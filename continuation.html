@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="継続率から平均連チャン、目標連チャン到達率、最高連チャンを試算するシミュレーターです。81%、90%、93%などを比較できます。">
+  <title>継続率シミュレーター | ICHIGEKI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">シミュレーター集</span></a><nav class="nav"><a href="index.html">トップ</a><a href="pachinko-319.html">319</a><a href="ranking.html">ランキング</a></nav></div></header>
+  <main class="page"><div class="layout"><div class="main-column">
+    <section class="hero"><div class="kicker">Chain Tool</div><h1>継続率シミュレーター</h1><p class="lead">継続率を指定して、平均何連するか、10連以上に届く確率はどれくらいかを試せます。81%、90%、93%などを比較できます。</p></section>
+    <section class="tool-card">
+      <h2>シミュレーター</h2>
+      <div class="control-grid">
+        <div class="field"><label for="continueRate">継続率（%）</label><input id="continueRate" type="number" value="81" min="1" max="99"></div>
+        <div class="field"><label for="targetChain">目標連チャン</label><input id="targetChain" type="number" value="10" min="1" max="100"></div>
+        <div class="field"><label for="trials">試行回数</label><input id="trials" type="number" value="10000" min="100" max="100000"></div>
+      </div>
+      <div class="tool-actions"><button class="button primary" data-action="continuation">試算する</button><button class="button" data-action="share">結果をコピー</button></div>
+      <div class="result-grid">
+        <div class="result-box"><div class="result-label">平均連チャン</div><div class="result-value good" id="resultAverage">--</div></div>
+        <div class="result-box"><div class="result-label">目標到達率</div><div class="result-value" id="resultReach">--</div></div>
+        <div class="result-box"><div class="result-label">最高連チャン</div><div class="result-value" id="resultBest">--</div></div>
+        <div class="result-box"><div class="result-label">試行回数</div><div class="result-value" id="resultTrials">--</div></div>
+      </div>
+      <div class="log-box" id="log">試算結果がここに表示されます。</div>
+    </section>
+    <div class="ad-box ad-box-wide" data-ad-slot="continuation-inline"><span class="ad-label">PR</span><span class="ad-title">記事内広告枠</span><span class="ad-note">シミュレーター結果下</span></div>
+    <article class="article-card">
+      <h2>継続率の見方</h2>
+      <p>継続率81%でも必ず長く続くわけではありません。短く終わることもあれば、まれに大きく伸びることもあります。このシミュレーターはそのブレを確認するためのものです。</p>
+      <div class="toc"><a href="#condition">計算条件</a><a href="#compare">継続率の比較</a><a href="#target">目標連チャンの見方</a><a href="#faq">よくある質問</a></div>
+      <h2 id="condition">計算条件</h2>
+      <p>1回の初当たりを1連目として、次回継続に成功するたびに連チャン数を加算します。指定した試行回数だけ繰り返して平均値、目標到達率、最高連チャンを出します。</p>
+      <p>たとえば継続率81%、目標10連、試行回数10,000回で試すと、10連以上に届いた割合や、試行中にどれくらい大きな連チャンが出たかを確認できます。</p>
+      <h2 id="compare">継続率の比較</h2>
+      <p>継続率は数%違うだけでも、長く試すと平均連チャンや10連以上の到達率に差が出ます。ただし、1回だけの結果では高継続でも短く終わることがあり、低めの継続率でも大きく伸びることがあります。</p>
+      <div class="table-wrap"><table class="ranking-table"><thead><tr><th>継続率</th><th>見え方</th><th>確認したいポイント</th></tr></thead><tbody><tr><td>75%前後</td><td>続く時と短く終わる時の差が大きい</td><td>平均と単発寄りの結果</td></tr><tr><td>81%前後</td><td>ミドル系でよく見る高継続帯</td><td>10連以上の到達感</td></tr><tr><td>90%以上</td><td>長く続く期待感が強い</td><td>試行回数を増やした時の最大連チャン</td></tr></tbody></table></div>
+      <h2 id="target">目標連チャンの見方</h2>
+      <p>目標連チャンは「何連以上を達成したいか」を見るための入力です。10連、20連、30連などを入れて比較すると、同じ継続率でも到達しやすいラインとかなり難しいラインが分かります。</p>
+      <ul class="info-list">
+        <li><strong>平均連チャン</strong>指定した試行回数の平均値です。多く試すほど安定しやすくなります。</li>
+        <li><strong>目標到達率</strong>設定した連チャン数以上に届いた割合です。</li>
+        <li><strong>最高連チャン</strong>試行中に出た最大連チャンです。試行回数が多いほど大きな値が出やすくなります。</li>
+      </ul>
+      <h2 id="faq">よくある質問</h2>
+      <div class="faq-item"><h3>継続率81%なら平均は何連ですか？</h3><p>単純な継続抽選だけで見ると、平均はおおよそ5連前後になります。ただし実機の仕様や出玉振り分けによって印象は変わります。</p></div>
+      <div class="faq-item"><h3>試行回数は多い方がいいですか？</h3><p>傾向を見るなら多い方が安定します。軽く遊ぶだけなら1,000回程度、比較するなら10,000回以上が見やすいです。</p></div>
+      <div class="faq-item"><h3>実機のSTや転落式も再現していますか？</h3><p>再現していません。このページは毎回同じ継続率で抽選するシンプルなモデルです。</p></div>
+      <p class="note">簡易乱数による試算です。実機の時短、転落、小当たり、振り分けなどは反映していません。</p>
+    </article>
+  </div><aside class="side-column"><section class="side-card"><h2>関連ツール</h2><ul class="side-list"><li><a href="rush.html">RUSH突入率</a></li><li><a href="pachinko-319.html">319大当たり</a></li><li><a href="hamari.html">ハマり確率</a></li></ul></section><div class="ad-box ad-box-sidebar" data-ad-slot="continuation-sidebar"><span class="ad-label">PR</span><span class="ad-title">サイドバー広告枠</span><span class="ad-note">PC表示向け</span></div></aside></div><div class="ad-box ad-box-footer" data-ad-slot="continuation-footer"><span class="ad-label">PR</span><span class="ad-title">ページ下部広告枠</span><span class="ad-note">記事末尾の広告枠</span></div></main>
+  <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a></div></div></footer>
+  <script src="main.js"></script>
+</body>
+</html>

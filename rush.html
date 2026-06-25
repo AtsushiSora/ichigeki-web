@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="RUSH突入率を指定して、複数回の初当たりで何回突破できるか、失敗がどれくらい続くかを試せるシミュレーターです。">
+  <title>RUSH突入率シミュレーター | ICHIGEKI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">シミュレーター集</span></a><nav class="nav"><a href="index.html">トップ</a><a href="pachinko-319.html">319</a><a href="ranking.html">ランキング</a></nav></div></header>
+  <main class="page"><div class="layout"><div class="main-column">
+    <section class="hero"><div class="kicker">Rush Tool</div><h1>RUSH突入率シミュレーター</h1><p class="lead">突入率60%などを指定して、初当たりを複数回引いた時に何回RUSHへ入るかを試算します。突破できない偏りも確認できます。</p></section>
+    <section class="tool-card">
+      <h2>シミュレーター</h2>
+      <div class="control-grid">
+        <div class="field"><label for="rushRate">RUSH突入率（%）</label><input id="rushRate" type="number" value="60" min="0" max="100"></div>
+        <div class="field"><label for="trials">初当たり回数</label><input id="trials" type="number" value="100" min="1" max="10000"></div>
+      </div>
+      <div class="tool-actions"><button class="button primary" data-action="rush">試算する</button><button class="button" data-action="share">結果をコピー</button></div>
+      <div class="result-grid">
+        <div class="result-box"><div class="result-label">突破</div><div class="result-value good" id="resultSuccess">--</div></div>
+        <div class="result-box"><div class="result-label">失敗</div><div class="result-value bad" id="resultFail">--</div></div>
+        <div class="result-box"><div class="result-label">実測突入率</div><div class="result-value" id="resultRate">--</div></div>
+        <div class="result-box"><div class="result-label">最大失敗連続</div><div class="result-value" id="resultStreak">--</div></div>
+      </div>
+      <div class="log-box" id="log">試算結果がここに表示されます。</div>
+    </section>
+    <div class="ad-box ad-box-wide" data-ad-slot="rush-inline"><span class="ad-label">PR</span><span class="ad-title">記事内広告枠</span><span class="ad-note">シミュレーター結果下</span></div>
+    <article class="article-card">
+      <h2>RUSH突入率のブレ</h2>
+      <p>突入率60%でも、短い試行では40%台や80%台に偏ることがあります。何回も試すことで、確率のブレを視覚的に確認できます。</p>
+      <div class="toc"><a href="#condition">計算条件</a><a href="#result">結果の見方</a><a href="#streak">失敗連続の考え方</a><a href="#faq">よくある質問</a></div>
+      <h2 id="condition">計算条件</h2>
+      <p>入力した初当たり回数分だけ、RUSHに入るかどうかを抽選します。突入率60%なら、1回ごとに60%で突破、40%で失敗として扱います。</p>
+      <p>結果には、突破回数、失敗回数、実測突入率、最大失敗連続を表示します。短い回数では大きく偏ることがあり、回数を増やすほど入力した突入率に近づきやすくなります。</p>
+      <h2 id="result">結果の見方</h2>
+      <div class="table-wrap"><table class="ranking-table"><thead><tr><th>項目</th><th>意味</th><th>使い方</th></tr></thead><tbody><tr><td>突破</td><td>RUSHに入った回数</td><td>成功回数を確認</td></tr><tr><td>失敗</td><td>RUSHに入らなかった回数</td><td>突入しない偏りを確認</td></tr><tr><td>実測突入率</td><td>試行結果上の突入率</td><td>設定値とのズレを見る</td></tr><tr><td>最大失敗連続</td><td>連続で突破できなかった最大回数</td><td>悪い偏りの目安を見る</td></tr></tbody></table></div>
+      <h2 id="streak">失敗連続の考え方</h2>
+      <p>突入率60%は高く見えますが、失敗が連続することもあります。1回ごとの抽選が独立している場合、前回失敗したから次が突破しやすくなるわけではありません。</p>
+      <p>このページでは最大失敗連続を表示することで、「60%なのに何回も入らない」という偏りを数値として見られるようにしています。実際の遊技結果を保証するものではありませんが、確率のブレを理解する材料になります。</p>
+      <ul class="info-list">
+        <li><strong>少ない試行回数</strong>結果が大きく偏りやすく、体感に近いブレを見やすいです。</li>
+        <li><strong>多い試行回数</strong>設定した突入率に近づきやすく、全体傾向を確認しやすいです。</li>
+        <li><strong>最大失敗連続</strong>悪い方向に偏った時の印象を確認するための目安です。</li>
+      </ul>
+      <h2 id="faq">よくある質問</h2>
+      <div class="faq-item"><h3>突入率60%なのに半分以下になることはありますか？</h3><p>短い試行ではあります。初当たり回数が少ないほど、実測突入率は大きくブレます。</p></div>
+      <div class="faq-item"><h3>突入率を上げると何が変わりますか？</h3><p>突破回数が増えやすくなり、失敗回数や最大失敗連続は小さくなりやすくなります。ただし、単発の結果では偏りが残ります。</p></div>
+      <div class="faq-item"><h3>実機の突破演出や振り分けは反映していますか？</h3><p>反映していません。RUSHへ入るかどうかだけを抽選する簡易シミュレーターです。</p></div>
+      <p class="note">このツールは確率の偏りを体験するための簡易シミュレーターです。実機の演出や詳細な振り分けは反映していません。</p>
+    </article>
+  </div><aside class="side-column"><section class="side-card"><h2>関連ツール</h2><ul class="side-list"><li><a href="continuation.html">継続率</a></li><li><a href="pachinko-319.html">319大当たり</a></li><li><a href="hamari.html">ハマり確率</a></li></ul></section><div class="ad-box ad-box-sidebar" data-ad-slot="rush-sidebar"><span class="ad-label">PR</span><span class="ad-title">サイドバー広告枠</span><span class="ad-note">PC表示向け</span></div></aside></div><div class="ad-box ad-box-footer" data-ad-slot="rush-footer"><span class="ad-label">PR</span><span class="ad-title">ページ下部広告枠</span><span class="ad-note">記事末尾の広告枠</span></div></main>
+  <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a></div></div></footer>
+  <script src="main.js"></script>
+</body>
+</html>
