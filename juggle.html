@@ -32,6 +32,7 @@
           <div class="result-grid">
             <div class="result-box"><div class="result-label">ジャグ連</div><div class="result-value good" id="resultChain">0連</div></div>
             <div class="result-box"><div class="result-label">総ゲーム</div><div class="result-value" id="resultGames">0G</div></div>
+            <div class="result-box"><div class="result-label">100Gカウント</div><div class="result-value" id="resultAfterHitGames">0G</div></div>
             <div class="result-box"><div class="result-label">投資</div><div class="result-value" id="resultInvestment">0円</div></div>
             <div class="result-box"><div class="result-label">持ちメダル</div><div class="result-value" id="resultMedals">0枚</div></div>
             <div class="result-box"><div class="result-label">差枚</div><div class="result-value" id="resultDiff">0枚</div></div>
@@ -56,7 +57,7 @@
             <li>100G以内の当選をジャグ連としてカウント</li>
           </ul>
           <h2 id="how">結果の見方</h2>
-          <p>このシミュレーターでは、初当たり後に100G以内の当選が続いた回数を「ジャグ連」として表示します。総ゲーム数は初当たりまでのゲーム数と、連チャンが終わるまでのゲーム数を含めた値です。</p>
+          <p>このシミュレーターでは、当たったタイミングでジャグ連数をカウントします。総ゲーム数は初当たりまでのゲーム数と、連チャンが終わるまでのゲーム数を含めた値です。100Gカウントは、当たり後に1Gから数え直し、100G以内に次の当たりを引けるかを見るための表示です。</p>
           <p>投資は、持ちメダルが足りなくなった場合に1,000円ずつ追加した想定で計算します。持ちメダルはBIGとREGの獲得枚数からゲーム消化分を差し引いた簡易値です。差枚は、最終的な持ちメダルから投資分の貸しメダルを引いた目安です。</p>
           <h2 id="compare">設定と回転数の考え方</h2>
           <p>実際のジャグラー系機種では、BIG確率、REG確率、合算確率、小役、ブドウ確率など複数の要素を見ます。このページでは、ジャグ連の起こり方を分かりやすくするため、BIGとREGをどちらも1/255に固定しています。</p>

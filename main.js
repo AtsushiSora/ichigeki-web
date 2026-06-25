@@ -58,6 +58,56 @@ async function animateCount(id, endValue, suffix, duration = 1200) {
   });
 }
 
+async function animateJuggleResult(result) {
+  const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+  if (reducedMotion || !result.hitEvents.length) {
+    setText("resultGames", `${yen.format(result.games)}G`);
+    setText("resultAfterHitGames", result.chain > 0 ? "100G抜け" : "0G");
+    setText("resultChain", `${result.chain}連`);
+    setText("resultBonus", `BIG ${result.big} / REG ${result.reg}`);
+    return;
+  }
+
+  const duration = Math.min(3200, Math.max(1400, result.games * 7));
+  const start = performance.now();
+  let hitIndex = -1;
+  return new Promise(resolve => {
+    function frame(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const currentGame = Math.min(result.games, Math.max(1, Math.round(result.games * eased)));
+
+      while (hitIndex + 1 < result.hitEvents.length && result.hitEvents[hitIndex + 1].game <= currentGame) {
+        hitIndex++;
+        const hit = result.hitEvents[hitIndex];
+        setText("resultChain", `${hit.chain}連`);
+        setText("resultBonus", `BIG ${hit.big} / REG ${hit.reg}`);
+        setText("log", `${hit.game}Gで${hit.type}当選 / ${hit.chain}連`);
+      }
+
+      setText("resultGames", `${yen.format(currentGame)}G`);
+      if (hitIndex >= 0) {
+        const lastHit = result.hitEvents[hitIndex];
+        const afterHitGames = currentGame - lastHit.game;
+        setText("resultAfterHitGames", afterHitGames === 0 ? "当たり" : `${Math.min(afterHitGames, 100)}G`);
+      } else {
+        setText("resultAfterHitGames", "初当たり待ち");
+      }
+
+      if (progress < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        setText("resultGames", `${yen.format(result.games)}G`);
+        setText("resultAfterHitGames", result.chain > 0 ? "100G抜け" : "0G");
+        setText("resultChain", `${result.chain}連`);
+        setText("resultBonus", `BIG ${result.big} / REG ${result.reg}`);
+        resolve();
+      }
+    }
+    requestAnimationFrame(frame);
+  });
+}
+
 function runPachinko319() {
   const spinsPerUnit = clampNumber(document.getElementById("spinPerUnit")?.value, 17);
   const rushRate = clampNumber(document.getElementById("rushRate")?.value, 60) / 100;
@@ -104,6 +154,7 @@ function simulateJuggle() {
   let chain = 0;
   let afterHit = 0;
   let started = false;
+  const hitEvents = [];
   while (games < 20000) {
     if (medals < costPerGame) {
       investment += 1000;
@@ -118,28 +169,33 @@ function simulateJuggle() {
       started = true;
       afterHit = 0;
       chain++;
+      let type;
       if (Math.random() < 0.5) {
         big++;
         medals += 252;
+        type = "BIG";
       } else {
         reg++;
         medals += 96;
+        type = "REG";
       }
+      hitEvents.push({ game: games, type, chain, big, reg });
     }
     if (started && afterHit >= 100) break;
   }
   const finalMedals = Math.max(0, Math.round(medals));
   const investedMedals = Math.round(investment / 1000 * medalsPerUnit);
   const diff = finalMedals - investedMedals;
-  return { games, investment, finalMedals, diff, big, reg, chain };
+  return { games, investment, finalMedals, diff, big, reg, chain, hitEvents };
 }
 
 async function runJuggle() {
   if (juggleRunning) return;
   juggleRunning = true;
   setRunningButton("juggle", true);
-  setText("resultChain", "抽選中");
+  setText("resultChain", "0連");
   setText("resultGames", "0G");
+  setText("resultAfterHitGames", "初当たり待ち");
   setText("resultInvestment", "0円");
   setText("resultMedals", "0枚");
   setText("resultDiff", "0枚");
@@ -147,7 +203,7 @@ async function runJuggle() {
   setText("log", "回転中...");
 
   const result = simulateJuggle();
-  await animateCount("resultGames", result.games, "G", Math.min(2200, Math.max(900, result.games * 6)));
+  await animateJuggleResult(result);
   await sleep(160);
 
   const { games, investment, finalMedals, diff, big, reg, chain } = result;
