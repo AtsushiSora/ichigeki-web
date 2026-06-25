@@ -21,6 +21,43 @@ function randomHit(rate) {
   return Math.random() < 1 / rate;
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function setRunningButton(action, isRunning) {
+  const button = document.querySelector(`[data-action="${action}"]`);
+  if (!button) return;
+  button.disabled = isRunning;
+  button.textContent = isRunning ? "抽選中..." : "スタート";
+}
+
+async function animateCount(id, endValue, suffix, duration = 1200) {
+  const element = document.getElementById(id);
+  if (!element) return;
+  const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+  if (reducedMotion) {
+    element.textContent = `${yen.format(endValue)}${suffix}`;
+    return;
+  }
+  const start = performance.now();
+  return new Promise(resolve => {
+    function frame(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(endValue * eased);
+      element.textContent = `${yen.format(current)}${suffix}`;
+      if (progress < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        element.textContent = `${yen.format(endValue)}${suffix}`;
+        resolve();
+      }
+    }
+    requestAnimationFrame(frame);
+  });
+}
+
 function runPachinko319() {
   const spinsPerUnit = clampNumber(document.getElementById("spinPerUnit")?.value, 17);
   const rushRate = clampNumber(document.getElementById("rushRate")?.value, 60) / 100;
@@ -51,7 +88,9 @@ function runPachinko319() {
   appendLog("log", `${spins}回転で大当たり / ${chain}連 / 差玉 ${diff > 0 ? "+" : ""}${yen.format(diff)}玉`);
 }
 
-function runJuggle() {
+let juggleRunning = false;
+
+function simulateJuggle() {
   const bigRate = 255;
   const regRate = 255;
   const medalsPerUnit = 46;
@@ -92,13 +131,35 @@ function runJuggle() {
   const finalMedals = Math.max(0, Math.round(medals));
   const investedMedals = Math.round(investment / 1000 * medalsPerUnit);
   const diff = finalMedals - investedMedals;
+  return { games, investment, finalMedals, diff, big, reg, chain };
+}
+
+async function runJuggle() {
+  if (juggleRunning) return;
+  juggleRunning = true;
+  setRunningButton("juggle", true);
+  setText("resultChain", "抽選中");
+  setText("resultGames", "0G");
+  setText("resultInvestment", "0円");
+  setText("resultMedals", "0枚");
+  setText("resultDiff", "0枚");
+  setText("resultBonus", "BIG 0 / REG 0");
+  setText("log", "回転中...");
+
+  const result = simulateJuggle();
+  await animateCount("resultGames", result.games, "G", Math.min(2200, Math.max(900, result.games * 6)));
+  await sleep(160);
+
+  const { games, investment, finalMedals, diff, big, reg, chain } = result;
   setText("resultChain", `${chain}連`);
   setText("resultGames", `${yen.format(games)}G`);
   setText("resultInvestment", `${yen.format(investment)}円`);
   setText("resultMedals", `${yen.format(finalMedals)}枚`);
   setText("resultDiff", `${diff > 0 ? "+" : ""}${yen.format(diff)}枚`);
   setText("resultBonus", `BIG ${big} / REG ${reg}`);
-  appendLog("log", `${games}G / ${chain}連 / BIG ${big} REG ${reg} / 差枚 ${diff > 0 ? "+" : ""}${yen.format(diff)}枚`);
+  setText("log", `${games}G / ${chain}連 / BIG ${big} REG ${reg} / 差枚 ${diff > 0 ? "+" : ""}${yen.format(diff)}枚`);
+  setRunningButton("juggle", false);
+  juggleRunning = false;
 }
 
 function runHamari() {
