@@ -28,8 +28,9 @@ function sleep(ms) {
 function setRunningButton(action, isRunning) {
   const button = document.querySelector(`[data-action="${action}"]`);
   if (!button) return;
+  if (!button.dataset.idleLabel) button.dataset.idleLabel = button.textContent;
   button.disabled = isRunning;
-  button.textContent = isRunning ? "抽選中..." : "スタート";
+  button.textContent = isRunning ? "進行中..." : button.dataset.idleLabel;
 }
 
 async function animateCount(id, endValue, suffix, duration = 1200) {
@@ -51,6 +52,31 @@ async function animateCount(id, endValue, suffix, duration = 1200) {
         requestAnimationFrame(frame);
       } else {
         element.textContent = `${yen.format(endValue)}${suffix}`;
+        resolve();
+      }
+    }
+    requestAnimationFrame(frame);
+  });
+}
+
+async function animateDecimal(id, endValue, suffix, digits = 1, duration = 1000) {
+  const element = document.getElementById(id);
+  if (!element) return;
+  const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+  if (reducedMotion) {
+    element.textContent = `${endValue.toFixed(digits)}${suffix}`;
+    return;
+  }
+  const start = performance.now();
+  return new Promise(resolve => {
+    function frame(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      element.textContent = `${(endValue * eased).toFixed(digits)}${suffix}`;
+      if (progress < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        element.textContent = `${endValue.toFixed(digits)}${suffix}`;
         resolve();
       }
     }
@@ -108,7 +134,9 @@ async function animateJuggleResult(result) {
   });
 }
 
-function runPachinko319() {
+let pachinkoRunning = false;
+
+function simulatePachinko319() {
   const spinsPerUnit = clampNumber(document.getElementById("spinPerUnit")?.value, 17);
   const rushRate = clampNumber(document.getElementById("rushRate")?.value, 60) / 100;
   const continueRate = clampNumber(document.getElementById("continueRate")?.value, 81) / 100;
@@ -129,13 +157,49 @@ function runPachinko319() {
   }
   const usedBalls = Math.round(investment / 4);
   const diff = totalPayout - usedBalls;
+  return { spins, investment, totalPayout, chain, diff, enteredRush, firstPayout, payout };
+}
+
+async function runPachinko319() {
+  if (pachinkoRunning) return;
+  pachinkoRunning = true;
+  setRunningButton("pachinko319", true);
+  setText("resultSpins", "0回転");
+  setText("resultInvestment", "0円");
+  setText("resultPayout", "0玉");
+  setText("resultChain", "0連");
+  setText("resultDiff", "0玉");
+  setText("resultRush", "抽選中");
+  setText("log", "初当たり抽選中...");
+
+  const result = simulatePachinko319();
+  const { spins, investment, totalPayout, chain, diff, enteredRush, firstPayout, payout } = result;
+  await animateCount("resultSpins", spins, "回転", Math.min(3000, Math.max(1200, spins * 6)));
+
+  setText("resultRush", enteredRush ? "突入" : "非突入");
+  setText("resultChain", "1連");
+  setText("resultPayout", `${yen.format(firstPayout)}玉`);
+  setText("log", `${spins}回転で大当たり`);
+  if (enteredRush) {
+    let currentPayout = firstPayout;
+    for (let currentChain = 2; currentChain <= chain; currentChain++) {
+      await sleep(180);
+      currentPayout += payout;
+      setText("resultChain", `${currentChain}連`);
+      setText("resultPayout", `${yen.format(currentPayout)}玉`);
+      setText("log", `RUSH継続 ${currentChain}連 / ${yen.format(currentPayout)}玉`);
+    }
+  }
+  await sleep(120);
   setText("resultSpins", `${yen.format(spins)}回転`);
   setText("resultInvestment", `${yen.format(investment)}円`);
   setText("resultPayout", `${yen.format(totalPayout)}玉`);
   setText("resultChain", `${chain}連`);
   setText("resultDiff", `${diff > 0 ? "+" : ""}${yen.format(diff)}玉`);
   setText("resultRush", enteredRush ? "突入" : "非突入");
-  appendLog("log", `${spins}回転で大当たり / ${chain}連 / 差玉 ${diff > 0 ? "+" : ""}${yen.format(diff)}玉`);
+  setText("log", `${spins}回転で大当たり / ${chain}連 / 差玉 ${diff > 0 ? "+" : ""}${yen.format(diff)}玉`);
+  setRunningButton("pachinko319", false);
+  pachinkoRunning = false;
 }
 
 let juggleRunning = false;
@@ -218,19 +282,38 @@ async function runJuggle() {
   juggleRunning = false;
 }
 
-function runHamari() {
+let hamariRunning = false;
+
+async function runHamari() {
+  if (hamariRunning) return;
+  hamariRunning = true;
+  setRunningButton("hamari", true);
   const rate = clampNumber(document.getElementById("hitRate")?.value, 319);
   const spins = clampNumber(document.getElementById("targetSpins")?.value, 1000);
   const probability = Math.pow((rate - 1) / rate, spins) * 100;
   const hitByThen = 100 - probability;
+  setText("resultHamari", "--");
+  setText("resultHit", "--");
+  setText("resultRate", `1/${yen.format(rate)}`);
+  setText("resultSpins", "0回転");
+  setText("log", "回転数をカウント中...");
+  await animateCount("resultSpins", spins, "回転", Math.min(2200, Math.max(900, spins * 2)));
+  await Promise.all([
+    animateDecimal("resultHamari", probability, "%", 2, 900),
+    animateDecimal("resultHit", hitByThen, "%", 2, 900)
+  ]);
   setText("resultHamari", `${probability.toFixed(2)}%`);
   setText("resultHit", `${hitByThen.toFixed(2)}%`);
   setText("resultRate", `1/${yen.format(rate)}`);
   setText("resultSpins", `${yen.format(spins)}回転`);
-  appendLog("log", `1/${rate}で${spins}回転ハマる確率: ${probability.toFixed(2)}%`);
+  setText("log", `1/${rate}で${spins}回転ハマる確率: ${probability.toFixed(2)}%`);
+  setRunningButton("hamari", false);
+  hamariRunning = false;
 }
 
-function runContinuation() {
+let continuationRunning = false;
+
+function simulateContinuation() {
   const rate = clampNumber(document.getElementById("continueRate")?.value, 81) / 100;
   const target = clampNumber(document.getElementById("targetChain")?.value, 10);
   const trials = clampNumber(document.getElementById("trials")?.value, 10000);
@@ -244,19 +327,44 @@ function runContinuation() {
     best = Math.max(best, chain);
     if (chain >= target) reached++;
   }
-  setText("resultAverage", `${(total / trials).toFixed(2)}連`);
-  setText("resultReach", `${(reached / trials * 100).toFixed(2)}%`);
-  setText("resultBest", `${best}連`);
-  setText("resultTrials", `${yen.format(trials)}回`);
-  appendLog("log", `継続率${Math.round(rate * 100)}% / 平均 ${(total / trials).toFixed(2)}連 / 最高 ${best}連`);
+  return { rate, target, trials, average: total / trials, reach: reached / trials * 100, best };
 }
 
-function runRush() {
+async function runContinuation() {
+  if (continuationRunning) return;
+  continuationRunning = true;
+  setRunningButton("continuation", true);
+  setText("resultAverage", "--");
+  setText("resultReach", "--");
+  setText("resultBest", "--");
+  setText("resultTrials", "0回");
+  setText("log", "試行中...");
+
+  const result = simulateContinuation();
+  await animateCount("resultTrials", result.trials, "回", Math.min(2600, Math.max(1000, result.trials / 12)));
+  await Promise.all([
+    animateDecimal("resultAverage", result.average, "連", 2, 900),
+    animateDecimal("resultReach", result.reach, "%", 2, 900),
+    animateCount("resultBest", result.best, "連", 900)
+  ]);
+  setText("resultAverage", `${result.average.toFixed(2)}連`);
+  setText("resultReach", `${result.reach.toFixed(2)}%`);
+  setText("resultBest", `${result.best}連`);
+  setText("resultTrials", `${yen.format(result.trials)}回`);
+  setText("log", `継続率${Math.round(result.rate * 100)}% / 平均 ${result.average.toFixed(2)}連 / 最高 ${result.best}連`);
+  setRunningButton("continuation", false);
+  continuationRunning = false;
+}
+
+let rushRunning = false;
+
+function simulateRush() {
   const rushRate = clampNumber(document.getElementById("rushRate")?.value, 60) / 100;
   const trials = clampNumber(document.getElementById("trials")?.value, 100);
   let success = 0;
   let bestFailStreak = 0;
   let currentFail = 0;
+  const events = [];
   for (let i = 0; i < trials; i++) {
     if (Math.random() < rushRate) {
       success++;
@@ -265,13 +373,64 @@ function runRush() {
       currentFail++;
       bestFailStreak = Math.max(bestFailStreak, currentFail);
     }
+    events.push({ trial: i + 1, success, fail: i + 1 - success, bestFailStreak });
   }
   const failed = trials - success;
+  return { rushRate, trials, success, failed, bestFailStreak, events };
+}
+
+async function animateRushResult(result) {
+  const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+  if (reducedMotion) return;
+  const duration = Math.min(2600, Math.max(1200, result.trials * 20));
+  const start = performance.now();
+  let lastIndex = -1;
+  return new Promise(resolve => {
+    function frame(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const index = Math.min(result.events.length - 1, Math.max(0, Math.round((result.events.length - 1) * eased)));
+      if (index !== lastIndex) {
+        lastIndex = index;
+        const event = result.events[index];
+        const rate = event.success / event.trial * 100;
+        setText("resultSuccess", `${event.success}回`);
+        setText("resultFail", `${event.fail}回`);
+        setText("resultRate", `${rate.toFixed(1)}%`);
+        setText("resultStreak", `${event.bestFailStreak}連続`);
+        setText("log", `${event.trial}回目まで試行中 / 突破 ${event.success}回`);
+      }
+      if (progress < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        resolve();
+      }
+    }
+    requestAnimationFrame(frame);
+  });
+}
+
+async function runRush() {
+  if (rushRunning) return;
+  rushRunning = true;
+  setRunningButton("rush", true);
+  setText("resultSuccess", "0回");
+  setText("resultFail", "0回");
+  setText("resultRate", "0.0%");
+  setText("resultStreak", "0連続");
+  setText("log", "初当たりを試行中...");
+
+  const result = simulateRush();
+  await animateRushResult(result);
+  await sleep(120);
+  const { trials, success, failed, bestFailStreak } = result;
   setText("resultSuccess", `${success}回`);
   setText("resultFail", `${failed}回`);
   setText("resultRate", `${(success / trials * 100).toFixed(1)}%`);
   setText("resultStreak", `${bestFailStreak}連続`);
-  appendLog("log", `${trials}回中 ${success}回突破 / 実測 ${(success / trials * 100).toFixed(1)}%`);
+  setText("log", `${trials}回中 ${success}回突破 / 実測 ${(success / trials * 100).toFixed(1)}%`);
+  setRunningButton("rush", false);
+  rushRunning = false;
 }
 
 function copyShareText() {
