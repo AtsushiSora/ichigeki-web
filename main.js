@@ -34,23 +34,21 @@ function setRunningButton(action, isRunning) {
 }
 
 function getSpeedValue() {
-  return clampNumber(document.getElementById("animationSpeed")?.value, 3);
+  return Math.min(20, Math.max(1, clampNumber(document.getElementById("animationSpeed")?.value, 1)));
 }
 
 function getSpeedFactor() {
-  const value = getSpeedValue();
-  return { 1: 0.55, 2: 0.75, 3: 1, 4: 1.45, 5: 2.1 }[value] || 1;
+  return getSpeedValue();
 }
 
 function speedAdjustedDuration(duration) {
-  return Math.max(180, Math.round(duration / getSpeedFactor()));
+  return Math.max(40, Math.round(duration / getSpeedFactor()));
 }
 
 function updateSpeedLabel() {
   const label = document.getElementById("speedLabel");
   if (!label) return;
-  const names = { 1: "ゆっくり", 2: "遅め", 3: "標準", 4: "速め", 5: "高速" };
-  label.textContent = names[getSpeedValue()] || "標準";
+  label.textContent = `${getSpeedValue()}倍`;
 }
 
 async function animateCount(id, endValue, suffix, duration = 1200) {
