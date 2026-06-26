@@ -33,6 +33,26 @@ function setRunningButton(action, isRunning) {
   button.textContent = isRunning ? "進行中..." : button.dataset.idleLabel;
 }
 
+function getSpeedValue() {
+  return clampNumber(document.getElementById("animationSpeed")?.value, 3);
+}
+
+function getSpeedFactor() {
+  const value = getSpeedValue();
+  return { 1: 0.55, 2: 0.75, 3: 1, 4: 1.45, 5: 2.1 }[value] || 1;
+}
+
+function speedAdjustedDuration(duration) {
+  return Math.max(180, Math.round(duration / getSpeedFactor()));
+}
+
+function updateSpeedLabel() {
+  const label = document.getElementById("speedLabel");
+  if (!label) return;
+  const names = { 1: "ゆっくり", 2: "遅め", 3: "標準", 4: "速め", 5: "高速" };
+  label.textContent = names[getSpeedValue()] || "標準";
+}
+
 async function animateCount(id, endValue, suffix, duration = 1200) {
   const element = document.getElementById(id);
   if (!element) return;
@@ -41,6 +61,7 @@ async function animateCount(id, endValue, suffix, duration = 1200) {
     element.textContent = `${yen.format(endValue)}${suffix}`;
     return;
   }
+  duration = speedAdjustedDuration(duration);
   const start = performance.now();
   return new Promise(resolve => {
     function frame(now) {
@@ -67,6 +88,7 @@ async function animateDecimal(id, endValue, suffix, digits = 1, duration = 1000)
     element.textContent = `${endValue.toFixed(digits)}${suffix}`;
     return;
   }
+  duration = speedAdjustedDuration(duration);
   const start = performance.now();
   return new Promise(resolve => {
     function frame(now) {
@@ -94,7 +116,7 @@ async function animateJuggleResult(result) {
     return;
   }
 
-  const duration = Math.min(3200, Math.max(1400, result.games * 7));
+  const duration = speedAdjustedDuration(Math.min(3200, Math.max(1400, result.games * 7)));
   const start = performance.now();
   let hitIndex = -1;
   return new Promise(resolve => {
@@ -183,14 +205,14 @@ async function runPachinko319() {
   if (enteredRush) {
     let currentPayout = firstPayout;
     for (let currentChain = 2; currentChain <= chain; currentChain++) {
-      await sleep(180);
+      await sleep(speedAdjustedDuration(180));
       currentPayout += payout;
       setText("resultChain", `${currentChain}連`);
       setText("resultPayout", `${yen.format(currentPayout)}玉`);
       setText("log", `RUSH継続 ${currentChain}連 / ${yen.format(currentPayout)}玉`);
     }
   }
-  await sleep(120);
+  await sleep(speedAdjustedDuration(120));
   setText("resultSpins", `${yen.format(spins)}回転`);
   setText("resultInvestment", `${yen.format(investment)}円`);
   setText("resultPayout", `${yen.format(totalPayout)}玉`);
@@ -268,7 +290,7 @@ async function runJuggle() {
 
   const result = simulateJuggle();
   await animateJuggleResult(result);
-  await sleep(160);
+  await sleep(speedAdjustedDuration(160));
 
   const { games, investment, finalMedals, diff, big, reg, chain } = result;
   setText("resultChain", `${chain}連`);
@@ -382,7 +404,7 @@ function simulateRush() {
 async function animateRushResult(result) {
   const reducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
   if (reducedMotion) return;
-  const duration = Math.min(2600, Math.max(1200, result.trials * 20));
+  const duration = speedAdjustedDuration(Math.min(2600, Math.max(1200, result.trials * 20)));
   const start = performance.now();
   let lastIndex = -1;
   return new Promise(resolve => {
@@ -422,7 +444,7 @@ async function runRush() {
 
   const result = simulateRush();
   await animateRushResult(result);
-  await sleep(120);
+  await sleep(speedAdjustedDuration(120));
   const { trials, success, failed, bestFailStreak } = result;
   setText("resultSuccess", `${success}回`);
   setText("resultFail", `${failed}回`);
@@ -449,3 +471,9 @@ document.addEventListener("click", event => {
   if (action === "rush") runRush();
   if (action === "share") copyShareText();
 });
+
+document.addEventListener("input", event => {
+  if (event.target?.id === "animationSpeed") updateSpeedLabel();
+});
+
+updateSpeedLabel();
