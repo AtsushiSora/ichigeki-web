@@ -209,6 +209,11 @@ p {
   opacity: 0.55;
 }
 
+.button.danger {
+  border-color: #f0c7c0;
+  color: var(--red);
+}
+
 .grid {
   display: grid;
   gap: 16px;
@@ -280,6 +285,27 @@ p {
 }
 
 .quick-card span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.mini-guide {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.mini-guide div {
+  display: grid;
+  gap: 4px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper-soft);
+}
+
+.mini-guide span {
   color: var(--muted);
   font-size: 13px;
 }
@@ -712,6 +738,7 @@ p {
   .tool-grid,
   .control-grid,
   .quick-grid,
+  .mini-guide,
   .rank-category-grid,
   .podium-grid,
   .ranking-hero {
@@ -771,6 +798,22 @@ p {
 
   .button {
     width: 100%;
+  }
+
+  .result-value {
+    font-size: 21px;
+    overflow-wrap: anywhere;
+  }
+
+  .field input,
+  .field select {
+    font-size: 16px;
+  }
+
+  .ranking-table th,
+  .ranking-table td {
+    padding: 10px 8px;
+    white-space: nowrap;
   }
 
   .tool-link {

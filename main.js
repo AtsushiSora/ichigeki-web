@@ -110,7 +110,22 @@ function saveLatestRecord(type) {
     ...records[type]
   ]).slice(0, 30);
   const saved = storeLocalRecords(records);
-  appendLog("log", saved ? "ランキングに保存しました。" : "保存できませんでした。ブラウザの保存設定を確認してください。");
+  if (saved) {
+    appendLog("log", "ランキングに保存しました。ランキングページで確認できます。");
+    renderRankingPage();
+  } else {
+    appendLog("log", "保存できませんでした。ブラウザの保存設定を確認してください。");
+  }
+}
+
+function clearLocalRecords() {
+  if (typeof window !== "undefined" && window.confirm && !window.confirm("保存したランキング記録をすべて削除しますか？")) return;
+  try {
+    localStorage.removeItem(rankingStorageKey);
+  } catch {
+    return;
+  }
+  renderRankingPage();
 }
 
 function renderEmptyRows(columns, message = "まだ記録がありません") {
@@ -591,6 +606,7 @@ document.addEventListener("click", event => {
   if (action === "saveJuggle") saveLatestRecord("juggle");
   if (action === "savePachinko319") saveLatestRecord("pachinko319");
   if (action === "saveHamari") saveLatestRecord("hamari");
+  if (action === "clearRanking") clearLocalRecords();
 });
 
 document.addEventListener("input", event => {
