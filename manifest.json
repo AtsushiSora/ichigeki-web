@@ -1,0 +1,19 @@
+{
+  "name": "ICHIGEKI シミュレーター集",
+  "short_name": "ICHIGEKI",
+  "description": "パチンコ・パチスロの確率、出玉、連チャン、ハマりを試せる無料シミュレーター集です。",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f7f9",
+  "theme_color": "#1f7a55",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

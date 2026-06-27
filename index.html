@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1f7a55">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
   <meta name="description" content="パチンコ・パチスロの確率、出玉、連チャン、ハマりを試せる無料シミュレーター集です。">
   <title>ICHIGEKI | パチンコ・パチスロ シミュレーター集</title>
   <link rel="stylesheet" href="style.css">
@@ -39,56 +42,35 @@
     <div class="layout">
       <div class="main-column">
         <section class="article-card">
-          <h2>人気シミュレーター</h2>
-          <div class="grid tool-grid">
-            <a class="tool-link" href="juggle.html">
-              <span class="tool-icon">🤡</span>
-              <span><span class="tool-title">ジャグ連シミュレーター</span><span class="tool-desc">100G以内の連続当選をどこまで伸ばせるか試算</span></span>
-            </a>
-            <a class="tool-link" href="pachinko-319.html">
-              <span class="tool-icon">🎰</span>
-              <span><span class="tool-title">319大当たりシミュレーター</span><span class="tool-desc">投資、RUSH突入、連チャン、差玉を確認</span></span>
-            </a>
-            <a class="tool-link" href="ama-deji.html">
-              <span class="tool-icon">🍬</span>
-              <span><span class="tool-title">甘デジ一撃シミュレーター</span><span class="tool-desc">1/99前後の軽さと出玉感を確認</span></span>
-            </a>
-            <a class="tool-link" href="light-middle-199.html">
-              <span class="tool-icon">💡</span>
-              <span><span class="tool-title">ライトミドル199シミュレーター</span><span class="tool-desc">甘デジと319の中間タイプを比較</span></span>
-            </a>
-            <a class="tool-link" href="lucky-trigger.html">
-              <span class="tool-icon">🚀</span>
-              <span><span class="tool-title">ラッキートリガー風シミュレーター</span><span class="tool-desc">突入時の高継続・高出玉を試す</span></span>
-            </a>
-            <a class="tool-link" href="kakenuke.html">
-              <span class="tool-icon">🌀</span>
-              <span><span class="tool-title">単発・駆け抜けシミュレーター</span><span class="tool-desc">RUSH後の駆け抜け率を確認</span></span>
-            </a>
-            <a class="tool-link" href="slot-at.html">
-              <span class="tool-icon">⚙️</span>
-              <span><span class="tool-title">スロットAT一撃シミュレーター</span><span class="tool-desc">AT突入、獲得枚数、差枚を試す</span></span>
-            </a>
-            <a class="tool-link" href="two-choice.html">
-              <span class="tool-icon">↔️</span>
-              <span><span class="tool-title">二択チャレンジ</span><span class="tool-desc">左か右を選んで50%を当て続ける</span></span>
-            </a>
-            <a class="tool-link" href="hamari.html">
-              <span class="tool-icon">📉</span>
-              <span><span class="tool-title">ハマり確率シミュレーター</span><span class="tool-desc">指定回転数まで当たらない確率を計算</span></span>
-            </a>
-            <a class="tool-link" href="continuation.html">
-              <span class="tool-icon">🔁</span>
-              <span><span class="tool-title">継続率シミュレーター</span><span class="tool-desc">81%、90%などの連チャン感を試す</span></span>
-            </a>
-            <a class="tool-link" href="rush.html">
-              <span class="tool-icon">⚡</span>
-              <span><span class="tool-title">RUSH突入率シミュレーター</span><span class="tool-desc">突破率60%などを複数回試行</span></span>
-            </a>
-            <a class="tool-link" href="ranking.html">
-              <span class="tool-icon">🏆</span>
-              <span><span class="tool-title">みんなの記録</span><span class="tool-desc">シミュレーション結果のランキングページ</span></span>
-            </a>
+          <h2>シミュレーターを選ぶ</h2>
+          <div class="category-stack">
+            <section class="tool-category">
+              <div class="category-head"><span>パチンコ系</span><small>初当たり、RUSH、出玉、差玉を試す</small></div>
+              <div class="grid tool-grid">
+                <a class="tool-link" href="pachinko-319.html"><span class="tool-icon">🎰</span><span><span class="tool-title">319大当たりシミュレーター</span><span class="tool-desc">投資、RUSH突入、連チャン、差玉を確認</span></span></a>
+                <a class="tool-link" href="ama-deji.html"><span class="tool-icon">🍬</span><span><span class="tool-title">甘デジ一撃シミュレーター</span><span class="tool-desc">1/99前後の軽さと出玉感を確認</span></span></a>
+                <a class="tool-link" href="light-middle-199.html"><span class="tool-icon">💡</span><span><span class="tool-title">ライトミドル199シミュレーター</span><span class="tool-desc">甘デジと319の中間タイプを比較</span></span></a>
+                <a class="tool-link" href="lucky-trigger.html"><span class="tool-icon">🚀</span><span><span class="tool-title">ラッキートリガー風シミュレーター</span><span class="tool-desc">突入時の高継続・高出玉を試す</span></span></a>
+              </div>
+            </section>
+            <section class="tool-category">
+              <div class="category-head"><span>スロット系</span><small>ジャグ連、AT、差枚を試す</small></div>
+              <div class="grid tool-grid">
+                <a class="tool-link" href="juggle.html"><span class="tool-icon">🤡</span><span><span class="tool-title">ジャグ連シミュレーター</span><span class="tool-desc">100G以内の連続当選をどこまで伸ばせるか試算</span></span></a>
+                <a class="tool-link" href="slot-at.html"><span class="tool-icon">⚙️</span><span><span class="tool-title">スロットAT一撃シミュレーター</span><span class="tool-desc">AT突入、獲得枚数、差枚を試す</span></span></a>
+              </div>
+            </section>
+            <section class="tool-category">
+              <div class="category-head"><span>確率・ミニゲーム系</span><small>偏り、継続、50%チャレンジを体感する</small></div>
+              <div class="grid tool-grid">
+                <a class="tool-link" href="two-choice.html"><span class="tool-icon">↔️</span><span><span class="tool-title">二択チャレンジ</span><span class="tool-desc">左か右を選んで50%を当て続ける</span></span></a>
+                <a class="tool-link" href="hamari.html"><span class="tool-icon">📉</span><span><span class="tool-title">ハマり確率シミュレーター</span><span class="tool-desc">指定回転数まで当たらない確率を計算</span></span></a>
+                <a class="tool-link" href="continuation.html"><span class="tool-icon">🔁</span><span><span class="tool-title">継続率シミュレーター</span><span class="tool-desc">81%、90%などの連チャン感を試す</span></span></a>
+                <a class="tool-link" href="rush.html"><span class="tool-icon">⚡</span><span><span class="tool-title">RUSH突入率シミュレーター</span><span class="tool-desc">突破率60%などを複数回試行</span></span></a>
+                <a class="tool-link" href="kakenuke.html"><span class="tool-icon">🌀</span><span><span class="tool-title">単発・駆け抜けシミュレーター</span><span class="tool-desc">RUSH後の駆け抜け率を確認</span></span></a>
+                <a class="tool-link" href="ranking.html"><span class="tool-icon">🏆</span><span><span class="tool-title">みんなの記録</span><span class="tool-desc">シミュレーション結果のランキングページ</span></span></a>
+              </div>
+            </section>
           </div>
         </section>
 
@@ -193,5 +175,6 @@
       </div>
     </div>
   </footer>
+  <script src="main.js"></script>
 </body>
 </html>

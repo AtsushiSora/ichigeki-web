@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1f7a55">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
   <meta name="description" content="ICHIGEKIのシミュレーション結果をまとめる、みんなの記録ページです。">
   <title>みんなの記録・ランキング | ICHIGEKI</title>
   <link rel="stylesheet" href="style.css">
@@ -24,7 +27,7 @@
       <div class="ranking-summary">
         <span>端末内ランキング</span>
         <strong id="rankingCount">0件</strong>
-        <small>ジャグ連 / 319一撃 / ハマり</small>
+        <small>ジャグ連 / 319一撃 / ハマり / 二択</small>
       </div>
     </section>
 
@@ -35,11 +38,13 @@
           <div class="record-summary-card"><span>ジャグ連</span><strong id="juggleBestSummary">--</strong><small id="juggleRecordCount">0件</small></div>
           <div class="record-summary-card"><span>319一撃</span><strong id="pachinkoBestSummary">--</strong><small id="pachinkoRecordCount">0件</small></div>
           <div class="record-summary-card"><span>ハマり</span><strong id="hamariBestSummary">--</strong><small id="hamariRecordCount">0件</small></div>
+          <div class="record-summary-card"><span>二択</span><strong id="twoChoiceBestSummary">--</strong><small id="twoChoiceRecordCount">0件</small></div>
         </div>
         <div class="rank-category-grid">
           <a class="rank-category active" href="#juggle-ranking"><span>🤡</span><strong>全国ジャグ連</strong><small>連数、BIG/REG、差枚で競う</small></a>
           <a class="rank-category" href="#pachinko-ranking"><span>🎰</span><strong>319一撃</strong><small>総出玉、連チャン、差玉で競う</small></a>
           <a class="rank-category" href="#hamari-ranking"><span>📉</span><strong>ハマり記録</strong><small>回転数と条件を記録する</small></a>
+          <a class="rank-category" href="#two-choice-ranking"><span>↔️</span><strong>二択チャレンジ</strong><small>50%の連続正解数で競う</small></a>
         </div>
       </section>
 
@@ -112,6 +117,23 @@
         <div class="table-wrap"><table class="ranking-table"><thead><tr><th>順位</th><th>名前</th><th>回転数</th><th>条件</th><th>ハマり確率</th><th>保存日時</th><th>操作</th></tr></thead><tbody id="hamariRankingBody"><tr><td colspan="7">まだ記録がありません</td></tr></tbody></table></div>
       </section>
 
+      <section class="article-card" id="two-choice-ranking">
+        <div class="section-head">
+          <div><h2>二択チャレンジランキング</h2><p>左か右の50%を何連続で当てられたかを記録する種目です。</p></div>
+          <span class="status-pill">端末内保存</span>
+        </div>
+        <div class="ranking-controls">
+          <label for="twoChoiceSort">並び替え</label>
+          <select id="twoChoiceSort" data-ranking-sort>
+            <option value="score">連続正解が多い順</option>
+            <option value="probability">到達確率が低い順</option>
+            <option value="date">新しい順</option>
+            <option value="name">名前順</option>
+          </select>
+        </div>
+        <div class="table-wrap"><table class="ranking-table"><thead><tr><th>順位</th><th>名前</th><th>連続正解</th><th>挑戦回数</th><th>到達確率</th><th>保存日時</th><th>操作</th></tr></thead><tbody id="twoChoiceRankingBody"><tr><td colspan="7">まだ記録がありません</td></tr></tbody></table></div>
+      </section>
+
       <section class="article-card">
         <h2>ランキングの扱いについて</h2>
         <ul>
@@ -128,7 +150,7 @@
         <p>ランキングに保存される内容は、シミュレーターで出た数値、保存日時、入力されたランキング保存名です。メールアドレス、端末情報、個人を識別する情報は保存しません。</p>
         <p>記録はブラウザのローカルストレージに保存されます。ブラウザの履歴やサイトデータを削除すると、保存したランキングも消えます。共有ランキングを本稼働させる場合は、別途オンライン保存の仕組みを追加します。</p>
       </section>
-    </div><aside class="side-column"><section class="side-card"><h2>ランキングに挑戦</h2><ul class="side-list"><li><a href="juggle.html">全国ジャグ連チャレンジ</a></li><li><a href="pachinko-319.html">319一撃シミュレーター</a></li><li><a href="hamari.html">ハマり確率シミュレーター</a></li></ul></section><div class="ad-box ad-box-sidebar" data-ad-slot="ranking-sidebar"><span class="ad-label">PR</span><span class="ad-title">サイドバー広告枠</span><span class="ad-note">PC表示向け</span></div><section class="side-card"><h2>関連ページ</h2><ul class="side-list"><li><a href="guide.html">確率の見方</a></li><li><a href="glossary.html">用語集</a></li><li><a href="faq.html">よくある質問</a></li></ul></section></aside></div>
+    </div><aside class="side-column"><section class="side-card"><h2>ランキングに挑戦</h2><ul class="side-list"><li><a href="juggle.html">全国ジャグ連チャレンジ</a></li><li><a href="pachinko-319.html">319一撃シミュレーター</a></li><li><a href="hamari.html">ハマり確率シミュレーター</a></li><li><a href="two-choice.html">二択チャレンジ</a></li></ul></section><div class="ad-box ad-box-sidebar" data-ad-slot="ranking-sidebar"><span class="ad-label">PR</span><span class="ad-title">サイドバー広告枠</span><span class="ad-note">PC表示向け</span></div><section class="side-card"><h2>関連ページ</h2><ul class="side-list"><li><a href="guide.html">確率の見方</a></li><li><a href="glossary.html">用語集</a></li><li><a href="faq.html">よくある質問</a></li></ul></section></aside></div>
     <div class="ad-box ad-box-footer" data-ad-slot="ranking-footer"><span class="ad-label">PR</span><span class="ad-title">ページ下部広告枠</span><span class="ad-note">ランキング末尾の広告枠</span></div>
   </main>
   <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="sitemap.html">サイトマップ</a><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a></div></div></footer>

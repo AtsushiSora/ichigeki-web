@@ -3,7 +3,8 @@ const rankingStorageKey = "ichigekiLocalRecordsV1";
 const latestResults = {
   juggle: null,
   pachinko319: null,
-  hamari: null
+  hamari: null,
+  twoChoice: null
 };
 
 function clampNumber(value, fallback = 0) {
@@ -98,10 +99,11 @@ function loadLocalRecords() {
     return {
       juggle: Array.isArray(parsed.juggle) ? parsed.juggle.map((record, index) => normalizeRecord("juggle", record, index)) : [],
       pachinko319: Array.isArray(parsed.pachinko319) ? parsed.pachinko319.map((record, index) => normalizeRecord("pachinko319", record, index)) : [],
-      hamari: Array.isArray(parsed.hamari) ? parsed.hamari.map((record, index) => normalizeRecord("hamari", record, index)) : []
+      hamari: Array.isArray(parsed.hamari) ? parsed.hamari.map((record, index) => normalizeRecord("hamari", record, index)) : [],
+      twoChoice: Array.isArray(parsed.twoChoice) ? parsed.twoChoice.map((record, index) => normalizeRecord("twoChoice", record, index)) : []
     };
   } catch {
-    return { juggle: [], pachinko319: [], hamari: [] };
+    return { juggle: [], pachinko319: [], hamari: [], twoChoice: [] };
   }
 }
 
@@ -137,6 +139,12 @@ function sortRecords(type, records, mode = "score") {
     hamari: {
       score: (a, b) => b.spins - a.spins || b.probability - a.probability,
       probability: (a, b) => b.probability - a.probability || b.spins - a.spins,
+      date: (a, b) => getRecordTime(b) - getRecordTime(a),
+      name: (a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ja")
+    },
+    twoChoice: {
+      score: (a, b) => b.chain - a.chain || b.rounds - a.rounds,
+      probability: (a, b) => a.probability - b.probability || b.chain - a.chain,
       date: (a, b) => getRecordTime(b) - getRecordTime(a),
       name: (a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ja")
     }
@@ -228,16 +236,18 @@ function renderRankingPage() {
   const records = loadLocalRecords();
   const summary = document.getElementById("rankingCount");
   if (summary) {
-    const total = records.juggle.length + records.pachinko319.length + records.hamari.length;
+    const total = records.juggle.length + records.pachinko319.length + records.hamari.length + records.twoChoice.length;
     summary.textContent = `${total}件`;
   }
 
   setText("juggleRecordCount", `${records.juggle.length}件`);
   setText("pachinkoRecordCount", `${records.pachinko319.length}件`);
   setText("hamariRecordCount", `${records.hamari.length}件`);
+  setText("twoChoiceRecordCount", `${records.twoChoice.length}件`);
   setText("juggleBestSummary", records.juggle.length ? `${sortRecords("juggle", records.juggle)[0].chain}連` : "--");
   setText("pachinkoBestSummary", records.pachinko319.length ? `${yen.format(sortRecords("pachinko319", records.pachinko319)[0].totalPayout)}玉` : "--");
   setText("hamariBestSummary", records.hamari.length ? `${yen.format(sortRecords("hamari", records.hamari)[0].spins)}回転` : "--");
+  setText("twoChoiceBestSummary", records.twoChoice.length ? `${sortRecords("twoChoice", records.twoChoice)[0].chain}連` : "--");
 
   const podium = document.getElementById("jugglePodium");
   if (podium) podium.innerHTML = renderPodium(records.juggle);
@@ -264,6 +274,14 @@ function renderRankingPage() {
       `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.spins)}回転</td><td>1/${yen.format(record.rate)}</td><td>${record.probability.toFixed(2)}%</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("hamari", record.id)}</td></tr>`
     ));
     hamariBody.innerHTML = rows.join("") || renderEmptyRows(7, "ハマり記録がありません", "hamari.html", "ハマり確率を試す");
+  }
+
+  const twoChoiceBody = document.getElementById("twoChoiceRankingBody");
+  if (twoChoiceBody) {
+    const rows = sortRecords("twoChoice", records.twoChoice, getRankingSort("twoChoice")).slice(0, 10).map((record, index) => (
+      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.chain}連</td><td>${record.rounds || record.chain + 1}回</td><td>${record.probability.toFixed(3)}%</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("twoChoice", record.id)}</td></tr>`
+    ));
+    twoChoiceBody.innerHTML = rows.join("") || renderEmptyRows(7, "二択チャレンジの記録がありません", "two-choice.html", "二択を試す");
   }
 }
 
@@ -905,6 +923,7 @@ function resetTwoChoice() {
   setText("resultRound", "1回目");
   setText("resultNextRate", "50.0%");
   setText("log", "左か右を選んでください。");
+  latestResults.twoChoice = null;
   const effect = document.getElementById("choiceEffect");
   if (effect) {
     effect.textContent = "";
@@ -932,8 +951,10 @@ function playTwoChoiceSuccessEffect() {
   const effect = document.getElementById("choiceEffect");
   const stage = document.querySelector(".choice-stage");
   if (!effect || !stage) return;
-  effect.textContent = `正解！ ${twoChoiceState.chain}連`;
+  const special = twoChoiceState.chain >= 10 ? "激レア！" : twoChoiceState.chain >= 5 ? "好記録！" : "正解！";
+  effect.textContent = `${special} ${twoChoiceState.chain}連`;
   effect.classList.remove("show");
+  effect.classList.toggle("legend", twoChoiceState.chain >= 10);
   stage.classList.remove("success-pulse");
   void effect.offsetWidth;
   effect.classList.add("show");
@@ -952,6 +973,11 @@ function finishTwoChoice(selected) {
   try {
     localStorage.setItem("ichigekiTwoChoiceBest", String(twoChoiceState.best));
   } catch {}
+  latestResults.twoChoice = {
+    chain: finalChain,
+    rounds: twoChoiceState.round,
+    probability: Math.pow(0.5, finalChain) * 100
+  };
   document.querySelectorAll("[data-choice]").forEach(button => {
     button.disabled = true;
     button.classList.toggle("good", button.dataset.choice === twoChoiceState.correct);
@@ -980,12 +1006,25 @@ function chooseTwoChoice(selected) {
   setText("resultRound", `${twoChoiceState.round}回目`);
   setText("resultNextRate", "50.0%");
   setText("log", twoChoiceState.history.slice(0, 8).join("\n"));
+  latestResults.twoChoice = {
+    chain: twoChoiceState.chain,
+    rounds: twoChoiceState.round - 1,
+    probability: Math.pow(0.5, twoChoiceState.chain) * 100
+  };
   playTwoChoiceSuccessEffect();
 }
 
 function copyShareText() {
   const text = document.getElementById("log")?.textContent.trim() || location.href;
   navigator.clipboard?.writeText(`${document.title}\n${text}\n${location.href}`).catch(() => null);
+}
+
+function registerServiceWorker() {
+  if (!("serviceWorker" in navigator)) return;
+  if (!/^https?:$/.test(location.protocol)) return;
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => null);
+  });
 }
 
 document.addEventListener("click", event => {
@@ -1007,6 +1046,7 @@ document.addEventListener("click", event => {
   if (action === "saveJuggle") saveLatestRecord("juggle");
   if (action === "savePachinko319") saveLatestRecord("pachinko319");
   if (action === "saveHamari") saveLatestRecord("hamari");
+  if (action === "saveTwoChoice") saveLatestRecord("twoChoice");
   if (action === "clearRanking") clearLocalRecords();
   if (action === "editRecord") updateRecordName(target.dataset.type, target.dataset.id);
   if (action === "deleteRecord") deleteRecord(target.dataset.type, target.dataset.id);
@@ -1023,3 +1063,4 @@ document.addEventListener("change", event => {
 updateSpeedLabel();
 renderRankingPage();
 initializeTwoChoicePage();
+registerServiceWorker();

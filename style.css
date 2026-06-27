@@ -223,6 +223,36 @@ p {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.category-stack {
+  display: grid;
+  gap: 22px;
+}
+
+.tool-category {
+  display: grid;
+  gap: 12px;
+}
+
+.category-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.category-head span {
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.category-head small {
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .tool-link {
   display: grid;
   grid-template-columns: 52px 1fr;
@@ -426,6 +456,10 @@ p {
   animation: choice-success 760ms ease-out both;
 }
 
+.choice-effect.legend {
+  color: var(--gold);
+}
+
 .choice-effect::before,
 .choice-effect::after {
   content: "";
@@ -436,6 +470,11 @@ p {
   border-radius: 999px;
   background: var(--accent);
   box-shadow: 0 0 18px color-mix(in srgb, var(--accent), transparent 35%);
+}
+
+.choice-effect.legend::before,
+.choice-effect.legend::after {
+  background: var(--gold);
 }
 
 .choice-button {
@@ -878,14 +917,14 @@ code,
 
 .rank-category-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
   margin-top: 14px;
 }
 
 .record-summary-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
 }
 
