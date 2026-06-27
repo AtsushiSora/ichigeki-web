@@ -408,6 +408,36 @@ p {
   margin: 18px 0;
 }
 
+.choice-effect {
+  min-height: 0;
+  height: 0;
+  margin: 0;
+  color: var(--accent-dark);
+  font-weight: 900;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(10px) scale(0.96);
+}
+
+.choice-effect.show {
+  height: auto;
+  margin: 6px 0 0;
+  animation: choice-success 760ms ease-out both;
+}
+
+.choice-effect::before,
+.choice-effect::after {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin: 0 10px 4px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--accent), transparent 35%);
+}
+
 .choice-button {
   min-height: 140px;
   border: 2px solid var(--line-strong);
@@ -440,6 +470,42 @@ p {
 .choice-button:disabled {
   cursor: default;
   opacity: 0.9;
+}
+
+.choice-stage.success-pulse .choice-button {
+  animation: choice-button-pop 520ms ease-out;
+}
+
+@keyframes choice-success {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.92);
+  }
+  25% {
+    opacity: 1;
+    transform: translateY(0) scale(1.08);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+}
+
+@keyframes choice-button-pop {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.03);
+    border-color: var(--accent);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .result-box {

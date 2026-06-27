@@ -905,6 +905,12 @@ function resetTwoChoice() {
   setText("resultRound", "1回目");
   setText("resultNextRate", "50.0%");
   setText("log", "左か右を選んでください。");
+  const effect = document.getElementById("choiceEffect");
+  if (effect) {
+    effect.textContent = "";
+    effect.classList.remove("show");
+  }
+  document.querySelector(".choice-stage")?.classList.remove("success-pulse");
   document.querySelectorAll("[data-choice]").forEach(button => {
     button.disabled = false;
     button.classList.remove("good", "bad");
@@ -920,6 +926,21 @@ function initializeTwoChoicePage() {
   twoChoiceState.active = true;
   setText("resultBest", `${best}連`);
   setText("log", "左か右を選んでください。");
+}
+
+function playTwoChoiceSuccessEffect() {
+  const effect = document.getElementById("choiceEffect");
+  const stage = document.querySelector(".choice-stage");
+  if (!effect || !stage) return;
+  effect.textContent = `正解！ ${twoChoiceState.chain}連`;
+  effect.classList.remove("show");
+  stage.classList.remove("success-pulse");
+  void effect.offsetWidth;
+  effect.classList.add("show");
+  stage.classList.add("success-pulse");
+  window.setTimeout(() => {
+    stage.classList.remove("success-pulse");
+  }, 560);
 }
 
 function finishTwoChoice(selected) {
@@ -959,6 +980,7 @@ function chooseTwoChoice(selected) {
   setText("resultRound", `${twoChoiceState.round}回目`);
   setText("resultNextRate", "50.0%");
   setText("log", twoChoiceState.history.slice(0, 8).join("\n"));
+  playTwoChoiceSuccessEffect();
 }
 
 function copyShareText() {
