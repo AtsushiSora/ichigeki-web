@@ -19,7 +19,7 @@
         <div class="field"><label for="trials">試行回数</label><input id="trials" type="number" value="10000" min="100" max="100000"></div>
         <div class="field speed-field"><label for="animationSpeed">回転速度 <span id="speedLabel">1倍</span></label><input id="animationSpeed" type="range" value="1" min="1" max="20"></div>
       </div>
-      <div class="tool-actions"><button class="button primary" data-action="continuation">試算する</button><button class="button" data-action="share">結果をコピー</button></div>
+      <div class="tool-actions"><button class="button primary" data-action="continuation">試算する</button><button class="button" data-action="share">結果をコピー</button><a class="button" href="ranking.html">ランキングを見る</a></div>
       <div class="result-grid">
         <div class="result-box"><div class="result-label">平均連チャン</div><div class="result-value good" id="resultAverage">--</div></div>
         <div class="result-box"><div class="result-label">目標到達率</div><div class="result-value" id="resultReach">--</div></div>
@@ -32,7 +32,7 @@
     <article class="article-card">
       <h2>継続率の見方</h2>
       <p>継続率81%でも必ず長く続くわけではありません。短く終わることもあれば、まれに大きく伸びることもあります。このシミュレーターはそのブレを確認するためのものです。</p>
-      <div class="toc"><a href="#condition">計算条件</a><a href="#compare">継続率の比較</a><a href="#target">目標連チャンの見方</a><a href="#faq">よくある質問</a></div>
+      <div class="toc"><a href="#condition">計算条件</a><a href="#compare">継続率の比較</a><a href="#target">目標連チャンの見方</a><a href="#sample">入力例</a><a href="#faq">よくある質問</a></div>
       <h2 id="condition">計算条件</h2>
       <p>1回の初当たりを1連目として、次回継続に成功するたびに連チャン数を加算します。指定した試行回数だけ繰り返して平均値、目標到達率、最高連チャンを出します。</p>
       <p>たとえば継続率81%、目標10連、試行回数10,000回で試すと、10連以上に届いた割合や、試行中にどれくらい大きな連チャンが出たかを確認できます。</p>
@@ -46,10 +46,20 @@
         <li><strong>目標到達率</strong>設定した連チャン数以上に届いた割合です。</li>
         <li><strong>最高連チャン</strong>試行中に出た最大連チャンです。試行回数が多いほど大きな値が出やすくなります。</li>
       </ul>
+      <h2 id="sample">入力例</h2>
+      <p>まずは初期値の継続率81%、目標10連、試行回数10,000回で試すと、ミドルタイプでよく見る高継続の感覚を確認できます。次に継続率を75%、90%、93%に変えると、平均連チャンや目標到達率の差が分かりやすくなります。</p>
+      <div class="mini-guide">
+        <div><strong>81%を試す</strong><span>王道ミドルの高継続帯として、まず比較基準にします。</span></div>
+        <div><strong>90%を試す</strong><span>平均と最高連チャンがどれくらい伸びるか確認します。</span></div>
+        <div><strong>目標を変える</strong><span>10連、20連、30連の達成しやすさを比べます。</span></div>
+      </div>
+      <h2>関連シミュレーターとの使い分け</h2>
+      <p>継続率だけを比較したい場合はこのページが向いています。初当たりや投資、総出玉までまとめて見たい場合は <a href="pachinko-319.html">319大当たりシミュレーター</a>、RUSHへ入るかどうかの偏りだけを確認したい場合は <a href="rush.html">RUSH突入率シミュレーター</a> を使ってください。</p>
       <h2 id="faq">よくある質問</h2>
       <div class="faq-item"><h3>継続率81%なら平均は何連ですか？</h3><p>単純な継続抽選だけで見ると、平均はおおよそ5連前後になります。ただし実機の仕様や出玉振り分けによって印象は変わります。</p></div>
       <div class="faq-item"><h3>試行回数は多い方がいいですか？</h3><p>傾向を見るなら多い方が安定します。軽く遊ぶだけなら1,000回程度、比較するなら10,000回以上が見やすいです。</p></div>
       <div class="faq-item"><h3>実機のSTや転落式も再現していますか？</h3><p>再現していません。このページは毎回同じ継続率で抽選するシンプルなモデルです。</p></div>
+      <div class="next-links"><a href="rush.html">RUSH突入率を試す</a><a href="pachinko-319.html">319大当たりを試す</a><a href="guide.html">確率の見方を読む</a></div>
       <p class="note">簡易乱数による試算です。実機の時短、転落、小当たり、振り分けなどは反映していません。</p>
     </article>
   </div><aside class="side-column"><section class="side-card"><h2>関連ツール</h2><ul class="side-list"><li><a href="rush.html">RUSH突入率</a></li><li><a href="pachinko-319.html">319大当たり</a></li><li><a href="hamari.html">ハマり確率</a></li></ul></section><div class="ad-box ad-box-sidebar" data-ad-slot="continuation-sidebar"><span class="ad-label">PR</span><span class="ad-title">サイドバー広告枠</span><span class="ad-note">PC表示向け</span></div></aside></div><div class="ad-box ad-box-footer" data-ad-slot="continuation-footer"><span class="ad-label">PR</span><span class="ad-title">ページ下部広告枠</span><span class="ad-note">記事末尾の広告枠</span></div></main>
