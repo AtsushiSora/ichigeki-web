@@ -26,6 +26,13 @@ function escapeHtml(value) {
   })[char]);
 }
 
+function formatSavedAt(value) {
+  if (!value) return "--";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "--";
+  return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+}
+
 function appendLog(id, line) {
   const element = document.getElementById(id);
   if (!element) return;
@@ -155,31 +162,38 @@ function renderRankingPage() {
     summary.textContent = `${total}件`;
   }
 
+  setText("juggleRecordCount", `${records.juggle.length}件`);
+  setText("pachinkoRecordCount", `${records.pachinko319.length}件`);
+  setText("hamariRecordCount", `${records.hamari.length}件`);
+  setText("juggleBestSummary", records.juggle.length ? `${sortRecords("juggle", records.juggle)[0].chain}連` : "--");
+  setText("pachinkoBestSummary", records.pachinko319.length ? `${yen.format(sortRecords("pachinko319", records.pachinko319)[0].totalPayout)}玉` : "--");
+  setText("hamariBestSummary", records.hamari.length ? `${yen.format(sortRecords("hamari", records.hamari)[0].spins)}回転` : "--");
+
   const podium = document.getElementById("jugglePodium");
   if (podium) podium.innerHTML = renderPodium(records.juggle);
 
   const juggleBody = document.getElementById("juggleRankingBody");
   if (juggleBody) {
     const rows = sortRecords("juggle", records.juggle).slice(0, 10).map((record, index) => (
-      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.chain}連</td><td>BIG ${record.big} / REG ${record.reg}</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}枚</td></tr>`
+      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.chain}連</td><td>BIG ${record.big} / REG ${record.reg}</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}枚</td><td>${formatSavedAt(record.savedAt)}</td></tr>`
     ));
-    juggleBody.innerHTML = rows.join("") || renderEmptyRows(5);
+    juggleBody.innerHTML = rows.join("") || renderEmptyRows(6);
   }
 
   const pachinkoBody = document.getElementById("pachinkoRankingBody");
   if (pachinkoBody) {
     const rows = sortRecords("pachinko319", records.pachinko319).slice(0, 10).map((record, index) => (
-      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.totalPayout)}玉</td><td>${record.chain}連</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}玉</td></tr>`
+      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.totalPayout)}玉</td><td>${record.chain}連</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}玉</td><td>${formatSavedAt(record.savedAt)}</td></tr>`
     ));
-    pachinkoBody.innerHTML = rows.join("") || renderEmptyRows(5);
+    pachinkoBody.innerHTML = rows.join("") || renderEmptyRows(6);
   }
 
   const hamariBody = document.getElementById("hamariRankingBody");
   if (hamariBody) {
     const rows = sortRecords("hamari", records.hamari).slice(0, 10).map((record, index) => (
-      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.spins)}回転</td><td>1/${yen.format(record.rate)}</td><td>${record.probability.toFixed(2)}%</td></tr>`
+      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.spins)}回転</td><td>1/${yen.format(record.rate)}</td><td>${record.probability.toFixed(2)}%</td><td>${formatSavedAt(record.savedAt)}</td></tr>`
     ));
-    hamariBody.innerHTML = rows.join("") || renderEmptyRows(5);
+    hamariBody.innerHTML = rows.join("") || renderEmptyRows(6);
   }
 }
 
