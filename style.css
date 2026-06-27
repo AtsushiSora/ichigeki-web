@@ -591,7 +591,7 @@ code,
 
 .ranking-table {
   width: 100%;
-  min-width: 620px;
+  min-width: 760px;
   border-collapse: collapse;
   overflow: hidden;
   border-radius: 10px;
@@ -608,6 +608,57 @@ code,
   background: var(--paper-soft);
   color: var(--muted);
   font-size: 13px;
+}
+
+.ranking-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+  margin: 12px 0 4px;
+}
+
+.ranking-controls label {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.ranking-controls select {
+  min-height: 38px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  padding: 0 36px 0 14px;
+  background: var(--paper-soft);
+  color: var(--text);
+  font: inherit;
+  font-weight: 700;
+}
+
+.record-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.mini-button {
+  min-height: 32px;
+  padding: 0 10px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.mini-button.danger {
+  border-color: #f0c7c0;
+  color: var(--red);
 }
 
 .empty-state {
@@ -929,6 +980,14 @@ code,
 
   .ranking-table th {
     white-space: nowrap;
+  }
+
+  .ranking-controls {
+    justify-content: stretch;
+  }
+
+  .ranking-controls select {
+    width: 100%;
   }
 
   .tool-link {

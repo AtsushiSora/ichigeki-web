@@ -33,6 +33,18 @@ function formatSavedAt(value) {
   return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
 }
 
+function createRecordId(type) {
+  if (window.crypto?.randomUUID) return window.crypto.randomUUID();
+  return `${type}-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+}
+
+function normalizeRecord(type, record, index) {
+  return {
+    ...record,
+    id: record.id || `${type}-${record.savedAt || "record"}-${index}`
+  };
+}
+
 function getRecordName() {
   const input = document.getElementById("recordName");
   const name = (input?.value || "").trim().replace(/\s+/g, " ").slice(0, 12);
@@ -84,9 +96,9 @@ function loadLocalRecords() {
   try {
     const parsed = JSON.parse(localStorage.getItem(rankingStorageKey) || "{}");
     return {
-      juggle: Array.isArray(parsed.juggle) ? parsed.juggle : [],
-      pachinko319: Array.isArray(parsed.pachinko319) ? parsed.pachinko319 : [],
-      hamari: Array.isArray(parsed.hamari) ? parsed.hamari : []
+      juggle: Array.isArray(parsed.juggle) ? parsed.juggle.map((record, index) => normalizeRecord("juggle", record, index)) : [],
+      pachinko319: Array.isArray(parsed.pachinko319) ? parsed.pachinko319.map((record, index) => normalizeRecord("pachinko319", record, index)) : [],
+      hamari: Array.isArray(parsed.hamari) ? parsed.hamari.map((record, index) => normalizeRecord("hamari", record, index)) : []
     };
   } catch {
     return { juggle: [], pachinko319: [], hamari: [] };
@@ -102,13 +114,34 @@ function storeLocalRecords(records) {
   }
 }
 
-function sortRecords(type, records) {
+function getRecordTime(record) {
+  const time = new Date(record.savedAt || 0).getTime();
+  return Number.isFinite(time) ? time : 0;
+}
+
+function sortRecords(type, records, mode = "score") {
   const sorters = {
-    juggle: (a, b) => b.chain - a.chain || b.diff - a.diff || b.games - a.games,
-    pachinko319: (a, b) => b.totalPayout - a.totalPayout || b.chain - a.chain || b.diff - a.diff,
-    hamari: (a, b) => b.spins - a.spins || b.probability - a.probability
+    juggle: {
+      score: (a, b) => b.chain - a.chain || b.diff - a.diff || b.games - a.games,
+      diff: (a, b) => b.diff - a.diff || b.chain - a.chain,
+      date: (a, b) => getRecordTime(b) - getRecordTime(a),
+      name: (a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ja")
+    },
+    pachinko319: {
+      score: (a, b) => b.totalPayout - a.totalPayout || b.chain - a.chain || b.diff - a.diff,
+      diff: (a, b) => b.diff - a.diff || b.totalPayout - a.totalPayout,
+      chain: (a, b) => b.chain - a.chain || b.totalPayout - a.totalPayout,
+      date: (a, b) => getRecordTime(b) - getRecordTime(a),
+      name: (a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ja")
+    },
+    hamari: {
+      score: (a, b) => b.spins - a.spins || b.probability - a.probability,
+      probability: (a, b) => b.probability - a.probability || b.spins - a.spins,
+      date: (a, b) => getRecordTime(b) - getRecordTime(a),
+      name: (a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ja")
+    }
   };
-  return [...records].sort(sorters[type] || (() => 0));
+  return [...records].sort(sorters[type]?.[mode] || sorters[type]?.score || (() => 0));
 }
 
 function saveLatestRecord(type) {
@@ -119,7 +152,7 @@ function saveLatestRecord(type) {
   }
   const records = loadLocalRecords();
   records[type] = sortRecords(type, [
-    { ...latest, name: getRecordName(), savedAt: new Date().toISOString() },
+    { ...latest, id: createRecordId(type), name: getRecordName(), savedAt: new Date().toISOString() },
     ...records[type]
   ]).slice(0, 30);
   const saved = storeLocalRecords(records);
@@ -129,6 +162,27 @@ function saveLatestRecord(type) {
   } else {
     appendLog("log", "保存できませんでした。ブラウザの保存設定を確認してください。");
   }
+}
+
+function updateRecordName(type, id) {
+  const records = loadLocalRecords();
+  const record = records[type]?.find(item => item.id === id);
+  if (!record) return;
+  const currentName = record.name || "あなた";
+  const nextName = window.prompt?.("新しい保存名を入力してください（最大12文字）", currentName);
+  if (nextName === null || nextName === undefined) return;
+  const cleanName = nextName.trim().replace(/\s+/g, " ").slice(0, 12) || "あなた";
+  records[type] = records[type].map(item => item.id === id ? { ...item, name: cleanName } : item);
+  if (storeLocalRecords(records)) renderRankingPage();
+}
+
+function deleteRecord(type, id) {
+  const records = loadLocalRecords();
+  const record = records[type]?.find(item => item.id === id);
+  if (!record) return;
+  if (window.confirm && !window.confirm("この記録を削除しますか？")) return;
+  records[type] = records[type].filter(item => item.id !== id);
+  if (storeLocalRecords(records)) renderRankingPage();
 }
 
 function clearLocalRecords() {
@@ -144,6 +198,15 @@ function clearLocalRecords() {
 function renderEmptyRows(columns, message = "まだ記録がありません", href = "", label = "") {
   const action = href && label ? `<a class="empty-state-link" href="${href}">${label}</a>` : "";
   return `<tr><td colspan="${columns}"><div class="empty-state"><strong>${message}</strong><span>シミュレーターで結果を出して「ランキングに保存」を押すと、ここに記録が表示されます。</span>${action}</div></td></tr>`;
+}
+
+function getRankingSort(type) {
+  const element = document.getElementById(`${type}Sort`);
+  return element?.value || "score";
+}
+
+function renderRecordActions(type, id) {
+  return `<div class="record-actions"><button class="mini-button" data-action="editRecord" data-type="${type}" data-id="${escapeHtml(id)}">名前変更</button><button class="mini-button danger" data-action="deleteRecord" data-type="${type}" data-id="${escapeHtml(id)}">削除</button></div>`;
 }
 
 function renderPodium(records) {
@@ -181,26 +244,26 @@ function renderRankingPage() {
 
   const juggleBody = document.getElementById("juggleRankingBody");
   if (juggleBody) {
-    const rows = sortRecords("juggle", records.juggle).slice(0, 10).map((record, index) => (
-      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.chain}連</td><td>BIG ${record.big} / REG ${record.reg}</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}枚</td><td>${formatSavedAt(record.savedAt)}</td></tr>`
+    const rows = sortRecords("juggle", records.juggle, getRankingSort("juggle")).slice(0, 10).map((record, index) => (
+      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.chain}連</td><td>BIG ${record.big} / REG ${record.reg}</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}枚</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("juggle", record.id)}</td></tr>`
     ));
-    juggleBody.innerHTML = rows.join("") || renderEmptyRows(6, "ジャグ連の記録がありません", "juggle.html", "ジャグ連を試す");
+    juggleBody.innerHTML = rows.join("") || renderEmptyRows(7, "ジャグ連の記録がありません", "juggle.html", "ジャグ連を試す");
   }
 
   const pachinkoBody = document.getElementById("pachinkoRankingBody");
   if (pachinkoBody) {
-    const rows = sortRecords("pachinko319", records.pachinko319).slice(0, 10).map((record, index) => (
-      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.totalPayout)}玉</td><td>${record.chain}連</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}玉</td><td>${formatSavedAt(record.savedAt)}</td></tr>`
+    const rows = sortRecords("pachinko319", records.pachinko319, getRankingSort("pachinko319")).slice(0, 10).map((record, index) => (
+      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.totalPayout)}玉</td><td>${record.chain}連</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}玉</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("pachinko319", record.id)}</td></tr>`
     ));
-    pachinkoBody.innerHTML = rows.join("") || renderEmptyRows(6, "319一撃の記録がありません", "pachinko-319.html", "319を試す");
+    pachinkoBody.innerHTML = rows.join("") || renderEmptyRows(7, "319一撃の記録がありません", "pachinko-319.html", "319を試す");
   }
 
   const hamariBody = document.getElementById("hamariRankingBody");
   if (hamariBody) {
-    const rows = sortRecords("hamari", records.hamari).slice(0, 10).map((record, index) => (
-      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.spins)}回転</td><td>1/${yen.format(record.rate)}</td><td>${record.probability.toFixed(2)}%</td><td>${formatSavedAt(record.savedAt)}</td></tr>`
+    const rows = sortRecords("hamari", records.hamari, getRankingSort("hamari")).slice(0, 10).map((record, index) => (
+      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.spins)}回転</td><td>1/${yen.format(record.rate)}</td><td>${record.probability.toFixed(2)}%</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("hamari", record.id)}</td></tr>`
     ));
-    hamariBody.innerHTML = rows.join("") || renderEmptyRows(6, "ハマり記録がありません", "hamari.html", "ハマり確率を試す");
+    hamariBody.innerHTML = rows.join("") || renderEmptyRows(7, "ハマり記録がありません", "hamari.html", "ハマり確率を試す");
   }
 }
 
@@ -628,10 +691,16 @@ document.addEventListener("click", event => {
   if (action === "savePachinko319") saveLatestRecord("pachinko319");
   if (action === "saveHamari") saveLatestRecord("hamari");
   if (action === "clearRanking") clearLocalRecords();
+  if (action === "editRecord") updateRecordName(target.dataset.type, target.dataset.id);
+  if (action === "deleteRecord") deleteRecord(target.dataset.type, target.dataset.id);
 });
 
 document.addEventListener("input", event => {
   if (event.target?.id === "animationSpeed") updateSpeedLabel();
+});
+
+document.addEventListener("change", event => {
+  if (event.target?.matches("[data-ranking-sort]")) renderRankingPage();
 });
 
 updateSpeedLabel();

@@ -58,12 +58,21 @@
           <div><h2>全国ジャグ連ランキング</h2><p>100G以内の連続当選数をメインに表示するランキングです。</p></div>
           <span class="status-pill">端末内保存</span>
         </div>
+        <div class="ranking-controls">
+          <label for="juggleSort">並び替え</label>
+          <select id="juggleSort" data-ranking-sort>
+            <option value="score">連数が多い順</option>
+            <option value="diff">差枚が多い順</option>
+            <option value="date">新しい順</option>
+            <option value="name">名前順</option>
+          </select>
+        </div>
         <div class="podium-grid" id="jugglePodium">
           <div class="podium-card second"><span class="rank-badge">2</span><strong>記録待ち</strong><b>--連</b><small>BIG -- / REG --</small></div>
           <div class="podium-card first"><span class="rank-badge">1</span><strong>記録待ち</strong><b>--連</b><small>BIG -- / REG --</small></div>
           <div class="podium-card third"><span class="rank-badge">3</span><strong>記録待ち</strong><b>--連</b><small>BIG -- / REG --</small></div>
         </div>
-        <div class="table-wrap"><table class="ranking-table"><thead><tr><th>順位</th><th>名前</th><th>連数</th><th>内訳</th><th>差枚</th><th>保存日時</th></tr></thead><tbody id="juggleRankingBody"><tr><td colspan="6">まだ記録がありません</td></tr></tbody></table></div>
+        <div class="table-wrap"><table class="ranking-table"><thead><tr><th>順位</th><th>名前</th><th>連数</th><th>内訳</th><th>差枚</th><th>保存日時</th><th>操作</th></tr></thead><tbody id="juggleRankingBody"><tr><td colspan="7">まだ記録がありません</td></tr></tbody></table></div>
       </section>
 
       <div class="ad-box ad-box-wide" data-ad-slot="ranking-inline"><span class="ad-label">PR</span><span class="ad-title">記事内広告枠</span><span class="ad-note">ランキング一覧の途中</span></div>
@@ -73,7 +82,17 @@
           <div><h2>319一撃ランキング</h2><p>総出玉、連チャン、差玉を見やすく並べるランキングです。</p></div>
           <span class="status-pill">端末内保存</span>
         </div>
-        <div class="table-wrap"><table class="ranking-table"><thead><tr><th>順位</th><th>名前</th><th>総出玉</th><th>連チャン</th><th>差玉</th><th>保存日時</th></tr></thead><tbody id="pachinkoRankingBody"><tr><td colspan="6">まだ記録がありません</td></tr></tbody></table></div>
+        <div class="ranking-controls">
+          <label for="pachinko319Sort">並び替え</label>
+          <select id="pachinko319Sort" data-ranking-sort>
+            <option value="score">総出玉が多い順</option>
+            <option value="diff">差玉が多い順</option>
+            <option value="chain">連チャンが多い順</option>
+            <option value="date">新しい順</option>
+            <option value="name">名前順</option>
+          </select>
+        </div>
+        <div class="table-wrap"><table class="ranking-table"><thead><tr><th>順位</th><th>名前</th><th>総出玉</th><th>連チャン</th><th>差玉</th><th>保存日時</th><th>操作</th></tr></thead><tbody id="pachinkoRankingBody"><tr><td colspan="7">まだ記録がありません</td></tr></tbody></table></div>
       </section>
 
       <section class="article-card" id="hamari-ranking">
@@ -81,7 +100,16 @@
           <div><h2>ハマり記録ランキング</h2><p>指定確率でどこまで当たらなかったかを記録する種目です。</p></div>
           <span class="status-pill">端末内保存</span>
         </div>
-        <div class="table-wrap"><table class="ranking-table"><thead><tr><th>順位</th><th>名前</th><th>回転数</th><th>条件</th><th>ハマり確率</th><th>保存日時</th></tr></thead><tbody id="hamariRankingBody"><tr><td colspan="6">まだ記録がありません</td></tr></tbody></table></div>
+        <div class="ranking-controls">
+          <label for="hamariSort">並び替え</label>
+          <select id="hamariSort" data-ranking-sort>
+            <option value="score">回転数が多い順</option>
+            <option value="probability">ハマり確率が高い順</option>
+            <option value="date">新しい順</option>
+            <option value="name">名前順</option>
+          </select>
+        </div>
+        <div class="table-wrap"><table class="ranking-table"><thead><tr><th>順位</th><th>名前</th><th>回転数</th><th>条件</th><th>ハマり確率</th><th>保存日時</th><th>操作</th></tr></thead><tbody id="hamariRankingBody"><tr><td colspan="7">まだ記録がありません</td></tr></tbody></table></div>
       </section>
 
       <section class="article-card">
@@ -91,6 +119,7 @@
           <li>別のスマホやPCには自動共有されません。</li>
           <li>実際の遊技結果、収支、景品、金銭的価値とは関係ありません。</li>
           <li>ニックネーム登録時は個人情報を入力しないでください。</li>
+          <li>保存した記録は、名前変更または個別削除ができます。</li>
           <li>不自然な記録や表示上の不具合がある場合は、調整・削除する場合があります。</li>
         </ul>
       </section>
