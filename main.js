@@ -807,6 +807,14 @@ async function runContinuation() {
 }
 
 let rushRunning = false;
+let twoChoiceState = {
+  active: false,
+  chain: 0,
+  best: 0,
+  round: 1,
+  correct: null,
+  history: []
+};
 
 function simulateRush() {
   const rushRate = clampNumber(document.getElementById("rushRate")?.value, 60) / 100;
@@ -883,6 +891,76 @@ async function runRush() {
   rushRunning = false;
 }
 
+function resetTwoChoice() {
+  twoChoiceState = {
+    active: true,
+    chain: 0,
+    best: Math.max(twoChoiceState.best || 0, clampNumber(localStorage.getItem("ichigekiTwoChoiceBest"), 0)),
+    round: 1,
+    correct: Math.random() < 0.5 ? "left" : "right",
+    history: []
+  };
+  setText("resultChain", "0連");
+  setText("resultBest", `${twoChoiceState.best}連`);
+  setText("resultRound", "1回目");
+  setText("resultNextRate", "50.0%");
+  setText("log", "左か右を選んでください。");
+  document.querySelectorAll("[data-choice]").forEach(button => {
+    button.disabled = false;
+    button.classList.remove("good", "bad");
+  });
+}
+
+function initializeTwoChoicePage() {
+  if (!document.getElementById("resultBest")) return;
+  if (!document.querySelector("[data-action='twoChoicePick']")) return;
+  const best = clampNumber(localStorage.getItem("ichigekiTwoChoiceBest"), 0);
+  twoChoiceState.best = best;
+  twoChoiceState.correct = Math.random() < 0.5 ? "left" : "right";
+  twoChoiceState.active = true;
+  setText("resultBest", `${best}連`);
+  setText("log", "左か右を選んでください。");
+}
+
+function finishTwoChoice(selected) {
+  const selectedLabel = selected === "left" ? "左" : "右";
+  const correctLabel = twoChoiceState.correct === "left" ? "左" : "右";
+  const finalChain = twoChoiceState.chain;
+  twoChoiceState.active = false;
+  twoChoiceState.best = Math.max(twoChoiceState.best, finalChain);
+  try {
+    localStorage.setItem("ichigekiTwoChoiceBest", String(twoChoiceState.best));
+  } catch {}
+  document.querySelectorAll("[data-choice]").forEach(button => {
+    button.disabled = true;
+    button.classList.toggle("good", button.dataset.choice === twoChoiceState.correct);
+    button.classList.toggle("bad", button.dataset.choice === selected);
+  });
+  setText("resultBest", `${twoChoiceState.best}連`);
+  setText("resultNextRate", "--");
+  setText("log", `終了: ${finalChain}連 / 選択 ${selectedLabel} / 正解 ${correctLabel}`);
+}
+
+function chooseTwoChoice(selected) {
+  if (!twoChoiceState.active) resetTwoChoice();
+  if (selected !== "left" && selected !== "right") return;
+  const selectedLabel = selected === "left" ? "左" : "右";
+  if (selected !== twoChoiceState.correct) {
+    finishTwoChoice(selected);
+    return;
+  }
+  twoChoiceState.chain++;
+  twoChoiceState.best = Math.max(twoChoiceState.best, twoChoiceState.chain);
+  twoChoiceState.history.unshift(`${twoChoiceState.round}回目 ${selectedLabel} 正解 / ${twoChoiceState.chain}連`);
+  twoChoiceState.round++;
+  twoChoiceState.correct = Math.random() < 0.5 ? "left" : "right";
+  setText("resultChain", `${twoChoiceState.chain}連`);
+  setText("resultBest", `${twoChoiceState.best}連`);
+  setText("resultRound", `${twoChoiceState.round}回目`);
+  setText("resultNextRate", "50.0%");
+  setText("log", twoChoiceState.history.slice(0, 8).join("\n"));
+}
+
 function copyShareText() {
   const text = document.getElementById("log")?.textContent.trim() || location.href;
   navigator.clipboard?.writeText(`${document.title}\n${text}\n${location.href}`).catch(() => null);
@@ -901,6 +979,8 @@ document.addEventListener("click", event => {
   if (action === "luckyTrigger") runLuckyTrigger();
   if (action === "kakenuke") runKakenuke();
   if (action === "slotAt") runSlotAt();
+  if (action === "twoChoiceStart") resetTwoChoice();
+  if (action === "twoChoicePick") chooseTwoChoice(target.dataset.choice);
   if (action === "share") copyShareText();
   if (action === "saveJuggle") saveLatestRecord("juggle");
   if (action === "savePachinko319") saveLatestRecord("pachinko319");
@@ -920,3 +1000,4 @@ document.addEventListener("change", event => {
 
 updateSpeedLabel();
 renderRankingPage();
+initializeTwoChoicePage();

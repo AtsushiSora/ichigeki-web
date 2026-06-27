@@ -401,6 +401,47 @@ p {
   margin-top: 16px;
 }
 
+.choice-stage {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 18px 0;
+}
+
+.choice-button {
+  min-height: 140px;
+  border: 2px solid var(--line-strong);
+  border-radius: 14px;
+  background: var(--paper-soft);
+  color: var(--text);
+  font: inherit;
+  font-size: clamp(28px, 6vw, 46px);
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+}
+
+.choice-button:hover {
+  border-color: var(--accent);
+}
+
+.choice-button.good {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+}
+
+.choice-button.bad {
+  border-color: #f0c7c0;
+  background: #fff1ef;
+  color: var(--red);
+}
+
+.choice-button:disabled {
+  cursor: default;
+  opacity: 0.9;
+}
+
 .result-box {
   background: var(--paper-soft);
   border: 1px solid var(--line);
@@ -966,6 +1007,14 @@ code,
   .result-value {
     font-size: 21px;
     overflow-wrap: anywhere;
+  }
+
+  .choice-stage {
+    gap: 10px;
+  }
+
+  .choice-button {
+    min-height: 110px;
   }
 
   .field input,

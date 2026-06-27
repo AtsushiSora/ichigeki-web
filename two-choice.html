@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="左か右の2択を選び、50%を何連続で当て続けられるかを試す二択チャレンジです。">
+  <title>二択チャレンジ | ICHIGEKI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">シミュレーター集</span></a><nav class="nav"><a href="index.html">トップ</a><a href="juggle.html">ジャグ連</a><a href="ranking.html">ランキング</a></nav></div></header>
+  <main class="page"><div class="layout"><div class="main-column">
+    <section class="hero"><div class="kicker">Two Choice</div><h1>二択チャレンジ</h1><p class="lead">左か右を選んで、50%の二択を何連続で当てられるか試すチャレンジです。外した時点で終了します。</p></section>
+
+    <section class="tool-card">
+      <h2>チャレンジ</h2>
+      <div class="choice-stage">
+        <button class="choice-button" data-action="twoChoicePick" data-choice="left">左</button>
+        <button class="choice-button" data-action="twoChoicePick" data-choice="right">右</button>
+      </div>
+      <div class="tool-actions">
+        <button class="button primary" data-action="twoChoiceStart">リスタート</button>
+        <button class="button" data-action="share">結果をコピー</button>
+      </div>
+      <div class="result-grid">
+        <div class="result-box"><div class="result-label">現在の連続正解</div><div class="result-value good" id="resultChain">0連</div></div>
+        <div class="result-box"><div class="result-label">最高記録</div><div class="result-value" id="resultBest">0連</div></div>
+        <div class="result-box"><div class="result-label">現在の挑戦</div><div class="result-value" id="resultRound">1回目</div></div>
+        <div class="result-box"><div class="result-label">次回成功率</div><div class="result-value" id="resultNextRate">50.0%</div></div>
+      </div>
+      <div class="log-box" id="log">左か右を選んでください。</div>
+    </section>
+
+    <div class="ad-box ad-box-wide" data-ad-slot="two-choice-inline"><span class="ad-label">PR</span><span class="ad-title">記事内広告枠</span></div>
+
+    <article class="article-card">
+      <h2>二択チャレンジの遊び方</h2>
+      <p>画面の「左」または「右」を押すと、内部でランダムに決まった正解と照合します。正解なら連続正解数が増え、次の二択へ進みます。不正解ならその時点で終了です。</p>
+      <h2>確率の目安</h2>
+      <div class="table-wrap"><table class="ranking-table"><thead><tr><th>連続正解</th><th>確率</th><th>見え方</th></tr></thead><tbody><tr><td>3連</td><td>12.5%</td><td>わりと起きる</td></tr><tr><td>5連</td><td>3.125%</td><td>かなり良い</td></tr><tr><td>10連</td><td>約0.098%</td><td>かなり珍しい</td></tr></tbody></table></div>
+      <p>二択は毎回独立抽選です。前回当たったから次が外れやすくなる、前回外れたから次が当たりやすくなる、という仕組みではありません。</p>
+      <div class="next-links"><a href="juggle.html">ジャグ連を試す</a><a href="rush.html">RUSH突入率を試す</a><a href="continuation.html">継続率を試す</a></div>
+      <p class="note">このツールは娯楽用です。実際の遊技結果、押し順、抽選方式、収支を保証するものではありません。</p>
+    </article>
+  </div><aside class="side-column"><section class="side-card"><h2>関連ツール</h2><ul class="side-list"><li><a href="juggle.html">ジャグ連</a></li><li><a href="rush.html">RUSH突入率</a></li><li><a href="continuation.html">継続率</a></li><li><a href="slot-at.html">スロットAT一撃</a></li></ul></section><div class="ad-box ad-box-sidebar" data-ad-slot="two-choice-sidebar"><span class="ad-label">PR</span><span class="ad-title">サイドバー広告枠</span></div></aside></div><div class="ad-box ad-box-footer" data-ad-slot="two-choice-footer"><span class="ad-label">PR</span><span class="ad-title">ページ下部広告枠</span></div></main>
+  <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a></div></div></footer>
+  <script src="main.js"></script>
+</body>
+</html>
