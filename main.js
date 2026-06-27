@@ -371,6 +371,7 @@ async function animateJuggleResult(result) {
 }
 
 let pachinkoRunning = false;
+let genericToolRunning = false;
 
 function simulatePachinko319() {
   const spinsPerUnit = clampNumber(document.getElementById("spinPerUnit")?.value, 17);
@@ -437,6 +438,216 @@ async function runPachinko319() {
   latestResults.pachinko319 = { spins, investment, totalPayout, chain, diff, enteredRush };
   setRunningButton("pachinko319", false);
   pachinkoRunning = false;
+}
+
+function simulateGenericPachinko() {
+  const hitRate = clampNumber(document.getElementById("hitRate")?.value, 199);
+  const spinsPerUnit = clampNumber(document.getElementById("spinPerUnit")?.value, 18);
+  const rushRate = clampNumber(document.getElementById("rushRate")?.value, 55) / 100;
+  const continueRate = clampNumber(document.getElementById("continueRate")?.value, 75) / 100;
+  const firstPayout = clampNumber(document.getElementById("firstPayout")?.value, 300);
+  const payout = clampNumber(document.getElementById("payout")?.value, 1000);
+  let spins = 0;
+  while (!randomHit(hitRate) && spins < 8000) spins++;
+  spins++;
+  const investment = Math.ceil(spins / spinsPerUnit) * 1000;
+  let totalPayout = firstPayout;
+  let chain = 1;
+  const enteredRush = Math.random() < rushRate;
+  if (enteredRush) {
+    while (Math.random() < continueRate && chain < 200) {
+      chain++;
+      totalPayout += payout;
+    }
+  }
+  const diff = totalPayout - Math.round(investment / 4);
+  return { hitRate, spins, investment, totalPayout, chain, diff, enteredRush, firstPayout, payout };
+}
+
+async function runGenericPachinko() {
+  if (genericToolRunning) return;
+  genericToolRunning = true;
+  setRunningButton("genericPachinko", true);
+  setText("resultSpins", "0回転");
+  setText("resultInvestment", "0円");
+  setText("resultPayout", "0玉");
+  setText("resultChain", "0連");
+  setText("resultDiff", "0玉");
+  setText("resultRush", "抽選中");
+  setText("log", "初当たり抽選中...");
+
+  const result = simulateGenericPachinko();
+  await animateCount("resultSpins", result.spins, "回転", Math.min(3000, Math.max(1000, result.spins * 6)));
+  setText("resultRush", result.enteredRush ? "突入" : "非突入");
+  setText("resultChain", "1連");
+  setText("resultPayout", `${yen.format(result.firstPayout)}玉`);
+  setText("log", `${result.spins}回転で大当たり`);
+  if (result.enteredRush) {
+    let currentPayout = result.firstPayout;
+    for (let currentChain = 2; currentChain <= result.chain; currentChain++) {
+      await sleep(speedAdjustedDuration(160));
+      currentPayout += result.payout;
+      setText("resultChain", `${currentChain}連`);
+      setText("resultPayout", `${yen.format(currentPayout)}玉`);
+      setText("log", `RUSH継続 ${currentChain}連 / ${yen.format(currentPayout)}玉`);
+    }
+  }
+  setText("resultSpins", `${yen.format(result.spins)}回転`);
+  setText("resultInvestment", `${yen.format(result.investment)}円`);
+  setText("resultPayout", `${yen.format(result.totalPayout)}玉`);
+  setText("resultChain", `${result.chain}連`);
+  setText("resultDiff", `${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
+  setText("resultRush", result.enteredRush ? "突入" : "非突入");
+  setText("log", `1/${result.hitRate} / ${result.spins}回転 / ${result.chain}連 / 差玉 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
+  setRunningButton("genericPachinko", false);
+  genericToolRunning = false;
+}
+
+function simulateLuckyTrigger() {
+  const hitRate = clampNumber(document.getElementById("hitRate")?.value, 199);
+  const spinsPerUnit = clampNumber(document.getElementById("spinPerUnit")?.value, 18);
+  const triggerRate = clampNumber(document.getElementById("triggerRate")?.value, 15) / 100;
+  const triggerContinueRate = clampNumber(document.getElementById("triggerContinueRate")?.value, 90) / 100;
+  const firstPayout = clampNumber(document.getElementById("firstPayout")?.value, 300);
+  const triggerPayout = clampNumber(document.getElementById("triggerPayout")?.value, 1500);
+  let spins = 0;
+  while (!randomHit(hitRate) && spins < 8000) spins++;
+  spins++;
+  const investment = Math.ceil(spins / spinsPerUnit) * 1000;
+  const enteredTrigger = Math.random() < triggerRate;
+  let chain = 1;
+  let totalPayout = firstPayout;
+  if (enteredTrigger) {
+    while (Math.random() < triggerContinueRate && chain < 300) {
+      chain++;
+      totalPayout += triggerPayout;
+    }
+  }
+  const diff = totalPayout - Math.round(investment / 4);
+  return { hitRate, spins, investment, enteredTrigger, chain, totalPayout, diff, firstPayout, triggerPayout };
+}
+
+async function runLuckyTrigger() {
+  if (genericToolRunning) return;
+  genericToolRunning = true;
+  setRunningButton("luckyTrigger", true);
+  setText("resultSpins", "0回転");
+  setText("resultInvestment", "0円");
+  setText("resultTrigger", "抽選中");
+  setText("resultChain", "0連");
+  setText("resultPayout", "0玉");
+  setText("resultDiff", "0玉");
+  setText("log", "初当たり抽選中...");
+  const result = simulateLuckyTrigger();
+  await animateCount("resultSpins", result.spins, "回転", Math.min(3000, Math.max(1000, result.spins * 6)));
+  setText("resultTrigger", result.enteredTrigger ? "LT突入" : "通常終了");
+  setText("resultPayout", `${yen.format(result.firstPayout)}玉`);
+  setText("resultChain", "1連");
+  if (result.enteredTrigger) {
+    let currentPayout = result.firstPayout;
+    for (let currentChain = 2; currentChain <= result.chain; currentChain++) {
+      await sleep(speedAdjustedDuration(130));
+      currentPayout += result.triggerPayout;
+      setText("resultChain", `${currentChain}連`);
+      setText("resultPayout", `${yen.format(currentPayout)}玉`);
+      setText("log", `LT継続 ${currentChain}連 / ${yen.format(currentPayout)}玉`);
+    }
+  }
+  setText("resultSpins", `${yen.format(result.spins)}回転`);
+  setText("resultInvestment", `${yen.format(result.investment)}円`);
+  setText("resultTrigger", result.enteredTrigger ? "LT突入" : "通常終了");
+  setText("resultChain", `${result.chain}連`);
+  setText("resultPayout", `${yen.format(result.totalPayout)}玉`);
+  setText("resultDiff", `${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
+  setText("log", `LT${result.enteredTrigger ? "突入" : "非突入"} / ${result.chain}連 / 差玉 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
+  setRunningButton("luckyTrigger", false);
+  genericToolRunning = false;
+}
+
+async function runKakenuke() {
+  if (genericToolRunning) return;
+  genericToolRunning = true;
+  setRunningButton("kakenuke", true);
+  const continueRate = clampNumber(document.getElementById("continueRate")?.value, 81) / 100;
+  const trials = clampNumber(document.getElementById("trials")?.value, 1000);
+  let kakenuke = 0;
+  let total = 0;
+  let best = 0;
+  setText("resultKakenuke", "0回");
+  setText("resultRate", "0.0%");
+  setText("resultAverage", "--");
+  setText("resultBest", "--");
+  setText("log", "RUSHを試行中...");
+  for (let i = 0; i < trials; i++) {
+    let chain = 1;
+    while (Math.random() < continueRate && chain < 300) chain++;
+    if (chain === 1) kakenuke++;
+    total += chain;
+    best = Math.max(best, chain);
+  }
+  await animateCount("resultKakenuke", kakenuke, "回", Math.min(2200, Math.max(900, trials / 8)));
+  const rate = kakenuke / trials * 100;
+  setText("resultKakenuke", `${yen.format(kakenuke)}回`);
+  setText("resultRate", `${rate.toFixed(2)}%`);
+  setText("resultAverage", `${(total / trials).toFixed(2)}連`);
+  setText("resultBest", `${best}連`);
+  setText("log", `${trials}回中 ${kakenuke}回駆け抜け / 駆け抜け率 ${rate.toFixed(2)}%`);
+  setRunningButton("kakenuke", false);
+  genericToolRunning = false;
+}
+
+function simulateSlotAt() {
+  const hitRate = clampNumber(document.getElementById("hitRate")?.value, 350);
+  const atRate = clampNumber(document.getElementById("atRate")?.value, 50) / 100;
+  const gamesPerUnit = clampNumber(document.getElementById("gamesPerUnit")?.value, 35);
+  const medalsPerUnit = 46;
+  const netIncrease = clampNumber(document.getElementById("netIncrease")?.value, 2.8);
+  const initialGames = clampNumber(document.getElementById("initialGames")?.value, 50);
+  const addRate = clampNumber(document.getElementById("addRate")?.value, 20) / 100;
+  let games = 0;
+  while (!randomHit(hitRate) && games < 20000) games++;
+  games++;
+  const investment = Math.ceil(games / gamesPerUnit) * 1000;
+  const enteredAt = Math.random() < atRate;
+  let atGames = 0;
+  let payout = 0;
+  if (enteredAt) {
+    let remain = initialGames;
+    while (remain > 0 && atGames < 5000) {
+      remain--;
+      atGames++;
+      payout += netIncrease;
+      if (Math.random() < addRate / 20) remain += 10;
+    }
+  }
+  const finalMedals = Math.round(payout);
+  const investedMedals = Math.round(investment / 1000 * medalsPerUnit);
+  const diff = finalMedals - investedMedals;
+  return { games, investment, enteredAt, atGames, finalMedals, diff };
+}
+
+async function runSlotAt() {
+  if (genericToolRunning) return;
+  genericToolRunning = true;
+  setRunningButton("slotAt", true);
+  setText("resultGames", "0G");
+  setText("resultInvestment", "0円");
+  setText("resultAt", "抽選中");
+  setText("resultAtGames", "0G");
+  setText("resultMedals", "0枚");
+  setText("resultDiff", "0枚");
+  setText("log", "初当たり抽選中...");
+  const result = simulateSlotAt();
+  await animateCount("resultGames", result.games, "G", Math.min(3000, Math.max(1000, result.games * 6)));
+  await sleep(speedAdjustedDuration(140));
+  setText("resultInvestment", `${yen.format(result.investment)}円`);
+  setText("resultAt", result.enteredAt ? "AT突入" : "通常終了");
+  setText("resultAtGames", `${yen.format(result.atGames)}G`);
+  setText("resultMedals", `${yen.format(result.finalMedals)}枚`);
+  setText("resultDiff", `${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}枚`);
+  setText("log", `${result.games}Gで初当たり / ${result.enteredAt ? "AT突入" : "AT非突入"} / 差枚 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}枚`);
+  setRunningButton("slotAt", false);
+  genericToolRunning = false;
 }
 
 let juggleRunning = false;
@@ -686,6 +897,10 @@ document.addEventListener("click", event => {
   if (action === "hamari") runHamari();
   if (action === "continuation") runContinuation();
   if (action === "rush") runRush();
+  if (action === "genericPachinko") runGenericPachinko();
+  if (action === "luckyTrigger") runLuckyTrigger();
+  if (action === "kakenuke") runKakenuke();
+  if (action === "slotAt") runSlotAt();
   if (action === "share") copyShareText();
   if (action === "saveJuggle") saveLatestRecord("juggle");
   if (action === "savePachinko319") saveLatestRecord("pachinko319");
