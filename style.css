@@ -258,6 +258,32 @@ p {
   font-size: 13px;
 }
 
+.quick-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.quick-card {
+  display: grid;
+  gap: 6px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper-soft);
+  color: var(--text);
+}
+
+.quick-card:hover {
+  border-color: var(--accent);
+  text-decoration: none;
+}
+
+.quick-card span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .tool-card {
   padding: 22px;
   margin-bottom: 20px;
@@ -480,6 +506,7 @@ p {
 
 .ranking-table {
   width: 100%;
+  min-width: 620px;
   border-collapse: collapse;
   overflow: hidden;
   border-radius: 10px;
@@ -684,10 +711,23 @@ p {
 
   .tool-grid,
   .control-grid,
+  .quick-grid,
   .rank-category-grid,
   .podium-grid,
   .ranking-hero {
     grid-template-columns: 1fr;
+  }
+
+  .podium-card.first {
+    order: 1;
+  }
+
+  .podium-card.second {
+    order: 2;
+  }
+
+  .podium-card.third {
+    order: 3;
   }
 
   .section-head {

@@ -1,4 +1,10 @@
 const yen = new Intl.NumberFormat("ja-JP");
+const rankingStorageKey = "ichigekiLocalRecordsV1";
+const latestResults = {
+  juggle: null,
+  pachinko319: null,
+  hamari: null
+};
 
 function clampNumber(value, fallback = 0) {
   const number = Number(value);
@@ -8,6 +14,16 @@ function clampNumber(value, fallback = 0) {
 function setText(id, value) {
   const element = document.getElementById(id);
   if (element) element.textContent = value;
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[char]);
 }
 
 function appendLog(id, line) {
@@ -49,6 +65,107 @@ function updateSpeedLabel() {
   const label = document.getElementById("speedLabel");
   if (!label) return;
   label.textContent = `${getSpeedValue()}倍`;
+}
+
+function loadLocalRecords() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(rankingStorageKey) || "{}");
+    return {
+      juggle: Array.isArray(parsed.juggle) ? parsed.juggle : [],
+      pachinko319: Array.isArray(parsed.pachinko319) ? parsed.pachinko319 : [],
+      hamari: Array.isArray(parsed.hamari) ? parsed.hamari : []
+    };
+  } catch {
+    return { juggle: [], pachinko319: [], hamari: [] };
+  }
+}
+
+function storeLocalRecords(records) {
+  try {
+    localStorage.setItem(rankingStorageKey, JSON.stringify(records));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function sortRecords(type, records) {
+  const sorters = {
+    juggle: (a, b) => b.chain - a.chain || b.diff - a.diff || b.games - a.games,
+    pachinko319: (a, b) => b.totalPayout - a.totalPayout || b.chain - a.chain || b.diff - a.diff,
+    hamari: (a, b) => b.spins - a.spins || b.probability - a.probability
+  };
+  return [...records].sort(sorters[type] || (() => 0));
+}
+
+function saveLatestRecord(type) {
+  const latest = latestResults[type];
+  if (!latest) {
+    appendLog("log", "先にスタートして結果を出してください。");
+    return;
+  }
+  const records = loadLocalRecords();
+  records[type] = sortRecords(type, [
+    { ...latest, name: "あなた", savedAt: new Date().toISOString() },
+    ...records[type]
+  ]).slice(0, 30);
+  const saved = storeLocalRecords(records);
+  appendLog("log", saved ? "ランキングに保存しました。" : "保存できませんでした。ブラウザの保存設定を確認してください。");
+}
+
+function renderEmptyRows(columns, message = "まだ記録がありません") {
+  return `<tr><td colspan="${columns}">${message}</td></tr>`;
+}
+
+function renderPodium(records) {
+  const top = sortRecords("juggle", records).slice(0, 3);
+  const cards = [
+    { rank: 2, className: "second", record: top[1] },
+    { rank: 1, className: "first", record: top[0] },
+    { rank: 3, className: "third", record: top[2] }
+  ];
+  return cards.map(({ rank, className, record }) => {
+    const name = record ? escapeHtml(record.name || "あなた") : "記録待ち";
+    const chain = record ? `${record.chain}連` : "--連";
+    const detail = record ? `BIG ${record.big} / REG ${record.reg}` : "BIG -- / REG --";
+    return `<div class="podium-card ${className}"><span class="rank-badge">${rank}</span><strong>${name}</strong><b>${chain}</b><small>${detail}</small></div>`;
+  }).join("");
+}
+
+function renderRankingPage() {
+  const records = loadLocalRecords();
+  const summary = document.getElementById("rankingCount");
+  if (summary) {
+    const total = records.juggle.length + records.pachinko319.length + records.hamari.length;
+    summary.textContent = `${total}件`;
+  }
+
+  const podium = document.getElementById("jugglePodium");
+  if (podium) podium.innerHTML = renderPodium(records.juggle);
+
+  const juggleBody = document.getElementById("juggleRankingBody");
+  if (juggleBody) {
+    const rows = sortRecords("juggle", records.juggle).slice(0, 10).map((record, index) => (
+      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.chain}連</td><td>BIG ${record.big} / REG ${record.reg}</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}枚</td></tr>`
+    ));
+    juggleBody.innerHTML = rows.join("") || renderEmptyRows(5);
+  }
+
+  const pachinkoBody = document.getElementById("pachinkoRankingBody");
+  if (pachinkoBody) {
+    const rows = sortRecords("pachinko319", records.pachinko319).slice(0, 10).map((record, index) => (
+      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.totalPayout)}玉</td><td>${record.chain}連</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}玉</td></tr>`
+    ));
+    pachinkoBody.innerHTML = rows.join("") || renderEmptyRows(5);
+  }
+
+  const hamariBody = document.getElementById("hamariRankingBody");
+  if (hamariBody) {
+    const rows = sortRecords("hamari", records.hamari).slice(0, 10).map((record, index) => (
+      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.spins)}回転</td><td>1/${yen.format(record.rate)}</td><td>${record.probability.toFixed(2)}%</td></tr>`
+    ));
+    hamariBody.innerHTML = rows.join("") || renderEmptyRows(5);
+  }
 }
 
 async function animateCount(id, endValue, suffix, duration = 1200) {
@@ -218,6 +335,7 @@ async function runPachinko319() {
   setText("resultDiff", `${diff > 0 ? "+" : ""}${yen.format(diff)}玉`);
   setText("resultRush", enteredRush ? "突入" : "非突入");
   setText("log", `${spins}回転で大当たり / ${chain}連 / 差玉 ${diff > 0 ? "+" : ""}${yen.format(diff)}玉`);
+  latestResults.pachinko319 = { spins, investment, totalPayout, chain, diff, enteredRush };
   setRunningButton("pachinko319", false);
   pachinkoRunning = false;
 }
@@ -298,6 +416,7 @@ async function runJuggle() {
   setText("resultDiff", `${diff > 0 ? "+" : ""}${yen.format(diff)}枚`);
   setText("resultBonus", `BIG ${big} / REG ${reg}`);
   setText("log", `${games}G / ${chain}連 / BIG ${big} REG ${reg} / 差枚 ${diff > 0 ? "+" : ""}${yen.format(diff)}枚`);
+  latestResults.juggle = { games, investment, finalMedals, diff, big, reg, chain };
   setRunningButton("juggle", false);
   juggleRunning = false;
 }
@@ -327,6 +446,7 @@ async function runHamari() {
   setText("resultRate", `1/${yen.format(rate)}`);
   setText("resultSpins", `${yen.format(spins)}回転`);
   setText("log", `1/${rate}で${spins}回転ハマる確率: ${probability.toFixed(2)}%`);
+  latestResults.hamari = { rate, spins, probability, hitByThen };
   setRunningButton("hamari", false);
   hamariRunning = false;
 }
@@ -468,6 +588,9 @@ document.addEventListener("click", event => {
   if (action === "continuation") runContinuation();
   if (action === "rush") runRush();
   if (action === "share") copyShareText();
+  if (action === "saveJuggle") saveLatestRecord("juggle");
+  if (action === "savePachinko319") saveLatestRecord("pachinko319");
+  if (action === "saveHamari") saveLatestRecord("hamari");
 });
 
 document.addEventListener("input", event => {
@@ -475,3 +598,4 @@ document.addEventListener("input", event => {
 });
 
 updateSpeedLabel();
+renderRankingPage();
