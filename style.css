@@ -445,6 +445,11 @@ p {
   margin-bottom: 20px;
 }
 
+.compact-card {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 .article-card ul,
 .article-card ol {
   padding-left: 1.4em;
@@ -480,6 +485,12 @@ p {
   border-radius: 10px;
   color: #5b4213;
   padding: 14px;
+}
+
+.small-note {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 0;
 }
 
 .ad-box {
@@ -577,6 +588,28 @@ p {
   background: var(--paper-soft);
   color: var(--muted);
   font-size: 13px;
+}
+
+.empty-state {
+  display: grid;
+  gap: 6px;
+  padding: 12px 4px;
+  white-space: normal;
+}
+
+.empty-state strong {
+  color: var(--text);
+}
+
+.empty-state span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.empty-state-link {
+  justify-self: start;
+  margin-top: 4px;
+  font-weight: 800;
 }
 
 .site-footer {
@@ -872,6 +905,9 @@ p {
   .ranking-table th,
   .ranking-table td {
     padding: 10px 8px;
+  }
+
+  .ranking-table th {
     white-space: nowrap;
   }
 

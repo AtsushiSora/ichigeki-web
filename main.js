@@ -135,8 +135,9 @@ function clearLocalRecords() {
   renderRankingPage();
 }
 
-function renderEmptyRows(columns, message = "まだ記録がありません") {
-  return `<tr><td colspan="${columns}">${message}</td></tr>`;
+function renderEmptyRows(columns, message = "まだ記録がありません", href = "", label = "") {
+  const action = href && label ? `<a class="empty-state-link" href="${href}">${label}</a>` : "";
+  return `<tr><td colspan="${columns}"><div class="empty-state"><strong>${message}</strong><span>シミュレーターで結果を出して「ランキングに保存」を押すと、ここに記録が表示されます。</span>${action}</div></td></tr>`;
 }
 
 function renderPodium(records) {
@@ -177,7 +178,7 @@ function renderRankingPage() {
     const rows = sortRecords("juggle", records.juggle).slice(0, 10).map((record, index) => (
       `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.chain}連</td><td>BIG ${record.big} / REG ${record.reg}</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}枚</td><td>${formatSavedAt(record.savedAt)}</td></tr>`
     ));
-    juggleBody.innerHTML = rows.join("") || renderEmptyRows(6);
+    juggleBody.innerHTML = rows.join("") || renderEmptyRows(6, "ジャグ連の記録がありません", "juggle.html", "ジャグ連を試す");
   }
 
   const pachinkoBody = document.getElementById("pachinkoRankingBody");
@@ -185,7 +186,7 @@ function renderRankingPage() {
     const rows = sortRecords("pachinko319", records.pachinko319).slice(0, 10).map((record, index) => (
       `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.totalPayout)}玉</td><td>${record.chain}連</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}玉</td><td>${formatSavedAt(record.savedAt)}</td></tr>`
     ));
-    pachinkoBody.innerHTML = rows.join("") || renderEmptyRows(6);
+    pachinkoBody.innerHTML = rows.join("") || renderEmptyRows(6, "319一撃の記録がありません", "pachinko-319.html", "319を試す");
   }
 
   const hamariBody = document.getElementById("hamariRankingBody");
@@ -193,7 +194,7 @@ function renderRankingPage() {
     const rows = sortRecords("hamari", records.hamari).slice(0, 10).map((record, index) => (
       `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.spins)}回転</td><td>1/${yen.format(record.rate)}</td><td>${record.probability.toFixed(2)}%</td><td>${formatSavedAt(record.savedAt)}</td></tr>`
     ));
-    hamariBody.innerHTML = rows.join("") || renderEmptyRows(6);
+    hamariBody.innerHTML = rows.join("") || renderEmptyRows(6, "ハマり記録がありません", "hamari.html", "ハマり確率を試す");
   }
 }
 

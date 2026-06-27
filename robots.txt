@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ichigekipachi.netlify.app/sitemap.xml
+Sitemap: https://atsushisora.github.io/ichigeki-web/sitemap.xml
