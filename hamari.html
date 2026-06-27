@@ -16,6 +16,7 @@
       <div class="control-grid">
         <div class="field"><label for="hitRate">大当たり確率</label><input id="hitRate" type="number" value="319" min="2" max="1000"></div>
         <div class="field"><label for="targetSpins">回転数</label><input id="targetSpins" type="number" value="1000" min="1" max="5000"></div>
+        <div class="field"><label for="recordName">ランキング保存名</label><input id="recordName" type="text" value="あなた" maxlength="12" autocomplete="nickname"></div>
         <div class="field speed-field"><label for="animationSpeed">回転速度 <span id="speedLabel">1倍</span></label><input id="animationSpeed" type="range" value="1" min="1" max="20"></div>
       </div>
       <div class="tool-actions"><button class="button primary" data-action="hamari">計算する</button><button class="button" data-action="saveHamari">ランキングに保存</button><button class="button" data-action="share">結果をコピー</button><a class="button" href="ranking.html#hamari-ranking">ランキングを見る</a></div>
@@ -43,7 +44,7 @@
       <p>このページは「なぜこんなに当たらないのか」を確率で確認するためのページです。実際の遊技判断や収支判断を目的にしたものではありません。</p>
       <h2>ランキング保存の使い方</h2>
       <p>ハマり記録ランキングでは、入力した回転数が大きい順に並びます。1/319で1000回転、1/199で700回転など、条件ごとに見比べることで「どれくらい珍しいか」を確認できます。</p>
-      <p>保存した記録は <a href="ranking.html#hamari-ranking">ハマり記録ランキング</a> に表示されます。ブラウザ内のローカル記録なので、端末やブラウザを変えると表示されません。</p>
+      <p>保存した記録は <a href="ranking.html#hamari-ranking">ハマり記録ランキング</a> に表示されます。保存名は12文字まで入力できます。ブラウザ内のローカル記録なので、端末やブラウザを変えると表示されません。</p>
       <h2 id="faq">よくある質問</h2>
       <div class="faq-item"><h3>確率分母まで回せば当たりますか？</h3><p>必ず当たるわけではありません。1/319で319回転回しても、当たる可能性と当たらない可能性の両方があります。</p></div>
       <div class="faq-item"><h3>前にハマった分、次は当たりやすくなりますか？</h3><p>この計算では毎回独立抽選として扱います。前回の結果によって次回の当たりやすさは変わらない前提です。</p></div>

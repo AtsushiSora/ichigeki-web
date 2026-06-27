@@ -24,6 +24,7 @@
             <div class="field"><label for="gamesPerUnit">1,000円あたりゲーム数</label><input id="gamesPerUnit" type="number" value="35" min="20" max="60"></div>
             <div class="field"><label>BIG確率</label><input value="1/255" disabled></div>
             <div class="field"><label>REG確率</label><input value="1/255" disabled></div>
+            <div class="field"><label for="recordName">ランキング保存名</label><input id="recordName" type="text" value="あなた" maxlength="12" autocomplete="nickname"></div>
             <div class="field speed-field"><label for="animationSpeed">回転速度 <span id="speedLabel">1倍</span></label><input id="animationSpeed" type="range" value="1" min="1" max="20"></div>
           </div>
           <div class="tool-actions">
@@ -68,7 +69,7 @@
           <div class="table-wrap"><table class="ranking-table"><thead><tr><th>見る項目</th><th>意味</th><th>このページでの扱い</th></tr></thead><tbody><tr><td>ジャグ連</td><td>100G以内に当たり続けた回数</td><td>メイン記録</td></tr><tr><td>BIG/REG</td><td>ボーナスの内訳</td><td>どちらも1/255で抽選</td></tr><tr><td>差枚</td><td>獲得枚数から使用分を引いた目安</td><td>簡易計算</td></tr></tbody></table></div>
           <h2>ランキング保存の使い方</h2>
           <p>結果が出た後に「ランキングに保存」を押すと、この端末のブラウザ内に記録が残ります。保存した結果は <a href="ranking.html#juggle-ranking">全国ジャグ連ランキング</a> に反映され、連数が多い順に並びます。</p>
-          <p>保存されるのはシミュレーション結果だけです。名前は「あなた」として保存され、外部サーバーへ送信されません。スマホとPCでは保存先が別になるため、同じランキングを共有したい場合は同じ端末で確認してください。</p>
+          <p>保存名は12文字まで入力できます。個人情報、本名、メールアドレスは入力しないでください。記録は外部サーバーへ送信されず、スマホとPCでは保存先が別になります。</p>
           <div class="mini-guide">
             <div><strong>1. スタート</strong><span>回転速度を選んで結果を出します。</span></div>
             <div><strong>2. 保存</strong><span>気に入った結果をランキングに保存します。</span></div>

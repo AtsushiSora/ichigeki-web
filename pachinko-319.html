@@ -19,6 +19,7 @@
         <div class="field"><label for="continueRate">継続率（%）</label><input id="continueRate" type="number" value="81" min="0" max="99"></div>
         <div class="field"><label for="firstPayout">初当たり出玉</label><input id="firstPayout" type="number" value="300" min="0" max="3000"></div>
         <div class="field"><label for="payout">RUSH中出玉</label><input id="payout" type="number" value="1500" min="0" max="3000"></div>
+        <div class="field"><label for="recordName">ランキング保存名</label><input id="recordName" type="text" value="あなた" maxlength="12" autocomplete="nickname"></div>
         <div class="field speed-field"><label for="animationSpeed">回転速度 <span id="speedLabel">1倍</span></label><input id="animationSpeed" type="range" value="1" min="1" max="20"></div>
       </div>
       <div class="tool-actions"><button class="button primary" data-action="pachinko319">スタート</button><button class="button" data-action="savePachinko319">ランキングに保存</button><button class="button" data-action="share">結果をコピー</button><a class="button" href="ranking.html#pachinko-ranking">ランキングを見る</a></div>
@@ -52,7 +53,7 @@
       </ul>
       <h2>ランキング保存の使い方</h2>
       <p>319一撃ランキングでは、総出玉を優先して並べます。同じ総出玉に近い記録では、連チャン数や差玉も比較しやすいように表示します。大きく伸びた結果だけを保存して、自分の最高記録を見返す用途に向いています。</p>
-      <p>このランキングは端末内保存です。実際の遊技結果ではなく、シミュレーター上の記録として扱ってください。保存後は <a href="ranking.html#pachinko-ranking">319一撃ランキング</a> から確認できます。</p>
+      <p>このランキングは端末内保存です。保存名は12文字まで入力できますが、個人情報、本名、メールアドレスは入力しないでください。実際の遊技結果ではなく、シミュレーター上の記録として扱ってください。保存後は <a href="ranking.html#pachinko-ranking">319一撃ランキング</a> から確認できます。</p>
       <h2 id="faq">よくある質問</h2>
       <div class="faq-item"><h3>1000回転以上ハマることはありますか？</h3><p>あります。1/319でも長く当たらないケースは確率上起こります。詳しくはハマり確率シミュレーターでも確認できます。</p></div>
       <div class="faq-item"><h3>RUSHに入ったのに伸びないことはありますか？</h3><p>あります。継続率81%でも、1回ごとの抽選に外れれば終了します。反対に、まれに大きく伸びることもあります。</p></div>

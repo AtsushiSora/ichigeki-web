@@ -373,6 +373,10 @@ p {
   font: inherit;
 }
 
+.field input[type="text"] {
+  font-weight: 700;
+}
+
 .field input[type="range"] {
   min-height: 44px;
   padding: 0;
@@ -485,6 +489,22 @@ p {
   border-radius: 10px;
   color: #5b4213;
   padding: 14px;
+}
+
+code,
+.code-box {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.code-box {
+  margin: 12px 0 16px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #111827;
+  color: #e5e7eb;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 .small-note {
@@ -919,6 +939,10 @@ p {
   .tool-icon {
     width: 44px;
     height: 44px;
+  }
+
+  .code-box {
+    font-size: 13px;
   }
 }
 

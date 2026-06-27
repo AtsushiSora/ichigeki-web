@@ -33,6 +33,12 @@ function formatSavedAt(value) {
   return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
 }
 
+function getRecordName() {
+  const input = document.getElementById("recordName");
+  const name = (input?.value || "").trim().replace(/\s+/g, " ").slice(0, 12);
+  return name || "あなた";
+}
+
 function appendLog(id, line) {
   const element = document.getElementById(id);
   if (!element) return;
@@ -113,7 +119,7 @@ function saveLatestRecord(type) {
   }
   const records = loadLocalRecords();
   records[type] = sortRecords(type, [
-    { ...latest, name: "あなた", savedAt: new Date().toISOString() },
+    { ...latest, name: getRecordName(), savedAt: new Date().toISOString() },
     ...records[type]
   ]).slice(0, 30);
   const saved = storeLocalRecords(records);
