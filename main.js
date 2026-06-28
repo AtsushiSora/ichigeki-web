@@ -687,6 +687,86 @@ async function runLtRush() {
   genericToolRunning = false;
 }
 
+function simulateCzChallenge() {
+  const czRate = clampNumber(document.getElementById("czRate")?.value, 180);
+  const gamesPerUnit = clampNumber(document.getElementById("gamesPerUnit")?.value, 35);
+  const successRate = clampNumber(document.getElementById("successRate")?.value, 40) / 100;
+  const atContinueRate = clampNumber(document.getElementById("atContinueRate")?.value, 70) / 100;
+  const firstMedals = clampNumber(document.getElementById("firstMedals")?.value, 250);
+  const continueMedals = clampNumber(document.getElementById("continueMedals")?.value, 120);
+  let games = 0;
+  while (!randomHit(czRate) && games < 8000) games++;
+  games++;
+  const investment = Math.ceil(games / gamesPerUnit) * 1000;
+  const usedMedals = Math.round(investment / 1000 * 46);
+  const success = Math.random() < successRate;
+  let chain = 0;
+  let totalMedals = 0;
+  const events = [`${games}GでCZ当選`];
+
+  if (success) {
+    chain = 1;
+    totalMedals = firstMedals;
+    events.push(`CZ成功 AT当選 +${yen.format(firstMedals)}枚`);
+    while (Math.random() < atContinueRate && chain < 200) {
+      chain++;
+      totalMedals += continueMedals;
+      events.push(`${chain}セット目 AT継続 +${yen.format(continueMedals)}枚`);
+    }
+    events.push("AT終了");
+  } else {
+    events.push("CZ失敗 通常へ");
+  }
+
+  const diff = totalMedals - usedMedals;
+  return { czRate, games, investment, usedMedals, success, chain, totalMedals, diff, firstMedals, continueMedals, events };
+}
+
+async function runCzChallenge() {
+  if (genericToolRunning) return;
+  genericToolRunning = true;
+  setRunningButton("czChallenge", true);
+  setText("resultGames", "0G");
+  setText("resultInvestment", "0円");
+  setText("resultCz", "抽選中");
+  setText("resultChain", "0セット");
+  setText("resultMedals", "0枚");
+  setText("resultDiff", "0枚");
+  setText("log", "CZ抽選中...");
+
+  const result = simulateCzChallenge();
+  await animateCount("resultGames", result.games, "G", Math.min(3000, Math.max(1000, result.games * 7)));
+  setText("resultInvestment", `${yen.format(result.investment)}円`);
+  setText("resultCz", result.success ? "成功" : "失敗");
+  setText("log", result.events[0]);
+
+  let currentMedals = 0;
+  let currentChain = 0;
+  for (const event of result.events.slice(1)) {
+    await sleep(speedAdjustedDuration(170));
+    const medalMatch = event.match(/\+([0-9,]+)枚/);
+    if (medalMatch) currentMedals += Number(medalMatch[1].replace(/,/g, ""));
+    const chainMatch = event.match(/^(\d+)セット目/);
+    if (chainMatch) currentChain = Number(chainMatch[1]);
+    if (event.includes("AT当選")) currentChain = 1;
+    if (event.includes("CZ成功")) setText("resultCz", "成功");
+    if (event.includes("CZ失敗")) setText("resultCz", "失敗");
+    setText("resultChain", `${currentChain}セット`);
+    setText("resultMedals", `${yen.format(currentMedals)}枚`);
+    setText("log", event);
+  }
+
+  setText("resultGames", `${yen.format(result.games)}G`);
+  setText("resultInvestment", `${yen.format(result.investment)}円`);
+  setText("resultCz", result.success ? "成功" : "失敗");
+  setText("resultChain", `${result.chain}セット`);
+  setText("resultMedals", `${yen.format(result.totalMedals)}枚`);
+  setText("resultDiff", `${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}枚`);
+  setText("log", `1/${result.czRate} / CZ${result.success ? "成功" : "失敗"} / ${result.chain}セット / 差枚 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}枚`);
+  setRunningButton("czChallenge", false);
+  genericToolRunning = false;
+}
+
 async function runKakenuke() {
   if (genericToolRunning) return;
   genericToolRunning = true;
@@ -1131,6 +1211,7 @@ document.addEventListener("click", event => {
   if (action === "genericPachinko") runGenericPachinko();
   if (action === "luckyTrigger") runLuckyTrigger();
   if (action === "ltRush") runLtRush();
+  if (action === "czChallenge") runCzChallenge();
   if (action === "kakenuke") runKakenuke();
   if (action === "twoChoiceStart") resetTwoChoice();
   if (action === "twoChoicePick") chooseTwoChoice(target.dataset.choice);
