@@ -17,14 +17,15 @@
     <section class="tool-card">
       <h2>シミュレーター</h2>
       <div class="control-grid">
-        <div class="field"><label for="spinPerUnit">1,000円あたり回転数</label><input id="spinPerUnit" type="number" value="17" min="5" max="35"></div>
-        <div class="field"><label for="rushRate">RUSH突入率（%）</label><input id="rushRate" type="number" value="60" min="0" max="100"></div>
-        <div class="field"><label for="continueRate">継続率（%）</label><input id="continueRate" type="number" value="81" min="0" max="99"></div>
-        <div class="field"><label for="firstPayout">初当たり出玉</label><input id="firstPayout" type="number" value="300" min="0" max="3000"></div>
-        <div class="field"><label for="payout">RUSH中出玉</label><input id="payout" type="number" value="1500" min="0" max="3000"></div>
+        <div class="field"><label for="spinPerUnit">1,000円あたり回転数（固定）</label><input id="spinPerUnit" type="number" value="17" disabled></div>
+        <div class="field"><label for="rushRate">RUSH突入率（固定）</label><input id="rushRate" type="number" value="60" disabled></div>
+        <div class="field"><label for="continueRate">継続率（固定）</label><input id="continueRate" type="number" value="81" disabled></div>
+        <div class="field"><label for="firstPayout">初当たり出玉（固定）</label><input id="firstPayout" type="number" value="300" disabled></div>
+        <div class="field"><label for="payout">RUSH中出玉（固定）</label><input id="payout" type="number" value="1500" disabled></div>
         <div class="field"><label for="recordName">ランキング保存名</label><input id="recordName" type="text" value="あなた" maxlength="12" autocomplete="nickname"></div>
         <div class="field speed-field"><label for="animationSpeed">回転速度 <span id="speedLabel">1倍</span></label><input id="animationSpeed" type="range" value="1" min="1" max="20"></div>
       </div>
+      <p class="small-note">ランキング対象のため、スペックは固定です。保存名と回転速度だけ変更できます。</p>
       <div class="tool-actions"><button class="button primary" data-action="pachinko319">スタート</button><button class="button" data-action="savePachinko319">ランキングに保存</button><button class="button" data-action="share">結果をコピー</button><a class="button" href="ranking.html#pachinko-ranking">ランキングを見る</a></div>
       <div class="result-grid">
         <div class="result-box"><div class="result-label">初当たり</div><div class="result-value" id="resultSpins">0回転</div></div>
@@ -39,16 +40,16 @@
     <div class="ad-box ad-box-wide" data-ad-slot="pachinko-inline"><span class="ad-label">PR</span><span class="ad-title">記事内広告枠</span><span class="ad-note">シミュレーター結果下</span></div>
     <article class="article-card">
       <h2>319シミュレーターの使い方</h2>
-      <p>回転率、RUSH突入率、継続率、出玉を入力してスタートします。初当たりまでの回転数は1/319の乱数で決まり、RUSHに入った場合は設定した継続率で連チャンを抽選します。</p>
+      <p>固定スペックでスタートします。初当たりまでの回転数は1/319の乱数で決まり、RUSHに入った場合は固定の継続率で連チャンを抽選します。</p>
       <div class="toc"><a href="#basic">基本条件</a><a href="#result">結果の見方</a><a href="#compare">比較ポイント</a><a href="#faq">よくある質問</a></div>
       <h2 id="basic">基本条件</h2>
-      <p>初期値は、王道ミドルタイプをイメージした数値です。1,000円あたり17回転、初当たり出玉300玉、RUSH中出玉1,500玉、RUSH突入率60%、継続率81%を基準にしています。</p>
-      <div class="table-wrap"><table class="ranking-table"><thead><tr><th>項目</th><th>初期値</th><th>意味</th></tr></thead><tbody><tr><td>大当たり確率</td><td>1/319</td><td>初当たりを引く確率</td></tr><tr><td>RUSH突入率</td><td>60%</td><td>初当たり後にRUSHへ入る割合</td></tr><tr><td>継続率</td><td>81%</td><td>RUSH中に次回へ続く割合</td></tr><tr><td>RUSH中出玉</td><td>1,500玉</td><td>RUSH中の大当たり1回分の目安</td></tr></tbody></table></div>
+      <p>ランキング条件を揃えるため、1,000円あたり17回転、初当たり出玉300玉、RUSH中出玉1,500玉、RUSH突入率60%、継続率81%に固定しています。</p>
+      <div class="table-wrap"><table class="ranking-table"><thead><tr><th>項目</th><th>固定値</th><th>意味</th></tr></thead><tbody><tr><td>大当たり確率</td><td>1/319</td><td>初当たりを引く確率</td></tr><tr><td>RUSH突入率</td><td>60%</td><td>初当たり後にRUSHへ入る割合</td></tr><tr><td>継続率</td><td>81%</td><td>RUSH中に次回へ続く割合</td></tr><tr><td>RUSH中出玉</td><td>1,500玉</td><td>RUSH中の大当たり1回分の目安</td></tr></tbody></table></div>
       <h2 id="result">結果の見方</h2>
       <p>初当たりは、当選までに回した回転数です。投資は、回転率から1,000円単位で計算します。総出玉は初当たり出玉とRUSH中の出玉を合計した値です。</p>
       <p>差玉は総出玉から投資分の使用玉を引いた簡易値です。実際の交換率、削り、持ち玉比率、貸玉手数料、電サポ中の増減などは反映していません。プラスやマイナスを厳密な収支ではなく、結果を比較するための目安として扱ってください。</p>
       <h2 id="compare">比較ポイント</h2>
-      <p>同じ1/319でも、回転率や突入率が変わると結果の印象は大きく変わります。回転率を上げると投資が軽くなり、突入率や継続率を上げると一撃の期待感が増えます。複数回スタートして、同じ条件でも結果が大きくブレることを確認できます。</p>
+      <p>ランキングでは条件を固定し、同じスペックでも結果が大きくブレることを確認できます。回転率や突入率を自由に変えて比較したい場合は、甘デジ、ライトミドル、継続率、RUSH突入率などの個別ツールを使ってください。</p>
       <ul class="info-list">
         <li><strong>回転率を見る</strong>初当たりまで同じ回転数でも、1,000円あたりの回転数が違うと投資額が変わります。</li>
         <li><strong>RUSH突入率を見る</strong>初当たりを引いてもRUSHに入らない場合があるため、総出玉の差が出やすい項目です。</li>

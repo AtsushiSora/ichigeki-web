@@ -13,15 +13,16 @@
 <body>
   <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">シミュレーター集</span></a><nav class="nav"><a href="index.html">トップ</a><a href="pachinko-319.html">319</a><a href="ranking.html">ランキング</a></nav></div></header>
   <main class="page"><div class="layout"><div class="main-column">
-    <section class="hero"><div class="kicker">Probability Tool</div><h1>ハマり確率シミュレーター</h1><p class="lead">大当たり確率と回転数を入力すると、その回転数まで当たらない確率を計算します。319で1000回転ハマる確率などを確認できます。</p></section>
+    <section class="hero"><div class="kicker">Probability Tool</div><h1>ハマり確率シミュレーター</h1><p class="lead">1/319で1000回転ハマる確率を固定条件で計算します。ランキングでは同じ条件のハマり記録として比較できます。</p></section>
     <section class="tool-card">
       <h2>シミュレーター</h2>
       <div class="control-grid">
-        <div class="field"><label for="hitRate">大当たり確率</label><input id="hitRate" type="number" value="319" min="2" max="1000"></div>
-        <div class="field"><label for="targetSpins">回転数</label><input id="targetSpins" type="number" value="1000" min="1" max="5000"></div>
+        <div class="field"><label for="hitRate">大当たり確率（固定）</label><input id="hitRate" type="number" value="319" disabled></div>
+        <div class="field"><label for="targetSpins">回転数（固定）</label><input id="targetSpins" type="number" value="1000" disabled></div>
         <div class="field"><label for="recordName">ランキング保存名</label><input id="recordName" type="text" value="あなた" maxlength="12" autocomplete="nickname"></div>
         <div class="field speed-field"><label for="animationSpeed">回転速度 <span id="speedLabel">1倍</span></label><input id="animationSpeed" type="range" value="1" min="1" max="20"></div>
       </div>
+      <p class="small-note">ランキング対象のため、スペックは固定です。保存名と回転速度だけ変更できます。</p>
       <div class="tool-actions"><button class="button primary" data-action="hamari">計算する</button><button class="button" data-action="saveHamari">ランキングに保存</button><button class="button" data-action="share">結果をコピー</button><a class="button" href="ranking.html#hamari-ranking">ランキングを見る</a></div>
       <div class="result-grid">
         <div class="result-box"><div class="result-label">ハマる確率</div><div class="result-value bad" id="resultHamari">--</div></div>
@@ -34,7 +35,7 @@
     <div class="ad-box ad-box-wide" data-ad-slot="hamari-inline"><span class="ad-label">PR</span><span class="ad-title">記事内広告枠</span><span class="ad-note">シミュレーター結果下</span></div>
     <article class="article-card">
       <h2>ハマり確率の考え方</h2>
-      <p>ハマり確率は「指定した回転数まで当たらない確率」です。1/319で1000回転ハマる確率、1/199で500回転ハマる確率などをすぐに確認できます。</p>
+      <p>ハマり確率は「指定した回転数まで当たらない確率」です。このランキング対象ページでは、条件を揃えるため1/319で1000回転ハマる確率に固定しています。</p>
       <div class="toc"><a href="#formula">計算式</a><a href="#sample">よく見る回転数</a><a href="#usecase">使い方の例</a><a href="#faq">よくある質問</a></div>
       <h2 id="formula">計算式</h2>
       <p>ハマる確率は「外れる確率」を回転数分だけ掛け合わせて計算します。大当たり確率が1/319の場合、1回転で外れる確率は318/319です。</p>
@@ -43,10 +44,10 @@
       <p>ハマりは感覚だけで見ると極端に珍しく感じることがあります。ただし確率で見ると、一定数は必ず発生します。319ミドルの場合、500回転、800回転、1000回転などを入力すると、どれくらい起こり得るのかを確認できます。</p>
       <div class="table-wrap"><table class="ranking-table"><thead><tr><th>入力例</th><th>確認できること</th><th>関連ツール</th></tr></thead><tbody><tr><td>1/319・500回転</td><td>ミドルで中程度ハマる確率</td><td><a href="pachinko-319.html">319シミュレーター</a></td></tr><tr><td>1/319・1000回転</td><td>深めのハマりがどれくらい起こるか</td><td><a href="pachinko-319.html">319シミュレーター</a></td></tr><tr><td>1/199・500回転</td><td>ライトミドルで長く当たらない確率</td><td><a href="guide.html">確率の見方</a></td></tr></tbody></table></div>
       <h2 id="usecase">使い方の例</h2>
-      <p>気になる確率分母と回転数を入力して、計算するを押します。結果には「ハマる確率」と「当たる確率」が表示されます。例えばハマる確率が5%前後なら、20回に1回程度は起こり得る目安として見ることができます。</p>
+      <p>計算するを押すと、1/319で1000回転ハマる確率と、その回転数までに当たる確率が表示されます。例えばハマる確率が5%前後なら、20回に1回程度は起こり得る目安として見ることができます。</p>
       <p>このページは「なぜこんなに当たらないのか」を確率で確認するためのページです。実際の遊技判断や収支判断を目的にしたものではありません。</p>
       <h2>ランキング保存の使い方</h2>
-      <p>ハマり記録ランキングでは、入力した回転数が大きい順に並びます。1/319で1000回転、1/199で700回転など、条件ごとに見比べることで「どれくらい珍しいか」を確認できます。</p>
+      <p>ハマり記録ランキングでは、1/319で1000回転という同じ条件の記録を保存できます。条件を固定することで、ランキング上の比較が分かりやすくなります。</p>
       <p>保存した記録は <a href="ranking.html#hamari-ranking">ハマり記録ランキング</a> に表示されます。保存名は12文字まで入力できます。ブラウザ内のローカル記録なので、端末やブラウザを変えると表示されません。</p>
       <h2 id="faq">よくある質問</h2>
       <div class="faq-item"><h3>確率分母まで回せば当たりますか？</h3><p>必ず当たるわけではありません。1/319で319回転回しても、当たる可能性と当たらない可能性の両方があります。</p></div>

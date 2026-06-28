@@ -392,11 +392,11 @@ let pachinkoRunning = false;
 let genericToolRunning = false;
 
 function simulatePachinko319() {
-  const spinsPerUnit = clampNumber(document.getElementById("spinPerUnit")?.value, 17);
-  const rushRate = clampNumber(document.getElementById("rushRate")?.value, 60) / 100;
-  const continueRate = clampNumber(document.getElementById("continueRate")?.value, 81) / 100;
-  const payout = clampNumber(document.getElementById("payout")?.value, 1500);
-  const firstPayout = clampNumber(document.getElementById("firstPayout")?.value, 300);
+  const spinsPerUnit = 17;
+  const rushRate = 0.6;
+  const continueRate = 0.81;
+  const payout = 1500;
+  const firstPayout = 300;
   let spins = 0;
   while (!randomHit(319) && spins < 5000) spins++;
   spins++;
@@ -620,7 +620,7 @@ function simulateJuggle() {
   const bigRate = 255;
   const regRate = 255;
   const medalsPerUnit = 46;
-  const gamesPerUnit = clampNumber(document.getElementById("gamesPerUnit")?.value, 35);
+  const gamesPerUnit = 35;
   const costPerGame = medalsPerUnit / gamesPerUnit;
   let games = 0;
   let investment = 0;
@@ -701,8 +701,8 @@ async function runHamari() {
   if (hamariRunning) return;
   hamariRunning = true;
   setRunningButton("hamari", true);
-  const rate = clampNumber(document.getElementById("hitRate")?.value, 319);
-  const spins = clampNumber(document.getElementById("targetSpins")?.value, 1000);
+  const rate = 319;
+  const spins = 1000;
   const probability = Math.pow((rate - 1) / rate, spins) * 100;
   const hitByThen = 100 - probability;
   setText("resultHamari", "--");

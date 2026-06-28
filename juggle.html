@@ -24,12 +24,13 @@
         <section class="tool-card">
           <h2>シミュレーター</h2>
           <div class="control-grid">
-            <div class="field"><label for="gamesPerUnit">1,000円あたりゲーム数</label><input id="gamesPerUnit" type="number" value="35" min="20" max="60"></div>
-            <div class="field"><label>BIG確率</label><input value="1/255" disabled></div>
-            <div class="field"><label>REG確率</label><input value="1/255" disabled></div>
+            <div class="field"><label for="gamesPerUnit">1,000円あたりゲーム数（固定）</label><input id="gamesPerUnit" type="number" value="35" disabled></div>
+            <div class="field"><label>BIG確率（固定）</label><input value="1/255" disabled></div>
+            <div class="field"><label>REG確率（固定）</label><input value="1/255" disabled></div>
             <div class="field"><label for="recordName">ランキング保存名</label><input id="recordName" type="text" value="あなた" maxlength="12" autocomplete="nickname"></div>
             <div class="field speed-field"><label for="animationSpeed">回転速度 <span id="speedLabel">1倍</span></label><input id="animationSpeed" type="range" value="1" min="1" max="20"></div>
           </div>
+          <p class="small-note">ランキング対象のため、スペックは固定です。保存名と回転速度だけ変更できます。</p>
           <div class="tool-actions">
             <button class="button primary" data-action="juggle">スタート</button>
             <button class="button" data-action="saveJuggle">ランキングに保存</button>
@@ -68,13 +69,13 @@
           <p>投資は、持ちメダルが足りなくなった場合に1,000円ずつ追加した想定で計算します。持ちメダルはBIGとREGの獲得枚数からゲーム消化分を差し引いた簡易値です。差枚は、最終的な持ちメダルから投資分の貸しメダルを引いた目安です。</p>
           <h2 id="compare">設定と回転数の考え方</h2>
           <p>実際のジャグラー系機種では、BIG確率、REG確率、合算確率、小役、ブドウ確率など複数の要素を見ます。このページでは、ジャグ連の起こり方を分かりやすくするため、BIGとREGをどちらも1/255に固定しています。</p>
-          <p>1,000円あたりのゲーム数を変えると、同じ当たり方でも投資や差枚の見え方が変わります。よく回る想定にすると投資は軽くなり、回らない想定にすると初当たりまでの負担が大きくなります。</p>
+          <p>ランキングの条件を揃えるため、1,000円あたり35G、貸しメダル1,000円46枚に固定しています。同じ条件でジャグ連数、総ゲーム数、差枚を比較できます。</p>
           <div class="table-wrap"><table class="ranking-table"><thead><tr><th>見る項目</th><th>意味</th><th>このページでの扱い</th></tr></thead><tbody><tr><td>ジャグ連</td><td>100G以内に当たり続けた回数</td><td>メイン記録</td></tr><tr><td>BIG/REG</td><td>ボーナスの内訳</td><td>どちらも1/255で抽選</td></tr><tr><td>差枚</td><td>獲得枚数から使用分を引いた目安</td><td>簡易計算</td></tr></tbody></table></div>
           <h2>ランキング保存の使い方</h2>
           <p>結果が出た後に「ランキングに保存」を押すと、この端末のブラウザ内に記録が残ります。保存した結果は <a href="ranking.html#juggle-ranking">全国ジャグ連ランキング</a> に反映され、連数が多い順に並びます。</p>
           <p>保存名は12文字まで入力できます。個人情報、本名、メールアドレスは入力しないでください。記録は外部サーバーへ送信されず、スマホとPCでは保存先が別になります。</p>
           <div class="mini-guide">
-            <div><strong>1. スタート</strong><span>回転速度を選んで結果を出します。</span></div>
+            <div><strong>1. スタート</strong><span>固定スペックで結果を出します。</span></div>
             <div><strong>2. 保存</strong><span>気に入った結果をランキングに保存します。</span></div>
             <div><strong>3. 確認</strong><span>ランキングページで順位と内訳を確認します。</span></div>
           </div>
