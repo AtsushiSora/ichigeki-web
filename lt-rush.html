@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1f7a55">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <meta name="description" content="初当たりから下位RUSH、上位RUSH昇格、LT到達までの流れを試せるパチンコ向けシミュレーターです。">
+  <title>LT上位RUSH到達シミュレーター | ICHIGEKI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">シミュレーター集</span></a><nav class="nav"><a href="index.html">トップ</a><a href="pachinko-319.html">319</a><a href="lucky-trigger.html">LT風</a><a href="ranking.html">ランキング</a></nav></div></header>
+  <main class="page"><div class="layout"><div class="main-column">
+    <section class="hero"><div class="kicker">LT Rush Route</div><h1>LT上位RUSH到達シミュレーター</h1><p class="lead">初当たり後に下位RUSHへ入り、そこから上位RUSHへ昇格できるかを試すシミュレーターです。LT機で重要な「入口の重さ」と「上位到達後の伸び」を1回の流れで確認できます。</p></section>
+    <section class="tool-card"><h2>シミュレーター</h2><div class="control-grid"><div class="field"><label for="hitRate">大当たり確率</label><input id="hitRate" type="number" value="319" min="20" max="499"></div><div class="field"><label for="spinPerUnit">1,000円あたり回転数</label><input id="spinPerUnit" type="number" value="17" min="5" max="40"></div><div class="field"><label for="lowerRushRate">下位RUSH突入率（%）</label><input id="lowerRushRate" type="number" value="55" min="0" max="100"></div><div class="field"><label for="lowerContinueRate">下位RUSH継続率（%）</label><input id="lowerContinueRate" type="number" value="75" min="0" max="99"></div><div class="field"><label for="upgradeRate">上位RUSH昇格率（%）</label><input id="upgradeRate" type="number" value="25" min="0" max="100"></div><div class="field"><label for="upperContinueRate">上位RUSH継続率（%）</label><input id="upperContinueRate" type="number" value="90" min="0" max="99"></div><div class="field"><label for="firstPayout">初当たり出玉</label><input id="firstPayout" type="number" value="300" min="0" max="5000"></div><div class="field"><label for="lowerPayout">下位RUSH中出玉</label><input id="lowerPayout" type="number" value="1500" min="0" max="5000"></div><div class="field"><label for="upperPayout">上位RUSH中出玉</label><input id="upperPayout" type="number" value="3000" min="0" max="8000"></div><div class="field speed-field"><label for="animationSpeed">回転速度 <span id="speedLabel">1倍</span></label><input id="animationSpeed" type="range" value="1" min="1" max="20"></div></div><div class="tool-actions"><button class="button primary" data-action="ltRush">スタート</button><button class="button" data-action="share">結果をコピー</button><a class="button" href="lucky-trigger.html">LT風と比較</a></div><div class="result-grid"><div class="result-box"><div class="result-label">初当たり</div><div class="result-value" id="resultSpins">0回転</div></div><div class="result-box"><div class="result-label">投資</div><div class="result-value" id="resultInvestment">0円</div></div><div class="result-box"><div class="result-label">到達ルート</div><div class="result-value" id="resultRoute">--</div></div><div class="result-box"><div class="result-label">連チャン</div><div class="result-value" id="resultChain">0連</div></div><div class="result-box"><div class="result-label">総出玉</div><div class="result-value good" id="resultPayout">0玉</div></div><div class="result-box"><div class="result-label">差玉</div><div class="result-value" id="resultDiff">0玉</div></div></div><div class="log-box" id="log">スタートすると結果がここに表示されます。</div></section>
+    <div class="ad-box ad-box-wide" data-ad-slot="lt-rush-inline"><span class="ad-label">PR</span><span class="ad-title">記事内広告枠</span></div>
+    <article class="article-card">
+      <h2>LT上位RUSH到達の見方</h2>
+      <p>最近のLT機は、初当たりからそのまま上位に入るだけでなく、下位RUSHを経由して上位RUSHを目指すタイプもあります。このページでは、初当たり、下位RUSH突入、上位昇格、上位継続を分けて試せます。</p>
+      <div class="toc"><a href="#lt-route-condition">計算条件</a><a href="#lt-route-result">結果の見方</a><a href="#lt-route-point">調整ポイント</a><a href="#lt-route-faq">よくある質問</a></div>
+      <h2 id="lt-route-condition">計算条件</h2>
+      <p>初期値は大当たり確率1/319、1,000円あたり17回転、下位RUSH突入率55%、下位RUSH継続率75%、上位RUSH昇格率25%、上位RUSH継続率90%です。上位RUSH中の出玉は大きめにして、到達時の伸びを見やすくしています。</p>
+      <div class="table-wrap"><table class="ranking-table"><thead><tr><th>段階</th><th>初期値</th><th>意味</th></tr></thead><tbody><tr><td>初当たり</td><td>1/319</td><td>通常時に大当たりを引くまでの重さ</td></tr><tr><td>下位RUSH突入</td><td>55%</td><td>初当たり後にRUSHへ入る割合</td></tr><tr><td>上位RUSH昇格</td><td>25%</td><td>下位RUSH継続時に上位へ昇格する割合</td></tr><tr><td>上位RUSH継続</td><td>90%</td><td>上位到達後に連チャンする割合</td></tr></tbody></table></div>
+      <h2 id="lt-route-result">結果の見方</h2>
+      <p>到達ルートには、通常終了、下位RUSH終了、上位RUSH到達のいずれかを表示します。差玉は投資額を4円貸しの使用玉に換算し、総出玉から差し引いた簡易値です。</p>
+      <h2 id="lt-route-point">調整ポイント</h2>
+      <ul class="info-list"><li><strong>入口を重くする</strong>下位RUSH突入率を下げると、初当たり後に終わる結果が増えます。</li><li><strong>上位を遠くする</strong>昇格率を下げると、下位RUSHで終わりやすくなります。</li><li><strong>一撃感を強くする</strong>上位継続率や上位出玉を上げると、上位到達時の出玉が伸びやすくなります。</li></ul>
+      <h2 id="lt-route-faq">よくある質問</h2>
+      <div class="faq-item"><h3>実在機種の完全再現ですか？</h3><p>完全再現ではありません。LT機によくある段階抽選を分解した汎用シミュレーターです。</p></div>
+      <div class="faq-item"><h3>昇格率はどのタイミングで抽選しますか？</h3><p>このページでは、下位RUSHが継続したタイミングで上位昇格を抽選します。実機の仕組みとは異なる場合があります。</p></div>
+      <div class="next-links"><a href="lucky-trigger.html">LT風を試す</a><a href="rush.html">RUSH突入率を試す</a><a href="kakenuke.html">駆け抜けを試す</a></div>
+      <p class="note">このツールは娯楽用の簡易シミュレーターです。実際の遊技結果や収支を保証しません。</p>
+    </article>
+  </div><aside class="side-column"><section class="side-card"><h2>関連ツール</h2><ul class="side-list"><li><a href="lucky-trigger.html">LT風シミュレーター</a></li><li><a href="pachinko-319.html">319大当たり</a></li><li><a href="rush.html">RUSH突入率</a></li><li><a href="continuation.html">継続率</a></li></ul></section><div class="ad-box ad-box-sidebar" data-ad-slot="lt-rush-sidebar"><span class="ad-label">PR</span><span class="ad-title">サイドバー広告枠</span></div></aside></div><div class="ad-box ad-box-footer" data-ad-slot="lt-rush-footer"><span class="ad-label">PR</span><span class="ad-title">ページ下部広告枠</span></div></main>
+  <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a></div></div></footer>
+  <script src="main.js"></script>
+</body>
+</html>

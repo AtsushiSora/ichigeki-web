@@ -582,6 +582,111 @@ async function runLuckyTrigger() {
   genericToolRunning = false;
 }
 
+function simulateLtRush() {
+  const hitRate = clampNumber(document.getElementById("hitRate")?.value, 319);
+  const spinsPerUnit = clampNumber(document.getElementById("spinPerUnit")?.value, 17);
+  const lowerRushRate = clampNumber(document.getElementById("lowerRushRate")?.value, 55) / 100;
+  const lowerContinueRate = clampNumber(document.getElementById("lowerContinueRate")?.value, 75) / 100;
+  const upgradeRate = clampNumber(document.getElementById("upgradeRate")?.value, 25) / 100;
+  const upperContinueRate = clampNumber(document.getElementById("upperContinueRate")?.value, 90) / 100;
+  const firstPayout = clampNumber(document.getElementById("firstPayout")?.value, 300);
+  const lowerPayout = clampNumber(document.getElementById("lowerPayout")?.value, 1500);
+  const upperPayout = clampNumber(document.getElementById("upperPayout")?.value, 3000);
+  let spins = 0;
+  while (!randomHit(hitRate) && spins < 12000) spins++;
+  spins++;
+  const investment = Math.ceil(spins / spinsPerUnit) * 1000;
+  const usedBalls = Math.round(investment / 4);
+  const enteredLower = Math.random() < lowerRushRate;
+  let enteredUpper = false;
+  let chain = 1;
+  let totalPayout = firstPayout;
+  const events = [`${spins}回転で初当たり +${yen.format(firstPayout)}玉`];
+
+  if (!enteredLower) {
+    const diff = totalPayout - usedBalls;
+    return { hitRate, spins, investment, usedBalls, enteredLower, enteredUpper, chain, totalPayout, diff, firstPayout, lowerPayout, upperPayout, events, status: "通常終了" };
+  }
+
+  events.push("下位RUSH突入");
+  while (chain < 300) {
+    if (Math.random() >= lowerContinueRate) {
+      events.push("下位RUSH終了");
+      break;
+    }
+    chain++;
+    if (!enteredUpper && Math.random() < upgradeRate) {
+      enteredUpper = true;
+      totalPayout += upperPayout;
+      events.push(`${chain}連目 上位RUSH昇格 +${yen.format(upperPayout)}玉`);
+      break;
+    }
+    totalPayout += lowerPayout;
+    events.push(`${chain}連目 下位RUSH継続 +${yen.format(lowerPayout)}玉`);
+  }
+
+  if (enteredUpper) {
+    while (chain < 300) {
+      if (Math.random() >= upperContinueRate) {
+        events.push("上位RUSH終了");
+        break;
+      }
+      chain++;
+      totalPayout += upperPayout;
+      events.push(`${chain}連目 上位RUSH継続 +${yen.format(upperPayout)}玉`);
+    }
+  }
+
+  const diff = totalPayout - usedBalls;
+  const status = enteredUpper ? "上位RUSH到達" : "下位RUSH終了";
+  return { hitRate, spins, investment, usedBalls, enteredLower, enteredUpper, chain, totalPayout, diff, firstPayout, lowerPayout, upperPayout, events, status };
+}
+
+async function runLtRush() {
+  if (genericToolRunning) return;
+  genericToolRunning = true;
+  setRunningButton("ltRush", true);
+  setText("resultSpins", "0回転");
+  setText("resultInvestment", "0円");
+  setText("resultRoute", "抽選中");
+  setText("resultChain", "0連");
+  setText("resultPayout", "0玉");
+  setText("resultDiff", "0玉");
+  setText("log", "初当たり抽選中...");
+
+  const result = simulateLtRush();
+  await animateCount("resultSpins", result.spins, "回転", Math.min(3200, Math.max(1000, result.spins * 6)));
+  setText("resultInvestment", `${yen.format(result.investment)}円`);
+  setText("resultRoute", result.enteredLower ? "下位RUSH" : "通常終了");
+  setText("resultChain", "1連");
+  setText("resultPayout", `${yen.format(result.firstPayout)}玉`);
+  setText("log", result.events[0]);
+
+  let currentPayout = result.firstPayout;
+  let currentChain = 1;
+  for (const event of result.events.slice(1)) {
+    await sleep(speedAdjustedDuration(170));
+    const payoutMatch = event.match(/\+([0-9,]+)玉/);
+    if (payoutMatch) currentPayout += Number(payoutMatch[1].replace(/,/g, ""));
+    const chainMatch = event.match(/^(\d+)連目/);
+    if (chainMatch) currentChain = Number(chainMatch[1]);
+    if (event.includes("上位RUSH")) setText("resultRoute", "上位RUSH");
+    setText("resultChain", `${currentChain}連`);
+    setText("resultPayout", `${yen.format(currentPayout)}玉`);
+    setText("log", event);
+  }
+
+  setText("resultSpins", `${yen.format(result.spins)}回転`);
+  setText("resultInvestment", `${yen.format(result.investment)}円`);
+  setText("resultRoute", result.status);
+  setText("resultChain", `${result.chain}連`);
+  setText("resultPayout", `${yen.format(result.totalPayout)}玉`);
+  setText("resultDiff", `${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
+  setText("log", `1/${result.hitRate} / ${result.status} / ${result.chain}連 / 差玉 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
+  setRunningButton("ltRush", false);
+  genericToolRunning = false;
+}
+
 async function runKakenuke() {
   if (genericToolRunning) return;
   genericToolRunning = true;
@@ -1025,6 +1130,7 @@ document.addEventListener("click", event => {
   if (action === "rush") runRush();
   if (action === "genericPachinko") runGenericPachinko();
   if (action === "luckyTrigger") runLuckyTrigger();
+  if (action === "ltRush") runLtRush();
   if (action === "kakenuke") runKakenuke();
   if (action === "twoChoiceStart") resetTwoChoice();
   if (action === "twoChoicePick") chooseTwoChoice(target.dataset.choice);
