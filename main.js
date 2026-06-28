@@ -725,10 +725,10 @@ async function runHamari() {
   hamariRunning = false;
 }
 
-let rare8129Running = false;
+let rare8192Running = false;
 
-function simulateRare8129() {
-  const rate = 8129;
+function simulateRare8192() {
+  const rate = 8192;
   const random = Math.max(Number.EPSILON, Math.random());
   const spins = Math.ceil(Math.log(1 - random) / Math.log((rate - 1) / rate));
   const ratio = spins / rate;
@@ -738,18 +738,18 @@ function simulateRare8129() {
   return { rate, spins, ratio, hitByThen, noHitByThen, withinOneDenominator };
 }
 
-async function runRare8129() {
-  if (rare8129Running) return;
-  rare8129Running = true;
-  setRunningButton("rare8129", true);
+async function runRare8192() {
+  if (rare8192Running) return;
+  rare8192Running = true;
+  setRunningButton("rare8192", true);
   setText("resultSpins", "0回転");
   setText("resultRatio", "--");
   setText("resultHitByThen", "--");
   setText("resultNoHit", "--");
   setText("resultOneDenominator", "--");
-  setText("log", "1/8129を抽選中...");
+  setText("log", "1/8192を抽選中...");
 
-  const result = simulateRare8129();
+  const result = simulateRare8192();
   await animateCount("resultSpins", result.spins, "回転", Math.min(5000, Math.max(1600, result.spins * 0.7)));
   await Promise.all([
     animateDecimal("resultHitByThen", result.hitByThen, "%", 2, 900),
@@ -761,8 +761,8 @@ async function runRare8129() {
   setText("resultNoHit", `${result.noHitByThen.toFixed(2)}%`);
   setText("resultOneDenominator", `${result.withinOneDenominator.toFixed(2)}%`);
   setText("log", `1/${yen.format(result.rate)} は ${yen.format(result.spins)}回転目に当選 / 分母の ${result.ratio.toFixed(2)}倍 / そこまでに当たる確率 ${result.hitByThen.toFixed(2)}%`);
-  setRunningButton("rare8129", false);
-  rare8129Running = false;
+  setRunningButton("rare8192", false);
+  rare8192Running = false;
 }
 
 let continuationRunning = false;
@@ -1020,7 +1020,7 @@ document.addEventListener("click", event => {
   if (action === "pachinko319") runPachinko319();
   if (action === "juggle") runJuggle();
   if (action === "hamari") runHamari();
-  if (action === "rare8129") runRare8129();
+  if (action === "rare8192") runRare8192();
   if (action === "continuation") runContinuation();
   if (action === "rush") runRush();
   if (action === "genericPachinko") runGenericPachinko();
