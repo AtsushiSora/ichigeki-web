@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1f7a55">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <meta name="description" content="1/8129の激レア確率が何回転目に当たるかを試せるシミュレーターです。分母の何倍ハマったか、そこまでに当たる確率も確認できます。">
+  <title>1/8129当選シミュレーター | ICHIGEKI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">シミュレーター集</span></a><nav class="nav"><a href="index.html">トップ</a><a href="juggle.html">ジャグ連</a><a href="hamari.html">ハマり</a><a href="ranking.html">ランキング</a></nav></div></header>
+  <main class="page"><div class="layout"><div class="main-column">
+    <section class="hero"><div class="kicker">Rare Probability Tool</div><h1>1/8129当選シミュレーター</h1><p class="lead">1/8129の激レア確率を1回引くまで、何回転かかるかをシミュレーションします。分母の何倍で当たったか、そこまでに当たる確率も確認できます。</p></section>
+    <section class="tool-card">
+      <h2>シミュレーター</h2>
+      <div class="control-grid">
+        <div class="field"><label>当選確率（固定）</label><input value="1/8129" disabled></div>
+        <div class="field speed-field"><label for="animationSpeed">回転速度 <span id="speedLabel">1倍</span></label><input id="animationSpeed" type="range" value="1" min="1" max="20"></div>
+      </div>
+      <p class="small-note">確率は固定です。スタートするたびに、1/8129が何回転目に当たるかを抽選します。</p>
+      <div class="tool-actions"><button class="button primary" data-action="rare8129">スタート</button><button class="button" data-action="share">結果をコピー</button><a class="button" href="hamari.html">ハマり確率を見る</a></div>
+      <div class="result-grid">
+        <div class="result-box"><div class="result-label">当選回転</div><div class="result-value good" id="resultSpins">0回転</div></div>
+        <div class="result-box"><div class="result-label">分母比</div><div class="result-value" id="resultRatio">--</div></div>
+        <div class="result-box"><div class="result-label">そこまでに当たる確率</div><div class="result-value" id="resultHitByThen">--</div></div>
+        <div class="result-box"><div class="result-label">そこまで当たらない確率</div><div class="result-value bad" id="resultNoHit">--</div></div>
+        <div class="result-box"><div class="result-label">8129回以内の当選率</div><div class="result-value" id="resultOneDenominator">--</div></div>
+      </div>
+      <div class="log-box" id="log">スタートすると結果がここに表示されます。</div>
+    </section>
+    <div class="ad-box ad-box-wide" data-ad-slot="rare-8129-inline"><span class="ad-label">PR</span><span class="ad-title">記事内広告枠</span><span class="ad-note">シミュレーター結果下</span></div>
+    <article class="article-card">
+      <h2>1/8129の見方</h2>
+      <p>1/8129は、1回ごとの抽選で約0.0123%の確率です。数字だけ見るとかなり重く感じますが、何回転で当たるかは毎回大きくブレます。</p>
+      <div class="toc"><a href="#how">使い方</a><a href="#probability">確率の目安</a><a href="#result">結果の見方</a><a href="#faq">よくある質問</a></div>
+      <h2 id="how">使い方</h2>
+      <p>スタートを押すと、1/8129が何回転目に当たるかを抽選します。結果は回転数が動く形で表示されます。回転速度バーを上げると、表示演出だけが速くなります。</p>
+      <h2 id="probability">確率の目安</h2>
+      <p>確率分母と同じ8129回転まで回しても、必ず当たるわけではありません。1/8129を8129回転以内に引ける確率は約63.21%です。反対に、約36.79%は8129回転を超えても当たりません。</p>
+      <div class="table-wrap"><table class="ranking-table"><thead><tr><th>回転数</th><th>意味</th><th>当選率の目安</th></tr></thead><tbody><tr><td>8,129回転</td><td>確率分母と同じ回転数</td><td>約63.21%</td></tr><tr><td>16,258回転</td><td>分母の2倍</td><td>約86.47%</td></tr><tr><td>24,387回転</td><td>分母の3倍</td><td>約95.02%</td></tr><tr><td>40,645回転</td><td>分母の5倍</td><td>約99.33%</td></tr></tbody></table></div>
+      <h2 id="result">結果の見方</h2>
+      <ul class="info-list">
+        <li><strong>当選回転</strong>今回の抽選で1/8129を引いた回転数です。</li>
+        <li><strong>分母比</strong>当選回転が8129の何倍かを示します。2.00倍なら約16,258回転です。</li>
+        <li><strong>そこまでに当たる確率</strong>表示された回転数までに1回以上当たる確率です。</li>
+        <li><strong>そこまで当たらない確率</strong>表示された回転数まで一度も当たらない確率です。</li>
+      </ul>
+      <h2 id="faq">よくある質問</h2>
+      <div class="faq-item"><h3>8129回転で必ず当たりますか？</h3><p>当たりません。8129回転以内に当たる確率は約63.21%です。</p></div>
+      <div class="faq-item"><h3>前回ハマったら次は当たりやすいですか？</h3><p>このシミュレーターでは毎回独立抽選として扱います。前回の結果で次回の当たりやすさは変わりません。</p></div>
+      <div class="faq-item"><h3>実機のフリーズやプレミア役を再現していますか？</h3><p>特定機種の仕様は再現していません。1/8129という確率そのものの重さを体感するための簡易シミュレーターです。</p></div>
+      <div class="next-links"><a href="hamari.html">ハマり確率を試す</a><a href="juggle.html">ジャグ連を試す</a><a href="guide.html">確率の見方を読む</a></div>
+      <p class="note">このツールは娯楽用です。実際の遊技結果、収支、機種性能を保証するものではありません。</p>
+    </article>
+  </div><aside class="side-column"><section class="side-card"><h2>関連ツール</h2><ul class="side-list"><li><a href="hamari.html">ハマり確率シミュレーター</a></li><li><a href="continuation.html">継続率シミュレーター</a></li><li><a href="rush.html">RUSH突入率シミュレーター</a></li><li><a href="two-choice.html">二択チャレンジ</a></li></ul></section><div class="ad-box ad-box-sidebar" data-ad-slot="rare-8129-sidebar"><span class="ad-label">PR</span><span class="ad-title">サイドバー広告枠</span><span class="ad-note">PC表示向け</span></div></aside></div><div class="ad-box ad-box-footer" data-ad-slot="rare-8129-footer"><span class="ad-label">PR</span><span class="ad-title">ページ下部広告枠</span><span class="ad-note">記事末尾の広告枠</span></div></main>
+  <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="sitemap.html">サイトマップ</a><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a></div></div></footer>
+  <script src="main.js"></script>
+</body>
+</html>
