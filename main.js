@@ -614,60 +614,6 @@ async function runKakenuke() {
   genericToolRunning = false;
 }
 
-function simulateSlotAt() {
-  const hitRate = clampNumber(document.getElementById("hitRate")?.value, 350);
-  const atRate = clampNumber(document.getElementById("atRate")?.value, 50) / 100;
-  const gamesPerUnit = clampNumber(document.getElementById("gamesPerUnit")?.value, 35);
-  const medalsPerUnit = 46;
-  const netIncrease = clampNumber(document.getElementById("netIncrease")?.value, 2.8);
-  const initialGames = clampNumber(document.getElementById("initialGames")?.value, 50);
-  const addRate = clampNumber(document.getElementById("addRate")?.value, 20) / 100;
-  let games = 0;
-  while (!randomHit(hitRate) && games < 20000) games++;
-  games++;
-  const investment = Math.ceil(games / gamesPerUnit) * 1000;
-  const enteredAt = Math.random() < atRate;
-  let atGames = 0;
-  let payout = 0;
-  if (enteredAt) {
-    let remain = initialGames;
-    while (remain > 0 && atGames < 5000) {
-      remain--;
-      atGames++;
-      payout += netIncrease;
-      if (Math.random() < addRate / 20) remain += 10;
-    }
-  }
-  const finalMedals = Math.round(payout);
-  const investedMedals = Math.round(investment / 1000 * medalsPerUnit);
-  const diff = finalMedals - investedMedals;
-  return { games, investment, enteredAt, atGames, finalMedals, diff };
-}
-
-async function runSlotAt() {
-  if (genericToolRunning) return;
-  genericToolRunning = true;
-  setRunningButton("slotAt", true);
-  setText("resultGames", "0G");
-  setText("resultInvestment", "0円");
-  setText("resultAt", "抽選中");
-  setText("resultAtGames", "0G");
-  setText("resultMedals", "0枚");
-  setText("resultDiff", "0枚");
-  setText("log", "初当たり抽選中...");
-  const result = simulateSlotAt();
-  await animateCount("resultGames", result.games, "G", Math.min(3000, Math.max(1000, result.games * 6)));
-  await sleep(speedAdjustedDuration(140));
-  setText("resultInvestment", `${yen.format(result.investment)}円`);
-  setText("resultAt", result.enteredAt ? "AT突入" : "通常終了");
-  setText("resultAtGames", `${yen.format(result.atGames)}G`);
-  setText("resultMedals", `${yen.format(result.finalMedals)}枚`);
-  setText("resultDiff", `${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}枚`);
-  setText("log", `${result.games}Gで初当たり / ${result.enteredAt ? "AT突入" : "AT非突入"} / 差枚 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}枚`);
-  setRunningButton("slotAt", false);
-  genericToolRunning = false;
-}
-
 let juggleRunning = false;
 
 function simulateJuggle() {
@@ -1039,7 +985,6 @@ document.addEventListener("click", event => {
   if (action === "genericPachinko") runGenericPachinko();
   if (action === "luckyTrigger") runLuckyTrigger();
   if (action === "kakenuke") runKakenuke();
-  if (action === "slotAt") runSlotAt();
   if (action === "twoChoiceStart") resetTwoChoice();
   if (action === "twoChoicePick") chooseTwoChoice(target.dataset.choice);
   if (action === "share") copyShareText();
