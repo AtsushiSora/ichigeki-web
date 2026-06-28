@@ -45,11 +45,18 @@
     <article class="article-card">
       <h2>二択チャレンジの遊び方</h2>
       <p>画面の「左」または「右」を押すと、内部でランダムに決まった正解と照合します。正解なら連続正解数が増え、次の二択へ進みます。不正解ならその時点で終了です。</p>
+      <div class="toc"><a href="#choice-rule">ルール</a><a href="#choice-probability">確率の目安</a><a href="#choice-ranking">ランキング保存</a><a href="#choice-faq">よくある質問</a></div>
+      <h2 id="choice-rule">ルール</h2>
+      <p>1回ごとに正解は左または右からランダムに決まります。ユーザーが選んだ方向と正解が一致すれば成功です。成功すると演出が表示され、連続正解数が1つ増えます。失敗するとその時点でチャレンジ終了です。</p>
       <h2>確率の目安</h2>
-      <div class="table-wrap"><table class="ranking-table"><thead><tr><th>連続正解</th><th>確率</th><th>見え方</th></tr></thead><tbody><tr><td>3連</td><td>12.5%</td><td>わりと起きる</td></tr><tr><td>5連</td><td>3.125%</td><td>かなり良い</td></tr><tr><td>10連</td><td>約0.098%</td><td>かなり珍しい</td></tr></tbody></table></div>
+      <div id="choice-probability" class="table-wrap"><table class="ranking-table"><thead><tr><th>連続正解</th><th>確率</th><th>見え方</th></tr></thead><tbody><tr><td>3連</td><td>12.5%</td><td>わりと起きる</td></tr><tr><td>5連</td><td>3.125%</td><td>かなり良い</td></tr><tr><td>10連</td><td>約0.098%</td><td>かなり珍しい</td></tr></tbody></table></div>
       <p>二択は毎回独立抽選です。前回当たったから次が外れやすくなる、前回外れたから次が当たりやすくなる、という仕組みではありません。</p>
-      <h2>ランキング保存について</h2>
+      <h2 id="choice-ranking">ランキング保存について</h2>
       <p>結果が出たら「ランキングに保存」を押すと、この端末内のランキングページに二択記録として保存できます。保存されるのは保存名、連続正解数、挑戦回数、到達確率です。</p>
+      <h2 id="choice-faq">よくある質問</h2>
+      <div class="faq-item"><h3>成功し続けるほど当たりにくくなりますか？</h3><p>1回ごとの成功率は常に50%です。ただし連続成功の到達確率は、回数が増えるほど低くなります。</p></div>
+      <div class="faq-item"><h3>押すタイミングで結果は変わりますか？</h3><p>このページではタイミングではなく、選択した左右と内部の正解が一致したかで判定します。</p></div>
+      <div class="faq-item"><h3>ランキングはオンライン共有ですか？</h3><p>現在は端末内保存です。スマホやPCを変えると記録は共有されません。</p></div>
       <div class="next-links"><a href="ranking.html#two-choice-ranking">二択ランキングを見る</a><a href="juggle.html">ジャグ連を試す</a><a href="rush.html">RUSH突入率を試す</a><a href="continuation.html">継続率を試す</a></div>
       <p class="note">このツールは娯楽用です。実際の遊技結果、押し順、抽選方式、収支を保証するものではありません。</p>
     </article>

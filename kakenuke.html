@@ -16,7 +16,24 @@
     <section class="hero"><div class="kicker">Kakenuke Tool</div><h1>単発・駆け抜けシミュレーター</h1><p class="lead">RUSHに入った後、どれくらい単発や駆け抜けが起きるかを試すシミュレーターです。継続率だけでは見えにくい短期の偏りを確認できます。</p></section>
     <section class="tool-card"><h2>シミュレーター</h2><div class="control-grid"><div class="field"><label for="continueRate">継続率（%）</label><input id="continueRate" type="number" value="81" min="1" max="99"></div><div class="field"><label for="trials">RUSH回数</label><input id="trials" type="number" value="1000" min="10" max="100000"></div><div class="field speed-field"><label for="animationSpeed">回転速度 <span id="speedLabel">1倍</span></label><input id="animationSpeed" type="range" value="1" min="1" max="20"></div></div><div class="tool-actions"><button class="button primary" data-action="kakenuke">スタート</button><button class="button" data-action="share">結果をコピー</button><a class="button" href="continuation.html">継続率を試す</a></div><div class="result-grid"><div class="result-box"><div class="result-label">駆け抜け回数</div><div class="result-value bad" id="resultKakenuke">--</div></div><div class="result-box"><div class="result-label">駆け抜け率</div><div class="result-value" id="resultRate">--</div></div><div class="result-box"><div class="result-label">平均連チャン</div><div class="result-value good" id="resultAverage">--</div></div><div class="result-box"><div class="result-label">最高連チャン</div><div class="result-value" id="resultBest">--</div></div></div><div class="log-box" id="log">スタートすると結果がここに表示されます。</div></section>
     <div class="ad-box ad-box-wide" data-ad-slot="kakenuke-inline"><span class="ad-label">PR</span><span class="ad-title">記事内広告枠</span></div>
-    <article class="article-card"><h2>駆け抜けの見方</h2><p>高継続でも1回で終わることはあります。このページでは、RUSHに入った前提で何回駆け抜けるかをまとめて試せます。</p><h2>使い分け</h2><p>平均連チャンや目標到達率を詳しく見るなら継続率シミュレーター、突入できるかどうかを見るならRUSH突入率シミュレーターが向いています。</p><div class="next-links"><a href="continuation.html">継続率を試す</a><a href="rush.html">RUSH突入率を試す</a><a href="lucky-trigger.html">LT風を試す</a></div><p class="note">このツールは娯楽用の簡易シミュレーターです。実際の遊技結果や収支を保証しません。</p></article>
+    <article class="article-card">
+      <h2>駆け抜けの見方</h2>
+      <p>高継続でも1回で終わることはあります。このページでは、RUSHに入った前提で何回駆け抜けるかをまとめて試せます。単発や短期の悪い偏りを確認するためのシミュレーターです。</p>
+      <div class="toc"><a href="#kakenuke-condition">計算条件</a><a href="#kakenuke-result">結果の見方</a><a href="#kakenuke-use">使い分け</a><a href="#kakenuke-faq">よくある質問</a></div>
+      <h2 id="kakenuke-condition">計算条件</h2>
+      <p>RUSHに入った状態を1連目として、指定した継続率で次回に続くかを抽選します。1連で終わった場合を駆け抜けとして数えます。初期値は継続率81%、RUSH回数1,000回です。</p>
+      <div class="table-wrap"><table class="ranking-table"><thead><tr><th>項目</th><th>意味</th><th>確認できること</th></tr></thead><tbody><tr><td>駆け抜け回数</td><td>1連で終わった回数</td><td>悪い偏りの発生数</td></tr><tr><td>駆け抜け率</td><td>全RUSH中の駆け抜け割合</td><td>単発の起こりやすさ</td></tr><tr><td>平均連チャン</td><td>全試行の平均連数</td><td>全体傾向</td></tr><tr><td>最高連チャン</td><td>試行中の最大連数</td><td>良い偏りの最大値</td></tr></tbody></table></div>
+      <h2 id="kakenuke-result">結果の見方</h2>
+      <p>駆け抜け回数だけでなく、平均連チャンと最高連チャンも見ることで、悪い結果と良い結果の両方を確認できます。試行回数が少ないほど結果はブレやすく、多いほど平均に近づきやすくなります。</p>
+      <h2 id="kakenuke-use">使い分け</h2>
+      <p>平均連チャンや目標到達率を詳しく見るなら継続率シミュレーター、突入できるかどうかを見るならRUSH突入率シミュレーターが向いています。このページは「RUSHに入ったのに伸びない」ケースだけを見たい時に使います。</p>
+      <ul class="info-list"><li><strong>単発の体感を確認</strong>高継続でも短く終わる割合を見ます。</li><li><strong>試行回数を増やす</strong>長期的な駆け抜け率を見やすくします。</li><li><strong>継続率を比較</strong>75%、81%、90%で駆け抜け率の違いを確認します。</li></ul>
+      <h2 id="kakenuke-faq">よくある質問</h2>
+      <div class="faq-item"><h3>高継続なのに駆け抜けますか？</h3><p>あります。1回ごとの継続抽選に外れれば、継続率が高くても短く終わります。</p></div>
+      <div class="faq-item"><h3>突入率は反映していますか？</h3><p>反映していません。このページはRUSHに入った後だけを試すページです。</p></div>
+      <div class="next-links"><a href="continuation.html">継続率を試す</a><a href="rush.html">RUSH突入率を試す</a><a href="lucky-trigger.html">LT風を試す</a></div>
+      <p class="note">このツールは娯楽用の簡易シミュレーターです。実際の遊技結果や収支を保証しません。</p>
+    </article>
   </div><aside class="side-column"><section class="side-card"><h2>関連ツール</h2><ul class="side-list"><li><a href="continuation.html">継続率</a></li><li><a href="rush.html">RUSH突入率</a></li><li><a href="pachinko-319.html">319大当たり</a></li></ul></section><div class="ad-box ad-box-sidebar" data-ad-slot="kakenuke-sidebar"><span class="ad-label">PR</span><span class="ad-title">サイドバー広告枠</span></div></aside></div><div class="ad-box ad-box-footer" data-ad-slot="kakenuke-footer"><span class="ad-label">PR</span><span class="ad-title">ページ下部広告枠</span></div></main>
   <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a></div></div></footer>
   <script src="main.js"></script>
