@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1f7a55">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <meta name="description" content="現在ゲーム数から天井までに当たるか、天井到達するか、投資と差枚を試せるスロット天井到達シミュレーターです。">
+  <title>天井到達シミュレーター | ICHIGEKI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">シミュレーター集</span></a><nav class="nav"><a href="index.html">トップ</a><a href="juggle.html">ジャグ連</a><a href="cz-challenge.html">CZ</a><a href="ranking.html">ランキング</a></nav></div></header>
+  <main class="page"><div class="layout"><div class="main-column">
+    <section class="hero"><div class="kicker">Ceiling Tool</div><h1>天井到達シミュレーター</h1><p class="lead">現在ゲーム数から打ち始めて、自力当選するか天井まで到達するかを試すスロット向けシミュレーターです。追加投資、獲得枚数、差枚、天井到達率の目安を確認できます。</p></section>
+    <section class="tool-card"><h2>シミュレーター</h2><div class="control-grid"><div class="field"><label for="currentGame">現在ゲーム数</label><input id="currentGame" type="number" value="300" min="0" max="1999"></div><div class="field"><label for="ceilingGame">天井ゲーム数</label><input id="ceilingGame" type="number" value="999" min="100" max="3000"></div><div class="field"><label for="hitRate">通常当選確率</label><input id="hitRate" type="number" value="280" min="20" max="2000"></div><div class="field"><label for="gamesPerUnit">1,000円あたりゲーム数</label><input id="gamesPerUnit" type="number" value="35" min="10" max="80"></div><div class="field"><label for="bonusMedals">当選時獲得枚数</label><input id="bonusMedals" type="number" value="350" min="0" max="5000"></div><div class="field"><label for="atContinueRate">継続率（%）</label><input id="atContinueRate" type="number" value="65" min="0" max="99"></div><div class="field"><label for="continueMedals">継続時獲得枚数</label><input id="continueMedals" type="number" value="120" min="0" max="3000"></div><div class="field speed-field"><label for="animationSpeed">回転速度 <span id="speedLabel">1倍</span></label><input id="animationSpeed" type="range" value="1" min="1" max="20"></div></div><div class="tool-actions"><button class="button primary" data-action="tenjo">スタート</button><button class="button" data-action="share">結果をコピー</button><a class="button" href="cz-challenge.html">CZ突破を試す</a></div><div class="result-grid"><div class="result-box"><div class="result-label">当選ゲーム</div><div class="result-value good" id="resultHitGame">0G</div></div><div class="result-box"><div class="result-label">ルート</div><div class="result-value" id="resultRoute">--</div></div><div class="result-box"><div class="result-label">追加投資</div><div class="result-value" id="resultInvestment">0円</div></div><div class="result-box"><div class="result-label">セット数</div><div class="result-value" id="resultChain">0セット</div></div><div class="result-box"><div class="result-label">獲得枚数</div><div class="result-value good" id="resultMedals">0枚</div></div><div class="result-box"><div class="result-label">差枚</div><div class="result-value" id="resultDiff">0枚</div></div><div class="result-box"><div class="result-label">天井到達率目安</div><div class="result-value" id="resultCeilingRate">--</div></div></div><div class="log-box" id="log">スタートすると結果がここに表示されます。</div></section>
+    <div class="ad-box ad-box-wide" data-ad-slot="tenjo-inline"><span class="ad-label">PR</span><span class="ad-title">記事内広告枠</span></div>
+    <article class="article-card">
+      <h2>天井到達シミュレーターの見方</h2>
+      <p>スロットの天井は、一定ゲーム数まで当たらなかった場合に当選やCZなどの恩恵が用意される仕組みです。このページでは、現在ゲーム数から打ち始めた場合に、自力当選するか天井まで到達するかを簡易的に試せます。</p>
+      <div class="toc"><a href="#tenjo-condition">計算条件</a><a href="#tenjo-result">結果の見方</a><a href="#tenjo-point">調整ポイント</a><a href="#tenjo-faq">よくある質問</a></div>
+      <h2 id="tenjo-condition">計算条件</h2>
+      <p>初期値は現在300G、天井999G、通常当選確率1/280、1,000円あたり35G、当選時350枚、継続率65%、継続時120枚です。投資は1,000円46枚貸しとして使用枚数を計算しています。</p>
+      <div class="table-wrap"><table class="ranking-table"><thead><tr><th>項目</th><th>初期値</th><th>意味</th></tr></thead><tbody><tr><td>現在ゲーム数</td><td>300G</td><td>打ち始めるゲーム数</td></tr><tr><td>天井ゲーム数</td><td>999G</td><td>ここまで自力当選しなければ天井到達</td></tr><tr><td>通常当選確率</td><td>1/280</td><td>天井前に自力当選する確率</td></tr><tr><td>1,000円あたりG数</td><td>35G</td><td>追加投資の計算基準</td></tr></tbody></table></div>
+      <h2 id="tenjo-result">結果の見方</h2>
+      <p>当選ゲームには、自力当選または天井到達したゲーム数を表示します。天井到達率目安は、現在ゲーム数から天井まで一度も自力当選しない確率です。差枚は獲得枚数から追加投資分の使用枚数を差し引いた簡易値です。</p>
+      <h2 id="tenjo-point">調整ポイント</h2>
+      <ul class="info-list"><li><strong>現在ゲーム数</strong>天井に近いほど追加投資は少なくなり、天井到達率も変わります。</li><li><strong>通常当選確率</strong>軽くすると天井前に当たりやすくなります。</li><li><strong>天井恩恵</strong>当選時獲得枚数や継続率を上げると、天井到達時の期待感が強くなります。</li></ul>
+      <h2 id="tenjo-faq">よくある質問</h2>
+      <div class="faq-item"><h3>実機の期待値を計算できますか？</h3><p>できません。実機のモード、ゾーン、前兆、純増、AT性能、天井恩恵などは反映していない簡易シミュレーターです。</p></div>
+      <div class="faq-item"><h3>天井到達率は何を意味しますか？</h3><p>現在ゲーム数から天井ゲーム数まで、自力当選を一度も引かない確率です。実機のゾーン抽選やモード移行は含みません。</p></div>
+      <div class="next-links"><a href="cz-challenge.html">CZ突破を試す</a><a href="juggle.html">ジャグ連を試す</a><a href="guide.html">確率の見方を読む</a></div>
+      <p class="note">このツールは娯楽用の簡易シミュレーターです。実際の遊技結果、収支、機種性能を保証しません。</p>
+    </article>
+  </div><aside class="side-column"><section class="side-card"><h2>関連ツール</h2><ul class="side-list"><li><a href="cz-challenge.html">CZ突破シミュレーター</a></li><li><a href="juggle.html">ジャグ連シミュレーター</a></li><li><a href="rare-8192.html">1/8192当選</a></li><li><a href="hamari.html">ハマり確率</a></li></ul></section><div class="ad-box ad-box-sidebar" data-ad-slot="tenjo-sidebar"><span class="ad-label">PR</span><span class="ad-title">サイドバー広告枠</span></div></aside></div><div class="ad-box ad-box-footer" data-ad-slot="tenjo-footer"><span class="ad-label">PR</span><span class="ad-title">ページ下部広告枠</span></div></main>
+  <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a></div></div></footer>
+  <script src="main.js"></script>
+</body>
+</html>

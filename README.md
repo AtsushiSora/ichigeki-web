@@ -7,6 +7,7 @@ AdSense審査とSEOを意識した、記事型のパチンコ・パチスロ シ
 - `index.html`: トップ
 - `juggle.html`: ジャグ連シミュレーター
 - `cz-challenge.html`: CZ突破シミュレーター
+- `tenjo.html`: 天井到達シミュレーター
 - `pachinko-319.html`: パチンコ319大当たりシミュレーター
 - `lt-rush.html`: LT上位RUSH到達シミュレーター
 - `hamari.html`: ハマり確率シミュレーター

@@ -18,10 +18,11 @@
       <h2>シミュレーター</h2>
       <div class="control-grid">
         <div class="field"><label>当選確率（固定）</label><input value="1/8192" disabled></div>
+        <div class="field"><label for="recordName">ランキング保存名</label><input id="recordName" type="text" value="あなた" maxlength="12" autocomplete="nickname"></div>
         <div class="field speed-field"><label for="animationSpeed">回転速度 <span id="speedLabel">1倍</span></label><input id="animationSpeed" type="range" value="1" min="1" max="20"></div>
       </div>
       <p class="small-note">確率は固定です。スタートするたびに、1/8192が何回転目に当たるかを抽選します。</p>
-      <div class="tool-actions"><button class="button primary" data-action="rare8192">スタート</button><button class="button" data-action="share">結果をコピー</button><a class="button" href="hamari.html">ハマり確率を見る</a></div>
+      <div class="tool-actions"><button class="button primary" data-action="rare8192">スタート</button><button class="button" data-action="saveRare8192">ランキングに保存</button><button class="button" data-action="share">結果をコピー</button><a class="button" href="ranking.html#rare-8192-ranking">ランキングを見る</a><a class="button" href="hamari.html">ハマり確率を見る</a></div>
       <div class="result-grid">
         <div class="result-box"><div class="result-label">当選回転</div><div class="result-value good" id="resultSpins">0回転</div></div>
         <div class="result-box"><div class="result-label">分母比</div><div class="result-value" id="resultRatio">--</div></div>
@@ -52,6 +53,9 @@
       <div class="faq-item"><h3>8192回転で必ず当たりますか？</h3><p>当たりません。8192回転以内に当たる確率は約63.21%です。</p></div>
       <div class="faq-item"><h3>前回ハマったら次は当たりやすいですか？</h3><p>このシミュレーターでは毎回独立抽選として扱います。前回の結果で次回の当たりやすさは変わりません。</p></div>
       <div class="faq-item"><h3>実機のフリーズやプレミア役を再現していますか？</h3><p>特定機種の仕様は再現していません。1/8192という確率そのものの重さを体感するための簡易シミュレーターです。</p></div>
+      <h2>ランキング保存の使い方</h2>
+      <p>1/8192ランキングでは、当選回転数、分母比、そこまでに当たる確率を保存します。基本の並び順は「早く当たった順」です。反対に、分母の何倍まで伸びたかを見たい場合はランキングページの並び替えで長ハマり順にもできます。</p>
+      <p>結果を出した後に保存名を入力して「ランキングに保存」を押すと、<a href="ranking.html#rare-8192-ranking">1/8192ランキング</a>に反映されます。保存名には本名や個人情報を入れないでください。</p>
       <div class="next-links"><a href="hamari.html">ハマり確率を試す</a><a href="juggle.html">ジャグ連を試す</a><a href="guide.html">確率の見方を読む</a></div>
       <p class="note">このツールは娯楽用です。実際の遊技結果、収支、機種性能を保証するものではありません。</p>
     </article>

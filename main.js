@@ -4,7 +4,10 @@ const latestResults = {
   juggle: null,
   pachinko319: null,
   hamari: null,
-  twoChoice: null
+  twoChoice: null,
+  ltRush: null,
+  czChallenge: null,
+  rare8192: null
 };
 
 function clampNumber(value, fallback = 0) {
@@ -100,10 +103,13 @@ function loadLocalRecords() {
       juggle: Array.isArray(parsed.juggle) ? parsed.juggle.map((record, index) => normalizeRecord("juggle", record, index)) : [],
       pachinko319: Array.isArray(parsed.pachinko319) ? parsed.pachinko319.map((record, index) => normalizeRecord("pachinko319", record, index)) : [],
       hamari: Array.isArray(parsed.hamari) ? parsed.hamari.map((record, index) => normalizeRecord("hamari", record, index)) : [],
-      twoChoice: Array.isArray(parsed.twoChoice) ? parsed.twoChoice.map((record, index) => normalizeRecord("twoChoice", record, index)) : []
+      twoChoice: Array.isArray(parsed.twoChoice) ? parsed.twoChoice.map((record, index) => normalizeRecord("twoChoice", record, index)) : [],
+      ltRush: Array.isArray(parsed.ltRush) ? parsed.ltRush.map((record, index) => normalizeRecord("ltRush", record, index)) : [],
+      czChallenge: Array.isArray(parsed.czChallenge) ? parsed.czChallenge.map((record, index) => normalizeRecord("czChallenge", record, index)) : [],
+      rare8192: Array.isArray(parsed.rare8192) ? parsed.rare8192.map((record, index) => normalizeRecord("rare8192", record, index)) : []
     };
   } catch {
-    return { juggle: [], pachinko319: [], hamari: [], twoChoice: [] };
+    return { juggle: [], pachinko319: [], hamari: [], twoChoice: [], ltRush: [], czChallenge: [], rare8192: [] };
   }
 }
 
@@ -145,6 +151,29 @@ function sortRecords(type, records, mode = "score") {
     twoChoice: {
       score: (a, b) => b.chain - a.chain || b.rounds - a.rounds,
       probability: (a, b) => a.probability - b.probability || b.chain - a.chain,
+      date: (a, b) => getRecordTime(b) - getRecordTime(a),
+      name: (a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ja")
+    },
+    ltRush: {
+      score: (a, b) => b.totalPayout - a.totalPayout || b.chain - a.chain || b.diff - a.diff,
+      diff: (a, b) => b.diff - a.diff || b.totalPayout - a.totalPayout,
+      chain: (a, b) => b.chain - a.chain || b.totalPayout - a.totalPayout,
+      route: (a, b) => Number(b.enteredUpper) - Number(a.enteredUpper) || Number(b.enteredLower) - Number(a.enteredLower) || b.totalPayout - a.totalPayout,
+      date: (a, b) => getRecordTime(b) - getRecordTime(a),
+      name: (a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ja")
+    },
+    czChallenge: {
+      score: (a, b) => b.totalMedals - a.totalMedals || b.chain - a.chain || b.diff - a.diff,
+      diff: (a, b) => b.diff - a.diff || b.totalMedals - a.totalMedals,
+      chain: (a, b) => b.chain - a.chain || b.totalMedals - a.totalMedals,
+      success: (a, b) => Number(b.success) - Number(a.success) || b.totalMedals - a.totalMedals,
+      date: (a, b) => getRecordTime(b) - getRecordTime(a),
+      name: (a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ja")
+    },
+    rare8192: {
+      score: (a, b) => a.spins - b.spins || b.hitByThen - a.hitByThen,
+      long: (a, b) => b.spins - a.spins || b.ratio - a.ratio,
+      ratio: (a, b) => a.ratio - b.ratio || a.spins - b.spins,
       date: (a, b) => getRecordTime(b) - getRecordTime(a),
       name: (a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ja")
     }
@@ -236,7 +265,7 @@ function renderRankingPage() {
   const records = loadLocalRecords();
   const summary = document.getElementById("rankingCount");
   if (summary) {
-    const total = records.juggle.length + records.pachinko319.length + records.hamari.length + records.twoChoice.length;
+    const total = records.juggle.length + records.pachinko319.length + records.hamari.length + records.twoChoice.length + records.ltRush.length + records.czChallenge.length + records.rare8192.length;
     summary.textContent = `${total}件`;
   }
 
@@ -244,10 +273,16 @@ function renderRankingPage() {
   setText("pachinkoRecordCount", `${records.pachinko319.length}件`);
   setText("hamariRecordCount", `${records.hamari.length}件`);
   setText("twoChoiceRecordCount", `${records.twoChoice.length}件`);
+  setText("ltRushRecordCount", `${records.ltRush.length}件`);
+  setText("czRecordCount", `${records.czChallenge.length}件`);
+  setText("rare8192RecordCount", `${records.rare8192.length}件`);
   setText("juggleBestSummary", records.juggle.length ? `${sortRecords("juggle", records.juggle)[0].chain}連` : "--");
   setText("pachinkoBestSummary", records.pachinko319.length ? `${yen.format(sortRecords("pachinko319", records.pachinko319)[0].totalPayout)}玉` : "--");
   setText("hamariBestSummary", records.hamari.length ? `${yen.format(sortRecords("hamari", records.hamari)[0].spins)}回転` : "--");
   setText("twoChoiceBestSummary", records.twoChoice.length ? `${sortRecords("twoChoice", records.twoChoice)[0].chain}連` : "--");
+  setText("ltRushBestSummary", records.ltRush.length ? `${yen.format(sortRecords("ltRush", records.ltRush)[0].totalPayout)}玉` : "--");
+  setText("czBestSummary", records.czChallenge.length ? `${yen.format(sortRecords("czChallenge", records.czChallenge)[0].totalMedals)}枚` : "--");
+  setText("rare8192BestSummary", records.rare8192.length ? `${yen.format(sortRecords("rare8192", records.rare8192)[0].spins)}回転` : "--");
 
   const podium = document.getElementById("jugglePodium");
   if (podium) podium.innerHTML = renderPodium(records.juggle);
@@ -282,6 +317,30 @@ function renderRankingPage() {
       `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.chain}連</td><td>${record.rounds || record.chain + 1}回</td><td>${record.probability.toFixed(3)}%</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("twoChoice", record.id)}</td></tr>`
     ));
     twoChoiceBody.innerHTML = rows.join("") || renderEmptyRows(7, "二択チャレンジの記録がありません", "two-choice.html", "二択を試す");
+  }
+
+  const ltRushBody = document.getElementById("ltRushRankingBody");
+  if (ltRushBody) {
+    const rows = sortRecords("ltRush", records.ltRush, getRankingSort("ltRush")).slice(0, 10).map((record, index) => (
+      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.totalPayout)}玉</td><td>${record.status || (record.enteredUpper ? "上位RUSH到達" : record.enteredLower ? "下位RUSH終了" : "通常終了")}</td><td>${record.chain}連</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}玉</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("ltRush", record.id)}</td></tr>`
+    ));
+    ltRushBody.innerHTML = rows.join("") || renderEmptyRows(8, "LT上位RUSHの記録がありません", "lt-rush.html", "LT上位RUSHを試す");
+  }
+
+  const czBody = document.getElementById("czRankingBody");
+  if (czBody) {
+    const rows = sortRecords("czChallenge", records.czChallenge, getRankingSort("czChallenge")).slice(0, 10).map((record, index) => (
+      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.success ? "成功" : "失敗"}</td><td>${record.chain}セット</td><td>${yen.format(record.totalMedals)}枚</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}枚</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("czChallenge", record.id)}</td></tr>`
+    ));
+    czBody.innerHTML = rows.join("") || renderEmptyRows(8, "CZ突破の記録がありません", "cz-challenge.html", "CZ突破を試す");
+  }
+
+  const rare8192Body = document.getElementById("rare8192RankingBody");
+  if (rare8192Body) {
+    const rows = sortRecords("rare8192", records.rare8192, getRankingSort("rare8192")).slice(0, 10).map((record, index) => (
+      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.spins)}回転</td><td>${record.ratio.toFixed(2)}倍</td><td>${record.hitByThen.toFixed(2)}%</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("rare8192", record.id)}</td></tr>`
+    ));
+    rare8192Body.innerHTML = rows.join("") || renderEmptyRows(7, "1/8192の記録がありません", "rare-8192.html", "1/8192を試す");
   }
 }
 
@@ -683,6 +742,17 @@ async function runLtRush() {
   setText("resultPayout", `${yen.format(result.totalPayout)}玉`);
   setText("resultDiff", `${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
   setText("log", `1/${result.hitRate} / ${result.status} / ${result.chain}連 / 差玉 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
+  latestResults.ltRush = {
+    spins: result.spins,
+    investment: result.investment,
+    usedBalls: result.usedBalls,
+    enteredLower: result.enteredLower,
+    enteredUpper: result.enteredUpper,
+    status: result.status,
+    chain: result.chain,
+    totalPayout: result.totalPayout,
+    diff: result.diff
+  };
   setRunningButton("ltRush", false);
   genericToolRunning = false;
 }
@@ -763,7 +833,95 @@ async function runCzChallenge() {
   setText("resultMedals", `${yen.format(result.totalMedals)}枚`);
   setText("resultDiff", `${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}枚`);
   setText("log", `1/${result.czRate} / CZ${result.success ? "成功" : "失敗"} / ${result.chain}セット / 差枚 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}枚`);
+  latestResults.czChallenge = {
+    czRate: result.czRate,
+    games: result.games,
+    investment: result.investment,
+    usedMedals: result.usedMedals,
+    success: result.success,
+    chain: result.chain,
+    totalMedals: result.totalMedals,
+    diff: result.diff
+  };
   setRunningButton("czChallenge", false);
+  genericToolRunning = false;
+}
+
+function simulateTenjo() {
+  const currentGame = clampNumber(document.getElementById("currentGame")?.value, 0);
+  const ceilingGame = clampNumber(document.getElementById("ceilingGame")?.value, 999);
+  const hitRate = clampNumber(document.getElementById("hitRate")?.value, 280);
+  const gamesPerUnit = clampNumber(document.getElementById("gamesPerUnit")?.value, 35);
+  const bonusMedals = clampNumber(document.getElementById("bonusMedals")?.value, 350);
+  const atContinueRate = clampNumber(document.getElementById("atContinueRate")?.value, 65) / 100;
+  const continueMedals = clampNumber(document.getElementById("continueMedals")?.value, 120);
+  const startGame = Math.max(0, Math.min(currentGame, ceilingGame - 1));
+  let game = startGame;
+  let addedGames = 0;
+  let route = "自力当選";
+  while (game < ceilingGame) {
+    game++;
+    addedGames++;
+    if (randomHit(hitRate)) break;
+  }
+  if (game >= ceilingGame) route = "天井到達";
+  const investment = Math.ceil(addedGames / gamesPerUnit) * 1000;
+  const usedMedals = Math.round(investment / 1000 * 46);
+  let chain = 1;
+  let totalMedals = bonusMedals;
+  const events = [`${game}Gで${route} +${yen.format(bonusMedals)}枚`];
+  while (Math.random() < atContinueRate && chain < 200) {
+    chain++;
+    totalMedals += continueMedals;
+    events.push(`${chain}セット目 継続 +${yen.format(continueMedals)}枚`);
+  }
+  const diff = totalMedals - usedMedals;
+  const remainingToCeiling = Math.max(0, ceilingGame - startGame);
+  const ceilingReachRate = Math.pow((hitRate - 1) / hitRate, remainingToCeiling) * 100;
+  return { startGame, ceilingGame, hitRate, game, addedGames, investment, usedMedals, route, chain, totalMedals, diff, bonusMedals, continueMedals, ceilingReachRate, events };
+}
+
+async function runTenjo() {
+  if (genericToolRunning) return;
+  genericToolRunning = true;
+  setRunningButton("tenjo", true);
+  setText("resultHitGame", "0G");
+  setText("resultRoute", "抽選中");
+  setText("resultInvestment", "0円");
+  setText("resultChain", "0セット");
+  setText("resultMedals", "0枚");
+  setText("resultDiff", "0枚");
+  setText("resultCeilingRate", "--");
+  setText("log", "天井まで回転中...");
+
+  const result = simulateTenjo();
+  await animateCount("resultHitGame", result.game, "G", Math.min(3200, Math.max(1000, result.addedGames * 7)));
+  setText("resultRoute", result.route);
+  setText("resultInvestment", `${yen.format(result.investment)}円`);
+  setText("resultChain", "1セット");
+  setText("resultMedals", `${yen.format(result.bonusMedals)}枚`);
+  setText("log", result.events[0]);
+
+  let currentMedals = result.bonusMedals;
+  for (const event of result.events.slice(1)) {
+    await sleep(speedAdjustedDuration(170));
+    const medalMatch = event.match(/\+([0-9,]+)枚/);
+    if (medalMatch) currentMedals += Number(medalMatch[1].replace(/,/g, ""));
+    const chainMatch = event.match(/^(\d+)セット目/);
+    if (chainMatch) setText("resultChain", `${chainMatch[1]}セット`);
+    setText("resultMedals", `${yen.format(currentMedals)}枚`);
+    setText("log", event);
+  }
+
+  setText("resultHitGame", `${yen.format(result.game)}G`);
+  setText("resultRoute", result.route);
+  setText("resultInvestment", `${yen.format(result.investment)}円`);
+  setText("resultChain", `${result.chain}セット`);
+  setText("resultMedals", `${yen.format(result.totalMedals)}枚`);
+  setText("resultDiff", `${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}枚`);
+  setText("resultCeilingRate", `${result.ceilingReachRate.toFixed(2)}%`);
+  setText("log", `${result.startGame}G開始 / ${result.game}Gで${result.route} / ${result.chain}セット / 差枚 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}枚`);
+  setRunningButton("tenjo", false);
   genericToolRunning = false;
 }
 
@@ -946,6 +1104,13 @@ async function runRare8192() {
   setText("resultNoHit", `${result.noHitByThen.toFixed(2)}%`);
   setText("resultOneDenominator", `${result.withinOneDenominator.toFixed(2)}%`);
   setText("log", `1/${yen.format(result.rate)} は ${yen.format(result.spins)}回転目に当選 / 分母の ${result.ratio.toFixed(2)}倍 / そこまでに当たる確率 ${result.hitByThen.toFixed(2)}%`);
+  latestResults.rare8192 = {
+    rate: result.rate,
+    spins: result.spins,
+    ratio: result.ratio,
+    hitByThen: result.hitByThen,
+    noHitByThen: result.noHitByThen
+  };
   setRunningButton("rare8192", false);
   rare8192Running = false;
 }
@@ -1212,6 +1377,7 @@ document.addEventListener("click", event => {
   if (action === "luckyTrigger") runLuckyTrigger();
   if (action === "ltRush") runLtRush();
   if (action === "czChallenge") runCzChallenge();
+  if (action === "tenjo") runTenjo();
   if (action === "kakenuke") runKakenuke();
   if (action === "twoChoiceStart") resetTwoChoice();
   if (action === "twoChoicePick") chooseTwoChoice(target.dataset.choice);
@@ -1220,6 +1386,9 @@ document.addEventListener("click", event => {
   if (action === "savePachinko319") saveLatestRecord("pachinko319");
   if (action === "saveHamari") saveLatestRecord("hamari");
   if (action === "saveTwoChoice") saveLatestRecord("twoChoice");
+  if (action === "saveLtRush") saveLatestRecord("ltRush");
+  if (action === "saveCzChallenge") saveLatestRecord("czChallenge");
+  if (action === "saveRare8192") saveLatestRecord("rare8192");
   if (action === "clearRanking") clearLocalRecords();
   if (action === "editRecord") updateRecordName(target.dataset.type, target.dataset.id);
   if (action === "deleteRecord") deleteRecord(target.dataset.type, target.dataset.id);
