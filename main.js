@@ -407,7 +407,7 @@ async function animateJuggleResult(result) {
     return;
   }
 
-  const duration = speedAdjustedDuration(Math.min(3200, Math.max(1400, result.games * 7)));
+  const duration = speedAdjustedDuration(Math.min(6200, Math.max(2600, result.games * 13)));
   const start = performance.now();
   let hitIndex = -1;
   return new Promise(resolve => {
