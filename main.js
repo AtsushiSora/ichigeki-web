@@ -112,6 +112,130 @@ function markResultReady(type) {
   setSaveReady(type, true);
 }
 
+const resultGuidesByAction = {
+  juggle: {
+    title: "結果の見方",
+    points: [
+      "ジャグ連は、初当たり後100G以内に当たり続けた回数です。",
+      "総ゲームは、初当たりを引いてから100G抜けまでの合計です。",
+      "差枚は、1,000円46枚・35G前後で使った枚数を差し引いた目安です。"
+    ]
+  },
+  pachinko319: {
+    title: "結果の見方",
+    points: [
+      "初当たり回転数と投資を見ると、当たるまでの重さを確認できます。",
+      "総出玉と連チャンは、一撃でどこまで伸びたかを見る主な数字です。",
+      "差玉は投資分を玉数換算して引いた目安で、プラスなら出玉が上回っています。"
+    ]
+  },
+  genericPachinko: {
+    title: "結果の見方",
+    points: [
+      "確率、突入率、継続率を変えると、初当たりと出玉の荒れ方を比較できます。",
+      "投資と差玉を見ると、同じ出玉でも初当たりの重さで結果が変わることが分かります。",
+      "まず初期値で数回試し、その後に1項目だけ変えると違いを確認しやすくなります。"
+    ]
+  },
+  luckyTrigger: {
+    title: "結果の見方",
+    points: [
+      "LT突入は低確率ですが、入った後の継続と出玉が結果を大きく動かします。",
+      "通常終了の多さと、LT突入時の一撃差を比較すると荒さが分かります。",
+      "突入率と継続率を別々に変えると、どちらが結果に効くか確認できます。"
+    ]
+  },
+  ltRush: {
+    title: "結果の見方",
+    points: [
+      "到達ルートは、通常終了・下位RUSH・上位RUSH到達のどこで終わったかを示します。",
+      "上位RUSHに入るまでの段階が多いほど、同じ319でも結果のブレが大きくなります。",
+      "ランキングではスペック固定なので、総出玉と差玉をそのまま比較しやすくしています。"
+    ]
+  },
+  czChallenge: {
+    title: "結果の見方",
+    points: [
+      "CZ当選ゲームは、通常時からCZに入るまでに回したゲーム数です。",
+      "CZ成功後はATセット数と獲得枚数、失敗時は投資負けの重さを見ます。",
+      "差枚は1,000円46枚換算で、投資した枚数を差し引いた目安です。"
+    ]
+  },
+  tenjo: {
+    title: "結果の見方",
+    points: [
+      "現在ゲーム数から、天井までに自力当選するか天井到達するかを試します。",
+      "追加投資は、打ち始めてから当選までに必要だった目安です。",
+      "天井到達率目安を見ると、今のゲーム数からどれくらい深く行きやすいか確認できます。"
+    ]
+  },
+  kakenuke: {
+    title: "結果の見方",
+    points: [
+      "駆け抜け率は、RUSHに入っても1回で終わる割合です。",
+      "平均連チャンと最高連チャンを一緒に見ると、短期の偏りが分かります。",
+      "試行回数を増やすほど、設定した継続率に近い結果になりやすくなります。"
+    ]
+  },
+  hamari: {
+    title: "結果の見方",
+    points: [
+      "ハマる確率は、指定回転数まで当たらない割合です。",
+      "当たる確率とセットで見ると、その回転数がどれくらい珍しいか判断できます。",
+      "大当たり確率と回転数を変えて、ミドル・ライトミドル・甘デジの違いを比較できます。"
+    ]
+  },
+  rare8192: {
+    title: "結果の見方",
+    points: [
+      "当選回転は、1/8192を何回転目に引けたかを示します。",
+      "分母比は、8192回転に対して早いか遅いかの目安です。",
+      "当選率を見ると、その回転数までに引ける人がどれくらいいるか分かります。"
+    ]
+  },
+  continuation: {
+    title: "結果の見方",
+    points: [
+      "平均連チャンは、試行全体で見た平均の続き方です。",
+      "目標到達率は、10連など指定した連数に届く割合です。",
+      "継続率を変えて比較すると、数%の差が体感にどう出るか確認できます。"
+    ]
+  },
+  rush: {
+    title: "結果の見方",
+    points: [
+      "突破と失敗は、指定した突入率で複数回試した結果です。",
+      "実測突入率は、今回の試行だけで見た成功割合です。",
+      "最大失敗連続を見ると、確率通りでも悪い偏りが起きることを確認できます。"
+    ]
+  },
+  twoChoiceStart: {
+    title: "結果の見方",
+    points: [
+      "現在の連続正解は、50%を何回続けて当てたかです。",
+      "到達確率は、同じ連数にたどり着く難しさの目安です。",
+      "外れたら終了なので、結果が出た後に保存するとランキングで比較できます。"
+    ]
+  }
+};
+
+function renderResultGuide() {
+  const card = document.querySelector(".tool-card");
+  if (!card || card.querySelector(".result-guide")) return;
+  const action = Object.keys(resultGuidesByAction).find(key => document.querySelector(`[data-action="${key}"]`));
+  const guide = resultGuidesByAction[action];
+  if (!guide) return;
+  const element = document.createElement("div");
+  element.className = "result-guide";
+  element.innerHTML = `<h3>${escapeHtml(guide.title)}</h3><ul>${guide.points.map(point => `<li>${escapeHtml(point)}</li>`).join("")}</ul>`;
+  const log = card.querySelector(".log-box");
+  if (log) {
+    log.insertAdjacentElement("afterend", element);
+  } else {
+    card.appendChild(element);
+  }
+}
+
 function getSpeedValue() {
   return Math.min(20, Math.max(1, clampNumber(document.getElementById("animationSpeed")?.value, 1)));
 }
@@ -1447,6 +1571,7 @@ document.addEventListener("change", event => {
 });
 
 updateSpeedLabel();
+renderResultGuide();
 renderRankingPage();
 initializeTwoChoicePage();
 registerServiceWorker();
