@@ -10,6 +10,52 @@ const latestResults = {
   rare8192: null
 };
 
+const fixedRankingSpecs = {
+  pachinko319: {
+    hitRate: 319,
+    spinsPerUnit: 17,
+    rushRate: 0.6,
+    continueRate: 0.81,
+    firstPayout: 300,
+    rushPayout: 1500
+  },
+  hamari: {
+    rate: 319,
+    spins: 1000
+  },
+  juggle: {
+    bigRate: 255,
+    regRate: 255,
+    medalsPerUnit: 46,
+    gamesPerUnit: 35,
+    bigMedals: 252,
+    regMedals: 96
+  },
+  ltRush: {
+    hitRate: 319,
+    spinsPerUnit: 17,
+    lowerRushRate: 0.55,
+    lowerContinueRate: 0.75,
+    upgradeRate: 0.25,
+    upperContinueRate: 0.9,
+    firstPayout: 300,
+    lowerPayout: 1500,
+    upperPayout: 3000
+  },
+  czChallenge: {
+    czRate: 180,
+    gamesPerUnit: 35,
+    successRate: 0.4,
+    atContinueRate: 0.7,
+    firstMedals: 250,
+    continueMedals: 120,
+    medalsPerUnit: 46
+  },
+  rare8192: {
+    rate: 8192
+  }
+};
+
 function clampNumber(value, fallback = 0) {
   const number = Number(value);
   return Number.isFinite(number) ? number : fallback;
@@ -610,13 +656,9 @@ let pachinkoRunning = false;
 let genericToolRunning = false;
 
 function simulatePachinko319() {
-  const spinsPerUnit = 17;
-  const rushRate = 0.6;
-  const continueRate = 0.81;
-  const payout = 1500;
-  const firstPayout = 300;
+  const { hitRate, spinsPerUnit, rushRate, continueRate, firstPayout, rushPayout: payout } = fixedRankingSpecs.pachinko319;
   let spins = 0;
-  while (!randomHit(319) && spins < 5000) spins++;
+  while (!randomHit(hitRate) && spins < 5000) spins++;
   spins++;
   const investment = Math.ceil(spins / spinsPerUnit) * 1000;
   let totalPayout = firstPayout;
@@ -802,15 +844,17 @@ async function runLuckyTrigger() {
 }
 
 function simulateLtRush() {
-  const hitRate = clampNumber(document.getElementById("hitRate")?.value, 319);
-  const spinsPerUnit = clampNumber(document.getElementById("spinPerUnit")?.value, 17);
-  const lowerRushRate = clampNumber(document.getElementById("lowerRushRate")?.value, 55) / 100;
-  const lowerContinueRate = clampNumber(document.getElementById("lowerContinueRate")?.value, 75) / 100;
-  const upgradeRate = clampNumber(document.getElementById("upgradeRate")?.value, 25) / 100;
-  const upperContinueRate = clampNumber(document.getElementById("upperContinueRate")?.value, 90) / 100;
-  const firstPayout = clampNumber(document.getElementById("firstPayout")?.value, 300);
-  const lowerPayout = clampNumber(document.getElementById("lowerPayout")?.value, 1500);
-  const upperPayout = clampNumber(document.getElementById("upperPayout")?.value, 3000);
+  const {
+    hitRate,
+    spinsPerUnit,
+    lowerRushRate,
+    lowerContinueRate,
+    upgradeRate,
+    upperContinueRate,
+    firstPayout,
+    lowerPayout,
+    upperPayout
+  } = fixedRankingSpecs.ltRush;
   let spins = 0;
   while (!randomHit(hitRate) && spins < 12000) spins++;
   spins++;
@@ -919,17 +963,20 @@ async function runLtRush() {
 }
 
 function simulateCzChallenge() {
-  const czRate = clampNumber(document.getElementById("czRate")?.value, 180);
-  const gamesPerUnit = clampNumber(document.getElementById("gamesPerUnit")?.value, 35);
-  const successRate = clampNumber(document.getElementById("successRate")?.value, 40) / 100;
-  const atContinueRate = clampNumber(document.getElementById("atContinueRate")?.value, 70) / 100;
-  const firstMedals = clampNumber(document.getElementById("firstMedals")?.value, 250);
-  const continueMedals = clampNumber(document.getElementById("continueMedals")?.value, 120);
+  const {
+    czRate,
+    gamesPerUnit,
+    successRate,
+    atContinueRate,
+    firstMedals,
+    continueMedals,
+    medalsPerUnit
+  } = fixedRankingSpecs.czChallenge;
   let games = 0;
   while (!randomHit(czRate) && games < 8000) games++;
   games++;
   const investment = Math.ceil(games / gamesPerUnit) * 1000;
-  const usedMedals = Math.round(investment / 1000 * 46);
+  const usedMedals = Math.round(investment / 1000 * medalsPerUnit);
   const success = Math.random() < successRate;
   let chain = 0;
   let totalMedals = 0;
@@ -1122,10 +1169,7 @@ async function runKakenuke() {
 let juggleRunning = false;
 
 function simulateJuggle() {
-  const bigRate = 255;
-  const regRate = 255;
-  const medalsPerUnit = 46;
-  const gamesPerUnit = 35;
+  const { bigRate, regRate, medalsPerUnit, gamesPerUnit, bigMedals, regMedals } = fixedRankingSpecs.juggle;
   const costPerGame = medalsPerUnit / gamesPerUnit;
   let games = 0;
   let investment = 0;
@@ -1153,11 +1197,11 @@ function simulateJuggle() {
       let type;
       if (Math.random() < 0.5) {
         big++;
-        medals += 252;
+        medals += bigMedals;
         type = "BIG";
       } else {
         reg++;
-        medals += 96;
+        medals += regMedals;
         type = "REG";
       }
       hitEvents.push({ game: games, type, chain, big, reg });
@@ -1207,8 +1251,7 @@ async function runHamari() {
   if (hamariRunning) return;
   hamariRunning = true;
   setRunningButton("hamari", true);
-  const rate = 319;
-  const spins = 1000;
+  const { rate, spins } = fixedRankingSpecs.hamari;
   const probability = Math.pow((rate - 1) / rate, spins) * 100;
   const hitByThen = 100 - probability;
   setText("resultHamari", "--");
@@ -1235,7 +1278,7 @@ async function runHamari() {
 let rare8192Running = false;
 
 function simulateRare8192() {
-  const rate = 8192;
+  const { rate } = fixedRankingSpecs.rare8192;
   const random = Math.max(Number.EPSILON, Math.random());
   const spins = Math.ceil(Math.log(1 - random) / Math.log((rate - 1) / rate));
   const ratio = spins / rate;
