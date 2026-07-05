@@ -278,6 +278,25 @@ p {
   border-color: var(--accent);
 }
 
+.tool-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  margin-bottom: 6px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.tool-badge.free {
+  background: var(--paper-soft);
+  color: var(--muted);
+  border: 1px solid var(--line);
+}
+
 .tool-icon {
   display: inline-flex;
   align-items: center;
@@ -423,6 +442,46 @@ p {
 .record-name-field {
   max-width: 360px;
   margin-top: 14px;
+}
+
+.fixed-condition-guide {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 14px;
+  border: 1px solid #f1d38b;
+  border-radius: 10px;
+  background: #fff8e6;
+}
+
+.fixed-condition-guide h3 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.fixed-condition-guide div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.fixed-condition-guide span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #efd28a;
+  color: #6f470c;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.fixed-condition-guide p {
+  margin: 0;
+  color: #6f470c;
+  font-size: 13px;
 }
 
 .speed-field label {

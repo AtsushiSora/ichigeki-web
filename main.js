@@ -1,5 +1,6 @@
 const yen = new Intl.NumberFormat("ja-JP");
 const rankingStorageKey = "ichigekiLocalRecordsV1";
+const rankingSpecVersion = "2026-07-fixed-v1";
 const latestResults = {
   juggle: null,
   pachinko319: null,
@@ -53,6 +54,9 @@ const fixedRankingSpecs = {
   },
   rare8192: {
     rate: 8192
+  },
+  twoChoice: {
+    successRate: 0.5
   }
 };
 
@@ -156,6 +160,16 @@ function setSaveReady(type, isReady) {
 
 function markResultReady(type) {
   setSaveReady(type, true);
+}
+
+function getFixedSpecSnapshot(type) {
+  const spec = fixedRankingSpecs[type];
+  if (!spec) return null;
+  return JSON.parse(JSON.stringify({
+    version: rankingSpecVersion,
+    type,
+    ...spec
+  }));
 }
 
 const resultGuidesByAction = {
@@ -264,6 +278,33 @@ const resultGuidesByAction = {
     ]
   }
 };
+
+const fixedConditionSummariesByAction = {
+  juggle: ["BIG 1/255", "REG 1/255", "1,000円46枚", "35G/1,000円", "100G抜けまで"],
+  pachinko319: ["大当たり 1/319", "RUSH突入 60%", "継続率 81%", "初当たり 300玉", "RUSH中 1,500玉", "17回転/1,000円"],
+  hamari: ["大当たり 1/319", "判定回転数 1,000回転"],
+  twoChoiceStart: ["成功率 50%", "外れた時点で終了", "連続正解数でランキング"],
+  ltRush: ["大当たり 1/319", "下位突入 55%", "下位継続 75%", "上位昇格 25%", "上位継続 90%"],
+  czChallenge: ["CZ 1/180", "CZ成功 40%", "AT継続 70%", "1,000円46枚", "35G/1,000円"],
+  rare8192: ["当選確率 1/8192", "当選回転でランキング"]
+};
+
+function renderFixedConditionGuide() {
+  const card = document.querySelector(".tool-card");
+  if (!card || card.querySelector(".fixed-condition-guide")) return;
+  const action = Object.keys(fixedConditionSummariesByAction).find(key => document.querySelector(`[data-action="${key}"]`));
+  const conditions = fixedConditionSummariesByAction[action];
+  if (!conditions) return;
+  const element = document.createElement("div");
+  element.className = "fixed-condition-guide";
+  element.innerHTML = `<h3>ランキング固定条件</h3><div>${conditions.map(condition => `<span>${escapeHtml(condition)}</span>`).join("")}</div><p>ランキングの公平性を保つため、保存名と回転速度以外は固定です。</p>`;
+  const controls = card.querySelector(".control-grid");
+  if (controls) {
+    controls.insertAdjacentElement("afterend", element);
+  } else {
+    card.prepend(element);
+  }
+}
 
 function renderResultGuide() {
   const card = document.querySelector(".tool-card");
@@ -393,7 +434,7 @@ function saveLatestRecord(type) {
   }
   const records = loadLocalRecords();
   records[type] = sortRecords(type, [
-    { ...latest, id: createRecordId(type), name: getRecordName(), savedAt: new Date().toISOString() },
+    { ...latest, id: createRecordId(type), name: getRecordName(), savedAt: new Date().toISOString(), spec: getFixedSpecSnapshot(type) },
     ...records[type]
   ]).slice(0, 30);
   const saved = storeLocalRecords(records);
@@ -1614,6 +1655,7 @@ document.addEventListener("change", event => {
 });
 
 updateSpeedLabel();
+renderFixedConditionGuide();
 renderResultGuide();
 renderRankingPage();
 initializeTwoChoicePage();
