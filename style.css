@@ -1203,9 +1203,22 @@ code,
 }
 
 @media (max-width: 640px) {
+  body {
+    background:
+      radial-gradient(circle at 50% -120px, rgba(31, 122, 85, 0.14), transparent 260px),
+      var(--bg);
+  }
+
+  .site-header {
+    backdrop-filter: blur(12px);
+    background: color-mix(in srgb, var(--paper), transparent 8%);
+  }
+
   .header-inner {
     align-items: flex-start;
     flex-direction: column;
+    gap: 10px;
+    padding: 12px 14px;
   }
 
   .nav {
@@ -1217,13 +1230,14 @@ code,
   }
 
   .page {
-    padding: 18px 14px calc(64px + env(safe-area-inset-bottom));
+    padding: 16px 12px calc(32px + env(safe-area-inset-bottom));
   }
 
   .hero,
   .tool-card,
   .article-card {
-    padding: 18px;
+    padding: 16px;
+    border-radius: 16px;
   }
 
   .tool-card {
@@ -1233,7 +1247,14 @@ code,
   }
 
   .tool-card .control-grid {
-    margin: 12px 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+    margin: 12px 0 10px;
+  }
+
+  .tool-card .speed-field,
+  .tool-card .record-name-field {
+    grid-column: 1 / -1;
   }
 
   .tool-card .small-note {
@@ -1245,6 +1266,12 @@ code,
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
     margin-top: 12px;
+  }
+
+  .result-grid .result-box:first-child {
+    grid-column: 1 / -1;
+    border-color: color-mix(in srgb, var(--accent), var(--line) 55%);
+    background: linear-gradient(135deg, var(--accent-soft), var(--paper));
   }
 
   .log-box {
@@ -1262,25 +1289,43 @@ code,
   .preset-strip {
     order: 12;
     margin-bottom: 10px;
+    padding: 12px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--paper-soft), var(--paper));
+  }
+
+  .preset-strip h3 {
+    font-size: 14px;
   }
 
   .preset-buttons {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    margin: 0 -12px;
+    padding: 0 12px 2px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .preset-button {
+    flex: 0 0 auto;
+    min-height: 38px;
+    scroll-snap-align: start;
+    box-shadow: 0 6px 16px rgba(31, 41, 51, 0.06);
   }
 
   .tool-actions {
-    order: 40;
-    position: sticky;
-    bottom: calc(10px + env(safe-area-inset-bottom));
-    z-index: 15;
-    margin: 12px -8px -8px;
-    padding: 10px;
+    order: 14;
+    position: static;
+    z-index: auto;
+    margin: 8px 0 4px;
+    padding: 12px;
     border: 1px solid var(--line);
-    border-radius: 14px;
-    background: color-mix(in srgb, var(--paper), transparent 4%);
-    box-shadow: 0 12px 28px rgba(31, 41, 51, 0.16);
-    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--paper), var(--paper-soft));
+    box-shadow: 0 10px 24px rgba(31, 41, 51, 0.08);
   }
 
   .hero-actions,
@@ -1295,8 +1340,9 @@ code,
 
   .tool-actions .button.primary {
     grid-column: 1 / -1;
-    min-height: 52px;
+    min-height: 54px;
     font-size: 17px;
+    box-shadow: 0 10px 24px color-mix(in srgb, var(--accent), transparent 78%);
   }
 
   .tool-actions .button.save-ready {
@@ -1317,6 +1363,16 @@ code,
   .result-value {
     font-size: 21px;
     overflow-wrap: anywhere;
+  }
+
+  .field label {
+    font-size: 12px;
+  }
+
+  .field input,
+  .field select {
+    border-radius: 10px;
+    background: var(--paper);
   }
 
   .choice-stage {
@@ -1358,12 +1414,15 @@ code,
 
   .tool-link {
     grid-template-columns: 44px 1fr;
-    padding: 14px;
+    padding: 16px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--paper), var(--paper-soft));
   }
 
   .tool-icon {
     width: 44px;
     height: 44px;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent), transparent 82%);
   }
 
   .code-box {
