@@ -76,6 +76,40 @@ function setRunningButton(action, isRunning) {
   if (!button.dataset.idleLabel) button.dataset.idleLabel = button.textContent;
   button.disabled = isRunning;
   button.textContent = isRunning ? "進行中..." : button.dataset.idleLabel;
+  if (isRunning) setSaveReady(recordTypeByRunAction[action], false);
+}
+
+const saveActionByType = {
+  juggle: "saveJuggle",
+  pachinko319: "savePachinko319",
+  hamari: "saveHamari",
+  twoChoice: "saveTwoChoice",
+  ltRush: "saveLtRush",
+  czChallenge: "saveCzChallenge",
+  rare8192: "saveRare8192"
+};
+
+const recordTypeByRunAction = {
+  juggle: "juggle",
+  pachinko319: "pachinko319",
+  hamari: "hamari",
+  twoChoiceStart: "twoChoice",
+  ltRush: "ltRush",
+  czChallenge: "czChallenge",
+  rare8192: "rare8192"
+};
+
+function setSaveReady(type, isReady) {
+  const action = saveActionByType[type];
+  if (!action) return;
+  const button = document.querySelector(`[data-action="${action}"]`);
+  if (!button) return;
+  button.classList.toggle("save-ready", isReady);
+  button.setAttribute("aria-live", "polite");
+}
+
+function markResultReady(type) {
+  setSaveReady(type, true);
 }
 
 function getSpeedValue() {
@@ -195,6 +229,7 @@ function saveLatestRecord(type) {
   const saved = storeLocalRecords(records);
   if (saved) {
     appendLog("log", "ランキングに保存しました。ランキングページで確認できます。");
+    setSaveReady(type, false);
     renderRankingPage();
   } else {
     appendLog("log", "保存できませんでした。ブラウザの保存設定を確認してください。");
@@ -513,6 +548,7 @@ async function runPachinko319() {
   setText("resultRush", enteredRush ? "突入" : "非突入");
   setText("log", `${spins}回転で大当たり / ${chain}連 / 差玉 ${diff > 0 ? "+" : ""}${yen.format(diff)}玉`);
   latestResults.pachinko319 = { spins, investment, totalPayout, chain, diff, enteredRush };
+  markResultReady("pachinko319");
   setRunningButton("pachinko319", false);
   pachinkoRunning = false;
 }
@@ -753,6 +789,7 @@ async function runLtRush() {
     totalPayout: result.totalPayout,
     diff: result.diff
   };
+  markResultReady("ltRush");
   setRunningButton("ltRush", false);
   genericToolRunning = false;
 }
@@ -843,6 +880,7 @@ async function runCzChallenge() {
     totalMedals: result.totalMedals,
     diff: result.diff
   };
+  markResultReady("czChallenge");
   setRunningButton("czChallenge", false);
   genericToolRunning = false;
 }
@@ -1034,6 +1072,7 @@ async function runJuggle() {
   setText("resultBonus", `BIG ${big} / REG ${reg}`);
   setText("log", `${games}G / ${chain}連 / BIG ${big} REG ${reg} / 差枚 ${diff > 0 ? "+" : ""}${yen.format(diff)}枚`);
   latestResults.juggle = { games, investment, finalMedals, diff, big, reg, chain };
+  markResultReady("juggle");
   setRunningButton("juggle", false);
   juggleRunning = false;
 }
@@ -1064,6 +1103,7 @@ async function runHamari() {
   setText("resultSpins", `${yen.format(spins)}回転`);
   setText("log", `1/${rate}で${spins}回転ハマる確率: ${probability.toFixed(2)}%`);
   latestResults.hamari = { rate, spins, probability, hitByThen };
+  markResultReady("hamari");
   setRunningButton("hamari", false);
   hamariRunning = false;
 }
@@ -1111,6 +1151,7 @@ async function runRare8192() {
     hitByThen: result.hitByThen,
     noHitByThen: result.noHitByThen
   };
+  markResultReady("rare8192");
   setRunningButton("rare8192", false);
   rare8192Running = false;
 }
@@ -1260,6 +1301,7 @@ function resetTwoChoice() {
   setText("resultNextRate", "50.0%");
   setText("log", "左か右を選んでください。");
   latestResults.twoChoice = null;
+  setSaveReady("twoChoice", false);
   const effect = document.getElementById("choiceEffect");
   if (effect) {
     effect.textContent = "";
@@ -1314,6 +1356,7 @@ function finishTwoChoice(selected) {
     rounds: twoChoiceState.round,
     probability: Math.pow(0.5, finalChain) * 100
   };
+  markResultReady("twoChoice");
   document.querySelectorAll("[data-choice]").forEach(button => {
     button.disabled = true;
     button.classList.toggle("good", button.dataset.choice === twoChoiceState.correct);
@@ -1347,6 +1390,7 @@ function chooseTwoChoice(selected) {
     rounds: twoChoiceState.round - 1,
     probability: Math.pow(0.5, twoChoiceState.chain) * 100
   };
+  markResultReady("twoChoice");
   playTwoChoiceSuccessEffect();
 }
 

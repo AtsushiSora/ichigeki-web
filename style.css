@@ -209,6 +209,13 @@ p {
   opacity: 0.55;
 }
 
+.button.save-ready {
+  border-color: var(--gold);
+  background: #fff8e6;
+  color: #6f470c;
+  box-shadow: 0 0 0 3px rgba(183, 121, 31, 0.12);
+}
+
 .button.danger {
   border-color: #f0c7c0;
   color: var(--red);
@@ -411,6 +418,11 @@ p {
   min-height: 44px;
   padding: 0;
   accent-color: var(--accent);
+}
+
+.record-name-field {
+  max-width: 360px;
+  margin-top: 14px;
 }
 
 .speed-field label {
@@ -1086,7 +1098,7 @@ code,
   }
 
   .page {
-    padding: 18px 14px 42px;
+    padding: 18px 14px calc(64px + env(safe-area-inset-bottom));
   }
 
   .hero,
@@ -1126,7 +1138,7 @@ code,
   .tool-actions {
     order: 40;
     position: sticky;
-    bottom: 10px;
+    bottom: calc(10px + env(safe-area-inset-bottom));
     z-index: 15;
     margin: 12px -8px -8px;
     padding: 10px;
@@ -1153,6 +1165,11 @@ code,
     font-size: 17px;
   }
 
+  .tool-actions .button.save-ready {
+    grid-column: 1 / -1;
+    min-height: 50px;
+  }
+
   .tool-actions .button {
     min-height: 42px;
     padding: 0 12px;
@@ -1171,6 +1188,12 @@ code,
   .choice-stage {
     order: 18;
     gap: 10px;
+  }
+
+  .record-name-field {
+    order: 35;
+    max-width: none;
+    margin-top: 10px;
   }
 
   .choice-button {
