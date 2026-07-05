@@ -319,17 +319,33 @@ const simplePresetsByAction = {
     {
       label: "深め 850G",
       values: { currentGame: 850, ceilingGame: 999, hitRate: 280, gamesPerUnit: 35, bonusMedals: 350, atContinueRate: 65, continueMedals: 120 }
+    },
+    {
+      label: "スマスロ荒波",
+      values: { currentGame: 450, ceilingGame: 999, hitRate: 420, gamesPerUnit: 32, bonusMedals: 500, atContinueRate: 78, continueMedals: 180 }
+    },
+    {
+      label: "遊びやすいAT",
+      values: { currentGame: 250, ceilingGame: 777, hitRate: 220, gamesPerUnit: 36, bonusMedals: 280, atContinueRate: 62, continueMedals: 100 }
     }
+  ],
+  genericPachinko: [
+    { label: "LTミドル", values: { hitRate: 319, spinPerUnit: 17, rushRate: 55, continueRate: 82, firstPayout: 300, payout: 1500 } },
+    { label: "ライトLT", values: { hitRate: 199, spinPerUnit: 18, rushRate: 50, continueRate: 88, firstPayout: 300, payout: 1200 } },
+    { label: "甘デジ遊び", values: { hitRate: 99, spinPerUnit: 20, rushRate: 45, continueRate: 72, firstPayout: 300, payout: 500 } },
+    { label: "一撃型 1/399", values: { hitRate: 399, spinPerUnit: 16, rushRate: 52, continueRate: 85, firstPayout: 300, payout: 1500 } }
   ],
   continuation: [
     { label: "王道 81%", values: { continueRate: 81, targetChain: 10, trials: 10000 } },
     { label: "高継続 90%", values: { continueRate: 90, targetChain: 20, trials: 10000 } },
-    { label: "超高継続 93%", values: { continueRate: 93, targetChain: 30, trials: 10000 } }
+    { label: "超高継続 93%", values: { continueRate: 93, targetChain: 30, trials: 10000 } },
+    { label: "LT級 95%", values: { continueRate: 95, targetChain: 40, trials: 10000 } }
   ],
   rush: [
     { label: "50%", values: { rushRate: 50, trials: 30 } },
     { label: "60%", values: { rushRate: 60, trials: 100 } },
-    { label: "70%", values: { rushRate: 70, trials: 100 } }
+    { label: "70%", values: { rushRate: 70, trials: 100 } },
+    { label: "LT狭き門 25%", values: { rushRate: 25, trials: 100 } }
   ],
   luckyTrigger: [
     {
@@ -343,6 +359,14 @@ const simplePresetsByAction = {
     {
       label: "荒め 1/319",
       values: { hitRate: 319, spinPerUnit: 17, triggerRate: 20, triggerContinueRate: 92, firstPayout: 300, triggerPayout: 1500 }
+    },
+    {
+      label: "ミドルLT",
+      values: { hitRate: 319, spinPerUnit: 17, triggerRate: 30, triggerContinueRate: 88, firstPayout: 300, triggerPayout: 1500 }
+    },
+    {
+      label: "重めLT 1/399",
+      values: { hitRate: 399, spinPerUnit: 16, triggerRate: 50, triggerContinueRate: 85, firstPayout: 300, triggerPayout: 1500 }
     }
   ]
 };
@@ -367,7 +391,7 @@ function renderSimplePresets() {
   if (!presets) return;
   const element = document.createElement("div");
   element.className = "preset-strip";
-  element.innerHTML = `<h3>かんたん設定</h3><div class="preset-buttons">${presets.map((preset, index) => `<button class="preset-button" type="button" data-action="applySimplePreset" data-preset-action="${action}" data-preset-index="${index}">${escapeHtml(preset.label)}</button>`).join("")}</div>`;
+  element.innerHTML = `<h3>かんたん設定・流行りスペック</h3><div class="preset-buttons">${presets.map((preset, index) => `<button class="preset-button" type="button" data-action="applySimplePreset" data-preset-action="${action}" data-preset-index="${index}">${escapeHtml(preset.label)}</button>`).join("")}</div>`;
   const controls = card.querySelector(".control-grid");
   if (controls) {
     controls.insertAdjacentElement("afterend", element);
