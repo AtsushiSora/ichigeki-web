@@ -306,6 +306,76 @@ function renderFixedConditionGuide() {
   }
 }
 
+const simplePresetsByAction = {
+  tenjo: [
+    {
+      label: "浅め 300G",
+      values: { currentGame: 300, ceilingGame: 999, hitRate: 280, gamesPerUnit: 35, bonusMedals: 350, atContinueRate: 65, continueMedals: 120 }
+    },
+    {
+      label: "天井近め 700G",
+      values: { currentGame: 700, ceilingGame: 999, hitRate: 280, gamesPerUnit: 35, bonusMedals: 350, atContinueRate: 65, continueMedals: 120 }
+    },
+    {
+      label: "深め 850G",
+      values: { currentGame: 850, ceilingGame: 999, hitRate: 280, gamesPerUnit: 35, bonusMedals: 350, atContinueRate: 65, continueMedals: 120 }
+    }
+  ],
+  continuation: [
+    { label: "王道 81%", values: { continueRate: 81, targetChain: 10, trials: 10000 } },
+    { label: "高継続 90%", values: { continueRate: 90, targetChain: 20, trials: 10000 } },
+    { label: "超高継続 93%", values: { continueRate: 93, targetChain: 30, trials: 10000 } }
+  ],
+  rush: [
+    { label: "50%", values: { rushRate: 50, trials: 30 } },
+    { label: "60%", values: { rushRate: 60, trials: 100 } },
+    { label: "70%", values: { rushRate: 70, trials: 100 } }
+  ],
+  luckyTrigger: [
+    {
+      label: "ライト 1/199",
+      values: { hitRate: 199, spinPerUnit: 18, triggerRate: 15, triggerContinueRate: 90, firstPayout: 300, triggerPayout: 1500 }
+    },
+    {
+      label: "甘め 1/99",
+      values: { hitRate: 99, spinPerUnit: 20, triggerRate: 8, triggerContinueRate: 88, firstPayout: 300, triggerPayout: 1000 }
+    },
+    {
+      label: "荒め 1/319",
+      values: { hitRate: 319, spinPerUnit: 17, triggerRate: 20, triggerContinueRate: 92, firstPayout: 300, triggerPayout: 1500 }
+    }
+  ]
+};
+
+function applySimplePreset(action, index) {
+  const preset = simplePresetsByAction[action]?.[Number(index)];
+  if (!preset) return;
+  Object.entries(preset.values).forEach(([id, value]) => {
+    const input = document.getElementById(id);
+    if (!input || input.disabled) return;
+    input.value = value;
+  });
+  appendLog("log", `${preset.label}の条件をセットしました。`);
+  updateSpeedLabel();
+}
+
+function renderSimplePresets() {
+  const card = document.querySelector(".tool-card");
+  if (!card || card.querySelector(".preset-strip")) return;
+  const action = Object.keys(simplePresetsByAction).find(key => document.querySelector(`[data-action="${key}"]`));
+  const presets = simplePresetsByAction[action];
+  if (!presets) return;
+  const element = document.createElement("div");
+  element.className = "preset-strip";
+  element.innerHTML = `<h3>かんたん設定</h3><div class="preset-buttons">${presets.map((preset, index) => `<button class="preset-button" type="button" data-action="applySimplePreset" data-preset-action="${action}" data-preset-index="${index}">${escapeHtml(preset.label)}</button>`).join("")}</div>`;
+  const controls = card.querySelector(".control-grid");
+  if (controls) {
+    controls.insertAdjacentElement("afterend", element);
+  } else {
+    card.prepend(element);
+  }
+}
+
 function renderResultGuide() {
   const card = document.querySelector(".tool-card");
   if (!card || card.querySelector(".result-guide")) return;
@@ -1633,6 +1703,7 @@ document.addEventListener("click", event => {
   if (action === "kakenuke") runKakenuke();
   if (action === "twoChoiceStart") resetTwoChoice();
   if (action === "twoChoicePick") chooseTwoChoice(target.dataset.choice);
+  if (action === "applySimplePreset") applySimplePreset(target.dataset.presetAction, target.dataset.presetIndex);
   if (action === "share") copyShareText();
   if (action === "saveJuggle") saveLatestRecord("juggle");
   if (action === "savePachinko319") saveLatestRecord("pachinko319");
@@ -1656,6 +1727,7 @@ document.addEventListener("change", event => {
 
 updateSpeedLabel();
 renderFixedConditionGuide();
+renderSimplePresets();
 renderResultGuide();
 renderRankingPage();
 initializeTwoChoicePage();
