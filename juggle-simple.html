@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050705">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <meta name="description" content="大きなSTARTボタンを押すだけでジャグ連を試せる、当たり表示だけのシンプルなランキングチャレンジです。">
+  <title>ジャグ連チャレンジ | ICHIGEKI</title>
+  <link rel="canonical" href="https://atsushisora.github.io/ichigeki-web/juggle-simple.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ICHIGEKI">
+  <meta property="og:title" content="ジャグ連チャレンジ | ICHIGEKI">
+  <meta property="og:description" content="大きなSTARTボタンを押すだけでジャグ連を試せる、当たり表示だけのシンプルなランキングチャレンジです。">
+  <meta property="og:url" content="https://atsushisora.github.io/ichigeki-web/juggle-simple.html">
+  <meta property="og:image" content="https://atsushisora.github.io/ichigeki-web/icon.svg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ジャグ連チャレンジ | ICHIGEKI">
+  <meta name="twitter:description" content="大きなSTARTボタンを押すだけでジャグ連を試せる、当たり表示だけのシンプルなランキングチャレンジです。">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="juggle-simple-page">
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-name">ICHIGEKI</span>
+        <span class="brand-sub">ジャグ連ランキング</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">トップ</a>
+        <a href="juggle.html">詳細版</a>
+        <a href="ranking.html#juggle-ranking">ランキング</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="simple-page">
+    <section class="juggle-simple-stage">
+      <div class="simple-title-line">
+        <span></span>
+        <h1>ジャグ連チャレンジ</h1>
+        <span></span>
+      </div>
+
+      <div class="simple-status-card">
+        <strong><span class="status-dot"></span><span id="simpleStatus">待機中</span></strong>
+        <p id="simpleStatusText">ボタンを押すと変動開始</p>
+      </div>
+
+      <div class="simple-result-card">
+        <span>当たりだけ表示</span>
+        <strong id="resultBonusType">--</strong>
+        <b id="resultHitGame">0G</b>
+        <small id="resultChain">0連</small>
+        <em id="resultBonusBreakdown">BIG 0 / REG 0</em>
+      </div>
+
+      <a class="simple-rank-link" href="ranking.html#juggle-ranking">ランキングを見る</a>
+
+      <div class="simple-start-area">
+        <button class="simple-start-button" data-action="juggleSimple">
+          <span>START</span>
+          <small>変動開始</small>
+        </button>
+      </div>
+
+      <div class="simple-sub-actions">
+        <button class="button" data-action="saveJuggle">ランキングに保存</button>
+        <button class="button" data-action="share">結果をコピー</button>
+        <a class="button" href="juggle.html">詳細版で遊ぶ</a>
+      </div>
+
+      <div class="log-box simple-log" id="log">スタートすると当たり結果だけ表示します。</div>
+      <div class="ad-box simple-ad" data-ad-slot="juggle-simple-footer"><span class="ad-label">PR</span><span class="ad-title">広告枠</span></div>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

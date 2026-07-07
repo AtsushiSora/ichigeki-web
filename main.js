@@ -141,6 +141,7 @@ const saveActionByType = {
 
 const recordTypeByRunAction = {
   juggle: "juggle",
+  juggleSimple: "juggle",
   pachinko319: "pachinko319",
   hamari: "hamari",
   twoChoiceStart: "twoChoice",
@@ -1380,6 +1381,61 @@ async function runJuggle() {
   juggleRunning = false;
 }
 
+async function runJuggleSimple() {
+  if (juggleRunning) return;
+  juggleRunning = true;
+  const startButton = document.querySelector('[data-action="juggleSimple"]');
+  if (startButton) startButton.disabled = true;
+  setSaveReady("juggle", false);
+  const stage = document.querySelector(".juggle-simple-stage");
+  stage?.classList.remove("is-hit", "is-finished");
+  stage?.classList.add("is-running");
+  setText("simpleStatus", "変動中");
+  setText("simpleStatusText", "当たりを抽選しています");
+  setText("resultBonusType", "抽選中");
+  setText("resultHitGame", "0G");
+  setText("resultChain", "0連");
+  setText("resultBonusBreakdown", "BIG 0 / REG 0");
+  setText("log", "変動開始...");
+
+  const result = simulateJuggle();
+  let previousGame = 0;
+  for (const hit of result.hitEvents) {
+    const distance = Math.max(1, hit.game - previousGame);
+    await animateCount("resultHitGame", hit.game, "G", Math.min(2600, Math.max(700, distance * 9)));
+    stage?.classList.add("is-hit");
+    setText("simpleStatus", "当たり");
+    setText("simpleStatusText", `${hit.type}を引きました`);
+    setText("resultBonusType", hit.type);
+    setText("resultChain", `${hit.chain}連`);
+    setText("resultBonusBreakdown", `BIG ${hit.big} / REG ${hit.reg}`);
+    setText("log", `${hit.game}Gで${hit.type} / ジャグ連 ${hit.chain}回`);
+    await sleep(speedAdjustedDuration(360));
+    stage?.classList.remove("is-hit");
+    previousGame = hit.game;
+    if (hit.chain < result.chain) {
+      setText("simpleStatus", "100G以内を追跡中");
+      setText("simpleStatusText", "次の当たりを待っています");
+    }
+  }
+
+  const { games, investment, finalMedals, diff, big, reg, chain } = result;
+  stage?.classList.remove("is-running");
+  stage?.classList.add("is-finished");
+  setText("simpleStatus", "結果確定");
+  setText("simpleStatusText", "100G抜けで終了");
+  const lastHit = result.hitEvents[result.hitEvents.length - 1];
+  setText("resultHitGame", `${yen.format(lastHit?.game || games)}G`);
+  setText("resultBonusType", lastHit?.type || "--");
+  setText("resultChain", `${chain}連`);
+  setText("resultBonusBreakdown", `BIG ${big} / REG ${reg}`);
+  setText("log", `${games}G / ${chain}連 / BIG ${big} REG ${reg} / 差枚 ${diff > 0 ? "+" : ""}${yen.format(diff)}枚`);
+  latestResults.juggle = { games, investment, finalMedals, diff, big, reg, chain };
+  markResultReady("juggle");
+  if (startButton) startButton.disabled = false;
+  juggleRunning = false;
+}
+
 let hamariRunning = false;
 
 async function runHamari() {
@@ -1715,6 +1771,7 @@ document.addEventListener("click", event => {
   const action = target.dataset.action;
   if (action === "pachinko319") runPachinko319();
   if (action === "juggle") runJuggle();
+  if (action === "juggleSimple") runJuggleSimple();
   if (action === "hamari") runHamari();
   if (action === "rare8192") runRare8192();
   if (action === "continuation") runContinuation();

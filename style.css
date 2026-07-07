@@ -1455,3 +1455,311 @@ code,
     font-size: 16px;
   }
 }
+
+.juggle-simple-page {
+  --bg: #050705;
+  --paper: #101411;
+  --paper-soft: #151a16;
+  --text: #f5f7f4;
+  --muted: #8f9a91;
+  --line: #263429;
+  --line-strong: #3d553f;
+  --accent: #6bd34f;
+  --accent-soft: #112414;
+  --accent-dark: #9df57d;
+  --gold: #f2b93b;
+  background:
+    radial-gradient(circle at 50% 70%, rgba(107, 211, 79, 0.11), transparent 260px),
+    radial-gradient(circle at 50% 0, rgba(242, 185, 59, 0.06), transparent 260px),
+    #050705;
+}
+
+.juggle-simple-page .site-header {
+  position: static;
+  background: #050705;
+  border-bottom: 1px solid rgba(107, 211, 79, 0.25);
+  box-shadow: none;
+}
+
+.juggle-simple-page .brand-name,
+.juggle-simple-page .nav a {
+  color: var(--text);
+}
+
+.simple-page {
+  max-width: 520px;
+  min-height: calc(100vh - 76px);
+  margin: 0 auto;
+  padding: 34px 18px 22px;
+}
+
+.juggle-simple-stage {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+  min-height: calc(100vh - 132px);
+}
+
+.simple-title-line {
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  gap: 12px;
+  align-items: center;
+  margin-top: 6px;
+  text-align: center;
+}
+
+.simple-title-line span {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent));
+}
+
+.simple-title-line span:last-child {
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+.simple-title-line h1 {
+  margin: 0;
+  font-size: clamp(30px, 9vw, 48px);
+  letter-spacing: 0;
+}
+
+.simple-status-card,
+.simple-result-card,
+.simple-rank-link,
+.simple-ad {
+  border: 1px solid rgba(107, 211, 79, 0.28);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(19, 26, 20, 0.96), rgba(7, 9, 8, 0.96));
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.28);
+}
+
+.simple-status-card {
+  display: grid;
+  gap: 6px;
+  padding: 18px 20px;
+}
+
+.simple-status-card strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--accent);
+  font-size: 22px;
+}
+
+.simple-status-card p {
+  margin: 0;
+  color: #b7beb8;
+  font-weight: 800;
+}
+
+.status-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 18px rgba(107, 211, 79, 0.7);
+}
+
+.simple-result-card {
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+  padding: 28px 18px;
+  border-color: rgba(242, 185, 59, 0.65);
+  text-align: center;
+}
+
+.simple-result-card span,
+.simple-result-card small,
+.simple-result-card em {
+  color: var(--gold);
+  font-style: normal;
+  font-weight: 900;
+}
+
+.simple-result-card strong {
+  color: var(--gold);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(78px, 22vw, 132px);
+  line-height: 0.95;
+  text-shadow: 0 0 26px rgba(242, 185, 59, 0.55);
+}
+
+.simple-result-card b {
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: clamp(42px, 11vw, 64px);
+  line-height: 1.1;
+}
+
+.simple-result-card small {
+  font-size: 24px;
+}
+
+.simple-rank-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 58px;
+  color: var(--text);
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.simple-rank-link::before {
+  content: "🏆";
+  margin-right: 10px;
+}
+
+.simple-rank-link::after {
+  content: "›";
+  margin-left: auto;
+  padding-right: 20px;
+  color: var(--accent);
+  font-size: 34px;
+  line-height: 1;
+}
+
+.simple-rank-link:hover {
+  text-decoration: none;
+  border-color: var(--accent);
+}
+
+.simple-start-area {
+  display: grid;
+  justify-items: center;
+  margin: 8px 0 2px;
+}
+
+.simple-start-button {
+  display: grid;
+  place-items: center;
+  width: min(62vw, 260px);
+  aspect-ratio: 1;
+  border: 4px solid rgba(173, 255, 142, 0.72);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 45% 28%, rgba(255, 255, 255, 0.28), transparent 24%),
+    linear-gradient(145deg, #7bdc55, #0f571d 70%);
+  color: #fff;
+  cursor: pointer;
+  box-shadow:
+    0 0 0 12px rgba(107, 211, 79, 0.18),
+    0 0 52px rgba(107, 211, 79, 0.7),
+    inset 0 -18px 28px rgba(0, 0, 0, 0.35);
+}
+
+.simple-start-button span {
+  display: block;
+  margin-top: 16px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: clamp(42px, 12vw, 58px);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.simple-start-button small {
+  display: block;
+  margin-top: -48px;
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.simple-start-button:disabled {
+  cursor: default;
+  filter: grayscale(0.25) brightness(0.88);
+}
+
+.juggle-simple-stage.is-running .simple-start-button {
+  animation: simple-pulse 1.1s ease-in-out infinite;
+}
+
+.juggle-simple-stage.is-hit .simple-result-card {
+  animation: simple-hit 520ms ease-out;
+}
+
+.juggle-simple-stage.is-finished .simple-status-card {
+  border-color: rgba(242, 185, 59, 0.55);
+}
+
+.simple-sub-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.simple-sub-actions .button:first-child {
+  grid-column: 1 / -1;
+}
+
+.simple-log {
+  min-height: 64px;
+  max-height: 92px;
+  margin-top: 0;
+  background: rgba(6, 8, 7, 0.92);
+  color: #b9c3ba;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.simple-ad {
+  min-height: 74px;
+  margin: 0;
+  background: linear-gradient(135deg, rgba(19, 26, 20, 0.96), rgba(11, 13, 12, 0.96));
+}
+
+@keyframes simple-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 12px rgba(107, 211, 79, 0.16),
+      0 0 52px rgba(107, 211, 79, 0.64),
+      inset 0 -18px 28px rgba(0, 0, 0, 0.35);
+  }
+  50% {
+    transform: scale(1.025);
+    box-shadow:
+      0 0 0 16px rgba(107, 211, 79, 0.22),
+      0 0 70px rgba(107, 211, 79, 0.85),
+      inset 0 -18px 28px rgba(0, 0, 0, 0.35);
+  }
+}
+
+@keyframes simple-hit {
+  0% {
+    transform: scale(0.98);
+    box-shadow: 0 0 0 rgba(242, 185, 59, 0);
+  }
+  45% {
+    transform: scale(1.02);
+    box-shadow: 0 0 42px rgba(242, 185, 59, 0.32);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 16px 42px rgba(0, 0, 0, 0.28);
+  }
+}
+
+@media (max-width: 420px) {
+  .simple-page {
+    padding: 24px 14px 18px;
+  }
+
+  .juggle-simple-stage {
+    gap: 15px;
+  }
+
+  .simple-result-card {
+    padding: 24px 14px;
+  }
+
+  .simple-start-button {
+    width: min(68vw, 244px);
+  }
+
+  .simple-sub-actions {
+    grid-template-columns: 1fr;
+  }
+}

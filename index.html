@@ -35,11 +35,12 @@
     "@type": "ItemList",
     "name": "ICHIGEKI シミュレーター一覧",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "ジャグ連シミュレーター", "url": "https://atsushisora.github.io/ichigeki-web/juggle.html" },
-      { "@type": "ListItem", "position": 2, "name": "CZ突破シミュレーター", "url": "https://atsushisora.github.io/ichigeki-web/cz-challenge.html" },
-      { "@type": "ListItem", "position": 3, "name": "天井到達シミュレーター", "url": "https://atsushisora.github.io/ichigeki-web/tenjo.html" },
-      { "@type": "ListItem", "position": 4, "name": "319大当たりシミュレーター", "url": "https://atsushisora.github.io/ichigeki-web/pachinko-319.html" },
-      { "@type": "ListItem", "position": 5, "name": "1/8192当選シミュレーター", "url": "https://atsushisora.github.io/ichigeki-web/rare-8192.html" }
+      { "@type": "ListItem", "position": 1, "name": "ジャグ連チャレンジ", "url": "https://atsushisora.github.io/ichigeki-web/juggle-simple.html" },
+      { "@type": "ListItem", "position": 2, "name": "ジャグ連シミュレーター", "url": "https://atsushisora.github.io/ichigeki-web/juggle.html" },
+      { "@type": "ListItem", "position": 3, "name": "CZ突破シミュレーター", "url": "https://atsushisora.github.io/ichigeki-web/cz-challenge.html" },
+      { "@type": "ListItem", "position": 4, "name": "天井到達シミュレーター", "url": "https://atsushisora.github.io/ichigeki-web/tenjo.html" },
+      { "@type": "ListItem", "position": 5, "name": "319大当たりシミュレーター", "url": "https://atsushisora.github.io/ichigeki-web/pachinko-319.html" },
+      { "@type": "ListItem", "position": 6, "name": "1/8192当選シミュレーター", "url": "https://atsushisora.github.io/ichigeki-web/rare-8192.html" }
     ]
   }
   </script>
@@ -68,7 +69,7 @@
       <h1>パチンコ・パチスロの確率を気軽に試せるシミュレーター集</h1>
       <p class="lead">大当たり、RUSH突入、継続率、ハマり、ジャグ連などをブラウザ上で試せる無料ツールです。実際の遊技結果を保証するものではなく、確率のイメージをつかむためのエンターテインメント用シミュレーターです。</p>
       <div class="hero-actions">
-        <a class="button primary" href="juggle.html">ジャグ連を試す</a>
+        <a class="button primary" href="juggle-simple.html">ジャグ連チャレンジ</a>
         <a class="button" href="cz-challenge.html">CZ突破を試す</a>
         <a class="button" href="ranking.html">ランキングを見る</a>
       </div>
@@ -82,7 +83,8 @@
             <section class="tool-category">
               <div class="category-head"><span>スロット系</span><small>ジャグ連、CZ突破、天井、差枚を試す</small></div>
               <div class="grid tool-grid">
-                <a class="tool-link" href="juggle.html"><span class="tool-icon">🤡</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">ジャグ連シミュレーター</span><span class="tool-desc">100G以内の連続当選をどこまで伸ばせるか試算</span></span></a>
+                <a class="tool-link" href="juggle-simple.html"><span class="tool-icon">🤡</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">ジャグ連チャレンジ</span><span class="tool-desc">大きなボタン1つで当たりだけ表示するシンプル版</span></span></a>
+                <a class="tool-link" href="juggle.html"><span class="tool-icon">📊</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">ジャグ連シミュレーター詳細版</span><span class="tool-desc">投資、持ちメダル、差枚まで細かく確認</span></span></a>
                 <a class="tool-link" href="cz-challenge.html"><span class="tool-icon">🎮</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">CZ突破シミュレーター</span><span class="tool-desc">CZ突入から成功、AT、差枚までを試す</span></span></a>
                 <a class="tool-link" href="tenjo.html"><span class="tool-icon">⏱</span><span><span class="tool-badge free">自由試算</span><span class="tool-title">天井到達シミュレーター</span><span class="tool-desc">現在G数から天井、自力当選、差枚を試す</span></span></a>
               </div>
@@ -115,7 +117,7 @@
         <section class="article-card">
           <h2>目的別に選ぶ</h2>
           <div class="quick-grid">
-            <a class="quick-card" href="juggle.html"><strong>短く遊びたい</strong><span>ジャグ連を1回スタートして、100G以内の連続当選を試せます。</span></a>
+            <a class="quick-card" href="juggle-simple.html"><strong>短く遊びたい</strong><span>大きなボタンを押すだけで、ジャグ連の当たり結果だけを見られます。</span></a>
             <a class="quick-card" href="cz-challenge.html"><strong>突破型を試したい</strong><span>CZからATへ進む流れと差枚を確認できます。</span></a>
             <a class="quick-card" href="pachinko-319.html"><strong>一撃感を見たい</strong><span>319の初当たり、RUSH、総出玉、差玉をまとめて確認できます。</span></a>
             <a class="quick-card" href="ranking.html"><strong>記録を残したい</strong><span>この端末内に結果を保存して、ランキング形式で見返せます。</span></a>
@@ -156,7 +158,8 @@
             <table class="ranking-table">
               <thead><tr><th>ページ</th><th>主な結果</th><th>向いている使い方</th></tr></thead>
               <tbody>
-                <tr><td><a href="juggle.html">ジャグ連</a></td><td>連数、総ゲーム、差枚</td><td>短時間でスロット風の連チャンを試す</td></tr>
+                <tr><td><a href="juggle-simple.html">ジャグ連チャレンジ</a></td><td>当たり、当選G、連数</td><td>短時間でシンプルにジャグ連を試す</td></tr>
+                <tr><td><a href="juggle.html">ジャグ連詳細版</a></td><td>連数、総ゲーム、差枚</td><td>投資や差枚まで確認する</td></tr>
                 <tr><td><a href="cz-challenge.html">CZ突破</a></td><td>CZ当選、成功、AT、差枚</td><td>スロットの前兆突破型の流れを見る</td></tr>
                 <tr><td><a href="tenjo.html">天井到達</a></td><td>当選G、天井到達、投資、差枚</td><td>現在G数から天井までの流れを見る</td></tr>
                 <tr><td><a href="pachinko-319.html">319</a></td><td>初当たり、投資、総出玉、差玉</td><td>ミドルタイプの荒れ方を見る</td></tr>
@@ -185,7 +188,8 @@
         <section class="side-card">
           <h2>ツール一覧</h2>
           <ul class="side-list">
-            <li><a href="juggle.html">ジャグ連シミュレーター</a></li>
+            <li><a href="juggle-simple.html">ジャグ連チャレンジ</a></li>
+            <li><a href="juggle.html">ジャグ連シミュレーター詳細版</a></li>
             <li><a href="cz-challenge.html">CZ突破シミュレーター</a></li>
             <li><a href="tenjo.html">天井到達シミュレーター</a></li>
             <li><a href="pachinko-319.html">319大当たりシミュレーター</a></li>
