@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#1f7a55">
+  <meta name="theme-color" content="#050705">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <meta name="description" content="パチンコ・パチスロの確率、出玉、連チャン、ハマりを試せる無料シミュレーター集です。">
-  <title>ICHIGEKI | パチンコ・パチスロ シミュレーター集</title>
+  <meta name="description" content="ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル集です。ジャグ連、319一撃、CZ突破、1/8192などを固定スペックで遊べます。">
+  <title>ICHIGEKI | パチンコ・パチスロ風ランキングバトル</title>
   <link rel="canonical" href="https://atsushisora.github.io/ichigeki-web/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ICHIGEKI">
-  <meta property="og:title" content="ICHIGEKI | パチンコ・パチスロ シミュレーター集">
-  <meta property="og:description" content="パチンコ・パチスロの確率、出玉、連チャン、ハマりを試せる無料シミュレーター集です。">
+  <meta property="og:title" content="ICHIGEKI | パチンコ・パチスロ風ランキングバトル">
+  <meta property="og:description" content="ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル集です。ジャグ連、319一撃、CZ突破、1/8192などを固定スペックで遊べます。">
   <meta property="og:url" content="https://atsushisora.github.io/ichigeki-web/">
   <meta property="og:image" content="https://atsushisora.github.io/ichigeki-web/icon.svg">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="ICHIGEKI | パチンコ・パチスロ シミュレーター集">
-  <meta name="twitter:description" content="パチンコ・パチスロの確率、出玉、連チャン、ハマりを試せる無料シミュレーター集です。">
+  <meta name="twitter:title" content="ICHIGEKI | パチンコ・パチスロ風ランキングバトル">
+  <meta name="twitter:description" content="ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル集です。ジャグ連、319一撃、CZ突破、1/8192などを固定スペックで遊べます。">
   <link rel="stylesheet" href="style.css">
   <script type="application/ld+json">
   {
@@ -25,7 +25,7 @@
     "@type": "WebSite",
     "name": "ICHIGEKI",
     "url": "https://atsushisora.github.io/ichigeki-web/",
-    "description": "パチンコ・パチスロの確率、出玉、連チャン、ハマりを試せる無料シミュレーター集です。",
+    "description": "ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル集です。ジャグ連、319一撃、CZ突破、1/8192などを固定スペックで遊べます。",
     "inLanguage": "ja"
   }
   </script>
@@ -33,7 +33,7 @@
   {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "name": "ICHIGEKI シミュレーター一覧",
+    "name": "ICHIGEKI ランキングバトル一覧",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "ジャグ連チャレンジ", "url": "https://atsushisora.github.io/ichigeki-web/juggle-simple.html" },
       { "@type": "ListItem", "position": 2, "name": "ジャグ連シミュレーター", "url": "https://atsushisora.github.io/ichigeki-web/juggle.html" },
@@ -50,11 +50,11 @@
     <div class="header-inner">
       <a class="brand" href="index.html">
         <span class="brand-name">ICHIGEKI</span>
-        <span class="brand-sub">パチンコ・パチスロ シミュレーター集</span>
+        <span class="brand-sub">ランキングバトル</span>
       </a>
       <nav class="nav">
         <a href="index.html">トップ</a>
-        <a href="juggle.html">ジャグ連</a>
+        <a href="juggle-simple.html">ジャグ連</a>
         <a href="pachinko-319.html">319</a>
         <a href="ranking.html">ランキング</a>
         <a href="guide.html">使い方</a>
@@ -65,12 +65,12 @@
 
   <main class="page">
     <section class="hero">
-      <div class="kicker">Simulation Tools</div>
-      <h1>パチンコ・パチスロの確率を気軽に試せるシミュレーター集</h1>
-      <p class="lead">大当たり、RUSH突入、継続率、ハマり、ジャグ連などをブラウザ上で試せる無料ツールです。実際の遊技結果を保証するものではなく、確率のイメージをつかむためのエンターテインメント用シミュレーターです。</p>
+      <div class="kicker">Ranking Battle</div>
+      <h1>ワンタップで一撃を競うランキングバトル</h1>
+      <p class="lead">設定不要。STARTを押して結果を出し、ランキングで競うエンタメ用チャレンジサイトです。自由試算ツールも下層に残しています。</p>
       <div class="hero-actions">
         <a class="button primary" href="juggle-simple.html">ジャグ連チャレンジ</a>
-        <a class="button" href="cz-challenge.html">CZ突破を試す</a>
+        <a class="button" href="cz-challenge.html">CZ突破バトル</a>
         <a class="button" href="ranking.html">ランキングを見る</a>
       </div>
     </section>
@@ -78,10 +78,10 @@
     <div class="layout">
       <div class="main-column">
         <section class="article-card">
-          <h2>シミュレーターを選ぶ</h2>
+          <h2>ランキングバトルを選ぶ</h2>
           <div class="category-stack">
             <section class="tool-category">
-              <div class="category-head"><span>スロット系</span><small>ジャグ連、CZ突破、天井、差枚を試す</small></div>
+              <div class="category-head"><span>スロットバトル</span><small>ジャグ連、CZ突破、二択、1/8192を競う</small></div>
               <div class="grid tool-grid">
                 <a class="tool-link" href="juggle-simple.html"><span class="tool-icon">🤡</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">ジャグ連チャレンジ</span><span class="tool-desc">大きなボタン1つで当たりだけ表示するシンプル版</span></span></a>
                 <a class="tool-link" href="juggle.html"><span class="tool-icon">📊</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">ジャグ連シミュレーター詳細版</span><span class="tool-desc">投資、持ちメダル、差枚まで細かく確認</span></span></a>
@@ -90,7 +90,7 @@
               </div>
             </section>
             <section class="tool-category">
-              <div class="category-head"><span>パチンコ系</span><small>初当たり、RUSH、出玉、差玉を試す</small></div>
+              <div class="category-head"><span>パチンコバトル</span><small>初当たり、RUSH、出玉、差玉を競う</small></div>
               <div class="grid tool-grid">
                 <a class="tool-link" href="pachinko-319.html"><span class="tool-icon">🎰</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">319大当たりシミュレーター</span><span class="tool-desc">投資、RUSH突入、連チャン、差玉を確認</span></span></a>
                 <a class="tool-link" href="lt-rush.html"><span class="tool-icon">🔥</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">LT上位RUSH到達シミュレーター</span><span class="tool-desc">下位RUSHから上位RUSH昇格までを試す</span></span></a>
@@ -100,7 +100,7 @@
               </div>
             </section>
             <section class="tool-category">
-              <div class="category-head"><span>確率・ミニゲーム系</span><small>偏り、継続、50%チャレンジを体感する</small></div>
+              <div class="category-head"><span>確率バトル・自由試算</span><small>偏り、継続、50%チャレンジを体感する</small></div>
               <div class="grid tool-grid">
                 <a class="tool-link" href="two-choice.html"><span class="tool-icon">↔️</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">二択チャレンジ</span><span class="tool-desc">左か右を選んで50%を当て続ける</span></span></a>
                 <a class="tool-link" href="hamari.html"><span class="tool-icon">📉</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">ハマり確率シミュレーター</span><span class="tool-desc">指定回転数まで当たらない確率を計算</span></span></a>
@@ -128,17 +128,17 @@
 
         <section class="article-card">
           <h2>このサイトについて</h2>
-          <p>ICHIGEKIは、パチンコ・パチスロの確率を直感的に試すためのツール集です。確率分母や突入率、継続率を数字だけで見るよりも、シミュレーターで回してみることで「どれくらい起きるのか」をイメージしやすくなります。</p>
-          <p>各シミュレーターは簡易的な乱数計算で動作します。実在機種の完全再現、攻略情報、収支保証を目的としたものではありません。</p>
+          <p>ICHIGEKIは、パチンコ・パチスロ風の確率イベントをランキング形式で遊ぶためのエンタメサイトです。固定スペックのバトルは、誰でも同じ条件で一撃記録を狙えるようにしています。</p>
+          <p>各バトルは簡易的な乱数計算で動作します。実在機種の完全再現、攻略情報、収支保証を目的としたものではありません。</p>
         </section>
 
         <section class="article-card">
           <h2>おすすめの使い方</h2>
           <ol>
-            <li>気になるテーマのシミュレーターを開く</li>
-            <li>初期値のまま試す</li>
-            <li>確率や回数を変えて比較する</li>
-            <li>結果の差を見ながら確率のブレを確認する</li>
+            <li>ランキングバトルを選ぶ</li>
+            <li>STARTを押して結果を出す</li>
+            <li>良い結果をランキングに保存する</li>
+            <li>もう一回挑戦して記録更新を狙う</li>
           </ol>
           <p>初めて使う場合は、先に <a href="guide.html">確率の見方</a> と <a href="glossary.html">用語集</a> を確認すると、結果の意味が分かりやすくなります。</p>
         </section>
@@ -153,7 +153,7 @@
         </section>
 
         <section class="article-card">
-          <h2>シミュレーター早見表</h2>
+          <h2>バトル・自由試算早見表</h2>
           <div class="table-wrap">
             <table class="ranking-table">
               <thead><tr><th>ページ</th><th>主な結果</th><th>向いている使い方</th></tr></thead>
