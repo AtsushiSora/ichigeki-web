@@ -31,6 +31,11 @@
     <section class="juggle-simple-stage">
       <div class="simple-title-line"><span></span><h1>ハマり確率</h1><span></span></div>
       <div class="simple-status-card"><strong><span class="status-dot"></span><span>固定条件</span></strong><p>1/319で1000回転</p></div>
+      <div class="simple-rule-row" aria-label="チャレンジ条件">
+        <span><b>確率</b><strong>1/319</strong></span>
+        <span><b>回転数</b><strong>1000回転</strong></span>
+        <span><b>記録</b><strong>ハマり率</strong></span>
+      </div>
       <div class="simple-result-card">
         <strong id="resultHamari">--</strong>
         <b id="resultSpins">--</b>
@@ -45,6 +50,11 @@
         <button class="button" data-action="saveHamari">ランキングに保存</button>
         <button class="button" data-action="share">結果をコピー</button>
         <a class="button" href="index.html">トップへ戻る</a>
+      </div>
+      <div class="simple-next-row" aria-label="次に遊ぶ">
+        <a href="pachinko-319.html">一撃319へ</a>
+        <a href="rare-8192.html">8192へ</a>
+        <a href="ranking.html#hamari-ranking">記録へ</a>
       </div>
       <div class="field record-name-field"><label for="recordName">保存名</label><input id="recordName" type="text" maxlength="12" value="あなた"></div>
       <div class="log-box simple-log" id="log">STARTを押すとハマり確率を表示します。</div>
