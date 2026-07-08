@@ -869,6 +869,108 @@ p {
   letter-spacing: 1px;
 }
 
+.one-tap-tool .control-grid,
+.one-tap-tool .preset-strip,
+.one-tap-tool .fixed-condition-guide,
+.one-tap-tool .record-name-field {
+  display: none;
+}
+
+.one-tap-tool > .small-note {
+  margin: -4px 0 10px;
+  color: #c8d0c7;
+  font-weight: 800;
+  text-align: center;
+}
+
+.one-tap-tool .tool-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  justify-items: stretch;
+  margin: 10px 0 16px;
+}
+
+.one-tap-tool .tool-actions .button.primary {
+  justify-self: center;
+  grid-column: 1 / -1;
+  display: grid;
+  place-items: center;
+  width: min(210px, 54vw);
+  min-height: 0;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 4px solid rgba(173, 255, 142, 0.78);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 42% 24%, rgba(255, 255, 255, 0.28), transparent 28%),
+    linear-gradient(145deg, #78dd56, #0d531b 72%);
+  color: #fff;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: clamp(28px, 8vw, 46px);
+  font-weight: 950;
+  letter-spacing: 1px;
+  line-height: 1;
+  box-shadow:
+    0 0 0 12px rgba(107, 211, 79, 0.14),
+    0 0 46px rgba(107, 211, 79, 0.56),
+    inset 0 -18px 28px rgba(0, 0, 0, 0.35);
+}
+
+.one-tap-tool .tool-actions .button.primary:disabled {
+  opacity: 0.86;
+  filter: grayscale(0.18) brightness(0.92);
+}
+
+.one-tap-tool .tool-actions .button:not(.primary) {
+  min-height: 40px;
+  padding: 0 12px;
+  border-radius: 14px;
+  font-size: 13px;
+}
+
+.one-tap-tool .result-grid {
+  margin-top: 8px;
+}
+
+.one-tap-center {
+  display: grid;
+  place-items: center;
+  margin: 8px 0 16px;
+}
+
+.one-tap-start {
+  display: grid;
+  place-items: center;
+  width: min(220px, 58vw);
+  aspect-ratio: 1;
+  border: 4px solid rgba(173, 255, 142, 0.78);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 42% 24%, rgba(255, 255, 255, 0.28), transparent 28%),
+    linear-gradient(145deg, #78dd56, #0d531b 72%);
+  color: #fff;
+  cursor: pointer;
+  box-shadow:
+    0 0 0 12px rgba(107, 211, 79, 0.14),
+    0 0 46px rgba(107, 211, 79, 0.56),
+    inset 0 -18px 28px rgba(0, 0, 0, 0.35);
+}
+
+.one-tap-start span {
+  margin-top: 30px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: clamp(30px, 9vw, 48px);
+  font-weight: 950;
+  line-height: 1;
+}
+
+.one-tap-start small {
+  margin-top: -34px;
+  font-size: 14px;
+  font-weight: 900;
+}
+
 .control-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1983,6 +2085,66 @@ code,
 
   .tool-card .small-note {
     margin-bottom: 10px;
+  }
+
+  .one-tap-tool {
+    padding-top: 14px;
+  }
+
+  .one-tap-tool > h2 {
+    margin-bottom: 8px;
+    font-size: 18px;
+  }
+
+  .one-tap-tool > .small-note {
+    margin: -2px 0 8px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .one-tap-tool .tool-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin: 6px 0 12px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .one-tap-tool .tool-actions .button.primary {
+    width: min(154px, 42vw);
+    border-width: 3px;
+    font-size: clamp(24px, 8vw, 34px);
+    box-shadow:
+      0 0 0 8px rgba(107, 211, 79, 0.14),
+      0 0 32px rgba(107, 211, 79, 0.5),
+      inset 0 -14px 22px rgba(0, 0, 0, 0.35);
+  }
+
+  .one-tap-tool .tool-actions .button:not(.primary) {
+    min-height: 36px;
+    padding: 0 8px;
+    font-size: 11px;
+  }
+
+  .one-tap-start {
+    width: min(160px, 44vw);
+    border-width: 3px;
+    box-shadow:
+      0 0 0 8px rgba(107, 211, 79, 0.14),
+      0 0 32px rgba(107, 211, 79, 0.5),
+      inset 0 -14px 22px rgba(0, 0, 0, 0.35);
+  }
+
+  .one-tap-start span {
+    margin-top: 22px;
+    font-size: clamp(26px, 8vw, 36px);
+  }
+
+  .one-tap-start small {
+    margin-top: -26px;
+    font-size: 12px;
   }
 
   .result-grid {
