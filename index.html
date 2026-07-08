@@ -45,7 +45,7 @@
   }
   </script>
 </head>
-<body>
+<body class="home-page">
   <header class="site-header">
     <div class="header-inner">
       <a class="brand" href="index.html">
@@ -63,22 +63,85 @@
     </div>
   </header>
 
-  <main class="page">
-    <section class="hero">
-      <div class="kicker">Ranking Battle</div>
-      <h1>ワンタップで一撃を競うランキングバトル</h1>
-      <p class="lead">設定不要。STARTを押して結果を出し、ランキングで競うエンタメ用チャレンジサイトです。自由試算ツールも下層に残しています。</p>
-      <div class="hero-actions">
-        <a class="button primary" href="juggle-simple.html">ジャグ連チャレンジ</a>
-        <a class="button" href="cz-challenge.html">CZ突破バトル</a>
-        <a class="button" href="ranking.html">ランキングを見る</a>
+  <main class="page home-game-page">
+    <section class="game-lobby" aria-labelledby="homeTitle">
+      <div class="lobby-top">
+        <div>
+          <div class="kicker">Ranking Battle</div>
+          <h1 id="homeTitle">ICHIGEKI</h1>
+          <p>ワンタップで挑戦。固定スペックで一撃記録を競うランキングバトル。</p>
+        </div>
+        <a class="lobby-rank-button" href="ranking.html">🏆 ランキング</a>
       </div>
+
+      <div class="lobby-status">
+        <span><b>LV.</b><strong>12</strong></span>
+        <span><b>所持玉</b><strong>23,900玉</strong></span>
+        <span><b>最高連</b><strong>16連</strong></span>
+        <span><b>ボーナス</b><strong>受け取り可能</strong></span>
+      </div>
+
+      <div class="lobby-ranking-strip" aria-label="ランキング上位">
+        <span class="strip-title">TOP3</span>
+        <span><b>1</b> atsushi <strong>28,045玉</strong></span>
+        <span><b>2</b> ああああ <strong>10,663玉</strong></span>
+        <span><b>3</b> あ <strong>0玉</strong></span>
+      </div>
+
+      <article class="featured-battle">
+        <div class="featured-crown">♛</div>
+        <div>
+          <span class="battle-label">MAIN BATTLE</span>
+          <h2>全国ランキングバトル</h2>
+          <p>全国のプレイヤーとスコアを競い合え。まずはジャグ連でトップランカーを狙う。</p>
+          <div class="featured-tags">
+            <span>固定スペック</span>
+            <span>ランキング対象</span>
+            <span>ワンタップ</span>
+          </div>
+        </div>
+        <a class="play-button" href="juggle-simple.html"><span>PLAY</span><small>挑戦する</small></a>
+      </article>
+
+      <section class="mode-select" aria-label="ゲームモード">
+        <a class="mode-card mode-juggle" href="juggle-simple.html">
+          <span class="mode-icon">777</span>
+          <strong>ジャグ連</strong>
+          <small>100G以内の連チャンを競う</small>
+          <b>PLAY</b>
+        </a>
+        <a class="mode-card mode-319" href="pachinko-319.html">
+          <span class="mode-icon">319</span>
+          <strong>一撃319</strong>
+          <small>初当たりから総出玉を競う</small>
+          <b>PLAY</b>
+        </a>
+        <a class="mode-card mode-8192" href="rare-8192.html">
+          <span class="mode-icon">8192</span>
+          <strong>8192チャレンジ</strong>
+          <small>激レア確率の当選Gを狙う</small>
+          <b>PLAY</b>
+        </a>
+        <a class="mode-card mode-choice" href="two-choice.html">
+          <span class="mode-icon">2択</span>
+          <strong>二択</strong>
+          <small>50%を当て続ける</small>
+          <b>PLAY</b>
+        </a>
+      </section>
+
+      <div class="lobby-footer-panels">
+        <a class="mission-card" href="ranking.html"><strong>本日のミッション</strong><span>ランキングに1回挑戦</span><em>報酬 300玉</em></a>
+        <a class="mission-card bonus" href="guide.html"><strong>使い方</strong><span>ルールと記録の見方</span><em>確認する</em></a>
+      </div>
+
+      <div class="ad-box ad-box-wide lobby-ad" data-ad-slot="home-lobby"><span class="ad-label">PR</span><span class="ad-title">広告枠</span></div>
     </section>
 
     <div class="layout">
       <div class="main-column">
         <section class="article-card">
-          <h2>ランキングバトルを選ぶ</h2>
+          <h2>全ゲームモード</h2>
           <div class="category-stack">
             <section class="tool-category">
               <div class="category-head"><span>スロットバトル</span><small>ジャグ連、CZ突破、二択、1/8192を競う</small></div>
