@@ -200,7 +200,7 @@ const rankingPreviewConfig = {
     unit: "連",
     score: record => record?.chain || 0,
     sort: records => sortRecords("twoChoice", records),
-    format: record => record ? `${record.chain}連 / 到達率 ${record.probability.toFixed(3)}%` : "--"
+    format: record => record ? `${record.chain}連 / 到達 ${formatTwoChoiceOddsFromPercent(record.probability)}` : "--"
   },
   ltRush: {
     label: "LT上位",
@@ -535,6 +535,19 @@ function updateSpeedLabel() {
   label.textContent = `${getSpeedValue()}倍`;
 }
 
+function formatTwoChoiceOddsFromChain(chain) {
+  const cleanChain = Math.max(0, Math.floor(clampNumber(chain, 0)));
+  const denominator = 2 ** cleanChain;
+  return `1/${yen.format(denominator)}`;
+}
+
+function formatTwoChoiceOddsFromPercent(percent) {
+  const cleanPercent = clampNumber(percent, 100);
+  if (cleanPercent <= 0) return "--";
+  const denominator = Math.max(1, Math.round(100 / cleanPercent));
+  return `1/${yen.format(denominator)}`;
+}
+
 function loadLocalRecords() {
   try {
     const parsed = JSON.parse(localStorage.getItem(rankingStorageKey) || "{}");
@@ -797,7 +810,7 @@ function renderRankingPage() {
   const twoChoiceBody = document.getElementById("twoChoiceRankingBody");
   if (twoChoiceBody) {
     const rows = sortRecords("twoChoice", records.twoChoice, getRankingSort("twoChoice")).slice(0, 10).map((record, index) => (
-      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.chain}連</td><td>${record.rounds || record.chain + 1}回</td><td>${record.probability.toFixed(3)}%</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("twoChoice", record.id)}</td></tr>`
+      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.chain}連</td><td>${record.rounds || record.chain + 1}回</td><td>${formatTwoChoiceOddsFromPercent(record.probability)}</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("twoChoice", record.id)}</td></tr>`
     ));
     twoChoiceBody.innerHTML = rows.join("") || renderEmptyRows(7, "二択チャレンジの記録がありません", "two-choice-select.html", "二択を試す");
   }
@@ -1802,7 +1815,7 @@ function resetTwoChoice() {
   setText("resultChain", "0連");
   setText("resultBest", `${twoChoiceState.best}連`);
   setText("resultRound", "1回目");
-  setText("resultNextRate", "50.0%");
+  setText("resultNextRate", formatTwoChoiceOddsFromChain(0));
   setText("log", "左か右を選んでください。");
   setText("simpleStatus", "選択待ち");
   setText("simpleStatusText", "左か右を選んで50%を突破");
@@ -1827,6 +1840,7 @@ function initializeTwoChoicePage() {
   twoChoiceState.correct = Math.random() < 0.5 ? "left" : "right";
   twoChoiceState.active = true;
   setText("resultBest", `${best}連`);
+  setText("resultNextRate", formatTwoChoiceOddsFromChain(0));
   if (document.querySelector("[data-action='twoChoiceAuto']")) {
     setText("log", "STARTを押すと二択チャレンジを開始します。");
   } else {
@@ -1872,7 +1886,7 @@ function finishTwoChoice(selected) {
     button.classList.toggle("bad", button.dataset.choice === selected);
   });
   setText("resultBest", `${twoChoiceState.best}連`);
-  setText("resultNextRate", "--");
+  setText("resultNextRate", formatTwoChoiceOddsFromChain(finalChain));
   setText("log", `終了: ${finalChain}連 / 選択 ${selectedLabel} / 正解 ${correctLabel}`);
   setText("simpleStatus", "結果確定");
   setText("simpleStatusText", `${finalChain}連で終了 / 正解は${correctLabel}`);
@@ -1894,7 +1908,7 @@ function chooseTwoChoice(selected) {
   setText("resultChain", `${twoChoiceState.chain}連`);
   setText("resultBest", `${twoChoiceState.best}連`);
   setText("resultRound", `${twoChoiceState.round}回目`);
-  setText("resultNextRate", "50.0%");
+  setText("resultNextRate", formatTwoChoiceOddsFromChain(twoChoiceState.chain));
   setText("log", twoChoiceState.history.slice(0, 8).join("\n"));
   setText("simpleStatus", "正解");
   setText("simpleStatusText", `${twoChoiceState.chain}連突破 / 次の二択へ`);
@@ -1921,7 +1935,7 @@ async function runTwoChoiceAuto() {
     setText("resultChain", `${twoChoiceState.chain}連`);
     setText("resultBest", `${twoChoiceState.best}連`);
     setText("resultRound", `${twoChoiceState.chain + 1}回目`);
-    setText("resultNextRate", "50.0%");
+    setText("resultNextRate", formatTwoChoiceOddsFromChain(twoChoiceState.chain));
     setText("log", history.slice(0, 8).join("\n"));
     playTwoChoiceSuccessEffect();
     await sleep(speedAdjustedDuration(240));
@@ -1940,7 +1954,7 @@ async function runTwoChoiceAuto() {
   setText("resultChain", `${finalChain}連`);
   setText("resultBest", `${twoChoiceState.best}連`);
   setText("resultRound", `${finalChain + 1}回目`);
-  setText("resultNextRate", "--");
+  setText("resultNextRate", formatTwoChoiceOddsFromChain(finalChain));
   setText("log", `終了: ${finalChain}連 / ${finalChain + 1}回目で失敗`);
   markResultReady("twoChoice");
   setRunningButton("twoChoiceAuto", false);

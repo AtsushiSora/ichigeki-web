@@ -46,7 +46,7 @@
         <div class="result-box"><div class="result-label">現在の連続正解</div><div class="result-value good" id="resultChain">0連</div></div>
         <div class="result-box"><div class="result-label">最高記録</div><div class="result-value" id="resultBest">0連</div></div>
         <div class="result-box"><div class="result-label">現在の挑戦</div><div class="result-value" id="resultRound">1回目</div></div>
-        <div class="result-box"><div class="result-label">次回成功率</div><div class="result-value" id="resultNextRate">50.0%</div></div>
+        <div class="result-box"><div class="result-label">到達確率</div><div class="result-value" id="resultNextRate">1/1</div></div>
       </div>
       <div class="log-box" id="log">STARTを押すと二択チャレンジを開始します。</div>
     </section>
@@ -60,7 +60,7 @@
       <h2 id="choice-rule">ルール</h2>
       <p>1回ごとに成功・失敗を50%で抽選します。成功すると連続正解数が1つ増え、失敗するとその時点でチャレンジ終了です。</p>
       <h2>確率の目安</h2>
-      <div id="choice-probability" class="table-wrap"><table class="ranking-table"><thead><tr><th>連続正解</th><th>確率</th><th>見え方</th></tr></thead><tbody><tr><td>3連</td><td>12.5%</td><td>わりと起きる</td></tr><tr><td>5連</td><td>3.125%</td><td>かなり良い</td></tr><tr><td>10連</td><td>約0.098%</td><td>かなり珍しい</td></tr></tbody></table></div>
+      <div id="choice-probability" class="table-wrap"><table class="ranking-table"><thead><tr><th>連続正解</th><th>到達確率</th><th>見え方</th></tr></thead><tbody><tr><td>3連</td><td>1/8</td><td>わりと起きる</td></tr><tr><td>5連</td><td>1/32</td><td>かなり良い</td></tr><tr><td>10連</td><td>1/1,024</td><td>かなり珍しい</td></tr></tbody></table></div>
       <p>二択は毎回独立抽選です。前回当たったから次が外れやすくなる、前回外れたから次が当たりやすくなる、という仕組みではありません。</p>
       <h2 id="choice-ranking">ランキング保存について</h2>
       <p>結果が出たら「ランキングに保存」を押すと、この端末内のランキングページに二択記録として保存できます。保存されるのは保存名、連続正解数、挑戦回数、到達確率です。</p>

@@ -1204,7 +1204,7 @@ p {
 }
 
 .choice-simple-stage {
-  grid-template-columns: minmax(0, 1fr) minmax(150px, 180px);
+  grid-template-columns: minmax(0, 1fr) minmax(210px, 240px);
   align-items: stretch;
 }
 
@@ -1227,8 +1227,7 @@ p {
 .choice-simple-stage .choice-stage {
   grid-column: 2;
   grid-row: 3;
-  grid-template-columns: 1fr;
-  grid-template-rows: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   min-height: 100%;
   margin: 0;
@@ -1649,6 +1648,7 @@ code,
 .table-wrap {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
 }
 
 .ranking-hero {
@@ -2328,10 +2328,34 @@ code,
   .ranking-table th,
   .ranking-table td {
     padding: 10px 8px;
+    font-size: 12px;
   }
 
   .ranking-table th {
     white-space: nowrap;
+  }
+
+  .table-wrap {
+    margin: 0 -2px;
+    border: 1px solid rgba(107, 211, 79, 0.14);
+    background: rgba(5, 7, 5, 0.36);
+  }
+
+  .ranking-table {
+    min-width: 680px;
+  }
+
+  .ranking-table td:first-child,
+  .ranking-table th:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--paper-soft);
+  }
+
+  .ranking-table td:first-child {
+    color: var(--gold);
+    font-weight: 900;
   }
 
   .ranking-controls {
@@ -2909,7 +2933,7 @@ code,
   }
 
   .choice-simple-stage {
-    grid-template-columns: minmax(0, 1fr) minmax(104px, 30vw);
+    grid-template-columns: minmax(0, 1fr) minmax(150px, 42vw);
     align-items: stretch;
   }
 
@@ -2921,8 +2945,7 @@ code,
   .choice-simple-stage .choice-stage {
     grid-column: 2;
     grid-row: 2;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
     align-self: stretch;
     min-height: 0;
@@ -2933,7 +2956,7 @@ code,
     min-height: 0;
     padding: 0;
     border-radius: 16px;
-    font-size: clamp(24px, 7vw, 34px);
+    font-size: clamp(22px, 6vw, 30px);
   }
 
   .choice-simple-stage .choice-effect {
@@ -2983,10 +3006,10 @@ code,
   }
 
   .choice-simple-stage {
-    grid-template-columns: minmax(0, 1fr) minmax(96px, 29vw);
+    grid-template-columns: minmax(0, 1fr) minmax(136px, 40vw);
   }
 
   .choice-simple-stage .choice-button {
-    font-size: clamp(22px, 7vw, 30px);
+    font-size: clamp(20px, 6vw, 28px);
   }
 }
