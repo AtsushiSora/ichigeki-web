@@ -164,6 +164,9 @@ function setSaveReady(type, isReady) {
   const button = document.querySelector(`[data-action="${action}"]`);
   if (!button) return;
   button.classList.toggle("save-ready", isReady);
+  button.disabled = !isReady;
+  button.setAttribute("aria-disabled", String(!isReady));
+  button.title = isReady ? "この結果をランキングに保存できます" : "結果が出ると保存できます";
   button.setAttribute("aria-live", "polite");
   if (!isReady) updateSavePreview(type, null);
 }
@@ -171,6 +174,10 @@ function setSaveReady(type, isReady) {
 function markResultReady(type) {
   setSaveReady(type, true);
   updateSavePreview(type, latestResults[type]);
+}
+
+function initializeSaveButtons() {
+  Object.keys(saveActionByType).forEach(type => setSaveReady(type, false));
 }
 
 const rankingPreviewConfig = {
@@ -2049,6 +2056,7 @@ document.addEventListener("change", event => {
 });
 
 updateSpeedLabel();
+initializeSaveButtons();
 renderFixedConditionGuide();
 renderSimplePresets();
 renderResultGuide();
