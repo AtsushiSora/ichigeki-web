@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050705">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <meta name="description" content="左か右を選んで50%を何連続で突破できるか試す、1ページ完結の二択チャレンジです。">
+  <title>二択セレクトチャレンジ | ICHIGEKI</title>
+  <link rel="canonical" href="https://atsushisora.github.io/ichigeki-web/two-choice-select.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ICHIGEKI">
+  <meta property="og:title" content="二択セレクトチャレンジ | ICHIGEKI">
+  <meta property="og:description" content="左か右を選んで50%を何連続で突破できるか試す、1ページ完結の二択チャレンジです。">
+  <meta property="og:url" content="https://atsushisora.github.io/ichigeki-web/two-choice-select.html">
+  <meta property="og:image" content="https://atsushisora.github.io/ichigeki-web/icon.svg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="二択セレクトチャレンジ | ICHIGEKI">
+  <meta name="twitter:description" content="左か右を選んで50%を何連続で突破できるか試す、1ページ完結の二択チャレンジです。">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="juggle-simple-page choice-simple-page">
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-name">ICHIGEKI</span>
+        <span class="brand-sub">二択ランキング</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">トップ</a>
+        <a href="two-choice.html">自動版</a>
+        <a href="ranking.html#two-choice-ranking">ランキング</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="simple-page">
+    <section class="juggle-simple-stage choice-simple-stage">
+      <div class="simple-title-line">
+        <span></span>
+        <h1>二択セレクト</h1>
+        <span></span>
+      </div>
+
+      <div class="simple-status-card">
+        <strong><span class="status-dot"></span><span id="simpleStatus">選択待ち</span></strong>
+        <p id="simpleStatusText">左か右を選んで50%を突破</p>
+      </div>
+
+      <div class="simple-result-card">
+        <strong>2択</strong>
+        <b id="resultChain">0連</b>
+        <small id="resultRound">1回目</small>
+        <em>最高 <span id="resultBest">0連</span> / 次回 <span id="resultNextRate">50.0%</span></em>
+      </div>
+
+      <div class="choice-effect" id="choiceEffect" aria-live="polite"></div>
+      <div class="choice-stage">
+        <button class="choice-button" data-action="twoChoicePick" data-choice="left">左</button>
+        <button class="choice-button" data-action="twoChoicePick" data-choice="right">右</button>
+      </div>
+
+      <a class="simple-rank-link" href="ranking.html#two-choice-ranking">ランキングを見る</a>
+
+      <div class="simple-sub-actions">
+        <button class="button" data-action="twoChoiceStart">リスタート</button>
+        <button class="button" data-action="saveTwoChoice">ランキングに保存</button>
+        <button class="button" data-action="share">結果をコピー</button>
+        <a class="button" href="two-choice.html">自動版で遊ぶ</a>
+      </div>
+
+      <div class="field record-name-field">
+        <label for="recordName">保存名</label>
+        <input id="recordName" type="text" maxlength="12" value="あなた">
+      </div>
+
+      <div class="log-box simple-log" id="log">左か右を選んでください。</div>
+      <div class="ad-box simple-ad" data-ad-slot="two-choice-select-footer"><span class="ad-label">PR</span><span class="ad-title">広告枠</span></div>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

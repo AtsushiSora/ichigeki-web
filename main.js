@@ -154,7 +154,8 @@ const recordTypeByRunAction = {
   twoChoiceStart: "twoChoice",
   ltRush: "ltRush",
   czChallenge: "czChallenge",
-  rare8192: "rare8192"
+  rare8192: "rare8192",
+  twoChoiceAuto: "twoChoice"
 };
 
 function setSaveReady(type, isReady) {
@@ -798,7 +799,7 @@ function renderRankingPage() {
     const rows = sortRecords("twoChoice", records.twoChoice, getRankingSort("twoChoice")).slice(0, 10).map((record, index) => (
       `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.chain}連</td><td>${record.rounds || record.chain + 1}回</td><td>${record.probability.toFixed(3)}%</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("twoChoice", record.id)}</td></tr>`
     ));
-    twoChoiceBody.innerHTML = rows.join("") || renderEmptyRows(7, "二択チャレンジの記録がありません", "two-choice.html", "二択を試す");
+    twoChoiceBody.innerHTML = rows.join("") || renderEmptyRows(7, "二択チャレンジの記録がありません", "two-choice-select.html", "二択を試す");
   }
 
   const ltRushBody = document.getElementById("ltRushRankingBody");
@@ -1704,6 +1705,7 @@ async function runContinuation() {
 }
 
 let rushRunning = false;
+let twoChoiceRunning = false;
 let twoChoiceState = {
   active: false,
   chain: 0,
@@ -1802,6 +1804,8 @@ function resetTwoChoice() {
   setText("resultRound", "1回目");
   setText("resultNextRate", "50.0%");
   setText("log", "左か右を選んでください。");
+  setText("simpleStatus", "選択待ち");
+  setText("simpleStatusText", "左か右を選んで50%を突破");
   latestResults.twoChoice = null;
   setSaveReady("twoChoice", false);
   const effect = document.getElementById("choiceEffect");
@@ -1823,12 +1827,16 @@ function initializeTwoChoicePage() {
   twoChoiceState.correct = Math.random() < 0.5 ? "left" : "right";
   twoChoiceState.active = true;
   setText("resultBest", `${best}連`);
-  setText("log", "左か右を選んでください。");
+  if (document.querySelector("[data-action='twoChoiceAuto']")) {
+    setText("log", "STARTを押すと二択チャレンジを開始します。");
+  } else {
+    setText("log", "左か右を選んでください。");
+  }
 }
 
 function playTwoChoiceSuccessEffect() {
   const effect = document.getElementById("choiceEffect");
-  const stage = document.querySelector(".choice-stage");
+  const stage = document.querySelector(".choice-stage, .one-tap-center");
   if (!effect || !stage) return;
   const special = twoChoiceState.chain >= 10 ? "激レア！" : twoChoiceState.chain >= 5 ? "好記録！" : "正解！";
   effect.textContent = `${special} ${twoChoiceState.chain}連`;
@@ -1866,6 +1874,8 @@ function finishTwoChoice(selected) {
   setText("resultBest", `${twoChoiceState.best}連`);
   setText("resultNextRate", "--");
   setText("log", `終了: ${finalChain}連 / 選択 ${selectedLabel} / 正解 ${correctLabel}`);
+  setText("simpleStatus", "結果確定");
+  setText("simpleStatusText", `${finalChain}連で終了 / 正解は${correctLabel}`);
 }
 
 function chooseTwoChoice(selected) {
@@ -1886,6 +1896,8 @@ function chooseTwoChoice(selected) {
   setText("resultRound", `${twoChoiceState.round}回目`);
   setText("resultNextRate", "50.0%");
   setText("log", twoChoiceState.history.slice(0, 8).join("\n"));
+  setText("simpleStatus", "正解");
+  setText("simpleStatusText", `${twoChoiceState.chain}連突破 / 次の二択へ`);
   latestResults.twoChoice = {
     chain: twoChoiceState.chain,
     rounds: twoChoiceState.round - 1,
@@ -1893,6 +1905,46 @@ function chooseTwoChoice(selected) {
   };
   markResultReady("twoChoice");
   playTwoChoiceSuccessEffect();
+}
+
+async function runTwoChoiceAuto() {
+  if (twoChoiceRunning) return;
+  twoChoiceRunning = true;
+  resetTwoChoice();
+  setRunningButton("twoChoiceAuto", true);
+  setText("log", "二択チャレンジ開始...");
+  const history = [];
+  while (Math.random() < 0.5 && twoChoiceState.chain < 200) {
+    twoChoiceState.chain++;
+    twoChoiceState.best = Math.max(twoChoiceState.best, twoChoiceState.chain);
+    history.unshift(`${twoChoiceState.chain}回目 成功 / ${twoChoiceState.chain}連`);
+    setText("resultChain", `${twoChoiceState.chain}連`);
+    setText("resultBest", `${twoChoiceState.best}連`);
+    setText("resultRound", `${twoChoiceState.chain + 1}回目`);
+    setText("resultNextRate", "50.0%");
+    setText("log", history.slice(0, 8).join("\n"));
+    playTwoChoiceSuccessEffect();
+    await sleep(speedAdjustedDuration(240));
+  }
+  const finalChain = twoChoiceState.chain;
+  twoChoiceState.active = false;
+  twoChoiceState.round = finalChain + 1;
+  try {
+    localStorage.setItem("ichigekiTwoChoiceBest", String(twoChoiceState.best));
+  } catch {}
+  latestResults.twoChoice = {
+    chain: finalChain,
+    rounds: finalChain + 1,
+    probability: Math.pow(0.5, finalChain) * 100
+  };
+  setText("resultChain", `${finalChain}連`);
+  setText("resultBest", `${twoChoiceState.best}連`);
+  setText("resultRound", `${finalChain + 1}回目`);
+  setText("resultNextRate", "--");
+  setText("log", `終了: ${finalChain}連 / ${finalChain + 1}回目で失敗`);
+  markResultReady("twoChoice");
+  setRunningButton("twoChoiceAuto", false);
+  twoChoiceRunning = false;
 }
 
 function copyShareText() {
@@ -1904,7 +1956,7 @@ function renderMobileBottomNav() {
   if (document.querySelector(".mobile-bottom-nav")) return;
   const items = [
     { href: "index.html", label: "トップ", icon: "⌂", match: ["index.html", ""] },
-    { href: "juggle-simple.html", label: "挑戦", icon: "▶", match: ["juggle-simple.html", "pachinko-319.html", "cz-challenge.html", "rare-8192.html", "two-choice.html", "hamari.html", "lt-rush.html"] },
+    { href: "juggle-simple.html", label: "挑戦", icon: "▶", match: ["juggle-simple.html", "pachinko-319.html", "cz-challenge.html", "rare-8192.html", "two-choice.html", "two-choice-select.html", "hamari.html", "lt-rush.html"] },
     { href: "ranking.html", label: "記録", icon: "🏆", match: ["ranking.html"] },
     { href: "guide.html", label: "使い方", icon: "?", match: ["guide.html", "faq.html", "glossary.html"] }
   ];
@@ -1959,6 +2011,7 @@ document.addEventListener("click", event => {
   if (action === "kakenuke") runKakenuke();
   if (action === "twoChoiceStart") resetTwoChoice();
   if (action === "twoChoicePick") chooseTwoChoice(target.dataset.choice);
+  if (action === "twoChoiceAuto") runTwoChoiceAuto();
   if (action === "applySimplePreset") applySimplePreset(target.dataset.presetAction, target.dataset.presetIndex);
   if (action === "share") copyShareText();
   if (action === "saveJuggle") saveLatestRecord("juggle");
