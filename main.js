@@ -1400,22 +1400,25 @@ async function runJuggleSimple() {
 
   const result = simulateJuggle();
   let previousGame = 0;
+  let lastInterval = 0;
   for (const hit of result.hitEvents) {
     const distance = Math.max(1, hit.game - previousGame);
-    await animateCount("resultHitGame", hit.game, "G", Math.min(2600, Math.max(700, distance * 9)));
+    lastInterval = distance;
+    await animateCount("resultHitGame", distance, "G", Math.min(2600, Math.max(700, distance * 9)));
     stage?.classList.add("is-hit");
     setText("simpleStatus", "当たり");
     setText("simpleStatusText", `${hit.type}を引きました`);
     setText("resultBonusType", hit.type);
     setText("resultChain", `${hit.chain}連`);
     setText("resultBonusBreakdown", `BIG ${hit.big} / REG ${hit.reg}`);
-    setText("log", `${hit.game}Gで${hit.type} / ジャグ連 ${hit.chain}回`);
+    setText("log", `${distance}Gで${hit.type} / ジャグ連 ${hit.chain}回`);
     await sleep(speedAdjustedDuration(360));
     stage?.classList.remove("is-hit");
     previousGame = hit.game;
     if (hit.chain < result.chain) {
       setText("simpleStatus", "100G以内を追跡中");
       setText("simpleStatusText", "次の当たりを待っています");
+      setText("resultHitGame", "0G");
     }
   }
 
@@ -1425,7 +1428,7 @@ async function runJuggleSimple() {
   setText("simpleStatus", "結果確定");
   setText("simpleStatusText", "100G抜けで終了");
   const lastHit = result.hitEvents[result.hitEvents.length - 1];
-  setText("resultHitGame", `${yen.format(lastHit?.game || games)}G`);
+  setText("resultHitGame", `${yen.format(lastInterval || games)}G`);
   setText("resultBonusType", lastHit?.type || "--");
   setText("resultChain", `${chain}連`);
   setText("resultBonusBreakdown", `BIG ${big} / REG ${reg}`);
