@@ -6,76 +6,52 @@
   <meta name="theme-color" content="#050705">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <meta name="description" content="1/319の初当たり、RUSH突入、継続率、投資、総出玉、差玉を試せるパチンコ319シミュレーターです。">
-  <title>パチンコ319大当たりシミュレーター | ICHIGEKI</title>
+  <meta name="description" content="STARTを押すだけで319一撃の初当たり、RUSH、総出玉、差玉を試せるランキングチャレンジです。">
+  <title>319一撃チャレンジ | ICHIGEKI</title>
   <link rel="canonical" href="https://atsushisora.github.io/ichigeki-web/pachinko-319.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ICHIGEKI">
-  <meta property="og:title" content="パチンコ319大当たりシミュレーター | ICHIGEKI">
-  <meta property="og:description" content="1/319の初当たり、RUSH突入、継続率、投資、総出玉、差玉を試せるパチンコ319シミュレーターです。">
+  <meta property="og:title" content="319一撃チャレンジ | ICHIGEKI">
+  <meta property="og:description" content="STARTを押すだけで319一撃の初当たり、RUSH、総出玉、差玉を試せるランキングチャレンジです。">
   <meta property="og:url" content="https://atsushisora.github.io/ichigeki-web/pachinko-319.html">
   <meta property="og:image" content="https://atsushisora.github.io/ichigeki-web/icon.svg">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="パチンコ319大当たりシミュレーター | ICHIGEKI">
-  <meta name="twitter:description" content="1/319の初当たり、RUSH突入、継続率、投資、総出玉、差玉を試せるパチンコ319シミュレーターです。">
+  <meta name="twitter:title" content="319一撃チャレンジ | ICHIGEKI">
+  <meta name="twitter:description" content="STARTを押すだけで319一撃の初当たり、RUSH、総出玉、差玉を試せるランキングチャレンジです。">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">ランキングバトル</span></a><nav class="nav"><a href="index.html">トップ</a><a href="juggle-simple.html">ジャグ連</a><a href="ranking.html">ランキング</a></nav></div></header>
-  <main class="page"><div class="layout"><div class="main-column">
-    <section class="hero"><div class="kicker">Pachinko Tool</div><h1>パチンコ319大当たりシミュレーター</h1><p class="lead">1/319の初当たりを引くまで回し、RUSH突入、継続、出玉、投資、差玉を簡易計算します。王道ミドルタイプの荒れ方を体感するためのツールです。</p></section>
-    <section class="tool-card">
-      <h2>シミュレーター</h2>
-      <div class="control-grid">
-        <div class="field"><label for="spinPerUnit">1,000円あたり回転数（固定）</label><input id="spinPerUnit" type="number" value="17" disabled></div>
-        <div class="field"><label for="rushRate">RUSH突入率（固定）</label><input id="rushRate" type="number" value="60" disabled></div>
-        <div class="field"><label for="continueRate">継続率（固定）</label><input id="continueRate" type="number" value="81" disabled></div>
-        <div class="field"><label for="firstPayout">初当たり出玉（固定）</label><input id="firstPayout" type="number" value="300" disabled></div>
-        <div class="field"><label for="payout">RUSH中出玉（固定）</label><input id="payout" type="number" value="1500" disabled></div>
-        <div class="field"><label for="recordName">ランキング保存名</label><input id="recordName" type="text" value="あなた" maxlength="12" autocomplete="nickname"></div>
-        <div class="field speed-field"><label for="animationSpeed">回転速度 <span id="speedLabel">1倍</span></label><input id="animationSpeed" type="range" value="1" min="1" max="20"></div>
+<body class="juggle-simple-page">
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">319ランキング</span></a>
+      <nav class="nav"><a href="index.html">トップ</a><a href="ranking.html#pachinko-ranking">ランキング</a></nav>
+    </div>
+  </header>
+  <main class="simple-page">
+    <section class="juggle-simple-stage">
+      <div class="simple-title-line"><span></span><h1>319一撃</h1><span></span></div>
+      <div class="simple-status-card"><strong><span class="status-dot"></span><span>固定スペック</span></strong><p>1/319・突入60%・継続81%</p></div>
+      <div class="simple-result-card">
+        <strong id="resultPayout">0玉</strong>
+        <b id="resultChain">0連</b>
+        <small id="resultRush">--</small>
+        <em><span id="resultSpins">0回転</span> / <span id="resultInvestment">0円</span> / <span id="resultDiff">0玉</span></em>
       </div>
-      <p class="small-note">ランキング対象のため、スペックは固定です。保存名と回転速度だけ変更できます。</p>
-      <div class="tool-actions"><button class="button primary" data-action="pachinko319">スタート</button><button class="button" data-action="savePachinko319">ランキングに保存</button><button class="button" data-action="share">結果をコピー</button><a class="button" href="ranking.html#pachinko-ranking">ランキングを見る</a></div>
-      <div class="result-grid">
-        <div class="result-box"><div class="result-label">初当たり</div><div class="result-value" id="resultSpins">0回転</div></div>
-        <div class="result-box"><div class="result-label">投資</div><div class="result-value" id="resultInvestment">0円</div></div>
-        <div class="result-box"><div class="result-label">総出玉</div><div class="result-value good" id="resultPayout">0玉</div></div>
-        <div class="result-box"><div class="result-label">連チャン</div><div class="result-value" id="resultChain">0連</div></div>
-        <div class="result-box"><div class="result-label">差玉</div><div class="result-value" id="resultDiff">0玉</div></div>
-        <div class="result-box"><div class="result-label">RUSH</div><div class="result-value" id="resultRush">--</div></div>
+      <a class="simple-rank-link" href="ranking.html#pachinko-ranking">ランキングを見る</a>
+      <div class="simple-start-area">
+        <button class="simple-start-button" data-action="pachinko319"><span>START</span><small>変動開始</small></button>
       </div>
-      <div class="log-box" id="log">スタートすると結果がここに表示されます。</div>
+      <div class="simple-sub-actions">
+        <button class="button" data-action="savePachinko319">ランキングに保存</button>
+        <button class="button" data-action="share">結果をコピー</button>
+        <a class="button" href="index.html">トップへ戻る</a>
+      </div>
+      <div class="field record-name-field"><label for="recordName">保存名</label><input id="recordName" type="text" maxlength="12" value="あなた"></div>
+      <div class="log-box simple-log" id="log">STARTを押すと319一撃の結果を表示します。</div>
+      <div class="ad-box simple-ad" data-ad-slot="pachinko-simple-footer"><span class="ad-label">PR</span><span class="ad-title">広告枠</span></div>
+      <p class="note">娯楽用のシミュレーターです。実際の遊技結果や収支を保証するものではありません。</p>
     </section>
-    <div class="ad-box ad-box-wide" data-ad-slot="pachinko-inline"><span class="ad-label">PR</span><span class="ad-title">記事内広告枠</span><span class="ad-note">シミュレーター結果下</span></div>
-    <article class="article-card">
-      <h2>319シミュレーターの使い方</h2>
-      <p>固定スペックでスタートします。初当たりまでの回転数は1/319の乱数で決まり、RUSHに入った場合は固定の継続率で連チャンを抽選します。</p>
-      <div class="toc"><a href="#basic">基本条件</a><a href="#result">結果の見方</a><a href="#compare">比較ポイント</a><a href="#faq">よくある質問</a></div>
-      <h2 id="basic">基本条件</h2>
-      <p>ランキング条件を揃えるため、1,000円あたり17回転、初当たり出玉300玉、RUSH中出玉1,500玉、RUSH突入率60%、継続率81%に固定しています。</p>
-      <div class="table-wrap"><table class="ranking-table"><thead><tr><th>項目</th><th>固定値</th><th>意味</th></tr></thead><tbody><tr><td>大当たり確率</td><td>1/319</td><td>初当たりを引く確率</td></tr><tr><td>RUSH突入率</td><td>60%</td><td>初当たり後にRUSHへ入る割合</td></tr><tr><td>継続率</td><td>81%</td><td>RUSH中に次回へ続く割合</td></tr><tr><td>RUSH中出玉</td><td>1,500玉</td><td>RUSH中の大当たり1回分の目安</td></tr></tbody></table></div>
-      <h2 id="result">結果の見方</h2>
-      <p>初当たりは、当選までに回した回転数です。投資は、回転率から1,000円単位で計算します。総出玉は初当たり出玉とRUSH中の出玉を合計した値です。</p>
-      <p>差玉は総出玉から投資分の使用玉を引いた簡易値です。実際の交換率、削り、持ち玉比率、貸玉手数料、電サポ中の増減などは反映していません。プラスやマイナスを厳密な収支ではなく、結果を比較するための目安として扱ってください。</p>
-      <h2 id="compare">比較ポイント</h2>
-      <p>ランキングでは条件を固定し、同じスペックでも結果が大きくブレることを確認できます。回転率や突入率を自由に変えて比較したい場合は、甘デジ、ライトミドル、継続率、RUSH突入率などの個別ツールを使ってください。</p>
-      <ul class="info-list">
-        <li><strong>回転率を見る</strong>初当たりまで同じ回転数でも、1,000円あたりの回転数が違うと投資額が変わります。</li>
-        <li><strong>RUSH突入率を見る</strong>初当たりを引いてもRUSHに入らない場合があるため、総出玉の差が出やすい項目です。</li>
-        <li><strong>継続率を見る</strong>高継続でも短く終わることがあり、低めでも伸びることがあります。確率のブレを確認する項目です。</li>
-      </ul>
-      <h2>ランキング保存の使い方</h2>
-      <p>319一撃ランキングでは、総出玉を優先して並べます。同じ総出玉に近い記録では、連チャン数や差玉も比較しやすいように表示します。大きく伸びた結果だけを保存して、自分の最高記録を見返す用途に向いています。</p>
-      <p>このランキングは端末内保存です。保存名は12文字まで入力できますが、個人情報、本名、メールアドレスは入力しないでください。実際の遊技結果ではなく、シミュレーター上の記録として扱ってください。保存後は <a href="ranking.html#pachinko-ranking">319一撃ランキング</a> から確認できます。</p>
-      <h2 id="faq">よくある質問</h2>
-      <div class="faq-item"><h3>1000回転以上ハマることはありますか？</h3><p>あります。1/319でも長く当たらないケースは確率上起こります。詳しくはハマり確率シミュレーターでも確認できます。</p></div>
-      <div class="faq-item"><h3>RUSHに入ったのに伸びないことはありますか？</h3><p>あります。継続率81%でも、1回ごとの抽選に外れれば終了します。反対に、まれに大きく伸びることもあります。</p></div>
-      <div class="faq-item"><h3>実在機種のスペックですか？</h3><p>特定機種の完全再現ではありません。王道ミドルタイプの確率感を試しやすいようにした汎用シミュレーターです。</p></div>
-      <p class="note">このツールは娯楽用です。実際の遊技結果、収支、機種性能を保証するものではありません。</p>
-    </article>
-  </div><aside class="side-column"><section class="side-card"><h2>関連ツール</h2><ul class="side-list"><li><a href="hamari.html">ハマり確率</a></li><li><a href="continuation.html">継続率</a></li><li><a href="rush.html">RUSH突入率</a></li></ul></section><div class="ad-box ad-box-sidebar" data-ad-slot="pachinko-sidebar"><span class="ad-label">PR</span><span class="ad-title">サイドバー広告枠</span><span class="ad-note">PC表示向け</span></div></aside></div><div class="ad-box ad-box-footer" data-ad-slot="pachinko-footer"><span class="ad-label">PR</span><span class="ad-title">ページ下部広告枠</span><span class="ad-note">記事末尾の広告枠</span></div></main>
-  <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a></div></div></footer>
+  </main>
   <script src="main.js"></script>
 </body>
 </html>

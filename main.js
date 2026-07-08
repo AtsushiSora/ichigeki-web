@@ -124,7 +124,7 @@ function setRunningButton(action, isRunning) {
   const button = document.querySelector(`[data-action="${action}"]`);
   if (!button) return;
   if (!button.dataset.idleLabel) button.dataset.idleLabel = button.textContent;
-  if (button.classList.contains("one-tap-start") && !button.dataset.idleHtml) button.dataset.idleHtml = button.innerHTML;
+  if ((button.classList.contains("one-tap-start") || button.classList.contains("simple-start-button")) && !button.dataset.idleHtml) button.dataset.idleHtml = button.innerHTML;
   button.disabled = isRunning;
   if (isRunning) {
     button.textContent = "進行中...";

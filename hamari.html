@@ -6,68 +6,52 @@
   <meta name="theme-color" content="#050705">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <meta name="description" content="大当たり確率と回転数から、指定回転数までハマる確率と当たる確率を計算するパチンコ向けシミュレーターです。">
-  <title>ハマり確率シミュレーター | ICHIGEKI</title>
+  <meta name="description" content="STARTを押すだけで1/319が1000回転ハマる確率を確認できるランキングチャレンジです。">
+  <title>ハマり確率チャレンジ | ICHIGEKI</title>
   <link rel="canonical" href="https://atsushisora.github.io/ichigeki-web/hamari.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ICHIGEKI">
-  <meta property="og:title" content="ハマり確率シミュレーター | ICHIGEKI">
-  <meta property="og:description" content="大当たり確率と回転数から、指定回転数までハマる確率と当たる確率を計算するパチンコ向けシミュレーターです。">
+  <meta property="og:title" content="ハマり確率チャレンジ | ICHIGEKI">
+  <meta property="og:description" content="STARTを押すだけで1/319が1000回転ハマる確率を確認できるランキングチャレンジです。">
   <meta property="og:url" content="https://atsushisora.github.io/ichigeki-web/hamari.html">
   <meta property="og:image" content="https://atsushisora.github.io/ichigeki-web/icon.svg">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="ハマり確率シミュレーター | ICHIGEKI">
-  <meta name="twitter:description" content="大当たり確率と回転数から、指定回転数までハマる確率と当たる確率を計算するパチンコ向けシミュレーターです。">
+  <meta name="twitter:title" content="ハマり確率チャレンジ | ICHIGEKI">
+  <meta name="twitter:description" content="STARTを押すだけで1/319が1000回転ハマる確率を確認できるランキングチャレンジです。">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">ランキングバトル</span></a><nav class="nav"><a href="index.html">トップ</a><a href="pachinko-319.html">319</a><a href="ranking.html">ランキング</a></nav></div></header>
-  <main class="page"><div class="layout"><div class="main-column">
-    <section class="hero"><div class="kicker">Probability Tool</div><h1>ハマり確率シミュレーター</h1><p class="lead">1/319で1000回転ハマる確率を固定条件で計算します。ランキングでは同じ条件のハマり記録として比較できます。</p></section>
-    <section class="tool-card">
-      <h2>シミュレーター</h2>
-      <div class="control-grid">
-        <div class="field"><label for="hitRate">大当たり確率（固定）</label><input id="hitRate" type="number" value="319" disabled></div>
-        <div class="field"><label for="targetSpins">回転数（固定）</label><input id="targetSpins" type="number" value="1000" disabled></div>
-        <div class="field"><label for="recordName">ランキング保存名</label><input id="recordName" type="text" value="あなた" maxlength="12" autocomplete="nickname"></div>
-        <div class="field speed-field"><label for="animationSpeed">回転速度 <span id="speedLabel">1倍</span></label><input id="animationSpeed" type="range" value="1" min="1" max="20"></div>
+<body class="juggle-simple-page">
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">ハマりランキング</span></a>
+      <nav class="nav"><a href="index.html">トップ</a><a href="ranking.html#hamari-ranking">ランキング</a></nav>
+    </div>
+  </header>
+  <main class="simple-page">
+    <section class="juggle-simple-stage">
+      <div class="simple-title-line"><span></span><h1>ハマり確率</h1><span></span></div>
+      <div class="simple-status-card"><strong><span class="status-dot"></span><span>固定条件</span></strong><p>1/319で1000回転</p></div>
+      <div class="simple-result-card">
+        <strong id="resultHamari">--</strong>
+        <b id="resultSpins">--</b>
+        <small>ハマる確率</small>
+        <em><span id="resultRate">--</span> / 当たる確率 <span id="resultHit">--</span></em>
       </div>
-      <p class="small-note">ランキング対象のため、スペックは固定です。保存名と回転速度だけ変更できます。</p>
-      <div class="tool-actions"><button class="button primary" data-action="hamari">計算する</button><button class="button" data-action="saveHamari">ランキングに保存</button><button class="button" data-action="share">結果をコピー</button><a class="button" href="ranking.html#hamari-ranking">ランキングを見る</a></div>
-      <div class="result-grid">
-        <div class="result-box"><div class="result-label">ハマる確率</div><div class="result-value bad" id="resultHamari">--</div></div>
-        <div class="result-box"><div class="result-label">当たる確率</div><div class="result-value good" id="resultHit">--</div></div>
-        <div class="result-box"><div class="result-label">確率</div><div class="result-value" id="resultRate">--</div></div>
-        <div class="result-box"><div class="result-label">回転数</div><div class="result-value" id="resultSpins">--</div></div>
+      <a class="simple-rank-link" href="ranking.html#hamari-ranking">ランキングを見る</a>
+      <div class="simple-start-area">
+        <button class="simple-start-button" data-action="hamari"><span>START</span><small>計算開始</small></button>
       </div>
-      <div class="log-box" id="log">計算結果がここに表示されます。</div>
+      <div class="simple-sub-actions">
+        <button class="button" data-action="saveHamari">ランキングに保存</button>
+        <button class="button" data-action="share">結果をコピー</button>
+        <a class="button" href="index.html">トップへ戻る</a>
+      </div>
+      <div class="field record-name-field"><label for="recordName">保存名</label><input id="recordName" type="text" maxlength="12" value="あなた"></div>
+      <div class="log-box simple-log" id="log">STARTを押すとハマり確率を表示します。</div>
+      <div class="ad-box simple-ad" data-ad-slot="hamari-simple-footer"><span class="ad-label">PR</span><span class="ad-title">広告枠</span></div>
+      <p class="note">毎回同じ確率で独立抽選される前提の娯楽用計算です。</p>
     </section>
-    <div class="ad-box ad-box-wide" data-ad-slot="hamari-inline"><span class="ad-label">PR</span><span class="ad-title">記事内広告枠</span><span class="ad-note">シミュレーター結果下</span></div>
-    <article class="article-card">
-      <h2>ハマり確率の考え方</h2>
-      <p>ハマり確率は「指定した回転数まで当たらない確率」です。このランキング対象ページでは、条件を揃えるため1/319で1000回転ハマる確率に固定しています。</p>
-      <div class="toc"><a href="#formula">計算式</a><a href="#sample">よく見る回転数</a><a href="#usecase">使い方の例</a><a href="#faq">よくある質問</a></div>
-      <h2 id="formula">計算式</h2>
-      <p>ハマる確率は「外れる確率」を回転数分だけ掛け合わせて計算します。大当たり確率が1/319の場合、1回転で外れる確率は318/319です。</p>
-      <p>例: 1/319で1000回転ハマる確率 = (318 / 319) の1000乗です。当たる確率は、100%からハマる確率を引いた値です。</p>
-      <h2 id="sample">よく見る回転数</h2>
-      <p>ハマりは感覚だけで見ると極端に珍しく感じることがあります。ただし確率で見ると、一定数は必ず発生します。319ミドルの場合、500回転、800回転、1000回転などを入力すると、どれくらい起こり得るのかを確認できます。</p>
-      <div class="table-wrap"><table class="ranking-table"><thead><tr><th>入力例</th><th>確認できること</th><th>関連ツール</th></tr></thead><tbody><tr><td>1/319・500回転</td><td>ミドルで中程度ハマる確率</td><td><a href="pachinko-319.html">319シミュレーター</a></td></tr><tr><td>1/319・1000回転</td><td>深めのハマりがどれくらい起こるか</td><td><a href="pachinko-319.html">319シミュレーター</a></td></tr><tr><td>1/199・500回転</td><td>ライトミドルで長く当たらない確率</td><td><a href="guide.html">確率の見方</a></td></tr></tbody></table></div>
-      <h2 id="usecase">使い方の例</h2>
-      <p>計算するを押すと、1/319で1000回転ハマる確率と、その回転数までに当たる確率が表示されます。例えばハマる確率が5%前後なら、20回に1回程度は起こり得る目安として見ることができます。</p>
-      <p>このページは「なぜこんなに当たらないのか」を確率で確認するためのページです。実際の遊技判断や収支判断を目的にしたものではありません。</p>
-      <h2>ランキング保存の使い方</h2>
-      <p>ハマり記録ランキングでは、1/319で1000回転という同じ条件の記録を保存できます。条件を固定することで、ランキング上の比較が分かりやすくなります。</p>
-      <p>保存した記録は <a href="ranking.html#hamari-ranking">ハマり記録ランキング</a> に表示されます。保存名は12文字まで入力できます。ブラウザ内のローカル記録なので、端末やブラウザを変えると表示されません。</p>
-      <h2 id="faq">よくある質問</h2>
-      <div class="faq-item"><h3>確率分母まで回せば当たりますか？</h3><p>必ず当たるわけではありません。1/319で319回転回しても、当たる可能性と当たらない可能性の両方があります。</p></div>
-      <div class="faq-item"><h3>前にハマった分、次は当たりやすくなりますか？</h3><p>この計算では毎回独立抽選として扱います。前回の結果によって次回の当たりやすさは変わらない前提です。</p></div>
-      <div class="faq-item"><h3>遊タイムや天井は反映していますか？</h3><p>反映していません。常に同じ確率で抽選される前提のシンプルな計算ツールです。</p></div>
-      <h2>注意点</h2><p>この計算は毎回同じ確率で独立抽選される前提です。実際の演出、状態、機種仕様を完全に再現するものではありません。</p>
-      <p class="note">確率の理解を助けるための計算ツールです。実際の遊技結果を保証するものではありません。</p>
-    </article>
-  </div><aside class="side-column"><section class="side-card"><h2>関連ツール</h2><ul class="side-list"><li><a href="pachinko-319.html">319大当たり</a></li><li><a href="continuation.html">継続率</a></li><li><a href="rush.html">RUSH突入率</a></li></ul></section><div class="ad-box ad-box-sidebar" data-ad-slot="hamari-sidebar"><span class="ad-label">PR</span><span class="ad-title">サイドバー広告枠</span><span class="ad-note">PC表示向け</span></div></aside></div><div class="ad-box ad-box-footer" data-ad-slot="hamari-footer"><span class="ad-label">PR</span><span class="ad-title">ページ下部広告枠</span><span class="ad-note">記事末尾の広告枠</span></div></main>
-  <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a></div></div></footer>
+  </main>
   <script src="main.js"></script>
 </body>
 </html>
