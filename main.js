@@ -154,8 +154,7 @@ const recordTypeByRunAction = {
   twoChoiceStart: "twoChoice",
   ltRush: "ltRush",
   czChallenge: "czChallenge",
-  rare8192: "rare8192",
-  twoChoiceAuto: "twoChoice"
+  rare8192: "rare8192"
 };
 
 function setSaveReady(type, isReady) {
@@ -731,6 +730,7 @@ function renderHomeLobby() {
 function prepareOneTapTools() {
   const card = document.querySelector(".tool-card");
   if (!card || document.body.classList.contains("juggle-simple-page")) return;
+  if (document.querySelector("[data-action='twoChoicePick']")) return;
   document.body.classList.add("one-tap-tool-page");
   card.classList.add("one-tap-tool");
   const primary = card.querySelector(".tool-actions .button.primary");
@@ -1704,7 +1704,6 @@ async function runContinuation() {
 }
 
 let rushRunning = false;
-let twoChoiceRunning = false;
 let twoChoiceState = {
   active: false,
   chain: 0,
@@ -1824,16 +1823,12 @@ function initializeTwoChoicePage() {
   twoChoiceState.correct = Math.random() < 0.5 ? "left" : "right";
   twoChoiceState.active = true;
   setText("resultBest", `${best}連`);
-  if (document.querySelector("[data-action='twoChoiceAuto']")) {
-    setText("log", "STARTを押すと二択チャレンジを開始します。");
-  } else {
-    setText("log", "左か右を選んでください。");
-  }
+  setText("log", "左か右を選んでください。");
 }
 
 function playTwoChoiceSuccessEffect() {
   const effect = document.getElementById("choiceEffect");
-  const stage = document.querySelector(".choice-stage, .one-tap-center");
+  const stage = document.querySelector(".choice-stage");
   if (!effect || !stage) return;
   const special = twoChoiceState.chain >= 10 ? "激レア！" : twoChoiceState.chain >= 5 ? "好記録！" : "正解！";
   effect.textContent = `${special} ${twoChoiceState.chain}連`;
@@ -1900,46 +1895,6 @@ function chooseTwoChoice(selected) {
   playTwoChoiceSuccessEffect();
 }
 
-async function runTwoChoiceAuto() {
-  if (twoChoiceRunning) return;
-  twoChoiceRunning = true;
-  resetTwoChoice();
-  setRunningButton("twoChoiceAuto", true);
-  setText("log", "二択チャレンジ開始...");
-  const history = [];
-  while (Math.random() < 0.5 && twoChoiceState.chain < 200) {
-    twoChoiceState.chain++;
-    twoChoiceState.best = Math.max(twoChoiceState.best, twoChoiceState.chain);
-    history.unshift(`${twoChoiceState.chain}回目 成功 / ${twoChoiceState.chain}連`);
-    setText("resultChain", `${twoChoiceState.chain}連`);
-    setText("resultBest", `${twoChoiceState.best}連`);
-    setText("resultRound", `${twoChoiceState.chain + 1}回目`);
-    setText("resultNextRate", "50.0%");
-    setText("log", history.slice(0, 8).join("\n"));
-    playTwoChoiceSuccessEffect();
-    await sleep(speedAdjustedDuration(240));
-  }
-  const finalChain = twoChoiceState.chain;
-  twoChoiceState.active = false;
-  twoChoiceState.round = finalChain + 1;
-  try {
-    localStorage.setItem("ichigekiTwoChoiceBest", String(twoChoiceState.best));
-  } catch {}
-  latestResults.twoChoice = {
-    chain: finalChain,
-    rounds: finalChain + 1,
-    probability: Math.pow(0.5, finalChain) * 100
-  };
-  setText("resultChain", `${finalChain}連`);
-  setText("resultBest", `${twoChoiceState.best}連`);
-  setText("resultRound", `${finalChain + 1}回目`);
-  setText("resultNextRate", "--");
-  setText("log", `終了: ${finalChain}連 / ${finalChain + 1}回目で失敗`);
-  markResultReady("twoChoice");
-  setRunningButton("twoChoiceAuto", false);
-  twoChoiceRunning = false;
-}
-
 function copyShareText() {
   const text = document.getElementById("log")?.textContent.trim() || location.href;
   navigator.clipboard?.writeText(`${document.title}\n${text}\n${location.href}`).catch(() => null);
@@ -2004,7 +1959,6 @@ document.addEventListener("click", event => {
   if (action === "kakenuke") runKakenuke();
   if (action === "twoChoiceStart") resetTwoChoice();
   if (action === "twoChoicePick") chooseTwoChoice(target.dataset.choice);
-  if (action === "twoChoiceAuto") runTwoChoiceAuto();
   if (action === "applySimplePreset") applySimplePreset(target.dataset.presetAction, target.dataset.presetIndex);
   if (action === "share") copyShareText();
   if (action === "saveJuggle") saveLatestRecord("juggle");
