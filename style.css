@@ -1510,14 +1510,14 @@ code,
   max-width: 520px;
   min-height: calc(100vh - 76px);
   margin: 0 auto;
-  padding: 34px 18px 22px;
+  padding: 24px 18px 18px;
 }
 
 .juggle-simple-stage {
   display: grid;
-  gap: 18px;
+  gap: 12px;
   align-content: start;
-  min-height: calc(100vh - 132px);
+  min-height: calc(100svh - 112px);
 }
 
 .simple-title-line {
@@ -1525,7 +1525,7 @@ code,
   grid-template-columns: 48px 1fr 48px;
   gap: 12px;
   align-items: center;
-  margin-top: 6px;
+  margin-top: 0;
   text-align: center;
 }
 
@@ -1540,7 +1540,7 @@ code,
 
 .simple-title-line h1 {
   margin: 0;
-  font-size: clamp(30px, 9vw, 48px);
+  font-size: clamp(28px, 8vw, 44px);
   letter-spacing: 0;
 }
 
@@ -1556,8 +1556,8 @@ code,
 
 .simple-status-card {
   display: grid;
-  gap: 6px;
-  padding: 18px 20px;
+  gap: 4px;
+  padding: 12px 16px;
 }
 
 .simple-status-card strong {
@@ -1565,7 +1565,7 @@ code,
   align-items: center;
   gap: 10px;
   color: var(--accent);
-  font-size: 22px;
+  font-size: 18px;
 }
 
 .simple-status-card p {
@@ -1584,9 +1584,9 @@ code,
 
 .simple-result-card {
   display: grid;
-  gap: 4px;
+  gap: 2px;
   justify-items: center;
-  padding: 28px 18px;
+  padding: 18px 14px;
   border-color: rgba(242, 185, 59, 0.65);
   text-align: center;
 }
@@ -1602,7 +1602,7 @@ code,
 .simple-result-card strong {
   color: var(--gold);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(78px, 22vw, 132px);
+  font-size: clamp(66px, 19vw, 112px);
   line-height: 0.95;
   text-shadow: 0 0 26px rgba(242, 185, 59, 0.55);
 }
@@ -1610,19 +1610,19 @@ code,
 .simple-result-card b {
   color: var(--text);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: clamp(42px, 11vw, 64px);
+  font-size: clamp(34px, 9vw, 56px);
   line-height: 1.1;
 }
 
 .simple-result-card small {
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .simple-rank-link {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 58px;
+  min-height: 48px;
   color: var(--text);
   font-size: 18px;
   font-weight: 900;
@@ -1650,13 +1650,13 @@ code,
 .simple-start-area {
   display: grid;
   justify-items: center;
-  margin: 8px 0 2px;
+  margin: 2px 0 0;
 }
 
 .simple-start-button {
   display: grid;
   place-items: center;
-  width: min(62vw, 260px);
+  width: min(54vw, 220px);
   aspect-ratio: 1;
   border: 4px solid rgba(173, 255, 142, 0.72);
   border-radius: 50%;
@@ -1673,17 +1673,17 @@ code,
 
 .simple-start-button span {
   display: block;
-  margin-top: 16px;
+  margin-top: 12px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: clamp(42px, 12vw, 58px);
+  font-size: clamp(36px, 10vw, 52px);
   font-weight: 900;
   line-height: 1;
 }
 
 .simple-start-button small {
   display: block;
-  margin-top: -48px;
-  font-size: 20px;
+  margin-top: -40px;
+  font-size: 17px;
   font-weight: 900;
 }
 
@@ -1707,7 +1707,13 @@ code,
 .simple-sub-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 8px;
+}
+
+.simple-sub-actions .button {
+  min-height: 40px;
+  padding: 0 12px;
+  font-size: 13px;
 }
 
 .simple-sub-actions .button:first-child {
@@ -1715,8 +1721,8 @@ code,
 }
 
 .simple-log {
-  min-height: 64px;
-  max-height: 92px;
+  min-height: 48px;
+  max-height: 64px;
   margin-top: 0;
   background: rgba(6, 8, 7, 0.92);
   color: #b9c3ba;
@@ -1724,7 +1730,7 @@ code,
 }
 
 .simple-ad {
-  min-height: 74px;
+  min-height: 58px;
   margin: 0;
   background: linear-gradient(135deg, rgba(19, 26, 20, 0.96), rgba(11, 13, 12, 0.96));
 }
@@ -1762,24 +1768,142 @@ code,
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 640px) {
+  .juggle-simple-page .site-header {
+    position: static;
+  }
+
+  .juggle-simple-page .header-inner {
+    gap: 6px;
+    padding: 9px 12px;
+  }
+
+  .juggle-simple-page .brand-name {
+    font-size: 18px;
+  }
+
+  .juggle-simple-page .brand-sub,
+  .juggle-simple-page .nav {
+    font-size: 11px;
+  }
+
   .simple-page {
-    padding: 24px 14px 18px;
+    min-height: calc(100svh - 82px);
+    padding: 10px 12px 10px;
   }
 
   .juggle-simple-stage {
-    gap: 15px;
+    grid-template-columns: minmax(0, 1fr) minmax(132px, 38vw);
+    gap: 8px;
+    min-height: auto;
+  }
+
+  .simple-title-line {
+    display: none;
+  }
+
+  .simple-status-card,
+  .simple-rank-link,
+  .simple-sub-actions,
+  .simple-ad {
+    grid-column: 1 / -1;
+  }
+
+  .simple-status-card {
+    padding: 9px 12px;
+    border-radius: 14px;
+  }
+
+  .simple-status-card p {
+    font-size: 12px;
   }
 
   .simple-result-card {
-    padding: 24px 14px;
+    grid-column: 1;
+    padding: 12px;
+    border-radius: 16px;
+    min-height: 148px;
+    align-content: center;
+  }
+
+  .simple-result-card strong {
+    font-size: clamp(54px, 17vw, 82px);
+  }
+
+  .simple-result-card b {
+    font-size: clamp(28px, 8vw, 40px);
+  }
+
+  .simple-result-card small,
+  .simple-result-card em {
+    font-size: 15px;
+  }
+
+  .simple-rank-link {
+    min-height: 40px;
+    border-radius: 14px;
+    font-size: 14px;
   }
 
   .simple-start-button {
-    width: min(68vw, 244px);
+    width: min(38vw, 168px);
+    border-width: 3px;
+    box-shadow:
+      0 0 0 8px rgba(107, 211, 79, 0.16),
+      0 0 34px rgba(107, 211, 79, 0.62),
+      inset 0 -14px 22px rgba(0, 0, 0, 0.35);
+  }
+
+  .simple-start-button span {
+    margin-top: 8px;
+    font-size: clamp(28px, 8vw, 40px);
+  }
+
+  .simple-start-button small {
+    margin-top: -30px;
+    font-size: 13px;
+  }
+
+  .simple-start-area {
+    grid-column: 2;
+    align-self: center;
+    margin: 0;
   }
 
   .simple-sub-actions {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .simple-sub-actions .button:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .simple-sub-actions .button {
+    min-height: 36px;
+    font-size: 12px;
+  }
+
+  .simple-log {
+    display: none;
+  }
+
+  .simple-ad {
+    min-height: 48px;
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 420px) {
+  .simple-result-card strong {
+    font-size: clamp(54px, 17vw, 76px);
+  }
+
+  .simple-result-card b {
+    font-size: clamp(28px, 8vw, 36px);
+  }
+
+  .simple-start-button {
+    width: min(38vw, 168px);
   }
 }
