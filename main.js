@@ -693,6 +693,33 @@ function renderPodium(records) {
   }).join("");
 }
 
+function renderHomeLobby() {
+  if (!document.querySelector(".game-lobby")) return;
+  const records = loadLocalRecords();
+  const juggleTop = sortRecords("juggle", records.juggle).slice(0, 3);
+  const pachinkoTop = sortRecords("pachinko319", records.pachinko319)[0];
+  const ltTop = sortRecords("ltRush", records.ltRush)[0];
+  const ballBest = Math.max(pachinkoTop?.totalPayout || 0, ltTop?.totalPayout || 0);
+  const chainBest = Math.max(
+    juggleTop[0]?.chain || 0,
+    sortRecords("pachinko319", records.pachinko319, "chain")[0]?.chain || 0,
+    sortRecords("ltRush", records.ltRush, "chain")[0]?.chain || 0,
+    sortRecords("twoChoice", records.twoChoice)[0]?.chain || 0
+  );
+  setText("homeBestBalls", ballBest ? `${yen.format(ballBest)}玉` : "--玉");
+  setText("homeBestChain", chainBest ? `${chainBest}連` : "--連");
+  [1, 2, 3].forEach(rank => {
+    const record = juggleTop[rank - 1];
+    const element = document.getElementById(`homeRank${rank}`);
+    if (!element) return;
+    if (!record) {
+      element.innerHTML = `<b>${rank}</b> 記録待ち <strong>--</strong>`;
+      return;
+    }
+    element.innerHTML = `<b>${rank}</b> ${escapeHtml(record.name || "あなた")} <strong>${record.chain}連 / ${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}枚</strong>`;
+  });
+}
+
 function renderRankingPage() {
   const records = loadLocalRecords();
   const summary = document.getElementById("rankingCount");
@@ -1936,6 +1963,7 @@ updateSpeedLabel();
 renderFixedConditionGuide();
 renderSimplePresets();
 renderResultGuide();
+renderHomeLobby();
 renderRankingPage();
 initializeTwoChoicePage();
 renderMobileBottomNav();

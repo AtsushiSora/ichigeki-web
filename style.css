@@ -135,7 +135,11 @@ svg {
   border-color: rgba(107, 211, 79, 0.34);
   background:
     radial-gradient(circle at 88% 20%, rgba(107, 211, 79, 0.18), transparent 220px),
+    radial-gradient(circle at 0 0, rgba(242, 185, 59, 0.08), transparent 220px),
     linear-gradient(135deg, rgba(20, 30, 22, 0.98), rgba(7, 9, 8, 0.98));
+  box-shadow:
+    var(--shadow),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
 }
 
 .home-game-page {
@@ -690,6 +694,7 @@ p {
   text-decoration: none;
   border-color: var(--accent);
   box-shadow: 0 18px 44px rgba(107, 211, 79, 0.12);
+  transform: translateY(-1px);
 }
 
 .tool-badge {
@@ -811,6 +816,57 @@ p {
 .tool-card {
   padding: 22px;
   margin-bottom: 20px;
+}
+
+.tool-card {
+  position: relative;
+  border-color: rgba(242, 185, 59, 0.28);
+  background:
+    radial-gradient(circle at 86% 8%, rgba(107, 211, 79, 0.14), transparent 250px),
+    radial-gradient(circle at 0 0, rgba(242, 185, 59, 0.12), transparent 220px),
+    linear-gradient(155deg, rgba(18, 22, 19, 0.98), rgba(6, 8, 7, 0.98));
+  overflow: hidden;
+}
+
+.tool-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent, rgba(242, 185, 59, 0.06), transparent),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.022) 0 1px, transparent 1px 68px);
+  opacity: 0.42;
+}
+
+.tool-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.tool-card > h2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  color: #fff4bf;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.tool-card > h2::after {
+  content: "BATTLE";
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 10px;
+  border: 1px solid rgba(242, 185, 59, 0.34);
+  border-radius: 999px;
+  color: var(--gold);
+  font-size: 11px;
+  letter-spacing: 1px;
 }
 
 .control-grid {
@@ -954,6 +1010,13 @@ p {
   margin-top: 16px;
 }
 
+.tool-card .result-grid {
+  padding: 12px;
+  border: 1px solid rgba(107, 211, 79, 0.18);
+  border-radius: 18px;
+  background: rgba(5, 7, 5, 0.46);
+}
+
 .choice-stage {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1071,9 +1134,11 @@ p {
 }
 
 .result-box {
-  background: var(--paper-soft);
-  border: 1px solid var(--line);
-  border-radius: 10px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(107, 211, 79, 0.1), transparent 110px),
+    var(--paper-soft);
+  border: 1px solid rgba(107, 211, 79, 0.18);
+  border-radius: 14px;
   padding: 14px;
 }
 
@@ -1081,6 +1146,7 @@ p {
   color: var(--muted);
   font-size: 12px;
   margin-bottom: 5px;
+  font-weight: 900;
 }
 
 .result-value {
@@ -1093,10 +1159,12 @@ p {
 
 .result-value.good {
   color: var(--accent);
+  text-shadow: 0 0 16px rgba(107, 211, 79, 0.28);
 }
 
 .result-value.bad {
   color: var(--red);
+  text-shadow: 0 0 16px rgba(255, 95, 85, 0.24);
 }
 
 .log-box {
@@ -1105,9 +1173,10 @@ p {
   overflow: auto;
   margin-top: 14px;
   padding: 12px;
-  background: #050705;
+  background: rgba(5, 7, 5, 0.92);
   color: #dbe7dc;
-  border-radius: 10px;
+  border: 1px solid rgba(107, 211, 79, 0.16);
+  border-radius: 14px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 13px;
   line-height: 1.7;
@@ -1116,9 +1185,11 @@ p {
 .result-guide {
   margin-top: 14px;
   padding: 14px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: rgba(107, 211, 79, 0.1);
+  border: 1px solid rgba(107, 211, 79, 0.28);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 0 0, rgba(107, 211, 79, 0.12), transparent 160px),
+    rgba(8, 12, 9, 0.88);
 }
 
 .result-guide h3 {
@@ -1217,9 +1288,18 @@ code,
     linear-gradient(135deg, rgba(16, 22, 17, 0.96), rgba(8, 10, 9, 0.98));
   color: var(--muted);
   font-size: 14px;
-  border-color: var(--line);
+  border-color: rgba(107, 211, 79, 0.22);
   box-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
   text-align: center;
+}
+
+.ad-box::before {
+  content: "";
+  width: 54px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.8;
 }
 
 .ad-label {
@@ -1435,15 +1515,23 @@ code,
   grid-template-columns: minmax(0, 1fr) 220px;
   gap: 20px;
   align-items: center;
+  border-color: rgba(242, 185, 59, 0.36);
+  background:
+    radial-gradient(circle at 85% 20%, rgba(242, 185, 59, 0.18), transparent 260px),
+    radial-gradient(circle at 0 0, rgba(107, 211, 79, 0.12), transparent 260px),
+    linear-gradient(145deg, rgba(22, 17, 9, 0.98), rgba(5, 7, 5, 0.98));
 }
 
 .ranking-summary {
   display: grid;
   gap: 4px;
   padding: 20px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--paper-soft);
+  border: 1px solid rgba(242, 185, 59, 0.38);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(242, 185, 59, 0.2), transparent 130px),
+    rgba(5, 7, 5, 0.76);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
   text-align: center;
 }
 
@@ -1456,9 +1544,11 @@ code,
 }
 
 .ranking-summary strong {
+  color: var(--gold);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  font-size: 34px;
+  font-size: 42px;
   line-height: 1.1;
+  text-shadow: 0 0 22px rgba(242, 185, 59, 0.34);
 }
 
 .ranking-summary small,
@@ -1484,9 +1574,11 @@ code,
   display: grid;
   gap: 4px;
   padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--paper-soft);
+  border: 1px solid rgba(107, 211, 79, 0.18);
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(107, 211, 79, 0.12), transparent 140px),
+    rgba(13, 17, 14, 0.94);
 }
 
 .record-summary-card span,
@@ -1501,26 +1593,33 @@ code,
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 24px;
   line-height: 1.2;
+  text-shadow: 0 0 14px rgba(107, 211, 79, 0.24);
 }
 
 .rank-category {
   display: grid;
   gap: 5px;
   padding: 16px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
+  min-height: 132px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
   color: var(--text);
-  background: var(--paper-soft);
+  background:
+    radial-gradient(circle at 100% 0, rgba(242, 185, 59, 0.1), transparent 140px),
+    linear-gradient(155deg, rgba(18, 20, 19, 0.96), rgba(6, 8, 7, 0.96));
 }
 
 .rank-category:hover {
   text-decoration: none;
   border-color: var(--accent);
+  box-shadow: 0 18px 38px rgba(107, 211, 79, 0.1);
 }
 
 .rank-category.active {
   border-color: var(--accent);
-  background: var(--accent-soft);
+  background:
+    radial-gradient(circle at 100% 0, rgba(107, 211, 79, 0.16), transparent 150px),
+    linear-gradient(155deg, rgba(16, 35, 18, 0.94), rgba(6, 8, 7, 0.96));
 }
 
 .rank-category span {
@@ -1557,17 +1656,22 @@ code,
   gap: 6px;
   justify-items: center;
   padding: 18px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  background: var(--paper-soft);
+  min-height: 154px;
+  border: 1px solid rgba(242, 185, 59, 0.24);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 50% 10%, rgba(242, 185, 59, 0.12), transparent 150px),
+    rgba(10, 12, 10, 0.94);
   text-align: center;
 }
 
 .podium-card.first {
+  min-height: 178px;
   border-color: rgba(242, 185, 59, 0.58);
   background:
-    radial-gradient(circle at 50% -20%, rgba(242, 185, 59, 0.22), transparent 170px),
-    var(--paper);
+    radial-gradient(circle at 50% 0, rgba(242, 185, 59, 0.24), transparent 170px),
+    linear-gradient(180deg, rgba(40, 27, 8, 0.98), rgba(8, 10, 9, 0.96));
+  box-shadow: 0 0 30px rgba(242, 185, 59, 0.12);
 }
 
 .podium-card b {
@@ -1583,10 +1687,18 @@ code,
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: rgba(107, 211, 79, 0.13);
-  color: var(--accent-dark);
-  border: 1px solid rgba(107, 211, 79, 0.35);
+  background: rgba(242, 185, 59, 0.1);
+  color: var(--gold);
+  border: 1px solid rgba(242, 185, 59, 0.36);
   font-weight: 800;
+}
+
+.podium-card.first .rank-badge {
+  width: 48px;
+  height: 48px;
+  border-color: var(--gold);
+  background: rgba(242, 185, 59, 0.14);
+  box-shadow: 0 0 20px rgba(242, 185, 59, 0.16);
 }
 
 @media (max-width: 900px) {
