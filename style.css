@@ -393,14 +393,14 @@ svg {
 
 .mode-select {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
 }
 
 .mode-card {
   display: grid;
   gap: 8px;
-  min-height: 220px;
+  min-height: 184px;
   padding: 18px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 20px;
@@ -466,6 +466,16 @@ svg {
   border-color: rgba(125, 167, 255, 0.55);
 }
 
+.mode-cz {
+  color: #6bd34f;
+  border-color: rgba(107, 211, 79, 0.55);
+}
+
+.mode-lt {
+  color: #ff9a3d;
+  border-color: rgba(255, 154, 61, 0.55);
+}
+
 .lobby-footer-panels {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -506,6 +516,61 @@ svg {
   margin: 0;
   min-height: 72px;
   border-color: rgba(242, 185, 59, 0.22);
+}
+
+.section-lead {
+  max-width: 760px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.priority-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 18px 0 24px;
+}
+
+.priority-list a {
+  display: grid;
+  gap: 6px;
+  min-height: 120px;
+  padding: 16px;
+  border: 1px solid rgba(242, 185, 59, 0.28);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(242, 185, 59, 0.12), transparent 130px),
+    rgba(10, 12, 10, 0.88);
+  color: var(--text);
+}
+
+.priority-list a:hover {
+  text-decoration: none;
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+
+.priority-list b {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(242, 185, 59, 0.42);
+  border-radius: 50%;
+  color: var(--gold);
+  font-size: 15px;
+}
+
+.priority-list strong {
+  color: #fff4bf;
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+.priority-list span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
 }
 
 .kicker {
@@ -2112,6 +2177,22 @@ code,
 
   .mode-card strong {
     font-size: 16px;
+  }
+
+  .priority-list {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 14px 0 18px;
+  }
+
+  .priority-list a {
+    min-height: 104px;
+    padding: 13px;
+    border-radius: 16px;
+  }
+
+  .priority-list strong {
+    font-size: 15px;
   }
 
   .mode-card small {

@@ -69,16 +69,16 @@
         <div>
           <div class="kicker">Ranking Battle</div>
           <h1 id="homeTitle">ICHIGEKI</h1>
-          <p>ワンタップで挑戦。固定スペックで一撃記録を競うランキングバトル。</p>
+          <p>固定条件で一撃記録を競うランキングバトル。まずは1回押して、良い結果だけ保存。</p>
         </div>
         <a class="lobby-rank-button" href="ranking.html">🏆 ランキング</a>
       </div>
 
       <div class="lobby-status">
-        <span><b>LV.</b><strong>12</strong></span>
+        <span><b>遊び方</b><strong>STARTだけ</strong></span>
         <span><b>最高玉</b><strong id="homeBestBalls">--玉</strong></span>
         <span><b>最高連</b><strong id="homeBestChain">--連</strong></span>
-        <span><b>ボーナス</b><strong>受け取り可能</strong></span>
+        <span><b>記録</b><strong>端末内保存</strong></span>
       </div>
 
       <div class="lobby-ranking-strip" aria-label="ランキング上位">
@@ -92,15 +92,15 @@
         <div class="featured-crown">♛</div>
         <div>
           <span class="battle-label">MAIN BATTLE</span>
-          <h2>全国ランキングバトル</h2>
-          <p>全国のプレイヤーとスコアを競い合え。まずはジャグ連でトップランカーを狙う。</p>
+          <h2>まずはジャグ連バトル</h2>
+          <p>100G以内の連チャン数を競うメイン種目。STARTを押して、良い結果だけランキングに保存。</p>
           <div class="featured-tags">
+            <span>メイン</span>
             <span>固定スペック</span>
-            <span>ランキング対象</span>
-            <span>ワンタップ</span>
+            <span>保存対応</span>
           </div>
         </div>
-        <a class="play-button" href="juggle-simple.html"><span>PLAY</span><small>挑戦する</small></a>
+        <a class="play-button" href="juggle-simple.html"><span>START</span><small>今すぐ挑戦</small></a>
       </article>
 
       <section class="mode-select" aria-label="ゲームモード">
@@ -110,10 +110,10 @@
           <small>100G以内の連チャンを競う</small>
           <b>PLAY</b>
         </a>
-        <a class="mode-card mode-319" href="pachinko-319.html">
-          <span class="mode-icon">319</span>
-          <strong>一撃319</strong>
-          <small>初当たりから総出玉を競う</small>
+        <a class="mode-card mode-choice" href="two-choice-select.html">
+          <span class="mode-icon">2択</span>
+          <strong>二択</strong>
+          <small>50%を当て続ける</small>
           <b>PLAY</b>
         </a>
         <a class="mode-card mode-8192" href="rare-8192.html">
@@ -122,17 +122,29 @@
           <small>激レア確率の当選Gを狙う</small>
           <b>PLAY</b>
         </a>
-        <a class="mode-card mode-choice" href="two-choice-select.html">
-          <span class="mode-icon">2択</span>
-          <strong>二択</strong>
-          <small>50%を当て続ける</small>
+        <a class="mode-card mode-319" href="pachinko-319.html">
+          <span class="mode-icon">319</span>
+          <strong>一撃319</strong>
+          <small>初当たりから総出玉を競う</small>
+          <b>PLAY</b>
+        </a>
+        <a class="mode-card mode-cz" href="cz-challenge.html">
+          <span class="mode-icon">CZ</span>
+          <strong>CZ突破</strong>
+          <small>突破から差枚まで競う</small>
+          <b>PLAY</b>
+        </a>
+        <a class="mode-card mode-lt" href="lt-rush.html">
+          <span class="mode-icon">LT</span>
+          <strong>LT上位</strong>
+          <small>上位RUSH到達を狙う</small>
           <b>PLAY</b>
         </a>
       </section>
 
       <div class="lobby-footer-panels">
-        <a class="mission-card" href="ranking.html"><strong>本日のミッション</strong><span>ランキングに1回挑戦</span><em>報酬 300玉</em></a>
-        <a class="mission-card bonus" href="guide.html"><strong>使い方</strong><span>ルールと記録の見方</span><em>確認する</em></a>
+        <a class="mission-card" href="juggle-simple.html"><strong>最短ルート</strong><span>ジャグ連 → 保存 → ランキング確認</span><em>STARTする</em></a>
+        <a class="mission-card bonus" href="guide.html"><strong>ルール確認</strong><span>確率と記録の見方を確認</span><em>読む</em></a>
       </div>
 
       <div class="ad-box ad-box-wide lobby-ad" data-ad-slot="home-lobby"><span class="ad-label">PR</span><span class="ad-title">広告枠</span></div>
@@ -141,15 +153,22 @@
     <div class="layout">
       <div class="main-column">
         <section class="article-card">
-          <h2>全ゲームモード</h2>
+          <h2>ランキング対象バトル</h2>
+          <p class="section-lead">同じ条件で結果を出して、端末内ランキングに保存できるメインモードです。まずはこの順番で触ると分かりやすいです。</p>
+          <div class="priority-list" aria-label="おすすめ順">
+            <a href="juggle-simple.html"><b>1</b><strong>ジャグ連</strong><span>最初におすすめ</span></a>
+            <a href="two-choice-select.html"><b>2</b><strong>二択</strong><span>成功か失敗が分かりやすい</span></a>
+            <a href="rare-8192.html"><b>3</b><strong>8192</strong><span>レア当選の一撃感</span></a>
+            <a href="pachinko-319.html"><b>4</b><strong>一撃319</strong><span>出玉勝負</span></a>
+          </div>
           <div class="category-stack">
             <section class="tool-category">
-              <div class="category-head"><span>スロットバトル</span><small>ジャグ連、CZ突破、二択、1/8192を競う</small></div>
+              <div class="category-head"><span>まず遊ぶメイン種目</span><small>短時間で結果が分かり、ランキング保存もしやすい</small></div>
               <div class="grid tool-grid">
                 <a class="tool-link" href="juggle-simple.html"><span class="tool-icon">🤡</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">ジャグ連チャレンジ</span><span class="tool-desc">大きなボタン1つでジャグ連を競うシンプル版</span></span></a>
-                <a class="tool-link" href="juggle.html"><span class="tool-icon">📊</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">ジャグ連シミュレーター詳細版</span><span class="tool-desc">投資、持ちメダル、差枚まで細かく確認</span></span></a>
+                <a class="tool-link" href="two-choice-select.html"><span class="tool-icon">↔️</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">二択セレクトチャレンジ</span><span class="tool-desc">左か右を選んで50%を当て続ける</span></span></a>
+                <a class="tool-link" href="rare-8192.html"><span class="tool-icon">🎯</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">1/8192当選シミュレーター</span><span class="tool-desc">激レア確率が何回転目に当たるか試す</span></span></a>
                 <a class="tool-link" href="cz-challenge.html"><span class="tool-icon">🎮</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">CZ突破シミュレーター</span><span class="tool-desc">CZ突入から成功、AT、差枚までを試す</span></span></a>
-                <a class="tool-link" href="tenjo.html"><span class="tool-icon">⏱</span><span><span class="tool-badge free">自由試算</span><span class="tool-title">天井到達シミュレーター</span><span class="tool-desc">現在G数から天井、自力当選、差枚を試す</span></span></a>
               </div>
             </section>
             <section class="tool-category">
@@ -163,11 +182,11 @@
               </div>
             </section>
             <section class="tool-category">
-              <div class="category-head"><span>確率バトル・自由試算</span><small>偏り、継続、50%チャレンジを体感する</small></div>
+              <div class="category-head"><span>自由試算・詳細確認</span><small>設定を変えて、確率や出玉の偏りを確認する補助ツール</small></div>
               <div class="grid tool-grid">
-                <a class="tool-link" href="two-choice-select.html"><span class="tool-icon">↔️</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">二択セレクトチャレンジ</span><span class="tool-desc">左か右を選んで50%を当て続ける</span></span></a>
-                <a class="tool-link" href="hamari.html"><span class="tool-icon">📉</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">ハマり確率シミュレーター</span><span class="tool-desc">指定回転数まで当たらない確率を計算</span></span></a>
-                <a class="tool-link" href="rare-8192.html"><span class="tool-icon">🎯</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">1/8192当選シミュレーター</span><span class="tool-desc">激レア確率が何回転目に当たるか試す</span></span></a>
+                <a class="tool-link" href="juggle.html"><span class="tool-icon">📊</span><span><span class="tool-badge free">詳細版</span><span class="tool-title">ジャグ連シミュレーター詳細版</span><span class="tool-desc">投資、持ちメダル、差枚まで細かく確認</span></span></a>
+                <a class="tool-link" href="tenjo.html"><span class="tool-icon">⏱</span><span><span class="tool-badge free">自由試算</span><span class="tool-title">天井到達シミュレーター</span><span class="tool-desc">現在G数から天井、自力当選、差枚を試す</span></span></a>
+                <a class="tool-link" href="hamari.html"><span class="tool-icon">📉</span><span><span class="tool-badge free">自由試算</span><span class="tool-title">ハマり確率シミュレーター</span><span class="tool-desc">指定回転数まで当たらない確率を計算</span></span></a>
                 <a class="tool-link" href="continuation.html"><span class="tool-icon">🔁</span><span><span class="tool-badge free">自由試算</span><span class="tool-title">継続率シミュレーター</span><span class="tool-desc">81%、90%などの連チャン感を試す</span></span></a>
                 <a class="tool-link" href="rush.html"><span class="tool-icon">⚡</span><span><span class="tool-badge free">自由試算</span><span class="tool-title">RUSH突入率シミュレーター</span><span class="tool-desc">突破率60%などを複数回試行</span></span></a>
                 <a class="tool-link" href="kakenuke.html"><span class="tool-icon">🌀</span><span><span class="tool-badge free">自由試算</span><span class="tool-title">単発・駆け抜けシミュレーター</span><span class="tool-desc">RUSH後の駆け抜け率を確認</span></span></a>
