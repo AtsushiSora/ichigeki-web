@@ -1831,9 +1831,10 @@ function resetTwoChoice() {
   const effect = document.getElementById("choiceEffect");
   if (effect) {
     effect.textContent = "";
-    effect.classList.remove("show");
+    effect.classList.remove("show", "miss");
   }
   document.querySelector(".choice-stage")?.classList.remove("success-pulse");
+  document.querySelector(".choice-simple-stage")?.classList.remove("is-missed");
   document.querySelectorAll("[data-choice]").forEach(button => {
     button.disabled = false;
     button.classList.remove("good", "bad");
@@ -1876,6 +1877,8 @@ function finishTwoChoice(selected) {
   const selectedLabel = selected === "left" ? "左" : "右";
   const correctLabel = twoChoiceState.correct === "left" ? "左" : "右";
   const finalChain = twoChoiceState.chain;
+  const effect = document.getElementById("choiceEffect");
+  const stage = document.querySelector(".choice-simple-stage");
   twoChoiceState.active = false;
   twoChoiceState.best = Math.max(twoChoiceState.best, finalChain);
   try {
@@ -1895,8 +1898,16 @@ function finishTwoChoice(selected) {
   setText("resultBest", `${twoChoiceState.best}連`);
   setText("resultNextRate", formatTwoChoiceOddsFromChain(finalChain));
   setText("log", `終了: ${finalChain}連 / 選択 ${selectedLabel} / 正解 ${correctLabel}`);
-  setText("simpleStatus", "結果確定");
-  setText("simpleStatusText", `${finalChain}連で終了 / 正解は${correctLabel}`);
+  setText("simpleStatus", "ハズレ");
+  setText("simpleStatusText", `選択 ${selectedLabel} は失敗。正解は ${correctLabel} / ${finalChain}連で終了`);
+  if (effect) {
+    effect.textContent = `ハズレ / 正解は${correctLabel}`;
+    effect.classList.remove("show", "legend");
+    effect.classList.add("miss");
+    void effect.offsetWidth;
+    effect.classList.add("show");
+  }
+  stage?.classList.add("is-missed");
 }
 
 function chooseTwoChoice(selected) {
