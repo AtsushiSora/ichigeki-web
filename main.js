@@ -163,6 +163,9 @@ function setSaveReady(type, isReady) {
   if (!action) return;
   const button = document.querySelector(`[data-action="${action}"]`);
   if (!button) return;
+  if (!button.dataset.saveLabel) button.dataset.saveLabel = button.textContent;
+  if (isReady) button.textContent = button.dataset.saveLabel;
+  if (!isReady) button.textContent = button.dataset.saveLabel;
   button.classList.toggle("save-ready", isReady);
   button.disabled = !isReady;
   button.setAttribute("aria-disabled", String(!isReady));
@@ -232,6 +235,16 @@ const rankingPreviewConfig = {
   }
 };
 
+const savedFeedbackConfig = {
+  juggle: { rankingHref: "ranking.html#juggle-ranking", retryHref: "juggle-simple.html", retryLabel: "もう一回" },
+  pachinko319: { rankingHref: "ranking.html#pachinko-ranking", retryHref: "pachinko-319.html", retryLabel: "もう一回" },
+  hamari: { rankingHref: "ranking.html#hamari-ranking", retryHref: "hamari.html", retryLabel: "もう一回" },
+  twoChoice: { rankingHref: "ranking.html#two-choice-ranking", retryHref: "two-choice-select.html", retryLabel: "もう一回" },
+  ltRush: { rankingHref: "ranking.html#lt-rush-ranking", retryHref: "lt-rush.html", retryLabel: "もう一回" },
+  czChallenge: { rankingHref: "ranking.html#cz-ranking", retryHref: "cz-challenge.html", retryLabel: "もう一回" },
+  rare8192: { rankingHref: "ranking.html#rare-8192-ranking", retryHref: "rare-8192.html", retryLabel: "もう一回" }
+};
+
 function ensureSavePreview(type) {
   const action = saveActionByType[type];
   const saveButton = action ? document.querySelector(`[data-action="${action}"]`) : null;
@@ -257,6 +270,7 @@ function getPreviewRank(type, latest) {
 function updateSavePreview(type, latest) {
   const preview = ensureSavePreview(type);
   if (!preview) return;
+  preview.className = "save-preview";
   if (!latest) {
     preview.hidden = true;
     preview.innerHTML = "";
@@ -267,6 +281,17 @@ function updateSavePreview(type, latest) {
   const rankText = rank ? `現在 ${rank}位相当` : "保存できます";
   preview.hidden = false;
   preview.innerHTML = `<span>${escapeHtml(config?.label || "ランキング")}</span><strong>${escapeHtml(rankText)}</strong><small>${escapeHtml(config?.format(latest) || "結果を保存できます")}</small>`;
+}
+
+function showSavedFeedback(type, record) {
+  const preview = ensureSavePreview(type);
+  if (!preview) return;
+  const config = savedFeedbackConfig[type] || { rankingHref: "ranking.html", retryHref: location.pathname.split("/").pop() || "index.html", retryLabel: "もう一回" };
+  const previewConfig = rankingPreviewConfig[type];
+  const detail = previewConfig?.format(record) || "保存した記録をランキングで確認できます";
+  preview.hidden = false;
+  preview.className = "save-preview is-saved";
+  preview.innerHTML = `<span>保存完了</span><strong>ランキングに保存しました</strong><small>${escapeHtml(detail)}</small><div class="save-preview-actions"><a href="${config.rankingHref}">ランキングを見る</a><a href="${config.retryHref}">${escapeHtml(config.retryLabel)}</a></div>`;
 }
 
 function getFixedSpecSnapshot(type) {
@@ -647,14 +672,18 @@ function saveLatestRecord(type) {
     return;
   }
   const records = loadLocalRecords();
+  const record = { ...latest, id: createRecordId(type), name: getRecordName(), savedAt: new Date().toISOString(), spec: getFixedSpecSnapshot(type) };
   records[type] = sortRecords(type, [
-    { ...latest, id: createRecordId(type), name: getRecordName(), savedAt: new Date().toISOString(), spec: getFixedSpecSnapshot(type) },
+    record,
     ...records[type]
   ]).slice(0, 30);
   const saved = storeLocalRecords(records);
   if (saved) {
     appendLog("log", "ランキングに保存しました。ランキングページで確認できます。");
     setSaveReady(type, false);
+    const button = document.querySelector(`[data-action="${saveActionByType[type]}"]`);
+    if (button) button.textContent = "保存済み";
+    showSavedFeedback(type, record);
     renderRankingPage();
   } else {
     appendLog("log", "保存できませんでした。ブラウザの保存設定を確認してください。");
