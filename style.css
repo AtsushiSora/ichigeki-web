@@ -1816,6 +1816,77 @@ code,
   margin-top: 14px;
 }
 
+.ranking-play-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.ranking-play-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    "icon title action"
+    "icon desc action";
+  gap: 4px 12px;
+  align-items: center;
+  min-height: 92px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 100% 0, rgba(107, 211, 79, 0.1), transparent 140px),
+    linear-gradient(155deg, rgba(18, 20, 19, 0.96), rgba(6, 8, 7, 0.96));
+  color: var(--text);
+}
+
+.ranking-play-card:hover {
+  text-decoration: none;
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.ranking-play-card.primary {
+  border-color: rgba(242, 185, 59, 0.46);
+  background:
+    radial-gradient(circle at 100% 0, rgba(242, 185, 59, 0.16), transparent 140px),
+    linear-gradient(155deg, rgba(28, 23, 12, 0.96), rgba(6, 8, 7, 0.96));
+}
+
+.ranking-play-card span {
+  grid-area: icon;
+  font-size: 24px;
+}
+
+.ranking-play-card strong {
+  grid-area: title;
+  color: #fff;
+  font-size: 17px;
+  line-height: 1.25;
+}
+
+.ranking-play-card small {
+  grid-area: desc;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.ranking-play-card b {
+  grid-area: action;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 64px;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid rgba(107, 211, 79, 0.5);
+  border-radius: 999px;
+  color: var(--accent-dark);
+  font-size: 11px;
+}
+
 .record-summary-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1883,6 +1954,14 @@ code,
   justify-content: space-between;
   gap: 16px;
   align-items: flex-start;
+}
+
+.section-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .status-pill {
@@ -1966,6 +2045,7 @@ code,
   .control-grid,
   .quick-grid,
   .mini-guide,
+  .ranking-play-grid,
   .record-summary-grid,
   .rank-category-grid,
   .podium-grid,
@@ -2491,6 +2571,19 @@ code,
 
   .ranking-controls select {
     width: 100%;
+  }
+
+  .section-head {
+    display: grid;
+  }
+
+  .section-actions {
+    justify-content: flex-start;
+  }
+
+  .ranking-play-card {
+    min-height: 84px;
+    padding: 14px;
   }
 
   .tool-link {

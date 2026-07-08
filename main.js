@@ -795,7 +795,7 @@ function renderRankingPage() {
     const rows = sortRecords("juggle", records.juggle, getRankingSort("juggle")).slice(0, 10).map((record, index) => (
       `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.chain}連</td><td>BIG ${record.big} / REG ${record.reg}</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}枚</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("juggle", record.id)}</td></tr>`
     ));
-    juggleBody.innerHTML = rows.join("") || renderEmptyRows(7, "ジャグ連の記録がありません", "juggle.html", "ジャグ連を試す");
+    juggleBody.innerHTML = rows.join("") || renderEmptyRows(7, "ジャグ連の記録がありません", "juggle-simple.html", "ジャグ連を試す");
   }
 
   const pachinkoBody = document.getElementById("pachinkoRankingBody");

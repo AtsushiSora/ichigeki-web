@@ -40,7 +40,8 @@
         <p class="lead">シミュレーターで出た結果を種目ごとに保存して見返せるページです。現在はこの端末のブラウザ内に記録されるローカルランキングとして動作します。</p>
         <div class="hero-actions">
           <a class="button primary" href="juggle-simple.html">ジャグ連に挑戦</a>
-          <a class="button" href="pachinko-319.html">319を試す</a>
+          <a class="button" href="two-choice-select.html">二択を試す</a>
+          <a class="button" href="rare-8192.html">8192を試す</a>
           <button class="button danger" data-action="clearRanking">記録をリセット</button>
         </div>
       </div>
@@ -52,6 +53,19 @@
     </section>
 
     <div class="layout"><div class="main-column">
+      <section class="article-card compact-card">
+        <h2>すぐ挑戦</h2>
+        <p class="section-lead">ランキング対象の固定バトルです。結果が出たら、そのままこのページに保存できます。</p>
+        <div class="ranking-play-grid">
+          <a class="ranking-play-card primary" href="juggle-simple.html"><span>🤡</span><strong>ジャグ連</strong><small>100G以内の連チャン数</small><b>START</b></a>
+          <a class="ranking-play-card" href="two-choice-select.html"><span>↔️</span><strong>二択</strong><small>50%の連続正解</small><b>START</b></a>
+          <a class="ranking-play-card" href="rare-8192.html"><span>🎯</span><strong>1/8192</strong><small>当選回転で勝負</small><b>START</b></a>
+          <a class="ranking-play-card" href="pachinko-319.html"><span>🎰</span><strong>319一撃</strong><small>総出玉で勝負</small><b>START</b></a>
+          <a class="ranking-play-card" href="cz-challenge.html"><span>🎮</span><strong>CZ突破</strong><small>獲得枚数・差枚</small><b>START</b></a>
+          <a class="ranking-play-card" href="lt-rush.html"><span>🔥</span><strong>LT上位</strong><small>上位到達と総出玉</small><b>START</b></a>
+        </div>
+      </section>
+
       <section class="article-card">
         <h2>ランキング種目</h2>
         <div class="record-summary-grid">
@@ -64,7 +78,7 @@
           <div class="record-summary-card"><span>二択</span><strong id="twoChoiceBestSummary">--</strong><small id="twoChoiceRecordCount">0件</small></div>
         </div>
         <div class="rank-category-grid">
-          <a class="rank-category active" href="#juggle-ranking"><span>🤡</span><strong>全国ジャグ連</strong><small>連数、BIG/REG、差枚で競う</small></a>
+          <a class="rank-category active" href="#juggle-ranking"><span>🤡</span><strong>ジャグ連</strong><small>連数、BIG/REG、差枚で競う</small></a>
           <a class="rank-category" href="#cz-ranking"><span>🎮</span><strong>CZ突破</strong><small>CZ成功、AT、差枚で競う</small></a>
           <a class="rank-category" href="#pachinko-ranking"><span>🎰</span><strong>319一撃</strong><small>総出玉、連チャン、差玉で競う</small></a>
           <a class="rank-category" href="#lt-rush-ranking"><span>🔥</span><strong>LT上位RUSH</strong><small>上位到達、総出玉、差玉で競う</small></a>
@@ -86,8 +100,8 @@
 
       <section class="article-card" id="juggle-ranking">
         <div class="section-head">
-          <div><h2>全国ジャグ連ランキング</h2><p>100G以内の連続当選数をメインに表示するランキングです。</p></div>
-          <span class="status-pill">端末内保存</span>
+          <div><h2>ジャグ連ランキング</h2><p>100G以内の連続当選数をメインに表示するランキングです。</p></div>
+          <div class="section-actions"><span class="status-pill">端末内保存</span><a class="mini-button" href="juggle-simple.html">挑戦する</a></div>
         </div>
         <div class="ranking-controls">
           <label for="juggleSort">並び替え</label>
@@ -111,7 +125,7 @@
       <section class="article-card" id="cz-ranking">
         <div class="section-head">
           <div><h2>CZ突破ランキング</h2><p>CZ成功、ATセット数、獲得枚数、差枚を並べるランキングです。</p></div>
-          <span class="status-pill">端末内保存</span>
+          <div class="section-actions"><span class="status-pill">端末内保存</span><a class="mini-button" href="cz-challenge.html">挑戦する</a></div>
         </div>
         <div class="ranking-controls">
           <label for="czChallengeSort">並び替え</label>
@@ -130,7 +144,7 @@
       <section class="article-card" id="pachinko-ranking">
         <div class="section-head">
           <div><h2>319一撃ランキング</h2><p>総出玉、連チャン、差玉を見やすく並べるランキングです。</p></div>
-          <span class="status-pill">端末内保存</span>
+          <div class="section-actions"><span class="status-pill">端末内保存</span><a class="mini-button" href="pachinko-319.html">挑戦する</a></div>
         </div>
         <div class="ranking-controls">
           <label for="pachinko319Sort">並び替え</label>
@@ -148,7 +162,7 @@
       <section class="article-card" id="lt-rush-ranking">
         <div class="section-head">
           <div><h2>LT上位RUSHランキング</h2><p>上位RUSH到達、総出玉、連チャン、差玉を見やすく並べるランキングです。</p></div>
-          <span class="status-pill">端末内保存</span>
+          <div class="section-actions"><span class="status-pill">端末内保存</span><a class="mini-button" href="lt-rush.html">挑戦する</a></div>
         </div>
         <div class="ranking-controls">
           <label for="ltRushSort">並び替え</label>
@@ -167,7 +181,7 @@
       <section class="article-card" id="rare-8192-ranking">
         <div class="section-head">
           <div><h2>1/8192当選ランキング</h2><p>1/8192を何回転目に引けたかを記録するランキングです。</p></div>
-          <span class="status-pill">端末内保存</span>
+          <div class="section-actions"><span class="status-pill">端末内保存</span><a class="mini-button" href="rare-8192.html">挑戦する</a></div>
         </div>
         <div class="ranking-controls">
           <label for="rare8192Sort">並び替え</label>
@@ -185,7 +199,7 @@
       <section class="article-card" id="hamari-ranking">
         <div class="section-head">
           <div><h2>ハマり記録ランキング</h2><p>指定確率でどこまで当たらなかったかを記録する種目です。</p></div>
-          <span class="status-pill">端末内保存</span>
+          <div class="section-actions"><span class="status-pill">端末内保存</span><a class="mini-button" href="hamari.html">挑戦する</a></div>
         </div>
         <div class="ranking-controls">
           <label for="hamariSort">並び替え</label>
@@ -202,7 +216,7 @@
       <section class="article-card" id="two-choice-ranking">
         <div class="section-head">
           <div><h2>二択チャレンジランキング</h2><p>左か右の二択を何連続で当てられたかを記録する種目です。到達確率は「1/32」のような分母形式で表示します。</p></div>
-          <span class="status-pill">端末内保存</span>
+          <div class="section-actions"><span class="status-pill">端末内保存</span><a class="mini-button" href="two-choice-select.html">挑戦する</a></div>
         </div>
         <div class="ranking-controls">
           <label for="twoChoiceSort">並び替え</label>
@@ -232,7 +246,7 @@
         <p>ランキングに保存される内容は、シミュレーターで出た数値、保存日時、入力されたランキング保存名です。メールアドレス、端末情報、個人を識別する情報は保存しません。</p>
         <p>記録はブラウザのローカルストレージに保存されます。ブラウザの履歴やサイトデータを削除すると、保存したランキングも消えます。共有ランキングを本稼働させる場合は、別途オンライン保存の仕組みを追加します。</p>
       </section>
-    </div><aside class="side-column"><section class="side-card"><h2>ランキングに挑戦</h2><ul class="side-list"><li><a href="juggle-simple.html">全国ジャグ連チャレンジ</a></li><li><a href="juggle.html">ジャグ連詳細版</a></li><li><a href="cz-challenge.html">CZ突破シミュレーター</a></li><li><a href="pachinko-319.html">319一撃シミュレーター</a></li><li><a href="lt-rush.html">LT上位RUSHシミュレーター</a></li><li><a href="rare-8192.html">1/8192当選シミュレーター</a></li><li><a href="hamari.html">ハマり確率シミュレーター</a></li><li><a href="two-choice-select.html">二択セレクトチャレンジ</a></li></ul></section><div class="ad-box ad-box-sidebar" data-ad-slot="ranking-sidebar"><span class="ad-label">PR</span><span class="ad-title">サイドバー広告枠</span><span class="ad-note">PC表示向け</span></div><section class="side-card"><h2>関連ページ</h2><ul class="side-list"><li><a href="guide.html">確率の見方</a></li><li><a href="glossary.html">用語集</a></li><li><a href="faq.html">よくある質問</a></li></ul></section></aside></div>
+    </div><aside class="side-column"><section class="side-card"><h2>ランキングに挑戦</h2><ul class="side-list"><li><a href="juggle-simple.html">ジャグ連チャレンジ</a></li><li><a href="two-choice-select.html">二択セレクトチャレンジ</a></li><li><a href="rare-8192.html">1/8192当選シミュレーター</a></li><li><a href="cz-challenge.html">CZ突破シミュレーター</a></li><li><a href="pachinko-319.html">319一撃シミュレーター</a></li><li><a href="lt-rush.html">LT上位RUSHシミュレーター</a></li><li><a href="hamari.html">ハマり確率シミュレーター</a></li><li><a href="juggle.html">ジャグ連詳細版</a></li></ul></section><div class="ad-box ad-box-sidebar" data-ad-slot="ranking-sidebar"><span class="ad-label">PR</span><span class="ad-title">サイドバー広告枠</span><span class="ad-note">PC表示向け</span></div><section class="side-card"><h2>関連ページ</h2><ul class="side-list"><li><a href="guide.html">確率の見方</a></li><li><a href="glossary.html">用語集</a></li><li><a href="faq.html">よくある質問</a></li></ul></section></aside></div>
     <div class="ad-box ad-box-footer" data-ad-slot="ranking-footer"><span class="ad-label">PR</span><span class="ad-title">ページ下部広告枠</span><span class="ad-note">ランキング末尾の広告枠</span></div>
   </main>
   <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="sitemap.html">サイトマップ</a><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a></div></div></footer>
