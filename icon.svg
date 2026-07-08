@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="96" fill="#1f7a55"/>
+  <rect width="512" height="512" rx="96" fill="#050705"/>
   <rect x="64" y="64" width="384" height="384" rx="72" fill="#ffffff" opacity=".12"/>
   <text x="256" y="286" fill="#ffffff" font-family="Menlo, Consolas, monospace" font-size="74" font-weight="900" text-anchor="middle">一撃</text>
   <text x="256" y="354" fill="#e7f5ee" font-family="Menlo, Consolas, monospace" font-size="42" font-weight="800" text-anchor="middle">ICHIGEKI</text>

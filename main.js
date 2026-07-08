@@ -157,10 +157,101 @@ function setSaveReady(type, isReady) {
   if (!button) return;
   button.classList.toggle("save-ready", isReady);
   button.setAttribute("aria-live", "polite");
+  if (!isReady) updateSavePreview(type, null);
 }
 
 function markResultReady(type) {
   setSaveReady(type, true);
+  updateSavePreview(type, latestResults[type]);
+}
+
+const rankingPreviewConfig = {
+  juggle: {
+    label: "ジャグ連",
+    unit: "連",
+    score: record => record?.chain || 0,
+    sort: records => sortRecords("juggle", records),
+    format: record => record ? `${record.chain}連 / 差枚 ${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}枚` : "--"
+  },
+  pachinko319: {
+    label: "319一撃",
+    unit: "玉",
+    score: record => record?.totalPayout || 0,
+    sort: records => sortRecords("pachinko319", records),
+    format: record => record ? `${yen.format(record.totalPayout)}玉 / ${record.chain}連` : "--"
+  },
+  hamari: {
+    label: "ハマり",
+    unit: "回転",
+    score: record => record?.spins || 0,
+    sort: records => sortRecords("hamari", records),
+    format: record => record ? `${yen.format(record.spins)}回転 / ${record.probability.toFixed(2)}%` : "--"
+  },
+  twoChoice: {
+    label: "二択",
+    unit: "連",
+    score: record => record?.chain || 0,
+    sort: records => sortRecords("twoChoice", records),
+    format: record => record ? `${record.chain}連 / 到達率 ${record.probability.toFixed(3)}%` : "--"
+  },
+  ltRush: {
+    label: "LT上位",
+    unit: "玉",
+    score: record => record?.totalPayout || 0,
+    sort: records => sortRecords("ltRush", records),
+    format: record => record ? `${yen.format(record.totalPayout)}玉 / ${record.status}` : "--"
+  },
+  czChallenge: {
+    label: "CZ突破",
+    unit: "枚",
+    score: record => record?.totalMedals || 0,
+    sort: records => sortRecords("czChallenge", records),
+    format: record => record ? `${yen.format(record.totalMedals)}枚 / ${record.success ? "成功" : "失敗"}` : "--"
+  },
+  rare8192: {
+    label: "1/8192",
+    unit: "回転",
+    score: record => record?.spins || 0,
+    sort: records => sortRecords("rare8192", records),
+    format: record => record ? `${yen.format(record.spins)}回転 / 分母${record.ratio.toFixed(2)}倍` : "--"
+  }
+};
+
+function ensureSavePreview(type) {
+  const action = saveActionByType[type];
+  const saveButton = action ? document.querySelector(`[data-action="${action}"]`) : null;
+  if (!saveButton) return null;
+  let preview = document.querySelector(`[data-save-preview="${type}"]`);
+  if (preview) return preview;
+  preview = document.createElement("div");
+  preview.className = "save-preview";
+  preview.dataset.savePreview = type;
+  saveButton.closest(".tool-actions, .simple-sub-actions")?.insertAdjacentElement("beforebegin", preview);
+  return preview;
+}
+
+function getPreviewRank(type, latest) {
+  const config = rankingPreviewConfig[type];
+  if (!config || !latest) return null;
+  const records = loadLocalRecords()[type] || [];
+  const temporary = { ...latest, id: "__preview__", savedAt: new Date().toISOString(), name: getRecordName() };
+  const sorted = config.sort([temporary, ...records]);
+  return sorted.findIndex(record => record.id === "__preview__") + 1;
+}
+
+function updateSavePreview(type, latest) {
+  const preview = ensureSavePreview(type);
+  if (!preview) return;
+  if (!latest) {
+    preview.hidden = true;
+    preview.innerHTML = "";
+    return;
+  }
+  const config = rankingPreviewConfig[type];
+  const rank = getPreviewRank(type, latest);
+  const rankText = rank ? `現在 ${rank}位相当` : "保存できます";
+  preview.hidden = false;
+  preview.innerHTML = `<span>${escapeHtml(config?.label || "ランキング")}</span><strong>${escapeHtml(rankText)}</strong><small>${escapeHtml(config?.format(latest) || "結果を保存できます")}</small>`;
 }
 
 function getFixedSpecSnapshot(type) {
@@ -575,7 +666,7 @@ function clearLocalRecords() {
 
 function renderEmptyRows(columns, message = "まだ記録がありません", href = "", label = "") {
   const action = href && label ? `<a class="empty-state-link" href="${href}">${label}</a>` : "";
-  return `<tr><td colspan="${columns}"><div class="empty-state"><strong>${message}</strong><span>シミュレーターで結果を出して「ランキングに保存」を押すと、ここに記録が表示されます。</span>${action}</div></td></tr>`;
+  return `<tr><td colspan="${columns}"><div class="empty-state"><strong>${message}</strong><span>ランキングバトルで結果を出して「ランキングに保存」を押すと、ここに記録が表示されます。</span>${action}</div></td></tr>`;
 }
 
 function getRankingSort(type) {
@@ -1760,6 +1851,38 @@ function copyShareText() {
   navigator.clipboard?.writeText(`${document.title}\n${text}\n${location.href}`).catch(() => null);
 }
 
+function renderMobileBottomNav() {
+  if (document.querySelector(".mobile-bottom-nav")) return;
+  const items = [
+    { href: "index.html", label: "トップ", icon: "⌂", match: ["index.html", ""] },
+    { href: "juggle-simple.html", label: "挑戦", icon: "▶", match: ["juggle-simple.html", "pachinko-319.html", "cz-challenge.html", "rare-8192.html", "two-choice.html", "hamari.html", "lt-rush.html"] },
+    { href: "ranking.html", label: "記録", icon: "🏆", match: ["ranking.html"] },
+    { href: "guide.html", label: "使い方", icon: "?", match: ["guide.html", "faq.html", "glossary.html"] }
+  ];
+  const page = location.pathname.split("/").pop() || "index.html";
+  const nav = document.createElement("nav");
+  nav.className = "mobile-bottom-nav";
+  nav.setAttribute("aria-label", "スマホ用ナビゲーション");
+  nav.innerHTML = items.map(item => {
+    const active = item.match.includes(page) || (page === "index.html" && item.match.includes(""));
+    return `<a class="${active ? "active" : ""}" href="${item.href}"><span>${item.icon}</span><b>${item.label}</b></a>`;
+  }).join("");
+  document.body.appendChild(nav);
+}
+
+function enhanceAdPlacement() {
+  document.querySelectorAll(".ad-box").forEach(ad => {
+    ad.setAttribute("role", "complementary");
+    ad.setAttribute("aria-label", "広告枠");
+  });
+}
+
+function enhanceInstallCard() {
+  const manifest = document.querySelector('link[rel="manifest"]');
+  if (!manifest) return;
+  document.documentElement.classList.add("pwa-ready");
+}
+
 function registerServiceWorker() {
   if (!("serviceWorker" in navigator)) return;
   if (!/^https?:$/.test(location.protocol)) return;
@@ -1815,4 +1938,7 @@ renderSimplePresets();
 renderResultGuide();
 renderRankingPage();
 initializeTwoChoicePage();
+renderMobileBottomNav();
+enhanceAdPlacement();
+enhanceInstallCard();
 registerServiceWorker();
