@@ -212,20 +212,6 @@ const rankingPreviewConfig = {
     sort: records => sortRecords("twoChoice", records),
     format: record => record ? `${record.chain}連 / 到達 ${formatTwoChoiceOddsFromPercent(record.probability)}` : "--"
   },
-  ltRush: {
-    label: "LT上位",
-    unit: "玉",
-    score: record => record?.totalPayout || 0,
-    sort: records => sortRecords("ltRush", records),
-    format: record => record ? `${yen.format(record.totalPayout)}玉 / ${record.status}` : "--"
-  },
-  czChallenge: {
-    label: "CZ突破",
-    unit: "枚",
-    score: record => record?.totalMedals || 0,
-    sort: records => sortRecords("czChallenge", records),
-    format: record => record ? `${yen.format(record.totalMedals)}枚 / ${record.success ? "成功" : "失敗"}` : "--"
-  },
   rare8192: {
     label: "1/8192",
     unit: "回転",
@@ -240,8 +226,6 @@ const savedFeedbackConfig = {
   pachinko319: { rankingHref: "ranking.html#pachinko-ranking", retryHref: "pachinko-319.html", retryLabel: "もう一回" },
   hamari: { rankingHref: "ranking.html#hamari-ranking", retryHref: "hamari.html", retryLabel: "もう一回" },
   twoChoice: { rankingHref: "ranking.html#two-choice-ranking", retryHref: "two-choice-select.html", retryLabel: "もう一回" },
-  ltRush: { rankingHref: "ranking.html#lt-rush-ranking", retryHref: "lt-rush.html", retryLabel: "もう一回" },
-  czChallenge: { rankingHref: "ranking.html#cz-ranking", retryHref: "cz-challenge.html", retryLabel: "もう一回" },
   rare8192: { rankingHref: "ranking.html#rare-8192-ranking", retryHref: "rare-8192.html", retryLabel: "もう一回" }
 };
 
@@ -329,30 +313,6 @@ const resultGuidesByAction = {
       "まず初期値で数回試し、その後に1項目だけ変えると違いを確認しやすくなります。"
     ]
   },
-  luckyTrigger: {
-    title: "結果の見方",
-    points: [
-      "LT突入は低確率ですが、入った後の継続と出玉が結果を大きく動かします。",
-      "通常終了の多さと、LT突入時の一撃差を比較すると荒さが分かります。",
-      "突入率と継続率を別々に変えると、どちらが結果に効くか確認できます。"
-    ]
-  },
-  ltRush: {
-    title: "結果の見方",
-    points: [
-      "到達ルートは、通常終了・下位RUSH・上位RUSH到達のどこで終わったかを示します。",
-      "上位RUSHに入るまでの段階が多いほど、同じ319でも結果のブレが大きくなります。",
-      "ランキングではスペック固定なので、総出玉と差玉をそのまま比較しやすくしています。"
-    ]
-  },
-  czChallenge: {
-    title: "結果の見方",
-    points: [
-      "CZ当選ゲームは、通常時からCZに入るまでに回したゲーム数です。",
-      "CZ成功後はATセット数と獲得枚数、失敗時は投資負けの重さを見ます。",
-      "差枚は1,000円46枚換算で、投資した枚数を差し引いた目安です。"
-    ]
-  },
   tenjo: {
     title: "結果の見方",
     points: [
@@ -416,8 +376,6 @@ const fixedConditionSummariesByAction = {
   pachinko319: ["大当たり 1/319", "RUSH突入 60%", "継続率 81%", "初当たり 300玉", "RUSH中 1,500玉", "17回転/1,000円"],
   hamari: ["大当たり 1/319", "判定回転数 1,000回転"],
   twoChoiceStart: ["成功率 50%", "外れた時点で終了", "連続正解数でランキング"],
-  ltRush: ["大当たり 1/319", "下位突入 55%", "下位継続 75%", "上位昇格 25%", "上位継続 90%"],
-  czChallenge: ["CZ 1/180", "CZ成功 40%", "AT継続 70%", "1,000円46枚", "35G/1,000円"],
   rare8192: ["当選確率 1/8192", "当選回転でランキング"]
 };
 
@@ -462,8 +420,8 @@ const simplePresetsByAction = {
     }
   ],
   genericPachinko: [
-    { label: "LTミドル", values: { hitRate: 319, spinPerUnit: 17, rushRate: 55, continueRate: 82, firstPayout: 300, payout: 1500 } },
-    { label: "ライトLT", values: { hitRate: 199, spinPerUnit: 18, rushRate: 50, continueRate: 88, firstPayout: 300, payout: 1200 } },
+    { label: "王道ミドル", values: { hitRate: 319, spinPerUnit: 17, rushRate: 55, continueRate: 82, firstPayout: 300, payout: 1500 } },
+    { label: "ライト高継続", values: { hitRate: 199, spinPerUnit: 18, rushRate: 50, continueRate: 88, firstPayout: 300, payout: 1200 } },
     { label: "甘デジ遊び", values: { hitRate: 99, spinPerUnit: 20, rushRate: 45, continueRate: 72, firstPayout: 300, payout: 500 } },
     { label: "一撃型 1/399", values: { hitRate: 399, spinPerUnit: 16, rushRate: 52, continueRate: 85, firstPayout: 300, payout: 1500 } }
   ],
@@ -471,13 +429,13 @@ const simplePresetsByAction = {
     { label: "王道 81%", values: { continueRate: 81, targetChain: 10, trials: 10000 } },
     { label: "高継続 90%", values: { continueRate: 90, targetChain: 20, trials: 10000 } },
     { label: "超高継続 93%", values: { continueRate: 93, targetChain: 30, trials: 10000 } },
-    { label: "LT級 95%", values: { continueRate: 95, targetChain: 40, trials: 10000 } }
+    { label: "超高継続 95%", values: { continueRate: 95, targetChain: 40, trials: 10000 } }
   ],
   rush: [
     { label: "50%", values: { rushRate: 50, trials: 30 } },
     { label: "60%", values: { rushRate: 60, trials: 100 } },
     { label: "70%", values: { rushRate: 70, trials: 100 } },
-    { label: "LT狭き門 25%", values: { rushRate: 25, trials: 100 } }
+    { label: "狭き門 25%", values: { rushRate: 25, trials: 100 } }
   ],
   luckyTrigger: [
     {
@@ -493,11 +451,11 @@ const simplePresetsByAction = {
       values: { hitRate: 319, spinPerUnit: 17, triggerRate: 20, triggerContinueRate: 92, firstPayout: 300, triggerPayout: 1500 }
     },
     {
-      label: "ミドルLT",
+      label: "ミドル一撃型",
       values: { hitRate: 319, spinPerUnit: 17, triggerRate: 30, triggerContinueRate: 88, firstPayout: 300, triggerPayout: 1500 }
     },
     {
-      label: "重めLT 1/399",
+      label: "重め一撃型 1/399",
       values: { hitRate: 399, spinPerUnit: 16, triggerRate: 50, triggerContinueRate: 85, firstPayout: 300, triggerPayout: 1500 }
     }
   ]
@@ -755,12 +713,10 @@ function renderHomeLobby() {
   const records = loadLocalRecords();
   const juggleTop = sortRecords("juggle", records.juggle).slice(0, 3);
   const pachinkoTop = sortRecords("pachinko319", records.pachinko319)[0];
-  const ltTop = sortRecords("ltRush", records.ltRush)[0];
-  const ballBest = Math.max(pachinkoTop?.totalPayout || 0, ltTop?.totalPayout || 0);
+  const ballBest = pachinkoTop?.totalPayout || 0;
   const chainBest = Math.max(
     juggleTop[0]?.chain || 0,
     sortRecords("pachinko319", records.pachinko319, "chain")[0]?.chain || 0,
-    sortRecords("ltRush", records.ltRush, "chain")[0]?.chain || 0,
     sortRecords("twoChoice", records.twoChoice)[0]?.chain || 0
   );
   setText("homeBestBalls", ballBest ? `${yen.format(ballBest)}玉` : "--玉");
@@ -797,7 +753,7 @@ function renderRankingPage() {
   const records = loadLocalRecords();
   const summary = document.getElementById("rankingCount");
   if (summary) {
-    const total = records.juggle.length + records.pachinko319.length + records.hamari.length + records.twoChoice.length + records.ltRush.length + records.czChallenge.length + records.rare8192.length;
+    const total = records.juggle.length + records.pachinko319.length + records.hamari.length + records.twoChoice.length + records.rare8192.length;
     summary.textContent = `${total}件`;
   }
 
@@ -849,22 +805,6 @@ function renderRankingPage() {
       `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.chain}連</td><td>${record.rounds || record.chain + 1}回</td><td>${formatTwoChoiceOddsFromPercent(record.probability)}</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("twoChoice", record.id)}</td></tr>`
     ));
     twoChoiceBody.innerHTML = rows.join("") || renderEmptyRows(7, "二択チャレンジの記録がありません", "two-choice-select.html", "二択を試す");
-  }
-
-  const ltRushBody = document.getElementById("ltRushRankingBody");
-  if (ltRushBody) {
-    const rows = sortRecords("ltRush", records.ltRush, getRankingSort("ltRush")).slice(0, 10).map((record, index) => (
-      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.totalPayout)}玉</td><td>${record.status || (record.enteredUpper ? "上位RUSH到達" : record.enteredLower ? "下位RUSH終了" : "通常終了")}</td><td>${record.chain}連</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}玉</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("ltRush", record.id)}</td></tr>`
-    ));
-    ltRushBody.innerHTML = rows.join("") || renderEmptyRows(8, "LT上位RUSHの記録がありません", "lt-rush.html", "LT上位RUSHを試す");
-  }
-
-  const czBody = document.getElementById("czRankingBody");
-  if (czBody) {
-    const rows = sortRecords("czChallenge", records.czChallenge, getRankingSort("czChallenge")).slice(0, 10).map((record, index) => (
-      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.success ? "成功" : "失敗"}</td><td>${record.chain}セット</td><td>${yen.format(record.totalMedals)}枚</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}枚</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("czChallenge", record.id)}</td></tr>`
-    ));
-    czBody.innerHTML = rows.join("") || renderEmptyRows(8, "CZ突破の記録がありません", "cz-challenge.html", "CZ突破を試す");
   }
 
   const rare8192Body = document.getElementById("rare8192RankingBody");
@@ -1146,7 +1086,7 @@ async function runLuckyTrigger() {
   setText("log", "初当たり抽選中...");
   const result = simulateLuckyTrigger();
   await animateCount("resultSpins", result.spins, "回転", Math.min(3000, Math.max(1000, result.spins * 6)));
-  setText("resultTrigger", result.enteredTrigger ? "LT突入" : "通常終了");
+  setText("resultTrigger", result.enteredTrigger ? "特化突入" : "通常終了");
   setText("resultPayout", `${yen.format(result.firstPayout)}玉`);
   setText("resultChain", "1連");
   if (result.enteredTrigger) {
@@ -1156,16 +1096,16 @@ async function runLuckyTrigger() {
       currentPayout += result.triggerPayout;
       setText("resultChain", `${currentChain}連`);
       setText("resultPayout", `${yen.format(currentPayout)}玉`);
-      setText("log", `LT継続 ${currentChain}連 / ${yen.format(currentPayout)}玉`);
+      setText("log", `特化継続 ${currentChain}連 / ${yen.format(currentPayout)}玉`);
     }
   }
   setText("resultSpins", `${yen.format(result.spins)}回転`);
   setText("resultInvestment", `${yen.format(result.investment)}円`);
-  setText("resultTrigger", result.enteredTrigger ? "LT突入" : "通常終了");
+  setText("resultTrigger", result.enteredTrigger ? "特化突入" : "通常終了");
   setText("resultChain", `${result.chain}連`);
   setText("resultPayout", `${yen.format(result.totalPayout)}玉`);
   setText("resultDiff", `${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
-  setText("log", `LT${result.enteredTrigger ? "突入" : "非突入"} / ${result.chain}連 / 差玉 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
+  setText("log", `特化${result.enteredTrigger ? "突入" : "非突入"} / ${result.chain}連 / 差玉 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
   setRunningButton("luckyTrigger", false);
   genericToolRunning = false;
 }
@@ -1307,12 +1247,12 @@ function simulateCzChallenge() {
   const success = Math.random() < successRate;
   let chain = 0;
   let totalMedals = 0;
-  const events = [`${games}GでCZ当選`];
+  const events = [`${games}Gでチャンス当選`];
 
   if (success) {
     chain = 1;
     totalMedals = firstMedals;
-    events.push(`CZ成功 AT当選 +${yen.format(firstMedals)}枚`);
+    events.push(`成功 AT当選 +${yen.format(firstMedals)}枚`);
     while (Math.random() < atContinueRate && chain < 200) {
       chain++;
       totalMedals += continueMedals;
@@ -1320,7 +1260,7 @@ function simulateCzChallenge() {
     }
     events.push("AT終了");
   } else {
-    events.push("CZ失敗 通常へ");
+    events.push("失敗 通常へ");
   }
 
   const diff = totalMedals - usedMedals;
@@ -1337,7 +1277,7 @@ async function runCzChallenge() {
   setText("resultChain", "0セット");
   setText("resultMedals", "0枚");
   setText("resultDiff", "0枚");
-  setText("log", "CZ抽選中...");
+  setText("log", "抽選中...");
 
   const result = simulateCzChallenge();
   await animateCount("resultGames", result.games, "G", Math.min(3000, Math.max(1000, result.games * 7)));
@@ -1354,8 +1294,8 @@ async function runCzChallenge() {
     const chainMatch = event.match(/^(\d+)セット目/);
     if (chainMatch) currentChain = Number(chainMatch[1]);
     if (event.includes("AT当選")) currentChain = 1;
-    if (event.includes("CZ成功")) setText("resultCz", "成功");
-    if (event.includes("CZ失敗")) setText("resultCz", "失敗");
+    if (event.includes("成功")) setText("resultCz", "成功");
+    if (event.includes("失敗")) setText("resultCz", "失敗");
     setText("resultChain", `${currentChain}セット`);
     setText("resultMedals", `${yen.format(currentMedals)}枚`);
     setText("log", event);
@@ -1367,7 +1307,7 @@ async function runCzChallenge() {
   setText("resultChain", `${result.chain}セット`);
   setText("resultMedals", `${yen.format(result.totalMedals)}枚`);
   setText("resultDiff", `${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}枚`);
-  setText("log", `1/${result.czRate} / CZ${result.success ? "成功" : "失敗"} / ${result.chain}セット / 差枚 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}枚`);
+  setText("log", `1/${result.czRate} / ${result.success ? "成功" : "失敗"} / ${result.chain}セット / 差枚 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}枚`);
   latestResults.czChallenge = {
     czRate: result.czRate,
     games: result.games,
@@ -2017,7 +1957,7 @@ function renderMobileBottomNav() {
   if (document.querySelector(".mobile-bottom-nav")) return;
   const items = [
     { href: "index.html", label: "トップ", icon: "⌂", match: ["index.html", ""] },
-    { href: "juggle-simple.html", label: "挑戦", icon: "▶", match: ["juggle-simple.html", "pachinko-319.html", "cz-challenge.html", "rare-8192.html", "two-choice.html", "two-choice-select.html", "hamari.html", "lt-rush.html"] },
+    { href: "juggle-simple.html", label: "挑戦", icon: "▶", match: ["juggle-simple.html", "pachinko-319.html", "rare-8192.html", "two-choice.html", "two-choice-select.html", "hamari.html"] },
     { href: "ranking.html", label: "記録", icon: "🏆", match: ["ranking.html"] },
     { href: "guide.html", label: "使い方", icon: "?", match: ["guide.html", "faq.html", "glossary.html"] }
   ];

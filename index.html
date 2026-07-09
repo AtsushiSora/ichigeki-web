@@ -6,18 +6,18 @@
   <meta name="theme-color" content="#050705">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <meta name="description" content="ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル集です。ジャグ連、319一撃、CZ突破、1/8192などを固定スペックで遊べます。">
+  <meta name="description" content="ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル集です。ジャグ連、二択、319一撃、1/8192などを固定スペックで遊べます。">
   <title>ICHIGEKI | パチンコ・パチスロ風ランキングバトル</title>
   <link rel="canonical" href="https://atsushisora.github.io/ichigeki-web/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ICHIGEKI">
   <meta property="og:title" content="ICHIGEKI | パチンコ・パチスロ風ランキングバトル">
-  <meta property="og:description" content="ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル集です。ジャグ連、319一撃、CZ突破、1/8192などを固定スペックで遊べます。">
+  <meta property="og:description" content="ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル集です。ジャグ連、二択、319一撃、1/8192などを固定スペックで遊べます。">
   <meta property="og:url" content="https://atsushisora.github.io/ichigeki-web/">
   <meta property="og:image" content="https://atsushisora.github.io/ichigeki-web/icon.svg">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="ICHIGEKI | パチンコ・パチスロ風ランキングバトル">
-  <meta name="twitter:description" content="ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル集です。ジャグ連、319一撃、CZ突破、1/8192などを固定スペックで遊べます。">
+  <meta name="twitter:description" content="ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル集です。ジャグ連、二択、319一撃、1/8192などを固定スペックで遊べます。">
   <link rel="stylesheet" href="style.css">
   <script type="application/ld+json">
   {
@@ -25,7 +25,7 @@
     "@type": "WebSite",
     "name": "ICHIGEKI",
     "url": "https://atsushisora.github.io/ichigeki-web/",
-    "description": "ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル集です。ジャグ連、319一撃、CZ突破、1/8192などを固定スペックで遊べます。",
+    "description": "ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル集です。ジャグ連、二択、319一撃、1/8192などを固定スペックで遊べます。",
     "inLanguage": "ja"
   }
   </script>
@@ -37,7 +37,7 @@
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "ジャグ連チャレンジ", "url": "https://atsushisora.github.io/ichigeki-web/juggle-simple.html" },
       { "@type": "ListItem", "position": 2, "name": "ジャグ連シミュレーター", "url": "https://atsushisora.github.io/ichigeki-web/juggle.html" },
-      { "@type": "ListItem", "position": 3, "name": "CZ突破シミュレーター", "url": "https://atsushisora.github.io/ichigeki-web/cz-challenge.html" },
+      { "@type": "ListItem", "position": 3, "name": "二択セレクトチャレンジ", "url": "https://atsushisora.github.io/ichigeki-web/two-choice-select.html" },
       { "@type": "ListItem", "position": 4, "name": "天井到達シミュレーター", "url": "https://atsushisora.github.io/ichigeki-web/tenjo.html" },
       { "@type": "ListItem", "position": 5, "name": "319大当たりシミュレーター", "url": "https://atsushisora.github.io/ichigeki-web/pachinko-319.html" },
       { "@type": "ListItem", "position": 6, "name": "1/8192当選シミュレーター", "url": "https://atsushisora.github.io/ichigeki-web/rare-8192.html" }
@@ -128,18 +128,6 @@
           <small>初当たりから総出玉を競う</small>
           <b>PLAY</b>
         </a>
-        <a class="mode-card mode-cz" href="cz-challenge.html">
-          <span class="mode-icon">CZ</span>
-          <strong>CZ突破</strong>
-          <small>突破から差枚まで競う</small>
-          <b>PLAY</b>
-        </a>
-        <a class="mode-card mode-lt" href="lt-rush.html">
-          <span class="mode-icon">LT</span>
-          <strong>LT上位</strong>
-          <small>上位RUSH到達を狙う</small>
-          <b>PLAY</b>
-        </a>
       </section>
 
       <div class="lobby-footer-panels">
@@ -168,15 +156,12 @@
                 <a class="tool-link" href="juggle-simple.html"><span class="tool-icon">🤡</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">ジャグ連チャレンジ</span><span class="tool-desc">大きなボタン1つでジャグ連を競うシンプル版</span></span></a>
                 <a class="tool-link" href="two-choice-select.html"><span class="tool-icon">↔️</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">二択セレクトチャレンジ</span><span class="tool-desc">左か右を選んで50%を当て続ける</span></span></a>
                 <a class="tool-link" href="rare-8192.html"><span class="tool-icon">🎯</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">1/8192当選シミュレーター</span><span class="tool-desc">激レア確率が何回転目に当たるか試す</span></span></a>
-                <a class="tool-link" href="cz-challenge.html"><span class="tool-icon">🎮</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">CZ突破シミュレーター</span><span class="tool-desc">CZ突入から成功、AT、差枚までを試す</span></span></a>
               </div>
             </section>
             <section class="tool-category">
               <div class="category-head"><span>パチンコバトル</span><small>初当たり、RUSH、出玉、差玉を競う</small></div>
               <div class="grid tool-grid">
                 <a class="tool-link" href="pachinko-319.html"><span class="tool-icon">🎰</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">319大当たりシミュレーター</span><span class="tool-desc">投資、RUSH突入、連チャン、差玉を確認</span></span></a>
-                <a class="tool-link" href="lt-rush.html"><span class="tool-icon">🔥</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">LT上位RUSH到達シミュレーター</span><span class="tool-desc">下位RUSHから上位RUSH昇格までを試す</span></span></a>
-                <a class="tool-link" href="lucky-trigger.html"><span class="tool-icon">🚀</span><span><span class="tool-badge free">自由試算</span><span class="tool-title">ラッキートリガー風シミュレーター</span><span class="tool-desc">突入時の高継続・高出玉を試す</span></span></a>
                 <a class="tool-link" href="ama-deji.html"><span class="tool-icon">🍬</span><span><span class="tool-badge free">自由試算</span><span class="tool-title">甘デジ一撃シミュレーター</span><span class="tool-desc">1/99前後の軽さと出玉感を確認</span></span></a>
                 <a class="tool-link" href="light-middle-199.html"><span class="tool-icon">💡</span><span><span class="tool-badge free">自由試算</span><span class="tool-title">ライトミドル199シミュレーター</span><span class="tool-desc">甘デジと319の中間タイプを比較</span></span></a>
               </div>
@@ -200,7 +185,7 @@
           <h2>目的別に選ぶ</h2>
           <div class="quick-grid">
             <a class="quick-card" href="juggle-simple.html"><strong>短く遊びたい</strong><span>大きなボタンを押すだけで、ジャグ連の結果をすぐ確認できます。</span></a>
-            <a class="quick-card" href="cz-challenge.html"><strong>突破型を試したい</strong><span>CZからATへ進む流れと差枚を確認できます。</span></a>
+            <a class="quick-card" href="two-choice-select.html"><strong>勝負感を試したい</strong><span>左右の二択で、50%をどこまで当て続けられるか確認できます。</span></a>
             <a class="quick-card" href="pachinko-319.html"><strong>一撃感を見たい</strong><span>319の初当たり、RUSH、総出玉、差玉をまとめて確認できます。</span></a>
             <a class="quick-card" href="ranking.html"><strong>記録を残したい</strong><span>この端末内に結果を保存して、ランキング形式で見返せます。</span></a>
           </div>
@@ -242,13 +227,10 @@
               <tbody>
                 <tr><td><a href="juggle-simple.html">ジャグ連チャレンジ</a></td><td>当たり、当選G、連数</td><td>短時間でシンプルにジャグ連を試す</td></tr>
                 <tr><td><a href="juggle.html">ジャグ連詳細版</a></td><td>連数、総ゲーム、差枚</td><td>投資や差枚まで確認する</td></tr>
-                <tr><td><a href="cz-challenge.html">CZ突破</a></td><td>CZ当選、成功、AT、差枚</td><td>スロットの前兆突破型の流れを見る</td></tr>
                 <tr><td><a href="tenjo.html">天井到達</a></td><td>当選G、天井到達、投資、差枚</td><td>現在G数から天井までの流れを見る</td></tr>
                 <tr><td><a href="pachinko-319.html">319</a></td><td>初当たり、投資、総出玉、差玉</td><td>ミドルタイプの荒れ方を見る</td></tr>
                 <tr><td><a href="ama-deji.html">甘デジ</a></td><td>初当たり、RUSH、差玉</td><td>軽い初当たりの出玉感を見る</td></tr>
                 <tr><td><a href="light-middle-199.html">ライトミドル199</a></td><td>初当たり、RUSH、差玉</td><td>中間帯の荒れ方を比較する</td></tr>
-                <tr><td><a href="lucky-trigger.html">LT風</a></td><td>LT突入、連チャン、差玉</td><td>突入時の伸び方を試す</td></tr>
-                <tr><td><a href="lt-rush.html">LT上位RUSH到達</a></td><td>下位突入、上位昇格、差玉</td><td>段階突破型のLT到達ルートを見る</td></tr>
                 <tr><td><a href="kakenuke.html">駆け抜け</a></td><td>駆け抜け率、平均連、最高連</td><td>RUSH後の短期偏りを見る</td></tr>
                 <tr><td><a href="two-choice-select.html">二択セレクト</a></td><td>連続正解、最高記録</td><td>50%をどこまで当て続けるか試す</td></tr>
                 <tr><td><a href="hamari.html">ハマり</a></td><td>ハマる確率、当たる確率</td><td>指定回転数の重さを確認する</td></tr>
@@ -272,13 +254,10 @@
           <ul class="side-list">
             <li><a href="juggle-simple.html">ジャグ連チャレンジ</a></li>
             <li><a href="juggle.html">ジャグ連シミュレーター詳細版</a></li>
-            <li><a href="cz-challenge.html">CZ突破シミュレーター</a></li>
             <li><a href="tenjo.html">天井到達シミュレーター</a></li>
             <li><a href="pachinko-319.html">319大当たりシミュレーター</a></li>
             <li><a href="ama-deji.html">甘デジ一撃シミュレーター</a></li>
             <li><a href="light-middle-199.html">ライトミドル199シミュレーター</a></li>
-            <li><a href="lucky-trigger.html">ラッキートリガー風シミュレーター</a></li>
-            <li><a href="lt-rush.html">LT上位RUSH到達シミュレーター</a></li>
             <li><a href="kakenuke.html">単発・駆け抜けシミュレーター</a></li>
             <li><a href="two-choice-select.html">二択セレクトチャレンジ</a></li>
             <li><a href="hamari.html">ハマり確率シミュレーター</a></li>
