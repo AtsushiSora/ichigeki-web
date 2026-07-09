@@ -665,6 +665,7 @@ p {
 .save-preview {
   display: grid;
   gap: 3px;
+  min-width: 0;
   margin: 12px 0 0;
   padding: 12px 14px;
   border: 1px solid rgba(242, 185, 59, 0.38);
@@ -679,6 +680,7 @@ p {
 }
 
 .save-preview span {
+  min-width: 0;
   color: var(--muted);
   font-size: 11px;
   font-weight: 900;
@@ -686,14 +688,18 @@ p {
 }
 
 .save-preview strong {
+  min-width: 0;
   color: var(--gold);
   font-size: 18px;
   line-height: 1.25;
+  overflow-wrap: anywhere;
 }
 
 .save-preview small {
+  min-width: 0;
   color: var(--muted);
   font-size: 12px;
+  overflow-wrap: anywhere;
 }
 
 .save-preview.is-saved {
@@ -710,9 +716,10 @@ p {
 
 .save-preview-actions {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
   margin-top: 8px;
+  min-width: 0;
 }
 
 .save-preview-actions a {
@@ -721,13 +728,17 @@ p {
   justify-content: center;
   min-height: 38px;
   padding: 0 12px;
+  min-width: 0;
   border: 1px solid rgba(107, 211, 79, 0.46);
   border-radius: 999px;
   background: rgba(107, 211, 79, 0.13);
   color: var(--accent-dark);
   font-size: 13px;
   font-weight: 900;
+  line-height: 1.25;
   text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .save-preview-actions a:first-child {
@@ -1877,6 +1888,7 @@ code,
   gap: 4px 12px;
   align-items: center;
   min-height: 92px;
+  min-width: 0;
   padding: 16px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 18px;
@@ -1901,21 +1913,26 @@ code,
 
 .ranking-play-card span {
   grid-area: icon;
+  min-width: 0;
   font-size: 24px;
 }
 
 .ranking-play-card strong {
   grid-area: title;
+  min-width: 0;
   color: #fff;
   font-size: 17px;
   line-height: 1.25;
+  overflow-wrap: anywhere;
 }
 
 .ranking-play-card small {
   grid-area: desc;
+  min-width: 0;
   color: var(--muted);
   font-size: 12px;
   font-weight: 800;
+  overflow-wrap: anywhere;
 }
 
 .ranking-play-card b {
@@ -1923,13 +1940,15 @@ code,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 64px;
+  min-width: 0;
   min-height: 34px;
   padding: 0 10px;
   border: 1px solid rgba(107, 211, 79, 0.5);
   border-radius: 999px;
   color: var(--accent-dark);
   font-size: 11px;
+  line-height: 1.2;
+  white-space: normal;
 }
 
 .record-summary-grid {
@@ -1967,6 +1986,7 @@ code,
 .rank-category {
   display: grid;
   gap: 5px;
+  min-width: 0;
   padding: 16px;
   min-height: 132px;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -1999,6 +2019,7 @@ code,
   justify-content: space-between;
   gap: 16px;
   align-items: flex-start;
+  min-width: 0;
 }
 
 .section-actions {
@@ -2007,6 +2028,7 @@ code,
   gap: 8px;
   justify-content: flex-end;
   align-items: center;
+  min-width: 0;
 }
 
 .status-pill {
@@ -2818,6 +2840,7 @@ code,
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px;
+  min-width: 0;
   overflow: hidden;
   background: rgba(7, 9, 8, 0.88);
 }
@@ -3032,11 +3055,13 @@ code,
 
 .simple-sub-actions .button {
   width: 100%;
+  min-width: 0;
   min-height: 40px;
   padding: 0 12px;
   font-size: 13px;
   line-height: 1.25;
   white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .simple-sub-actions .button:first-child {
@@ -3047,6 +3072,7 @@ code,
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px;
+  min-width: 0;
   overflow: hidden;
   background: rgba(7, 9, 8, 0.9);
 }
@@ -3055,13 +3081,17 @@ code,
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-width: 0;
   min-height: 42px;
   padding: 0 10px;
   background: rgba(15, 20, 16, 0.72);
   color: #d7ded8;
   font-size: 12px;
   font-weight: 900;
+  line-height: 1.25;
   text-align: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .simple-next-row a:hover {
