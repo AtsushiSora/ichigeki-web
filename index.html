@@ -54,8 +54,7 @@
       </a>
       <nav class="nav">
         <a href="index.html">トップ</a>
-        <a href="juggle-simple.html">ジャグ連</a>
-        <a href="pachinko-319.html">319</a>
+        <a href="#battleList">挑戦</a>
         <a href="ranking.html">ランキング</a>
         <a href="guide.html">使い方</a>
         <a href="about.html">運営者</a>
@@ -81,29 +80,29 @@
         <span><b>記録</b><strong>端末内保存</strong></span>
       </div>
 
-      <div class="lobby-ranking-strip" aria-label="ランキング上位">
-        <span class="strip-title">TOP3</span>
-        <span id="homeRank1"><b>1</b> 記録待ち <strong>--</strong></span>
-        <span id="homeRank2"><b>2</b> 記録待ち <strong>--</strong></span>
-        <span id="homeRank3"><b>3</b> 記録待ち <strong>--</strong></span>
+      <div class="lobby-ranking-strip" aria-label="ランキングバトル分類">
+        <span class="strip-title">BATTLE</span>
+        <span><b>出玉</b> 999 / 319 <strong>一撃勝負</strong></span>
+        <span><b>連続</b> ジャグ連 / 二択 <strong>連数勝負</strong></span>
+        <span><b>確率</b> 8192 / ハマり <strong>回転勝負</strong></span>
       </div>
 
       <article class="featured-battle">
-        <div class="featured-crown">♛</div>
+        <div class="featured-crown">六</div>
         <div>
-          <span class="battle-label">MAIN BATTLE</span>
-          <h2>まずはジャグ連バトル</h2>
-          <p>100G以内の連チャン数を競うメイン種目。STARTを押して、良い結果だけランキングに保存。</p>
+          <span class="battle-label">RANKING BATTLE</span>
+          <h2>好きな種目で一撃勝負</h2>
+          <p>ジャグ連、二択、999、319、8192、ハマりを同じ扱いで配置。STARTを押して、良い結果をランキングに保存。</p>
           <div class="featured-tags">
-            <span>メイン</span>
-            <span>固定スペック</span>
+            <span>6種目</span>
+            <span>固定条件</span>
             <span>保存対応</span>
           </div>
         </div>
-        <a class="play-button" href="juggle-simple.html"><span>START</span><small>今すぐ挑戦</small></a>
+        <a class="play-button" href="#battleList"><span>PLAY</span><small>種目を選ぶ</small></a>
       </article>
 
-      <section class="mode-select" aria-label="ゲームモード">
+      <section class="mode-select" id="battleList" aria-label="ゲームモード">
         <a class="mode-card mode-juggle" href="juggle-simple.html">
           <span class="mode-icon">777</span>
           <strong>ジャグ連</strong>
@@ -143,7 +142,7 @@
       </section>
 
       <div class="lobby-footer-panels">
-        <a class="mission-card" href="juggle-simple.html"><strong>最短ルート</strong><span>ジャグ連 → 保存 → ランキング確認</span><em>STARTする</em></a>
+        <a class="mission-card" href="ranking.html"><strong>ランキング確認</strong><span>保存した全種目の記録を一覧で確認</span><em>見る</em></a>
         <a class="mission-card bonus" href="guide.html"><strong>ルール確認</strong><span>確率と記録の見方を確認</span><em>読む</em></a>
       </div>
 
@@ -154,20 +153,20 @@
       <div class="main-column">
         <section class="article-card">
           <h2>ランキング対象バトル</h2>
-          <p class="section-lead">同じ条件で結果を出して、端末内ランキングに保存できるメインモードです。まずはこの順番で触ると分かりやすいです。</p>
-          <div class="priority-list" aria-label="おすすめ順">
-            <a href="juggle-simple.html"><b>1</b><strong>ジャグ連</strong><span>最初におすすめ</span></a>
-            <a href="two-choice-select.html"><b>2</b><strong>二択</strong><span>成功か失敗が分かりやすい</span></a>
-            <a href="tokyo-ghoul-999.html"><b>3</b><strong>東京喰種999</strong><span>超デカ一撃の出玉勝負</span></a>
-            <a href="rare-8192.html"><b>4</b><strong>8192</strong><span>レア当選の一撃感</span></a>
-            <a href="pachinko-319.html"><b>5</b><strong>一撃319</strong><span>出玉勝負</span></a>
-            <a href="hamari.html"><b>6</b><strong>ハマり</strong><span>深い回転数の重さ</span></a>
+          <p class="section-lead">同じ条件で結果を出して、端末内ランキングに保存できるモードです。ジャグ連だけでなく、全種目を同じ入口から選べるようにしています。</p>
+          <div class="priority-list" aria-label="ランキング対象一覧">
+            <a href="juggle-simple.html"><b>連</b><strong>ジャグ連</strong><span>100G以内の連チャン勝負</span></a>
+            <a href="two-choice-select.html"><b>択</b><strong>二択</strong><span>50%の連続成功勝負</span></a>
+            <a href="tokyo-ghoul-999.html"><b>喰</b><strong>東京喰種999</strong><span>超デカ一撃の出玉勝負</span></a>
+            <a href="rare-8192.html"><b>激</b><strong>8192</strong><span>レア当選の回転勝負</span></a>
+            <a href="pachinko-319.html"><b>玉</b><strong>一撃319</strong><span>RUSH込みの総出玉勝負</span></a>
+            <a href="hamari.html"><b>嵌</b><strong>ハマり</strong><span>深い回転数の重さ勝負</span></a>
           </div>
           <div class="category-stack">
             <section class="tool-category">
               <div class="category-head"><span>ランキングバトル</span><small>固定条件で挑戦し、結果をランキングに保存できます</small></div>
               <div class="grid tool-grid">
-                <a class="tool-link" href="juggle-simple.html"><span class="tool-icon">🤡</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">ジャグ連チャレンジ</span><span class="tool-desc">100G以内の連チャン数を競うメイン種目</span></span></a>
+                <a class="tool-link" href="juggle-simple.html"><span class="tool-icon">🤡</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">ジャグ連チャレンジ</span><span class="tool-desc">100G以内の連チャン数を競う</span></span></a>
                 <a class="tool-link" href="two-choice-select.html"><span class="tool-icon">↔️</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">二択セレクトチャレンジ</span><span class="tool-desc">左か右を選んで50%を当て続ける</span></span></a>
                 <a class="tool-link" href="tokyo-ghoul-999.html"><span class="tool-icon">喰</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">東京喰種999チャレンジ</span><span class="tool-desc">1/999とチャージから超デカ一撃を狙う</span></span></a>
                 <a class="tool-link" href="rare-8192.html"><span class="tool-icon">🎯</span><span><span class="tool-badge">ランキング対象</span><span class="tool-title">1/8192当選チャレンジ</span><span class="tool-desc">激レア確率を何回転目に引けるか競う</span></span></a>
@@ -182,10 +181,12 @@
         <section class="article-card">
           <h2>目的別に選ぶ</h2>
           <div class="quick-grid">
-            <a class="quick-card" href="juggle-simple.html"><strong>短く遊びたい</strong><span>大きなボタンを押すだけで、ジャグ連の結果をすぐ確認できます。</span></a>
-            <a class="quick-card" href="two-choice-select.html"><strong>勝負感を試したい</strong><span>左右の二択で、50%をどこまで当て続けられるか確認できます。</span></a>
+            <a class="quick-card" href="juggle-simple.html"><strong>連チャンを試したい</strong><span>100G以内の当たりをどこまで伸ばせるか確認できます。</span></a>
+            <a class="quick-card" href="two-choice-select.html"><strong>選択勝負をしたい</strong><span>左右の二択で、50%をどこまで当て続けられるか確認できます。</span></a>
             <a class="quick-card" href="tokyo-ghoul-999.html"><strong>大きな一撃を見たい</strong><span>東京喰種999風のLT突入と超デカ一撃を試せます。</span></a>
-            <a class="quick-card" href="pachinko-319.html"><strong>一撃感を見たい</strong><span>319の初当たり、RUSH、総出玉、差玉をまとめて確認できます。</span></a>
+            <a class="quick-card" href="pachinko-319.html"><strong>ミドルの荒さを見たい</strong><span>319の初当たり、RUSH、総出玉、差玉をまとめて確認できます。</span></a>
+            <a class="quick-card" href="rare-8192.html"><strong>激レアを引きたい</strong><span>1/8192を何回転で引けるか試せます。</span></a>
+            <a class="quick-card" href="hamari.html"><strong>ハマりを試したい</strong><span>指定確率でどこまで当たらないか確認できます。</span></a>
             <a class="quick-card" href="ranking.html"><strong>記録を残したい</strong><span>この端末内に結果を保存して、ランキング形式で見返せます。</span></a>
           </div>
         </section>
