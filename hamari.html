@@ -6,18 +6,18 @@
   <meta name="theme-color" content="#050705">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <meta name="description" content="STARTを押すだけで1/319が1000回転ハマる確率を確認できるランキングチャレンジです。">
-  <title>ハマり確率チャレンジ | ICHIGEKI</title>
+  <meta name="description" content="STARTを押すだけで1/399の当たりが何回転まで深くハマるかを競うランキングチャレンジです。">
+  <title>399ハマりチャレンジ | ICHIGEKI</title>
   <link rel="canonical" href="https://atsushisora.github.io/ichigeki-web/hamari.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ICHIGEKI">
-  <meta property="og:title" content="ハマり確率チャレンジ | ICHIGEKI">
-  <meta property="og:description" content="STARTを押すだけで1/319が1000回転ハマる確率を確認できるランキングチャレンジです。">
+  <meta property="og:title" content="399ハマりチャレンジ | ICHIGEKI">
+  <meta property="og:description" content="STARTを押すだけで1/399の当たりが何回転まで深くハマるかを競うランキングチャレンジです。">
   <meta property="og:url" content="https://atsushisora.github.io/ichigeki-web/hamari.html">
   <meta property="og:image" content="https://atsushisora.github.io/ichigeki-web/icon.svg">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="ハマり確率チャレンジ | ICHIGEKI">
-  <meta name="twitter:description" content="STARTを押すだけで1/319が1000回転ハマる確率を確認できるランキングチャレンジです。">
+  <meta name="twitter:title" content="399ハマりチャレンジ | ICHIGEKI">
+  <meta name="twitter:description" content="STARTを押すだけで1/399の当たりが何回転まで深くハマるかを競うランキングチャレンジです。">
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="juggle-simple-page">
@@ -29,22 +29,22 @@
   </header>
   <main class="simple-page">
     <section class="juggle-simple-stage">
-      <div class="simple-title-line"><span></span><h1>ハマり確率</h1><span></span></div>
-      <div class="simple-status-card"><strong><span class="status-dot"></span><span>固定条件</span></strong><p>1/319で1000回転</p></div>
+      <div class="simple-title-line"><span></span><h1>399ハマり</h1><span></span></div>
+      <div class="simple-status-card"><strong><span class="status-dot"></span><span>深ハマり勝負</span></strong><p>1/399の当たりが何回転まで沈むかを競う</p></div>
       <div class="simple-rule-row" aria-label="チャレンジ条件">
-        <span><b>確率</b><strong>1/319</strong></span>
-        <span><b>回転数</b><strong>1000回転</strong></span>
-        <span><b>記録</b><strong>ハマり率</strong></span>
+        <span><b>確率</b><strong>1/399</strong></span>
+        <span><b>終了</b><strong>当選まで</strong></span>
+        <span><b>記録</b><strong>回転数</strong></span>
       </div>
       <div class="simple-result-card">
-        <strong id="resultHamari">--</strong>
-        <b id="resultSpins">--</b>
-        <small>ハマる確率</small>
-        <em><span id="resultRate">--</span> / 当たる確率 <span id="resultHit">--</span></em>
+        <strong id="resultHamari">--回転</strong>
+        <b id="resultSpins">1/399</b>
+        <small>当選までのハマり</small>
+        <em>分母比 <span id="resultRate">--</span> / 到達目安 <span id="resultHit">--</span></em>
       </div>
       <a class="simple-rank-link" href="ranking.html#hamari-ranking">ランキングを見る</a>
       <div class="simple-start-area">
-        <button class="simple-start-button" data-action="hamari"><span>START</span><small>計算開始</small></button>
+        <button class="simple-start-button" data-action="hamari"><span>START</span><small>抽選開始</small></button>
       </div>
       <div class="simple-sub-actions">
         <button class="button" data-action="saveHamari">ランキングに保存</button>
@@ -57,9 +57,9 @@
         <a href="ranking.html#hamari-ranking">記録へ</a>
       </div>
       <div class="field record-name-field"><label for="recordName">保存名</label><input id="recordName" type="text" maxlength="12" value="あなた"></div>
-      <div class="log-box simple-log" id="log">STARTを押すとハマり確率を表示します。</div>
+      <div class="log-box simple-log" id="log">STARTを押すと1/399を当たるまで抽選します。</div>
       <div class="ad-box simple-ad" data-ad-slot="hamari-simple-footer"><span class="ad-label">PR</span><span class="ad-title">広告枠</span></div>
-      <p class="note">毎回同じ確率で独立抽選される前提の娯楽用計算です。</p>
+      <p class="note">毎回同じ確率で独立抽選される前提の娯楽用シミュレーションです。実際の遊技結果を保証するものではありません。</p>
     </section>
   </main>
   <script src="main.js"></script>

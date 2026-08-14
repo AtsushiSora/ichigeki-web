@@ -32,8 +32,7 @@ const fixedRankingSpecs = {
     rushPayout: 3000
   },
   hamari: {
-    rate: 319,
-    spins: 1000
+    rate: 399
   },
   juggle: {
     bigRate: 255,
@@ -199,7 +198,7 @@ const rankingPreviewConfig = {
     unit: "回転",
     score: record => record?.spins || 0,
     sort: records => sortRecords("hamari", records),
-    format: record => record ? `${yen.format(record.spins)}回転 / ${record.probability.toFixed(2)}%` : "--"
+    format: record => record ? `${yen.format(record.spins)}回転 / 1/${yen.format(record.rate || fixedRankingSpecs.hamari.rate)}` : "--"
   },
   twoChoice: {
     label: "二択",
@@ -329,9 +328,9 @@ const resultGuidesByAction = {
   hamari: {
     title: "結果の見方",
     points: [
-      "ハマる確率は、指定回転数まで当たらない割合です。",
-      "当たる確率とセットで見ると、その回転数がどれくらい珍しいか判断できます。",
-      "大当たり確率と回転数を変えて、ミドル・ライトミドル・甘デジの違いを比較できます。"
+      "399ハマりは、1/399の当たりを引くまでに何回転かかったかを競います。",
+      "回転数が深いほど上位になります。到達目安は、その回転までハマる珍しさの参考値です。",
+      "ランキング条件は固定なので、保存した記録同士を同じ条件で比較できます。"
     ]
   },
   rare8192: {
@@ -372,7 +371,7 @@ const fixedConditionSummariesByAction = {
   juggle: ["BIG 1/255", "REG 1/255", "1,000円46枚", "35G/1,000円", "100G抜けまで"],
   pachinko319: ["大当たり 1/319", "RUSH突入 60%", "継続率 81%", "初当たり 300玉", "RUSH中 1,500玉", "17回転/1,000円"],
   tokyoGhoul999: ["図柄揃い 1/999", "チャージ 1/538.8", "LT突入 約50%", "突入時 7,500玉", "RUSH中 3,000玉", "ST5回"],
-  hamari: ["大当たり 1/319", "判定回転数 1,000回転"],
+  hamari: ["大当たり 1/399", "当たるまで抽選", "深い回転数でランキング"],
   twoChoiceStart: ["成功率 50%", "外れた時点で終了", "連続正解数でランキング"],
   rare8192: ["当選確率 1/8192", "当選回転でランキング"]
 };
@@ -543,7 +542,9 @@ function loadLocalRecords() {
       juggle: Array.isArray(parsed.juggle) ? parsed.juggle.map((record, index) => normalizeRecord("juggle", record, index)) : [],
       pachinko319: Array.isArray(parsed.pachinko319) ? parsed.pachinko319.map((record, index) => normalizeRecord("pachinko319", record, index)) : [],
       tokyoGhoul999: Array.isArray(parsed.tokyoGhoul999) ? parsed.tokyoGhoul999.map((record, index) => normalizeRecord("tokyoGhoul999", record, index)) : [],
-      hamari: Array.isArray(parsed.hamari) ? parsed.hamari.map((record, index) => normalizeRecord("hamari", record, index)) : [],
+      hamari: Array.isArray(parsed.hamari) ? parsed.hamari
+        .map((record, index) => normalizeRecord("hamari", record, index))
+        .filter(record => record.rate === fixedRankingSpecs.hamari.rate && Number.isFinite(record.ratio)) : [],
       twoChoice: Array.isArray(parsed.twoChoice) ? parsed.twoChoice.map((record, index) => normalizeRecord("twoChoice", record, index)) : [],
       rare8192: Array.isArray(parsed.rare8192) ? parsed.rare8192.map((record, index) => normalizeRecord("rare8192", record, index)) : []
     };
@@ -591,7 +592,7 @@ function sortRecords(type, records, mode = "score") {
     },
     hamari: {
       score: (a, b) => b.spins - a.spins || b.probability - a.probability,
-      probability: (a, b) => b.probability - a.probability || b.spins - a.spins,
+      probability: (a, b) => a.probability - b.probability || b.spins - a.spins,
       date: (a, b) => getRecordTime(b) - getRecordTime(a),
       name: (a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ja")
     },
@@ -791,9 +792,9 @@ function renderRankingPage() {
   const hamariBody = document.getElementById("hamariRankingBody");
   if (hamariBody) {
     const rows = sortRecords("hamari", records.hamari, getRankingSort("hamari")).slice(0, 10).map((record, index) => (
-      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.spins)}回転</td><td>1/${yen.format(record.rate)}</td><td>${record.probability.toFixed(2)}%</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("hamari", record.id)}</td></tr>`
+      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.spins)}回転</td><td>1/${yen.format(record.rate || fixedRankingSpecs.hamari.rate)}</td><td>${clampNumber(record.probability, 0).toFixed(2)}%</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("hamari", record.id)}</td></tr>`
     ));
-    hamariBody.innerHTML = rows.join("") || renderEmptyRows(7, "ハマり記録がありません", "hamari.html", "ハマり確率を試す");
+    hamariBody.innerHTML = rows.join("") || renderEmptyRows(7, "399ハマりの記録がありません", "hamari.html", "399ハマりを試す");
   }
 
   const twoChoiceBody = document.getElementById("twoChoiceRankingBody");
@@ -1470,29 +1471,40 @@ async function runJuggleSimple() {
 
 let hamariRunning = false;
 
+function simulateHamari() {
+  const { rate } = fixedRankingSpecs.hamari;
+  const random = Math.max(Number.EPSILON, Math.random());
+  const spins = Math.ceil(Math.log(1 - random) / Math.log((rate - 1) / rate));
+  const ratio = spins / rate;
+  const reachProbability = Math.pow((rate - 1) / rate, Math.max(0, spins - 1)) * 100;
+  const hitByThen = (1 - Math.pow((rate - 1) / rate, spins)) * 100;
+  return { rate, spins, ratio, probability: reachProbability, hitByThen };
+}
+
 async function runHamari() {
   if (hamariRunning) return;
   hamariRunning = true;
   setRunningButton("hamari", true);
-  const { rate, spins } = fixedRankingSpecs.hamari;
-  const probability = Math.pow((rate - 1) / rate, spins) * 100;
-  const hitByThen = 100 - probability;
-  setText("resultHamari", "--");
+  const result = simulateHamari();
+  setText("resultHamari", "0回転");
   setText("resultHit", "--");
-  setText("resultRate", `1/${yen.format(rate)}`);
-  setText("resultSpins", "0回転");
-  setText("log", "回転数をカウント中...");
-  await animateCount("resultSpins", spins, "回転", Math.min(2200, Math.max(900, spins * 2)));
-  await Promise.all([
-    animateDecimal("resultHamari", probability, "%", 2, 900),
-    animateDecimal("resultHit", hitByThen, "%", 2, 900)
-  ]);
-  setText("resultHamari", `${probability.toFixed(2)}%`);
-  setText("resultHit", `${hitByThen.toFixed(2)}%`);
-  setText("resultRate", `1/${yen.format(rate)}`);
-  setText("resultSpins", `${yen.format(spins)}回転`);
-  setText("log", `1/${rate}で${spins}回転ハマる確率: ${probability.toFixed(2)}%`);
-  latestResults.hamari = { rate, spins, probability, hitByThen };
+  setText("resultRate", "--");
+  setText("resultSpins", `1/${yen.format(result.rate)}`);
+  setText("log", "1/399を当たるまで抽選中...");
+  await animateCount("resultHamari", result.spins, "回転", Math.min(4200, Math.max(1000, result.spins * 1.4)));
+  await animateDecimal("resultHit", result.probability, "%", 2, 900);
+  setText("resultHamari", `${yen.format(result.spins)}回転`);
+  setText("resultHit", `${result.probability.toFixed(2)}%`);
+  setText("resultRate", `${result.ratio.toFixed(2)}倍`);
+  setText("resultSpins", `1/${yen.format(result.rate)}`);
+  setText("log", `1/${yen.format(result.rate)}が${yen.format(result.spins)}回転目に当選 / 分母の${result.ratio.toFixed(2)}倍 / そこまでハマる目安 ${result.probability.toFixed(2)}%`);
+  latestResults.hamari = {
+    rate: result.rate,
+    spins: result.spins,
+    ratio: result.ratio,
+    probability: result.probability,
+    hitByThen: result.hitByThen
+  };
   markResultReady("hamari");
   setRunningButton("hamari", false);
   hamariRunning = false;

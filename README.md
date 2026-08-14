@@ -10,7 +10,7 @@
 - `tokyo-ghoul-999.html`: 東京喰種999チャレンジ
 - `rare-8192.html`: 1/8192当選チャレンジ
 - `pachinko-319.html`: 319一撃チャレンジ
-- `hamari.html`: ハマり記録チャレンジ
+- `hamari.html`: 399ハマりチャレンジ
 - `ranking.html`: みんなの記録・ランキング
 - `guide.html`: パチンコ・パチスロ確率の見方
 - `glossary.html`: 用語集
