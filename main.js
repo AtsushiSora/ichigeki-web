@@ -6,8 +6,6 @@ const latestResults = {
   pachinko319: null,
   hamari: null,
   twoChoice: null,
-  ltRush: null,
-  czChallenge: null,
   rare8192: null
 };
 
@@ -31,26 +29,6 @@ const fixedRankingSpecs = {
     gamesPerUnit: 35,
     bigMedals: 252,
     regMedals: 96
-  },
-  ltRush: {
-    hitRate: 319,
-    spinsPerUnit: 17,
-    lowerRushRate: 0.55,
-    lowerContinueRate: 0.75,
-    upgradeRate: 0.25,
-    upperContinueRate: 0.9,
-    firstPayout: 300,
-    lowerPayout: 1500,
-    upperPayout: 3000
-  },
-  czChallenge: {
-    czRate: 180,
-    gamesPerUnit: 35,
-    successRate: 0.4,
-    atContinueRate: 0.7,
-    firstMedals: 250,
-    continueMedals: 120,
-    medalsPerUnit: 46
   },
   rare8192: {
     rate: 8192
@@ -141,8 +119,6 @@ const saveActionByType = {
   pachinko319: "savePachinko319",
   hamari: "saveHamari",
   twoChoice: "saveTwoChoice",
-  ltRush: "saveLtRush",
-  czChallenge: "saveCzChallenge",
   rare8192: "saveRare8192"
 };
 
@@ -152,8 +128,6 @@ const recordTypeByRunAction = {
   pachinko319: "pachinko319",
   hamari: "hamari",
   twoChoiceStart: "twoChoice",
-  ltRush: "ltRush",
-  czChallenge: "czChallenge",
   rare8192: "rare8192",
   twoChoiceAuto: "twoChoice"
 };
@@ -546,12 +520,10 @@ function loadLocalRecords() {
       pachinko319: Array.isArray(parsed.pachinko319) ? parsed.pachinko319.map((record, index) => normalizeRecord("pachinko319", record, index)) : [],
       hamari: Array.isArray(parsed.hamari) ? parsed.hamari.map((record, index) => normalizeRecord("hamari", record, index)) : [],
       twoChoice: Array.isArray(parsed.twoChoice) ? parsed.twoChoice.map((record, index) => normalizeRecord("twoChoice", record, index)) : [],
-      ltRush: Array.isArray(parsed.ltRush) ? parsed.ltRush.map((record, index) => normalizeRecord("ltRush", record, index)) : [],
-      czChallenge: Array.isArray(parsed.czChallenge) ? parsed.czChallenge.map((record, index) => normalizeRecord("czChallenge", record, index)) : [],
       rare8192: Array.isArray(parsed.rare8192) ? parsed.rare8192.map((record, index) => normalizeRecord("rare8192", record, index)) : []
     };
   } catch {
-    return { juggle: [], pachinko319: [], hamari: [], twoChoice: [], ltRush: [], czChallenge: [], rare8192: [] };
+    return { juggle: [], pachinko319: [], hamari: [], twoChoice: [], rare8192: [] };
   }
 }
 
@@ -593,22 +565,6 @@ function sortRecords(type, records, mode = "score") {
     twoChoice: {
       score: (a, b) => b.chain - a.chain || b.rounds - a.rounds,
       probability: (a, b) => a.probability - b.probability || b.chain - a.chain,
-      date: (a, b) => getRecordTime(b) - getRecordTime(a),
-      name: (a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ja")
-    },
-    ltRush: {
-      score: (a, b) => b.totalPayout - a.totalPayout || b.chain - a.chain || b.diff - a.diff,
-      diff: (a, b) => b.diff - a.diff || b.totalPayout - a.totalPayout,
-      chain: (a, b) => b.chain - a.chain || b.totalPayout - a.totalPayout,
-      route: (a, b) => Number(b.enteredUpper) - Number(a.enteredUpper) || Number(b.enteredLower) - Number(a.enteredLower) || b.totalPayout - a.totalPayout,
-      date: (a, b) => getRecordTime(b) - getRecordTime(a),
-      name: (a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ja")
-    },
-    czChallenge: {
-      score: (a, b) => b.totalMedals - a.totalMedals || b.chain - a.chain || b.diff - a.diff,
-      diff: (a, b) => b.diff - a.diff || b.totalMedals - a.totalMedals,
-      chain: (a, b) => b.chain - a.chain || b.totalMedals - a.totalMedals,
-      success: (a, b) => Number(b.success) - Number(a.success) || b.totalMedals - a.totalMedals,
       date: (a, b) => getRecordTime(b) - getRecordTime(a),
       name: (a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ja")
     },
@@ -761,15 +717,11 @@ function renderRankingPage() {
   setText("pachinkoRecordCount", `${records.pachinko319.length}件`);
   setText("hamariRecordCount", `${records.hamari.length}件`);
   setText("twoChoiceRecordCount", `${records.twoChoice.length}件`);
-  setText("ltRushRecordCount", `${records.ltRush.length}件`);
-  setText("czRecordCount", `${records.czChallenge.length}件`);
   setText("rare8192RecordCount", `${records.rare8192.length}件`);
   setText("juggleBestSummary", records.juggle.length ? `${sortRecords("juggle", records.juggle)[0].chain}連` : "--");
   setText("pachinkoBestSummary", records.pachinko319.length ? `${yen.format(sortRecords("pachinko319", records.pachinko319)[0].totalPayout)}玉` : "--");
   setText("hamariBestSummary", records.hamari.length ? `${yen.format(sortRecords("hamari", records.hamari)[0].spins)}回転` : "--");
   setText("twoChoiceBestSummary", records.twoChoice.length ? `${sortRecords("twoChoice", records.twoChoice)[0].chain}連` : "--");
-  setText("ltRushBestSummary", records.ltRush.length ? `${yen.format(sortRecords("ltRush", records.ltRush)[0].totalPayout)}玉` : "--");
-  setText("czBestSummary", records.czChallenge.length ? `${yen.format(sortRecords("czChallenge", records.czChallenge)[0].totalMedals)}枚` : "--");
   setText("rare8192BestSummary", records.rare8192.length ? `${yen.format(sortRecords("rare8192", records.rare8192)[0].spins)}回転` : "--");
 
   const podium = document.getElementById("jugglePodium");
@@ -1107,219 +1059,6 @@ async function runLuckyTrigger() {
   setText("resultDiff", `${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
   setText("log", `特化${result.enteredTrigger ? "突入" : "非突入"} / ${result.chain}連 / 差玉 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
   setRunningButton("luckyTrigger", false);
-  genericToolRunning = false;
-}
-
-function simulateLtRush() {
-  const {
-    hitRate,
-    spinsPerUnit,
-    lowerRushRate,
-    lowerContinueRate,
-    upgradeRate,
-    upperContinueRate,
-    firstPayout,
-    lowerPayout,
-    upperPayout
-  } = fixedRankingSpecs.ltRush;
-  let spins = 0;
-  while (!randomHit(hitRate) && spins < 12000) spins++;
-  spins++;
-  const investment = Math.ceil(spins / spinsPerUnit) * 1000;
-  const usedBalls = Math.round(investment / 4);
-  const enteredLower = Math.random() < lowerRushRate;
-  let enteredUpper = false;
-  let chain = 1;
-  let totalPayout = firstPayout;
-  const events = [`${spins}回転で初当たり +${yen.format(firstPayout)}玉`];
-
-  if (!enteredLower) {
-    const diff = totalPayout - usedBalls;
-    return { hitRate, spins, investment, usedBalls, enteredLower, enteredUpper, chain, totalPayout, diff, firstPayout, lowerPayout, upperPayout, events, status: "通常終了" };
-  }
-
-  events.push("下位RUSH突入");
-  while (chain < 300) {
-    if (Math.random() >= lowerContinueRate) {
-      events.push("下位RUSH終了");
-      break;
-    }
-    chain++;
-    if (!enteredUpper && Math.random() < upgradeRate) {
-      enteredUpper = true;
-      totalPayout += upperPayout;
-      events.push(`${chain}連目 上位RUSH昇格 +${yen.format(upperPayout)}玉`);
-      break;
-    }
-    totalPayout += lowerPayout;
-    events.push(`${chain}連目 下位RUSH継続 +${yen.format(lowerPayout)}玉`);
-  }
-
-  if (enteredUpper) {
-    while (chain < 300) {
-      if (Math.random() >= upperContinueRate) {
-        events.push("上位RUSH終了");
-        break;
-      }
-      chain++;
-      totalPayout += upperPayout;
-      events.push(`${chain}連目 上位RUSH継続 +${yen.format(upperPayout)}玉`);
-    }
-  }
-
-  const diff = totalPayout - usedBalls;
-  const status = enteredUpper ? "上位RUSH到達" : "下位RUSH終了";
-  return { hitRate, spins, investment, usedBalls, enteredLower, enteredUpper, chain, totalPayout, diff, firstPayout, lowerPayout, upperPayout, events, status };
-}
-
-async function runLtRush() {
-  if (genericToolRunning) return;
-  genericToolRunning = true;
-  setRunningButton("ltRush", true);
-  setText("resultSpins", "0回転");
-  setText("resultInvestment", "0円");
-  setText("resultRoute", "抽選中");
-  setText("resultChain", "0連");
-  setText("resultPayout", "0玉");
-  setText("resultDiff", "0玉");
-  setText("log", "初当たり抽選中...");
-
-  const result = simulateLtRush();
-  await animateCount("resultSpins", result.spins, "回転", Math.min(3200, Math.max(1000, result.spins * 6)));
-  setText("resultInvestment", `${yen.format(result.investment)}円`);
-  setText("resultRoute", result.enteredLower ? "下位RUSH" : "通常終了");
-  setText("resultChain", "1連");
-  setText("resultPayout", `${yen.format(result.firstPayout)}玉`);
-  setText("log", result.events[0]);
-
-  let currentPayout = result.firstPayout;
-  let currentChain = 1;
-  for (const event of result.events.slice(1)) {
-    await sleep(speedAdjustedDuration(170));
-    const payoutMatch = event.match(/\+([0-9,]+)玉/);
-    if (payoutMatch) currentPayout += Number(payoutMatch[1].replace(/,/g, ""));
-    const chainMatch = event.match(/^(\d+)連目/);
-    if (chainMatch) currentChain = Number(chainMatch[1]);
-    if (event.includes("上位RUSH")) setText("resultRoute", "上位RUSH");
-    setText("resultChain", `${currentChain}連`);
-    setText("resultPayout", `${yen.format(currentPayout)}玉`);
-    setText("log", event);
-  }
-
-  setText("resultSpins", `${yen.format(result.spins)}回転`);
-  setText("resultInvestment", `${yen.format(result.investment)}円`);
-  setText("resultRoute", result.status);
-  setText("resultChain", `${result.chain}連`);
-  setText("resultPayout", `${yen.format(result.totalPayout)}玉`);
-  setText("resultDiff", `${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
-  setText("log", `1/${result.hitRate} / ${result.status} / ${result.chain}連 / 差玉 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
-  latestResults.ltRush = {
-    spins: result.spins,
-    investment: result.investment,
-    usedBalls: result.usedBalls,
-    enteredLower: result.enteredLower,
-    enteredUpper: result.enteredUpper,
-    status: result.status,
-    chain: result.chain,
-    totalPayout: result.totalPayout,
-    diff: result.diff
-  };
-  markResultReady("ltRush");
-  setRunningButton("ltRush", false);
-  genericToolRunning = false;
-}
-
-function simulateCzChallenge() {
-  const {
-    czRate,
-    gamesPerUnit,
-    successRate,
-    atContinueRate,
-    firstMedals,
-    continueMedals,
-    medalsPerUnit
-  } = fixedRankingSpecs.czChallenge;
-  let games = 0;
-  while (!randomHit(czRate) && games < 8000) games++;
-  games++;
-  const investment = Math.ceil(games / gamesPerUnit) * 1000;
-  const usedMedals = Math.round(investment / 1000 * medalsPerUnit);
-  const success = Math.random() < successRate;
-  let chain = 0;
-  let totalMedals = 0;
-  const events = [`${games}Gでチャンス当選`];
-
-  if (success) {
-    chain = 1;
-    totalMedals = firstMedals;
-    events.push(`成功 AT当選 +${yen.format(firstMedals)}枚`);
-    while (Math.random() < atContinueRate && chain < 200) {
-      chain++;
-      totalMedals += continueMedals;
-      events.push(`${chain}セット目 AT継続 +${yen.format(continueMedals)}枚`);
-    }
-    events.push("AT終了");
-  } else {
-    events.push("失敗 通常へ");
-  }
-
-  const diff = totalMedals - usedMedals;
-  return { czRate, games, investment, usedMedals, success, chain, totalMedals, diff, firstMedals, continueMedals, events };
-}
-
-async function runCzChallenge() {
-  if (genericToolRunning) return;
-  genericToolRunning = true;
-  setRunningButton("czChallenge", true);
-  setText("resultGames", "0G");
-  setText("resultInvestment", "0円");
-  setText("resultCz", "抽選中");
-  setText("resultChain", "0セット");
-  setText("resultMedals", "0枚");
-  setText("resultDiff", "0枚");
-  setText("log", "抽選中...");
-
-  const result = simulateCzChallenge();
-  await animateCount("resultGames", result.games, "G", Math.min(3000, Math.max(1000, result.games * 7)));
-  setText("resultInvestment", `${yen.format(result.investment)}円`);
-  setText("resultCz", result.success ? "成功" : "失敗");
-  setText("log", result.events[0]);
-
-  let currentMedals = 0;
-  let currentChain = 0;
-  for (const event of result.events.slice(1)) {
-    await sleep(speedAdjustedDuration(170));
-    const medalMatch = event.match(/\+([0-9,]+)枚/);
-    if (medalMatch) currentMedals += Number(medalMatch[1].replace(/,/g, ""));
-    const chainMatch = event.match(/^(\d+)セット目/);
-    if (chainMatch) currentChain = Number(chainMatch[1]);
-    if (event.includes("AT当選")) currentChain = 1;
-    if (event.includes("成功")) setText("resultCz", "成功");
-    if (event.includes("失敗")) setText("resultCz", "失敗");
-    setText("resultChain", `${currentChain}セット`);
-    setText("resultMedals", `${yen.format(currentMedals)}枚`);
-    setText("log", event);
-  }
-
-  setText("resultGames", `${yen.format(result.games)}G`);
-  setText("resultInvestment", `${yen.format(result.investment)}円`);
-  setText("resultCz", result.success ? "成功" : "失敗");
-  setText("resultChain", `${result.chain}セット`);
-  setText("resultMedals", `${yen.format(result.totalMedals)}枚`);
-  setText("resultDiff", `${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}枚`);
-  setText("log", `1/${result.czRate} / ${result.success ? "成功" : "失敗"} / ${result.chain}セット / 差枚 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}枚`);
-  latestResults.czChallenge = {
-    czRate: result.czRate,
-    games: result.games,
-    investment: result.investment,
-    usedMedals: result.usedMedals,
-    success: result.success,
-    chain: result.chain,
-    totalMedals: result.totalMedals,
-    diff: result.diff
-  };
-  markResultReady("czChallenge");
-  setRunningButton("czChallenge", false);
   genericToolRunning = false;
 }
 
@@ -2006,8 +1745,6 @@ document.addEventListener("click", event => {
   if (action === "rush") runRush();
   if (action === "genericPachinko") runGenericPachinko();
   if (action === "luckyTrigger") runLuckyTrigger();
-  if (action === "ltRush") runLtRush();
-  if (action === "czChallenge") runCzChallenge();
   if (action === "tenjo") runTenjo();
   if (action === "kakenuke") runKakenuke();
   if (action === "twoChoiceStart") resetTwoChoice();
@@ -2019,8 +1756,6 @@ document.addEventListener("click", event => {
   if (action === "savePachinko319") saveLatestRecord("pachinko319");
   if (action === "saveHamari") saveLatestRecord("hamari");
   if (action === "saveTwoChoice") saveLatestRecord("twoChoice");
-  if (action === "saveLtRush") saveLatestRecord("ltRush");
-  if (action === "saveCzChallenge") saveLatestRecord("czChallenge");
   if (action === "saveRare8192") saveLatestRecord("rare8192");
   if (action === "clearRanking") clearLocalRecords();
   if (action === "editRecord") updateRecordName(target.dataset.type, target.dataset.id);

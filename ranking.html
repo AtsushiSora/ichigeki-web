@@ -37,7 +37,7 @@
       <div>
         <div class="kicker">Records</div>
         <h1>みんなの記録・ランキング</h1>
-        <p class="lead">シミュレーターで出た結果を種目ごとに保存して見返せるページです。現在はこの端末のブラウザ内に記録されるローカルランキングとして動作します。</p>
+        <p class="lead">ランキングバトルで出た結果を種目ごとに保存して見返せるページです。現在はこの端末のブラウザ内に記録されるローカルランキングとして動作します。</p>
         <div class="hero-actions">
           <a class="button primary" href="juggle-simple.html">ジャグ連に挑戦</a>
           <a class="button" href="two-choice-select.html">二択を試す</a>
@@ -48,7 +48,7 @@
       <div class="ranking-summary">
         <span>端末内ランキング</span>
         <strong id="rankingCount">0件</strong>
-        <small>ジャグ連 / 二択 / 319 / 8192 ほか</small>
+        <small>ジャグ連 / 二択 / 319 / 8192 / ハマり</small>
       </div>
     </section>
 
@@ -61,6 +61,7 @@
           <a class="ranking-play-card" href="two-choice-select.html"><span>↔️</span><strong>二択</strong><small>50%の連続正解</small><b>START</b></a>
           <a class="ranking-play-card" href="rare-8192.html"><span>🎯</span><strong>1/8192</strong><small>当選回転で勝負</small><b>START</b></a>
           <a class="ranking-play-card" href="pachinko-319.html"><span>🎰</span><strong>319一撃</strong><small>総出玉で勝負</small><b>START</b></a>
+          <a class="ranking-play-card" href="hamari.html"><span>📉</span><strong>ハマり</strong><small>回転数で勝負</small><b>START</b></a>
         </div>
       </section>
 
@@ -89,7 +90,7 @@
           <div><strong>2. 保存</strong><span>結果画面の「ランキングに保存」を押します。</span></div>
           <div><strong>3. 確認</strong><span>このページで順位、内訳、保存日時を確認できます。</span></div>
         </div>
-        <p class="small-note">ランキング対象シミュレーターのスペックは固定です。記録は端末内保存で、スマホとPCでは別の記録になります。オンライン共有ランキングは、本稼働時に別途追加します。</p>
+        <p class="small-note">ランキング対象バトルのスペックは固定です。記録は端末内保存で、スマホとPCでは別の記録になります。オンライン共有ランキングは、本稼働時に別途追加します。</p>
       </section>
 
       <section class="article-card" id="juggle-ranking">
@@ -199,10 +200,10 @@
       </section>
       <section class="article-card">
         <h2>保存される内容</h2>
-        <p>ランキングに保存される内容は、シミュレーターで出た数値、保存日時、入力されたランキング保存名です。メールアドレス、端末情報、個人を識別する情報は保存しません。</p>
+        <p>ランキングに保存される内容は、ランキングバトルで出た数値、保存日時、入力されたランキング保存名です。メールアドレス、端末情報、個人を識別する情報は保存しません。</p>
         <p>記録はブラウザのローカルストレージに保存されます。ブラウザの履歴やサイトデータを削除すると、保存したランキングも消えます。共有ランキングを本稼働させる場合は、別途オンライン保存の仕組みを追加します。</p>
       </section>
-    </div><aside class="side-column"><section class="side-card"><h2>ランキングに挑戦</h2><ul class="side-list"><li><a href="juggle-simple.html">ジャグ連チャレンジ</a></li><li><a href="two-choice-select.html">二択セレクトチャレンジ</a></li><li><a href="rare-8192.html">1/8192当選シミュレーター</a></li><li><a href="pachinko-319.html">319一撃シミュレーター</a></li><li><a href="hamari.html">ハマり確率シミュレーター</a></li></ul></section><div class="ad-box ad-box-sidebar" data-ad-slot="ranking-sidebar"><span class="ad-label">PR</span><span class="ad-title">サイドバー広告枠</span><span class="ad-note">PC表示向け</span></div><section class="side-card"><h2>関連ページ</h2><ul class="side-list"><li><a href="guide.html">確率の見方</a></li><li><a href="glossary.html">用語集</a></li><li><a href="faq.html">よくある質問</a></li></ul></section></aside></div>
+    </div><aside class="side-column"><section class="side-card"><h2>ランキングに挑戦</h2><ul class="side-list"><li><a href="juggle-simple.html">ジャグ連チャレンジ</a></li><li><a href="two-choice-select.html">二択セレクトチャレンジ</a></li><li><a href="rare-8192.html">1/8192当選チャレンジ</a></li><li><a href="pachinko-319.html">319一撃チャレンジ</a></li><li><a href="hamari.html">ハマり記録チャレンジ</a></li></ul></section><div class="ad-box ad-box-sidebar" data-ad-slot="ranking-sidebar"><span class="ad-label">PR</span><span class="ad-title">サイドバー広告枠</span><span class="ad-note">PC表示向け</span></div><section class="side-card"><h2>関連ページ</h2><ul class="side-list"><li><a href="guide.html">確率の見方</a></li><li><a href="glossary.html">用語集</a></li><li><a href="faq.html">よくある質問</a></li></ul></section></aside></div>
     <div class="ad-box ad-box-footer" data-ad-slot="ranking-footer"><span class="ad-label">PR</span><span class="ad-title">ページ下部広告枠</span><span class="ad-note">ランキング末尾の広告枠</span></div>
   </main>
   <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="sitemap.html">サイトマップ</a><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a></div></div></footer>
