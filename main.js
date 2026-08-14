@@ -4,6 +4,7 @@ const rankingSpecVersion = "2026-07-fixed-v1";
 const latestResults = {
   juggle: null,
   pachinko319: null,
+  tokyoGhoul999: null,
   hamari: null,
   twoChoice: null,
   rare8192: null
@@ -17,6 +18,18 @@ const fixedRankingSpecs = {
     continueRate: 0.81,
     firstPayout: 300,
     rushPayout: 1500
+  },
+  tokyoGhoul999: {
+    figureRate: 999,
+    chargeRate: 538.8,
+    spinsPerUnit: 17,
+    rushRate: 0.5,
+    rushHitRate: 7.7,
+    rushSpins: 5,
+    figurePayout: 1500,
+    chargePayout: 300,
+    entryPayout: 7500,
+    rushPayout: 3000
   },
   hamari: {
     rate: 319,
@@ -117,6 +130,7 @@ function setRunningButton(action, isRunning) {
 const saveActionByType = {
   juggle: "saveJuggle",
   pachinko319: "savePachinko319",
+  tokyoGhoul999: "saveTokyoGhoul999",
   hamari: "saveHamari",
   twoChoice: "saveTwoChoice",
   rare8192: "saveRare8192"
@@ -126,6 +140,7 @@ const recordTypeByRunAction = {
   juggle: "juggle",
   juggleSimple: "juggle",
   pachinko319: "pachinko319",
+  tokyoGhoul999: "tokyoGhoul999",
   hamari: "hamari",
   twoChoiceStart: "twoChoice",
   rare8192: "rare8192",
@@ -172,6 +187,13 @@ const rankingPreviewConfig = {
     sort: records => sortRecords("pachinko319", records),
     format: record => record ? `${yen.format(record.totalPayout)}玉 / ${record.chain}連` : "--"
   },
+  tokyoGhoul999: {
+    label: "東京喰種999",
+    unit: "玉",
+    score: record => record?.totalPayout || 0,
+    sort: records => sortRecords("tokyoGhoul999", records),
+    format: record => record ? `${yen.format(record.totalPayout)}玉 / ${record.chain}連 / ${record.route}` : "--"
+  },
   hamari: {
     label: "ハマり",
     unit: "回転",
@@ -198,6 +220,7 @@ const rankingPreviewConfig = {
 const savedFeedbackConfig = {
   juggle: { rankingHref: "ranking.html#juggle-ranking", retryHref: "juggle-simple.html", retryLabel: "もう一回" },
   pachinko319: { rankingHref: "ranking.html#pachinko-ranking", retryHref: "pachinko-319.html", retryLabel: "もう一回" },
+  tokyoGhoul999: { rankingHref: "ranking.html#tokyo-ghoul-ranking", retryHref: "tokyo-ghoul-999.html", retryLabel: "もう一回" },
   hamari: { rankingHref: "ranking.html#hamari-ranking", retryHref: "hamari.html", retryLabel: "もう一回" },
   twoChoice: { rankingHref: "ranking.html#two-choice-ranking", retryHref: "two-choice-select.html", retryLabel: "もう一回" },
   rare8192: { rankingHref: "ranking.html#rare-8192-ranking", retryHref: "rare-8192.html", retryLabel: "もう一回" }
@@ -348,6 +371,7 @@ const resultGuidesByAction = {
 const fixedConditionSummariesByAction = {
   juggle: ["BIG 1/255", "REG 1/255", "1,000円46枚", "35G/1,000円", "100G抜けまで"],
   pachinko319: ["大当たり 1/319", "RUSH突入 60%", "継続率 81%", "初当たり 300玉", "RUSH中 1,500玉", "17回転/1,000円"],
+  tokyoGhoul999: ["図柄揃い 1/999", "チャージ 1/538.8", "LT突入 約50%", "突入時 7,500玉", "RUSH中 3,000玉", "ST5回"],
   hamari: ["大当たり 1/319", "判定回転数 1,000回転"],
   twoChoiceStart: ["成功率 50%", "外れた時点で終了", "連続正解数でランキング"],
   rare8192: ["当選確率 1/8192", "当選回転でランキング"]
@@ -518,12 +542,13 @@ function loadLocalRecords() {
     return {
       juggle: Array.isArray(parsed.juggle) ? parsed.juggle.map((record, index) => normalizeRecord("juggle", record, index)) : [],
       pachinko319: Array.isArray(parsed.pachinko319) ? parsed.pachinko319.map((record, index) => normalizeRecord("pachinko319", record, index)) : [],
+      tokyoGhoul999: Array.isArray(parsed.tokyoGhoul999) ? parsed.tokyoGhoul999.map((record, index) => normalizeRecord("tokyoGhoul999", record, index)) : [],
       hamari: Array.isArray(parsed.hamari) ? parsed.hamari.map((record, index) => normalizeRecord("hamari", record, index)) : [],
       twoChoice: Array.isArray(parsed.twoChoice) ? parsed.twoChoice.map((record, index) => normalizeRecord("twoChoice", record, index)) : [],
       rare8192: Array.isArray(parsed.rare8192) ? parsed.rare8192.map((record, index) => normalizeRecord("rare8192", record, index)) : []
     };
   } catch {
-    return { juggle: [], pachinko319: [], hamari: [], twoChoice: [], rare8192: [] };
+    return { juggle: [], pachinko319: [], tokyoGhoul999: [], hamari: [], twoChoice: [], rare8192: [] };
   }
 }
 
@@ -553,6 +578,14 @@ function sortRecords(type, records, mode = "score") {
       score: (a, b) => b.totalPayout - a.totalPayout || b.chain - a.chain || b.diff - a.diff,
       diff: (a, b) => b.diff - a.diff || b.totalPayout - a.totalPayout,
       chain: (a, b) => b.chain - a.chain || b.totalPayout - a.totalPayout,
+      date: (a, b) => getRecordTime(b) - getRecordTime(a),
+      name: (a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ja")
+    },
+    tokyoGhoul999: {
+      score: (a, b) => b.totalPayout - a.totalPayout || b.chain - a.chain || b.diff - a.diff,
+      diff: (a, b) => b.diff - a.diff || b.totalPayout - a.totalPayout,
+      chain: (a, b) => b.chain - a.chain || b.totalPayout - a.totalPayout,
+      spins: (a, b) => a.spins - b.spins || b.totalPayout - a.totalPayout,
       date: (a, b) => getRecordTime(b) - getRecordTime(a),
       name: (a, b) => String(a.name || "").localeCompare(String(b.name || ""), "ja")
     },
@@ -669,10 +702,12 @@ function renderHomeLobby() {
   const records = loadLocalRecords();
   const juggleTop = sortRecords("juggle", records.juggle).slice(0, 3);
   const pachinkoTop = sortRecords("pachinko319", records.pachinko319)[0];
-  const ballBest = pachinkoTop?.totalPayout || 0;
+  const tokyoTop = sortRecords("tokyoGhoul999", records.tokyoGhoul999)[0];
+  const ballBest = Math.max(pachinkoTop?.totalPayout || 0, tokyoTop?.totalPayout || 0);
   const chainBest = Math.max(
     juggleTop[0]?.chain || 0,
     sortRecords("pachinko319", records.pachinko319, "chain")[0]?.chain || 0,
+    sortRecords("tokyoGhoul999", records.tokyoGhoul999, "chain")[0]?.chain || 0,
     sortRecords("twoChoice", records.twoChoice)[0]?.chain || 0
   );
   setText("homeBestBalls", ballBest ? `${yen.format(ballBest)}玉` : "--玉");
@@ -709,17 +744,19 @@ function renderRankingPage() {
   const records = loadLocalRecords();
   const summary = document.getElementById("rankingCount");
   if (summary) {
-    const total = records.juggle.length + records.pachinko319.length + records.hamari.length + records.twoChoice.length + records.rare8192.length;
+    const total = records.juggle.length + records.pachinko319.length + records.tokyoGhoul999.length + records.hamari.length + records.twoChoice.length + records.rare8192.length;
     summary.textContent = `${total}件`;
   }
 
   setText("juggleRecordCount", `${records.juggle.length}件`);
   setText("pachinkoRecordCount", `${records.pachinko319.length}件`);
+  setText("tokyoGhoulRecordCount", `${records.tokyoGhoul999.length}件`);
   setText("hamariRecordCount", `${records.hamari.length}件`);
   setText("twoChoiceRecordCount", `${records.twoChoice.length}件`);
   setText("rare8192RecordCount", `${records.rare8192.length}件`);
   setText("juggleBestSummary", records.juggle.length ? `${sortRecords("juggle", records.juggle)[0].chain}連` : "--");
   setText("pachinkoBestSummary", records.pachinko319.length ? `${yen.format(sortRecords("pachinko319", records.pachinko319)[0].totalPayout)}玉` : "--");
+  setText("tokyoGhoulBestSummary", records.tokyoGhoul999.length ? `${yen.format(sortRecords("tokyoGhoul999", records.tokyoGhoul999)[0].totalPayout)}玉` : "--");
   setText("hamariBestSummary", records.hamari.length ? `${yen.format(sortRecords("hamari", records.hamari)[0].spins)}回転` : "--");
   setText("twoChoiceBestSummary", records.twoChoice.length ? `${sortRecords("twoChoice", records.twoChoice)[0].chain}連` : "--");
   setText("rare8192BestSummary", records.rare8192.length ? `${yen.format(sortRecords("rare8192", records.rare8192)[0].spins)}回転` : "--");
@@ -741,6 +778,14 @@ function renderRankingPage() {
       `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.totalPayout)}玉</td><td>${record.chain}連</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}玉</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("pachinko319", record.id)}</td></tr>`
     ));
     pachinkoBody.innerHTML = rows.join("") || renderEmptyRows(7, "319一撃の記録がありません", "pachinko-319.html", "319を試す");
+  }
+
+  const tokyoGhoulBody = document.getElementById("tokyoGhoulRankingBody");
+  if (tokyoGhoulBody) {
+    const rows = sortRecords("tokyoGhoul999", records.tokyoGhoul999, getRankingSort("tokyoGhoul999")).slice(0, 10).map((record, index) => (
+      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.totalPayout)}玉</td><td>${record.chain}連</td><td>${escapeHtml(record.route)}</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}玉</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("tokyoGhoul999", record.id)}</td></tr>`
+    ));
+    tokyoGhoulBody.innerHTML = rows.join("") || renderEmptyRows(8, "東京喰種999の記録がありません", "tokyo-ghoul-999.html", "東京喰種999を試す");
   }
 
   const hamariBody = document.getElementById("hamariRankingBody");
@@ -935,6 +980,120 @@ async function runPachinko319() {
   latestResults.pachinko319 = { spins, investment, totalPayout, chain, diff, enteredRush };
   markResultReady("pachinko319");
   setRunningButton("pachinko319", false);
+  pachinkoRunning = false;
+}
+
+function simulateTokyoGhoul999() {
+  const {
+    figureRate,
+    chargeRate,
+    spinsPerUnit,
+    rushRate,
+    rushHitRate,
+    rushSpins,
+    figurePayout,
+    chargePayout,
+    entryPayout,
+    rushPayout
+  } = fixedRankingSpecs.tokyoGhoul999;
+  let spins = 0;
+  let route = "図柄揃い";
+  while (spins < 30000) {
+    spins++;
+    const figureHit = randomHit(figureRate);
+    const chargeHit = randomHit(chargeRate);
+    if (figureHit || chargeHit) {
+      route = figureHit ? "図柄揃い" : "喰種チャージ";
+      break;
+    }
+  }
+
+  const investment = Math.ceil(spins / spinsPerUnit) * 1000;
+  const usedBalls = Math.round(investment / 4);
+  const enteredRush = Math.random() < rushRate;
+  let chain = 1;
+  let totalPayout = enteredRush ? entryPayout : (route === "図柄揃い" ? figurePayout : chargePayout);
+  const events = [`${yen.format(spins)}回転で${route}`];
+
+  if (enteredRush) {
+    events.push(`LT突入 +${yen.format(entryPayout)}玉`);
+    while (chain < 300) {
+      let hitInRush = false;
+      for (let spin = 0; spin < rushSpins; spin++) {
+        if (randomHit(rushHitRate)) {
+          hitInRush = true;
+          break;
+        }
+      }
+      if (!hitInRush) {
+        events.push(`${rushSpins}回転抜け RUSH終了`);
+        break;
+      }
+      chain++;
+      totalPayout += rushPayout;
+      events.push(`RUSH当たり ${chain}連 +${yen.format(rushPayout)}玉`);
+    }
+  } else {
+    events.push(`${route}後 通常終了 +${yen.format(totalPayout)}玉`);
+  }
+
+  const diff = totalPayout - usedBalls;
+  return { spins, investment, usedBalls, route, enteredRush, chain, totalPayout, diff, events };
+}
+
+async function runTokyoGhoul999() {
+  if (pachinkoRunning) return;
+  pachinkoRunning = true;
+  setRunningButton("tokyoGhoul999", true);
+  setText("resultSpins", "0回転");
+  setText("resultInvestment", "0円");
+  setText("resultPayout", "0玉");
+  setText("resultChain", "0連");
+  setText("resultDiff", "0玉");
+  setText("resultRoute", "抽選中");
+  setText("log", "図柄揃い・チャージ抽選中...");
+
+  const result = simulateTokyoGhoul999();
+  await animateCount("resultSpins", result.spins, "回転", Math.min(3600, Math.max(1300, result.spins * 4)));
+
+  setText("resultRoute", result.enteredRush ? `${result.route} → LT突入` : `${result.route} → 通常`);
+  setText("resultChain", "1連");
+  setText("resultPayout", `${yen.format(result.enteredRush ? fixedRankingSpecs.tokyoGhoul999.entryPayout : result.totalPayout)}玉`);
+  setText("log", result.events[0]);
+
+  let currentPayout = result.enteredRush ? fixedRankingSpecs.tokyoGhoul999.entryPayout : result.totalPayout;
+  if (result.enteredRush) {
+    setText("log", result.events[1]);
+    for (const event of result.events.slice(2)) {
+      await sleep(speedAdjustedDuration(190));
+      const payoutMatch = event.match(/\+([0-9,]+)玉/);
+      if (payoutMatch) currentPayout += Number(payoutMatch[1].replace(/,/g, ""));
+      const chainMatch = event.match(/(\d+)連/);
+      if (chainMatch) setText("resultChain", `${chainMatch[1]}連`);
+      setText("resultPayout", `${yen.format(currentPayout)}玉`);
+      setText("log", event);
+    }
+  }
+
+  setText("resultSpins", `${yen.format(result.spins)}回転`);
+  setText("resultInvestment", `${yen.format(result.investment)}円`);
+  setText("resultPayout", `${yen.format(result.totalPayout)}玉`);
+  setText("resultChain", `${result.chain}連`);
+  setText("resultDiff", `${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
+  setText("resultRoute", result.enteredRush ? `${result.route} → LT突入` : `${result.route} → 通常`);
+  setText("log", `${result.route} / ${result.enteredRush ? "LT突入" : "通常終了"} / ${result.chain}連 / 差玉 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
+  latestResults.tokyoGhoul999 = {
+    spins: result.spins,
+    investment: result.investment,
+    usedBalls: result.usedBalls,
+    route: result.enteredRush ? `${result.route}→LT` : `${result.route}→通常`,
+    enteredRush: result.enteredRush,
+    chain: result.chain,
+    totalPayout: result.totalPayout,
+    diff: result.diff
+  };
+  markResultReady("tokyoGhoul999");
+  setRunningButton("tokyoGhoul999", false);
   pachinkoRunning = false;
 }
 
@@ -1737,6 +1896,7 @@ document.addEventListener("click", event => {
   if (!target) return;
   const action = target.dataset.action;
   if (action === "pachinko319") runPachinko319();
+  if (action === "tokyoGhoul999") runTokyoGhoul999();
   if (action === "juggle") runJuggle();
   if (action === "juggleSimple") runJuggleSimple();
   if (action === "hamari") runHamari();
@@ -1754,6 +1914,7 @@ document.addEventListener("click", event => {
   if (action === "share") copyShareText();
   if (action === "saveJuggle") saveLatestRecord("juggle");
   if (action === "savePachinko319") saveLatestRecord("pachinko319");
+  if (action === "saveTokyoGhoul999") saveLatestRecord("tokyoGhoul999");
   if (action === "saveHamari") saveLatestRecord("hamari");
   if (action === "saveTwoChoice") saveLatestRecord("twoChoice");
   if (action === "saveRare8192") saveLatestRecord("rare8192");
