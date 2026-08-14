@@ -66,84 +66,55 @@
     <section class="game-lobby" aria-labelledby="homeTitle">
       <div class="lobby-top">
         <div>
-          <div class="kicker">Ranking Battle</div>
-          <h1 id="homeTitle">ICHIGEKI</h1>
-          <p>固定条件で一撃記録を競うランキングバトル特化サイト。挑戦して、良い結果を保存して順位を確認。</p>
+          <div class="kicker">ICHIGEKI</div>
+          <h1 id="homeTitle">ランキングバトル</h1>
+          <p>種目を選んでSTART。固定条件で一撃記録を競い、良い結果をランキングに保存できます。</p>
         </div>
-        <a class="lobby-rank-button" href="ranking.html">🏆 ランキング</a>
+        <a class="lobby-rank-button" href="ranking.html">ランキング</a>
       </div>
-
-      <div class="lobby-status">
-        <span><b>遊び方</b><strong>STARTだけ</strong></span>
-        <span><b>最高玉</b><strong id="homeBestBalls">--玉</strong></span>
-        <span><b>最高連</b><strong id="homeBestChain">--連</strong></span>
-        <span><b>記録</b><strong>端末内保存</strong></span>
-      </div>
-
-      <div class="lobby-ranking-strip" aria-label="ランキングバトル分類">
-        <span class="strip-title">BATTLE</span>
-        <span><b>出玉</b> 999 / 319 <strong>一撃勝負</strong></span>
-        <span><b>連続</b> ジャグ連 / 二択 <strong>連数勝負</strong></span>
-        <span><b>確率</b> 8192 / 399ハマり <strong>回転勝負</strong></span>
-      </div>
-
-      <article class="featured-battle">
-        <div class="featured-crown">六</div>
-        <div>
-          <span class="battle-label">RANKING BATTLE</span>
-          <h2>好きな種目で一撃勝負</h2>
-          <p>ジャグ連、二択、999、319、8192、399ハマりを同じ扱いで配置。STARTを押して、良い結果をランキングに保存。</p>
-          <div class="featured-tags">
-            <span>6種目</span>
-            <span>固定条件</span>
-            <span>保存対応</span>
-          </div>
-        </div>
-        <a class="play-button" href="#battleList"><span>PLAY</span><small>種目を選ぶ</small></a>
-      </article>
 
       <section class="mode-select" id="battleList" aria-label="ゲームモード">
         <a class="mode-card mode-juggle" href="juggle-simple.html">
           <span class="mode-icon">777</span>
           <strong>ジャグ連</strong>
-          <small>100G以内の連チャンを競う</small>
-          <b>PLAY</b>
+          <small>100G以内の連チャン</small>
+          <b>›</b>
         </a>
         <a class="mode-card mode-choice" href="two-choice-select.html">
           <span class="mode-icon">2択</span>
           <strong>二択</strong>
           <small>50%を当て続ける</small>
-          <b>PLAY</b>
-        </a>
-        <a class="mode-card mode-8192" href="rare-8192.html">
-          <span class="mode-icon">8192</span>
-          <strong>8192チャレンジ</strong>
-          <small>激レア確率の当選Gを狙う</small>
-          <b>PLAY</b>
+          <b>›</b>
         </a>
         <a class="mode-card" href="tokyo-ghoul-999.html">
           <span class="mode-icon">999</span>
           <strong>東京喰種999</strong>
-          <small>超デカ一撃の総出玉を競う</small>
-          <b>PLAY</b>
+          <small>超デカ一撃</small>
+          <b>›</b>
         </a>
         <a class="mode-card mode-319" href="pachinko-319.html">
           <span class="mode-icon">319</span>
           <strong>一撃319</strong>
-          <small>初当たりから総出玉を競う</small>
-          <b>PLAY</b>
+          <small>総出玉勝負</small>
+          <b>›</b>
+        </a>
+        <a class="mode-card mode-8192" href="rare-8192.html">
+          <span class="mode-icon">8192</span>
+          <strong>1/8192</strong>
+          <small>激レア当選</small>
+          <b>›</b>
         </a>
         <a class="mode-card" href="hamari.html">
-          <span class="mode-icon">1000</span>
+          <span class="mode-icon">399</span>
           <strong>399ハマり</strong>
-          <small>当選までの深い回転数を競う</small>
-          <b>PLAY</b>
+          <small>深い回転数勝負</small>
+          <b>›</b>
         </a>
       </section>
 
       <div class="lobby-footer-panels">
-        <a class="mission-card" href="ranking.html"><strong>ランキング確認</strong><span>保存した全種目の記録を一覧で確認</span><em>見る</em></a>
-        <a class="mission-card bonus" href="guide.html"><strong>ルール確認</strong><span>確率と記録の見方を確認</span><em>読む</em></a>
+        <a class="mission-card" href="ranking.html"><strong>ランキング</strong><span>保存した記録を見る</span><em>見る</em></a>
+        <a class="mission-card bonus" href="guide.html"><strong>使い方</strong><span>確率と記録の見方</span><em>読む</em></a>
       </div>
 
       <div class="ad-box ad-box-wide lobby-ad" data-ad-slot="home-lobby"><span class="ad-label">PR</span><span class="ad-title">広告枠</span></div>
