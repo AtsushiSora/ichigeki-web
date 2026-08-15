@@ -2028,6 +2028,139 @@ code,
   margin-top: 14px;
 }
 
+.ranking-tabs {
+  position: sticky;
+  top: 76px;
+  z-index: 6;
+  padding: 8px;
+  border: 1px solid rgba(107, 211, 79, 0.18);
+  border-radius: 18px;
+  background: rgba(5, 9, 6, 0.92);
+  backdrop-filter: blur(14px);
+}
+
+.ranking-panel {
+  display: none;
+}
+
+.ranking-panel.active {
+  display: block;
+}
+
+.ranking-winner-card {
+  margin: 16px 0;
+}
+
+.winner-card-layout {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr) minmax(180px, 0.65fr);
+  gap: 16px;
+  align-items: center;
+  padding: 18px;
+  border: 1px solid rgba(242, 185, 59, 0.42);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 8% 50%, rgba(242, 185, 59, 0.18), transparent 150px),
+    linear-gradient(135deg, rgba(28, 20, 8, 0.98), rgba(5, 8, 6, 0.98));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03), 0 16px 38px rgba(0, 0, 0, 0.3);
+}
+
+.winner-crown {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border: 1px solid rgba(242, 185, 59, 0.55);
+  border-radius: 18px;
+  background: rgba(242, 185, 59, 0.08);
+}
+
+.winner-crown span {
+  font-size: 26px;
+  line-height: 1;
+}
+
+.winner-crown b {
+  color: var(--gold);
+  font-size: 12px;
+}
+
+.winner-main,
+.winner-meta {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.winner-main small {
+  color: var(--gold);
+  font-weight: 900;
+}
+
+.winner-main strong {
+  overflow: hidden;
+  color: var(--text);
+  font-size: 24px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.winner-main b {
+  color: var(--gold);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: clamp(28px, 5vw, 42px);
+  line-height: 1;
+  text-shadow: 0 0 22px rgba(242, 185, 59, 0.28);
+}
+
+.winner-meta {
+  justify-items: end;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 800;
+  text-align: right;
+}
+
+.winner-meta span {
+  overflow-wrap: anywhere;
+}
+
+.winner-meta small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.winner-empty {
+  grid-template-columns: 1fr;
+  justify-items: start;
+}
+
+.winner-empty span {
+  color: var(--gold);
+  font-weight: 900;
+}
+
+.winner-empty strong {
+  color: var(--text);
+  font-size: 22px;
+}
+
+.winner-empty small {
+  color: var(--muted);
+}
+
+.winner-empty a {
+  display: inline-grid;
+  place-items: center;
+  min-height: 38px;
+  margin-top: 6px;
+  padding: 0 14px;
+  border: 1px solid rgba(107, 211, 79, 0.3);
+  border-radius: 999px;
+  color: var(--accent);
+  font-weight: 900;
+}
+
 .ranking-play-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -3697,5 +3830,72 @@ code,
 
   .home-page .mission-card span {
     font-size: 11px;
+  }
+}
+
+@media (max-width: 720px) {
+  .ranking-tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 8px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ranking-tabs .rank-category {
+    flex: 0 0 148px;
+    min-height: 88px;
+    padding: 12px;
+    border-radius: 14px;
+    scroll-snap-align: start;
+  }
+
+  .ranking-tabs .rank-category span {
+    font-size: 18px;
+  }
+
+  .ranking-tabs .rank-category strong {
+    font-size: 14px;
+  }
+
+  .ranking-tabs .rank-category small {
+    display: none;
+  }
+
+  .winner-card-layout {
+    grid-template-columns: 54px minmax(0, 1fr);
+    gap: 12px;
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .winner-crown {
+    width: 50px;
+    height: 50px;
+    border-radius: 14px;
+  }
+
+  .winner-crown span {
+    font-size: 20px;
+  }
+
+  .winner-main strong {
+    font-size: 18px;
+  }
+
+  .winner-main b {
+    font-size: 28px;
+  }
+
+  .winner-meta {
+    grid-column: 1 / -1;
+    justify-items: start;
+    text-align: left;
+    font-size: 13px;
+  }
+
+  .winner-empty {
+    grid-template-columns: 1fr;
   }
 }

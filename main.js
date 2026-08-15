@@ -698,6 +698,84 @@ function renderPodium(records) {
   }).join("");
 }
 
+function renderWinnerCard(id, type, records, emptyHref, emptyLabel) {
+  const element = document.getElementById(id);
+  if (!element) return;
+  const record = sortRecords(type, records[type] || [], getRankingSort(type))[0];
+  const emptyAction = emptyHref && emptyLabel ? `<a href="${emptyHref}">${emptyLabel}</a>` : "";
+  if (!record) {
+    element.innerHTML = `<div class="winner-card-layout winner-empty"><span>🏆 1位</span><strong>まだ記録がありません</strong><small>結果を保存すると、ここに1位の記録が大きく表示されます。</small>${emptyAction}</div>`;
+    return;
+  }
+
+  const configs = {
+    juggle: {
+      title: "ジャグ連王",
+      score: `${clampNumber(record.chain, 0)}連`,
+      sub: `BIG ${clampNumber(record.big, 0)} / REG ${clampNumber(record.reg, 0)}`,
+      meta: `差枚 ${record.diff > 0 ? "+" : ""}${yen.format(clampNumber(record.diff, 0))}枚`
+    },
+    pachinko319: {
+      title: "一撃319王",
+      score: `${yen.format(clampNumber(record.totalPayout, 0))}玉`,
+      sub: `${clampNumber(record.chain, 0)}連`,
+      meta: `差玉 ${record.diff > 0 ? "+" : ""}${yen.format(clampNumber(record.diff, 0))}玉`
+    },
+    tokyoGhoul999: {
+      title: "東京喰種999王",
+      score: `${yen.format(clampNumber(record.totalPayout, 0))}玉`,
+      sub: `${clampNumber(record.chain, 0)}連 / ${escapeHtml(record.route || "--")}`,
+      meta: `差玉 ${record.diff > 0 ? "+" : ""}${yen.format(clampNumber(record.diff, 0))}玉`
+    },
+    rare8192: {
+      title: "8192王",
+      score: `${yen.format(clampNumber(record.spins, 0))}回転`,
+      sub: `分母比 ${clampNumber(record.ratio, 0).toFixed(2)}倍`,
+      meta: `当選率 ${clampNumber(record.hitByThen, 0).toFixed(2)}%`
+    },
+    hamari: {
+      title: "ハマり王",
+      score: `${yen.format(clampNumber(record.spins, 0))}回転`,
+      sub: `1/${yen.format(record.rate || fixedRankingSpecs.hamari.rate)}`,
+      meta: `到達目安 ${clampNumber(record.probability, 0).toFixed(2)}%`
+    },
+    twoChoice: {
+      title: "二択王",
+      score: `${clampNumber(record.chain, 0)}連`,
+      sub: `${clampNumber(record.rounds, clampNumber(record.chain, 0) + 1)}回挑戦`,
+      meta: `到達 ${formatTwoChoiceOddsFromPercent(record.probability)}`
+    }
+  };
+  const config = configs[type];
+  element.innerHTML = `<div class="winner-card-layout"><div class="winner-crown"><span>🏆</span><b>1位</b></div><div class="winner-main"><small>${config.title}</small><strong>${escapeHtml(record.name || "あなた")}</strong><b>${config.score}</b></div><div class="winner-meta"><span>${config.sub}</span><span>${config.meta}</span><small>${formatSavedAt(record.savedAt)}</small></div></div>`;
+}
+
+const rankingPanelIds = [
+  "juggle-ranking",
+  "pachinko-ranking",
+  "tokyo-ghoul-ranking",
+  "rare-8192-ranking",
+  "hamari-ranking",
+  "two-choice-ranking"
+];
+
+function getActiveRankingPanelId() {
+  const hash = location.hash.replace("#", "");
+  return rankingPanelIds.includes(hash) ? hash : "juggle-ranking";
+}
+
+function updateRankingTabs() {
+  const activeId = getActiveRankingPanelId();
+  document.querySelectorAll("[data-rank-tab]").forEach(tab => {
+    const isActive = tab.dataset.rankTab === activeId;
+    tab.classList.toggle("active", isActive);
+    tab.setAttribute("aria-selected", String(isActive));
+  });
+  document.querySelectorAll("[data-rank-panel]").forEach(panel => {
+    panel.classList.toggle("active", panel.dataset.rankPanel === activeId);
+  });
+}
+
 const homeRankFormatters = {
   juggle: record => `${clampNumber(record.chain, 0)}連`,
   twoChoice: record => `${clampNumber(record.chain, 0)}連`,
@@ -785,56 +863,62 @@ function renderRankingPage() {
   setText("twoChoiceBestSummary", records.twoChoice.length ? `${sortRecords("twoChoice", records.twoChoice)[0].chain}連` : "--");
   setText("rare8192BestSummary", records.rare8192.length ? `${yen.format(sortRecords("rare8192", records.rare8192)[0].spins)}回転` : "--");
 
-  const podium = document.getElementById("jugglePodium");
-  if (podium) podium.innerHTML = renderPodium(records.juggle);
+  renderWinnerCard("juggleWinnerCard", "juggle", records, "juggle-simple.html", "ジャグ連に挑戦");
+  renderWinnerCard("pachinkoWinnerCard", "pachinko319", records, "pachinko-319.html", "319を試す");
+  renderWinnerCard("tokyoGhoulWinnerCard", "tokyoGhoul999", records, "tokyo-ghoul-999.html", "東京喰種999を試す");
+  renderWinnerCard("rare8192WinnerCard", "rare8192", records, "rare-8192.html", "1/8192を試す");
+  renderWinnerCard("hamariWinnerCard", "hamari", records, "hamari.html", "399ハマりを試す");
+  renderWinnerCard("twoChoiceWinnerCard", "twoChoice", records, "two-choice-select.html", "二択を試す");
 
   const juggleBody = document.getElementById("juggleRankingBody");
   if (juggleBody) {
-    const rows = sortRecords("juggle", records.juggle, getRankingSort("juggle")).slice(0, 10).map((record, index) => (
-      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.chain}連</td><td>BIG ${record.big} / REG ${record.reg}</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}枚</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("juggle", record.id)}</td></tr>`
+    const rows = sortRecords("juggle", records.juggle, getRankingSort("juggle")).slice(1, 11).map((record, index) => (
+      `<tr><td>${index + 2}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.chain}連</td><td>BIG ${record.big} / REG ${record.reg}</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}枚</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("juggle", record.id)}</td></tr>`
     ));
-    juggleBody.innerHTML = rows.join("") || renderEmptyRows(7, "ジャグ連の記録がありません", "juggle-simple.html", "ジャグ連を試す");
+    juggleBody.innerHTML = rows.join("") || renderEmptyRows(7, records.juggle.length ? "2位以下の記録はまだありません" : "ジャグ連の記録がありません", "juggle-simple.html", "ジャグ連を試す");
   }
 
   const pachinkoBody = document.getElementById("pachinkoRankingBody");
   if (pachinkoBody) {
-    const rows = sortRecords("pachinko319", records.pachinko319, getRankingSort("pachinko319")).slice(0, 10).map((record, index) => (
-      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.totalPayout)}玉</td><td>${record.chain}連</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}玉</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("pachinko319", record.id)}</td></tr>`
+    const rows = sortRecords("pachinko319", records.pachinko319, getRankingSort("pachinko319")).slice(1, 11).map((record, index) => (
+      `<tr><td>${index + 2}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.totalPayout)}玉</td><td>${record.chain}連</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}玉</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("pachinko319", record.id)}</td></tr>`
     ));
-    pachinkoBody.innerHTML = rows.join("") || renderEmptyRows(7, "319一撃の記録がありません", "pachinko-319.html", "319を試す");
+    pachinkoBody.innerHTML = rows.join("") || renderEmptyRows(7, records.pachinko319.length ? "2位以下の記録はまだありません" : "319一撃の記録がありません", "pachinko-319.html", "319を試す");
   }
 
   const tokyoGhoulBody = document.getElementById("tokyoGhoulRankingBody");
   if (tokyoGhoulBody) {
-    const rows = sortRecords("tokyoGhoul999", records.tokyoGhoul999, getRankingSort("tokyoGhoul999")).slice(0, 10).map((record, index) => (
-      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.totalPayout)}玉</td><td>${record.chain}連</td><td>${escapeHtml(record.route)}</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}玉</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("tokyoGhoul999", record.id)}</td></tr>`
+    const rows = sortRecords("tokyoGhoul999", records.tokyoGhoul999, getRankingSort("tokyoGhoul999")).slice(1, 11).map((record, index) => (
+      `<tr><td>${index + 2}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.totalPayout)}玉</td><td>${record.chain}連</td><td>${escapeHtml(record.route)}</td><td>${record.diff > 0 ? "+" : ""}${yen.format(record.diff)}玉</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("tokyoGhoul999", record.id)}</td></tr>`
     ));
-    tokyoGhoulBody.innerHTML = rows.join("") || renderEmptyRows(8, "東京喰種999の記録がありません", "tokyo-ghoul-999.html", "東京喰種999を試す");
+    tokyoGhoulBody.innerHTML = rows.join("") || renderEmptyRows(8, records.tokyoGhoul999.length ? "2位以下の記録はまだありません" : "東京喰種999の記録がありません", "tokyo-ghoul-999.html", "東京喰種999を試す");
   }
 
   const hamariBody = document.getElementById("hamariRankingBody");
   if (hamariBody) {
-    const rows = sortRecords("hamari", records.hamari, getRankingSort("hamari")).slice(0, 10).map((record, index) => (
-      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.spins)}回転</td><td>1/${yen.format(record.rate || fixedRankingSpecs.hamari.rate)}</td><td>${clampNumber(record.probability, 0).toFixed(2)}%</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("hamari", record.id)}</td></tr>`
+    const rows = sortRecords("hamari", records.hamari, getRankingSort("hamari")).slice(1, 11).map((record, index) => (
+      `<tr><td>${index + 2}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.spins)}回転</td><td>1/${yen.format(record.rate || fixedRankingSpecs.hamari.rate)}</td><td>${clampNumber(record.probability, 0).toFixed(2)}%</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("hamari", record.id)}</td></tr>`
     ));
-    hamariBody.innerHTML = rows.join("") || renderEmptyRows(7, "399ハマりの記録がありません", "hamari.html", "399ハマりを試す");
+    hamariBody.innerHTML = rows.join("") || renderEmptyRows(7, records.hamari.length ? "2位以下の記録はまだありません" : "399ハマりの記録がありません", "hamari.html", "399ハマりを試す");
   }
 
   const twoChoiceBody = document.getElementById("twoChoiceRankingBody");
   if (twoChoiceBody) {
-    const rows = sortRecords("twoChoice", records.twoChoice, getRankingSort("twoChoice")).slice(0, 10).map((record, index) => (
-      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.chain}連</td><td>${record.rounds || record.chain + 1}回</td><td>${formatTwoChoiceOddsFromPercent(record.probability)}</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("twoChoice", record.id)}</td></tr>`
+    const rows = sortRecords("twoChoice", records.twoChoice, getRankingSort("twoChoice")).slice(1, 11).map((record, index) => (
+      `<tr><td>${index + 2}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${record.chain}連</td><td>${record.rounds || record.chain + 1}回</td><td>${formatTwoChoiceOddsFromPercent(record.probability)}</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("twoChoice", record.id)}</td></tr>`
     ));
-    twoChoiceBody.innerHTML = rows.join("") || renderEmptyRows(7, "二択チャレンジの記録がありません", "two-choice-select.html", "二択を試す");
+    twoChoiceBody.innerHTML = rows.join("") || renderEmptyRows(7, records.twoChoice.length ? "2位以下の記録はまだありません" : "二択チャレンジの記録がありません", "two-choice-select.html", "二択を試す");
   }
 
   const rare8192Body = document.getElementById("rare8192RankingBody");
   if (rare8192Body) {
-    const rows = sortRecords("rare8192", records.rare8192, getRankingSort("rare8192")).slice(0, 10).map((record, index) => (
-      `<tr><td>${index + 1}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.spins)}回転</td><td>${record.ratio.toFixed(2)}倍</td><td>${record.hitByThen.toFixed(2)}%</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("rare8192", record.id)}</td></tr>`
+    const rows = sortRecords("rare8192", records.rare8192, getRankingSort("rare8192")).slice(1, 11).map((record, index) => (
+      `<tr><td>${index + 2}</td><td>${escapeHtml(record.name || "あなた")}</td><td>${yen.format(record.spins)}回転</td><td>${record.ratio.toFixed(2)}倍</td><td>${record.hitByThen.toFixed(2)}%</td><td>${formatSavedAt(record.savedAt)}</td><td>${renderRecordActions("rare8192", record.id)}</td></tr>`
     ));
-    rare8192Body.innerHTML = rows.join("") || renderEmptyRows(7, "1/8192の記録がありません", "rare-8192.html", "1/8192を試す");
+    rare8192Body.innerHTML = rows.join("") || renderEmptyRows(7, records.rare8192.length ? "2位以下の記録はまだありません" : "1/8192の記録がありません", "rare-8192.html", "1/8192を試す");
   }
+
+  updateRankingTabs();
 }
 
 async function animateCount(id, endValue, suffix, duration = 1200) {
@@ -2028,6 +2112,8 @@ document.addEventListener("input", event => {
 document.addEventListener("change", event => {
   if (event.target?.matches("[data-ranking-sort]")) renderRankingPage();
 });
+
+window.addEventListener("hashchange", updateRankingTabs);
 
 updateSpeedLabel();
 initializeSaveButtons();
