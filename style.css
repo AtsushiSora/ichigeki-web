@@ -2907,6 +2907,49 @@ code,
   overflow-x: hidden;
 }
 
+.simple-info-section {
+  display: grid;
+  gap: 16px;
+  margin-top: 18px;
+  padding: 22px;
+}
+
+.simple-info-section h2 {
+  margin: 0;
+  font-size: clamp(22px, 6vw, 30px);
+}
+
+.simple-info-section p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.9;
+}
+
+.simple-info-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.simple-info-grid div {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid rgba(107, 211, 79, 0.2);
+  border-radius: 14px;
+  background: rgba(8, 14, 9, 0.72);
+}
+
+.simple-info-grid strong {
+  color: var(--text);
+  font-size: 15px;
+}
+
+.simple-info-grid span {
+  color: var(--muted);
+  line-height: 1.75;
+  font-size: 14px;
+}
+
 .juggle-simple-stage {
   display: grid;
   gap: 12px;
