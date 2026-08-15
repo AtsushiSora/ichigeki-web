@@ -4803,6 +4803,28 @@ code,
     width: 36px;
   }
 
+  .juggle-simple-page {
+    padding-bottom: calc(150px + env(safe-area-inset-bottom));
+  }
+
+  .juggle-simple-page .simple-page {
+    padding-bottom: calc(168px + env(safe-area-inset-bottom));
+  }
+
+  .juggle-simple-page .simple-sub-actions {
+    position: relative;
+    z-index: 1;
+    margin-bottom: calc(92px + env(safe-area-inset-bottom));
+  }
+
+  .juggle-simple-page .simple-ad {
+    margin-bottom: calc(102px + env(safe-area-inset-bottom));
+  }
+
+  .juggle-simple-page .mobile-bottom-nav {
+    bottom: calc(18px + env(safe-area-inset-bottom));
+  }
+
   .ad-note {
     display: none;
   }
