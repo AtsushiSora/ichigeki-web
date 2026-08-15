@@ -5664,8 +5664,8 @@ code,
   position: relative;
   width: 100%;
   min-height: 104px;
-  padding: 13px 38px 18px;
-  border: 2px solid rgba(100, 255, 74, 0.52);
+  padding: 14px 38px 20px;
+  border: 2px solid rgba(255, 217, 74, 0.42);
   clip-path: polygon(
     0 14px,
     14px 14px,
@@ -5682,14 +5682,14 @@ code,
   );
   background:
     linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, transparent 0 16px, rgba(100, 255, 74, 0.18) 16px 18px, transparent 18px calc(100% - 18px), rgba(100, 255, 74, 0.18) calc(100% - 18px) calc(100% - 16px), transparent calc(100% - 16px)),
-    radial-gradient(circle at 50% 100%, rgba(100, 255, 74, 0.18), transparent 56%),
+    linear-gradient(90deg, transparent 0 16px, rgba(255, 217, 74, 0.2) 16px 18px, transparent 18px calc(100% - 18px), rgba(255, 217, 74, 0.2) calc(100% - 18px) calc(100% - 16px), transparent calc(100% - 16px)),
+    radial-gradient(circle at 50% 100%, rgba(255, 217, 74, 0.16), transparent 58%),
     linear-gradient(180deg, rgba(3, 16, 4, 0.96), rgba(2, 6, 3, 0.98));
   background-size: 100% 4px, auto, auto, auto;
   box-shadow:
     inset 0 0 0 2px rgba(0, 0, 0, 0.7),
-    inset 0 0 0 5px rgba(100, 255, 74, 0.05),
-    inset 0 0 30px rgba(100, 255, 74, 0.13),
+    inset 0 0 0 5px rgba(255, 217, 74, 0.05),
+    inset 0 0 32px rgba(255, 217, 74, 0.12),
     0 10px 0 rgba(0, 0, 0, 0.4);
 }
 
@@ -5698,12 +5698,15 @@ code,
   content: "";
   position: absolute;
   top: 50%;
-  width: 34px;
-  height: 18px;
+  width: 38px;
+  height: 28px;
   opacity: 0.85;
   background:
-    linear-gradient(90deg, var(--pixel-green) 0 10px, transparent 10px 14px, var(--pixel-green) 14px 24px, transparent 24px);
-  filter: drop-shadow(0 0 9px rgba(100, 255, 74, 0.48));
+    linear-gradient(45deg, transparent 0 36%, rgba(100, 255, 74, 0.86) 36% 48%, transparent 48%) 0 0 / 12px 12px repeat-y,
+    linear-gradient(-45deg, transparent 0 36%, rgba(255, 217, 74, 0.72) 36% 48%, transparent 48%) 18px 4px / 12px 12px repeat-y;
+  filter:
+    drop-shadow(0 0 7px rgba(100, 255, 74, 0.48))
+    drop-shadow(0 0 5px rgba(255, 217, 74, 0.22));
   transform: translateY(-50%);
 }
 
@@ -5719,8 +5722,8 @@ code,
 .juggle-simple-page .pixel-core-panel .simple-start-button {
   position: relative;
   isolation: isolate;
-  width: min(100%, 360px);
-  min-height: 84px;
+  width: min(100%, 330px);
+  min-height: 86px;
   aspect-ratio: auto;
   overflow: hidden;
   border: 0;
@@ -5739,20 +5742,21 @@ code,
     0 calc(100% - 16px)
   );
   background:
-    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 239, 134, 0.82) 0 6px, transparent 6px calc(100% - 6px), rgba(255, 239, 134, 0.82) calc(100% - 6px)),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.42), transparent 24%),
-    radial-gradient(circle at 50% 18%, rgba(234, 255, 195, 0.46), transparent 28%),
-    linear-gradient(180deg, #bfff5b 0%, #67dd47 34%, #25952e 62%, #0d5419 100%);
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100, 255, 74, 0.85) 0 5px, transparent 5px 10px, rgba(255, 217, 74, 0.86) 10px 13px, transparent 13px calc(100% - 13px), rgba(255, 217, 74, 0.86) calc(100% - 13px) calc(100% - 10px), transparent calc(100% - 10px) calc(100% - 5px), rgba(100, 255, 74, 0.85) calc(100% - 5px)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 20%),
+    radial-gradient(circle at 50% 6%, rgba(100, 255, 74, 0.24), transparent 30%),
+    linear-gradient(180deg, #173f17 0%, #0b2b0e 48%, #031005 100%);
   background-size: 100% 5px, auto, auto, auto, auto;
   box-shadow:
-    0 0 0 4px #041004,
-    0 0 0 8px rgba(255, 217, 74, 0.78),
-    0 0 0 12px rgba(100, 255, 74, 0.2),
-    0 0 42px rgba(100, 255, 74, 0.76),
+    0 0 0 4px #020802,
+    0 0 0 8px rgba(100, 255, 74, 0.72),
+    0 0 0 11px rgba(255, 217, 74, 0.36),
+    0 0 34px rgba(100, 255, 74, 0.56),
     0 12px 0 rgba(0, 0, 0, 0.5),
-    inset 0 5px 0 rgba(255, 255, 255, 0.28),
-    inset 0 -14px 0 rgba(0, 0, 0, 0.22);
+    inset 0 4px 0 rgba(255, 255, 255, 0.13),
+    inset 0 -13px 0 rgba(0, 0, 0, 0.38),
+    inset 0 0 18px rgba(100, 255, 74, 0.14);
 }
 
 .juggle-simple-page .pixel-core-panel .simple-start-button::before,
@@ -5764,51 +5768,68 @@ code,
 }
 
 .juggle-simple-page .pixel-core-panel .simple-start-button::before {
-  inset: 9px 14px auto;
-  height: 16px;
+  inset: 8px 16px auto;
+  height: 10px;
   background:
-    linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.62), transparent);
-  opacity: 0.72;
+    linear-gradient(90deg, transparent 0 12px, rgba(100, 255, 74, 0.7) 12px 24px, transparent 24px 34px) 0 0 / 34px 100% repeat-x;
+  opacity: 0.62;
   filter: blur(0.2px);
 }
 
 .juggle-simple-page .pixel-core-panel .simple-start-button::after {
-  right: 16px;
-  bottom: 10px;
-  left: 16px;
-  height: 6px;
+  right: 18px;
+  bottom: 11px;
+  left: 18px;
+  height: 8px;
   background:
-    linear-gradient(90deg, transparent 0 8px, rgba(255, 239, 134, 0.82) 8px 22px, transparent 22px 32px) 0 0 / 32px 100% repeat-x;
-  opacity: 0.72;
-  filter: drop-shadow(0 0 8px rgba(255, 239, 134, 0.48));
+    linear-gradient(90deg, transparent 0 8px, rgba(255, 217, 74, 0.88) 8px 24px, transparent 24px 32px) 0 0 / 32px 100% repeat-x;
+  opacity: 0.76;
+  filter:
+    drop-shadow(0 0 8px rgba(255, 217, 74, 0.52))
+    drop-shadow(0 0 5px rgba(100, 255, 74, 0.18));
 }
 
 .juggle-simple-page .pixel-core-panel .simple-start-button span {
   position: relative;
   z-index: 1;
   margin: 0;
-  font-size: clamp(36px, 9.8vw, 56px);
+  color: #ffd84d;
+  font-size: clamp(38px, 10.4vw, 58px);
   line-height: 0.92;
+  letter-spacing: 0.03em;
+  text-shadow:
+    3px 0 0 #3b2500,
+    -2px 0 0 #3b2500,
+    0 3px 0 #3b2500,
+    0 -2px 0 #3b2500,
+    4px 4px 0 rgba(0, 0, 0, 0.55),
+    0 0 14px rgba(255, 217, 74, 0.66);
 }
 
 .juggle-simple-page .pixel-core-panel .simple-start-button small {
   position: relative;
   z-index: 1;
-  margin-top: 2px;
+  margin-top: 4px;
+  color: #f9fff4;
   font-size: clamp(13px, 3.8vw, 16px);
   letter-spacing: 0.08em;
+  text-shadow:
+    2px 0 0 rgba(0, 0, 0, 0.7),
+    0 2px 0 rgba(0, 0, 0, 0.7),
+    0 0 8px rgba(100, 255, 74, 0.34);
 }
 
 .juggle-simple-page .pixel-core-panel .simple-start-button:active {
   transform: translateY(4px);
   box-shadow:
-    0 0 0 4px #041004,
-    0 0 0 8px rgba(255, 217, 74, 0.62),
-    0 0 0 12px rgba(100, 255, 74, 0.12),
-    0 0 25px rgba(100, 255, 74, 0.5),
+    0 0 0 4px #020802,
+    0 0 0 8px rgba(100, 255, 74, 0.52),
+    0 0 0 11px rgba(255, 217, 74, 0.22),
+    0 0 22px rgba(100, 255, 74, 0.42),
     0 6px 0 rgba(0, 0, 0, 0.54),
-    inset 0 3px 0 rgba(255, 255, 255, 0.18),
-    inset 0 -8px 0 rgba(0, 0, 0, 0.25);
+    inset 0 2px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -7px 0 rgba(0, 0, 0, 0.4),
+    inset 0 0 13px rgba(100, 255, 74, 0.1);
 }
 
 .juggle-simple-page .pixel-core-panel .simple-start-button:disabled {
@@ -5874,12 +5895,13 @@ code,
   .juggle-simple-page .pixel-core-panel .simple-start-button {
     min-height: 66px;
     box-shadow:
-      0 0 0 3px #041004,
-      0 0 0 6px rgba(255, 217, 74, 0.76),
-      0 0 0 9px rgba(100, 255, 74, 0.18),
-      0 0 30px rgba(100, 255, 74, 0.66),
+      0 0 0 3px #020802,
+      0 0 0 6px rgba(100, 255, 74, 0.7),
+      0 0 0 9px rgba(255, 217, 74, 0.28),
+      0 0 28px rgba(100, 255, 74, 0.52),
       0 9px 0 rgba(0, 0, 0, 0.5),
-      inset 0 4px 0 rgba(255, 255, 255, 0.25),
-      inset 0 -10px 0 rgba(0, 0, 0, 0.22);
+      inset 0 4px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -10px 0 rgba(0, 0, 0, 0.36),
+      inset 0 0 15px rgba(100, 255, 74, 0.12);
   }
 }
