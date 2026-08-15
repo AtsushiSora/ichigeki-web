@@ -698,9 +698,32 @@ function renderPodium(records) {
   }).join("");
 }
 
+const homeRankFormatters = {
+  juggle: record => `${clampNumber(record.chain, 0)}連`,
+  twoChoice: record => `${clampNumber(record.chain, 0)}連`,
+  tokyoGhoul999: record => `${yen.format(clampNumber(record.totalPayout, 0))}玉`,
+  pachinko319: record => `${yen.format(clampNumber(record.totalPayout, 0))}玉`,
+  rare8192: record => `${yen.format(clampNumber(record.spins, 0))}回転`,
+  hamari: record => `${yen.format(clampNumber(record.spins, 0))}回転`
+};
+
+function renderHomeCardRank(type, records) {
+  const element = document.querySelector(`[data-home-rank="${type}"]`);
+  if (!element) return;
+  const top = sortRecords(type, records[type] || [])[0];
+  if (!top) {
+    element.innerHTML = `<span><b>🏆 1位</b><strong>まだ記録なし</strong></span><span><b>MY BEST</b><strong>挑戦待ち</strong></span>`;
+    return;
+  }
+  const score = homeRankFormatters[type]?.(top) || "--";
+  const name = escapeHtml(top.name || "あなた");
+  element.innerHTML = `<span><b>🏆 1位</b><strong>${name} ${escapeHtml(score)}</strong></span><span><b>MY BEST</b><strong>${escapeHtml(score)}</strong></span>`;
+}
+
 function renderHomeLobby() {
   if (!document.querySelector(".game-lobby")) return;
   const records = loadLocalRecords();
+  Object.keys(homeRankFormatters).forEach(type => renderHomeCardRank(type, records));
   const juggleTop = sortRecords("juggle", records.juggle).slice(0, 3);
   const pachinkoTop = sortRecords("pachinko319", records.pachinko319)[0];
   const tokyoTop = sortRecords("tokyoGhoul999", records.tokyoGhoul999)[0];

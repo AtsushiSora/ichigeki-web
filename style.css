@@ -501,10 +501,10 @@ svg {
 
 .home-page .mode-card {
   grid-template-columns: 74px minmax(0, 1fr) 34px;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto auto auto;
   align-items: center;
   gap: 4px 16px;
-  min-height: 96px;
+  min-height: 122px;
   padding: 16px 18px;
   border-radius: 18px;
   background:
@@ -513,7 +513,7 @@ svg {
 }
 
 .home-page .mode-card .mode-icon {
-  grid-row: 1 / 3;
+  grid-row: 1 / 4;
   display: grid;
   place-items: center;
   width: 58px;
@@ -539,7 +539,7 @@ svg {
 
 .home-page .mode-card b {
   grid-column: 3;
-  grid-row: 1 / 3;
+  grid-row: 1 / 4;
   align-self: center;
   justify-self: end;
   min-width: 0;
@@ -548,6 +548,48 @@ svg {
   color: currentColor;
   font-size: 34px;
   line-height: 1;
+}
+
+.home-page .mode-card .mode-rank {
+  grid-column: 2;
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  margin-top: 5px;
+  padding: 8px 10px;
+  border: 1px solid rgba(107, 211, 79, 0.18);
+  border-radius: 12px;
+  background: rgba(5, 9, 6, 0.6);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.home-page .mode-card .mode-rank span {
+  display: grid;
+  grid-template-columns: 62px minmax(0, 1fr);
+  gap: 8px;
+  min-width: 0;
+  align-items: center;
+}
+
+.home-page .mode-card .mode-rank b {
+  all: unset;
+  color: currentColor;
+  font-size: 10px;
+  font-weight: 950;
+  opacity: 0.78;
+  white-space: nowrap;
+}
+
+.home-page .mode-card .mode-rank strong {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 11px;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .mode-cz {
@@ -3598,7 +3640,7 @@ code,
 
   .home-page .mode-card {
     grid-template-columns: 58px minmax(0, 1fr) 24px;
-    min-height: 78px;
+    min-height: 108px;
     padding: 12px 13px;
     border-radius: 16px;
   }
@@ -3621,6 +3663,22 @@ code,
 
   .home-page .mode-card b {
     font-size: 26px;
+  }
+
+  .home-page .mode-card .mode-rank {
+    padding: 7px 8px;
+    border-radius: 10px;
+    font-size: 10px;
+  }
+
+  .home-page .mode-card .mode-rank span {
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .home-page .mode-card .mode-rank b,
+  .home-page .mode-card .mode-rank strong {
+    font-size: 10px;
   }
 
   .home-page .lobby-footer-panels {
