@@ -3899,3 +3899,271 @@ code,
     grid-template-columns: 1fr;
   }
 }
+
+/* Mobile final layout guard: keep controls, ads and browser UI from colliding. */
+@media (max-width: 720px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    padding-bottom: calc(118px + env(safe-area-inset-bottom));
+  }
+
+  .page,
+  .simple-page {
+    width: 100%;
+    max-width: 100%;
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+    padding-bottom: calc(138px + env(safe-area-inset-bottom));
+  }
+
+  .site-footer {
+    margin-bottom: calc(112px + env(safe-area-inset-bottom));
+  }
+
+  .footer-inner {
+    justify-content: center;
+    padding: 22px 14px;
+    text-align: center;
+  }
+
+  .footer-links {
+    justify-content: center;
+    gap: 10px 14px;
+  }
+
+  .ad-box,
+  .ad-box-footer,
+  .simple-ad {
+    min-height: 50px;
+    max-width: 100%;
+    margin: 12px 0;
+    padding: 10px 12px;
+  }
+
+  .ad-box::before {
+    width: 36px;
+  }
+
+  .ad-note {
+    display: none;
+  }
+
+  .home-page .game-lobby {
+    max-width: none;
+    padding: 14px;
+  }
+
+  .home-page .lobby-top {
+    grid-template-columns: 1fr;
+  }
+
+  .home-page .lobby-rank-button {
+    justify-self: start;
+    min-height: 36px;
+  }
+
+  .home-page .mode-select {
+    gap: 9px;
+  }
+
+  .home-page .mode-card {
+    grid-template-columns: 50px minmax(0, 1fr) 20px;
+    min-height: 92px;
+    gap: 3px 12px;
+    padding: 11px 12px;
+  }
+
+  .home-page .mode-card .mode-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 14px;
+  }
+
+  .home-page .mode-card strong {
+    font-size: 17px;
+  }
+
+  .home-page .mode-card small {
+    font-size: 11px;
+  }
+
+  .home-page .mode-card .mode-rank {
+    max-width: 100%;
+    padding: 5px 7px;
+  }
+
+  .home-page .lobby-footer-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .home-page .mission-card {
+    min-height: 58px;
+  }
+
+  .article-card {
+    margin-bottom: 14px;
+  }
+
+  .article-card,
+  .article-card p,
+  .article-card li,
+  .faq-item,
+  .faq-item p,
+  code {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .ranking-hero {
+    gap: 12px;
+  }
+
+  .ranking-hero h1 {
+    font-size: clamp(28px, 9vw, 38px);
+    line-height: 1.2;
+  }
+
+  .hero-actions {
+    gap: 8px;
+  }
+
+  .record-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .record-summary-card {
+    padding: 12px 10px;
+  }
+
+  .record-summary-card strong {
+    font-size: 18px;
+  }
+
+  .ranking-tabs {
+    top: 82px;
+    margin-inline: -4px;
+    border-radius: 16px;
+  }
+
+  .ranking-tabs .rank-category {
+    flex-basis: 132px;
+    min-height: 74px;
+  }
+
+  .ranking-winner-card {
+    margin: 12px 0;
+  }
+
+  .winner-card-layout {
+    align-items: start;
+    padding: 12px;
+  }
+
+  .winner-main b {
+    font-size: clamp(24px, 8vw, 30px);
+  }
+
+  .table-wrap {
+    margin-inline: -4px;
+  }
+
+  .ranking-table {
+    min-width: 600px;
+  }
+
+  .ranking-table th,
+  .ranking-table td {
+    padding: 9px 7px;
+  }
+
+  .simple-page {
+    min-height: auto;
+    padding-top: 10px;
+  }
+
+  .juggle-simple-stage {
+    gap: 8px;
+    min-height: auto;
+  }
+
+  .simple-status-card,
+  .simple-rule-row,
+  .simple-result-card,
+  .simple-rank-link,
+  .simple-next-row,
+  .simple-ad {
+    border-radius: 14px;
+  }
+
+  .simple-rule-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .simple-result-card {
+    min-height: 120px;
+    padding: 10px 8px;
+  }
+
+  .simple-start-button {
+    width: min(31vw, 132px);
+  }
+
+  .simple-start-button span {
+    font-size: clamp(22px, 6.8vw, 30px);
+  }
+
+  .simple-start-button small {
+    margin-top: -22px;
+    font-size: 11px;
+  }
+
+  .simple-sub-actions {
+    gap: 6px;
+  }
+
+  .simple-sub-actions .button {
+    min-height: 36px;
+  }
+
+  .simple-info-section {
+    margin-top: 12px;
+    padding: 16px;
+  }
+}
+
+@media (max-width: 390px) {
+  .home-page .mode-card {
+    grid-template-columns: 44px minmax(0, 1fr) 18px;
+    min-height: 86px;
+  }
+
+  .home-page .mode-card .mode-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 13px;
+  }
+
+  .home-page .mode-card strong {
+    font-size: 16px;
+  }
+
+  .ranking-tabs .rank-category {
+    flex-basis: 122px;
+  }
+
+  .simple-result-card strong {
+    font-size: clamp(28px, 9vw, 44px);
+  }
+
+  .simple-start-button {
+    width: min(30vw, 122px);
+  }
+}
