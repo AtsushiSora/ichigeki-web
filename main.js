@@ -1859,8 +1859,44 @@ async function runTwoChoiceAuto() {
 }
 
 function copyShareText() {
-  const text = document.getElementById("log")?.textContent.trim() || location.href;
-  navigator.clipboard?.writeText(`${document.title}\n${text}\n${location.href}`).catch(() => null);
+  const text = document.getElementById("log")?.textContent.trim() || "ランキングバトルに挑戦しました";
+  const shareText = `${document.title}\n${text}\n${location.href}\n#ICHIGEKI`;
+  const fallbackCopy = () => {
+    if (navigator.clipboard?.writeText) {
+      return navigator.clipboard.writeText(shareText);
+    }
+    const textarea = document.createElement("textarea");
+    textarea.value = shareText;
+    textarea.setAttribute("readonly", "");
+    textarea.style.position = "fixed";
+    textarea.style.left = "-9999px";
+    document.body.appendChild(textarea);
+    textarea.select();
+    const copied = document.execCommand("copy");
+    textarea.remove();
+    return copied ? Promise.resolve() : Promise.reject(new Error("copy failed"));
+  };
+
+  fallbackCopy()
+    .then(() => showToast("結果をコピーしました"))
+    .catch(() => showToast("コピーできませんでした。URLを手動でコピーしてください"));
+}
+
+function showToast(message) {
+  let toast = document.querySelector(".site-toast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.className = "site-toast";
+    toast.setAttribute("role", "status");
+    toast.setAttribute("aria-live", "polite");
+    document.body.appendChild(toast);
+  }
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(showToast.timer);
+  showToast.timer = setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2200);
 }
 
 function renderMobileBottomNav() {
@@ -1886,6 +1922,33 @@ function enhanceAdPlacement() {
   document.querySelectorAll(".ad-box").forEach(ad => {
     ad.setAttribute("role", "complementary");
     ad.setAttribute("aria-label", "広告枠");
+    if (ad.querySelector(".adsbygoogle")) {
+      delete ad.dataset.adPlaceholder;
+    } else {
+      ad.dataset.adPlaceholder = "true";
+    }
+  });
+}
+
+function initializeAnalytics() {
+  const metaId = document.querySelector('meta[name="ichigeki-ga-id"]')?.content?.trim();
+  const analyticsId = window.ICHIGEKI_ANALYTICS_ID || metaId;
+  if (!/^G-[A-Z0-9]+$/.test(analyticsId || "")) return;
+  if (document.querySelector(`script[src*="${analyticsId}"]`)) return;
+
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(analyticsId)}`;
+  document.head.appendChild(script);
+
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function gtag() {
+    window.dataLayer.push(arguments);
+  };
+  window.gtag("js", new Date());
+  window.gtag("config", analyticsId, {
+    anonymize_ip: true,
+    send_page_view: true
   });
 }
 
@@ -1954,5 +2017,6 @@ renderRankingPage();
 initializeTwoChoicePage();
 renderMobileBottomNav();
 enhanceAdPlacement();
+initializeAnalytics();
 enhanceInstallCard();
 registerServiceWorker();
