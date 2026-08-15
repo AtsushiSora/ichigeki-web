@@ -1,4 +1,4 @@
-const CACHE_NAME = "ichigeki-web-v52";
+const CACHE_NAME = "ichigeki-web-v53";
 const CORE_ASSETS = [
   "index.html",
   "color-preview.html",
