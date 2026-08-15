@@ -516,6 +516,48 @@ function speedAdjustedDuration(duration) {
   return Math.max(40, Math.round(duration / getSpeedFactor()));
 }
 
+function getSimpleStage() {
+  return document.querySelector(".juggle-simple-stage");
+}
+
+function clearStageEffects(stage = getSimpleStage()) {
+  stage?.classList.remove("is-running", "is-hit", "is-finished", "is-missed", "is-big-hit");
+}
+
+function startStageEffects(status, message) {
+  const stage = getSimpleStage();
+  clearStageEffects(stage);
+  stage?.classList.add("is-running");
+  if (status) setText("simpleStatus", status);
+  if (message) setText("simpleStatusText", message);
+  return stage;
+}
+
+function flashStageEffect(className = "is-hit", duration = 520) {
+  const stage = getSimpleStage();
+  if (!stage) return;
+  stage.classList.remove(className);
+  void stage.offsetWidth;
+  stage.classList.add(className);
+  window.setTimeout(() => stage.classList.remove(className), speedAdjustedDuration(duration));
+}
+
+function finishStageEffects(className = "is-finished") {
+  const stage = getSimpleStage();
+  if (!stage) return;
+  stage.classList.remove("is-running");
+  stage.classList.add(className);
+}
+
+function bumpResultCard(duration = 520) {
+  const card = document.querySelector(".simple-result-card");
+  if (!card) return;
+  card.classList.remove("result-pop");
+  void card.offsetWidth;
+  card.classList.add("result-pop");
+  window.setTimeout(() => card.classList.remove("result-pop"), speedAdjustedDuration(duration));
+}
+
 function updateSpeedLabel() {
   const label = document.getElementById("speedLabel");
   if (!label) return;
@@ -930,6 +972,7 @@ async function animateCount(id, endValue, suffix, duration = 1200) {
     return;
   }
   duration = speedAdjustedDuration(duration);
+  element.classList.add("number-rolling");
   const start = performance.now();
   return new Promise(resolve => {
     function frame(now) {
@@ -941,6 +984,9 @@ async function animateCount(id, endValue, suffix, duration = 1200) {
         requestAnimationFrame(frame);
       } else {
         element.textContent = `${yen.format(endValue)}${suffix}`;
+        element.classList.remove("number-rolling");
+        element.classList.add("number-settle");
+        window.setTimeout(() => element.classList.remove("number-settle"), 360);
         resolve();
       }
     }
@@ -957,6 +1003,7 @@ async function animateDecimal(id, endValue, suffix, digits = 1, duration = 1000)
     return;
   }
   duration = speedAdjustedDuration(duration);
+  element.classList.add("number-rolling");
   const start = performance.now();
   return new Promise(resolve => {
     function frame(now) {
@@ -967,6 +1014,9 @@ async function animateDecimal(id, endValue, suffix, digits = 1, duration = 1000)
         requestAnimationFrame(frame);
       } else {
         element.textContent = `${endValue.toFixed(digits)}${suffix}`;
+        element.classList.remove("number-rolling");
+        element.classList.add("number-settle");
+        window.setTimeout(() => element.classList.remove("number-settle"), 360);
         resolve();
       }
     }
@@ -1050,6 +1100,7 @@ function simulatePachinko319() {
 async function runPachinko319() {
   if (pachinkoRunning) return;
   pachinkoRunning = true;
+  startStageEffects("変動中", "1/319を抽選しています");
   setRunningButton("pachinko319", true);
   setText("resultSpins", "0回転");
   setText("resultInvestment", "0円");
@@ -1063,19 +1114,28 @@ async function runPachinko319() {
   const { spins, investment, totalPayout, chain, diff, enteredRush, firstPayout, payout } = result;
   await animateCount("resultSpins", spins, "回転", Math.min(3000, Math.max(1200, spins * 6)));
 
+  flashStageEffect("is-hit");
+  bumpResultCard();
   setText("resultRush", enteredRush ? "突入" : "非突入");
   setText("resultChain", "1連");
   setText("resultPayout", `${yen.format(firstPayout)}玉`);
   setText("log", `${spins}回転で大当たり`);
   if (enteredRush) {
+    setText("simpleStatus", "RUSH突入");
+    setText("simpleStatusText", "継続抽選中");
     let currentPayout = firstPayout;
     for (let currentChain = 2; currentChain <= chain; currentChain++) {
       await sleep(speedAdjustedDuration(180));
       currentPayout += payout;
+      flashStageEffect("is-hit", 300);
       setText("resultChain", `${currentChain}連`);
       setText("resultPayout", `${yen.format(currentPayout)}玉`);
       setText("log", `RUSH継続 ${currentChain}連 / ${yen.format(currentPayout)}玉`);
     }
+  } else {
+    setText("simpleStatus", "通常終了");
+    setText("simpleStatusText", "RUSH非突入で終了");
+    flashStageEffect("is-missed", 620);
   }
   await sleep(speedAdjustedDuration(120));
   setText("resultSpins", `${yen.format(spins)}回転`);
@@ -1085,6 +1145,9 @@ async function runPachinko319() {
   setText("resultDiff", `${diff > 0 ? "+" : ""}${yen.format(diff)}玉`);
   setText("resultRush", enteredRush ? "突入" : "非突入");
   setText("log", `${spins}回転で大当たり / ${chain}連 / 差玉 ${diff > 0 ? "+" : ""}${yen.format(diff)}玉`);
+  setText("simpleStatus", "結果確定");
+  setText("simpleStatusText", `${chain}連 / 差玉 ${diff > 0 ? "+" : ""}${yen.format(diff)}玉`);
+  finishStageEffects(diff > 0 ? "is-big-hit" : "is-finished");
   latestResults.pachinko319 = { spins, investment, totalPayout, chain, diff, enteredRush };
   markResultReady("pachinko319");
   setRunningButton("pachinko319", false);
@@ -1152,6 +1215,7 @@ function simulateTokyoGhoul999() {
 async function runTokyoGhoul999() {
   if (pachinkoRunning) return;
   pachinkoRunning = true;
+  startStageEffects("変動中", "図柄揃い・チャージを抽選しています");
   setRunningButton("tokyoGhoul999", true);
   setText("resultSpins", "0回転");
   setText("resultInvestment", "0円");
@@ -1164,6 +1228,8 @@ async function runTokyoGhoul999() {
   const result = simulateTokyoGhoul999();
   await animateCount("resultSpins", result.spins, "回転", Math.min(3600, Math.max(1300, result.spins * 4)));
 
+  flashStageEffect(result.enteredRush ? "is-big-hit" : "is-hit", 700);
+  bumpResultCard();
   setText("resultRoute", result.enteredRush ? `${result.route} → LT突入` : `${result.route} → 通常`);
   setText("resultChain", "1連");
   setText("resultPayout", `${yen.format(result.enteredRush ? fixedRankingSpecs.tokyoGhoul999.entryPayout : result.totalPayout)}玉`);
@@ -1171,6 +1237,8 @@ async function runTokyoGhoul999() {
 
   let currentPayout = result.enteredRush ? fixedRankingSpecs.tokyoGhoul999.entryPayout : result.totalPayout;
   if (result.enteredRush) {
+    setText("simpleStatus", "LT突入");
+    setText("simpleStatusText", "超デカ一撃を抽選中");
     setText("log", result.events[1]);
     for (const event of result.events.slice(2)) {
       await sleep(speedAdjustedDuration(190));
@@ -1178,9 +1246,14 @@ async function runTokyoGhoul999() {
       if (payoutMatch) currentPayout += Number(payoutMatch[1].replace(/,/g, ""));
       const chainMatch = event.match(/(\d+)連/);
       if (chainMatch) setText("resultChain", `${chainMatch[1]}連`);
+      if (chainMatch) flashStageEffect("is-hit", 280);
       setText("resultPayout", `${yen.format(currentPayout)}玉`);
       setText("log", event);
     }
+  } else {
+    setText("simpleStatus", "通常終了");
+    setText("simpleStatusText", `${result.route}で終了`);
+    flashStageEffect("is-missed", 620);
   }
 
   setText("resultSpins", `${yen.format(result.spins)}回転`);
@@ -1190,6 +1263,9 @@ async function runTokyoGhoul999() {
   setText("resultDiff", `${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
   setText("resultRoute", result.enteredRush ? `${result.route} → LT突入` : `${result.route} → 通常`);
   setText("log", `${result.route} / ${result.enteredRush ? "LT突入" : "通常終了"} / ${result.chain}連 / 差玉 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
+  setText("simpleStatus", "結果確定");
+  setText("simpleStatusText", `${result.chain}連 / 差玉 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
+  finishStageEffects(result.enteredRush ? "is-big-hit" : "is-finished");
   latestResults.tokyoGhoul999 = {
     spins: result.spins,
     investment: result.investment,
@@ -1524,9 +1600,7 @@ async function runJuggleSimple() {
   const startButton = document.querySelector('[data-action="juggleSimple"]');
   if (startButton) startButton.disabled = true;
   setSaveReady("juggle", false);
-  const stage = document.querySelector(".juggle-simple-stage");
-  stage?.classList.remove("is-hit", "is-finished");
-  stage?.classList.add("is-running");
+  const stage = startStageEffects("変動中", "当たりを抽選しています");
   setText("simpleStatus", "変動中");
   setText("simpleStatusText", "当たりを抽選しています");
   setText("resultBonusType", "抽選中");
@@ -1543,6 +1617,7 @@ async function runJuggleSimple() {
     lastInterval = distance;
     await animateCount("resultHitGame", distance, "G", Math.min(2600, Math.max(700, distance * 9)));
     stage?.classList.add("is-hit");
+    bumpResultCard();
     setText("simpleStatus", "当たり");
     setText("simpleStatusText", `${hit.type}を引きました`);
     setText("resultBonusType", hit.type);
@@ -1560,8 +1635,7 @@ async function runJuggleSimple() {
   }
 
   const { games, investment, finalMedals, diff, big, reg, chain } = result;
-  stage?.classList.remove("is-running");
-  stage?.classList.add("is-finished");
+  finishStageEffects(chain >= 3 ? "is-big-hit" : "is-finished");
   setText("simpleStatus", "結果確定");
   setText("simpleStatusText", "100G抜けで終了");
   const lastHit = result.hitEvents[result.hitEvents.length - 1];
@@ -1591,6 +1665,7 @@ function simulateHamari() {
 async function runHamari() {
   if (hamariRunning) return;
   hamariRunning = true;
+  startStageEffects("変動中", "1/399を当たるまで抽選しています");
   setRunningButton("hamari", true);
   const result = simulateHamari();
   setText("resultHamari", "0回転");
@@ -1599,12 +1674,17 @@ async function runHamari() {
   setText("resultSpins", `1/${yen.format(result.rate)}`);
   setText("log", "1/399を当たるまで抽選中...");
   await animateCount("resultHamari", result.spins, "回転", Math.min(4200, Math.max(1000, result.spins * 1.4)));
+  flashStageEffect(result.ratio >= 2 ? "is-big-hit" : "is-hit", 700);
+  bumpResultCard();
   await animateDecimal("resultHit", result.probability, "%", 2, 900);
   setText("resultHamari", `${yen.format(result.spins)}回転`);
   setText("resultHit", `${result.probability.toFixed(2)}%`);
   setText("resultRate", `${result.ratio.toFixed(2)}倍`);
   setText("resultSpins", `1/${yen.format(result.rate)}`);
   setText("log", `1/${yen.format(result.rate)}が${yen.format(result.spins)}回転目に当選 / 分母の${result.ratio.toFixed(2)}倍 / そこまでハマる目安 ${result.probability.toFixed(2)}%`);
+  setText("simpleStatus", "結果確定");
+  setText("simpleStatusText", `${yen.format(result.spins)}回転 / 分母比 ${result.ratio.toFixed(2)}倍`);
+  finishStageEffects(result.ratio >= 2 ? "is-big-hit" : "is-finished");
   latestResults.hamari = {
     rate: result.rate,
     spins: result.spins,
@@ -1633,6 +1713,7 @@ function simulateRare8192() {
 async function runRare8192() {
   if (rare8192Running) return;
   rare8192Running = true;
+  startStageEffects("変動中", "1/8192を当たるまで抽選しています");
   setRunningButton("rare8192", true);
   setText("resultSpins", "0回転");
   setText("resultRatio", "--");
@@ -1643,6 +1724,8 @@ async function runRare8192() {
 
   const result = simulateRare8192();
   await animateCount("resultSpins", result.spins, "回転", Math.min(5000, Math.max(1600, result.spins * 0.7)));
+  flashStageEffect(result.ratio <= 0.25 ? "is-big-hit" : "is-hit", 780);
+  bumpResultCard();
   await Promise.all([
     animateDecimal("resultHitByThen", result.hitByThen, "%", 2, 900),
     animateDecimal("resultNoHit", result.noHitByThen, "%", 2, 900)
@@ -1653,6 +1736,9 @@ async function runRare8192() {
   setText("resultNoHit", `${result.noHitByThen.toFixed(2)}%`);
   setText("resultOneDenominator", `${result.withinOneDenominator.toFixed(2)}%`);
   setText("log", `1/${yen.format(result.rate)} は ${yen.format(result.spins)}回転目に当選 / 分母の ${result.ratio.toFixed(2)}倍 / そこまでに当たる確率 ${result.hitByThen.toFixed(2)}%`);
+  setText("simpleStatus", "結果確定");
+  setText("simpleStatusText", `${yen.format(result.spins)}回転 / 分母比 ${result.ratio.toFixed(2)}倍`);
+  finishStageEffects(result.ratio <= 0.25 ? "is-big-hit" : "is-finished");
   latestResults.rare8192 = {
     rate: result.rate,
     spins: result.spins,
@@ -1886,6 +1972,7 @@ function finishTwoChoice(selected) {
   setText("log", `終了: ${finalChain}連 / 選択 ${selectedLabel} / 正解 ${correctLabel}`);
   setText("simpleStatus", "ハズレ");
   setText("simpleStatusText", `選択 ${selectedLabel} は失敗。正解は ${correctLabel} / ${finalChain}連で終了`);
+  bumpResultCard();
   if (effect) {
     effect.textContent = `ハズレ / 正解は${correctLabel}`;
     effect.classList.remove("show", "legend");
@@ -1922,6 +2009,7 @@ function chooseTwoChoice(selected) {
     probability: Math.pow(0.5, twoChoiceState.chain) * 100
   };
   markResultReady("twoChoice");
+  bumpResultCard(360);
   playTwoChoiceSuccessEffect();
 }
 

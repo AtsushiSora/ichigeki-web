@@ -3237,10 +3237,22 @@ code,
   display: grid;
   gap: 2px;
   justify-items: center;
+  position: relative;
+  overflow: hidden;
   padding: 18px 14px;
   border-color: rgba(242, 185, 59, 0.65);
   text-align: center;
   min-width: 0;
+}
+
+.simple-result-card::after {
+  content: "";
+  position: absolute;
+  inset: -40% -80%;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent 36%, rgba(255, 255, 255, 0.18), transparent 64%);
+  opacity: 0;
+  transform: translateX(-42%);
 }
 
 .simple-result-card span,
@@ -3370,12 +3382,51 @@ code,
   animation: simple-pulse 1.1s ease-in-out infinite;
 }
 
+.juggle-simple-stage.is-running .status-dot {
+  animation: status-blink 720ms ease-in-out infinite;
+}
+
+.juggle-simple-stage.is-running .simple-result-card::after {
+  animation: result-scan 960ms linear infinite;
+  opacity: 1;
+}
+
 .juggle-simple-stage.is-hit .simple-result-card {
   animation: simple-hit 520ms ease-out;
 }
 
 .juggle-simple-stage.is-finished .simple-status-card {
   border-color: rgba(242, 185, 59, 0.55);
+}
+
+.juggle-simple-stage.is-big-hit .simple-status-card,
+.juggle-simple-stage.is-big-hit .simple-result-card {
+  border-color: rgba(107, 211, 79, 0.8);
+  box-shadow:
+    0 0 0 1px rgba(107, 211, 79, 0.12),
+    0 0 36px rgba(107, 211, 79, 0.28),
+    0 16px 42px rgba(0, 0, 0, 0.28);
+}
+
+.juggle-simple-stage.is-missed .simple-status-card,
+.juggle-simple-stage.is-missed .simple-result-card {
+  border-color: rgba(255, 95, 85, 0.56);
+}
+
+.result-pop {
+  animation: result-pop 520ms ease-out;
+}
+
+.number-rolling {
+  color: #fff8c7 !important;
+  text-shadow:
+    0 0 10px rgba(242, 185, 59, 0.74),
+    0 0 24px rgba(107, 211, 79, 0.26) !important;
+  animation: number-flicker 240ms linear infinite;
+}
+
+.number-settle {
+  animation: number-settle 360ms ease-out;
 }
 
 .simple-sub-actions {
@@ -3503,6 +3554,62 @@ code,
   100% {
     transform: scale(1);
     box-shadow: 0 16px 42px rgba(0, 0, 0, 0.28);
+  }
+}
+
+@keyframes status-blink {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.72);
+  }
+}
+
+@keyframes result-scan {
+  0% {
+    transform: translateX(-44%);
+  }
+  100% {
+    transform: translateX(44%);
+  }
+}
+
+@keyframes result-pop {
+  0% {
+    transform: scale(0.985);
+  }
+  44% {
+    transform: scale(1.025);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes number-flicker {
+  0%,
+  100% {
+    transform: translateY(0);
+    filter: brightness(1);
+  }
+  50% {
+    transform: translateY(-1px);
+    filter: brightness(1.25);
+  }
+}
+
+@keyframes number-settle {
+  0% {
+    transform: scale(1.08);
+    filter: brightness(1.3);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
   }
 }
 
