@@ -5401,3 +5401,249 @@ code,
     min-height: 116px;
   }
 }
+
+/* Pixel reel polish: replace emoji-like symbols with arcade parts. */
+.juggle-simple-page .pixel-slot-machine {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(180deg, #171717 0%, #050505 100%);
+  background-size: 100% 4px, auto;
+  border-color: rgba(100, 255, 74, 0.6);
+  box-shadow:
+    inset 0 0 0 3px #050705,
+    inset 0 0 0 6px rgba(100, 255, 74, 0.1),
+    0 0 18px rgba(100, 255, 74, 0.18);
+}
+
+.juggle-simple-page .pixel-slot-title {
+  color: #fff4e7;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, #c2242b 0%, #741016 100%);
+  background-size: 100% 4px, auto;
+  border: 2px solid rgba(255, 255, 255, 0.16);
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.34),
+    0 0 12px rgba(255, 95, 85, 0.24);
+}
+
+.juggle-simple-page .pixel-reels {
+  gap: 3px;
+  padding: 4px;
+  border: 3px solid #3c443a;
+  background:
+    linear-gradient(180deg, #eef4ec, #bfc9bd);
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.24),
+    0 3px 0 rgba(0, 0, 0, 0.42);
+}
+
+.juggle-simple-page .pixel-reels .reel-symbol {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 42px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.45);
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+    linear-gradient(180deg, #fbfffa, #d8ded5);
+  background-size: 100% 4px, auto;
+  color: #d81720;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 1000;
+  line-height: 1;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -4px 0 rgba(0, 0, 0, 0.08);
+}
+
+.juggle-simple-page .reel-seven {
+  font-size: 30px;
+  text-shadow:
+    2px 0 0 rgba(255, 255, 255, 0.82),
+    0 2px 0 rgba(0, 0, 0, 0.12),
+    0 0 8px rgba(216, 23, 32, 0.36);
+}
+
+.juggle-simple-page .reel-cherry {
+  grid-template-columns: repeat(2, 13px);
+  gap: 2px;
+  padding-top: 7px;
+}
+
+.juggle-simple-page .reel-cherry i {
+  display: block;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 28%, #fff 0 2px, transparent 3px),
+    radial-gradient(circle at 48% 50%, #ff3345, #b70713 68%);
+  box-shadow:
+    1px 1px 0 rgba(0, 0, 0, 0.32),
+    0 0 5px rgba(255, 51, 69, 0.28);
+}
+
+.juggle-simple-page .reel-cherry::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 16px;
+  height: 10px;
+  border-radius: 80% 0;
+  background: #3aa84f;
+  box-shadow:
+    4px -2px 0 #76d66f,
+    0 0 5px rgba(58, 168, 79, 0.34);
+  transform: translateX(-45%) rotate(-24deg);
+}
+
+.juggle-simple-page .reel-bell i {
+  display: block;
+  width: 28px;
+  height: 24px;
+  background:
+    linear-gradient(180deg, #fff2a5 0%, #ffd34a 28%, #d28b0b 74%, #7b4500 100%);
+  clip-path: polygon(26% 18%, 74% 18%, 86% 66%, 96% 78%, 4% 78%, 14% 66%);
+  box-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.28),
+    0 0 9px rgba(255, 211, 74, 0.42);
+}
+
+.juggle-simple-page .reel-bell::after {
+  content: "";
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  width: 8px;
+  height: 5px;
+  border-radius: 0 0 6px 6px;
+  background: #5a3000;
+  transform: translateX(-50%);
+}
+
+.juggle-simple-page .pixel-slot-lights {
+  gap: 12px;
+}
+
+.juggle-simple-page .pixel-slot-lights i {
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(255, 95, 85, 0.34);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 38% 30%, #fff1ef, transparent 22%),
+    radial-gradient(circle, #ff493c, #9b130c 68%);
+  box-shadow:
+    0 0 10px rgba(255, 95, 85, 0.48),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.24);
+}
+
+.juggle-simple-stage.is-running .pixel-reels .reel-symbol {
+  animation: pixel-reel-shake 120ms steps(2, end) infinite;
+}
+
+.juggle-simple-stage.is-running .pixel-slot-lights i {
+  animation: pixel-light-chase 480ms steps(1, end) infinite;
+}
+
+.juggle-simple-stage.is-running .pixel-slot-lights i:nth-child(2) {
+  animation-delay: 160ms;
+}
+
+.juggle-simple-stage.is-running .pixel-slot-lights i:nth-child(3) {
+  animation-delay: 320ms;
+}
+
+.juggle-simple-stage.is-big-hit .pixel-arcade-marquee,
+.juggle-simple-stage.is-hit .pixel-slot-machine {
+  animation: pixel-win-flash 640ms steps(2, end) 3;
+}
+
+.juggle-simple-page .pixel-core-panel {
+  position: relative;
+}
+
+.juggle-simple-page .pixel-core-panel::before,
+.juggle-simple-page .pixel-core-panel::after {
+  content: "";
+  position: absolute;
+  top: -8px;
+  height: 4px;
+  background: rgba(255, 217, 74, 0.72);
+  filter: drop-shadow(0 0 8px rgba(255, 217, 74, 0.34));
+}
+
+.juggle-simple-page .pixel-core-panel::before {
+  left: 18px;
+  width: min(46%, 230px);
+}
+
+.juggle-simple-page .pixel-core-panel::after {
+  right: 18px;
+  width: min(34%, 170px);
+}
+
+@keyframes pixel-reel-shake {
+  0% { transform: translateY(-2px); filter: blur(0.4px); }
+  50% { transform: translateY(2px); filter: blur(0); }
+  100% { transform: translateY(-1px); filter: blur(0.4px); }
+}
+
+@keyframes pixel-light-chase {
+  0%, 100% {
+    filter: brightness(1.6);
+    box-shadow: 0 0 16px rgba(255, 95, 85, 0.72);
+  }
+  50% {
+    filter: brightness(0.55);
+    box-shadow: 0 0 4px rgba(255, 95, 85, 0.22);
+  }
+}
+
+@keyframes pixel-win-flash {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.28) saturate(1.35);
+  }
+}
+
+@media (max-width: 420px) {
+  .juggle-simple-page .pixel-reels {
+    padding: 3px;
+  }
+
+  .juggle-simple-page .pixel-reels .reel-symbol {
+    min-height: 32px;
+  }
+
+  .juggle-simple-page .reel-seven {
+    font-size: 23px;
+  }
+
+  .juggle-simple-page .reel-cherry {
+    grid-template-columns: repeat(2, 10px);
+    padding-top: 6px;
+  }
+
+  .juggle-simple-page .reel-cherry i {
+    width: 10px;
+    height: 10px;
+  }
+
+  .juggle-simple-page .reel-cherry::before {
+    top: 4px;
+    width: 12px;
+    height: 8px;
+  }
+
+  .juggle-simple-page .reel-bell i {
+    width: 22px;
+    height: 19px;
+  }
+}
