@@ -7640,3 +7640,25 @@ code,
 .juggle-simple-page .simple-rule-row strong#simpleRuleChain {
   color: #fbfff1;
 }
+
+/* Juggle tabs: slimmer arcade tabs. */
+.juggle-simple-page .pixel-arcade-tabs {
+  min-height: 42px;
+  border-width: 2px;
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.84),
+    0 5px 0 rgba(255, 217, 74, 0.2),
+    0 0 14px rgba(100, 255, 74, 0.12);
+}
+
+.juggle-simple-page .pixel-arcade-tabs a {
+  min-height: 40px;
+  padding: 5px 8px 4px;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.juggle-simple-page .pixel-arcade-tabs a:first-child::before {
+  margin-right: 6px;
+  font-size: 12px;
+}
