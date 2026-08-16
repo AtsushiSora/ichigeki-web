@@ -7454,14 +7454,6 @@ code,
   font-size: clamp(16px, 5vw, 22px);
 }
 
-.juggle-simple-page .pixel-arcade-tabs {
-  min-height: 44px;
-}
-
-.juggle-simple-page .pixel-arcade-tabs a {
-  min-height: 42px;
-}
-
 .juggle-simple-page .pixel-top-panel {
   grid-template-columns: 106px minmax(0, 1fr);
   min-height: 104px;
@@ -7481,10 +7473,6 @@ code,
 
 .juggle-simple-page .pixel-top-panel .pixel-state {
   padding-inline: 1px;
-}
-
-.juggle-simple-page .simple-rule-row {
-  min-height: 52px;
 }
 
 .juggle-simple-page .pixel-core-panel {
