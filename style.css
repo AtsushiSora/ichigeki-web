@@ -5840,3 +5840,170 @@ code,
     padding-inline: 8px;
   }
 }
+
+/* Juggle arcade rebuild v7: override old mobile grid placement. */
+.juggle-simple-page .pixel-arcade-marquee {
+  order: 1;
+  grid-column: 1 / -1;
+  grid-row: auto;
+}
+
+.juggle-simple-page .pixel-arcade-tabs {
+  order: 2;
+  grid-column: 1 / -1;
+  grid-row: auto;
+}
+
+.juggle-simple-page .pixel-top-panel {
+  order: 3;
+  grid-column: 1 / -1;
+  grid-row: auto;
+}
+
+.juggle-simple-page .simple-rule-row {
+  order: 4;
+  grid-column: 1 / -1;
+  grid-row: auto;
+}
+
+.juggle-simple-page .pixel-core-panel {
+  order: 5;
+  grid-column: 1 / -1;
+  grid-row: auto;
+}
+
+.juggle-simple-page .pixel-action-row {
+  order: 6;
+  grid-column: 1 / -1;
+  grid-row: auto;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.juggle-simple-page .pixel-action-row .simple-start-area {
+  grid-column: 1 / -1;
+  grid-row: auto;
+  width: 100%;
+  justify-self: stretch;
+}
+
+.juggle-simple-page .pixel-action-row .simple-start-button {
+  width: min(100%, 384px);
+  min-height: 0;
+  aspect-ratio: 1200 / 457;
+}
+
+.juggle-simple-page .simple-rank-link {
+  order: 7;
+  grid-column: 1 / -1;
+  grid-row: auto;
+}
+
+.juggle-simple-page .save-preview {
+  order: 8;
+  grid-column: 1 / -1;
+  grid-row: auto;
+}
+
+.juggle-simple-page .simple-sub-actions {
+  order: 9;
+  grid-column: 1 / -1;
+  grid-row: auto;
+}
+
+.juggle-simple-page .simple-log {
+  order: 10;
+  grid-column: 1 / -1;
+  grid-row: auto;
+}
+
+.juggle-simple-page .simple-ad {
+  order: 11;
+  grid-column: 1 / -1;
+  grid-row: auto;
+}
+
+.juggle-simple-page .pixel-top-panel .pixel-slot-machine,
+.juggle-simple-page .pixel-top-panel .simple-status-card {
+  height: 112px;
+  min-height: 112px;
+  max-height: 112px;
+}
+
+.juggle-simple-page .pixel-top-panel .pixel-slot-machine {
+  grid-template-rows: 20px 52px 12px;
+}
+
+.juggle-simple-page .pixel-top-panel .pixel-reels {
+  height: 52px;
+  max-height: 52px;
+}
+
+.juggle-simple-page .pixel-top-panel .pixel-reels .reel-symbol {
+  min-height: 38px;
+  height: 38px;
+  aspect-ratio: auto;
+}
+
+.juggle-simple-page .pixel-top-panel .simple-status-card {
+  align-content: center;
+}
+
+.juggle-simple-page .pixel-top-panel .pixel-state-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  height: 94px;
+}
+
+.juggle-simple-page .pixel-top-panel .pixel-state {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  min-height: 0;
+  height: 94px;
+}
+
+.juggle-simple-page .pixel-top-panel .pixel-state .pixel-lamp {
+  width: min(9vw, 34px);
+  min-width: 24px;
+  max-width: 34px;
+}
+
+.juggle-simple-page .pixel-top-panel .pixel-state p,
+.juggle-simple-page .pixel-top-panel .pixel-state strong {
+  font-size: clamp(10px, 3.2vw, 15px);
+  line-height: 1.25;
+  text-align: center;
+}
+
+@media (max-width: 390px) {
+  .juggle-simple-page .pixel-top-panel {
+    min-height: 128px;
+  }
+
+  .juggle-simple-page .pixel-top-panel .pixel-slot-machine,
+  .juggle-simple-page .pixel-top-panel .simple-status-card {
+    height: 104px;
+    min-height: 104px;
+    max-height: 104px;
+  }
+
+  .juggle-simple-page .pixel-top-panel .pixel-slot-machine {
+    grid-template-rows: 18px 48px 11px;
+  }
+
+  .juggle-simple-page .pixel-top-panel .pixel-reels {
+    height: 48px;
+    max-height: 48px;
+  }
+
+  .juggle-simple-page .pixel-top-panel .pixel-reels .reel-symbol {
+    min-height: 34px;
+    height: 34px;
+  }
+
+  .juggle-simple-page .pixel-top-panel .pixel-state-grid,
+  .juggle-simple-page .pixel-top-panel .pixel-state {
+    height: 86px;
+  }
+}
