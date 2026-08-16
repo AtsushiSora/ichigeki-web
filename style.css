@@ -5611,13 +5611,13 @@ code,
 
 /* Juggle arcade rebuild v5: match the reference single-screen cabinet order. */
 .juggle-simple-page .simple-page {
-  max-width: 430px;
-  padding: max(7px, env(safe-area-inset-top)) 7px calc(164px + env(safe-area-inset-bottom));
+  max-width: 414px;
+  padding: max(5px, env(safe-area-inset-top)) 6px calc(156px + env(safe-area-inset-bottom));
 }
 
 .juggle-simple-page .pixel-arcade-screen {
-  gap: 7px;
-  padding: 7px;
+  gap: 6px;
+  padding: 6px;
   background:
     linear-gradient(rgba(98, 255, 72, 0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgba(98, 255, 72, 0.035) 1px, transparent 1px),
@@ -5627,8 +5627,21 @@ code,
 }
 
 .juggle-simple-page .pixel-arcade-marquee {
-  min-height: 110px;
-  padding: 12px 8px 9px;
+  min-height: 98px;
+  padding: 10px 7px 8px;
+}
+
+.juggle-simple-page .pixel-arcade-marquee strong {
+  font-size: clamp(38px, 13.8vw, 62px);
+}
+
+.juggle-simple-page .pixel-arcade-marquee small {
+  font-size: clamp(18px, 5.8vw, 27px);
+}
+
+.juggle-simple-page .pixel-laurel,
+.juggle-simple-page .pixel-trophy {
+  height: 54px;
 }
 
 .juggle-simple-page .pixel-arcade-tabs {
@@ -5641,7 +5654,7 @@ code,
 }
 
 .juggle-simple-page .pixel-arcade-tabs a {
-  min-height: 48px;
+  min-height: 44px;
   border: 0;
   border-radius: 0;
   box-shadow: none;
@@ -5652,19 +5665,19 @@ code,
 }
 
 .juggle-simple-page .pixel-top-panel {
-  grid-template-columns: 132px minmax(0, 1fr);
-  min-height: 136px;
-  padding: 8px;
-  gap: 8px;
+  grid-template-columns: 124px minmax(0, 1fr);
+  min-height: 124px;
+  padding: 7px;
+  gap: 7px;
 }
 
 .juggle-simple-page .pixel-slot-machine {
-  min-height: 118px;
+  min-height: 108px;
 }
 
 .juggle-simple-page .simple-status-card {
-  min-height: 118px;
-  padding: 8px;
+  min-height: 108px;
+  padding: 7px;
 }
 
 .juggle-simple-page .pixel-state-grid {
@@ -5673,7 +5686,7 @@ code,
 
 .juggle-simple-page .pixel-state {
   min-width: 0;
-  padding: 7px 5px;
+  padding: 6px 4px;
 }
 
 .juggle-simple-page .pixel-state p,
@@ -5682,7 +5695,7 @@ code,
 }
 
 .juggle-simple-page .simple-rule-row {
-  min-height: 66px;
+  min-height: 58px;
 }
 
 .juggle-simple-page .simple-rule-row strong#simpleRuleGame,
@@ -5693,7 +5706,7 @@ code,
 .juggle-simple-page .pixel-core-panel {
   grid-template-columns: minmax(0, 1fr);
   gap: 0;
-  padding-top: 6px;
+  padding-top: 5px;
 }
 
 .juggle-simple-page .pixel-core-panel::before,
@@ -5702,22 +5715,23 @@ code,
 }
 
 .juggle-simple-page .pixel-core-panel .simple-result-card {
-  min-height: 258px;
-  padding: 17px 13px 16px;
+  min-height: 226px;
+  padding: 14px 12px 13px;
   border-color: rgba(100, 255, 74, 0.74);
 }
 
 .juggle-simple-page .simple-result-card::before {
-  inset: 72px 22px 76px;
+  inset: 63px 20px 68px;
   opacity: 0.78;
 }
 
 .juggle-simple-page .simple-result-card .pixel-display-heading {
-  margin-bottom: 18px;
+  margin-bottom: 13px;
 }
 
 .juggle-simple-page .simple-result-card strong {
-  min-height: 58px;
+  min-height: 50px;
+  font-size: clamp(42px, 16vw, 68px);
 }
 
 .juggle-simple-page .simple-result-card b {
@@ -5735,7 +5749,7 @@ code,
 
 .juggle-simple-page .pixel-action-row .simple-start-area {
   width: 100%;
-  min-height: 120px;
+  min-height: 112px;
   display: grid;
   place-items: center;
   margin: 0;
@@ -5753,7 +5767,7 @@ code,
 }
 
 .juggle-simple-page .pixel-action-row .simple-start-button {
-  width: min(100%, 370px);
+  width: min(100%, 384px);
   max-width: none;
   aspect-ratio: 1200 / 457;
   min-height: 0;
@@ -5765,7 +5779,7 @@ code,
 }
 
 .juggle-simple-page .pixel-action-row .simple-start-button span {
-  font-size: clamp(38px, 12vw, 56px);
+  font-size: clamp(42px, 13.6vw, 64px);
   line-height: 0.9;
 }
 
@@ -5794,35 +5808,35 @@ code,
 
 @media (max-width: 390px) {
   .juggle-simple-page .pixel-arcade-marquee {
-    min-height: 104px;
+    min-height: 94px;
   }
 
   .juggle-simple-page .pixel-top-panel {
-    grid-template-columns: 122px minmax(0, 1fr);
-    min-height: 128px;
+    grid-template-columns: 116px minmax(0, 1fr);
+    min-height: 118px;
   }
 
   .juggle-simple-page .pixel-slot-machine,
   .juggle-simple-page .simple-status-card {
-    min-height: 110px;
+    min-height: 102px;
   }
 
   .juggle-simple-page .pixel-core-panel .simple-result-card {
-    min-height: 240px;
+    min-height: 214px;
   }
 
   .juggle-simple-page .pixel-action-row .simple-start-area {
-    min-height: 112px;
+    min-height: 106px;
   }
 }
 
 @media (max-width: 360px) {
   .juggle-simple-page .pixel-top-panel {
-    grid-template-columns: 112px minmax(0, 1fr);
+    grid-template-columns: 106px minmax(0, 1fr);
   }
 
   .juggle-simple-page .pixel-action-row .simple-start-area {
-    min-height: 106px;
+    min-height: 100px;
     padding-inline: 8px;
   }
 }
