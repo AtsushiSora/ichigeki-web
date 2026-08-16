@@ -7431,78 +7431,78 @@ code,
 
 /* Juggle sizing pass: tighten height, scale, and position. */
 .juggle-simple-page .pixel-arcade-screen {
-  width: min(100%, 392px);
-  gap: 4px;
-  padding: 8px 10px 10px;
+  width: min(100%, 376px);
+  gap: 3px;
+  padding: 7px 8px 9px;
 }
 
 .juggle-simple-page .pixel-arcade-marquee {
-  min-height: 108px;
-  padding: 14px 18px 10px;
+  min-height: 98px;
+  padding: 12px 16px 8px;
 }
 
 .juggle-simple-page .pixel-arcade-marquee > div {
-  transform: translate(-2%, -1px);
+  transform: translate(-1%, -2px) scale(0.96);
 }
 
 .juggle-simple-page .pixel-arcade-marquee strong {
-  font-size: clamp(34px, 12.8vw, 56px);
+  font-size: clamp(32px, 12vw, 52px);
 }
 
 .juggle-simple-page .pixel-arcade-marquee small {
-  margin-top: 2px;
-  font-size: clamp(17px, 5.3vw, 24px);
+  margin-top: 0;
+  font-size: clamp(16px, 5vw, 22px);
 }
 
 .juggle-simple-page .pixel-arcade-tabs {
-  min-height: 48px;
+  min-height: 44px;
 }
 
 .juggle-simple-page .pixel-arcade-tabs a {
-  min-height: 46px;
+  min-height: 42px;
 }
 
 .juggle-simple-page .pixel-top-panel {
-  grid-template-columns: 116px minmax(0, 1fr);
-  min-height: 114px;
-  gap: 6px;
-  padding: 6px 7px;
+  grid-template-columns: 106px minmax(0, 1fr);
+  min-height: 104px;
+  gap: 5px;
+  padding: 5px 6px;
 }
 
 .juggle-simple-page .pixel-slot-machine,
 .juggle-simple-page .pixel-top-panel .simple-status-card {
-  min-height: 100px;
+  min-height: 92px;
 }
 
 .juggle-simple-page .pixel-top-panel .pixel-state .pixel-lamp {
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
 }
 
 .juggle-simple-page .pixel-top-panel .pixel-state {
-  padding-inline: 2px;
+  padding-inline: 1px;
 }
 
 .juggle-simple-page .simple-rule-row {
-  min-height: 56px;
+  min-height: 52px;
 }
 
 .juggle-simple-page .pixel-core-panel {
-  margin-top: 3px;
+  margin-top: 2px;
 }
 
 .juggle-simple-page .pixel-core-panel .simple-result-card {
-  min-height: 224px;
-  padding: 13px 12px 11px;
+  min-height: 202px;
+  padding: 10px 12px 9px;
 }
 
 .juggle-simple-page .simple-result-card .pixel-display-heading {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .juggle-simple-page .simple-result-card strong {
-  min-height: 42px;
-  font-size: clamp(38px, 12vw, 60px);
+  min-height: 36px;
+  font-size: clamp(34px, 10.6vw, 54px);
 }
 
 .juggle-simple-page .simple-result-card b {
@@ -7510,68 +7510,69 @@ code,
 }
 
 .juggle-simple-page .simple-result-card em {
-  min-height: 34px;
+  min-height: 30px;
 }
 
 .juggle-simple-page .pixel-action-row {
-  margin-top: -5px;
+  margin-top: -10px;
 }
 
 .juggle-simple-page .pixel-action-row .simple-start-area {
-  min-height: 104px;
-  padding: 2px 8px 4px;
+  min-height: 96px;
+  padding: 0 8px 2px;
 }
 
 .juggle-simple-page .pixel-action-row .simple-start-button {
-  width: min(94%, 336px);
+  width: min(86%, 308px);
 }
 
 .juggle-simple-page .pixel-action-row .simple-start-button small {
-  bottom: 18%;
+  bottom: 16%;
 }
 
 .juggle-simple-page .simple-rank-link {
-  min-height: 64px;
-  margin-top: -2px;
+  min-height: 58px;
+  margin-top: -6px;
 }
 
 @media (max-width: 390px) {
   .juggle-simple-page .pixel-arcade-screen {
-    padding-inline: 8px;
+    width: min(100%, 368px);
+    padding-inline: 7px;
   }
 
   .juggle-simple-page .pixel-arcade-marquee {
-    min-height: 104px;
-    padding-top: 13px;
+    min-height: 94px;
+    padding-top: 11px;
   }
 
   .juggle-simple-page .pixel-arcade-marquee strong {
-    font-size: clamp(36px, 13.2vw, 52px);
+    font-size: clamp(32px, 12.2vw, 48px);
   }
 
   .juggle-simple-page .pixel-arcade-marquee small {
-    font-size: clamp(17px, 5.1vw, 22px);
+    font-size: clamp(16px, 4.9vw, 20px);
   }
 
   .juggle-simple-page .pixel-top-panel {
-    grid-template-columns: 110px minmax(0, 1fr);
-    min-height: 110px;
+    grid-template-columns: 102px minmax(0, 1fr);
+    min-height: 100px;
   }
 
   .juggle-simple-page .pixel-slot-machine,
   .juggle-simple-page .pixel-top-panel .simple-status-card {
-    min-height: 96px;
+    min-height: 88px;
   }
 
   .juggle-simple-page .pixel-core-panel .simple-result-card {
-    min-height: 214px;
+    min-height: 194px;
   }
 
   .juggle-simple-page .pixel-action-row .simple-start-area {
-    min-height: 98px;
+    min-height: 90px;
   }
 
   .juggle-simple-page .simple-rank-link {
-    min-height: 62px;
+    min-height: 56px;
   }
 }
