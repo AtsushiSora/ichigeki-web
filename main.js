@@ -713,7 +713,7 @@ function clearLocalRecords() {
 
 function renderEmptyRows(columns, message = "まだ記録がありません", href = "", label = "") {
   const action = href && label ? `<a class="empty-state-link" href="${href}">${label}</a>` : "";
-  return `<tr><td colspan="${columns}"><div class="empty-state"><strong>${message}</strong><span>ランキングバトルで結果を出して「ランキングに保存」を押すと、ここに記録が表示されます。</span>${action}</div></td></tr>`;
+  return `<tr class="ranking-empty-row"><td colspan="${columns}"><div class="empty-state ranking-empty-card"><strong>${message}</strong><span>ランキングバトルで結果を出して「ランキングに保存」を押すと、ここに記録が表示されます。</span>${action}</div></td></tr>`;
 }
 
 function getRankingSort(type) {

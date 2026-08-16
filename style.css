@@ -7910,3 +7910,560 @@ code,
     transform: translateY(-1px) scale(1.015);
   }
 }
+
+/* Ranking arcade final pass: match Juggle cabinet tone and improve mobile records. */
+.ranking-arcade-page .page {
+  max-width: 1160px;
+}
+
+.ranking-arcade-page .ranking-hero {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(120, 255, 89, 0.42);
+  background:
+    linear-gradient(rgba(104, 255, 78, 0.06) 1px, transparent 1px),
+    radial-gradient(circle at 14% 18%, rgba(120, 255, 89, 0.17), transparent 30%),
+    radial-gradient(circle at 82% 18%, rgba(255, 214, 74, 0.12), transparent 32%),
+    rgba(1, 9, 3, 0.92);
+  background-size: 100% 4px, auto, auto, auto;
+  box-shadow:
+    inset 0 0 0 3px rgba(0, 0, 0, 0.76),
+    inset 0 0 34px rgba(120, 255, 89, 0.08),
+    0 0 24px rgba(120, 255, 89, 0.12);
+}
+
+.ranking-arcade-page .ranking-hero::after {
+  content: "RANKING";
+  position: absolute;
+  right: 18px;
+  bottom: 10px;
+  color: rgba(120, 255, 89, 0.08);
+  font-size: clamp(42px, 8vw, 92px);
+  font-weight: 1000;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.ranking-arcade-page .ranking-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ranking-arcade-page .ranking-play-card,
+.ranking-arcade-page .rank-category {
+  min-height: 112px;
+  align-items: center;
+  border-color: rgba(120, 255, 89, 0.34);
+  background:
+    linear-gradient(rgba(104, 255, 78, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(104, 255, 78, 0.03) 1px, transparent 1px),
+    rgba(1, 8, 2, 0.9);
+  background-size: 100% 4px, 24px 24px, auto;
+}
+
+.ranking-arcade-page .ranking-play-card:hover,
+.ranking-arcade-page .rank-category:hover {
+  border-color: rgba(120, 255, 89, 0.68);
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.72),
+    0 0 22px rgba(120, 255, 89, 0.16);
+}
+
+.ranking-arcade-page .ranking-play-card:nth-child(1) span,
+.ranking-arcade-page .rank-category:nth-child(1) span {
+  color: #bd63ff;
+}
+
+.ranking-arcade-page .ranking-play-card:nth-child(2) span,
+.ranking-arcade-page .rank-category:nth-child(6) span {
+  color: #72a7ff;
+}
+
+.ranking-arcade-page .ranking-play-card:nth-child(3) span,
+.ranking-arcade-page .rank-category:nth-child(4) span {
+  color: #ffd64a;
+}
+
+.ranking-arcade-page .ranking-play-card:nth-child(4) span,
+.ranking-arcade-page .rank-category:nth-child(2) span {
+  color: #ff6658;
+}
+
+.ranking-arcade-page .ranking-play-card:nth-child(5) span,
+.ranking-arcade-page .rank-category:nth-child(3) span {
+  color: #f5ffe9;
+}
+
+.ranking-arcade-page .ranking-play-card:nth-child(6) span,
+.ranking-arcade-page .rank-category:nth-child(5) span {
+  color: #7dff70;
+}
+
+.ranking-arcade-page .rank-category.active {
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.72),
+    inset 0 0 26px rgba(255, 214, 74, 0.12),
+    0 0 22px rgba(255, 214, 74, 0.12);
+}
+
+.ranking-arcade-page .record-summary-card {
+  min-height: 92px;
+  border-color: rgba(73, 233, 255, 0.22);
+}
+
+.ranking-arcade-page .ranking-panel.active {
+  display: grid;
+  gap: 16px;
+}
+
+.ranking-arcade-page .ranking-winner-card {
+  overflow: hidden;
+  border-color: rgba(255, 214, 74, 0.52);
+  background:
+    linear-gradient(rgba(255, 214, 74, 0.06) 1px, transparent 1px),
+    radial-gradient(circle at 50% 0%, rgba(255, 214, 74, 0.16), transparent 44%),
+    rgba(16, 10, 0, 0.86);
+  background-size: 100% 4px, auto, auto;
+}
+
+.ranking-arcade-page .winner-card-layout {
+  align-items: center;
+  gap: 16px;
+}
+
+.ranking-arcade-page .winner-crown {
+  display: grid;
+  min-width: 72px;
+  place-items: center;
+}
+
+.ranking-arcade-page .winner-crown span {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  place-items: center;
+  border: 2px solid rgba(255, 214, 74, 0.56);
+  background: rgba(0, 0, 0, 0.38);
+}
+
+.ranking-arcade-page .winner-main b {
+  font-size: clamp(28px, 5.2vw, 46px);
+  line-height: 1;
+}
+
+.ranking-arcade-page .table-wrap {
+  overflow: hidden;
+}
+
+.ranking-arcade-page .ranking-table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.ranking-arcade-page .ranking-table tr:nth-child(even) td {
+  background: rgba(120, 255, 89, 0.025);
+}
+
+@media (max-width: 760px) {
+  .ranking-arcade-page .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+
+  .ranking-arcade-page .page {
+    max-width: 430px;
+    padding: 12px 10px 118px;
+  }
+
+  .ranking-arcade-page .layout {
+    gap: 14px;
+  }
+
+  .ranking-arcade-page .ranking-hero {
+    gap: 14px;
+    padding: 16px 12px;
+  }
+
+  .ranking-arcade-page .ranking-hero h1 {
+    font-size: clamp(25px, 8vw, 36px);
+    line-height: 1.15;
+  }
+
+  .ranking-arcade-page .ranking-hero .lead {
+    font-size: 13px;
+    line-height: 1.75;
+  }
+
+  .ranking-arcade-page .ranking-summary {
+    min-height: 96px;
+  }
+
+  .ranking-arcade-page .article-card {
+    padding: 16px 12px;
+  }
+
+  .ranking-arcade-page .ranking-play-grid,
+  .ranking-arcade-page .rank-category-grid {
+    gap: 10px;
+  }
+
+  .ranking-arcade-page .ranking-play-card,
+  .ranking-arcade-page .rank-category {
+    display: grid;
+    grid-template-columns: 58px minmax(0, 1fr) auto;
+    min-height: 84px;
+    gap: 12px;
+    padding: 12px 38px 12px 12px;
+  }
+
+  .ranking-arcade-page .ranking-play-card span,
+  .ranking-arcade-page .rank-category span {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .ranking-arcade-page .ranking-play-card strong,
+  .ranking-arcade-page .rank-category strong {
+    font-size: clamp(19px, 6vw, 26px);
+    line-height: 1.15;
+  }
+
+  .ranking-arcade-page .ranking-play-card small,
+  .ranking-arcade-page .rank-category small {
+    font-size: 12px;
+  }
+
+  .ranking-arcade-page .ranking-play-card b {
+    font-size: 11px;
+    color: rgba(255, 214, 74, 0.86);
+  }
+
+  .ranking-arcade-page .record-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .ranking-arcade-page .record-summary-card {
+    min-height: 78px;
+    padding: 10px;
+  }
+
+  .ranking-arcade-page .record-summary-card strong {
+    font-size: clamp(18px, 6vw, 24px);
+  }
+
+  .ranking-arcade-page .ranking-panel {
+    padding: 16px 12px;
+  }
+
+  .ranking-arcade-page .section-head h2 {
+    font-size: clamp(23px, 7vw, 31px);
+  }
+
+  .ranking-arcade-page .ranking-winner-card {
+    padding: 12px;
+  }
+
+  .ranking-arcade-page .winner-card-layout {
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .ranking-arcade-page .winner-crown {
+    min-width: 0;
+  }
+
+  .ranking-arcade-page .winner-crown span {
+    width: 48px;
+    height: 48px;
+  }
+
+  .ranking-arcade-page .winner-meta {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 214, 74, 0.18);
+  }
+
+  .ranking-arcade-page .ranking-controls {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+  }
+
+  .ranking-arcade-page .table-wrap {
+    overflow: visible;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .ranking-arcade-page .ranking-table,
+  .ranking-arcade-page .ranking-table tbody,
+  .ranking-arcade-page .ranking-table tr,
+  .ranking-arcade-page .ranking-table td {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ranking-arcade-page .ranking-table thead {
+    display: none;
+  }
+
+  .ranking-arcade-page .ranking-table tbody {
+    display: grid;
+    gap: 10px;
+  }
+
+  .ranking-arcade-page .ranking-table tr {
+    position: relative;
+    overflow: hidden;
+    padding: 12px 12px 12px 66px;
+    border: 2px solid rgba(120, 255, 89, 0.3);
+    background:
+      linear-gradient(rgba(104, 255, 78, 0.055) 1px, transparent 1px),
+      rgba(1, 8, 2, 0.88);
+    background-size: 100% 4px, auto;
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.72);
+  }
+
+  .ranking-arcade-page .ranking-table tr:nth-child(1) {
+    border-color: rgba(255, 214, 74, 0.5);
+  }
+
+  .ranking-arcade-page .ranking-table td {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 6px 0;
+    border: 0;
+    color: rgba(245, 255, 233, 0.9);
+    text-align: right;
+  }
+
+  .ranking-arcade-page .ranking-table td::before {
+    flex: 0 0 auto;
+    color: rgba(169, 255, 148, 0.7);
+    font-size: 11px;
+    font-weight: 900;
+    text-align: left;
+  }
+
+  .ranking-arcade-page .ranking-table td:first-child {
+    position: absolute;
+    left: 12px;
+    top: 14px;
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    padding: 0;
+    border: 2px solid rgba(255, 214, 74, 0.48);
+    color: var(--arcade-gold);
+    background: rgba(0, 0, 0, 0.36);
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .ranking-arcade-page .ranking-table td:first-child::before,
+  .ranking-arcade-page .ranking-table td[colspan]::before {
+    content: "";
+    display: none;
+  }
+
+  .ranking-arcade-page .ranking-table td:nth-child(2) {
+    color: #fffdea;
+    font-size: 17px;
+    font-weight: 900;
+  }
+
+  .ranking-arcade-page .ranking-table td:nth-child(3) {
+    color: var(--arcade-gold);
+    font-size: 18px;
+    font-weight: 1000;
+  }
+
+  .ranking-arcade-page .ranking-table td:last-child {
+    padding-top: 10px;
+  }
+
+  .ranking-arcade-page .ranking-table td[colspan] {
+    display: block;
+    padding: 18px 12px;
+    text-align: center;
+  }
+
+  .ranking-arcade-page .record-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .ranking-arcade-page .record-actions .mini-button {
+    min-height: 38px;
+    justify-content: center;
+  }
+
+  #juggleRankingBody td:nth-child(2)::before,
+  #pachinkoRankingBody td:nth-child(2)::before,
+  #tokyoGhoulRankingBody td:nth-child(2)::before,
+  #rare8192RankingBody td:nth-child(2)::before,
+  #hamariRankingBody td:nth-child(2)::before,
+  #twoChoiceRankingBody td:nth-child(2)::before {
+    content: "名前";
+  }
+
+  #juggleRankingBody td:nth-child(3)::before { content: "連数"; }
+  #juggleRankingBody td:nth-child(4)::before { content: "内訳"; }
+  #juggleRankingBody td:nth-child(5)::before { content: "差枚"; }
+  #juggleRankingBody td:nth-child(6)::before { content: "保存日時"; }
+  #juggleRankingBody td:nth-child(7)::before { content: "操作"; }
+
+  #pachinkoRankingBody td:nth-child(3)::before { content: "総出玉"; }
+  #pachinkoRankingBody td:nth-child(4)::before { content: "連チャン"; }
+  #pachinkoRankingBody td:nth-child(5)::before { content: "差玉"; }
+  #pachinkoRankingBody td:nth-child(6)::before { content: "保存日時"; }
+  #pachinkoRankingBody td:nth-child(7)::before { content: "操作"; }
+
+  #tokyoGhoulRankingBody td:nth-child(3)::before { content: "総出玉"; }
+  #tokyoGhoulRankingBody td:nth-child(4)::before { content: "連チャン"; }
+  #tokyoGhoulRankingBody td:nth-child(5)::before { content: "ルート"; }
+  #tokyoGhoulRankingBody td:nth-child(6)::before { content: "差玉"; }
+  #tokyoGhoulRankingBody td:nth-child(7)::before { content: "保存日時"; }
+  #tokyoGhoulRankingBody td:nth-child(8)::before { content: "操作"; }
+
+  #rare8192RankingBody td:nth-child(3)::before { content: "当選回転"; }
+  #rare8192RankingBody td:nth-child(4)::before { content: "分母比"; }
+  #rare8192RankingBody td:nth-child(5)::before { content: "当選率"; }
+  #rare8192RankingBody td:nth-child(6)::before { content: "保存日時"; }
+  #rare8192RankingBody td:nth-child(7)::before { content: "操作"; }
+
+  #hamariRankingBody td:nth-child(3)::before { content: "回転数"; }
+  #hamariRankingBody td:nth-child(4)::before { content: "条件"; }
+  #hamariRankingBody td:nth-child(5)::before { content: "到達目安"; }
+  #hamariRankingBody td:nth-child(6)::before { content: "保存日時"; }
+  #hamariRankingBody td:nth-child(7)::before { content: "操作"; }
+
+  #twoChoiceRankingBody td:nth-child(3)::before { content: "連続正解"; }
+  #twoChoiceRankingBody td:nth-child(4)::before { content: "挑戦回数"; }
+  #twoChoiceRankingBody td:nth-child(5)::before { content: "到達確率"; }
+  #twoChoiceRankingBody td:nth-child(6)::before { content: "保存日時"; }
+  #twoChoiceRankingBody td:nth-child(7)::before { content: "操作"; }
+}
+
+@media (max-width: 390px) {
+  .ranking-arcade-page .record-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ranking-arcade-page .hero-actions {
+    gap: 8px;
+  }
+
+  .ranking-arcade-page .ranking-play-card,
+  .ranking-arcade-page .rank-category {
+    min-height: 78px;
+    grid-template-columns: 52px minmax(0, 1fr) auto;
+  }
+}
+
+/* Ranking mobile final override: keep battle entries readable as vertical arcade cards. */
+@media (max-width: 760px) {
+  .ranking-arcade-page .ranking-hero {
+    padding: 14px 12px;
+  }
+
+  .ranking-arcade-page .ranking-hero .hero-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .ranking-arcade-page .ranking-summary {
+    min-height: 84px;
+  }
+
+  .ranking-arcade-page .ranking-tabs {
+    position: static;
+    top: auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .ranking-arcade-page .ranking-tabs .rank-category {
+    width: 100%;
+    min-height: 80px;
+    flex: none;
+    flex-basis: auto;
+    grid-template-columns: 52px minmax(0, 1fr) auto;
+    align-items: center;
+    padding: 12px 38px 12px 12px;
+  }
+
+  .ranking-arcade-page .ranking-tabs .rank-category span {
+    width: 46px;
+    height: 46px;
+    font-size: 19px;
+  }
+
+  .ranking-arcade-page .ranking-tabs .rank-category strong {
+    overflow-wrap: anywhere;
+    font-size: clamp(18px, 5.6vw, 24px);
+  }
+
+  .ranking-arcade-page .ranking-tabs .rank-category small {
+    overflow-wrap: anywhere;
+  }
+
+  .ranking-arcade-page .ranking-table .ranking-empty-row {
+    padding: 0;
+  }
+
+  .ranking-arcade-page .ranking-table .ranking-empty-row td {
+    position: static;
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+  }
+
+  .ranking-arcade-page .ranking-empty-card {
+    display: grid;
+    gap: 8px;
+    min-height: 120px;
+    place-items: center;
+    padding: 22px 14px;
+    border: 2px solid rgba(120, 255, 89, 0.26);
+    background:
+      linear-gradient(rgba(104, 255, 78, 0.055) 1px, transparent 1px),
+      rgba(1, 8, 2, 0.9);
+    background-size: 100% 4px, auto;
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.72);
+    text-align: center;
+  }
+}
+
+@media (max-width: 390px) {
+  .ranking-arcade-page .ranking-tabs .rank-category {
+    min-height: 76px;
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+  }
+}
