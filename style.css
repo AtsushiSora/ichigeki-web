@@ -6413,3 +6413,225 @@ code,
     font-size: clamp(34px, 10.5vw, 58px);
   }
 }
+
+/* Juggle generated asset pass v2: closer arcade cabinet finish. */
+.juggle-simple-page .pixel-arcade-screen {
+  background:
+    linear-gradient(rgba(100, 255, 74, 0.052) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100, 255, 74, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at 50% 8%, rgba(103, 255, 67, 0.14), transparent 34%),
+    radial-gradient(circle at 48% 52%, rgba(255, 217, 74, 0.055), transparent 38%),
+    #020602;
+  background-size: 100% 3px, 25px 25px, auto, auto, auto;
+}
+
+.juggle-simple-page .pixel-arcade-marquee {
+  min-height: 124px;
+  padding: 17px 18px 13px;
+  border: 0;
+  background: url("assets/juggle/marquee-frame-v4.png") center / 100% 100% no-repeat;
+  box-shadow: none;
+}
+
+.juggle-simple-page .pixel-arcade-marquee::before,
+.juggle-simple-page .pixel-arcade-marquee::after,
+.juggle-simple-page .pixel-laurel,
+.juggle-simple-page .pixel-trophy {
+  display: none;
+}
+
+.juggle-simple-page .pixel-arcade-marquee > div {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  transform: translateX(-3%);
+}
+
+.juggle-simple-page .pixel-arcade-marquee strong {
+  font-size: clamp(38px, 13.5vw, 60px);
+  line-height: 0.9;
+  color: #91ff59;
+  text-shadow:
+    0 4px 0 #0d2b0c,
+    3px 0 0 rgba(197, 255, 114, 0.34),
+    0 0 18px rgba(116, 255, 66, 0.62);
+}
+
+.juggle-simple-page .pixel-arcade-marquee small {
+  color: #edffe3;
+  font-size: clamp(18px, 5.9vw, 27px);
+  text-shadow:
+    0 3px 0 rgba(0, 0, 0, 0.84),
+    0 0 12px rgba(127, 255, 82, 0.42);
+}
+
+.juggle-simple-page .pixel-arcade-tabs {
+  min-height: 50px;
+  border-color: rgba(111, 255, 83, 0.78);
+  background:
+    linear-gradient(rgba(100, 255, 74, 0.075) 1px, transparent 1px),
+    rgba(0, 10, 2, 0.86);
+  background-size: 100% 4px, auto;
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.84),
+    0 7px 0 rgba(255, 217, 74, 0.22),
+    0 0 16px rgba(100, 255, 74, 0.14);
+}
+
+.juggle-simple-page .pixel-arcade-tabs a {
+  min-height: 48px;
+  font-size: 15px;
+  color: rgba(238, 255, 230, 0.72);
+}
+
+.juggle-simple-page .pixel-arcade-tabs a:first-child {
+  color: #fffbd8;
+  background:
+    linear-gradient(rgba(100, 255, 74, 0.07) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(26, 79, 22, 0.84), rgba(4, 24, 7, 0.82));
+  background-size: 100% 4px, auto;
+}
+
+.juggle-simple-page .pixel-arcade-tabs a:first-child::before {
+  content: "♛";
+  margin-right: 8px;
+  color: var(--pixel-gold);
+}
+
+.juggle-simple-page .pixel-top-panel {
+  grid-template-columns: 124px minmax(0, 1fr);
+  min-height: 124px;
+  padding: 7px 8px;
+  border: 0;
+  background:
+    linear-gradient(rgba(100, 255, 74, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100, 255, 74, 0.04) 1px, transparent 1px),
+    rgba(3, 11, 4, 0.92);
+  background-size: 100% 4px, 20px 20px, auto;
+  box-shadow:
+    inset 0 0 0 3px rgba(100, 255, 74, 0.4),
+    inset 0 0 0 7px rgba(0, 0, 0, 0.62),
+    0 0 20px rgba(100, 255, 74, 0.13);
+}
+
+.juggle-simple-page .pixel-slot-machine {
+  min-height: 108px;
+  border: 0;
+  background: url("assets/juggle/slot-machine-v4.png") center / contain no-repeat;
+  box-shadow: none;
+}
+
+.juggle-simple-page .pixel-slot-machine > * {
+  opacity: 0;
+}
+
+.juggle-simple-page .simple-status-card {
+  border: 0;
+  background:
+    linear-gradient(rgba(100, 255, 74, 0.075) 1px, transparent 1px),
+    rgba(0, 9, 2, 0.78);
+  background-size: 100% 4px, auto;
+  box-shadow:
+    inset 0 0 0 2px rgba(100, 255, 74, 0.36),
+    inset 0 0 0 6px rgba(0, 0, 0, 0.54);
+}
+
+.juggle-simple-page .pixel-top-panel .pixel-state .pixel-lamp {
+  width: 36px;
+  height: 36px;
+}
+
+.juggle-simple-page .simple-rule-row {
+  min-height: 62px;
+  border: 0;
+  background:
+    linear-gradient(rgba(100, 255, 74, 0.06) 1px, transparent 1px),
+    rgba(2, 10, 3, 0.9);
+  background-size: 100% 4px, auto;
+  box-shadow:
+    inset 0 0 0 2px rgba(100, 255, 74, 0.48),
+    inset 0 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+.juggle-simple-page .simple-rank-link {
+  min-height: 74px;
+  padding: 0 68px 0 58px;
+  border: 0;
+  background: url("assets/juggle/rank-button-v4.png") center / 100% 100% no-repeat;
+  box-shadow: none;
+  color: #fffef3;
+  font-size: clamp(19px, 5.5vw, 25px);
+  text-shadow:
+    0 3px 0 rgba(0, 0, 0, 0.78),
+    0 0 10px rgba(100, 255, 74, 0.28);
+}
+
+.juggle-simple-page .simple-rank-link::before,
+.juggle-simple-page .simple-rank-link::after {
+  content: "";
+}
+
+.juggle-simple-page .simple-sub-actions .button,
+.juggle-simple-page .simple-log,
+.juggle-simple-page .simple-ad {
+  background:
+    linear-gradient(rgba(100, 255, 74, 0.05) 1px, transparent 1px),
+    rgba(3, 10, 4, 0.82);
+  background-size: 100% 4px, auto;
+  border-color: rgba(100, 255, 74, 0.34);
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.62),
+    0 0 14px rgba(100, 255, 74, 0.08);
+}
+
+.juggle-simple-page .mobile-bottom-nav {
+  border: 2px solid rgba(100, 255, 74, 0.52);
+  background:
+    linear-gradient(rgba(100, 255, 74, 0.055) 1px, transparent 1px),
+    rgba(1, 8, 2, 0.94);
+  background-size: 100% 4px, auto;
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.75),
+    0 0 20px rgba(100, 255, 74, 0.18);
+}
+
+.juggle-simple-page .mobile-bottom-nav a {
+  border-radius: 0;
+}
+
+.juggle-simple-page .mobile-bottom-nav a.active {
+  background:
+    linear-gradient(rgba(100, 255, 74, 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(22, 79, 19, 0.9), rgba(9, 46, 12, 0.9));
+  background-size: 100% 4px, auto;
+  box-shadow:
+    inset 0 -4px 0 rgba(100, 255, 74, 0.75),
+    inset 0 0 18px rgba(100, 255, 74, 0.08);
+}
+
+@media (max-width: 390px) {
+  .juggle-simple-page .pixel-arcade-marquee {
+    min-height: 116px;
+    padding-top: 15px;
+  }
+
+  .juggle-simple-page .pixel-arcade-marquee strong {
+    font-size: clamp(40px, 14vw, 58px);
+  }
+
+  .juggle-simple-page .pixel-top-panel {
+    grid-template-columns: 116px minmax(0, 1fr);
+    min-height: 124px;
+  }
+
+  .juggle-simple-page .pixel-slot-machine,
+  .juggle-simple-page .simple-status-card {
+    min-height: 106px;
+  }
+
+  .juggle-simple-page .simple-rank-link {
+    min-height: 68px;
+    padding-left: 50px;
+    padding-right: 56px;
+  }
+}
