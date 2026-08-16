@@ -1,11 +1,13 @@
-const CACHE_NAME = "ichigeki-web-v65";
+const CACHE_NAME = "ichigeki-web-v66";
 const CORE_ASSETS = [
   "index.html",
   "juggle-simple.html",
   "tokyo-ghoul-999.html",
   "two-choice-select.html",
   "style.css",
+  "style.css?v=66",
   "main.js",
+  "main.js?v=66",
   "assets/juggle/start-frame.png",
   "offline.html",
   "manifest.json",
@@ -30,8 +32,15 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
   if (event.request.method !== "GET") return;
+  const shouldBypassHttpCache =
+    event.request.mode === "navigate" ||
+    event.request.destination === "style" ||
+    event.request.destination === "script";
+  const request = shouldBypassHttpCache
+    ? new Request(event.request, { cache: "reload" })
+    : event.request;
   event.respondWith(
-    fetch(event.request).then(response => {
+    fetch(request).then(response => {
       const copy = response.clone();
       caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
       return response;
