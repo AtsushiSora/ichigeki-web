@@ -1,4 +1,4 @@
-const CACHE_NAME = "ichigeki-web-v60";
+const CACHE_NAME = "ichigeki-web-v61";
 const CORE_ASSETS = [
   "index.html",
   "juggle-simple.html",

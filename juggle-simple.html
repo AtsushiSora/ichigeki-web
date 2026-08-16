@@ -61,14 +61,21 @@
           <div class="pixel-slot-lights"><i></i><i></i><i></i></div>
         </div>
 
-        <div class="simple-status-card">
-          <div class="pixel-lamp-row" aria-hidden="true">
-            <span class="pixel-lamp"></span>
-            <span class="pixel-lamp"></span>
-            <span class="pixel-lamp"></span>
+        <div class="simple-status-card" aria-label="チャレンジ状態">
+          <div class="pixel-state-grid">
+            <div class="pixel-state pixel-state-main">
+              <span class="pixel-lamp"></span>
+              <strong id="simpleStatus">待機中</strong>
+            </div>
+            <div class="pixel-state">
+              <span class="pixel-lamp"></span>
+              <p id="simpleStatusText">ボタンを押すと変動開始</p>
+            </div>
+            <div class="pixel-state">
+              <span class="pixel-lamp"></span>
+              <strong>終了</strong>
+            </div>
           </div>
-          <strong><span class="status-dot"></span><span id="simpleStatus">待機中</span></strong>
-          <p id="simpleStatusText">ボタンを押すと変動開始</p>
         </div>
       </div>
 
