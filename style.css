@@ -6343,3 +6343,196 @@ code,
     font-size: clamp(38px, 11vw, 54px);
   }
 }
+
+/* Juggle arcade rebuild v4: align element positions with the reference cabinet. */
+.juggle-simple-page .simple-page {
+  max-width: 430px;
+  padding: max(8px, env(safe-area-inset-top)) 8px calc(174px + env(safe-area-inset-bottom));
+}
+
+.juggle-simple-page .pixel-arcade-screen {
+  gap: 8px;
+  padding: 8px;
+}
+
+.juggle-simple-page .pixel-arcade-marquee {
+  order: 1;
+  min-height: 114px;
+  grid-template-columns: 42px minmax(0, 1fr) 42px;
+  padding: 13px 8px 10px;
+}
+
+.juggle-simple-page .pixel-arcade-tabs {
+  order: 2;
+}
+
+.juggle-simple-page .pixel-arcade-tabs a {
+  min-height: 49px;
+}
+
+.juggle-simple-page .pixel-top-panel {
+  order: 3;
+  grid-template-columns: 128px minmax(0, 1fr);
+  gap: 8px;
+  min-height: 136px;
+  padding: 8px;
+}
+
+.juggle-simple-page .pixel-slot-machine {
+  min-height: 118px;
+}
+
+.juggle-simple-page .simple-status-card {
+  min-height: 118px;
+  padding: 8px;
+}
+
+.juggle-simple-page .pixel-state-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.juggle-simple-page .pixel-state {
+  gap: 8px;
+}
+
+.juggle-simple-page .pixel-state .pixel-lamp {
+  width: min(8.4vw, 38px);
+}
+
+.juggle-simple-page .simple-rule-row {
+  order: 4;
+  min-height: 68px;
+}
+
+.juggle-simple-page .pixel-core-panel {
+  order: 5;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  padding-top: 7px;
+}
+
+.juggle-simple-page .pixel-core-panel::before,
+.juggle-simple-page .pixel-core-panel::after {
+  display: none;
+}
+
+.juggle-simple-page .pixel-core-panel .simple-result-card {
+  min-height: 254px;
+  padding: 16px 12px 15px;
+}
+
+.juggle-simple-page .pixel-action-row {
+  order: 6;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(160px, 47%);
+  gap: 8px;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.juggle-simple-page .pixel-action-row .simple-rank-link {
+  min-height: 104px;
+  align-self: stretch;
+  margin: 0;
+  padding: 0 11px;
+  font-size: clamp(15px, 4.2vw, 18px);
+}
+
+.juggle-simple-page .pixel-action-row .simple-rank-link::after {
+  padding-right: 0;
+}
+
+.juggle-simple-page .pixel-action-row .simple-start-area {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  min-height: 104px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.juggle-simple-page .pixel-action-row .simple-start-area::before,
+.juggle-simple-page .pixel-action-row .simple-start-area::after,
+.juggle-simple-page .pixel-action-row .simple-start-button::before,
+.juggle-simple-page .pixel-action-row .simple-start-button::after {
+  display: none;
+}
+
+.juggle-simple-page .pixel-action-row .simple-start-button {
+  width: 100%;
+  max-width: 204px;
+  aspect-ratio: 1200 / 457;
+  min-height: 0;
+  background: url("assets/juggle/start-frame.png") center / 100% 100% no-repeat;
+  box-shadow:
+    0 10px 18px rgba(0, 0, 0, 0.38),
+    0 0 34px rgba(100, 255, 74, 0.32);
+}
+
+.juggle-simple-page .pixel-action-row .simple-start-button span {
+  font-size: clamp(28px, 7.8vw, 38px);
+}
+
+.juggle-simple-page .pixel-action-row .simple-start-button small {
+  font-size: clamp(10px, 3vw, 13px);
+}
+
+.juggle-simple-page .simple-sub-actions {
+  order: 7;
+}
+
+.juggle-simple-page .simple-log {
+  order: 8;
+}
+
+.juggle-simple-page .simple-ad {
+  order: 9;
+  margin-bottom: calc(102px + env(safe-area-inset-bottom));
+}
+
+@media (max-width: 390px) {
+  .juggle-simple-page .pixel-top-panel {
+    grid-template-columns: 116px minmax(0, 1fr);
+    min-height: 128px;
+  }
+
+  .juggle-simple-page .pixel-slot-machine,
+  .juggle-simple-page .simple-status-card {
+    min-height: 110px;
+  }
+
+  .juggle-simple-page .pixel-state {
+    gap: 6px;
+    padding: 7px 4px;
+  }
+
+  .juggle-simple-page .pixel-core-panel .simple-result-card {
+    min-height: 232px;
+  }
+
+  .juggle-simple-page .pixel-action-row {
+    grid-template-columns: minmax(0, 1fr) minmax(152px, 47%);
+  }
+
+  .juggle-simple-page .pixel-action-row .simple-rank-link,
+  .juggle-simple-page .pixel-action-row .simple-start-area {
+    min-height: 96px;
+  }
+}
+
+@media (max-width: 360px) {
+  .juggle-simple-page .pixel-top-panel {
+    grid-template-columns: 108px minmax(0, 1fr);
+  }
+
+  .juggle-simple-page .pixel-action-row {
+    grid-template-columns: minmax(0, 1fr) 144px;
+  }
+
+  .juggle-simple-page .pixel-action-row .simple-start-button span {
+    font-size: clamp(25px, 7.2vw, 34px);
+  }
+}
