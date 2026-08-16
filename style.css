@@ -6007,3 +6007,109 @@ code,
     height: 86px;
   }
 }
+
+/* Juggle arcade polish v8: tighten copy, button face, and result feedback. */
+.juggle-simple-page .pixel-top-panel .pixel-state p,
+.juggle-simple-page .pixel-top-panel .pixel-state strong {
+  word-break: keep-all;
+  overflow-wrap: normal;
+  letter-spacing: 0;
+}
+
+.juggle-simple-page .pixel-top-panel .pixel-state p {
+  max-width: 6.5em;
+  font-size: clamp(9px, 2.65vw, 13px);
+}
+
+.juggle-simple-page .pixel-top-panel .pixel-state p span {
+  display: block;
+  white-space: nowrap;
+}
+
+.juggle-simple-page .pixel-top-panel .pixel-state strong {
+  font-size: clamp(12px, 3.9vw, 17px);
+}
+
+.juggle-simple-page .pixel-state-main .pixel-lamp {
+  box-shadow:
+    0 0 0 2px rgba(154, 255, 112, 0.35),
+    0 0 16px rgba(106, 255, 70, 0.72),
+    inset -5px -6px 0 rgba(19, 80, 17, 0.36);
+}
+
+.juggle-simple-page .juggle-simple-stage.is-running .pixel-state-main .pixel-lamp {
+  animation: pixelLampPulse 0.34s steps(2, end) infinite;
+}
+
+.juggle-simple-page .simple-result-card {
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.juggle-simple-page .juggle-simple-stage.is-hit .simple-result-card {
+  border-color: rgba(255, 217, 74, 0.86);
+  box-shadow:
+    inset 0 0 0 3px rgba(0, 0, 0, 0.66),
+    inset 0 0 36px rgba(255, 217, 74, 0.12),
+    0 0 24px rgba(255, 217, 74, 0.22);
+  animation: pixelResultPop 0.28s steps(2, end);
+}
+
+.juggle-simple-page .pixel-action-row .simple-start-button {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  padding: 0 0 6px;
+  transform: translateZ(0);
+}
+
+.juggle-simple-page .pixel-action-row .simple-start-button span {
+  transform: translateY(-1px);
+  text-shadow:
+    0 3px 0 #4e3500,
+    0 0 12px rgba(255, 217, 74, 0.7);
+}
+
+.juggle-simple-page .pixel-action-row .simple-start-button small {
+  transform: translateY(-2px);
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.72);
+}
+
+.juggle-simple-page .pixel-action-row .simple-start-button:active {
+  transform: translateY(3px);
+  filter: saturate(1.24) brightness(1.08);
+}
+
+@keyframes pixelLampPulse {
+  0%, 100% {
+    filter: brightness(1);
+  }
+
+  50% {
+    filter: brightness(1.42);
+  }
+}
+
+@keyframes pixelResultPop {
+  0% {
+    transform: scale(0.992);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 390px) {
+  .juggle-simple-page .pixel-top-panel .pixel-state p {
+    max-width: 5.8em;
+    font-size: clamp(8px, 2.45vw, 12px);
+  }
+
+  .juggle-simple-page .pixel-top-panel .pixel-state strong {
+    font-size: clamp(11px, 3.7vw, 15px);
+  }
+
+  .juggle-simple-page .pixel-action-row .simple-start-button span {
+    font-size: clamp(40px, 12.4vw, 56px);
+  }
+}
