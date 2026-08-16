@@ -81,8 +81,8 @@
 
       <div class="simple-rule-row" aria-label="チャレンジ条件">
         <span><b>確率</b><strong>BIG/REG 1/255</strong></span>
-        <span><b>終了</b><strong>100G抜け</strong></span>
-        <span><b>記録</b><strong>連チャン数</strong></span>
+        <span><b>100G抜け</b><strong id="simpleRuleGame">0G</strong></span>
+        <span><b>記録</b><strong id="simpleRuleChain">0連</strong></span>
       </div>
 
       <div class="pixel-core-panel">
@@ -96,7 +96,6 @@
       </div>
 
       <div class="pixel-action-row">
-        <a class="simple-rank-link" href="ranking.html#juggle-ranking">ランキングを見る</a>
         <div class="simple-start-area">
           <button class="simple-start-button" data-action="juggleSimple">
             <span>START</span>
@@ -104,6 +103,7 @@
           </button>
         </div>
       </div>
+      <a class="simple-rank-link" href="ranking.html#juggle-ranking">ランキングを見る</a>
 
       <div class="simple-sub-actions">
         <button class="button" data-action="saveJuggle">ランキングに保存</button>

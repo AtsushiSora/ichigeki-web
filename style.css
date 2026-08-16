@@ -5609,38 +5609,53 @@ code,
   }
 }
 
-/* Juggle arcade rebuild v4: align element positions with the reference cabinet. */
+/* Juggle arcade rebuild v5: match the reference single-screen cabinet order. */
 .juggle-simple-page .simple-page {
   max-width: 430px;
-  padding: max(8px, env(safe-area-inset-top)) 8px calc(174px + env(safe-area-inset-bottom));
+  padding: max(7px, env(safe-area-inset-top)) 7px calc(164px + env(safe-area-inset-bottom));
 }
 
 .juggle-simple-page .pixel-arcade-screen {
-  gap: 8px;
-  padding: 8px;
+  gap: 7px;
+  padding: 7px;
+  background:
+    linear-gradient(rgba(98, 255, 72, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(98, 255, 72, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at 50% 12%, rgba(91, 255, 78, 0.13), transparent 34%),
+    #030703;
+  background-size: 100% 4px, 26px 26px, auto, auto;
 }
 
 .juggle-simple-page .pixel-arcade-marquee {
-  order: 1;
-  min-height: 114px;
-  grid-template-columns: 42px minmax(0, 1fr) 42px;
-  padding: 13px 8px 10px;
+  min-height: 110px;
+  padding: 12px 8px 9px;
 }
 
 .juggle-simple-page .pixel-arcade-tabs {
-  order: 2;
+  gap: 0;
+  border: 2px solid rgba(100, 255, 74, 0.62);
+  background: rgba(0, 0, 0, 0.46);
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.78),
+    0 7px 0 rgba(255, 210, 52, 0.28);
 }
 
 .juggle-simple-page .pixel-arcade-tabs a {
-  min-height: 49px;
+  min-height: 48px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.juggle-simple-page .pixel-arcade-tabs a + a {
+  border-left: 2px solid rgba(100, 255, 74, 0.48);
 }
 
 .juggle-simple-page .pixel-top-panel {
-  order: 3;
-  grid-template-columns: 128px minmax(0, 1fr);
-  gap: 8px;
+  grid-template-columns: 132px minmax(0, 1fr);
   min-height: 136px;
   padding: 8px;
+  gap: 8px;
 }
 
 .juggle-simple-page .pixel-slot-machine {
@@ -5657,23 +5672,28 @@ code,
 }
 
 .juggle-simple-page .pixel-state {
-  gap: 8px;
+  min-width: 0;
+  padding: 7px 5px;
 }
 
-.juggle-simple-page .pixel-state .pixel-lamp {
-  width: min(8.4vw, 38px);
+.juggle-simple-page .pixel-state p,
+.juggle-simple-page .pixel-state strong {
+  overflow-wrap: anywhere;
 }
 
 .juggle-simple-page .simple-rule-row {
-  order: 4;
-  min-height: 68px;
+  min-height: 66px;
+}
+
+.juggle-simple-page .simple-rule-row strong#simpleRuleGame,
+.juggle-simple-page .simple-rule-row strong#simpleRuleChain {
+  color: var(--accent-blue);
 }
 
 .juggle-simple-page .pixel-core-panel {
-  order: 5;
   grid-template-columns: minmax(0, 1fr);
   gap: 0;
-  padding-top: 7px;
+  padding-top: 6px;
 }
 
 .juggle-simple-page .pixel-core-panel::before,
@@ -5682,85 +5702,103 @@ code,
 }
 
 .juggle-simple-page .pixel-core-panel .simple-result-card {
-  min-height: 254px;
-  padding: 16px 12px 15px;
+  min-height: 258px;
+  padding: 17px 13px 16px;
+  border-color: rgba(100, 255, 74, 0.74);
+}
+
+.juggle-simple-page .simple-result-card::before {
+  inset: 72px 22px 76px;
+  opacity: 0.78;
+}
+
+.juggle-simple-page .simple-result-card .pixel-display-heading {
+  margin-bottom: 18px;
+}
+
+.juggle-simple-page .simple-result-card strong {
+  min-height: 58px;
+}
+
+.juggle-simple-page .simple-result-card b {
+  margin-top: 2px;
 }
 
 .juggle-simple-page .pixel-action-row {
   order: 6;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(160px, 47%);
-  gap: 8px;
-  align-items: stretch;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
   min-width: 0;
-}
-
-.juggle-simple-page .pixel-action-row .simple-rank-link {
-  min-height: 104px;
-  align-self: stretch;
-  margin: 0;
-  padding: 0 11px;
-  font-size: clamp(15px, 4.2vw, 18px);
-}
-
-.juggle-simple-page .pixel-action-row .simple-rank-link::after {
-  padding-right: 0;
+  margin-top: -1px;
 }
 
 .juggle-simple-page .pixel-action-row .simple-start-area {
+  width: 100%;
+  min-height: 120px;
   display: grid;
-  align-items: center;
-  justify-items: center;
-  min-height: 104px;
+  place-items: center;
   margin: 0;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-}
-
-.juggle-simple-page .pixel-action-row .simple-start-area::before,
-.juggle-simple-page .pixel-action-row .simple-start-area::after,
-.juggle-simple-page .pixel-action-row .simple-start-button::before,
-.juggle-simple-page .pixel-action-row .simple-start-button::after {
-  display: none;
+  padding: 6px 10px;
+  border: 3px solid rgba(255, 217, 74, 0.74);
+  background:
+    linear-gradient(rgba(100, 255, 74, 0.055) 1px, transparent 1px),
+    radial-gradient(circle at 50% 50%, rgba(106, 255, 70, 0.2), transparent 58%),
+    rgba(4, 15, 5, 0.82);
+  background-size: 100% 4px, auto, auto;
+  box-shadow:
+    inset 0 0 0 3px rgba(0, 0, 0, 0.66),
+    inset 0 0 0 7px rgba(100, 255, 74, 0.08),
+    0 0 26px rgba(100, 255, 74, 0.18);
 }
 
 .juggle-simple-page .pixel-action-row .simple-start-button {
-  width: 100%;
-  max-width: 204px;
+  width: min(100%, 370px);
+  max-width: none;
   aspect-ratio: 1200 / 457;
   min-height: 0;
   background: url("assets/juggle/start-frame.png") center / 100% 100% no-repeat;
+  filter: saturate(1.12) contrast(1.08);
   box-shadow:
-    0 10px 18px rgba(0, 0, 0, 0.38),
-    0 0 34px rgba(100, 255, 74, 0.32);
+    0 9px 0 rgba(0, 0, 0, 0.38),
+    0 0 32px rgba(100, 255, 74, 0.3);
 }
 
 .juggle-simple-page .pixel-action-row .simple-start-button span {
-  font-size: clamp(28px, 7.8vw, 38px);
+  font-size: clamp(38px, 12vw, 56px);
+  line-height: 0.9;
 }
 
 .juggle-simple-page .pixel-action-row .simple-start-button small {
-  font-size: clamp(10px, 3vw, 13px);
+  margin-top: 2px;
+  font-size: clamp(12px, 3.7vw, 16px);
+}
+
+.juggle-simple-page .simple-rank-link {
+  order: 7;
+  min-height: 58px;
+  margin: 0;
 }
 
 .juggle-simple-page .simple-sub-actions {
-  order: 7;
-}
-
-.juggle-simple-page .simple-log {
   order: 8;
 }
 
-.juggle-simple-page .simple-ad {
+.juggle-simple-page .simple-log {
   order: 9;
-  margin-bottom: calc(102px + env(safe-area-inset-bottom));
+}
+
+.juggle-simple-page .simple-ad {
+  order: 10;
 }
 
 @media (max-width: 390px) {
+  .juggle-simple-page .pixel-arcade-marquee {
+    min-height: 104px;
+  }
+
   .juggle-simple-page .pixel-top-panel {
-    grid-template-columns: 116px minmax(0, 1fr);
+    grid-template-columns: 122px minmax(0, 1fr);
     min-height: 128px;
   }
 
@@ -5769,35 +5807,22 @@ code,
     min-height: 110px;
   }
 
-  .juggle-simple-page .pixel-state {
-    gap: 6px;
-    padding: 7px 4px;
-  }
-
   .juggle-simple-page .pixel-core-panel .simple-result-card {
-    min-height: 232px;
+    min-height: 240px;
   }
 
-  .juggle-simple-page .pixel-action-row {
-    grid-template-columns: minmax(0, 1fr) minmax(152px, 47%);
-  }
-
-  .juggle-simple-page .pixel-action-row .simple-rank-link,
   .juggle-simple-page .pixel-action-row .simple-start-area {
-    min-height: 96px;
+    min-height: 112px;
   }
 }
 
 @media (max-width: 360px) {
   .juggle-simple-page .pixel-top-panel {
-    grid-template-columns: 108px minmax(0, 1fr);
+    grid-template-columns: 112px minmax(0, 1fr);
   }
 
-  .juggle-simple-page .pixel-action-row {
-    grid-template-columns: minmax(0, 1fr) 144px;
-  }
-
-  .juggle-simple-page .pixel-action-row .simple-start-button span {
-    font-size: clamp(25px, 7.2vw, 34px);
+  .juggle-simple-page .pixel-action-row .simple-start-area {
+    min-height: 106px;
+    padding-inline: 8px;
   }
 }

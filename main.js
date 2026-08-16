@@ -1606,6 +1606,8 @@ async function runJuggleSimple() {
   setText("resultBonusType", "抽選中");
   setText("resultHitGame", "0G");
   setText("resultChain", "0連");
+  setText("simpleRuleGame", "0G");
+  setText("simpleRuleChain", "0連");
   setText("resultBonusBreakdown", "BIG 0 / REG 0");
   setText("log", "変動開始...");
 
@@ -1622,6 +1624,8 @@ async function runJuggleSimple() {
     setText("simpleStatusText", `${hit.type}を引きました`);
     setText("resultBonusType", hit.type);
     setText("resultChain", `${hit.chain}連`);
+    setText("simpleRuleGame", `${yen.format(distance)}G`);
+    setText("simpleRuleChain", `${hit.chain}連`);
     setText("resultBonusBreakdown", `BIG ${hit.big} / REG ${hit.reg}`);
     setText("log", `${distance}Gで${hit.type} / ジャグ連 ${hit.chain}回`);
     await sleep(speedAdjustedDuration(360));
@@ -1631,6 +1635,7 @@ async function runJuggleSimple() {
       setText("simpleStatus", "100G以内を追跡中");
       setText("simpleStatusText", "次の当たりを待っています");
       setText("resultHitGame", "0G");
+      setText("simpleRuleGame", "0G");
     }
   }
 
@@ -1642,6 +1647,8 @@ async function runJuggleSimple() {
   setText("resultHitGame", `${yen.format(lastInterval || games)}G`);
   setText("resultBonusType", lastHit?.type || "--");
   setText("resultChain", `${chain}連`);
+  setText("simpleRuleGame", `${yen.format(lastInterval || games)}G`);
+  setText("simpleRuleChain", `${chain}連`);
   setText("resultBonusBreakdown", `BIG ${big} / REG ${reg}`);
   setText("log", `${games}G / ${chain}連 / BIG ${big} REG ${reg} / 差枚 ${diff > 0 ? "+" : ""}${yen.format(diff)}枚`);
   latestResults.juggle = { games, investment, finalMedals, diff, big, reg, chain };
