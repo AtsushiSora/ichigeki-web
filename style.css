@@ -6635,3 +6635,796 @@ code,
     padding-right: 56px;
   }
 }
+
+/* Shared ranking arcade finish v1. */
+.ranking-arcade-page {
+  --arcade-green: #78ff59;
+  --arcade-green-soft: rgba(120, 255, 89, 0.24);
+  --arcade-green-dim: rgba(120, 255, 89, 0.13);
+  --arcade-gold: #ffd64a;
+  --arcade-red: #ff6658;
+  --arcade-cyan: #49e9ff;
+  color: #f5ffe9;
+  background:
+    linear-gradient(rgba(104, 255, 78, 0.046) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(104, 255, 78, 0.026) 1px, transparent 1px),
+    radial-gradient(circle at 50% 0%, rgba(104, 255, 78, 0.14), transparent 36%),
+    #020602;
+  background-size: 100% 4px, 28px 28px, auto, auto;
+}
+
+.ranking-arcade-page .site-header,
+.challenge-arcade-page .site-header {
+  border-bottom: 2px solid rgba(120, 255, 89, 0.25);
+  background:
+    linear-gradient(rgba(104, 255, 78, 0.06) 1px, transparent 1px),
+    rgba(0, 7, 2, 0.96);
+  background-size: 100% 4px, auto;
+}
+
+.ranking-arcade-page .brand-name,
+.challenge-arcade-page .brand-name {
+  color: #91ff59;
+  text-shadow:
+    0 3px 0 #0b2609,
+    0 0 16px rgba(120, 255, 89, 0.42);
+}
+
+.ranking-arcade-page .nav a,
+.challenge-arcade-page .nav a {
+  color: rgba(244, 255, 235, 0.78);
+}
+
+.ranking-arcade-page .nav a:hover,
+.challenge-arcade-page .nav a:hover {
+  color: var(--arcade-green);
+}
+
+.ranking-arcade-page .page {
+  max-width: 1180px;
+  padding-top: 24px;
+}
+
+.ranking-arcade-page .hero,
+.ranking-arcade-page .article-card,
+.ranking-arcade-page .side-card,
+.ranking-arcade-page .ad-box,
+.ranking-arcade-page .ranking-summary {
+  border: 2px solid rgba(120, 255, 89, 0.28);
+  border-radius: 0;
+  background:
+    linear-gradient(rgba(104, 255, 78, 0.055) 1px, transparent 1px),
+    rgba(2, 12, 4, 0.86);
+  background-size: 100% 4px, auto;
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.76),
+    0 0 22px rgba(120, 255, 89, 0.09);
+}
+
+.ranking-arcade-page .hero {
+  align-items: stretch;
+  gap: 20px;
+  padding: 26px;
+}
+
+.ranking-arcade-page .kicker {
+  color: var(--arcade-green);
+  letter-spacing: 0.14em;
+}
+
+.ranking-arcade-page h1,
+.ranking-arcade-page h2 {
+  color: #fffdea;
+  text-shadow:
+    0 3px 0 rgba(0, 0, 0, 0.8),
+    0 0 12px rgba(120, 255, 89, 0.2);
+}
+
+.ranking-arcade-page .lead,
+.ranking-arcade-page .section-lead,
+.ranking-arcade-page .small-note,
+.ranking-arcade-page .article-card p,
+.ranking-arcade-page .article-card li,
+.ranking-arcade-page .side-list a {
+  color: rgba(234, 246, 229, 0.78);
+}
+
+.ranking-arcade-page .hero-actions {
+  gap: 10px;
+}
+
+.ranking-arcade-page .button,
+.ranking-arcade-page .mini-button {
+  border: 2px solid rgba(120, 255, 89, 0.42);
+  border-radius: 0;
+  color: #f7ffe9;
+  background:
+    linear-gradient(rgba(104, 255, 78, 0.075) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(17, 61, 15, 0.94), rgba(3, 20, 5, 0.94));
+  background-size: 100% 4px, auto;
+  box-shadow:
+    inset 0 -4px 0 rgba(120, 255, 89, 0.19),
+    0 0 16px rgba(120, 255, 89, 0.08);
+}
+
+.ranking-arcade-page .button.primary,
+.ranking-arcade-page .ranking-play-card.primary {
+  border-color: rgba(255, 214, 74, 0.64);
+  color: #fff3bb;
+  background:
+    linear-gradient(rgba(255, 214, 74, 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(83, 61, 6, 0.94), rgba(18, 12, 0, 0.96));
+  background-size: 100% 4px, auto;
+}
+
+.ranking-arcade-page .button.danger {
+  border-color: rgba(255, 102, 88, 0.46);
+  color: #ffd5cf;
+}
+
+.ranking-arcade-page .ranking-summary {
+  min-width: min(100%, 280px);
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+
+.ranking-arcade-page .ranking-summary span,
+.ranking-arcade-page .ranking-summary small {
+  color: rgba(234, 246, 229, 0.72);
+}
+
+.ranking-arcade-page .ranking-summary strong {
+  color: var(--arcade-cyan);
+  font-size: clamp(34px, 5vw, 58px);
+  text-shadow: 0 0 14px rgba(73, 233, 255, 0.32);
+}
+
+.ranking-arcade-page .ranking-play-grid,
+.ranking-arcade-page .rank-category-grid {
+  gap: 14px;
+}
+
+.ranking-arcade-page .ranking-play-card,
+.ranking-arcade-page .rank-category,
+.ranking-arcade-page .record-summary-card {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid rgba(120, 255, 89, 0.26);
+  border-radius: 0;
+  background:
+    linear-gradient(rgba(104, 255, 78, 0.055) 1px, transparent 1px),
+    rgba(1, 8, 2, 0.86);
+  background-size: 100% 4px, auto;
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.74);
+}
+
+.ranking-arcade-page .ranking-play-card::after,
+.ranking-arcade-page .rank-category::after {
+  content: "›";
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  color: var(--arcade-green);
+  font-size: 34px;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+.ranking-arcade-page .ranking-play-card span,
+.ranking-arcade-page .rank-category span {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  place-items: center;
+  border: 2px solid currentColor;
+  border-radius: 0;
+  color: var(--arcade-gold);
+  background: rgba(0, 0, 0, 0.35);
+  font-size: 22px;
+  box-shadow: inset 0 0 14px rgba(255, 214, 74, 0.1);
+}
+
+.ranking-arcade-page .ranking-play-card strong,
+.ranking-arcade-page .rank-category strong {
+  color: #fffdea;
+  font-size: clamp(18px, 2.4vw, 24px);
+}
+
+.ranking-arcade-page .ranking-play-card small,
+.ranking-arcade-page .rank-category small,
+.ranking-arcade-page .record-summary-card span,
+.ranking-arcade-page .record-summary-card small {
+  color: rgba(234, 246, 229, 0.66);
+}
+
+.ranking-arcade-page .ranking-play-card b {
+  color: var(--arcade-gold);
+}
+
+.ranking-arcade-page .rank-category.active {
+  border-color: rgba(255, 214, 74, 0.68);
+  background:
+    linear-gradient(rgba(255, 214, 74, 0.085) 1px, transparent 1px),
+    rgba(22, 14, 0, 0.9);
+  background-size: 100% 4px, auto;
+}
+
+.ranking-arcade-page .record-summary-card strong {
+  color: var(--arcade-cyan);
+  text-shadow: 0 0 10px rgba(73, 233, 255, 0.22);
+}
+
+.ranking-arcade-page .section-head {
+  align-items: start;
+  gap: 14px;
+}
+
+.ranking-arcade-page .status-pill {
+  border: 1px solid rgba(120, 255, 89, 0.5);
+  color: var(--arcade-green);
+  background: rgba(10, 45, 10, 0.52);
+}
+
+.ranking-arcade-page .ranking-winner-card {
+  border: 2px solid rgba(255, 214, 74, 0.38);
+  border-radius: 0;
+  background:
+    linear-gradient(rgba(255, 214, 74, 0.055) 1px, transparent 1px),
+    rgba(16, 10, 0, 0.82);
+  background-size: 100% 4px, auto;
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.72),
+    0 0 18px rgba(255, 214, 74, 0.1);
+}
+
+.ranking-arcade-page .winner-crown span,
+.ranking-arcade-page .winner-main strong,
+.ranking-arcade-page .winner-main b {
+  color: var(--arcade-gold);
+}
+
+.ranking-arcade-page .winner-meta {
+  color: rgba(234, 246, 229, 0.74);
+}
+
+.ranking-arcade-page .ranking-controls {
+  border: 1px solid rgba(120, 255, 89, 0.24);
+  background: rgba(0, 0, 0, 0.24);
+  padding: 10px;
+}
+
+.ranking-arcade-page .ranking-controls label {
+  color: var(--arcade-green);
+}
+
+.ranking-arcade-page .ranking-controls select {
+  border: 1px solid rgba(120, 255, 89, 0.42);
+  color: #f5ffe9;
+  background: #031005;
+}
+
+.ranking-arcade-page .table-wrap {
+  border: 2px solid rgba(120, 255, 89, 0.22);
+  border-radius: 0;
+  background:
+    linear-gradient(rgba(104, 255, 78, 0.045) 1px, transparent 1px),
+    rgba(0, 6, 2, 0.86);
+  background-size: 100% 4px, auto;
+}
+
+.ranking-arcade-page .ranking-table th {
+  color: var(--arcade-green);
+  background: rgba(6, 35, 7, 0.76);
+}
+
+.ranking-arcade-page .ranking-table td {
+  color: rgba(245, 255, 233, 0.86);
+  border-color: rgba(120, 255, 89, 0.17);
+}
+
+.ranking-arcade-page .ranking-table td:first-child {
+  color: var(--arcade-gold);
+  font-weight: 900;
+}
+
+.ranking-arcade-page .side-list a {
+  border-bottom-color: rgba(120, 255, 89, 0.18);
+}
+
+.ranking-arcade-page .ad-box {
+  color: rgba(234, 246, 229, 0.58);
+}
+
+.ranking-arcade-page .ad-label {
+  color: var(--arcade-green);
+}
+
+.challenge-arcade-page .simple-page {
+  max-width: 430px;
+  padding-top: 14px;
+}
+
+.challenge-arcade-page .juggle-simple-stage:not(.pixel-arcade-screen) {
+  gap: 12px;
+  border: 2px solid rgba(120, 255, 89, 0.32);
+  border-radius: 0;
+  background:
+    linear-gradient(rgba(104, 255, 78, 0.052) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(104, 255, 78, 0.026) 1px, transparent 1px),
+    radial-gradient(circle at 50% 8%, rgba(104, 255, 78, 0.14), transparent 34%),
+    #020602;
+  background-size: 100% 4px, 25px 25px, auto, auto;
+  box-shadow:
+    inset 0 0 0 3px rgba(0, 0, 0, 0.75),
+    0 0 22px rgba(120, 255, 89, 0.11);
+}
+
+.challenge-arcade-page .simple-title-line {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 92px;
+  place-items: center;
+  padding: 12px 20px;
+  border: 0;
+  background: url("assets/juggle/marquee-frame-v4.png") center / 100% 100% no-repeat;
+  box-shadow: none;
+}
+
+.challenge-arcade-page .simple-title-line span {
+  display: none;
+}
+
+.challenge-arcade-page .simple-title-line h1 {
+  width: 100%;
+  margin: 0;
+  color: #91ff59;
+  font-size: clamp(25px, 8.2vw, 42px);
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  word-break: keep-all;
+  overflow-wrap: normal;
+  text-shadow:
+    0 4px 0 #0d2b0c,
+    0 0 18px rgba(116, 255, 66, 0.56);
+}
+
+.challenge-arcade-page .simple-status-card,
+.challenge-arcade-page .simple-rule-row,
+.challenge-arcade-page .simple-result-card,
+.challenge-arcade-page .choice-effect,
+.challenge-arcade-page .choice-stage,
+.challenge-arcade-page .record-name-field,
+.challenge-arcade-page .simple-log,
+.challenge-arcade-page .simple-info-section,
+.challenge-arcade-page .simple-ad {
+  border: 2px solid rgba(120, 255, 89, 0.28);
+  border-radius: 0;
+  background:
+    linear-gradient(rgba(104, 255, 78, 0.052) 1px, transparent 1px),
+    rgba(1, 8, 2, 0.82);
+  background-size: 100% 4px, auto;
+  box-shadow:
+    inset 0 0 0 2px rgba(0, 0, 0, 0.72),
+    0 0 14px rgba(120, 255, 89, 0.08);
+}
+
+.challenge-arcade-page .simple-status-card strong {
+  color: #8eff69;
+}
+
+.challenge-arcade-page .status-dot {
+  box-shadow:
+    0 0 0 4px rgba(120, 255, 89, 0.14),
+    0 0 20px rgba(120, 255, 89, 0.55);
+}
+
+.challenge-arcade-page .simple-rule-row {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.challenge-arcade-page .simple-rule-row span {
+  min-height: 62px;
+  padding: 10px 12px;
+  border-right: 1px solid rgba(120, 255, 89, 0.2);
+}
+
+.challenge-arcade-page .simple-rule-row span:last-child {
+  border-right: 0;
+}
+
+.challenge-arcade-page .simple-rule-row b {
+  color: rgba(169, 255, 148, 0.75);
+}
+
+.challenge-arcade-page .simple-rule-row strong {
+  color: #fffdea;
+  font-size: clamp(14px, 4vw, 18px);
+}
+
+.challenge-arcade-page .simple-result-card {
+  padding: 18px 16px;
+  border-color: rgba(255, 214, 74, 0.46);
+  background:
+    linear-gradient(rgba(255, 214, 74, 0.055) 1px, transparent 1px),
+    radial-gradient(circle at 50% 18%, rgba(255, 214, 74, 0.12), transparent 42%),
+    rgba(8, 7, 0, 0.9);
+  background-size: 100% 4px, auto, auto;
+}
+
+.challenge-arcade-page .simple-result-card strong {
+  color: #ffd64a;
+  text-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.78),
+    0 0 18px rgba(255, 214, 74, 0.3);
+}
+
+.challenge-arcade-page .simple-result-card b {
+  color: #49e9ff;
+}
+
+.challenge-arcade-page .simple-result-card small,
+.challenge-arcade-page .simple-result-card em {
+  color: rgba(245, 255, 233, 0.74);
+}
+
+.challenge-arcade-page .simple-rank-link {
+  min-height: 68px;
+  padding: 0 62px 0 56px;
+  border: 0;
+  border-radius: 0;
+  color: #fffef3;
+  background: url("assets/juggle/rank-button-v4.png") center / 100% 100% no-repeat;
+  box-shadow: none;
+  font-size: clamp(18px, 5vw, 22px);
+}
+
+.challenge-arcade-page .simple-rank-link::before,
+.challenge-arcade-page .simple-rank-link::after {
+  content: "";
+}
+
+.challenge-arcade-page .simple-start-area {
+  min-height: 126px;
+  display: grid;
+  place-items: center;
+}
+
+.challenge-arcade-page .simple-start-button {
+  width: min(100%, 320px);
+  min-height: 112px;
+  border: 0;
+  border-radius: 0;
+  color: #fff6bc;
+  background: url("assets/juggle/start-button-v3.png") center / 100% 100% no-repeat;
+  box-shadow: none;
+}
+
+.challenge-arcade-page .simple-start-button span {
+  color: #ffe46a;
+  font-size: clamp(34px, 9vw, 48px);
+  text-shadow:
+    0 4px 0 rgba(0, 0, 0, 0.72),
+    0 0 14px rgba(255, 214, 74, 0.34);
+}
+
+.challenge-arcade-page .simple-start-button small {
+  color: #f7ffe9;
+  font-size: 14px;
+}
+
+.challenge-arcade-page .simple-sub-actions {
+  gap: 8px;
+}
+
+.challenge-arcade-page .simple-sub-actions .button,
+.challenge-arcade-page .simple-next-row a {
+  border: 1px solid rgba(120, 255, 89, 0.34);
+  border-radius: 0;
+  color: #f7ffe9;
+  background:
+    linear-gradient(rgba(104, 255, 78, 0.055) 1px, transparent 1px),
+    rgba(1, 8, 2, 0.84);
+  background-size: 100% 4px, auto;
+}
+
+.challenge-arcade-page .simple-next-row {
+  display: none;
+}
+
+.challenge-arcade-page .record-name-field input {
+  border-radius: 0;
+  border-color: rgba(120, 255, 89, 0.34);
+  color: #f7ffe9;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.challenge-arcade-page .simple-info-section {
+  margin-top: 18px;
+}
+
+.challenge-arcade-page .simple-info-section h2 {
+  color: #fffdea;
+}
+
+.challenge-arcade-page .choice-stage {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 10px;
+}
+
+.challenge-arcade-page .choice-button {
+  min-height: 72px;
+  border: 2px solid rgba(120, 255, 89, 0.42);
+  border-radius: 0;
+  color: #fffdea;
+  background:
+    linear-gradient(rgba(104, 255, 78, 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(26, 79, 22, 0.94), rgba(4, 24, 7, 0.94));
+  background-size: 100% 4px, auto;
+  font-size: 26px;
+}
+
+.challenge-arcade-page .choice-button.bad {
+  border-color: rgba(255, 102, 88, 0.6);
+  color: #ffd5cf;
+}
+
+@media (max-width: 760px) {
+  .ranking-arcade-page .page {
+    padding: 16px 12px 118px;
+  }
+
+  .ranking-arcade-page .hero {
+    padding: 18px 14px;
+  }
+
+  .ranking-arcade-page .hero-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .ranking-arcade-page .hero-actions .danger {
+    grid-column: 1 / -1;
+  }
+
+  .ranking-arcade-page .ranking-play-grid,
+  .ranking-arcade-page .rank-category-grid,
+  .ranking-arcade-page .record-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ranking-arcade-page .ranking-play-card,
+  .ranking-arcade-page .rank-category {
+    min-height: 92px;
+    padding-right: 48px;
+  }
+
+  .ranking-arcade-page .section-head {
+    grid-template-columns: 1fr;
+  }
+
+  .ranking-arcade-page .section-actions {
+    justify-content: stretch;
+  }
+
+  .ranking-arcade-page .section-actions .mini-button,
+  .ranking-arcade-page .section-actions .status-pill {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .ranking-arcade-page .table-wrap {
+    overflow-x: auto;
+  }
+
+  .ranking-arcade-page .ranking-table {
+    min-width: 680px;
+  }
+
+  .ranking-arcade-page .mobile-bottom-nav {
+    border: 2px solid rgba(120, 255, 89, 0.52);
+    border-radius: 0;
+    background:
+      linear-gradient(rgba(104, 255, 78, 0.055) 1px, transparent 1px),
+      rgba(1, 8, 2, 0.95);
+    background-size: 100% 4px, auto;
+  }
+
+  .challenge-arcade-page .simple-page {
+    padding-inline: 10px;
+    padding-bottom: 118px;
+  }
+
+  .challenge-arcade-page .juggle-simple-stage:not(.pixel-arcade-screen) {
+    padding: 10px;
+  }
+
+  .challenge-arcade-page .simple-title-line {
+    min-height: 82px;
+  }
+
+  .challenge-arcade-page .simple-status-card {
+    padding: 14px;
+  }
+
+  .challenge-arcade-page .simple-rule-row span {
+    padding: 9px 8px;
+  }
+
+  .challenge-arcade-page .simple-result-card {
+    min-height: 186px;
+  }
+
+  .challenge-arcade-page .simple-start-area {
+    min-height: 116px;
+  }
+
+  .challenge-arcade-page .simple-start-button {
+    min-height: 104px;
+  }
+}
+
+@media (max-width: 390px) {
+  .ranking-arcade-page .hero-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .challenge-arcade-page .simple-title-line h1 {
+    font-size: clamp(22px, 7.6vw, 34px);
+  }
+
+  .challenge-arcade-page .simple-rule-row strong {
+    font-size: 13px;
+  }
+
+  .challenge-arcade-page .simple-rank-link {
+    min-height: 62px;
+    padding-left: 48px;
+    padding-right: 52px;
+  }
+}
+
+/* Generic ranking battles: isolate from Juggle-only generated layout. */
+.challenge-arcade-page .juggle-simple-stage:not(.pixel-arcade-screen) {
+  display: flex;
+  flex-direction: column;
+}
+
+.challenge-arcade-page .juggle-simple-stage:not(.pixel-arcade-screen)::before,
+.challenge-arcade-page .juggle-simple-stage:not(.pixel-arcade-screen)::after {
+  left: 20px;
+  right: 20px;
+}
+
+.challenge-arcade-page .simple-title-line,
+.challenge-arcade-page .simple-status-card,
+.challenge-arcade-page .simple-rule-row,
+.challenge-arcade-page .simple-result-card,
+.challenge-arcade-page .choice-effect,
+.challenge-arcade-page .choice-stage,
+.challenge-arcade-page .simple-rank-link,
+.challenge-arcade-page .simple-start-area,
+.challenge-arcade-page .simple-sub-actions,
+.challenge-arcade-page .record-name-field,
+.challenge-arcade-page .simple-log,
+.challenge-arcade-page .simple-ad,
+.challenge-arcade-page .note {
+  grid-column: auto;
+  grid-row: auto;
+  width: 100%;
+}
+
+.challenge-arcade-page .simple-title-line { order: 1; }
+.challenge-arcade-page .simple-status-card { order: 2; }
+.challenge-arcade-page .simple-rule-row { order: 3; }
+.challenge-arcade-page .simple-result-card { order: 4; }
+.challenge-arcade-page .choice-effect { order: 5; }
+.challenge-arcade-page .choice-stage { order: 6; }
+.challenge-arcade-page .simple-start-area { order: 7; }
+.challenge-arcade-page .simple-rank-link { order: 8; }
+.challenge-arcade-page .simple-sub-actions { order: 9; }
+.challenge-arcade-page .record-name-field { order: 10; }
+.challenge-arcade-page .simple-log { order: 11; }
+.challenge-arcade-page .simple-ad { order: 12; }
+.challenge-arcade-page .note { order: 13; }
+
+.challenge-arcade-page .simple-title-line {
+  margin-top: 6px;
+}
+
+.challenge-arcade-page .simple-status-card {
+  min-height: auto;
+  padding: 15px 16px;
+}
+
+.challenge-arcade-page .simple-status-card::after,
+.challenge-arcade-page .simple-result-card::before,
+.challenge-arcade-page .simple-result-card::after {
+  display: none;
+}
+
+.challenge-arcade-page .simple-result-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.challenge-arcade-page .simple-result-card {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  min-height: 214px;
+  gap: 6px;
+}
+
+.challenge-arcade-page .simple-result-card strong {
+  min-height: 0;
+  font-size: clamp(46px, 14vw, 74px);
+  overflow-wrap: anywhere;
+}
+
+.challenge-arcade-page .simple-result-card b {
+  font-size: clamp(26px, 8vw, 40px);
+}
+
+.challenge-arcade-page .simple-result-card em {
+  width: min(100%, 290px);
+  justify-content: center;
+  padding: 9px 10px;
+  border: 1px solid rgba(255, 214, 74, 0.33);
+  background: rgba(0, 0, 0, 0.38);
+}
+
+.challenge-arcade-page .simple-start-area {
+  margin: 0;
+  padding: 8px;
+  border: 2px solid rgba(255, 214, 74, 0.54);
+  background:
+    linear-gradient(rgba(104, 255, 78, 0.055) 1px, transparent 1px),
+    rgba(1, 8, 2, 0.74);
+  background-size: 100% 4px, auto;
+}
+
+.challenge-arcade-page .simple-sub-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.challenge-arcade-page .simple-sub-actions > :first-child {
+  grid-column: 1 / -1;
+}
+
+.challenge-arcade-page .record-name-field {
+  display: grid;
+  gap: 0;
+  padding: 0;
+}
+
+.challenge-arcade-page .record-name-field label {
+  padding: 8px 10px;
+  color: rgba(169, 255, 148, 0.75);
+}
+
+.challenge-arcade-page .record-name-field input {
+  min-height: 54px;
+  border-width: 1px 0 0;
+  text-align: center;
+}
+
+@media (max-width: 390px) {
+  .challenge-arcade-page .simple-result-card {
+    min-height: 190px;
+  }
+
+  .challenge-arcade-page .simple-result-card strong {
+    font-size: clamp(38px, 13vw, 58px);
+  }
+
+  .challenge-arcade-page .simple-status-card p {
+    font-size: 14px;
+  }
+}
