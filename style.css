@@ -5769,9 +5769,9 @@ code,
 .juggle-simple-page .pixel-action-row .simple-start-button {
   width: min(100%, 384px);
   max-width: none;
-  aspect-ratio: 2032 / 774;
+  aspect-ratio: 2084 / 755;
   min-height: 0;
-  background: url("assets/juggle/start-frame-v2.png") center / 100% 100% no-repeat;
+  background: url("assets/juggle/start-button-v3.png") center / contain no-repeat;
   filter: saturate(1.12) contrast(1.08);
   box-shadow:
     0 9px 0 rgba(0, 0, 0, 0.38),
@@ -6350,22 +6350,43 @@ code,
 }
 
 .juggle-simple-page .pixel-action-row .simple-start-area {
-  min-height: 118px;
-  padding: 7px 8px;
+  min-height: 124px;
+  padding: 0 6px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .juggle-simple-page .pixel-action-row .simple-start-button {
-  width: min(100%, 392px);
+  position: relative;
+  display: block;
+  width: min(88%, 340px);
+  aspect-ratio: 2084 / 755;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  clip-path: none;
+  background: url("assets/juggle/start-button-v3.png") center / contain no-repeat;
+  box-shadow: none;
+  filter: saturate(1.1) contrast(1.04) brightness(1.02);
 }
 
 .juggle-simple-page .pixel-action-row .simple-start-button span {
-  color: #fff8cb;
-  font-size: clamp(40px, 12.8vw, 62px);
+  opacity: 0;
 }
 
 .juggle-simple-page .pixel-action-row .simple-start-button small {
-  color: #ffffff;
-  font-size: clamp(11px, 3.4vw, 15px);
+  position: absolute;
+  left: 50%;
+  bottom: 21%;
+  margin: 0;
+  color: #fff8cc;
+  font-size: clamp(10px, 3vw, 13px);
+  transform: translateX(-50%);
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.92),
+    0 0 8px rgba(255, 217, 74, 0.48);
+  white-space: nowrap;
 }
 
 @media (max-width: 390px) {
@@ -6375,7 +6396,7 @@ code,
   }
 
   .juggle-simple-page .pixel-action-row .simple-start-area {
-    min-height: 106px;
+    min-height: 112px;
   }
 
   .juggle-simple-page .pixel-core-panel .simple-result-card::before {
