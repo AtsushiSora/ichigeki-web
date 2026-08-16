@@ -4882,21 +4882,21 @@ code,
   }
 
   .juggle-simple-page {
-    padding-bottom: calc(150px + env(safe-area-inset-bottom));
+    padding-bottom: calc(190px + env(safe-area-inset-bottom));
   }
 
   .juggle-simple-page .simple-page {
-    padding-bottom: calc(168px + env(safe-area-inset-bottom));
+    padding-bottom: calc(210px + env(safe-area-inset-bottom));
   }
 
   .juggle-simple-page .simple-sub-actions {
     position: relative;
     z-index: 1;
-    margin-bottom: calc(92px + env(safe-area-inset-bottom));
+    margin-bottom: calc(122px + env(safe-area-inset-bottom));
   }
 
   .juggle-simple-page .simple-ad {
-    margin-bottom: calc(102px + env(safe-area-inset-bottom));
+    margin-bottom: calc(132px + env(safe-area-inset-bottom));
   }
 
   .juggle-simple-page .mobile-bottom-nav {
@@ -5729,13 +5729,13 @@ code,
 /* Juggle challenge layout. Button visuals are defined by the generated frame block below. */
 .juggle-simple-page .pixel-core-panel {
   grid-template-columns: minmax(0, 1fr);
-  gap: 10px;
-  padding-top: 6px;
+  gap: 8px;
+  padding-top: 4px;
 }
 
 .juggle-simple-page .pixel-core-panel .simple-result-card {
   width: 100%;
-  min-height: 218px;
+  min-height: 206px;
 }
 
 @media (max-width: 640px) {
@@ -5744,20 +5744,20 @@ code,
   }
 
   .juggle-simple-page .pixel-core-panel .simple-result-card {
-    min-height: 188px;
+    min-height: 176px;
   }
 }
 
 @media (max-width: 420px) {
   .juggle-simple-page .pixel-core-panel .simple-result-card {
-    min-height: 172px;
+    min-height: 160px;
   }
 }
 
 /* Generated pixel-art button frame. Text remains live HTML for clarity and accessibility. */
 .juggle-simple-page .pixel-core-panel .simple-start-area {
-  min-height: 150px;
-  padding: 12px 12px 18px;
+  min-height: 132px;
+  padding: 8px 10px 12px;
   border-color: rgba(100, 255, 74, 0.46);
   background:
     linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
@@ -5774,6 +5774,9 @@ code,
 }
 
 .juggle-simple-page .pixel-core-panel .simple-start-button {
+  display: grid;
+  place-content: center;
+  gap: 4px;
   width: min(100%, 390px);
   min-height: 0;
   aspect-ratio: 1200 / 457;
@@ -5788,7 +5791,7 @@ code,
 }
 
 .juggle-simple-page .pixel-core-panel .simple-start-button span {
-  margin-top: 2px;
+  margin-top: 0;
   color: #ffd64b;
   font-size: clamp(38px, 10vw, 58px);
   letter-spacing: 0.03em;
@@ -5802,7 +5805,7 @@ code,
 }
 
 .juggle-simple-page .pixel-core-panel .simple-start-button small {
-  margin-top: 4px;
+  margin-top: 0;
   color: #eefde7;
   font-size: clamp(12px, 3.4vw, 15px);
 }
@@ -5829,8 +5832,8 @@ code,
 
 @media (max-width: 640px) {
   .juggle-simple-page .pixel-core-panel .simple-start-area {
-    min-height: 134px;
-    padding: 10px 8px 16px;
+    min-height: 116px;
+    padding: 7px 6px 10px;
   }
 
   .juggle-simple-page .pixel-core-panel .simple-start-button {
@@ -5840,12 +5843,12 @@ code,
 
 @media (max-width: 420px) {
   .juggle-simple-page .pixel-core-panel .simple-start-area {
-    min-height: 124px;
-    padding: 9px 6px 15px;
+    min-height: 108px;
+    padding: 6px 5px 9px;
   }
 
   .juggle-simple-page .pixel-core-panel .simple-start-button {
-    width: min(100%, 340px);
+    width: min(100%, 326px);
   }
 
   .juggle-simple-page .pixel-core-panel .simple-start-button span {
