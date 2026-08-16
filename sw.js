@@ -1,13 +1,13 @@
-const CACHE_NAME = "ichigeki-web-v68";
+const CACHE_NAME = "ichigeki-web-v69";
 const CORE_ASSETS = [
   "index.html",
   "juggle-simple.html",
   "tokyo-ghoul-999.html",
   "two-choice-select.html",
   "style.css",
-  "style.css?v=68",
+  "style.css?v=69",
   "main.js",
-  "main.js?v=68",
+  "main.js?v=69",
   "assets/juggle/start-frame.png",
   "offline.html",
   "manifest.json",

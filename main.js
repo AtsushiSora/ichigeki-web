@@ -1600,9 +1600,9 @@ async function runJuggleSimple() {
   const startButton = document.querySelector('[data-action="juggleSimple"]');
   if (startButton) startButton.disabled = true;
   setSaveReady("juggle", false);
-  const stage = startStageEffects("変動中", "当たりを抽選しています");
+  const stage = startStageEffects("変動中", "抽選中");
   setText("simpleStatus", "変動中");
-  setText("simpleStatusText", "当たりを抽選しています");
+  setText("simpleStatusText", "抽選中");
   setText("resultBonusType", "抽選中");
   setText("resultHitGame", "0G");
   setText("resultChain", "0連");
@@ -1621,7 +1621,7 @@ async function runJuggleSimple() {
     stage?.classList.add("is-hit");
     bumpResultCard();
     setText("simpleStatus", "当たり");
-    setText("simpleStatusText", `${hit.type}を引きました`);
+    setText("simpleStatusText", `${hit.type}点灯`);
     setText("resultBonusType", hit.type);
     setText("resultChain", `${hit.chain}連`);
     setText("simpleRuleGame", `${yen.format(distance)}G`);
@@ -1632,8 +1632,8 @@ async function runJuggleSimple() {
     stage?.classList.remove("is-hit");
     previousGame = hit.game;
     if (hit.chain < result.chain) {
-      setText("simpleStatus", "100G以内を追跡中");
-      setText("simpleStatusText", "次の当たりを待っています");
+      setText("simpleStatus", "追跡中");
+      setText("simpleStatusText", "連チャン待ち");
       setText("resultHitGame", "0G");
       setText("simpleRuleGame", "0G");
     }
