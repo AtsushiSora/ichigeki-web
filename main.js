@@ -2105,7 +2105,7 @@ function renderMobileBottomNav() {
   if (document.querySelector(".mobile-bottom-nav")) return;
   const items = [
     { href: "index.html", label: "トップ", icon: "⌂", match: ["index.html", ""] },
-    { href: "juggle-simple.html", label: "挑戦", icon: "▶", match: ["juggle-simple.html", "pachinko-319.html", "rare-8192.html", "two-choice-select.html", "hamari.html"] },
+    { href: "juggle-simple.html", label: "挑戦", icon: "▶", match: ["juggle-simple.html", "pachinko-319.html", "tokyo-ghoul-999.html", "rare-8192.html", "two-choice-select.html", "hamari.html"] },
     { href: "ranking.html", label: "記録", icon: "🏆", match: ["ranking.html"] },
     { href: "guide.html", label: "使い方", icon: "?", match: ["guide.html", "faq.html", "glossary.html"] }
   ];

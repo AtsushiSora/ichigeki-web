@@ -8986,3 +8986,428 @@ code,
     margin-top: 5px;
   }
 }
+
+/* Whole-site finish pass: mobile containment, bottom clearance, and readable cards. */
+@media (max-width: 760px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  .page,
+  .simple-page {
+    width: 100%;
+    max-width: 100%;
+    padding-left: max(10px, env(safe-area-inset-left));
+    padding-right: max(10px, env(safe-area-inset-right));
+    padding-bottom: calc(144px + env(safe-area-inset-bottom));
+  }
+
+  body:not(.juggle-simple-page) .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(7, 9, 8, 0.96);
+    backdrop-filter: blur(14px);
+  }
+
+  body:not(.juggle-simple-page) .header-inner {
+    gap: 12px;
+    padding: 13px 12px;
+  }
+
+  body:not(.juggle-simple-page) .brand-name {
+    font-size: clamp(25px, 8vw, 36px);
+    line-height: 1;
+  }
+
+  body:not(.juggle-simple-page) .brand-sub {
+    font-size: 12px;
+  }
+
+  body:not(.juggle-simple-page) .nav {
+    display: flex;
+    gap: 14px;
+    max-width: 100%;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  body:not(.juggle-simple-page) .nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  body:not(.juggle-simple-page) .nav a {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  .article-card,
+  .side-card,
+  .hero,
+  .game-lobby {
+    max-width: 100%;
+  }
+
+  .article-card {
+    padding: 17px 14px;
+  }
+
+  .article-card h1 {
+    font-size: clamp(26px, 8vw, 38px);
+    line-height: 1.16;
+  }
+
+  .article-card h2 {
+    font-size: clamp(21px, 6.4vw, 28px);
+    line-height: 1.22;
+  }
+
+  .article-card p,
+  .article-card li {
+    line-height: 1.78;
+  }
+
+  .table-wrap {
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ranking-table {
+    min-width: 620px;
+  }
+
+  .home-game-page {
+    padding-top: 12px;
+  }
+
+  .home-page .game-lobby {
+    gap: 14px;
+    padding: 16px 12px;
+  }
+
+  .home-page .lobby-top {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .home-page .lobby-rank-button {
+    width: 100%;
+    min-height: 48px;
+  }
+
+  .home-page .mode-select {
+    gap: 10px;
+  }
+
+  .home-page .mode-card {
+    min-height: 84px;
+    grid-template-columns: 48px minmax(0, 1fr) 20px;
+    gap: 12px;
+    padding: 13px 12px;
+  }
+
+  .home-page .mode-card .mode-icon {
+    width: 46px;
+    height: 46px;
+    font-size: 15px;
+  }
+
+  .home-page .mode-card strong {
+    font-size: clamp(20px, 6vw, 26px);
+    line-height: 1.14;
+  }
+
+  .home-page .mode-card small,
+  .home-page .mode-card .mode-rank {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .home-page .lobby-footer-panels {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .ranking-arcade-page .page {
+    padding-bottom: calc(150px + env(safe-area-inset-bottom));
+  }
+
+  .ranking-arcade-page .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .ranking-arcade-page .ranking-play-card,
+  .ranking-arcade-page .rank-category {
+    align-items: center;
+  }
+
+  .ranking-arcade-page .ranking-play-card::after,
+  .ranking-arcade-page .rank-category::after {
+    right: 12px;
+  }
+
+  .ranking-arcade-page .record-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ranking-arcade-page .section-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+
+  .ranking-arcade-page .section-actions > * {
+    min-width: 0;
+  }
+
+  .ranking-arcade-page .table-wrap {
+    border-radius: 0;
+    overflow-x: auto;
+  }
+
+  .challenge-arcade-page .simple-page {
+    max-width: 430px;
+    margin-inline: auto;
+    padding-top: 10px;
+    padding-bottom: calc(150px + env(safe-area-inset-bottom));
+  }
+
+  .challenge-arcade-page .juggle-simple-stage:not(.pixel-arcade-screen) {
+    width: min(100%, 410px);
+    max-width: calc(100svw - 20px);
+    margin-inline: auto;
+    gap: 9px;
+    padding: 9px;
+  }
+
+  .challenge-arcade-page .simple-title-line {
+    min-height: 74px;
+    margin-top: 0;
+    padding: 10px 16px;
+  }
+
+  .challenge-arcade-page .simple-status-card {
+    padding: 12px 13px;
+  }
+
+  .challenge-arcade-page .simple-status-card strong {
+    font-size: 18px;
+  }
+
+  .challenge-arcade-page .simple-status-card p {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .challenge-arcade-page .simple-rule-row span {
+    min-height: 54px;
+    padding: 8px 7px;
+  }
+
+  .challenge-arcade-page .simple-rule-row b {
+    font-size: 11px;
+  }
+
+  .challenge-arcade-page .simple-result-card {
+    min-height: 174px;
+    padding: 15px 12px;
+  }
+
+  .challenge-arcade-page .simple-result-card strong {
+    font-size: clamp(36px, 12vw, 58px);
+  }
+
+  .challenge-arcade-page .simple-result-card b {
+    font-size: clamp(24px, 7vw, 34px);
+  }
+
+  .challenge-arcade-page .simple-start-area {
+    min-height: 100px;
+    padding: 8px 14px;
+  }
+
+  .challenge-arcade-page .simple-start-button {
+    width: min(100%, 292px);
+    min-height: 92px;
+  }
+
+  .challenge-arcade-page .simple-start-button span {
+    font-size: clamp(30px, 8vw, 42px);
+  }
+
+  .challenge-arcade-page .simple-start-button small {
+    font-size: 12px;
+  }
+
+  .challenge-arcade-page .simple-rank-link {
+    min-height: 58px;
+    padding-inline: 48px;
+    font-size: clamp(17px, 4.8vw, 21px);
+  }
+
+  .challenge-arcade-page .simple-sub-actions {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .challenge-arcade-page .simple-sub-actions > :first-child {
+    grid-column: auto;
+  }
+
+  .challenge-arcade-page .record-name-field input {
+    min-height: 50px;
+  }
+
+  .challenge-arcade-page .simple-info-section {
+    width: min(100%, 410px);
+    margin: 14px auto 0;
+    padding: 16px 13px;
+  }
+
+  .challenge-arcade-page .choice-stage {
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .challenge-arcade-page .choice-button {
+    min-height: 66px;
+    font-size: 24px;
+  }
+
+  .ad-box,
+  .ad-box-footer,
+  .simple-ad {
+    width: 100%;
+    max-width: 100%;
+    min-height: 54px;
+  }
+
+  .site-footer {
+    padding-bottom: calc(112px + env(safe-area-inset-bottom));
+  }
+
+  .site-toast {
+    bottom: calc(92px + env(safe-area-inset-bottom));
+  }
+
+  .mobile-bottom-nav {
+    right: max(10px, env(safe-area-inset-right));
+    left: max(10px, env(safe-area-inset-left));
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    max-width: 520px;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 390px) {
+  .page,
+  .simple-page {
+    padding-left: max(8px, env(safe-area-inset-left));
+    padding-right: max(8px, env(safe-area-inset-right));
+  }
+
+  .home-page .mode-card {
+    min-height: 78px;
+    padding: 12px 10px;
+  }
+
+  .home-page .mode-card strong {
+    font-size: clamp(18px, 5.8vw, 23px);
+  }
+
+  .ranking-arcade-page .record-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .challenge-arcade-page .juggle-simple-stage:not(.pixel-arcade-screen) {
+    max-width: calc(100svw - 16px);
+    padding: 8px;
+  }
+
+  .challenge-arcade-page .simple-title-line {
+    min-height: 66px;
+  }
+
+  .challenge-arcade-page .simple-result-card {
+    min-height: 162px;
+  }
+
+  .challenge-arcade-page .simple-start-area {
+    min-height: 92px;
+  }
+
+  .challenge-arcade-page .simple-start-button {
+    min-height: 84px;
+  }
+}
+
+/* Final mobile width lock: prevent centered 430px layouts from clipping on narrow screens. */
+@media (max-width: 760px) {
+  .home-page .page,
+  .ranking-arcade-page .page,
+  .juggle-simple-page .simple-page,
+  .challenge-arcade-page .simple-page {
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .juggle-simple-page .juggle-simple-stage,
+  .challenge-arcade-page .juggle-simple-stage:not(.pixel-arcade-screen),
+  .juggle-simple-page .pixel-arcade-screen {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .home-page .game-lobby,
+  .ranking-arcade-page .hero,
+  .ranking-arcade-page .article-card,
+  .challenge-arcade-page .simple-info-section {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .home-page .lobby-top p,
+  .ranking-arcade-page .ranking-hero .lead {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
+
+  .home-page .lobby-top h1,
+  .ranking-arcade-page .ranking-hero h1 {
+    max-width: 100%;
+    font-size: clamp(30px, 9vw, 38px);
+    line-height: 1.16;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .ranking-arcade-page .ranking-hero h1 {
+    font-size: clamp(25px, 7.2vw, 31px);
+  }
+
+  .juggle-simple-page .simple-start-button span,
+  .challenge-arcade-page .simple-start-button span {
+    color: transparent !important;
+    text-shadow: none !important;
+  }
+}
