@@ -2102,6 +2102,7 @@ function showToast(message) {
 }
 
 function renderMobileBottomNav() {
+  if (document.body.classList.contains("home-page")) return;
   if (document.querySelector(".mobile-bottom-nav")) return;
   const items = [
     { href: "index.html", label: "トップ", icon: "⌂", match: ["index.html", ""] },
