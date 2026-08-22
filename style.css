@@ -8850,7 +8850,7 @@ code,
   }
 
   .juggle-simple-page .pixel-action-row {
-    margin-top: -6px;
+    margin-top: 8px;
   }
 
   .juggle-simple-page .pixel-action-row .simple-start-area {
@@ -8861,7 +8861,7 @@ code,
   .juggle-simple-page .pixel-action-row .simple-start-button {
     width: min(74%, 244px);
     min-height: 66px;
-    transform: translateY(-5px);
+    transform: translateY(-1px);
   }
 
   .juggle-simple-page .pixel-action-row .simple-start-button span {
