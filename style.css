@@ -8928,3 +8928,61 @@ code,
     min-height: 62px;
   }
 }
+
+/* Juggle final micro spacing: center result text and calm lower controls. */
+@media (max-width: 640px) {
+  .juggle-simple-page .pixel-top-panel .pixel-state-grid {
+    align-items: center;
+  }
+
+  .juggle-simple-page .pixel-top-panel .pixel-state {
+    align-content: center;
+    gap: 5px;
+  }
+
+  .juggle-simple-page .pixel-top-panel .pixel-state p {
+    max-width: 8em;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .juggle-simple-page .pixel-core-panel .simple-result-card {
+    align-content: center;
+    gap: 3px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+
+  .juggle-simple-page .simple-result-card .pixel-display-heading {
+    line-height: 1.1;
+  }
+
+  .juggle-simple-page .simple-result-card strong,
+  .juggle-simple-page .simple-result-card b,
+  .juggle-simple-page .simple-result-card small,
+  .juggle-simple-page .simple-result-card em {
+    transform: translateY(-1px);
+  }
+
+  .juggle-simple-page .pixel-action-row {
+    margin-top: 10px;
+  }
+
+  .juggle-simple-page .simple-rank-link {
+    margin-top: 5px;
+    margin-bottom: 4px;
+  }
+
+  .juggle-simple-page .simple-sub-actions {
+    margin-top: 4px;
+  }
+
+  .juggle-simple-page .simple-sub-actions .button {
+    align-content: center;
+    padding-block: 7px;
+  }
+
+  .juggle-simple-page .simple-log {
+    margin-top: 5px;
+  }
+}
