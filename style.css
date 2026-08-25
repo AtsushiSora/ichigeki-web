@@ -11209,3 +11209,29 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Mobile challenge controls v96: keep shared ranking START buttons compact. */
+@media (max-width: 760px) {
+  .challenge-arcade-page .simple-start-area {
+    min-height: 110px;
+    margin-top: 6px;
+  }
+
+  .challenge-arcade-page .simple-start-area .simple-start-button {
+    width: min(88%, 300px);
+    height: auto;
+    min-height: 0;
+    max-height: 112px;
+    aspect-ratio: 1200 / 434;
+  }
+
+  .challenge-arcade-page .simple-start-area .simple-start-button span {
+    margin-top: 2px;
+    font-size: clamp(30px, 9vw, 42px);
+  }
+
+  .challenge-arcade-page .simple-start-area .simple-start-button small {
+    margin-top: 1px;
+    font-size: 11px;
+  }
+}
