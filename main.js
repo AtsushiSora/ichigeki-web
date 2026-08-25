@@ -2101,26 +2101,6 @@ function showToast(message) {
   }, 2200);
 }
 
-function renderMobileBottomNav() {
-  if (document.body.classList.contains("home-page")) return;
-  if (document.querySelector(".mobile-bottom-nav")) return;
-  const items = [
-    { href: "index.html", label: "トップ", icon: "⌂", match: ["index.html", ""] },
-    { href: "juggle-simple.html", label: "挑戦", icon: "▶", match: ["juggle-simple.html", "pachinko-319.html", "tokyo-ghoul-999.html", "rare-8192.html", "two-choice-select.html", "hamari.html"] },
-    { href: "ranking.html", label: "記録", icon: "🏆", match: ["ranking.html"] },
-    { href: "guide.html", label: "使い方", icon: "?", match: ["guide.html", "faq.html", "glossary.html"] }
-  ];
-  const page = location.pathname.split("/").pop() || "index.html";
-  const nav = document.createElement("nav");
-  nav.className = "mobile-bottom-nav";
-  nav.setAttribute("aria-label", "スマホ用ナビゲーション");
-  nav.innerHTML = items.map(item => {
-    const active = item.match.includes(page) || (page === "index.html" && item.match.includes(""));
-    return `<a class="${active ? "active" : ""}" href="${item.href}"><span>${item.icon}</span><b>${item.label}</b></a>`;
-  }).join("");
-  document.body.appendChild(nav);
-}
-
 function enhanceAdPlacement() {
   document.querySelectorAll(".ad-box").forEach(ad => {
     ad.setAttribute("role", "complementary");
@@ -2220,7 +2200,6 @@ renderHomeLobby();
 prepareOneTapTools();
 renderRankingPage();
 initializeTwoChoicePage();
-renderMobileBottomNav();
 enhanceAdPlacement();
 initializeAnalytics();
 enhanceInstallCard();

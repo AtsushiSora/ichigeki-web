@@ -18,7 +18,7 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="みんなの記録・ランキング | ICHIGEKI">
   <meta name="twitter:description" content="ICHIGEKIのランキングバトル結果をまとめる、みんなの記録ページです。">
-  <link rel="stylesheet" href="style.css?v=89">
+  <link rel="stylesheet" href="style.css?v=95">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -36,8 +36,8 @@
     <section class="hero ranking-hero">
       <div>
         <div class="kicker">Records</div>
-        <h1>みんなの記録・ランキング</h1>
-        <p class="lead">ランキングバトルで出た結果を種目ごとに保存して見返せるページです。現在はこの端末のブラウザ内に記録されるローカルランキングとして動作します。</p>
+        <h1>記録ランキング</h1>
+        <p class="lead">種目ごとの結果を保存できます。現在は端末内ランキングです。</p>
         <div class="hero-actions">
           <a class="button primary" href="juggle-simple.html">ジャグ連に挑戦</a>
           <a class="button" href="two-choice-select.html">二択を試す</a>
@@ -57,12 +57,12 @@
         <h2>すぐ挑戦</h2>
         <p class="section-lead">ランキング対象の固定バトルです。結果が出たら、そのままこのページに保存できます。</p>
         <div class="ranking-play-grid">
-          <a class="ranking-play-card primary" href="juggle-simple.html"><span>🤡</span><strong>ジャグ連</strong><small>100G以内の連チャン数</small><b>START</b></a>
-          <a class="ranking-play-card" href="two-choice-select.html"><span>↔️</span><strong>二択</strong><small>50%の連続正解</small><b>START</b></a>
-          <a class="ranking-play-card" href="rare-8192.html"><span>🎯</span><strong>1/8192</strong><small>当選回転で勝負</small><b>START</b></a>
-          <a class="ranking-play-card" href="pachinko-319.html"><span>🎰</span><strong>319一撃</strong><small>総出玉で勝負</small><b>START</b></a>
-          <a class="ranking-play-card" href="tokyo-ghoul-999.html"><span>喰</span><strong>東京喰種999</strong><small>超デカ一撃で勝負</small><b>START</b></a>
-          <a class="ranking-play-card" href="hamari.html"><span>📉</span><strong>399ハマり</strong><small>深い回転数で勝負</small><b>START</b></a>
+          <a class="ranking-play-card primary rank-tone-juggle" href="juggle-simple.html"><span>777</span><strong>ジャグ連</strong><small>100G以内の連チャン数</small><b>START</b></a>
+          <a class="ranking-play-card rank-tone-choice" href="two-choice-select.html"><span>2択</span><strong>二択</strong><small>50%の連続正解</small><b>START</b></a>
+          <a class="ranking-play-card rank-tone-8192" href="rare-8192.html"><span>8192</span><strong>1/8192</strong><small>当選回転で勝負</small><b>START</b></a>
+          <a class="ranking-play-card rank-tone-319" href="pachinko-319.html"><span>319</span><strong>319一撃</strong><small>総出玉で勝負</small><b>START</b></a>
+          <a class="ranking-play-card rank-tone-ghoul" href="tokyo-ghoul-999.html"><span>999</span><strong>東京喰種999</strong><small>超デカ一撃で勝負</small><b>START</b></a>
+          <a class="ranking-play-card rank-tone-hamari" href="hamari.html"><span>399</span><strong>399ハマり</strong><small>深い回転数で勝負</small><b>START</b></a>
         </div>
       </section>
 
@@ -77,12 +77,12 @@
           <div class="record-summary-card"><span>二択</span><strong id="twoChoiceBestSummary">--</strong><small id="twoChoiceRecordCount">0件</small></div>
         </div>
         <div class="rank-category-grid ranking-tabs" aria-label="ランキング種目タブ">
-          <a class="rank-category active" data-rank-tab="juggle-ranking" href="#juggle-ranking"><span>🤡</span><strong>ジャグ連</strong><small>連数、BIG/REG、差枚で競う</small></a>
-          <a class="rank-category" data-rank-tab="pachinko-ranking" href="#pachinko-ranking"><span>🎰</span><strong>319一撃</strong><small>総出玉、連チャン、差玉で競う</small></a>
-          <a class="rank-category" data-rank-tab="tokyo-ghoul-ranking" href="#tokyo-ghoul-ranking"><span>喰</span><strong>東京喰種999</strong><small>LT突入と総出玉で競う</small></a>
-          <a class="rank-category" data-rank-tab="rare-8192-ranking" href="#rare-8192-ranking"><span>🎯</span><strong>1/8192</strong><small>最速当選と長ハマりを見る</small></a>
-          <a class="rank-category" data-rank-tab="hamari-ranking" href="#hamari-ranking"><span>📉</span><strong>399ハマり</strong><small>当選までの深さで競う</small></a>
-          <a class="rank-category" data-rank-tab="two-choice-ranking" href="#two-choice-ranking"><span>↔️</span><strong>二択</strong><small>50%の連続正解数で競う</small></a>
+          <a class="rank-category active rank-tone-juggle" data-rank-tab="juggle-ranking" href="#juggle-ranking"><span>777</span><strong>ジャグ連</strong><small>連数、BIG/REG、差枚で競う</small></a>
+          <a class="rank-category rank-tone-319" data-rank-tab="pachinko-ranking" href="#pachinko-ranking"><span>319</span><strong>319一撃</strong><small>総出玉、連チャン、差玉で競う</small></a>
+          <a class="rank-category rank-tone-ghoul" data-rank-tab="tokyo-ghoul-ranking" href="#tokyo-ghoul-ranking"><span>999</span><strong>東京喰種999</strong><small>LT突入と総出玉で競う</small></a>
+          <a class="rank-category rank-tone-8192" data-rank-tab="rare-8192-ranking" href="#rare-8192-ranking"><span>8192</span><strong>1/8192</strong><small>最速当選と長ハマりを見る</small></a>
+          <a class="rank-category rank-tone-hamari" data-rank-tab="hamari-ranking" href="#hamari-ranking"><span>399</span><strong>399ハマり</strong><small>当選までの深さで競う</small></a>
+          <a class="rank-category rank-tone-choice" data-rank-tab="two-choice-ranking" href="#two-choice-ranking"><span>2択</span><strong>二択</strong><small>50%の連続正解数で競う</small></a>
         </div>
       </section>
 
@@ -230,6 +230,6 @@
     <div class="ad-box ad-box-footer" data-ad-slot="ranking-footer"><span class="ad-label">PR</span><span class="ad-title">ページ下部広告枠</span><span class="ad-note">ランキング末尾の広告枠</span></div>
   </main>
   <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="sitemap.html">サイトマップ</a><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a></div></div></footer>
-  <script src="main.js?v=89"></script>
+  <script src="main.js?v=95"></script>
 </body>
 </html>

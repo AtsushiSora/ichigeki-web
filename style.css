@@ -9934,3 +9934,1278 @@ code,
     margin-top: 2px;
   }
 }
+
+/* Final layout pass: stable home lobby, unified battle pages, compact ranking. */
+.home-page .home-game-page {
+  width: min(100%, 1040px);
+  margin-inline: auto;
+}
+
+.home-page .game-lobby {
+  width: min(100%, 780px);
+  margin-inline: auto;
+}
+
+.home-page .mode-card {
+  isolation: isolate;
+}
+
+.home-page .mode-card strong,
+.home-page .mode-card small,
+.home-page .mode-card .mode-rank {
+  overflow-wrap: anywhere;
+}
+
+.challenge-arcade-page .juggle-simple-stage:not(.pixel-arcade-screen) {
+  position: relative;
+  width: min(100%, 440px);
+  max-width: calc(100vw - 18px);
+  margin-inline: auto;
+  padding: 12px;
+  border: 2px solid rgba(100, 255, 74, 0.46);
+  border-radius: 0;
+  background:
+    linear-gradient(rgba(100, 255, 74, 0.052) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100, 255, 74, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at 50% 8%, rgba(100, 255, 74, 0.12), transparent 45%),
+    rgba(1, 7, 2, 0.96);
+  background-size: 100% 4px, 24px 24px, auto, auto;
+  box-shadow:
+    inset 0 0 0 3px rgba(0, 0, 0, 0.72),
+    0 0 28px rgba(100, 255, 74, 0.14);
+}
+
+.challenge-arcade-page .simple-title-line {
+  min-height: 56px;
+  margin: 0;
+  padding: 10px 8px;
+  border: 2px solid rgba(100, 255, 74, 0.38);
+  border-radius: 0;
+  background:
+    linear-gradient(rgba(100, 255, 74, 0.06) 1px, transparent 1px),
+    rgba(0, 10, 2, 0.84);
+  background-size: 100% 4px, auto;
+}
+
+.challenge-arcade-page .simple-title-line h1 {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: clamp(22px, 7vw, 34px);
+  letter-spacing: 0.04em;
+  color: var(--pixel-green);
+  text-shadow: 0 3px 0 #082308, 0 0 16px rgba(100, 255, 74, 0.55);
+}
+
+.challenge-arcade-page .simple-status-card {
+  min-height: 58px;
+  padding: 10px 12px;
+}
+
+.challenge-arcade-page .simple-rule-row {
+  min-height: 68px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.challenge-arcade-page .simple-rule-row span {
+  min-width: 0;
+  padding: 10px 8px;
+}
+
+.challenge-arcade-page .simple-rule-row strong {
+  overflow-wrap: anywhere;
+}
+
+.challenge-arcade-page .simple-result-card {
+  min-height: 190px;
+  padding: 16px 12px;
+  border-color: rgba(255, 217, 74, 0.52);
+}
+
+.challenge-arcade-page .simple-result-card strong {
+  font-size: clamp(32px, 12vw, 58px);
+}
+
+.challenge-arcade-page .simple-result-card b {
+  font-size: clamp(26px, 9vw, 42px);
+}
+
+.challenge-arcade-page .simple-result-card em {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.challenge-arcade-page .simple-start-area {
+  margin: 8px 0 4px;
+}
+
+.challenge-arcade-page .simple-start-button {
+  width: min(100%, 326px);
+  min-height: 84px;
+}
+
+.challenge-arcade-page .simple-rank-link {
+  min-height: 48px;
+  margin-top: 8px;
+}
+
+.challenge-arcade-page .simple-sub-actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.challenge-arcade-page .simple-sub-actions .button {
+  min-height: 42px;
+}
+
+.challenge-arcade-page .simple-next-row {
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.challenge-arcade-page .simple-next-row a {
+  min-height: 34px;
+  padding: 0 8px;
+  font-size: 12px;
+}
+
+.choice-simple-page .choice-stage {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.choice-simple-page .choice-button {
+  min-height: 92px;
+  font-size: clamp(26px, 9vw, 40px);
+}
+
+.ranking-arcade-page .ranking-hero,
+.ranking-arcade-page .article-card {
+  border-radius: 0;
+}
+
+.ranking-arcade-page .ranking-play-card,
+.ranking-arcade-page .rank-category,
+.ranking-arcade-page .record-summary-card {
+  border-radius: 0;
+}
+
+@media (max-width: 760px) {
+  .home-page .home-game-page {
+    padding-inline: 8px;
+  }
+
+  .home-page .game-lobby {
+    width: 100%;
+    max-width: 390px;
+    margin-inline: auto;
+    padding: 9px;
+  }
+
+  .home-page .lobby-top {
+    padding-inline: 8px;
+  }
+
+  .home-page .lobby-top .kicker {
+    font-size: clamp(31px, 10.5vw, 42px);
+  }
+
+  .home-page .mode-select {
+    gap: 7px;
+  }
+
+  .home-page .mode-card {
+    min-height: 116px;
+    padding: 8px 7px;
+  }
+
+  .home-page .mode-card .mode-rank {
+    min-height: 38px;
+  }
+
+  .challenge-arcade-page .simple-page {
+    padding-inline: 8px;
+    padding-bottom: calc(120px + env(safe-area-inset-bottom));
+  }
+
+  .challenge-arcade-page .juggle-simple-stage:not(.pixel-arcade-screen) {
+    gap: 9px;
+    padding: 9px;
+  }
+
+  .challenge-arcade-page .simple-result-card {
+    min-height: 168px;
+  }
+
+  .challenge-arcade-page .simple-start-button {
+    min-height: 76px;
+  }
+
+  .challenge-arcade-page .simple-sub-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .challenge-arcade-page .record-name-field {
+    margin-top: 8px;
+  }
+
+  .ranking-arcade-page .page {
+    padding-inline: 10px;
+  }
+
+  .ranking-arcade-page .ranking-play-grid,
+  .ranking-arcade-page .rank-category-grid {
+    gap: 8px;
+  }
+
+  .ranking-arcade-page .ranking-play-card,
+  .ranking-arcade-page .rank-category {
+    min-height: 74px;
+    padding: 12px;
+  }
+
+  .ranking-arcade-page .record-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+}
+
+@media (max-width: 390px) {
+  .home-page .game-lobby {
+    max-width: calc(100vw - 18px);
+  }
+
+  .home-page .mode-card strong {
+    font-size: clamp(13px, 4.6vw, 17px);
+  }
+
+  .challenge-arcade-page .simple-rule-row b {
+    font-size: 10px;
+  }
+
+  .challenge-arcade-page .simple-rule-row strong {
+    font-size: 13px;
+  }
+
+  .challenge-arcade-page .simple-sub-actions .button {
+    font-size: 12px;
+  }
+}
+
+/* Mobile hard lock: final guard against old wide desktop rules. */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 760px) {
+  .home-page .home-game-page,
+  .home-page .game-lobby,
+  .ranking-arcade-page .page,
+  .juggle-simple-page .simple-page,
+  .challenge-arcade-page .simple-page {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box;
+  }
+
+  .home-page .home-game-page {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  .home-page .game-lobby {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    overflow: hidden;
+  }
+
+  .home-page .mode-select,
+  .home-page .quick-grid,
+  .home-page .priority-list {
+    grid-template-columns: 1fr !important;
+  }
+
+  .home-page .mode-card,
+  .home-page .mission-card,
+  .home-page .quick-card,
+  .home-page .priority-list a {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .juggle-simple-page .pixel-arcade-screen,
+  .juggle-simple-page .juggle-simple-stage,
+  .challenge-arcade-page .juggle-simple-stage:not(.pixel-arcade-screen),
+  .challenge-arcade-page .simple-info-section,
+  .ranking-arcade-page .ranking-hero,
+  .ranking-arcade-page .article-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box;
+  }
+
+  .juggle-simple-page .pixel-arcade-screen {
+    overflow: hidden;
+  }
+
+  .juggle-simple-page .pixel-arcade-marquee strong {
+    font-size: clamp(26px, 12vw, 44px) !important;
+  }
+
+  .juggle-simple-page .pixel-arcade-marquee small {
+    font-size: clamp(16px, 5.6vw, 24px) !important;
+  }
+
+  .juggle-simple-page .simple-sub-actions {
+    grid-template-columns: 1fr !important;
+  }
+
+  .juggle-simple-page .simple-sub-actions .button {
+    width: 100%;
+    min-width: 0;
+    font-size: 12px;
+  }
+
+  .juggle-simple-page .pixel-top-panel,
+  .juggle-simple-page .simple-rule-row,
+  .challenge-arcade-page .simple-rule-row,
+  .ranking-arcade-page .record-summary-grid {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .ranking-arcade-page .ranking-hero h1,
+  .ranking-arcade-page .article-card h1,
+  .home-page .lobby-top h1,
+  .home-page .lobby-top p {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .ranking-arcade-page .ranking-hero h1,
+  .ranking-arcade-page .article-card h1 {
+    font-size: clamp(24px, 6.7vw, 30px) !important;
+    line-height: 1.22;
+  }
+
+  .ranking-arcade-page .ranking-hero .lead,
+  .ranking-arcade-page .article-card p,
+  .ranking-arcade-page .section-lead {
+    white-space: normal !important;
+    overflow-wrap: anywhere;
+    word-break: break-all;
+    line-break: anywhere;
+  }
+
+  .juggle-simple-page .pixel-arcade-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .juggle-simple-page .pixel-arcade-tabs a {
+    min-width: 0;
+    padding-inline: 4px !important;
+    overflow: hidden;
+    font-size: 11px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .home-page .mode-card {
+    grid-template-columns: 46px minmax(0, 1fr) 18px;
+  }
+
+  .juggle-simple-page .pixel-top-panel {
+    grid-template-columns: 86px minmax(0, 1fr);
+  }
+
+  .juggle-simple-page .pixel-slot-machine {
+    transform: scale(0.92);
+    transform-origin: left center;
+  }
+}
+
+/* Arcade design system v94: polished lobby, battle cabinets, and records. */
+:where(a, button, input, select):focus-visible {
+  outline: 3px solid #fff4a8;
+  outline-offset: 3px;
+}
+
+.home-page .game-lobby {
+  gap: 14px;
+  padding: 14px;
+  border-color: rgba(125, 255, 90, 0.66);
+  box-shadow:
+    inset 0 0 0 3px #001800,
+    inset 0 0 0 5px rgba(125, 255, 90, 0.14),
+    inset 0 0 42px rgba(125, 255, 90, 0.08),
+    0 18px 54px rgba(0, 0, 0, 0.58),
+    0 0 30px rgba(125, 255, 90, 0.12);
+}
+
+.home-page .lobby-top {
+  position: relative;
+  overflow: hidden;
+  min-height: 176px;
+  align-content: center;
+  border-color: rgba(255, 216, 74, 0.58);
+}
+
+.home-page .lobby-top::before,
+.home-page .lobby-top::after {
+  content: "";
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  width: 8px;
+  border-block: 4px solid #76ff4e;
+  background: repeating-linear-gradient(180deg, #76ff4e 0 6px, transparent 6px 12px);
+  opacity: 0.75;
+}
+
+.home-page .lobby-top::before { left: 14px; }
+.home-page .lobby-top::after { right: 14px; }
+
+.home-page .lobby-top .kicker {
+  color: #a4ff62;
+  text-shadow:
+    3px 0 0 #2d751e,
+    0 4px 0 #092b0b,
+    0 0 20px rgba(125, 255, 90, 0.7);
+}
+
+.home-page .lobby-rank-button {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 310px);
+  letter-spacing: 0.08em;
+  box-shadow: inset 0 -4px 0 rgba(255, 216, 74, 0.12);
+}
+
+.home-page .mode-card {
+  --mode-accent: #7dff5b;
+  color: var(--mode-accent);
+  border-color: color-mix(in srgb, var(--mode-accent), transparent 48%);
+  box-shadow:
+    inset 5px 0 0 color-mix(in srgb, var(--mode-accent), transparent 18%),
+    inset 0 0 0 2px rgba(0, 0, 0, 0.72),
+    0 0 18px color-mix(in srgb, var(--mode-accent), transparent 88%);
+  transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.home-page .mode-card::before {
+  content: "PLAY";
+  position: absolute;
+  top: 7px;
+  right: 9px;
+  color: color-mix(in srgb, var(--mode-accent), transparent 52%);
+  font: 900 9px/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: 0.14em;
+}
+
+.home-page .mode-card:hover,
+.home-page .mode-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--mode-accent);
+  box-shadow:
+    inset 5px 0 0 var(--mode-accent),
+    inset 0 0 0 2px rgba(0, 0, 0, 0.72),
+    0 0 24px color-mix(in srgb, var(--mode-accent), transparent 70%);
+}
+
+.home-page .mode-card .mode-icon {
+  color: var(--mode-accent);
+  border-color: var(--mode-accent);
+  box-shadow:
+    inset 0 0 14px color-mix(in srgb, var(--mode-accent), transparent 86%),
+    0 0 12px color-mix(in srgb, var(--mode-accent), transparent 80%);
+}
+
+.home-page .mode-card strong {
+  color: #fffdea;
+  text-shadow: 0 2px 0 #000, 0 0 10px color-mix(in srgb, var(--mode-accent), transparent 70%);
+}
+
+.home-page .mode-card .mode-rank {
+  border-color: color-mix(in srgb, var(--mode-accent), transparent 70%);
+  color: color-mix(in srgb, var(--mode-accent), #ffffff 22%);
+}
+
+.home-page .mode-juggle { --mode-accent: #83ff58; }
+.home-page .mode-choice { --mode-accent: #55c7ff; }
+.home-page .mode-ghoul { --mode-accent: #ff5a88; }
+.home-page .mode-319 { --mode-accent: #ff6a5a; }
+.home-page .mode-8192 { --mode-accent: #ffd64a; }
+.home-page .mode-hamari { --mode-accent: #ff9f43; }
+
+.home-page .mission-card {
+  min-height: 72px;
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.72);
+}
+
+.home-page .mission-card:hover {
+  border-color: #7dff5b;
+  background-color: rgba(8, 31, 8, 0.92);
+}
+
+.challenge-arcade-page {
+  --battle-accent: #7dff5b;
+  --battle-accent-rgb: 125, 255, 91;
+  --battle-secondary: #ffd84a;
+  background:
+    linear-gradient(rgba(var(--battle-accent-rgb), 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--battle-accent-rgb), 0.028) 1px, transparent 1px),
+    radial-gradient(circle at 50% 0%, rgba(var(--battle-accent-rgb), 0.16), transparent 390px),
+    #010401;
+  background-size: 100% 4px, 24px 24px, auto, auto;
+}
+
+.battle-theme-choice {
+  --battle-accent: #58c9ff;
+  --battle-accent-rgb: 88, 201, 255;
+  --battle-secondary: #a8e9ff;
+}
+
+.battle-theme-ghoul {
+  --battle-accent: #ff5b8d;
+  --battle-accent-rgb: 255, 91, 141;
+  --battle-secondary: #f2a8ff;
+}
+
+.battle-theme-319 {
+  --battle-accent: #ff6858;
+  --battle-accent-rgb: 255, 104, 88;
+  --battle-secondary: #ffe15b;
+}
+
+.battle-theme-8192 {
+  --battle-accent: #ffd64a;
+  --battle-accent-rgb: 255, 214, 74;
+  --battle-secondary: #fff2a4;
+}
+
+.battle-theme-hamari {
+  --battle-accent: #ff9f43;
+  --battle-accent-rgb: 255, 159, 67;
+  --battle-secondary: #ffe173;
+}
+
+.challenge-arcade-page .site-header {
+  border-bottom-color: rgba(var(--battle-accent-rgb), 0.34);
+}
+
+.challenge-arcade-page .brand-name,
+.challenge-arcade-page .nav a:hover {
+  color: var(--battle-accent);
+  text-shadow: 0 3px 0 #071507, 0 0 14px rgba(var(--battle-accent-rgb), 0.46);
+}
+
+.challenge-arcade-page .simple-page {
+  width: min(100%, 720px);
+  margin-inline: auto;
+  padding-top: 18px;
+}
+
+.challenge-arcade-page .juggle-simple-stage:not(.pixel-arcade-screen) {
+  width: min(100%, 500px);
+  padding: 14px;
+  gap: 10px;
+  border-color: rgba(var(--battle-accent-rgb), 0.62);
+  background:
+    linear-gradient(rgba(var(--battle-accent-rgb), 0.052) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--battle-accent-rgb), 0.032) 1px, transparent 1px),
+    radial-gradient(circle at 50% 5%, rgba(var(--battle-accent-rgb), 0.13), transparent 44%),
+    rgba(1, 6, 2, 0.97);
+  background-size: 100% 4px, 22px 22px, auto, auto;
+  box-shadow:
+    inset 0 0 0 3px #000,
+    inset 0 0 0 5px rgba(var(--battle-accent-rgb), 0.1),
+    0 18px 48px rgba(0, 0, 0, 0.58),
+    0 0 28px rgba(var(--battle-accent-rgb), 0.12);
+}
+
+.challenge-arcade-page .simple-title-line {
+  min-height: 66px;
+  border-color: rgba(var(--battle-accent-rgb), 0.56);
+  box-shadow: inset 0 0 0 2px #000, inset 0 -5px 0 rgba(var(--battle-accent-rgb), 0.08);
+}
+
+.challenge-arcade-page .simple-title-line h1 {
+  color: var(--battle-accent);
+  text-shadow: 0 3px 0 #111, 0 0 18px rgba(var(--battle-accent-rgb), 0.52);
+}
+
+.challenge-arcade-page .simple-status-card {
+  border-color: rgba(var(--battle-accent-rgb), 0.42);
+  background:
+    linear-gradient(rgba(var(--battle-accent-rgb), 0.06) 1px, transparent 1px),
+    rgba(0, 8, 2, 0.9);
+  background-size: 100% 4px, auto;
+  box-shadow: inset 0 0 0 2px #000;
+}
+
+.challenge-arcade-page .simple-status-card strong {
+  color: var(--battle-accent);
+}
+
+.challenge-arcade-page .status-dot {
+  background: var(--battle-accent);
+  box-shadow: 0 0 16px rgba(var(--battle-accent-rgb), 0.82);
+}
+
+.challenge-arcade-page .simple-rule-row {
+  border-color: rgba(var(--battle-accent-rgb), 0.44);
+  background: rgba(0, 7, 2, 0.92);
+  box-shadow: inset 0 0 0 2px #000;
+}
+
+.challenge-arcade-page .simple-rule-row span + span {
+  border-left-color: rgba(var(--battle-accent-rgb), 0.22);
+}
+
+.challenge-arcade-page .simple-rule-row b {
+  color: color-mix(in srgb, var(--battle-accent), #ffffff 16%);
+}
+
+.challenge-arcade-page .simple-result-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 210px;
+  border: 3px solid rgba(var(--battle-accent-rgb), 0.52);
+  background:
+    radial-gradient(circle, rgba(var(--battle-accent-rgb), 0.12) 0 1px, transparent 1.5px) 0 0 / 8px 8px,
+    radial-gradient(circle at 50% 50%, rgba(var(--battle-accent-rgb), 0.09), transparent 58%),
+    #020502;
+  box-shadow:
+    inset 0 0 0 4px #000,
+    inset 0 0 34px rgba(var(--battle-accent-rgb), 0.08),
+    0 0 18px rgba(var(--battle-accent-rgb), 0.11);
+}
+
+.challenge-arcade-page .simple-result-card::before {
+  content: "BATTLE RESULT";
+  display: block;
+  min-width: 170px;
+  margin-bottom: 10px;
+  padding: 4px 12px;
+  border: 1px solid rgba(var(--battle-accent-rgb), 0.42);
+  color: var(--battle-accent);
+  font: 900 11px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: 0.14em;
+  text-align: center;
+}
+
+.challenge-arcade-page .simple-result-card strong {
+  color: var(--battle-secondary);
+  text-shadow: 0 3px 0 #241700, 0 0 18px rgba(var(--battle-accent-rgb), 0.34);
+}
+
+.challenge-arcade-page .simple-result-card b {
+  color: #f8fff2;
+}
+
+.challenge-arcade-page .simple-result-card em {
+  color: color-mix(in srgb, var(--battle-accent), #ffffff 22%);
+}
+
+.challenge-arcade-page .simple-start-area {
+  min-height: 112px;
+  margin-top: 10px;
+}
+
+.challenge-arcade-page .simple-start-button {
+  width: min(88%, 340px);
+  min-height: 102px;
+  transition: transform 100ms ease, filter 100ms ease;
+}
+
+.challenge-arcade-page .simple-start-button:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.015);
+  filter: saturate(1.25) brightness(1.08);
+}
+
+.challenge-arcade-page .simple-start-button:active:not(:disabled) {
+  transform: translateY(2px) scale(0.985);
+}
+
+.challenge-arcade-page .simple-rank-link,
+.challenge-arcade-page .simple-sub-actions .button,
+.challenge-arcade-page .simple-next-row,
+.challenge-arcade-page .record-name-field input,
+.challenge-arcade-page .simple-log {
+  border-color: rgba(var(--battle-accent-rgb), 0.36);
+}
+
+.challenge-arcade-page .simple-rank-link:hover,
+.challenge-arcade-page .simple-sub-actions .button:hover,
+.challenge-arcade-page .simple-next-row a:hover {
+  border-color: var(--battle-accent);
+  color: #ffffff;
+}
+
+.choice-simple-page .choice-button {
+  border-color: rgba(var(--battle-accent-rgb), 0.64);
+  color: #effaff;
+  background:
+    linear-gradient(rgba(var(--battle-accent-rgb), 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(20, 70, 94, 0.96), rgba(2, 17, 28, 0.98));
+  background-size: 100% 4px, auto;
+  box-shadow: inset 0 -6px 0 rgba(var(--battle-accent-rgb), 0.14), 0 0 18px rgba(var(--battle-accent-rgb), 0.12);
+}
+
+.choice-simple-page .choice-button:hover:not(:disabled) {
+  border-color: #d7f5ff;
+  box-shadow: inset 0 -6px 0 rgba(var(--battle-accent-rgb), 0.2), 0 0 24px rgba(var(--battle-accent-rgb), 0.28);
+}
+
+.ranking-arcade-page .ranking-play-card,
+.ranking-arcade-page .rank-category {
+  --rank-tone: #78ff59;
+  border-color: color-mix(in srgb, var(--rank-tone), transparent 58%);
+  box-shadow:
+    inset 5px 0 0 color-mix(in srgb, var(--rank-tone), transparent 22%),
+    inset 0 0 0 2px #000;
+}
+
+.ranking-arcade-page .rank-tone-juggle { --rank-tone: #83ff58; }
+.ranking-arcade-page .rank-tone-choice { --rank-tone: #58c9ff; }
+.ranking-arcade-page .rank-tone-ghoul { --rank-tone: #ff5b8d; }
+.ranking-arcade-page .rank-tone-319 { --rank-tone: #ff6858; }
+.ranking-arcade-page .rank-tone-8192 { --rank-tone: #ffd64a; }
+.ranking-arcade-page .rank-tone-hamari { --rank-tone: #ff9f43; }
+
+.ranking-arcade-page .ranking-play-card span,
+.ranking-arcade-page .rank-category span {
+  color: var(--rank-tone);
+  border-color: var(--rank-tone);
+  font: 950 13px/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--rank-tone), transparent 35%);
+}
+
+.ranking-arcade-page .ranking-play-card::after,
+.ranking-arcade-page .rank-category::after {
+  color: var(--rank-tone);
+}
+
+.ranking-arcade-page .ranking-play-card:hover,
+.ranking-arcade-page .rank-category:hover,
+.ranking-arcade-page .rank-category.active {
+  border-color: var(--rank-tone);
+  box-shadow:
+    inset 5px 0 0 var(--rank-tone),
+    inset 0 0 0 2px #000,
+    0 0 20px color-mix(in srgb, var(--rank-tone), transparent 78%);
+}
+
+.ranking-arcade-page .record-summary-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.ranking-arcade-page .record-summary-card {
+  min-height: 92px;
+  justify-content: center;
+  border-top-color: rgba(255, 214, 74, 0.46);
+}
+
+@media (max-width: 760px) {
+  .home-page .site-header,
+  .challenge-arcade-page .site-header,
+  .ranking-arcade-page .site-header {
+    position: static;
+  }
+
+  .home-page .header-inner,
+  .challenge-arcade-page .header-inner,
+  .ranking-arcade-page .header-inner {
+    gap: 10px;
+    padding-block: 10px;
+  }
+
+  .home-page .nav,
+  .challenge-arcade-page .nav,
+  .ranking-arcade-page .nav {
+    width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
+
+  .home-page .nav::-webkit-scrollbar,
+  .challenge-arcade-page .nav::-webkit-scrollbar,
+  .ranking-arcade-page .nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .home-page .game-lobby {
+    gap: 10px;
+    padding: 8px !important;
+  }
+
+  .home-page .lobby-top {
+    min-height: 144px;
+    padding-inline: 22px;
+  }
+
+  .home-page .mode-select {
+    gap: 7px;
+  }
+
+  .home-page .mode-card {
+    grid-template-columns: 48px minmax(0, 1fr) 16px !important;
+    grid-template-rows: auto auto;
+    min-height: 86px;
+    padding: 11px 9px 10px 12px;
+    gap: 3px 9px;
+  }
+
+  .home-page .mode-card .mode-icon {
+    grid-row: 1 / 3;
+    width: 44px;
+    height: 44px;
+    font-size: 12px;
+  }
+
+  .home-page .mode-card strong {
+    align-self: end;
+    font-size: clamp(17px, 5.3vw, 21px);
+  }
+
+  .home-page .mode-card small {
+    font-size: 11px;
+  }
+
+  .home-page .mode-card .mode-rank {
+    position: absolute;
+    right: 25px;
+    bottom: 7px;
+    max-width: 44%;
+    margin: 0;
+    padding: 2px 5px;
+    border: 0;
+    background: transparent;
+    font-size: 9px;
+    text-align: right;
+  }
+
+  .home-page .mode-card .mode-rank span {
+    display: inline !important;
+  }
+
+  .home-page .mode-card .mode-rank span + span {
+    margin-left: 4px;
+  }
+
+  .home-page .mode-card::after {
+    right: 8px;
+    bottom: 27px;
+  }
+
+  .challenge-arcade-page .simple-page {
+    padding: 10px 7px 40px;
+  }
+
+  .challenge-arcade-page .juggle-simple-stage:not(.pixel-arcade-screen) {
+    padding: 8px;
+    gap: 7px;
+  }
+
+  .challenge-arcade-page .simple-title-line {
+    min-height: 54px;
+    padding: 7px;
+  }
+
+  .challenge-arcade-page .simple-status-card {
+    min-height: 54px;
+    padding: 8px 10px;
+  }
+
+  .challenge-arcade-page .simple-rule-row {
+    min-height: 60px;
+  }
+
+  .challenge-arcade-page .simple-rule-row span {
+    padding: 8px 5px;
+  }
+
+  .challenge-arcade-page .simple-result-card {
+    min-height: 176px;
+    padding: 12px 9px;
+  }
+
+  .challenge-arcade-page .simple-result-card::before {
+    margin-bottom: 6px;
+  }
+
+  .challenge-arcade-page .simple-start-area {
+    min-height: 96px;
+    margin-top: 7px;
+  }
+
+  .challenge-arcade-page .simple-start-button {
+    width: min(88%, 310px);
+    min-height: 88px;
+  }
+
+  .challenge-arcade-page .simple-sub-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .challenge-arcade-page .simple-sub-actions > :first-child,
+  .challenge-arcade-page .simple-sub-actions > :last-child:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+
+  .ranking-arcade-page .record-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .ranking-arcade-page .record-summary-card {
+    min-height: 76px;
+    padding: 9px;
+  }
+
+  .ranking-arcade-page .ranking-play-card,
+  .ranking-arcade-page .ranking-tabs .rank-category {
+    min-height: 76px;
+    padding-block: 10px;
+  }
+}
+
+@media (max-width: 390px) {
+  .home-page .lobby-top .kicker {
+    font-size: clamp(30px, 10.7vw, 42px) !important;
+  }
+
+  .home-page .lobby-top h1 {
+    font-size: 20px;
+  }
+
+  .home-page .lobby-top p {
+    font-size: 10px;
+  }
+
+  .home-page .mode-card .mode-rank {
+    display: none;
+  }
+
+  .challenge-arcade-page .simple-title-line h1 {
+    font-size: clamp(21px, 7vw, 28px);
+  }
+
+  .challenge-arcade-page .simple-rule-row strong {
+    font-size: 12px;
+  }
+
+  .challenge-arcade-page .simple-sub-actions .button {
+    padding-inline: 7px;
+    font-size: 11px;
+  }
+}
+
+/* Mobile layout v95: compact controls without fixed navigation overlap. */
+@media (max-width: 760px) {
+  body,
+  .juggle-simple-page {
+    padding-bottom: env(safe-area-inset-bottom) !important;
+  }
+
+  .site-header,
+  body:not(.juggle-simple-page) .site-header,
+  .home-page .site-header,
+  .challenge-arcade-page .site-header,
+  .ranking-arcade-page .site-header {
+    position: static !important;
+  }
+
+  .header-inner,
+  body:not(.juggle-simple-page) .header-inner,
+  .home-page .header-inner,
+  .challenge-arcade-page .header-inner,
+  .ranking-arcade-page .header-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 9px;
+    padding: 11px max(12px, env(safe-area-inset-right)) 10px max(12px, env(safe-area-inset-left));
+  }
+
+  .brand {
+    min-width: 0;
+  }
+
+  .brand-name,
+  body:not(.juggle-simple-page) .brand-name {
+    font-size: clamp(22px, 7.4vw, 30px);
+    line-height: 1;
+  }
+
+  .brand-sub {
+    margin-top: 4px;
+    font-size: 10px;
+  }
+
+  .nav,
+  body:not(.juggle-simple-page) .nav,
+  .home-page .nav,
+  .challenge-arcade-page .nav,
+  .ranking-arcade-page .nav {
+    width: 100%;
+    max-width: 100%;
+    gap: 7px;
+    overflow-x: auto;
+    padding: 0 0 2px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .nav a {
+    display: inline-flex;
+    flex: 0 0 auto;
+    min-height: 38px;
+    align-items: center;
+    padding: 7px 9px;
+    white-space: nowrap;
+  }
+
+  .page,
+  .simple-page,
+  .ranking-arcade-page .page,
+  .juggle-simple-page .simple-page,
+  .challenge-arcade-page .simple-page {
+    padding-bottom: calc(34px + env(safe-area-inset-bottom)) !important;
+  }
+
+  .article-card,
+  .side-card,
+  .hero {
+    padding: 15px 13px;
+  }
+
+  .article-card h1,
+  .ranking-arcade-page .ranking-hero h1 {
+    font-size: clamp(24px, 7.4vw, 31px) !important;
+    overflow-wrap: anywhere;
+  }
+
+  .article-card h2 {
+    font-size: clamp(20px, 6vw, 25px);
+  }
+
+  .article-card p,
+  .article-card li,
+  .section-lead,
+  .lead {
+    line-height: 1.68;
+    word-break: normal !important;
+    overflow-wrap: anywhere;
+  }
+
+  .button,
+  .mini-button,
+  button,
+  select,
+  input {
+    min-height: 44px;
+  }
+
+  input,
+  select {
+    max-width: 100%;
+    font-size: 16px;
+  }
+
+  .home-page .home-game-page {
+    padding: 8px 8px 34px !important;
+  }
+
+  .home-page .game-lobby {
+    gap: 9px;
+    padding: 8px !important;
+  }
+
+  .home-page .lobby-top {
+    min-height: 132px;
+    padding: 13px 20px 11px;
+  }
+
+  .home-page .mode-card {
+    min-height: 84px;
+  }
+
+  .challenge-arcade-page .juggle-simple-stage:not(.pixel-arcade-screen) {
+    width: 100%;
+    max-width: 430px;
+    gap: 7px;
+    padding: 8px;
+  }
+
+  .challenge-arcade-page .simple-title-line {
+    min-height: 52px;
+    padding: 7px 10px;
+  }
+
+  .challenge-arcade-page .simple-title-line h1 {
+    font-size: clamp(20px, 6.8vw, 27px);
+  }
+
+  .challenge-arcade-page .simple-status-card {
+    min-height: 58px;
+    padding: 9px 10px;
+  }
+
+  .challenge-arcade-page .simple-rule-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .challenge-arcade-page .simple-rule-row span {
+    min-width: 0;
+    min-height: 52px;
+    padding: 7px 4px;
+  }
+
+  .challenge-arcade-page .simple-rule-row strong {
+    font-size: clamp(11px, 3.5vw, 14px);
+    overflow-wrap: anywhere;
+  }
+
+  .challenge-arcade-page .simple-result-card {
+    min-height: 164px;
+    padding: 11px 8px;
+  }
+
+  .challenge-arcade-page .simple-result-card strong {
+    font-size: clamp(34px, 11vw, 50px);
+  }
+
+  .challenge-arcade-page .simple-result-card b {
+    font-size: clamp(22px, 7vw, 30px);
+  }
+
+  .challenge-arcade-page .simple-rank-link {
+    min-height: 46px;
+    margin-block: 5px;
+  }
+
+  .challenge-arcade-page .simple-start-area {
+    min-height: 86px;
+    margin-top: 6px;
+  }
+
+  .challenge-arcade-page .simple-start-button {
+    width: min(92%, 310px);
+    min-height: 82px;
+  }
+
+  .challenge-arcade-page .simple-sub-actions {
+    gap: 7px;
+  }
+
+  .choice-simple-page .simple-sub-actions > :first-child,
+  .choice-simple-page .simple-sub-actions > :nth-child(2) {
+    grid-column: 1 / -1;
+  }
+
+  .challenge-arcade-page .simple-info-section {
+    margin-top: 12px;
+  }
+
+  .ranking-arcade-page .ranking-hero,
+  .ranking-arcade-page .article-card {
+    padding: 14px 11px;
+  }
+
+  .ranking-arcade-page .ranking-summary {
+    width: 100%;
+  }
+
+  .ranking-arcade-page .section-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .ranking-arcade-page .section-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: stretch;
+  }
+
+  .ranking-arcade-page .ranking-controls {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 5px;
+  }
+
+  .ranking-arcade-page .ranking-controls select {
+    width: 100%;
+  }
+
+  .ranking-arcade-page .ranking-table {
+    min-width: 0;
+  }
+
+  body:not(.ranking-arcade-page) .article-card .ranking-table {
+    width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+  }
+
+  body:not(.ranking-arcade-page) .article-card .ranking-table th,
+  body:not(.ranking-arcade-page) .article-card .ranking-table td {
+    padding: 10px 8px;
+    overflow-wrap: anywhere;
+  }
+
+  .ad-box,
+  .ad-box-footer,
+  .simple-ad {
+    position: static !important;
+    min-height: 52px;
+    margin: 11px 0;
+    padding: 9px 10px;
+  }
+
+  .site-footer {
+    margin-bottom: 0 !important;
+    padding-bottom: env(safe-area-inset-bottom) !important;
+  }
+
+  .footer-inner {
+    padding: 19px 13px;
+  }
+
+  .site-toast {
+    bottom: calc(16px + env(safe-area-inset-bottom));
+  }
+
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .home-page .mode-card .mode-rank {
+    display: none;
+  }
+
+  .ranking-arcade-page .record-summary-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  }
+
+  .ranking-arcade-page .record-summary-card {
+    min-height: 72px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
