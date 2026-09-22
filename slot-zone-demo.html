@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#050705">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <meta name="description" content="チャンスゾーン、特化ゾーン、上位チャンスゾーンを短時間で試せるスロット新台用シミュレーションのデモです。">
+  <title>スロット新台ゾーン体験 | ICHIGEKI</title><link rel="stylesheet" href="style.css?v=99">
+</head>
+<body class="slot-lab-page">
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">SLOT ZONE LAB</span></a><nav class="nav"><a href="index.html">トップ</a><a href="community.html?machine=slot-new">コミュニティ</a></nav></div></header>
+  <main class="page slot-lab-shell">
+    <section class="slot-lab-hero"><span class="community-eyebrow">SLOT DEMO</span><h1>新台スロット<br>ゾーン体験</h1><p>機種登録後は公式・解析スペックに合わせて各数値と演出名を差し替えます。現在は画面と遊び方を確認するためのデモです。</p><div class="demo-warning">デモ用仮設定・実在機種の再現ではありません</div></section>
+    <section class="zone-grid" aria-label="体験するゾーン">
+      <article class="zone-card zone-cz"><span>CZ</span><h2>チャンスゾーン</h2><p>5G間の成立役で突破を狙う短期チャレンジ。</p><dl><div><dt>継続</dt><dd>5G</dd></div><div><dt>各G成功</dt><dd>12.5%</dd></div><div><dt>目標</dt><dd>AT当選</dd></div></dl><button class="zone-start" type="button" data-zone="cz">CZを開始</button></article>
+      <article class="zone-card zone-special"><span>SPECIAL</span><h2>特化ゾーン</h2><p>10Gの上乗せ抽選で、合計ゲーム数を競います。</p><dl><div><dt>継続</dt><dd>10G</dd></div><div><dt>最低</dt><dd>+10G</dd></div><div><dt>記録</dt><dd>合計上乗せ</dd></div></dl><button class="zone-start" type="button" data-zone="special">特化ゾーン開始</button></article>
+      <article class="zone-card zone-upper"><span>UPPER</span><h2>上位CZ</h2><p>4G以内に突破して、上位ATへの扉を開けるチャレンジ。</p><dl><div><dt>継続</dt><dd>4G</dd></div><div><dt>各G成功</dt><dd>25%</dd></div><div><dt>目標</dt><dd>上位AT</dd></div></dl><button class="zone-start" type="button" data-zone="upper">上位CZ開始</button></article>
+    </section>
+    <section class="zone-result" id="zoneResult" aria-live="polite"><span class="community-eyebrow">RESULT</span><strong id="zoneResultTitle">ゾーンを選んでSTART</strong><p id="zoneResultDetail">結果はここに表示されます。</p><div id="zoneResultLog" class="zone-result-log"></div><div class="zone-result-actions"><button class="button" type="button" id="retryZone" disabled>もう一度</button><a class="button primary" id="shareZoneResult" href="community.html?machine=slot-new&compose=simulation#simulationComposer">結果を投稿する</a></div></section>
+    <section class="article-card slot-flow-explanation"><h2>実機ページではこう変わります</h2><div class="simple-info-grid"><div><strong>機種専用CZ</strong><span>ゲーム数、成立役、突破期待度、成功時の行き先を機種仕様に合わせます。</span></div><div><strong>特化ゾーン</strong><span>上乗せ振り分け、継続抽選、保証回数を反映します。</span></div><div><strong>上位CZ</strong><span>上位ATをかけた最終ジャッジ部分だけを短時間で体験できます。</span></div><div><strong>コミュニティ連携</strong><span>結果を投稿フォームへ自動入力し、口コミや実戦報告と同じ機種ページに残せます。</span></div></div></section>
+  </main>
+  <script src="slot-zone-demo.js?v=1"></script>
+</body>
+</html>

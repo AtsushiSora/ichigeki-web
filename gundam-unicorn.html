@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b10">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <meta name="description" content="2021年導入の初代Pフィーバー機動戦士ガンダムユニコーンのスペック記事と、初当たり・RUSH・覚醒HYPER・総出玉を試せる簡易シミュレーターです。">
+  <title>初代Pフィーバー機動戦士ガンダムユニコーン | 記事・シミュレーター | ICHIGEKI</title>
+  <link rel="canonical" href="https://atsushisora.github.io/ichigeki-web/gundam-unicorn.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="ICHIGEKI">
+  <meta property="og:title" content="初代Pフィーバー機動戦士ガンダムユニコーン | ICHIGEKI">
+  <meta property="og:description" content="大当り1/319.7、RUSH突入60%、継続約81%の初代ユニコーンを記事と簡易シミュレーターで紹介。">
+  <meta property="og:url" content="https://atsushisora.github.io/ichigeki-web/gundam-unicorn.html">
+  <link rel="stylesheet" href="style.css?v=99">
+</head>
+<body class="unicorn-page">
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">MACHINE ARCHIVE</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#simulator">シミュレーター</a><a href="community.html?machine=gundam-unicorn">口コミ・収支</a></nav></div></header>
+
+  <main class="page unicorn-shell">
+    <article>
+      <section class="unicorn-hero">
+        <div class="unicorn-visual" aria-hidden="true"><span class="unicorn-ring ring-one"></span><span class="unicorn-ring ring-two"></span><b>RX-0</b><strong>UNICORN</strong><small>2021 / 319 TYPE</small></div>
+        <div class="unicorn-intro"><span class="unicorn-kicker">PACHINKO ARCHIVE #001</span><h1>初代<br>ガンダム<br>ユニコーン</h1><p>シンプルな60%突入と、右打ちALL1,500個・継続約81%。大当り3回目から突入する覚醒HYPERまで、一撃の流れをまとめて体験できます。</p><div class="unicorn-meta"><span>2021年8月</span><span>SANKYO</span><span>1種2種混合</span></div></div>
+      </section>
+
+      <section class="unicorn-spec-strip" aria-label="主要スペック">
+        <div><small>大当り</small><strong>1/319.7</strong></div><div><small>RUSH突入</small><strong>60%</strong></div><div><small>RUSH継続</small><strong>約81%</strong></div><div><small>右打ち出玉</small><strong>ALL 1,500</strong></div>
+      </section>
+
+      <section class="unicorn-simulator" id="simulator">
+        <div class="unicorn-sim-head"><div><span class="unicorn-kicker">ONE TAP SIMULATOR</span><h2>初当たりから一撃終了まで</h2></div><button type="button" id="unicornStart" class="unicorn-start">可能性に<br><strong>賭ける</strong></button></div>
+        <div class="unicorn-cost-control"><label for="unicornSpinRate">1,000円あたり回転数<input id="unicornSpinRate" type="number" min="10" max="30" step="0.1" value="17"></label><div><span>平均初当り</span><strong>319.7回転</strong></div><div><span>平均投資目安</span><strong id="unicornAverageInvestment">18,800円</strong></div><div><span>スタート</span><strong>通常ヘソ</strong></div></div>
+        <div class="unicorn-result" id="unicornResult" aria-live="polite">
+          <div class="unicorn-result-main"><span id="unicornResultLabel">STANDBY</span><strong id="unicornPayout">0玉</strong><b id="unicornHits">0回</b></div>
+          <div class="unicorn-result-grid"><div><small>初当たり</small><strong id="unicornSpins">--回転</strong></div><div><small>投資目安</small><strong id="unicornInvestment">--円</strong></div><div><small>差玉目安</small><strong id="unicornDiff">--玉</strong></div><div><small>到達状態</small><strong id="unicornMode">待機中</strong></div></div>
+          <div class="unicorn-flow" id="unicornFlow"><span>STARTで抽選します</span></div>
+        </div>
+        <div class="unicorn-sim-actions"><button type="button" class="button" id="unicornRetry" disabled>もう一度</button><button type="button" class="button" id="unicornSave" disabled>端末に記録</button><a class="button primary" id="unicornCommunity" href="community.html?machine=gundam-unicorn&compose=simulation#simulationComposer">結果を投稿</a></div>
+        <div class="unicorn-best"><span>この端末のBEST</span><strong id="unicornBest">まだ記録なし</strong></div>
+        <p class="note">実機の演出・保留・転落抽選のタイミングを再現するものではありません。公開スペックを使った娯楽用の簡易抽選です。投資は入力した回転率と貸玉250玉で計算します。</p>
+      </section>
+
+      <div class="unicorn-content-layout">
+        <div class="unicorn-article-body">
+          <section class="article-card"><span class="unicorn-kicker">SPEC</span><h2>初代ユニコーンの基本スペック</h2><div class="table-wrap"><table class="ranking-table unicorn-spec-table"><tbody><tr><th>導入</th><td>2021年8月</td></tr><tr><th>大当り確率</th><td>1/319.7</td></tr><tr><th>RUSH突入率</th><td>60%</td></tr><tr><th>RUSH継続率</th><td>約81%</td></tr><tr><th>右打ち中の大当り</th><td>ALL 1,500個（払い出し）</td></tr><tr><th>特徴</th><td>連続大当り3回到達後に覚醒HYPER</td></tr></tbody></table></div><p>通常時はRUSH突入が濃厚となる図柄揃いに加え、3,000個獲得後にRUSHへ向かう「3000FEVER」を搭載。RUSHは大当り3回目を境に、より高速な覚醒HYPERへ切り替わります。</p></section>
+
+          <section class="article-card"><span class="unicorn-kicker">POINT</span><h2>一撃の見どころ</h2><div class="unicorn-points"><div><b>01</b><strong>60%の入口</strong><p>初当たり時にRUSHへ進めるかが最初の勝負。シミュレーターでは通常当たり、RUSH直行、3000FEVERのルートを分けています。</p></div><div><b>02</b><strong>ALL 1,500個</strong><p>右打ち中の大当りはすべて1,500個。継続するたびに一撃出玉が明快に積み上がります。</p></div><div><b>03</b><strong>覚醒HYPER</strong><p>初当たりを含む大当り3回目の後から覚醒HYPER。簡易シミュレーターでは到達の有無と総出玉を記録します。</p></div></div></section>
+
+          <section class="article-card"><span class="unicorn-kicker">COMMUNITY</span><h2>口コミ・実戦収支を見る</h2><p>実際に打った感想、投資・回収、撮影した画像、公開動画URL、シミュレーション結果を同じ機種ページにまとめられます。</p><div class="next-links"><a href="community.html?machine=gundam-unicorn">初代ユニコーンの投稿を見る</a><a href="#simulator">シミュレーターへ戻る</a></div></section>
+
+          <section class="article-card"><span class="unicorn-kicker">SOURCE</span><h2>参照情報</h2><p>導入時期、基本確率、RUSH継続、出玉、覚醒HYPERの説明はメーカー公式情報を参照しています。シミュレーターは遊びやすさを優先した簡易計算です。</p><ul class="info-list"><li><strong><a href="https://www.sankyo-fever.jp/collection/922/" target="_blank" rel="noopener noreferrer">SANKYO公式 機種コレクション</a></strong>導入年月、型式、主要スペック、機種紹介</li><li><strong><a href="https://gundam-official.com/news/i/news/hot-topics/01_9952" target="_blank" rel="noopener noreferrer">ガンダム公式サイト掲載情報</a></strong>RUSH突入率・継続率・右打ち出玉の紹介</li></ul></section>
+        </div>
+        <aside class="unicorn-side"><div class="ad-box ad-box-sidebar"><span class="ad-label">PR</span><span class="ad-title">広告枠</span></div><div class="side-card"><strong>次に試す</strong><a href="pachinko-319.html">一撃319</a><a href="tokyo-ghoul-999.html">東京喰種999</a><a href="community.html?machine=gundam-unicorn">ユニコーン掲示板</a></div></aside>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="community-guidelines.html">投稿ガイドライン</a><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a></div></div></footer>
+  <script src="gundam-unicorn.js?v=2"></script>
+</body>
+</html>

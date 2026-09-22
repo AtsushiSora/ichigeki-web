@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#050705">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <meta name="description" content="ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル特化サイトです。ジャグ連、二択、東京喰種999、319一撃、1/8192、399ハマりを固定スペックで遊べます。">
+  <meta name="description" content="人気パチンコ・パチスロの記事、平均回転数・投資目安・コイン単価付きシミュレーター、機種別コミュニティを楽しめるICHIGEKIです。">
   <title>ICHIGEKI | パチンコ・パチスロ風ランキングバトル</title>
   <link rel="canonical" href="https://atsushisora.github.io/ichigeki-web/">
   <meta property="og:type" content="website">
@@ -18,7 +18,7 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="ICHIGEKI | パチンコ・パチスロ風ランキングバトル">
   <meta name="twitter:description" content="ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル特化サイトです。ジャグ連、二択、東京喰種999、319一撃、1/8192、399ハマりを固定スペックで遊べます。">
-  <link rel="stylesheet" href="style.css?v=96">
+  <link rel="stylesheet" href="style.css?v=100">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -54,7 +54,9 @@
       </a>
       <nav class="nav">
         <a href="index.html">トップ</a>
+        <a href="#popularMachines">人気機種</a>
         <a href="#battleList">挑戦</a>
+        <a href="community.html">新台・口コミ</a>
         <a href="ranking.html">ランキング</a>
         <a href="guide.html">使い方</a>
         <a href="about.html">運営者</a>
@@ -63,11 +65,36 @@
   </header>
 
   <main class="page home-game-page">
+    <section class="home-intro" aria-labelledby="homeTitle">
+      <div class="home-intro-copy">
+        <span class="home-eyebrow">PACHINKO &amp; SLOT COMMUNITY</span>
+        <h1 id="homeTitle">人気台を選んで、<br>すぐ試す。</h1>
+        <p>機種スペック、平均回転数、投資目安を見て、そのままシミュレーション。実戦口コミや収支報告も機種ごとに確認できます。</p>
+        <div class="home-intro-actions">
+          <a class="button primary" href="#popularMachines">人気機種から選ぶ</a>
+          <a class="button" href="community.html">みんなの投稿を見る</a>
+        </div>
+      </div>
+      <div class="home-intro-guide" aria-label="サイトでできること">
+        <a href="#popularMachines"><b>01</b><span><strong>機種を知る</strong><small>スペック・平均G・投資目安</small></span></a>
+        <a href="#battleList"><b>02</b><span><strong>シミュレーション</strong><small>ワンタップで一撃体験</small></span></a>
+        <a href="community.html"><b>03</b><span><strong>投稿でつながる</strong><small>口コミ・収支・画像・結果</small></span></a>
+      </div>
+    </section>
+
+    <nav class="home-jump-nav" aria-label="ホームのメニュー">
+      <a href="#popularMachines"><span>人気</span>機種一覧</a>
+      <a href="#pachinkoMachines"><span>玉</span>パチンコ</a>
+      <a href="#slotMachines"><span>枚</span>スロット</a>
+      <a href="#battleList"><span>挑</span>ランキング挑戦</a>
+      <a href="community.html"><span>話</span>コミュニティ</a>
+    </nav>
+
     <section class="game-lobby" aria-labelledby="homeTitle">
       <div class="lobby-top">
         <div>
           <div class="kicker">ICHIGEKI</div>
-          <h1 id="homeTitle">ランキングバトル</h1>
+          <h2>ランキングバトル</h2>
           <p>種目を選んでSTART。固定条件で一撃記録を競い、良い結果をランキングに保存できます。</p>
         </div>
         <a class="lobby-rank-button" href="ranking.html">ランキング</a>
@@ -93,6 +120,13 @@
           <strong>東京喰種999</strong>
           <small>超デカ一撃</small>
           <span class="mode-rank" data-home-rank="tokyoGhoul999">ランキング読込中</span>
+          <b>›</b>
+        </a>
+        <a class="mode-card mode-unicorn" href="gundam-unicorn.html">
+          <span class="mode-icon">UC</span>
+          <strong>初代ユニコーン</strong>
+          <small>記事＋RUSHシミュレーター</small>
+          <span class="mode-rank">2021 / 1・319.7</span>
           <b>›</b>
         </a>
         <a class="mode-card mode-319" href="pachinko-319.html">
@@ -126,6 +160,29 @@
       <div class="ad-box ad-box-wide lobby-ad" data-ad-slot="home-lobby"><span class="ad-label">PR</span><span class="ad-title">広告枠</span></div>
     </section>
 
+    <section class="community-entry-banner">
+      <div><span>NEW MACHINE COMMUNITY</span><h2>打った感想や収支を、機種ごとに。</h2><p>口コミ・収支・画像／動画投稿と、シミュレーション結果を分けて見やすく共有できます。</p></div>
+      <div class="community-entry-actions"><a class="button primary" href="community.html">コミュニティを見る</a><a class="button" href="slot-zone-demo.html">スロット体験版</a></div>
+    </section>
+
+    <section class="article-card machine-index-section" id="popularMachines">
+      <span class="machine-section-label">POPULAR MACHINE ARCHIVE</span>
+      <h2>人気機種の記事・シミュレーター</h2>
+      <p class="section-lead">平均初当り、投資目安、通常ヘソ／デカヘソ、50枚ベース、コイン単価を確認してから遊べます。</p>
+      <div class="machine-index-grid" id="slotMachines">
+        <a class="is-slot" href="karakuri-circus.html"><span>01 / SLOT</span><strong>からくりサーカス</strong><small>運命の一劇 → 超からくり</small><div><b>平均564G</b><b>単価4.1円</b></div></a>
+        <a class="is-slot" href="monkey-turn-v.html"><span>02 / SLOT</span><strong>モンキーターンV</strong><small>SG RUSH → 青島SG</small><div><b>平均299.8G</b><b>単価3.1円</b></div></a>
+        <a class="is-pachinko" id="pachinkoMachines" href="eva15.html"><span>03 / PACHINKO</span><strong>エヴァ15</strong><small>王道V-ST・継続約81%</small><div><b>平均319.7回転</b><b>通常ヘソ</b></div></a>
+        <a class="is-pachinko" href="rezero-onigakari.html"><span>04 / PACHINKO</span><strong>リゼロ鬼がかり</strong><small>3000発 → 鬼がかりRUSH</small><div><b>平均319.6回転</b><b>通常ヘソ</b></div></a>
+        <a class="is-slot" href="kabaneri.html"><span>05 / SLOT</span><strong>甲鉄城のカバネリ</strong><small>CZ → ST → 美馬ST</small><div><b>平均407.9G</b><b>単価2.8円</b></div></a>
+        <a class="is-slot" href="smart-hokuto.html"><span>06 / SLOT</span><strong>スマスロ北斗の拳</strong><small>BB → 無想転生チャンス</small><div><b>平均383.4G</b><b>単価3.3円</b></div></a>
+        <a class="is-slot" href="valvrave.html"><span>07 / SLOT</span><strong>革命機ヴァルヴレイヴ</strong><small>革命RUSH → 超革命RUSH</small><div><b>平均519G</b><b>単価4.5円</b></div></a>
+        <a class="is-slot" href="sengoku-otome4.html"><span>08 / SLOT</span><strong>戦国乙女4</strong><small>乙女アタック → 真強カワ</small><div><b>平均429.2G</b><b>単価3.4円</b></div></a>
+        <a class="is-pachinko" href="oumi5.html"><span>09 / PACHINKO</span><strong>大海物語5</strong><small>王道60%確変ループ</small><div><b>平均319.6回転</b><b>通常ヘソ</b></div></a>
+        <a class="is-pachinko" href="shin-hokuto-musou.html"><span>10 / PACHINKO</span><strong>CR真・北斗無双</strong><small>80%継続 × 最大2400個</small><div><b>平均319.7回転</b><b>通常ヘソ</b></div></a>
+      </div>
+    </section>
+
     <div class="layout">
       <div class="main-column">
         <section class="article-card">
@@ -135,6 +192,7 @@
             <a href="juggle-simple.html"><b>連</b><strong>ジャグ連</strong><span>100G以内の連チャン勝負</span></a>
             <a href="two-choice-select.html"><b>択</b><strong>二択</strong><span>50%の連続成功勝負</span></a>
             <a href="tokyo-ghoul-999.html"><b>喰</b><strong>東京喰種999</strong><span>超デカ一撃の出玉勝負</span></a>
+            <a href="gundam-unicorn.html"><b>UC</b><strong>初代ユニコーン</strong><span>RUSH・覚醒HYPERの一撃体験</span></a>
             <a href="rare-8192.html"><b>激</b><strong>8192</strong><span>レア当選の回転勝負</span></a>
             <a href="pachinko-319.html"><b>玉</b><strong>一撃319</strong><span>RUSH込みの総出玉勝負</span></a>
             <a href="hamari.html"><b>嵌</b><strong>399ハマり</strong><span>1/399の深い回転数勝負</span></a>
@@ -225,6 +283,6 @@
       </div>
     </div>
   </footer>
-  <script src="main.js?v=96"></script>
+  <script src="main.js?v=99"></script>
 </body>
 </html>

@@ -20,9 +20,9 @@ const fixedRankingSpecs = {
     rushPayout: 1500
   },
   tokyoGhoul999: {
-    figureRate: 999,
-    chargeRate: 538.8,
-    spinsPerUnit: 17,
+    figureRate: 999.9,
+    chargeRate: 538.3,
+    spinsPerUnit: 35,
     rushRate: 0.5,
     rushHitRate: 7.7,
     rushSpins: 5,
@@ -370,7 +370,7 @@ const resultGuidesByAction = {
 const fixedConditionSummariesByAction = {
   juggle: ["BIG 1/255", "REG 1/255", "1,000円46枚", "35G/1,000円", "100G抜けまで"],
   pachinko319: ["大当たり 1/319", "RUSH突入 60%", "継続率 81%", "初当たり 300玉", "RUSH中 1,500玉", "17回転/1,000円"],
-  tokyoGhoul999: ["図柄揃い 1/999", "チャージ 1/538.8", "LT突入 約50%", "突入時 7,500玉", "RUSH中 3,000玉", "ST5回"],
+  tokyoGhoul999: ["デカヘソ 35回/1,000円", "合算 約1/349.9", "図柄揃い 約1/999.9", "図柄揃い時LT 約50%", "突入時 7,500玉", "RUSH中 3,000玉", "ST5回"],
   hamari: ["大当たり 1/399", "当たるまで抽選", "深い回転数でランキング"],
   twoChoiceStart: ["成功率 50%", "外れた時点で終了", "連続正解数でランキング"],
   rare8192: ["当選確率 1/8192", "当選回転でランキング"]
@@ -1181,7 +1181,7 @@ function simulateTokyoGhoul999() {
 
   const investment = Math.ceil(spins / spinsPerUnit) * 1000;
   const usedBalls = Math.round(investment / 4);
-  const enteredRush = Math.random() < rushRate;
+  const enteredRush = route === "図柄揃い" && Math.random() < rushRate;
   let chain = 1;
   let totalPayout = enteredRush ? entryPayout : (route === "図柄揃い" ? figurePayout : chargePayout);
   const events = [`${yen.format(spins)}回転で${route}`];

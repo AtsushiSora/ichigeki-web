@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050705">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <meta name="description" content="新台ごとの口コミ、実戦収支、画像、動画リンク、シミュレーション結果を共有できるICHIGEKIコミュニティです。">
+  <title>新台コミュニティ | ICHIGEKI</title>
+  <link rel="canonical" href="https://atsushisora.github.io/ichigeki-web/community.html">
+  <link rel="stylesheet" href="style.css?v=99">
+</head>
+<body class="community-page">
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">新台コミュニティ</span></a>
+      <nav class="nav"><a href="index.html">トップ</a><a href="slot-zone-demo.html">スロット体験</a><a href="ranking.html">ランキング</a></nav>
+    </div>
+  </header>
+
+  <main class="page community-shell">
+    <section class="community-hero">
+      <div>
+        <span class="community-eyebrow">NEW MACHINE COMMUNITY</span>
+        <h1>新台の話をして、<br>そのまま試す。</h1>
+        <p>口コミ・実戦収支・画像・動画リンク・シミュレーション結果を機種ごとにまとめます。</p>
+      </div>
+      <div class="community-status" id="communityStatus" role="status">
+        <span class="status-dot"></span><strong>接続確認中</strong><small>投稿先を確認しています</small>
+      </div>
+    </section>
+
+    <section class="machine-community-nav" aria-label="機種を選択">
+      <label for="machineFilter">表示する機種</label>
+      <select id="machineFilter">
+        <option value="slot-new">新台スロット（登録待ち）</option>
+        <option value="gundam-unicorn">初代ガンダムユニコーン</option>
+        <option value="karakuri-circus">パチスロ からくりサーカス</option>
+        <option value="monkey-turn-v">スマスロ モンキーターンV</option>
+        <option value="eva15">エヴァ15 未来への咆哮</option>
+        <option value="rezero-onigakari">Pリゼロ 鬼がかりver.</option>
+        <option value="kabaneri">パチスロ甲鉄城のカバネリ</option>
+        <option value="smart-hokuto">スマスロ北斗の拳</option>
+        <option value="valvrave">パチスロ革命機ヴァルヴレイヴ</option>
+        <option value="sengoku-otome4">L戦国乙女4</option>
+        <option value="oumi5">P大海物語5</option>
+        <option value="shin-hokuto-musou">CR真・北斗無双</option>
+        <option value="tokyo-ghoul-999">東京喰種999</option>
+        <option value="pachinko-319">一撃319</option>
+      </select>
+      <a class="button primary" id="machineSimulatorLink" href="slot-zone-demo.html">シミュレーターを試す</a>
+    </section>
+
+    <div class="community-layout">
+      <section class="community-feed" aria-labelledby="feedTitle">
+        <div class="community-section-head">
+          <div><span>COMMUNITY</span><h2 id="feedTitle">みんなの投稿</h2></div>
+          <div class="community-filters" role="group" aria-label="投稿の絞り込み">
+            <button class="is-active" type="button" data-post-filter="all">すべて</button>
+            <button type="button" data-post-filter="review">口コミ</button>
+            <button type="button" data-post-filter="result">収支</button>
+            <button type="button" data-post-filter="simulation">シミュ結果</button>
+          </div>
+        </div>
+        <div id="communityNotice" class="community-notice" hidden></div>
+        <div id="postList" class="post-list" aria-live="polite"></div>
+        <div id="emptyPosts" class="empty-posts" hidden><strong>まだ投稿がありません</strong><p>この機種の最初の口コミや結果を投稿してみてください。</p></div>
+      </section>
+
+      <aside class="post-composer" aria-labelledby="composerTitle">
+        <div class="composer-sticky">
+          <span class="community-eyebrow">POST</span><h2 id="composerTitle">投稿メニュー</h2>
+          <div class="composer-switch" role="tablist" aria-label="投稿方法を選択">
+            <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="regularComposer" data-composer-target="regular">口コミ・画像を投稿</button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="simulationComposer" data-composer-target="simulation">シミュ結果を投稿</button>
+          </div>
+
+          <section class="composer-panel is-active" id="regularComposer" data-composer-panel="regular" role="tabpanel">
+            <p class="composer-intro">口コミ・実戦収支・画像・動画はこちらから投稿できます。</p>
+            <form id="communityPostForm">
+            <div class="field"><label for="postType">投稿の種類</label><select id="postType" required><option value="review">口コミ・感想</option><option value="result">実戦収支</option></select></div>
+            <div class="field"><label for="nickname">ニックネーム</label><input id="nickname" maxlength="16" autocomplete="nickname" placeholder="例：一撃太郎" required></div>
+            <div class="field"><label for="rating">評価</label><select id="rating"><option value="0">評価なし</option><option value="5">★★★★★</option><option value="4">★★★★☆</option><option value="3">★★★☆☆</option><option value="2">★★☆☆☆</option><option value="1">★☆☆☆☆</option></select></div>
+            <div class="field"><label for="postTitle">タイトル</label><input id="postTitle" maxlength="60" placeholder="投稿内容が分かる短いタイトル" required></div>
+            <div class="field"><label for="postBody">本文</label><textarea id="postBody" maxlength="1000" rows="6" placeholder="遊んだ感想や結果を書いてください" required></textarea><small><span id="bodyCount">0</span>/1000</small></div>
+            <div class="balance-fields" id="balanceFields" hidden>
+              <div class="field"><label for="investment">投資額</label><input id="investment" type="number" min="0" step="1000" inputmode="numeric" placeholder="30000"></div>
+              <div class="field"><label for="returnAmount">回収額</label><input id="returnAmount" type="number" min="0" step="1000" inputmode="numeric" placeholder="52000"></div>
+            </div>
+            <div class="field"><label for="postImages">画像（最大3枚・各2MB）</label><input id="postImages" type="file" accept="image/jpeg,image/png,image/webp" multiple><div id="imagePreview" class="image-preview"></div></div>
+            <div class="field"><label for="videoUrl">動画URL</label><input id="videoUrl" type="url" inputmode="url" placeholder="YouTubeなどのhttps:// URL"><small>動画ファイルではなく公開動画のURLを添付します。</small></div>
+            <label class="community-agree"><input id="postAgreement" type="checkbox" required><span><a href="community-guidelines.html" target="_blank" rel="noopener">投稿ガイドライン</a>に同意し、個人情報・店舗や個人への誹謗中傷・権利のない画像を投稿しません。</span></label>
+            <button class="button primary community-submit" type="submit">口コミ・画像を投稿する</button>
+          </form>
+          </section>
+
+          <section class="composer-panel" id="simulationComposer" data-composer-panel="simulation" role="tabpanel" hidden>
+            <p class="composer-intro">シミュレーターで遊んだ結果だけを共有する専用フォームです。</p>
+            <form id="simulationPostForm">
+              <div class="field"><label for="simulationNickname">ニックネーム</label><input id="simulationNickname" maxlength="16" autocomplete="nickname" placeholder="例：一撃太郎" required></div>
+              <div class="field"><label for="simulationTitle">タイトル</label><input id="simulationTitle" maxlength="60" value="シミュレーション結果" required></div>
+              <div class="field"><label for="simulationBody">シミュレーション結果</label><textarea id="simulationBody" maxlength="1000" rows="7" placeholder="先にシミュレーターを遊ぶと結果が自動入力されます" required></textarea><small><span id="simulationBodyCount">0</span>/1000</small></div>
+              <a class="button simulation-return-link" id="composerSimulatorLink" href="slot-zone-demo.html">シミュレーターで遊ぶ</a>
+              <label class="community-agree"><input id="simulationAgreement" type="checkbox" required><span><a href="community-guidelines.html" target="_blank" rel="noopener">投稿ガイドライン</a>に同意します。</span></label>
+              <button class="button primary community-submit" type="submit">結果だけを投稿する</button>
+            </form>
+          </section>
+          <p class="composer-note">投稿は種類ごとに分けて保存され、一覧では絞り込み表示できます。</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="community-guidelines.html">投稿ガイドライン</a><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a></div></div></footer>
+  <script src="community-config.js?v=1"></script>
+  <script src="community.js?v=2"></script>
+</body>
+</html>
