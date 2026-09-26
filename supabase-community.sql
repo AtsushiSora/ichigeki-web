@@ -1,4 +1,5 @@
--- Supabase SQL Editorで一度だけ実行するICHIGEKIコミュニティ用スキーマです。
+-- Supabase SQL Editorで実行するICHIGEKIコミュニティ用スキーマです。
+-- 同じ内容を再実行しても安全な構成にしています。
 create extension if not exists pgcrypto;
 
 create table if not exists public.community_posts (
@@ -30,6 +31,17 @@ create table if not exists public.community_reports (
 alter table public.community_posts enable row level security;
 alter table public.community_reports enable row level security;
 
+create index if not exists community_posts_machine_created_idx
+  on public.community_posts (machine_slug, created_at desc)
+  where status = 'published';
+
+create index if not exists community_reports_post_idx
+  on public.community_reports (post_id);
+
+drop policy if exists "published posts are public" on public.community_posts;
+drop policy if exists "authenticated users create own posts" on public.community_posts;
+drop policy if exists "users report as themselves" on public.community_reports;
+
 create policy "published posts are public" on public.community_posts for select using (status = 'published');
 create policy "authenticated users create own posts" on public.community_posts for insert to authenticated with check (auth.uid() = user_id);
 create policy "users report as themselves" on public.community_reports for insert to authenticated with check (auth.uid() = reporter_id);
@@ -37,6 +49,9 @@ create policy "users report as themselves" on public.community_reports for inser
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values ('community-media', 'community-media', true, 2097152, array['image/jpeg', 'image/png', 'image/webp'])
 on conflict (id) do update set public = true, file_size_limit = 2097152, allowed_mime_types = array['image/jpeg', 'image/png', 'image/webp'];
+
+drop policy if exists "community images are public" on storage.objects;
+drop policy if exists "users upload to own folder" on storage.objects;
 
 create policy "community images are public" on storage.objects for select using (bucket_id = 'community-media');
 create policy "users upload to own folder" on storage.objects for insert to authenticated
