@@ -58,7 +58,7 @@
       <div class="machine-sim-head"><div><span class="machine-section-label">SIMULATOR</span><h2>${machine.shortName} 簡易シミュレーター</h2></div><span class="machine-sim-badge">娯楽用</span></div>
       <p class="machine-sim-note">公表スペックをもとに流れを簡略化しています。実機の全抽選、設定差、釘、交換率、持ち玉比率は再現していません。</p>
       <div class="machine-sim-layout">
-        <div class="machine-sim-controls">${controlMarkup()}<div class="machine-average-grid" id="averageGrid"></div><button class="machine-start-button" id="machineStart" type="button"><span>START</span><small>${labels.join(" → ")}</small></button></div>
+        <div class="machine-sim-controls">${controlMarkup()}<div class="machine-average-grid" id="averageGrid"></div><button class="machine-start-button is-sticky" id="machineStart" type="button"><span>START</span><small>${labels.join(" → ")}</small></button></div>
         <div class="machine-result" id="machineResult" aria-live="polite"><span>RESULT</span><strong id="resultTitle">STARTを押してください</strong><p id="resultSummary">平均値と今回の結果を比較できます。</p><div class="machine-result-stats" id="resultStats"></div><div class="machine-flow" id="resultFlow"></div><div class="machine-result-actions"><button class="button" id="saveMachineResult" type="button" disabled>端末に記録</button><a class="button primary" id="shareMachineResult" href="community.html?machine=${slug}&compose=simulation#simulationComposer">結果を投稿</a></div></div>
       </div>
     </section>
@@ -101,6 +101,7 @@
     let payout = rush ? sim.firstPayoutIn : sim.firstPayoutOut;
     let hits = 1;
     let upper = rush && Boolean(sim.upperLabel) && Math.random() < (sim.upperDirectChance || 0);
+    if (upper && sim.upperEntryPayout) payout = sim.upperEntryPayout;
     const flow = [`${spins}回転で${sim.hitLabel}`, rush ? `${sim.rushLabel}突入` : `${sim.rushLabel}非突入`];
     if (upper) flow.push(`${sim.upperLabel}直行`);
     if (rush) {
@@ -164,7 +165,19 @@
     document.getElementById("shareMachineResult").href = `community.html?machine=${slug}&compose=simulation&result=${encodeURIComponent(result.share)}#simulationComposer`;
   }
 
-  document.getElementById("machineStart").addEventListener("click", () => renderResult(machine.sim.kind === "pachinko" ? runPachinko() : runSlot()));
+  const startButton = document.getElementById("machineStart");
+  document.body.classList.add("has-machine-sticky-start");
+  startButton.addEventListener("click", () => {
+    renderResult(machine.sim.kind === "pachinko" ? runPachinko() : runSlot());
+    if (startButton.classList.contains("is-sticky")) {
+      const actions = document.querySelector(".machine-result-actions");
+      actions.before(startButton);
+      startButton.classList.remove("is-sticky");
+      startButton.classList.add("is-result-position");
+      document.body.classList.remove("has-machine-sticky-start");
+      document.getElementById("machineResult").scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  });
   document.querySelectorAll("#playRate, #baseRate, #coinUnit").forEach(input => input.addEventListener("input", updateAverages));
   document.getElementById("saveMachineResult").addEventListener("click", event => {
     if (!latestResult) return;

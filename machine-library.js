@@ -119,8 +119,68 @@ window.ICHIGEKI_MACHINES = {
     sim: { kind: "pachinko", hitRate: 399.9, hitLabel: "図柄揃い", startType: "通常ヘソ", spinsPer1k: 17.0, minSpins: 10, maxSpins: 30, rushLabel: "FULLBURST RUSH CLIMAX", rushEntry: 0.52, rushContinue: 0.75, firstPayoutIn: 1500, firstPayoutOut: 1500, rushPayouts: [[4500, 0.51], [3000, 0.49]] },
     sources: [["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10506"], ["ぱち7 機種解析", "https://pachiseven.jp/articles/detail/26157"]]
   },
+  "tokyo-ghoul-slot": {
+    order: 13, type: "slot", theme: "crimson", year: "2025年2月", maker: "スパイキー",
+    name: "L 東京喰種", shortName: "スマスロ 東京喰種",
+    catchcopy: "レミニセンスを突破し、有馬貴将JUDGEMENTへ。",
+    intro: "全国の大型ホールで主力設置される人気スマスロ。CZからAT『東京喰種咬』、BITESや特化ゾーンを経て上位CZを目指す流れを簡易体験できます。",
+    points: ["設定1のCZ約1/262.6、AT初当り約1/394.4", "約31G/50枚・コイン単価約4.1円", "上位CZ『有馬貴将JUDGEMENT』成功期待度約61%"],
+    specs: [["CZ（設定1）", "約1/262.6"], ["AT初当り（設定1）", "約1/394.4"], ["ベース", "約31G/50枚"], ["コイン単価", "約4.1円"], ["AT純増", "約4.0枚/G"], ["上位CZ期待度", "約61%"]],
+    sim: { kind: "slot", triggerLabel: "レミニセンス", triggerRate: 262.6, triggerSuccess: 0.666, mainLabel: "東京喰種咬", mainRate: 394.4, base50: 31, coinUnit: 4.1, normalMin: 180, normalMax: 1000, specialLabel: "BITES", specialChance: 0.36, specialMin: 200, specialMax: 1200, upperChallenge: "有馬貴将JUDGEMENT", upperChance: 0.22, upperSuccess: 0.61, upperLabel: "CCGの死神", upperContinue: 0.76, upperPayout: 520 },
+    sources: [["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10207"], ["パチンコビレッジ 機種概要", "https://cs62.cs-plaza.com/g/pachi/pla/s_conq/nanashow_slot/16/kh01.php"]]
+  },
+  "valvrave2": {
+    order: 14, type: "slot", theme: "magenta", year: "2025年11月", maker: "SANKYO",
+    name: "Lパチスロ 革命機ヴァルヴレイヴ2", shortName: "スマスロ ヴヴヴ2",
+    catchcopy: "ハラキリチャレンジを3連し、超革命RUSHへ。",
+    intro: "高純増ATと高継続の上位ATを搭載した大型ホールの主力機。CZ・ボーナスから革命RUSHへ進み、3セット継続で超革命RUSHを目指します。",
+    points: ["設定1のCZ約1/324、初当り合成約1/476", "約32.7G/50枚・コイン単価約4.2円", "革命RUSH約75%、超革命RUSH最大約90%継続"],
+    specs: [["CZ（設定1）", "約1/324"], ["初当り合成（設定1）", "約1/476"], ["ベース", "約32.7G/50枚"], ["コイン単価", "約4.2円"], ["AT純増", "約9.0枚/G"], ["超革命RUSH", "最大約90%継続"]],
+    sim: { kind: "slot", triggerLabel: "共闘Vチャレンジ", triggerRate: 324, triggerSuccess: 0.681, mainLabel: "革命RUSH", mainRate: 476, base50: 32.7, coinUnit: 4.2, normalMin: 300, normalMax: 1350, specialLabel: "革命の剣", specialChance: 0.31, specialMin: 180, specialMax: 1000, upperChallenge: "ハラキリチャレンジ3連", upperChance: 0.42, upperSuccess: 1, upperLabel: "超革命RUSH", upperContinue: 0.90, upperPayout: 650 },
+    sources: [["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10352"], ["SANKYOオンライン博物館", "https://www.sankyo-fever.jp/collection/987/"]]
+  },
+  "kabaneri-unato": {
+    order: 15, type: "slot", theme: "ember", year: "2026年3月", maker: "サミー",
+    name: "スマスロ 甲鉄城のカバネリ 海門決戦", shortName: "カバネリ 海門決戦",
+    catchcopy: "ボーナスからST、海門回想の先に裏・景之ST。",
+    intro: "全国5,000店舗以上に設置されるカバネリのスマスロ後継機。初当りボーナスからSTを目指し、カバネリアタックと上位ルートを簡易抽選します。",
+    points: ["設定1のボーナス初当り約1/254.2、ST約1/422.5", "約31.4G/50枚・コイン単価約3.1円", "AT純増約6.0枚/G、ST継続約76%"],
+    specs: [["ボーナス初当り（設定1）", "約1/254.2"], ["ST初当り（設定1）", "約1/422.5"], ["ベース", "約31.4G/50枚"], ["コイン単価", "約3.1円"], ["AT純増", "約6.0枚/G"], ["ST継続", "約76%"]],
+    sim: { kind: "slot", triggerLabel: "初当りボーナス", triggerRate: 254.2, triggerSuccess: 0.602, mainLabel: "カバネリST", mainRate: 422.5, base50: 31.4, coinUnit: 3.1, normalMin: 250, normalMax: 1100, specialLabel: "カバネリアタック", specialChance: 0.38, specialMin: 180, specialMax: 900, upperChallenge: "海門回想", upperChance: 0.20, upperSuccess: 0.50, upperLabel: "裏・景之ST", upperContinue: 0.88, upperPayout: 520 },
+    sources: [["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10399"], ["フリック7 基本情報", "https://flick7.net/slot/kabaneri_unato/tenjo/"]]
+  },
+  "tokyo-ghoul-e": {
+    order: 16, type: "pachinko", theme: "crimson", year: "2025年4月", maker: "ビスティ",
+    name: "e 東京喰種", shortName: "e東京喰種",
+    catchcopy: "図柄揃いから、ALL3000個以上のHYPER喰種RUSHへ。",
+    intro: "全国設置上位で大型ホールにも多台数導入される人気スマパチ。図柄揃いまでの投資と、3000個以上のRUSH連チャンを簡易抽選します。",
+    points: ["図柄揃い約1/399.9、チャージ込み大当り約1/199.9", "トータルRUSH突入約51%、ST130回", "RUSH継続約75%、右打ち3000個or6000個以上"],
+    specs: [["図柄揃い", "約1/399.9"], ["チャージ込み", "約1/199.9"], ["RUSH中", "約1/95.3"], ["RUSH突入", "約51%"], ["RUSH継続", "約75%"], ["スタート", "通常ヘソ"]],
+    sim: { kind: "pachinko", hitRate: 399.9, hitLabel: "図柄揃い", startType: "通常ヘソ", spinsPer1k: 16.7, minSpins: 10, maxSpins: 30, rushLabel: "HYPER喰種RUSH", rushEntry: 0.51, rushContinue: 0.75, firstPayoutIn: 1500, firstPayoutOut: 1500, rushPayouts: [[3000, 0.97], [6000, 0.03]] },
+    sources: [["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10249"], ["e東京喰種 公式サイト", "https://pachi-e-tokyoghoul.jp/"]]
+  },
+  "eva17-hajimari": {
+    order: 17, type: "pachinko", theme: "violet", year: "2025年12月", maker: "ビスティ",
+    name: "e 新世紀エヴァンゲリオン ～はじまりの記憶～", shortName: "エヴァ17 はじまりの記憶",
+    catchcopy: "時短100回を備えたロングST、ALL2400個＋α。",
+    intro: "大型ホールで多台数設置されるエヴァ20周年記念スマパチ。図柄揃いからSTまたは時短へ進み、約80%継続のRUSHを簡易体験できます。",
+    points: ["図柄揃い約1/399.9、チャージ込み約1/349.9", "時短引き戻し込みST突入約61.4%", "ST157回・継続約80%、右打ちALL2400個＋α"],
+    specs: [["図柄揃い", "約1/399.9"], ["チャージ込み", "約1/349.9"], ["ST中", "約1/99.6"], ["ST突入", "約61.4%"], ["ST継続", "約80%"], ["スタート", "通常ヘソ"]],
+    sim: { kind: "pachinko", hitRate: 399.9, hitLabel: "図柄揃い", startType: "通常ヘソ", spinsPer1k: 17.0, minSpins: 10, maxSpins: 30, rushLabel: "IMPACT MODE", rushEntry: 0.614, rushContinue: 0.80, firstPayoutIn: 300, firstPayoutOut: 300, rushPayouts: [[2400, 0.995], [4800, 0.005]] },
+    sources: [["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10353"], ["SANKYOオンライン博物館", "https://www.sankyo-fever.jp/collection/989/"]]
+  },
+  "garo12-gokugen": {
+    order: 18, type: "pachinko", theme: "gold", year: "2025年8月", maker: "サンセイR&D",
+    name: "e牙狼12黄金騎士極限", shortName: "牙狼12 黄金騎士極限",
+    catchcopy: "極限7500バトルを制し、魔戒CHANCE LTへ。",
+    intro: "大出玉ルートに特化し、大型ホールで主力設置されるスマパチ。液晶図柄揃い、極限7500バトル、上位LTの二段階突破を簡易再現します。",
+    points: ["大当り約1/349.9、液晶図柄揃い約1/437.4", "図柄揃いの約50%で極限7500バトル", "バトル突破約50%、魔戒CHANCE LT継続約76%"],
+    specs: [["大当り確率", "約1/349.9"], ["液晶図柄揃い", "約1/437.4"], ["極限7500バトル", "突入約50%"], ["LT突入", "バトルの約50%"], ["LT継続", "約76%"], ["スタート", "通常ヘソ"]],
+    sim: { kind: "pachinko", hitRate: 437.4, hitLabel: "液晶図柄揃い", startType: "通常ヘソ", spinsPer1k: 17.2, minSpins: 10, maxSpins: 30, rushLabel: "極限7500バトル", rushEntry: 0.50, rushContinue: 0, firstPayoutIn: 1500, firstPayoutOut: 1500, rushPayouts: [[1500, 0.75], [7500, 0.25]], upperLabel: "魔戒CHANCE LT", upperDirectChance: 0.50, upperUpgradeChance: 0, upperContinue: 0.76, upperEntryPayout: 7500 },
+    sources: [["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10305"], ["牙狼公式アーカイブ", "https://www.sansei-rd.com/p_garo_archive/archive/p_garo12_ok.html"]]
+  },
   "karakuri-circus": {
-    order: 13, type: "slot", theme: "crimson", year: "2022", maker: "SANKYO",
+    order: 19, type: "slot", theme: "crimson", year: "2022", maker: "SANKYO",
     name: "パチスロ からくりサーカス", shortName: "からくりサーカス",
     catchcopy: "運命の一劇を越え、超からくりサーカスへ。",
     intro: "CZ・AT・上位ATへの昇格チャレンジがはっきりしており、一撃の流れを体験するシミュレーターと相性の良い人気スマスロです。",
@@ -130,7 +190,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["SANKYO 基本情報PDF", "https://www.sankyo-fever.jp/products/assets/pdf/spx/spx_mp.pdf"], ["DMMぱちタウン 機種情報", "https://p-town.dmm.com/machines/4360"]]
   },
   "monkey-turn-v": {
-    order: 14, type: "slot", theme: "aqua", year: "2023", maker: "山佐",
+    order: 20, type: "slot", theme: "aqua", year: "2023", maker: "山佐",
     name: "スマスロ モンキーターンV", shortName: "モンキーターンV",
     catchcopy: "SG RUSHからグランドスラム、その先の青島SGへ。",
     intro: "周期・CZ・シナリオ管理ATを組み合わせたロングヒット機。比較的マイルドなコイン単価と、上位到達時の伸びを両方体験できます。",
@@ -140,7 +200,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["DMMぱちタウン 機種情報", "https://p-town.dmm.com/machines/4450"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9923"]]
   },
   "eva15": {
-    order: 15, type: "pachinko", theme: "violet", year: "2021", maker: "ビスティ",
+    order: 21, type: "pachinko", theme: "violet", year: "2021", maker: "ビスティ",
     name: "新世紀エヴァンゲリオン～未来への咆哮～", shortName: "エヴァ15",
     catchcopy: "王道V-ST。163回転のIMPACT MODEを駆け抜ける。",
     intro: "長期稼働を続ける1/319.7のV-ST機。通常時の回転率を変更し、初当りまでの平均投資とSTの連チャンを確認できます。",
@@ -150,7 +210,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["SANKYOオンライン博物館", "https://www.sankyo-fever.jp/collection/925/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9509"]]
   },
   "rezero-onigakari": {
-    order: 16, type: "pachinko", theme: "ice", year: "2022", maker: "大都技研",
+    order: 22, type: "pachinko", theme: "ice", year: "2022", maker: "大都技研",
     name: "P Re:ゼロから始める異世界生活 鬼がかりver.", shortName: "リゼロ鬼がかり",
     catchcopy: "初当り3000個から始まる、鬼がかりRUSH。",
     intro: "3000発スタートと高速STで支持された人気機。通常回転率に応じた平均投資と、144回転RUSHの結果を試せます。",
@@ -160,7 +220,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["DMMぱちタウン 機種情報", "https://p-town.dmm.com/machines/4046"], ["アタリ7 スペック", "https://www.atari7.com/pachinko/onirezero.php"]]
   },
   "kabaneri": {
-    order: 17, type: "slot", theme: "ember", year: "2022", maker: "サミー",
+    order: 23, type: "slot", theme: "ember", year: "2022", maker: "サミー",
     name: "パチスロ甲鉄城のカバネリ", shortName: "甲鉄城のカバネリ",
     catchcopy: "3つのチャンス目からCZ、そしてカバネリオブジアイアンフォートレスへ。",
     intro: "6.5号機を代表するSTタイプ。ボーナスからST、無名回想を経由した上位STまでの流れを簡易抽選します。",
@@ -170,7 +230,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["DMMぱちタウン 機種情報", "https://p-town.dmm.com/machines/4160"], ["セガサミー決算資料", "https://www.segasammy.co.jp/cms/wp-content/uploads/pdf/ja/ir/20242029_q3_presentation_j-1.pdf"]]
   },
   "smart-hokuto": {
-    order: 18, type: "slot", theme: "gold", year: "2023", maker: "サミー",
+    order: 24, type: "slot", theme: "gold", year: "2023", maker: "サミー",
     name: "スマスロ北斗の拳", shortName: "スマスロ北斗の拳",
     catchcopy: "バトルボーナスを継続し、無想転生バトルへ。",
     intro: "初代のゲーム性をスマスロで再構築した定番機。ATまでの平均ゲーム数と投資、無想転生チャンス突破を体験できます。",
@@ -180,7 +240,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9786"], ["サミー 機種情報", "https://www.sammy.co.jp/japanese/product/pachislot/sp_hok_ke/EN.html"]]
   },
   "valvrave": {
-    order: 19, type: "slot", theme: "magenta", year: "2022", maker: "SANKYO",
+    order: 25, type: "slot", theme: "magenta", year: "2022", maker: "SANKYO",
     name: "パチスロ 革命機ヴァルヴレイヴ", shortName: "革命機ヴァルヴレイヴ",
     catchcopy: "革命RUSHを突破し、超革命RUSHへ。",
     intro: "スマスロ初期を代表する高コイン単価機。通常RUSHから超革命RUSH、ハラキリDRIVEまでの荒さを簡易再現します。",
@@ -190,7 +250,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["SANKYOオンライン博物館", "https://www.sankyo-fever.jp/collection/936/"], ["SANKYO IR資料", "https://www.sankyo-fever.co.jp/corporate/modify/IR/Library_Briefing/files/explanation_20240807_ja.pdf"]]
   },
   "sengoku-otome4": {
-    order: 20, type: "slot", theme: "sakura", year: "2023", maker: "オリンピアエステート",
+    order: 26, type: "slot", theme: "sakura", year: "2023", maker: "オリンピアエステート",
     name: "L戦国乙女4 戦乱に閃く炯眼の軍師", shortName: "戦国乙女4",
     catchcopy: "乙女アタックから強カワRUSH、真強カワRUSHへ。",
     intro: "ボーナス・CZ・AT・上位ATの段階が分かりやすい人気スマスロ。乙女アタックとオウガイバトルを簡易抽選します。",
@@ -200,7 +260,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["一撃 機種解析", "https://1geki.jp/slot/l_otome_keigan/"], ["HEIWA 機種情報", "https://www.heiwanet.co.jp/products/pachislot/l-sg5/"]]
   },
   "oumi5": {
-    order: 21, type: "pachinko", theme: "ocean", year: "2023", maker: "三洋物産",
+    order: 27, type: "pachinko", theme: "ocean", year: "2023", maker: "三洋物産",
     name: "P大海物語5", shortName: "大海物語5",
     catchcopy: "すべて1500個。王道の60%確変ループ。",
     intro: "幅広い層に支持される確変ループ機。通常回転率から平均投資を計算し、確変と時短引き戻しを含めた連チャンを試せます。",
@@ -210,7 +270,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9768"], ["三洋物産 機種情報", "https://www.sanyobussan.co.jp/products/pk_bigsea5/"]]
   },
   "shin-hokuto-musou": {
-    order: 22, type: "pachinko", theme: "flame", year: "2016", maker: "サミー",
+    order: 28, type: "pachinko", theme: "flame", year: "2016", maker: "サミー",
     name: "ぱちんこCR真・北斗無双", shortName: "CR真・北斗無双",
     catchcopy: "80%×2400。長期稼働を築いたレジェンド。",
     intro: "高継続STと最大2400個で長期稼働した名機。時短引き戻し込みのST突入と、右打ちのラウンド振り分けを簡易再現します。",

@@ -35,6 +35,12 @@
 - `azur-lane-slot.html`: L アズールレーン THE ANIMATION
 - `sao-alicization-yozora.html`: e ソードアート・オンライン アリシゼーション 夜空
 - `gundam-seed-climax.html`: eフィーバー機動戦士ガンダムSEED クライマックス
+- `tokyo-ghoul-slot.html`: L 東京喰種
+- `valvrave2.html`: Lパチスロ 革命機ヴァルヴレイヴ2
+- `kabaneri-unato.html`: スマスロ 甲鉄城のカバネリ 海門決戦
+- `tokyo-ghoul-e.html`: e 東京喰種
+- `eva17-hajimari.html`: e 新世紀エヴァンゲリオン ～はじまりの記憶～
+- `garo12-gokugen.html`: e牙狼12黄金騎士極限
 - `karakuri-circus.html`: パチスロ からくりサーカス
 - `monkey-turn-v.html`: スマスロ モンキーターンV
 - `eva15.html`: 新世紀エヴァンゲリオン～未来への咆哮～

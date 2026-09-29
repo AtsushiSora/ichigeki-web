@@ -5091,6 +5091,23 @@ code,
 .machine-start-button { width: 100%; min-height: 92px; border: 1px solid var(--accent); border-radius: 14px; background: linear-gradient(180deg, var(--accent), #2c9223); color: #041003; cursor: pointer; }
 .machine-start-button span { display: block; font-size: 31px; font-weight: 950; letter-spacing: 2px; }
 .machine-start-button small { display: block; font-weight: 850; }
+.machine-start-button.is-sticky {
+  position: fixed;
+  z-index: 120;
+  left: 50%;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  width: min(540px, calc(100vw - 32px));
+  min-height: 82px;
+  transform: translateX(-50%);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, .68), 0 0 0 3px rgba(107, 211, 79, .14);
+}
+.machine-start-button.is-result-position {
+  display: block;
+  width: min(100%, 520px);
+  min-height: 82px;
+  margin: 18px auto 12px;
+}
+body.has-machine-sticky-start { padding-bottom: 118px; }
 .machine-result { display: grid; align-content: center; min-height: 360px; text-align: center; }
 .machine-result > span { color: var(--blue); font: 900 11px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 1.5px; }
 .machine-result > strong { margin: 5px 0; font-size: clamp(29px, 5vw, 48px); }
