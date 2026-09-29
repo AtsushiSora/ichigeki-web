@@ -29,6 +29,12 @@
 - `kabaneri2-119.html`: e 甲鉄城のカバネリ2 輪廻の果報119ver.
 - `aobuta-slot.html`: L青春ブタ野郎はバニーガール先輩の夢を見ない
 - `fire-force2-99.html`: eフィーバー炎炎ノ消防隊2 99ver.
+- `hokuto-tensei2.html`: スマスロ 北斗の拳 転生の章2
+- `tokyo-ghoul-super.html`: e 東京喰種 超デカ超一撃ver.
+- `bofuri-slot.html`: スマスロ 痛いのは嫌なので防御力に極振りしたいと思います。
+- `azur-lane-slot.html`: L アズールレーン THE ANIMATION
+- `sao-alicization-yozora.html`: e ソードアート・オンライン アリシゼーション 夜空
+- `gundam-seed-climax.html`: eフィーバー機動戦士ガンダムSEED クライマックス
 - `karakuri-circus.html`: パチスロ からくりサーカス
 - `monkey-turn-v.html`: スマスロ モンキーターンV
 - `eva15.html`: 新世紀エヴァンゲリオン～未来への咆哮～
