@@ -34,7 +34,7 @@ const machineMeta = {
   "tokyo-ghoul-999": { name: "東京喰種999", simulator: "tokyo-ghoul-999.html" },
   "pachinko-319": { name: "一撃319", simulator: "pachinko-319.html" }
 };
-const communityState = { mode: "local", client: null, posts: [], filter: "all", files: [], videoFile: null };
+const communityState = { mode: "local", client: null, userId: null, posts: [], filter: "all", files: [], videoFile: null };
 
 function text(value) { return String(value ?? ""); }
 function safeUrl(value, allowDataImage = false) {
@@ -79,6 +79,9 @@ async function loadSupabase() {
     const { error } = await communityState.client.auth.signInAnonymously();
     if (error) throw error;
   }
+  const { data: userData, error: userError } = await communityState.client.auth.getUser();
+  if (userError || !userData.user) throw userError || new Error("投稿用セッションを取得できませんでした。");
+  communityState.userId = userData.user.id;
   communityState.mode = "supabase";
   return true;
 }
@@ -123,7 +126,9 @@ function renderPosts() {
       : `<a class="post-video-link" href="${videoUrl}" target="_blank" rel="noopener noreferrer">添付動画を開く ↗</a>`;
     const media = safeMediaUrls(post);
     const mediaHtml = media.length ? `<div class="post-media">${media.map(url => `<img src="${url}" alt="投稿画像" loading="lazy">`).join("")}</div>` : "";
-    card.innerHTML = `<div class="post-topline"><span class="post-type post-type-${post.post_type}">${post.post_type === "result" ? "実戦収支" : post.post_type === "simulation" ? "シミュ結果" : "口コミ"}</span>${rating}<time>${new Date(post.created_at).toLocaleString("ja-JP", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" })}</time></div><h3></h3><p class="post-author"></p><p class="post-body"></p>${balance}${mediaHtml}${video}<div class="post-actions"><button type="button" data-report-post="${post.id}">通報・非表示</button></div>`;
+    const isOwnPost = communityState.mode === "local" || post.user_id === communityState.userId;
+    const deleteButton = isOwnPost ? `<button class="is-danger" type="button" data-delete-post="${post.id}">自分の投稿を削除</button>` : "";
+    card.innerHTML = `<div class="post-topline"><span class="post-type post-type-${post.post_type}">${post.post_type === "result" ? "実戦収支" : post.post_type === "simulation" ? "シミュ結果" : "口コミ"}</span>${rating}<time>${new Date(post.created_at).toLocaleString("ja-JP", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" })}</time></div><h3></h3><p class="post-author"></p><p class="post-body"></p>${balance}${mediaHtml}${video}<div class="post-actions">${deleteButton}<button type="button" data-report-post="${post.id}">通報・非表示</button></div>`;
     card.querySelector("h3").textContent = post.title;
     card.querySelector(".post-author").textContent = `${post.nickname} さん`;
     card.querySelector(".post-body").textContent = post.body;
@@ -308,13 +313,42 @@ document.querySelectorAll("[data-post-filter]").forEach(button => button.addEven
   button.classList.add("is-active"); communityState.filter = button.dataset.postFilter; renderPosts();
 }));
 document.getElementById("postList").addEventListener("click", async event => {
-  const button = event.target.closest("[data-report-post]"); if (!button) return;
-  const id = button.dataset.reportPost; const hidden = hiddenIds(); hidden.add(id); localStorage.setItem(COMMUNITY_HIDDEN_KEY, JSON.stringify([...hidden]));
-  if (communityState.mode === "supabase") {
-    const { data } = await communityState.client.auth.getUser();
-    await communityState.client.from("community_reports").insert({ post_id: id, reporter_id: data.user?.id, reason: "user_report" });
+  const deleteButton = event.target.closest("[data-delete-post]");
+  if (deleteButton) {
+    const id = deleteButton.dataset.deletePost;
+    if (!window.confirm("この投稿を削除しますか？削除後は元に戻せません。")) return;
+    deleteButton.disabled = true;
+    try {
+      if (communityState.mode === "supabase") {
+        const { error } = await communityState.client.from("community_posts").delete().eq("id", id);
+        if (error) throw error;
+      } else {
+        writeLocalPosts(readLocalPosts().filter(post => post.id !== id));
+      }
+      showNotice("投稿を削除しました。", "success");
+      await refreshPosts();
+    } catch (error) {
+      deleteButton.disabled = false;
+      showNotice(error.message || "投稿を削除できませんでした。", "error");
+    }
+    return;
   }
-  showNotice("この投稿を非表示にし、通報を受け付けました。", "success"); renderPosts();
+
+  const reportButton = event.target.closest("[data-report-post]"); if (!reportButton) return;
+  const id = reportButton.dataset.reportPost;
+  reportButton.disabled = true;
+  try {
+    if (communityState.mode === "supabase") {
+      const { error } = await communityState.client.from("community_reports").insert({ post_id: id, reporter_id: communityState.userId, reason: "user_report" });
+      if (error && error.code !== "23505") throw error;
+    }
+    const hidden = hiddenIds(); hidden.add(id); localStorage.setItem(COMMUNITY_HIDDEN_KEY, JSON.stringify([...hidden]));
+    showNotice("この投稿を非表示にし、通報を受け付けました。", "success");
+    await refreshPosts();
+  } catch (error) {
+    reportButton.disabled = false;
+    showNotice(error.message || "通報を送信できませんでした。", "error");
+  }
 });
 
 (async function initCommunity() {

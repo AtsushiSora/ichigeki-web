@@ -1,10 +1,11 @@
-const CACHE_NAME = "ichigeki-web-v107";
+const CACHE_NAME = "ichigeki-web-v108";
 const CORE_ASSETS = [
   "index.html",
   "juggle-simple.html",
   "tokyo-ghoul-999.html",
   "two-choice-select.html",
   "community.html",
+  "community-admin.html",
   "community-guidelines.html",
   "slot-zone-demo.html",
   "gundam-unicorn.html",
@@ -44,6 +45,7 @@ const CORE_ASSETS = [
   "style.css?v=105",
   "style.css?v=106",
   "style.css?v=107",
+  "style.css?v=108",
   "style.css?v=99",
   "style.css?v=96",
   "main.js",
@@ -67,6 +69,9 @@ const CORE_ASSETS = [
   "community.js?v=4",
   "community.js?v=5",
   "community.js?v=6",
+  "community.js?v=7",
+  "community-admin.js",
+  "community-admin.js?v=1",
   "slot-zone-demo.js",
   "gundam-unicorn.js",
   "gundam-unicorn.js?v=2",
