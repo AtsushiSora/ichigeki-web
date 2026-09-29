@@ -226,6 +226,33 @@ document.getElementById("adminLoginForm").addEventListener("submit", async event
   }
 });
 
+document.getElementById("adminMagicLink").addEventListener("click", async event => {
+  const button = event.currentTarget;
+  const email = document.getElementById("adminEmail").value.trim();
+  if (!email) {
+    showLogin("メールアドレスを入力してください。");
+    document.getElementById("adminEmail").focus();
+    return;
+  }
+  const label = button.textContent;
+  button.disabled = true;
+  button.textContent = "送信中...";
+  try {
+    const redirectTo = `${window.location.origin}${window.location.pathname}`;
+    const { error } = await adminState.client.auth.signInWithOtp({
+      email,
+      options: { shouldCreateUser: false, emailRedirectTo: redirectTo }
+    });
+    if (error) throw error;
+    setAdminStatus("online", "メールを送信しました", "受信したログインリンクを開いてください");
+  } catch (error) {
+    showLogin(error.message || "ログインリンクを送信できませんでした。");
+  } finally {
+    button.disabled = false;
+    button.textContent = label;
+  }
+});
+
 document.getElementById("adminLogout").addEventListener("click", async () => {
   await adminState.client.auth.signOut();
   showLogin();

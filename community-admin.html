@@ -31,8 +31,9 @@
         <div class="field"><label for="adminEmail">メールアドレス</label><input id="adminEmail" type="email" autocomplete="username" required></div>
         <div class="field"><label for="adminPassword">パスワード</label><input id="adminPassword" type="password" autocomplete="current-password" required></div>
         <button class="button primary" type="submit">ログイン</button>
+        <button class="button" id="adminMagicLink" type="button">メールでログインリンクを受け取る</button>
       </form>
-      <p class="admin-login-note">この画面から新規登録はできません。管理者以外のアカウントではデータを表示・変更できません。</p>
+      <p class="admin-login-note">パスワードがない場合はメールアドレスだけ入力し、ログインリンクを受け取ってください。この画面から新規登録はできません。</p>
     </section>
 
     <section id="adminDashboard" hidden>
@@ -67,6 +68,6 @@
 
   <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="community.html">コミュニティ</a><a href="community-guidelines.html">投稿ガイドライン</a></div></div></footer>
   <script src="community-config.js?v=2"></script>
-  <script src="community-admin.js?v=1"></script>
+  <script src="community-admin.js?v=2"></script>
 </body>
 </html>

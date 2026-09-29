@@ -1,4 +1,4 @@
-const CACHE_NAME = "ichigeki-web-v108";
+const CACHE_NAME = "ichigeki-web-v109";
 const CORE_ASSETS = [
   "index.html",
   "juggle-simple.html",
@@ -72,6 +72,7 @@ const CORE_ASSETS = [
   "community.js?v=7",
   "community-admin.js",
   "community-admin.js?v=1",
+  "community-admin.js?v=2",
   "slot-zone-demo.js",
   "gundam-unicorn.js",
   "gundam-unicorn.js?v=2",
