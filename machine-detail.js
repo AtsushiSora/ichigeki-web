@@ -8,6 +8,9 @@
   const yen = new Intl.NumberFormat("ja-JP");
   const ordered = Object.entries(machines).sort((a, b) => a[1].order - b[1].order);
   let latestResult = null;
+  let rankingClient = null;
+  let rankingMode = "local";
+  let rankingUserId = null;
 
   function randomInt(min, max) { return Math.round((min + Math.random() * (max - min)) / 10) * 10; }
   function geometric(rate) {
@@ -47,7 +50,7 @@
       <dl><div><dt>導入</dt><dd>${machine.year}</dd></div><div><dt>メーカー</dt><dd>${machine.maker}</dd></div><div><dt>分類</dt><dd>${machine.type === "slot" ? "パチスロ" : "パチンコ"}</dd></div></dl>
     </section>
 
-    <nav class="machine-quick-nav" aria-label="ページ内メニュー"><a href="#spec">スペック</a><a href="#simulator">シミュレーター</a><a href="#article">記事</a><a href="community.html?machine=${slug}">投稿を見る</a></nav>
+    <nav class="machine-quick-nav" aria-label="ページ内メニュー"><a href="#spec">スペック</a><a href="#simulator">シミュレーター</a><a href="#machineRanking">ランキング</a><a href="#article">記事</a><a href="community.html?machine=${slug}">投稿を見る</a></nav>
 
     <section class="machine-intro" id="spec">
       <div><span class="machine-section-label">SPEC GUIDE</span><h2>主要スペック</h2><p>${machine.intro}</p><ul>${machine.points.map(point => `<li>${point}</li>`).join("")}</ul></div>
@@ -58,9 +61,16 @@
       <div class="machine-sim-head"><div><span class="machine-section-label">SIMULATOR</span><h2>${machine.shortName} 簡易シミュレーター</h2></div><span class="machine-sim-badge">娯楽用</span></div>
       <p class="machine-sim-note">公表スペックをもとに流れを簡略化しています。実機の全抽選、設定差、釘、交換率、持ち玉比率は再現していません。</p>
       <div class="machine-sim-layout">
-        <div class="machine-sim-controls">${controlMarkup()}<div class="machine-average-grid" id="averageGrid"></div><button class="machine-start-button is-sticky" id="machineStart" type="button"><span>START</span><small>${labels.join(" → ")}</small></button></div>
-        <div class="machine-result" id="machineResult" aria-live="polite"><span>RESULT</span><strong id="resultTitle">STARTを押してください</strong><p id="resultSummary">平均値と今回の結果を比較できます。</p><div class="machine-result-stats" id="resultStats"></div><div class="machine-flow" id="resultFlow"></div><div class="machine-result-actions"><button class="button" id="saveMachineResult" type="button" disabled>端末に記録</button><a class="button primary" id="shareMachineResult" href="community.html?machine=${slug}&compose=simulation#simulationComposer">結果を投稿</a></div></div>
+        <div class="machine-sim-controls">${controlMarkup()}<div class="machine-average-grid" id="averageGrid"></div><div class="machine-start-anchor" id="machineStartAnchor"></div><button class="machine-start-button" id="machineStart" type="button"><span>START</span><small>${labels.join(" → ")}</small></button></div>
+        <div class="machine-result" id="machineResult" aria-live="polite"><span>RESULT</span><strong id="resultTitle">STARTを押してください</strong><p id="resultSummary">平均値と今回の結果を比較できます。</p><div class="machine-result-stats" id="resultStats"></div><div class="machine-flow" id="resultFlow"></div><label class="machine-ranking-name"><span>ランキング表示名</span><input id="rankingNickname" type="text" maxlength="16" autocomplete="nickname" placeholder="ニックネーム"></label><div class="machine-result-actions"><button class="button" id="saveMachineResult" type="button" disabled>端末に記録</button><button class="button primary" id="rankMachineResult" type="button" disabled>ランキングに登録</button><a class="button" id="shareMachineResult" href="community.html?machine=${slug}&compose=simulation#simulationComposer">結果を投稿</a></div></div>
       </div>
+    </section>
+
+    <section class="machine-ranking" id="machineRanking" aria-labelledby="machineRankingTitle">
+      <div class="machine-ranking-head"><div><span class="machine-section-label">MACHINE RANKING</span><h2 id="machineRankingTitle">${machine.shortName} ランキング</h2><p>差${machine.sim.kind === "pachinko" ? "玉" : "枚"}が多い順。同点の場合は投資が少ない記録を上位にします。</p></div><span class="machine-ranking-mode" id="machineRankingMode">この端末の記録</span></div>
+      <div class="machine-ranking-self" id="machineRankingSelf"><span>MY BEST</span><strong>まだ記録がありません</strong><small>シミュレーション後にランキングへ登録できます。</small></div>
+      <ol class="machine-ranking-list" id="machineRankingList"><li class="is-empty">まだランキング記録がありません。</li></ol>
+      <p class="machine-ranking-notice" id="machineRankingNotice" aria-live="polite">公開ランキングへ接続しています。</p>
     </section>
 
     <section class="machine-article-layout" id="article">
@@ -118,7 +128,7 @@
     const usedBalls = investment / 4;
     const diff = payout - usedBalls;
     const rushResultLabel = upper ? sim.upperLabel : rush ? sim.rushLabel : "通常";
-    return { title: rush ? `${rushResultLabel} ${hits}回当たり` : "通常へ", summary: `${spins}回転で初当り。${upper ? `${sim.upperLabel}まで到達しました。` : rush ? `${sim.rushLabel}に突入しました。` : "RUSHには突入しませんでした。"}`, stats: [["今回の回転数", `${yen.format(spins)}回転`], ["投資目安", `${yen.format(investment)}円`], ["総出玉", `${yen.format(payout)}玉`], ["差玉目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}玉`]], flow, share: `${machine.shortName}｜${yen.format(spins)}回転｜投資${yen.format(investment)}円｜${rushResultLabel}｜${hits}回当たり｜${yen.format(payout)}玉｜差玉${diff >= 0 ? "+" : ""}${yen.format(diff)}玉` };
+    return { title: rush ? `${rushResultLabel} ${hits}回当たり` : "通常へ", summary: `${spins}回転で初当り。${upper ? `${sim.upperLabel}まで到達しました。` : rush ? `${sim.rushLabel}に突入しました。` : "RUSHには突入しませんでした。"}`, stats: [["今回の回転数", `${yen.format(spins)}回転`], ["投資目安", `${yen.format(investment)}円`], ["総出玉", `${yen.format(payout)}玉`], ["差玉目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}玉`]], flow, share: `${machine.shortName}｜${yen.format(spins)}回転｜投資${yen.format(investment)}円｜${rushResultLabel}｜${hits}回当たり｜${yen.format(payout)}玉｜差玉${diff >= 0 ? "+" : ""}${yen.format(diff)}玉`, score: Math.round(diff), scoreKind: "balls", investment, payout, attempts: spins };
   }
 
   function runSlot() {
@@ -151,7 +161,7 @@
     }
     const diff = payout - usedCoins;
     const salesIndex = Math.round(usedCoins * coinUnit);
-    return { title: upper ? `${sim.upperLabel}到達` : entered ? `${sim.mainLabel}終了` : `${sim.triggerLabel}失敗`, summary: `${games}Gで${sim.triggerLabel}。${entered ? `${payout}枚を獲得しました。` : `${sim.mainLabel}には届きませんでした。`}`, stats: [["今回のゲーム数", `${yen.format(games)}G`], ["現金投資目安", `${yen.format(investment)}円`], ["獲得枚数", `${yen.format(payout)}枚`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]], flow, share: `${machine.shortName}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${upper ? sim.upperLabel : entered ? sim.mainLabel : sim.triggerLabel + "失敗"}｜${yen.format(payout)}枚｜差枚${diff >= 0 ? "+" : ""}${yen.format(diff)}枚｜コイン単価${coinUnit.toFixed(1)}円` };
+    return { title: upper ? `${sim.upperLabel}到達` : entered ? `${sim.mainLabel}終了` : `${sim.triggerLabel}失敗`, summary: `${games}Gで${sim.triggerLabel}。${entered ? `${payout}枚を獲得しました。` : `${sim.mainLabel}には届きませんでした。`}`, stats: [["今回のゲーム数", `${yen.format(games)}G`], ["現金投資目安", `${yen.format(investment)}円`], ["獲得枚数", `${yen.format(payout)}枚`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]], flow, share: `${machine.shortName}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${upper ? sim.upperLabel : entered ? sim.mainLabel : sim.triggerLabel + "失敗"}｜${yen.format(payout)}枚｜差枚${diff >= 0 ? "+" : ""}${yen.format(diff)}枚｜コイン単価${coinUnit.toFixed(1)}円`, score: Math.round(diff), scoreKind: "coins", investment, payout, attempts: games };
   }
 
   function renderResult(result) {
@@ -162,19 +172,62 @@
     document.getElementById("resultFlow").innerHTML = result.flow.map(item => `<span>${item}</span>`).join("<b>›</b>");
     document.getElementById("machineResult").classList.add("has-result");
     document.getElementById("saveMachineResult").disabled = false;
+    document.getElementById("saveMachineResult").textContent = "端末に記録";
+    document.getElementById("rankMachineResult").disabled = false;
+    document.getElementById("rankMachineResult").textContent = "ランキングに登録";
     document.getElementById("shareMachineResult").href = `community.html?machine=${slug}&compose=simulation&result=${encodeURIComponent(result.share)}#simulationComposer`;
   }
 
   const startButton = document.getElementById("machineStart");
-  document.body.classList.add("has-machine-sticky-start");
+  const simulator = document.getElementById("simulator");
+  const startAnchor = document.getElementById("machineStartAnchor");
+  let simulatorVisible = false;
+  let startAnchorVisible = false;
+  let resultPosition = false;
+
+  function updateStickyStart() {
+    const shouldStick = simulatorVisible && !startAnchorVisible && !resultPosition;
+    startButton.classList.toggle("is-sticky", shouldStick);
+    document.body.classList.toggle("has-machine-sticky-start", shouldStick);
+  }
+
+  if ("IntersectionObserver" in window) {
+    const simulatorObserver = new IntersectionObserver(entries => {
+      simulatorVisible = entries[0].isIntersecting;
+      updateStickyStart();
+    }, { threshold: 0.05 });
+    const anchorObserver = new IntersectionObserver(entries => {
+      startAnchorVisible = entries[0].isIntersecting;
+      updateStickyStart();
+    }, { threshold: 0.8 });
+    simulatorObserver.observe(simulator);
+    anchorObserver.observe(startAnchor);
+  }
+
+  function maybeRequestAdBreak() {
+    const countKey = "ichigekiAdAttemptsV1";
+    const lastKey = "ichigekiAdLastShownV1";
+    const attempts = (Number(localStorage.getItem(countKey)) || 0) + 1;
+    localStorage.setItem(countKey, String(attempts));
+    const lastShown = Number(localStorage.getItem(lastKey)) || 0;
+    if (attempts < 5 || Date.now() - lastShown < 10 * 60 * 1000 || typeof window.adBreak !== "function") return;
+    localStorage.setItem(countKey, "0");
+    localStorage.setItem(lastKey, String(Date.now()));
+    window.adBreak({ type: "next", name: "machine-result-break", beforeAd: () => {}, afterAd: () => {} });
+  }
+
   startButton.addEventListener("click", () => {
     renderResult(machine.sim.kind === "pachinko" ? runPachinko() : runSlot());
-    if (startButton.classList.contains("is-sticky")) {
+    maybeRequestAdBreak();
+    if (!resultPosition) {
       const actions = document.querySelector(".machine-result-actions");
       actions.before(startButton);
       startButton.classList.remove("is-sticky");
       startButton.classList.add("is-result-position");
       document.body.classList.remove("has-machine-sticky-start");
+      resultPosition = true;
+      startButton.querySelector("span").textContent = "もう一度試す";
+      startButton.querySelector("small").textContent = "同じ条件でもう一度";
       document.getElementById("machineResult").scrollIntoView({ behavior: "smooth", block: "center" });
     }
   });
@@ -189,5 +242,145 @@
     event.currentTarget.textContent = "保存しました";
     event.currentTarget.disabled = true;
   });
+
+  const nicknameInput = document.getElementById("rankingNickname");
+  nicknameInput.value = localStorage.getItem("ichigekiRankingNicknameV1") || "";
+
+  function rankingKey() { return `ichigekiMachineRankingV1:${slug}`; }
+  function readLocalRanking() {
+    try {
+      const records = JSON.parse(localStorage.getItem(rankingKey()) || "[]");
+      return Array.isArray(records) ? records : [];
+    } catch { return []; }
+  }
+  function scoreText(record) {
+    const unit = record.score_kind === "coins" || record.scoreKind === "coins" ? "枚" : "玉";
+    const score = Number(record.score) || 0;
+    return `${score >= 0 ? "+" : ""}${yen.format(score)}${unit}`;
+  }
+  function rankingDate(value) {
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? "" : date.toLocaleDateString("ja-JP", { month: "numeric", day: "numeric" });
+  }
+  function renderRanking(records, isPublic = false) {
+    const sorted = [...records].sort((a, b) => Number(b.score) - Number(a.score) || Number(a.investment) - Number(b.investment)).slice(0, 10);
+    const list = document.getElementById("machineRankingList");
+    list.innerHTML = "";
+    if (!sorted.length) {
+      const empty = document.createElement("li");
+      empty.className = "is-empty";
+      empty.textContent = "まだランキング記録がありません。最初の記録を狙ってください。";
+      list.appendChild(empty);
+    } else {
+      sorted.forEach((record, index) => {
+        const item = document.createElement("li");
+        const rank = document.createElement("b");
+        const name = document.createElement("span");
+        const score = document.createElement("strong");
+        const meta = document.createElement("small");
+        rank.textContent = String(index + 1);
+        name.textContent = record.nickname || "ゲスト";
+        score.textContent = scoreText(record);
+        meta.textContent = `投資 ${yen.format(Number(record.investment) || 0)}円・${rankingDate(record.updated_at || record.savedAt || record.created_at)}`;
+        item.append(rank, name, score, meta);
+        list.appendChild(item);
+      });
+    }
+    document.getElementById("machineRankingMode").textContent = isPublic ? "みんなのTOP10" : "この端末のTOP10";
+    const ownRecords = rankingUserId && isPublic ? sorted.filter(record => record.user_id === rankingUserId) : readLocalRanking();
+    const ownBest = [...ownRecords].sort((a, b) => Number(b.score) - Number(a.score) || Number(a.investment) - Number(b.investment))[0];
+    const self = document.getElementById("machineRankingSelf");
+    if (ownBest) {
+      self.querySelector("strong").textContent = scoreText(ownBest);
+      self.querySelector("small").textContent = `${ownBest.title || "自己ベスト"}・投資 ${yen.format(Number(ownBest.investment) || 0)}円`;
+    }
+  }
+  function saveLocalRanking(nickname) {
+    const records = readLocalRanking();
+    const record = { ...latestResult, nickname, savedAt: new Date().toISOString() };
+    const existingIndex = records.findIndex(item => item.nickname === nickname);
+    if (existingIndex < 0) records.push(record);
+    else if (Number(record.score) > Number(records[existingIndex].score) || (Number(record.score) === Number(records[existingIndex].score) && Number(record.investment) < Number(records[existingIndex].investment))) records[existingIndex] = record;
+    localStorage.setItem(rankingKey(), JSON.stringify(records.sort((a, b) => Number(b.score) - Number(a.score) || Number(a.investment) - Number(b.investment)).slice(0, 20)));
+    renderRanking(readLocalRanking(), false);
+  }
+  function loadScript(src, id) {
+    if (document.getElementById(id)) return Promise.resolve();
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.id = id;
+      script.src = src;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+  async function refreshPublicRanking() {
+    if (!rankingClient) return;
+    const { data, error } = await rankingClient.from("machine_rankings").select("user_id,nickname,score,score_kind,title,investment,payout,attempts,updated_at").eq("machine_slug", slug).order("score", { ascending: false }).order("investment", { ascending: true }).limit(10);
+    if (error) throw error;
+    renderRanking(data || [], true);
+  }
+  async function initializeRanking() {
+    renderRanking(readLocalRanking(), false);
+    try {
+      await loadScript("community-config.js", "ichigeki-community-config");
+      const config = window.ICHIGEKI_COMMUNITY_CONFIG || {};
+      if (!config.supabaseUrl || !config.supabaseAnonKey) throw new Error("公開ランキング未設定");
+      await loadScript("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2", "ichigeki-supabase-js");
+      rankingClient = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
+      let { data } = await rankingClient.auth.getSession();
+      if (!data.session) {
+        const signedIn = await rankingClient.auth.signInAnonymously();
+        if (signedIn.error) throw signedIn.error;
+        data = { session: signedIn.data.session };
+      }
+      rankingUserId = data.session?.user?.id || null;
+      await refreshPublicRanking();
+      rankingMode = "public";
+      document.getElementById("machineRankingNotice").textContent = "この機種を遊んだみんなの最高記録です。各利用者の自己ベストだけを掲載します。";
+    } catch {
+      rankingMode = "local";
+      document.getElementById("machineRankingNotice").textContent = "現在はこの端末内のランキングを表示しています。公開ランキング準備後に自動で切り替わります。";
+    }
+  }
+
+  document.getElementById("rankMachineResult").addEventListener("click", async event => {
+    if (!latestResult) return;
+    const nickname = nicknameInput.value.trim().slice(0, 16);
+    if (!nickname) {
+      nicknameInput.focus();
+      document.getElementById("machineRankingNotice").textContent = "ランキング表示名を入力してください。";
+      return;
+    }
+    localStorage.setItem("ichigekiRankingNicknameV1", nickname);
+    saveLocalRanking(nickname);
+    event.currentTarget.disabled = true;
+    event.currentTarget.textContent = "登録中...";
+    try {
+      if (rankingMode === "public" && rankingClient && rankingUserId) {
+        const { data: current, error: currentError } = await rankingClient.from("machine_rankings").select("score,investment").eq("machine_slug", slug).eq("user_id", rankingUserId).maybeSingle();
+        if (currentError) throw currentError;
+        const isBetter = !current || Number(latestResult.score) > Number(current.score) || (Number(latestResult.score) === Number(current.score) && Number(latestResult.investment) < Number(current.investment));
+        if (isBetter) {
+          const payload = { user_id: rankingUserId, machine_slug: slug, nickname, score: latestResult.score, score_kind: latestResult.scoreKind, title: latestResult.title, summary: latestResult.summary, investment: latestResult.investment, payout: latestResult.payout, attempts: latestResult.attempts, updated_at: new Date().toISOString() };
+          const { error } = await rankingClient.from("machine_rankings").upsert(payload, { onConflict: "user_id,machine_slug" });
+          if (error) throw error;
+        }
+        await refreshPublicRanking();
+        document.getElementById("machineRankingNotice").textContent = isBetter ? "自己ベストを公開ランキングへ登録しました。" : "公開中の自己ベストの方が上位です。記録は更新されませんでした。";
+      } else {
+        document.getElementById("machineRankingNotice").textContent = "この端末の機種別ランキングへ登録しました。";
+      }
+      event.currentTarget.textContent = "登録しました";
+    } catch {
+      rankingMode = "local";
+      renderRanking(readLocalRanking(), false);
+      document.getElementById("machineRankingNotice").textContent = "端末内ランキングへ登録しました。公開ランキングには現在接続できません。";
+      event.currentTarget.textContent = "端末に登録済み";
+    }
+  });
+
   updateAverages();
+  initializeRanking();
 })();

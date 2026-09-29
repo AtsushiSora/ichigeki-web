@@ -14,10 +14,10 @@
   <meta property="og:title" content="初代Pフィーバー機動戦士ガンダムユニコーン | ICHIGEKI">
   <meta property="og:description" content="大当り1/319.7、RUSH突入60%、継続約81%の初代ユニコーンを記事と簡易シミュレーターで紹介。">
   <meta property="og:url" content="https://atsushisora.github.io/ichigeki-web/gundam-unicorn.html">
-  <link rel="stylesheet" href="style.css?v=99">
+  <link rel="stylesheet" href="style.css?v=107">
 </head>
 <body class="unicorn-page">
-  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">MACHINE ARCHIVE</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#simulator">シミュレーター</a><a href="community.html?machine=gundam-unicorn">口コミ・収支</a></nav></div></header>
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">MACHINE ARCHIVE</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#simulator">シミュレーター</a><a href="#unicornRanking">ランキング</a><a href="community.html?machine=gundam-unicorn">口コミ・収支</a></nav></div></header>
 
   <main class="page unicorn-shell">
     <article>
@@ -38,9 +38,17 @@
           <div class="unicorn-result-grid"><div><small>初当たり</small><strong id="unicornSpins">--回転</strong></div><div><small>投資目安</small><strong id="unicornInvestment">--円</strong></div><div><small>差玉目安</small><strong id="unicornDiff">--玉</strong></div><div><small>到達状態</small><strong id="unicornMode">待機中</strong></div></div>
           <div class="unicorn-flow" id="unicornFlow"><span>STARTで抽選します</span></div>
         </div>
-        <div class="unicorn-sim-actions"><button type="button" class="button" id="unicornRetry" disabled>もう一度</button><button type="button" class="button" id="unicornSave" disabled>端末に記録</button><a class="button primary" id="unicornCommunity" href="community.html?machine=gundam-unicorn&compose=simulation#simulationComposer">結果を投稿</a></div>
+        <label class="machine-ranking-name"><span>ランキング表示名</span><input id="unicornRankingNickname" type="text" maxlength="16" autocomplete="nickname" placeholder="ニックネーム"></label>
+        <div class="unicorn-sim-actions has-ranking"><button type="button" class="button" id="unicornRetry" disabled>もう一度</button><button type="button" class="button" id="unicornSave" disabled>端末に記録</button><button type="button" class="button primary" id="unicornRank" disabled>ランキングに登録</button><a class="button" id="unicornCommunity" href="community.html?machine=gundam-unicorn&compose=simulation#simulationComposer">結果を投稿</a></div>
         <div class="unicorn-best"><span>この端末のBEST</span><strong id="unicornBest">まだ記録なし</strong></div>
         <p class="note">実機の演出・保留・転落抽選のタイミングを再現するものではありません。公開スペックを使った娯楽用の簡易抽選です。投資は入力した回転率と貸玉250玉で計算します。</p>
+      </section>
+
+      <section class="machine-ranking" id="unicornRanking" aria-labelledby="unicornRankingTitle">
+        <div class="machine-ranking-head"><div><span class="machine-section-label">MACHINE RANKING</span><h2 id="unicornRankingTitle">初代ユニコーン ランキング</h2><p>差玉が多い順。同点の場合は投資が少ない記録を上位にします。</p></div><span class="machine-ranking-mode" id="unicornRankingMode">この端末のTOP10</span></div>
+        <div class="machine-ranking-self" id="unicornRankingSelf"><span>MY BEST</span><strong>まだ記録がありません</strong><small>シミュレーション後にランキングへ登録できます。</small></div>
+        <ol class="machine-ranking-list" id="unicornRankingList"><li class="is-empty">まだランキング記録がありません。</li></ol>
+        <p class="machine-ranking-notice" id="unicornRankingNotice" aria-live="polite">公開ランキングへ接続しています。</p>
       </section>
 
       <div class="unicorn-content-layout">
@@ -59,6 +67,6 @@
   </main>
 
   <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="community-guidelines.html">投稿ガイドライン</a><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a></div></div></footer>
-  <script src="gundam-unicorn.js?v=2"></script>
+  <script src="gundam-unicorn.js?v=3"></script>
 </body>
 </html>

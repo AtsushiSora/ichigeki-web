@@ -7,41 +7,26 @@
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <meta name="description" content="人気パチンコ・パチスロの記事、平均回転数・投資目安・コイン単価付きシミュレーター、機種別コミュニティを楽しめるICHIGEKIです。">
-  <title>ICHIGEKI | パチンコ・パチスロ風ランキングバトル</title>
+  <title>ICHIGEKI | 人気パチンコ・パチスロ機種シミュレーター</title>
   <link rel="canonical" href="https://atsushisora.github.io/ichigeki-web/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ICHIGEKI">
-  <meta property="og:title" content="ICHIGEKI | パチンコ・パチスロ風ランキングバトル">
-  <meta property="og:description" content="ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル特化サイトです。ジャグ連、二択、東京喰種999、319一撃、1/8192、399ハマりを固定スペックで遊べます。">
+  <meta property="og:title" content="ICHIGEKI | 人気パチンコ・パチスロ機種シミュレーター">
+  <meta property="og:description" content="人気機種のスペック、平均回転数、投資目安を確認して、機種別シミュレーションとランキングを楽しめます。">
   <meta property="og:url" content="https://atsushisora.github.io/ichigeki-web/">
   <meta property="og:image" content="https://atsushisora.github.io/ichigeki-web/icon.svg">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="ICHIGEKI | パチンコ・パチスロ風ランキングバトル">
-  <meta name="twitter:description" content="ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル特化サイトです。ジャグ連、二択、東京喰種999、319一撃、1/8192、399ハマりを固定スペックで遊べます。">
-  <link rel="stylesheet" href="style.css?v=105">
+  <meta name="twitter:title" content="ICHIGEKI | 人気パチンコ・パチスロ機種シミュレーター">
+  <meta name="twitter:description" content="人気機種のスペック、平均回転数、投資目安を確認して、機種別シミュレーションとランキングを楽しめます。">
+  <link rel="stylesheet" href="style.css?v=107">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "ICHIGEKI",
     "url": "https://atsushisora.github.io/ichigeki-web/",
-    "description": "ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル特化サイトです。ジャグ連、二択、東京喰種999、319一撃、1/8192、399ハマりを固定スペックで遊べます。",
+    "description": "人気機種のスペック、平均回転数、投資目安を確認して、機種別シミュレーションとランキングを楽しめるサイトです。",
     "inLanguage": "ja"
-  }
-  </script>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "ICHIGEKI ランキングバトル一覧",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "ジャグ連チャレンジ", "url": "https://atsushisora.github.io/ichigeki-web/juggle-simple.html" },
-      { "@type": "ListItem", "position": 2, "name": "二択セレクトチャレンジ", "url": "https://atsushisora.github.io/ichigeki-web/two-choice-select.html" },
-      { "@type": "ListItem", "position": 3, "name": "東京喰種999チャレンジ", "url": "https://atsushisora.github.io/ichigeki-web/tokyo-ghoul-999.html" },
-      { "@type": "ListItem", "position": 4, "name": "1/8192当選チャレンジ", "url": "https://atsushisora.github.io/ichigeki-web/rare-8192.html" },
-      { "@type": "ListItem", "position": 5, "name": "319一撃チャレンジ", "url": "https://atsushisora.github.io/ichigeki-web/pachinko-319.html" },
-      { "@type": "ListItem", "position": 6, "name": "399ハマりチャレンジ", "url": "https://atsushisora.github.io/ichigeki-web/hamari.html" }
-    ]
   }
   </script>
 </head>
@@ -50,14 +35,13 @@
     <div class="header-inner">
       <a class="brand" href="index.html">
         <span class="brand-name">ICHIGEKI</span>
-        <span class="brand-sub">ランキングバトル</span>
+        <span class="brand-sub">MACHINE COMMUNITY</span>
       </a>
       <nav class="nav">
         <a href="index.html">トップ</a>
         <a href="#popularMachines">人気機種</a>
-        <a href="#battleList">挑戦</a>
+        <a href="#recentMachines">新台</a>
         <a href="community.html">新台・口コミ</a>
-        <a href="ranking.html">ランキング</a>
         <a href="guide.html">使い方</a>
         <a href="about.html">運営者</a>
       </nav>
@@ -77,7 +61,7 @@
       </div>
       <div class="home-intro-guide" aria-label="サイトでできること">
         <a href="#popularMachines"><b>01</b><span><strong>機種を知る</strong><small>スペック・平均G・投資目安</small></span></a>
-        <a href="#battleList"><b>02</b><span><strong>シミュレーション</strong><small>ワンタップで一撃体験</small></span></a>
+        <a href="#recentMachines"><b>02</b><span><strong>シミュレーション</strong><small>機種ごとに一撃体験</small></span></a>
         <a href="community.html"><b>03</b><span><strong>投稿でつながる</strong><small>口コミ・収支・画像・結果</small></span></a>
       </div>
     </section>
@@ -87,79 +71,9 @@
       <a href="#popularMachines"><span>人気</span>機種一覧</a>
       <a href="#pachinkoMachines"><span>玉</span>パチンコ</a>
       <a href="#slotMachines"><span>枚</span>スロット</a>
-      <a href="#battleList"><span>挑</span>ランキング挑戦</a>
+      <a href="#popularMachines"><span>冠</span>機種別ランキング</a>
       <a href="community.html"><span>話</span>コミュニティ</a>
     </nav>
-
-    <section class="game-lobby" aria-labelledby="homeTitle">
-      <div class="lobby-top">
-        <div>
-          <div class="kicker">ICHIGEKI</div>
-          <h2>ランキングバトル</h2>
-          <p>種目を選んでSTART。固定条件で一撃記録を競い、良い結果をランキングに保存できます。</p>
-        </div>
-        <a class="lobby-rank-button" href="ranking.html">ランキング</a>
-      </div>
-
-      <section class="mode-select" id="battleList" aria-label="ゲームモード">
-        <a class="mode-card mode-juggle" href="juggle-simple.html">
-          <span class="mode-icon">777</span>
-          <strong>ジャグ連</strong>
-          <small>100G以内の連チャン</small>
-          <span class="mode-rank" data-home-rank="juggle">ランキング読込中</span>
-          <b>›</b>
-        </a>
-        <a class="mode-card mode-choice" href="two-choice-select.html">
-          <span class="mode-icon">2択</span>
-          <strong>二択</strong>
-          <small>50%を当て続ける</small>
-          <span class="mode-rank" data-home-rank="twoChoice">ランキング読込中</span>
-          <b>›</b>
-        </a>
-        <a class="mode-card mode-ghoul" href="tokyo-ghoul-999.html">
-          <span class="mode-icon">999</span>
-          <strong>東京喰種999</strong>
-          <small>超デカ一撃</small>
-          <span class="mode-rank" data-home-rank="tokyoGhoul999">ランキング読込中</span>
-          <b>›</b>
-        </a>
-        <a class="mode-card mode-unicorn" href="gundam-unicorn.html">
-          <span class="mode-icon">UC</span>
-          <strong>初代ユニコーン</strong>
-          <small>記事＋RUSHシミュレーター</small>
-          <span class="mode-rank">2021 / 1・319.7</span>
-          <b>›</b>
-        </a>
-        <a class="mode-card mode-319" href="pachinko-319.html">
-          <span class="mode-icon">319</span>
-          <strong>一撃319</strong>
-          <small>総出玉勝負</small>
-          <span class="mode-rank" data-home-rank="pachinko319">ランキング読込中</span>
-          <b>›</b>
-        </a>
-        <a class="mode-card mode-8192" href="rare-8192.html">
-          <span class="mode-icon">8192</span>
-          <strong>1/8192</strong>
-          <small>激レア当選</small>
-          <span class="mode-rank" data-home-rank="rare8192">ランキング読込中</span>
-          <b>›</b>
-        </a>
-        <a class="mode-card mode-hamari" href="hamari.html">
-          <span class="mode-icon">399</span>
-          <strong>399ハマり</strong>
-          <small>深い回転数勝負</small>
-          <span class="mode-rank" data-home-rank="hamari">ランキング読込中</span>
-          <b>›</b>
-        </a>
-      </section>
-
-      <div class="lobby-footer-panels">
-        <a class="mission-card" href="ranking.html"><strong>ランキング</strong><span>保存した記録を見る</span><em>見る</em></a>
-        <a class="mission-card bonus" href="guide.html"><strong>使い方</strong><span>確率と記録の見方</span><em>読む</em></a>
-      </div>
-
-      <div class="ad-box ad-box-wide lobby-ad" data-ad-slot="home-lobby"><span class="ad-label">PR</span><span class="ad-title">広告枠</span></div>
-    </section>
 
     <section class="community-entry-banner">
       <div><span>NEW MACHINE COMMUNITY</span><h2>打った感想や収支を、機種ごとに。</h2><p>口コミ・収支・画像／動画投稿と、シミュレーション結果を分けて見やすく共有できます。</p></div>
@@ -207,52 +121,23 @@
         <a class="is-slot" href="sengoku-otome4.html"><span>20 / SLOT</span><strong>戦国乙女4</strong><small>乙女アタック → 真強カワ</small><div><b>平均429.2G</b><b>単価3.4円</b></div></a>
         <a class="is-pachinko" href="oumi5.html"><span>21 / PACHINKO</span><strong>大海物語5</strong><small>王道60%確変ループ</small><div><b>平均319.6回転</b><b>通常ヘソ</b></div></a>
         <a class="is-pachinko" href="shin-hokuto-musou.html"><span>22 / PACHINKO</span><strong>CR真・北斗無双</strong><small>80%継続 × 最大2400個</small><div><b>平均319.7回転</b><b>通常ヘソ</b></div></a>
+        <a class="is-pachinko" href="gundam-unicorn.html"><span>23 / PACHINKO・ARCHIVE</span><strong>初代ガンダムユニコーン</strong><small>RUSH → 覚醒HYPER</small><div><b>平均319.7回転</b><b>通常ヘソ</b></div></a>
       </div>
     </section>
 
-    <div class="layout">
-      <div class="main-column">
-        <section class="article-card">
-          <h2>ランキング対象バトル</h2>
-          <p class="section-lead">同じ条件で結果を出して、端末内ランキングに保存できるモードです。ジャグ連だけでなく、全種目を同じ入口から選べるようにしています。</p>
-          <div class="priority-list" aria-label="ランキング対象一覧">
-            <a href="juggle-simple.html"><b>連</b><strong>ジャグ連</strong><span>100G以内の連チャン勝負</span></a>
-            <a href="two-choice-select.html"><b>択</b><strong>二択</strong><span>50%の連続成功勝負</span></a>
-            <a href="tokyo-ghoul-999.html"><b>喰</b><strong>東京喰種999</strong><span>超デカ一撃の出玉勝負</span></a>
-            <a href="gundam-unicorn.html"><b>UC</b><strong>初代ユニコーン</strong><span>RUSH・覚醒HYPERの一撃体験</span></a>
-            <a href="rare-8192.html"><b>激</b><strong>8192</strong><span>レア当選の回転勝負</span></a>
-            <a href="pachinko-319.html"><b>玉</b><strong>一撃319</strong><span>RUSH込みの総出玉勝負</span></a>
-            <a href="hamari.html"><b>嵌</b><strong>399ハマり</strong><span>1/399の深い回転数勝負</span></a>
-          </div>
-        </section>
-
-        <section class="article-card">
-          <h2>目的別に選ぶ</h2>
-          <div class="quick-grid">
-            <a class="quick-card" href="juggle-simple.html"><strong>連チャンを試したい</strong><span>100G以内の当たりをどこまで伸ばせるか確認できます。</span></a>
-            <a class="quick-card" href="two-choice-select.html"><strong>選択勝負をしたい</strong><span>左右の二択で、50%をどこまで当て続けられるか確認できます。</span></a>
-            <a class="quick-card" href="tokyo-ghoul-999.html"><strong>大きな一撃を見たい</strong><span>東京喰種999風のLT突入と超デカ一撃を試せます。</span></a>
-            <a class="quick-card" href="pachinko-319.html"><strong>ミドルの荒さを見たい</strong><span>319の初当たり、RUSH、総出玉、差玉をまとめて確認できます。</span></a>
-            <a class="quick-card" href="rare-8192.html"><strong>激レアを引きたい</strong><span>1/8192を何回転で引けるか試せます。</span></a>
-            <a class="quick-card" href="hamari.html"><strong>深ハマりを狙いたい</strong><span>1/399の当たりが何回転まで沈むか確認できます。</span></a>
-            <a class="quick-card" href="ranking.html"><strong>記録を残したい</strong><span>この端末内に結果を保存して、ランキング形式で見返せます。</span></a>
-          </div>
-        </section>
-
-        <div class="ad-box ad-box-wide" data-ad-slot="home-inline"><span class="ad-label">PR</span><span class="ad-title">記事内広告枠</span><span class="ad-note">AdSense承認後にコードを配置</span></div>
-
+    <div class="main-column home-information">
         <section class="article-card">
           <h2>このサイトについて</h2>
-          <p>ICHIGEKIは、パチンコ・パチスロ風の確率イベントをランキング形式で遊ぶためのエンタメサイトです。固定スペックのバトルは、誰でも同じ条件で一撃記録を狙えるようにしています。</p>
-          <p>各バトルは簡易的な乱数計算で動作します。実在機種の完全再現、攻略情報、収支保証を目的としたものではありません。</p>
+          <p>ICHIGEKIは、人気パチンコ・パチスロのスペックを確認し、そのまま機種別シミュレーションとランキングを楽しめるエンタメサイトです。</p>
+          <p>各シミュレーターは簡易的な乱数計算で動作します。実在機種の完全再現、攻略情報、収支保証を目的としたものではありません。</p>
         </section>
 
         <section class="article-card">
           <h2>おすすめの使い方</h2>
           <ol>
-            <li>ランキングバトルを選ぶ</li>
+            <li>気になる機種を選ぶ</li>
             <li>STARTを押して結果を出す</li>
-            <li>良い結果をランキングに保存する</li>
+            <li>機種別ランキングに記録する</li>
             <li>もう一回挑戦して記録更新を狙う</li>
           </ol>
           <p>初めて使う場合は、先に <a href="guide.html">確率の見方</a> と <a href="glossary.html">用語集</a> を確認すると、結果の意味が分かりやすくなります。</p>
@@ -262,39 +147,16 @@
           <h2>読み物・ガイド</h2>
           <ul class="info-list">
             <li><strong><a href="guide.html">パチンコ・パチスロ確率の見方</a></strong>大当たり確率、ハマり、継続率、差玉・差枚の基本をまとめています。</li>
-            <li><strong><a href="glossary.html">用語集</a></strong>ランキングバトル内で使う用語を短く整理しています。</li>
+            <li><strong><a href="glossary.html">用語集</a></strong>シミュレーター内で使う用語を短く整理しています。</li>
             <li><strong><a href="faq.html">よくある質問</a></strong>サイトの使い方、ランキング、注意点をまとめています。</li>
           </ul>
         </section>
 
         <section class="article-card">
-          <h2>ランキングバトル早見表</h2>
-          <div class="table-wrap">
-            <table class="ranking-table">
-              <thead><tr><th>ページ</th><th>主な結果</th><th>向いている使い方</th></tr></thead>
-              <tbody>
-                <tr><td><a href="juggle-simple.html">ジャグ連チャレンジ</a></td><td>当たり、当選G、連数</td><td>短時間でシンプルにジャグ連を試す</td></tr>
-                <tr><td><a href="tokyo-ghoul-999.html">東京喰種999</a></td><td>初当たり、LT、総出玉、差玉</td><td>超デカ一撃の荒さを見る</td></tr>
-                <tr><td><a href="pachinko-319.html">319</a></td><td>初当たり、投資、総出玉、差玉</td><td>ミドルタイプの荒れ方を見る</td></tr>
-                <tr><td><a href="two-choice-select.html">二択セレクト</a></td><td>連続正解、最高記録</td><td>50%をどこまで当て続けるか試す</td></tr>
-                <tr><td><a href="hamari.html">399ハマり</a></td><td>当選回転、分母比、到達目安</td><td>1/399がどれだけ深くハマるか試す</td></tr>
-                <tr><td><a href="rare-8192.html">1/8192</a></td><td>当選回転、分母比、当選率</td><td>激レア確率がいつ当たるか試す</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
-
-        <section class="article-card">
           <h2>注意事項</h2>
-          <div class="note">このサイトはエンターテインメント目的のランキングバトルです。実際の遊技結果、収支、当選、機種性能を保証するものではありません。サイト内の数値、玉、メダル、ランキングには金銭的価値や交換価値はありません。18歳未満の方の利用はお控えください。</div>
+          <div class="note">このサイトはエンターテインメント目的の機種シミュレーターです。実際の遊技結果、収支、当選、機種性能を保証するものではありません。サイト内の数値、玉、メダル、ランキングには金銭的価値や交換価値はありません。18歳未満の方の利用はお控えください。</div>
         </section>
-      </div>
-
-      <aside class="side-column">
-        <div class="ad-box ad-box-sidebar" data-ad-slot="home-sidebar"><span class="ad-label">PR</span><span class="ad-title">サイドバー広告枠</span><span class="ad-note">PC表示向け</span></div>
-      </aside>
     </div>
-    <div class="ad-box ad-box-footer" data-ad-slot="home-footer"><span class="ad-label">PR</span><span class="ad-title">ページ下部広告枠</span><span class="ad-note">スマホでは記事末尾広告として表示</span></div>
   </main>
 
   <footer class="site-footer">
@@ -310,6 +172,6 @@
       </div>
     </div>
   </footer>
-  <script src="main.js?v=99"></script>
+  <script src="main.js?v=107"></script>
 </body>
 </html>

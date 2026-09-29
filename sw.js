@@ -1,4 +1,4 @@
-const CACHE_NAME = "ichigeki-web-v106";
+const CACHE_NAME = "ichigeki-web-v107";
 const CORE_ASSETS = [
   "index.html",
   "juggle-simple.html",
@@ -43,10 +43,12 @@ const CORE_ASSETS = [
   "style.css?v=104",
   "style.css?v=105",
   "style.css?v=106",
+  "style.css?v=107",
   "style.css?v=99",
   "style.css?v=96",
   "main.js",
   "main.js?v=99",
+  "main.js?v=107",
   "machine-library.js",
   "machine-library.js?v=99",
   "machine-library.js?v=103",
@@ -58,6 +60,7 @@ const CORE_ASSETS = [
   "machine-detail.js?v=104",
   "machine-detail.js?v=105",
   "machine-detail.js?v=106",
+  "machine-detail.js?v=107",
   "community-config.js",
   "community.js",
   "community.js?v=3",
@@ -67,6 +70,7 @@ const CORE_ASSETS = [
   "slot-zone-demo.js",
   "gundam-unicorn.js",
   "gundam-unicorn.js?v=2",
+  "gundam-unicorn.js?v=3",
   "assets/juggle/start-button-v3.png",
   "assets/juggle/result-panel-v2.png",
   "assets/juggle/marquee-frame-v4.png",

@@ -1727,6 +1727,7 @@ code,
 }
 
 .ad-box[data-ad-placeholder="true"] {
+  display: none;
   pointer-events: none;
   user-select: none;
 }
@@ -5088,26 +5089,27 @@ code,
 .machine-average-grid div { min-height: 68px; padding: 9px; border: 1px solid var(--line); border-radius: 9px; }
 .machine-average-grid span { display: block; color: var(--muted); font-size: 10px; }
 .machine-average-grid strong { display: block; margin-top: 3px; font-size: 15px; }
-.machine-start-button { width: 100%; min-height: 92px; border: 1px solid var(--accent); border-radius: 14px; background: linear-gradient(180deg, var(--accent), #2c9223); color: #041003; cursor: pointer; }
-.machine-start-button span { display: block; font-size: 31px; font-weight: 950; letter-spacing: 2px; }
+.machine-start-anchor { height: 1px; }
+.machine-start-button { width: 100%; min-height: 64px; border: 1px solid var(--accent); border-radius: 14px; background: linear-gradient(180deg, var(--accent), #2c9223); color: #041003; cursor: pointer; }
+.machine-start-button span { display: block; font-size: 25px; font-weight: 950; letter-spacing: 1px; }
 .machine-start-button small { display: block; font-weight: 850; }
 .machine-start-button.is-sticky {
   position: fixed;
   z-index: 120;
   left: 50%;
   bottom: max(16px, env(safe-area-inset-bottom));
-  width: min(540px, calc(100vw - 32px));
-  min-height: 82px;
+  width: min(500px, calc(100vw - 32px));
+  min-height: 68px;
   transform: translateX(-50%);
   box-shadow: 0 16px 45px rgba(0, 0, 0, .68), 0 0 0 3px rgba(107, 211, 79, .14);
 }
 .machine-start-button.is-result-position {
   display: block;
-  width: min(100%, 520px);
-  min-height: 82px;
+  width: min(100%, 480px);
+  min-height: 60px;
   margin: 18px auto 12px;
 }
-body.has-machine-sticky-start { padding-bottom: 118px; }
+body.has-machine-sticky-start { padding-bottom: 96px; }
 .machine-result { display: grid; align-content: center; min-height: 360px; text-align: center; }
 .machine-result > span { color: var(--blue); font: 900 11px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 1.5px; }
 .machine-result > strong { margin: 5px 0; font-size: clamp(29px, 5vw, 48px); }
@@ -5120,7 +5122,28 @@ body.has-machine-sticky-start { padding-bottom: 118px; }
 .machine-flow { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; margin: 10px 0; }
 .machine-flow span { padding: 5px 8px; border: 1px solid var(--line); border-radius: 999px; background: #080b09; font-size: 11px; font-weight: 850; }
 .machine-flow b { color: var(--muted); }
-.machine-result-actions { display: flex; justify-content: center; gap: 8px; margin-top: 8px; }
+.machine-ranking-name { display: grid; gap: 5px; max-width: 360px; margin: 14px auto 4px; text-align: left; }
+.machine-ranking-name span { color: var(--muted); font-size: 11px; font-weight: 850; }
+.machine-ranking-name input { width: 100%; min-height: 48px; padding: 10px 12px; border: 1px solid var(--line-strong); border-radius: 10px; background: #080b09; color: var(--text); font: inherit; }
+.machine-result-actions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
+.machine-result-actions .button { min-height: 52px; padding-inline: 12px; }
+.machine-ranking { margin-top: 20px; padding: 28px; border: 1px solid rgba(236, 192, 84, .32); border-radius: 16px; background: radial-gradient(circle at 90% 0, rgba(236, 192, 84, .08), transparent 36%), var(--panel); }
+.machine-ranking-head { display: flex; justify-content: space-between; gap: 18px; align-items: start; }
+.machine-ranking-head h2 { margin: 4px 0 6px; }
+.machine-ranking-head p { margin: 0; color: var(--muted); font-size: 12px; }
+.machine-ranking-mode { flex: 0 0 auto; padding: 7px 11px; border: 1px solid rgba(236, 192, 84, .35); border-radius: 999px; color: var(--gold); font-size: 11px; font-weight: 900; }
+.machine-ranking-self { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; margin: 20px 0 10px; padding: 15px 17px; border: 1px solid rgba(107, 211, 79, .28); border-radius: 13px; background: rgba(107, 211, 79, .055); }
+.machine-ranking-self > span { color: var(--accent); font: 900 11px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 1px; }
+.machine-ranking-self > strong { font-size: 20px; }
+.machine-ranking-self > small { color: var(--muted); text-align: right; }
+.machine-ranking-list { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
+.machine-ranking-list li { display: grid; grid-template-columns: 42px minmax(0, 1fr) auto minmax(160px, auto); gap: 12px; align-items: center; min-height: 58px; padding: 10px 13px; border: 1px solid var(--line); border-radius: 11px; background: rgba(0, 0, 0, .22); }
+.machine-ranking-list li > b { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: rgba(236, 192, 84, .11); color: var(--gold); }
+.machine-ranking-list li > span { overflow: hidden; font-weight: 850; text-overflow: ellipsis; white-space: nowrap; }
+.machine-ranking-list li > strong { color: var(--accent); font-size: 18px; }
+.machine-ranking-list li > small { color: var(--muted); text-align: right; }
+.machine-ranking-list li.is-empty { display: block; padding: 22px; color: var(--muted); text-align: center; }
+.machine-ranking-notice { margin: 11px 0 0; color: var(--muted); font-size: 11px; text-align: center; }
 .machine-article-layout { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 16px; margin-top: 20px; }
 .machine-article,
 .machine-side-list { padding: 24px; }
@@ -5153,6 +5176,7 @@ body.has-machine-sticky-start { padding-bottom: 118px; }
   .machine-archive-hero,
   .machine-intro,
   .machine-simulator,
+  .machine-ranking,
   .machine-article,
   .machine-side-list { padding: 18px; }
   .machine-archive-hero h1 { letter-spacing: -1px; }
@@ -5163,6 +5187,12 @@ body.has-machine-sticky-start { padding-bottom: 118px; }
   .machine-archive-hero dl div:nth-child(2) { border-right: 0; }
   .machine-archive-hero dl div:last-child { grid-column: 1 / -1; border-top: 1px solid var(--line); }
   .machine-result-actions { display: grid; grid-template-columns: 1fr; }
+  .machine-ranking-head { display: grid; }
+  .machine-ranking-mode { justify-self: start; }
+  .machine-ranking-self { grid-template-columns: 1fr; gap: 4px; }
+  .machine-ranking-self > small { text-align: left; }
+  .machine-ranking-list li { grid-template-columns: 34px minmax(0, 1fr) auto; gap: 8px; }
+  .machine-ranking-list li > small { grid-column: 2 / -1; text-align: left; }
   .machine-index-grid { grid-template-columns: 1fr; }
 }
 
@@ -11711,6 +11741,7 @@ body {
 .unicorn-flow span.is-current { border-color: #ff3759; color: #ff91a4; background: rgba(255, 55, 89, 0.08); }
 .unicorn-flow b { color: #42535d; }
 .unicorn-sim-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+.unicorn-sim-actions.has-ranking { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .unicorn-best { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; padding: 11px 14px; border: 1px solid #263b48; border-radius: 10px; }
 .unicorn-best span { color: #71838d; font-size: 12px; font-weight: 900; }
 .unicorn-best strong { color: #59e5ff; }
@@ -11754,7 +11785,8 @@ body {
   .unicorn-result-main b { margin-top: 7px; }
   .unicorn-result-grid { grid-template-columns: 1fr 1fr; }
   .unicorn-cost-control { grid-template-columns: 1fr 1fr; }
-  .unicorn-sim-actions { grid-template-columns: 1fr; }
+  .unicorn-sim-actions,
+  .unicorn-sim-actions.has-ranking { grid-template-columns: 1fr; }
   .unicorn-points { grid-template-columns: 1fr; }
   .unicorn-side { grid-template-columns: 1fr; }
 }
@@ -11893,9 +11925,7 @@ body {
   background: radial-gradient(circle at 82% 0, rgba(107, 211, 79, .10), transparent 34%), var(--panel);
 }
 .home-game-page > .community-entry-banner { order: 4; margin: 0 0 12px; }
-.home-game-page > .game-lobby { order: 5; max-width: none; margin: 0 0 20px; }
-.home-game-page > .layout { order: 6; }
-.home-game-page > .ad-box-footer { order: 7; }
+.home-game-page > .home-information { order: 5; width: 100%; }
 
 .home-game-page .machine-index-section > h2 {
   font-size: clamp(27px, 4vw, 40px);
