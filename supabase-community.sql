@@ -47,12 +47,13 @@ create policy "authenticated users create own posts" on public.community_posts f
 create policy "users report as themselves" on public.community_reports for insert to authenticated with check (auth.uid() = reporter_id);
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-values ('community-media', 'community-media', true, 2097152, array['image/jpeg', 'image/png', 'image/webp'])
-on conflict (id) do update set public = true, file_size_limit = 2097152, allowed_mime_types = array['image/jpeg', 'image/png', 'image/webp'];
+values ('community-media', 'community-media', true, 20971520, array['image/jpeg', 'image/png', 'image/webp', 'video/mp4', 'video/webm'])
+on conflict (id) do update set public = true, file_size_limit = 20971520, allowed_mime_types = array['image/jpeg', 'image/png', 'image/webp', 'video/mp4', 'video/webm'];
 
 drop policy if exists "community images are public" on storage.objects;
+drop policy if exists "community media are public" on storage.objects;
 drop policy if exists "users upload to own folder" on storage.objects;
 
-create policy "community images are public" on storage.objects for select using (bucket_id = 'community-media');
+create policy "community media are public" on storage.objects for select using (bucket_id = 'community-media');
 create policy "users upload to own folder" on storage.objects for insert to authenticated
 with check (bucket_id = 'community-media' and (storage.foldername(name))[1] = auth.uid()::text);

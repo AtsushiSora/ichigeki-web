@@ -16,7 +16,7 @@ const machineMeta = {
   "tokyo-ghoul-999": { name: "東京喰種999", simulator: "tokyo-ghoul-999.html" },
   "pachinko-319": { name: "一撃319", simulator: "pachinko-319.html" }
 };
-const communityState = { mode: "local", client: null, posts: [], filter: "all", files: [] };
+const communityState = { mode: "local", client: null, posts: [], filter: "all", files: [], videoFile: null };
 
 function text(value) { return String(value ?? ""); }
 function safeUrl(value, allowDataImage = false) {
@@ -82,6 +82,10 @@ function safeMediaUrls(post) {
   return urls.map(url => safeUrl(url, true)).filter(Boolean).slice(0, 3);
 }
 
+function isUploadedVideo(url) {
+  try { return /\.(mp4|webm)$/i.test(new URL(url).pathname); } catch { return false; }
+}
+
 function renderPosts() {
   const hidden = hiddenIds();
   const posts = communityState.posts.filter(post => !hidden.has(post.id) && (communityState.filter === "all" || post.post_type === communityState.filter));
@@ -96,7 +100,9 @@ function renderPosts() {
     const diff = Number(post.return_amount) - Number(post.investment);
     const balance = post.post_type === "result" ? `<div class="post-balance"><span>投資 <b>${money(post.investment)}円</b></span><span>回収 <b>${money(post.return_amount)}円</b></span><span class="${diff >= 0 ? "is-plus" : "is-minus"}">収支 <b>${diff >= 0 ? "+" : ""}${money(diff)}円</b></span></div>` : "";
     const videoUrl = safeUrl(post.video_url);
-    const video = videoUrl ? `<a class="post-video-link" href="${videoUrl}" target="_blank" rel="noopener noreferrer">添付動画を開く ↗</a>` : "";
+    const video = !videoUrl ? "" : isUploadedVideo(videoUrl)
+      ? `<video class="post-video-player" controls preload="metadata" playsinline src="${videoUrl}">動画を再生できません。</video>`
+      : `<a class="post-video-link" href="${videoUrl}" target="_blank" rel="noopener noreferrer">添付動画を開く ↗</a>`;
     const media = safeMediaUrls(post);
     const mediaHtml = media.length ? `<div class="post-media">${media.map(url => `<img src="${url}" alt="投稿画像" loading="lazy">`).join("")}</div>` : "";
     card.innerHTML = `<div class="post-topline"><span class="post-type post-type-${post.post_type}">${post.post_type === "result" ? "実戦収支" : post.post_type === "simulation" ? "シミュ結果" : "口コミ"}</span>${rating}<time>${new Date(post.created_at).toLocaleString("ja-JP", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" })}</time></div><h3></h3><p class="post-author"></p><p class="post-body"></p>${balance}${mediaHtml}${video}<div class="post-actions"><button type="button" data-report-post="${post.id}">通報・非表示</button></div>`;
@@ -134,6 +140,21 @@ async function uploadImages(userId) {
   return urls;
 }
 
+async function uploadVideo(userId) {
+  const file = communityState.videoFile;
+  if (!file) return "";
+  if (communityState.mode !== "supabase") throw new Error("動画ファイルは公開コミュニティ接続時だけ投稿できます。動画URLをご利用ください。");
+  if (file.size > 20 * 1024 * 1024) throw new Error("動画は20MB以下にしてください。");
+  if (!["video/mp4", "video/webm"].includes(file.type)) throw new Error("動画はMP4またはWebM形式にしてください。");
+  const bucket = window.ICHIGEKI_COMMUNITY_CONFIG.storageBucket || "community-media";
+  const ext = file.type === "video/webm" ? "webm" : "mp4";
+  const path = `${userId}/videos/${uid()}.${ext}`;
+  const { error } = await communityState.client.storage.from(bucket).upload(path, file, { contentType: file.type, upsert: false });
+  if (error) throw error;
+  const { data } = communityState.client.storage.from(bucket).getPublicUrl(path);
+  return data.publicUrl;
+}
+
 async function submitPost(event) {
   event.preventDefault();
   const isSimulation = event.currentTarget.id === "simulationPostForm";
@@ -143,12 +164,14 @@ async function submitPost(event) {
   try {
     const video = isSimulation ? "" : document.getElementById("videoUrl").value.trim();
     if (video && !/^https:\/\//i.test(video)) throw new Error("動画URLはhttps://から入力してください。");
+    if (video && communityState.videoFile) throw new Error("動画ファイルと動画URLはどちらか一方だけ選んでください。");
     let userId = "local";
     if (communityState.mode === "supabase") {
       const { data } = await communityState.client.auth.getUser(); userId = data.user?.id;
       if (!userId) throw new Error("投稿用セッションを取得できませんでした。");
     }
     const mediaUrls = isSimulation ? [] : await uploadImages(userId);
+    const uploadedVideoUrl = isSimulation ? "" : await uploadVideo(userId);
     const post = {
       id: uid(), user_id: communityState.mode === "supabase" ? userId : null,
       machine_slug: selectedMachine(), post_type: isSimulation ? "simulation" : document.getElementById("postType").value,
@@ -158,7 +181,7 @@ async function submitPost(event) {
       body: document.getElementById(isSimulation ? "simulationBody" : "postBody").value.trim().slice(0, 1000),
       investment: isSimulation ? 0 : Number(document.getElementById("investment").value) || 0,
       return_amount: isSimulation ? 0 : Number(document.getElementById("returnAmount").value) || 0,
-      media_urls: mediaUrls, video_url: video || null, status: "published", created_at: new Date().toISOString()
+      media_urls: mediaUrls, video_url: uploadedVideoUrl || video || null, status: "published", created_at: new Date().toISOString()
     };
     if (communityState.mode === "supabase") {
       const { id, ...payload } = post;
@@ -173,8 +196,10 @@ async function submitPost(event) {
       updateSimulationComposer();
     } else {
       communityState.files = [];
+      communityState.videoFile = null;
       updateComposer();
       document.getElementById("imagePreview").innerHTML = "";
+      document.getElementById("videoPreview").innerHTML = "";
     }
     showNotice(communityState.mode === "local" ? "投稿をこの端末に保存しました。公開共有はバックエンド接続後に有効になります。" : "投稿を公開しました。", "success");
     await refreshPosts();
@@ -229,6 +254,30 @@ document.getElementById("postImages").addEventListener("change", event => {
   if ([...event.target.files].length > 3) showNotice("画像は最大3枚です。最初の3枚を選択しました。", "error");
   const preview = document.getElementById("imagePreview"); preview.innerHTML = "";
   communityState.files.forEach(file => { const img = document.createElement("img"); img.src = URL.createObjectURL(file); img.alt = "投稿前の画像プレビュー"; preview.appendChild(img); });
+});
+document.getElementById("postVideo").addEventListener("change", event => {
+  const file = event.target.files[0] || null;
+  const preview = document.getElementById("videoPreview");
+  preview.innerHTML = "";
+  communityState.videoFile = null;
+  if (!file) return;
+  if (file.size > 20 * 1024 * 1024) {
+    event.target.value = "";
+    showNotice("動画は20MB以下にしてください。", "error");
+    return;
+  }
+  if (!["video/mp4", "video/webm"].includes(file.type)) {
+    event.target.value = "";
+    showNotice("動画はMP4またはWebM形式にしてください。", "error");
+    return;
+  }
+  communityState.videoFile = file;
+  const video = document.createElement("video");
+  video.src = URL.createObjectURL(file);
+  video.controls = true;
+  video.preload = "metadata";
+  video.playsInline = true;
+  preview.appendChild(video);
 });
 document.getElementById("machineFilter").addEventListener("change", async event => {
   const simulator = machineMeta[event.target.value].simulator;

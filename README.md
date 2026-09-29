@@ -65,4 +65,4 @@
 
 `community-config.js` が未設定の場合、投稿はブラウザのローカルストレージだけに保存されるプレビューモードです。
 
-公開コミュニティへ切り替える場合は、Supabaseで匿名ログインを有効にして `supabase-community.sql` を実行し、`community-config.js` にProject URLとanon keyを設定します。通常投稿では画像を最大3枚・各2MBまで、動画は外部の公開URLとして投稿できます。シミュレーション結果は添付投稿とは別の専用フォームから共有します。
+公開コミュニティへ切り替える場合は、Supabaseで匿名ログインを有効にして `supabase-community.sql` を実行し、`community-config.js` にProject URLとanon keyを設定します。通常投稿では画像を最大3枚・各2MBまで、動画ファイルを1本・20MBまで、または外部の公開動画URLを投稿できます。シミュレーション結果は添付投稿とは別の専用フォームから共有します。

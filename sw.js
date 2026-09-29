@@ -1,4 +1,4 @@
-const CACHE_NAME = "ichigeki-web-v101";
+const CACHE_NAME = "ichigeki-web-v102";
 const CORE_ASSETS = [
   "index.html",
   "juggle-simple.html",
@@ -20,6 +20,7 @@ const CORE_ASSETS = [
   "shin-hokuto-musou.html",
   "style.css",
   "style.css?v=100",
+  "style.css?v=101",
   "style.css?v=99",
   "style.css?v=96",
   "main.js",
@@ -30,6 +31,7 @@ const CORE_ASSETS = [
   "machine-detail.js?v=99",
   "community-config.js",
   "community.js",
+  "community.js?v=3",
   "slot-zone-demo.js",
   "gundam-unicorn.js",
   "gundam-unicorn.js?v=2",
