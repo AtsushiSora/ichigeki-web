@@ -23,6 +23,12 @@
 - `community.html`: 機種別の口コミ・収支・画像／動画投稿と、独立したシミュレーション結果投稿
 - `slot-zone-demo.html`: CZ・特化ゾーン・上位CZのスロット新台用デモ
 - `gundam-unicorn.html`: 初代Pフィーバー機動戦士ガンダムユニコーンの記事・簡易シミュレーター
+- `lycoris-recoil-slot.html`: スマスロ リコリス・リコイル
+- `assault-lily.html`: e アサルトリリィ
+- `kanokari-slot.html`: Lパチスロ 彼女、お借りします
+- `kabaneri2-119.html`: e 甲鉄城のカバネリ2 輪廻の果報119ver.
+- `aobuta-slot.html`: L青春ブタ野郎はバニーガール先輩の夢を見ない
+- `fire-force2-99.html`: eフィーバー炎炎ノ消防隊2 99ver.
 - `karakuri-circus.html`: パチスロ からくりサーカス
 - `monkey-turn-v.html`: スマスロ モンキーターンV
 - `eva15.html`: 新世紀エヴァンゲリオン～未来への咆哮～

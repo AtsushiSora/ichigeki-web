@@ -3,6 +3,12 @@ const COMMUNITY_HIDDEN_KEY = "ichigekiCommunityHiddenV1";
 const machineMeta = {
   "slot-new": { name: "新台スロット（登録待ち）", simulator: "slot-zone-demo.html" },
   "gundam-unicorn": { name: "初代ガンダムユニコーン", simulator: "gundam-unicorn.html" },
+  "lycoris-recoil-slot": { name: "スマスロ リコリス・リコイル", simulator: "lycoris-recoil-slot.html" },
+  "assault-lily": { name: "e アサルトリリィ", simulator: "assault-lily.html" },
+  "kanokari-slot": { name: "Lパチスロ 彼女、お借りします", simulator: "kanokari-slot.html" },
+  "kabaneri2-119": { name: "e 甲鉄城のカバネリ2 輪廻の果報119ver.", simulator: "kabaneri2-119.html" },
+  "aobuta-slot": { name: "L青春ブタ野郎はバニーガール先輩の夢を見ない", simulator: "aobuta-slot.html" },
+  "fire-force2-99": { name: "eフィーバー炎炎ノ消防隊2 99ver.", simulator: "fire-force2-99.html" },
   "karakuri-circus": { name: "パチスロ からくりサーカス", simulator: "karakuri-circus.html" },
   "monkey-turn-v": { name: "スマスロ モンキーターンV", simulator: "monkey-turn-v.html" },
   "eva15": { name: "エヴァ15 未来への咆哮", simulator: "eva15.html" },

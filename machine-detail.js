@@ -43,7 +43,7 @@
   const neighbors = ordered.filter(([key]) => key !== slug).slice(0, 5);
   app.innerHTML = `
     <section class="machine-archive-hero theme-${machine.theme}">
-      <div><span class="machine-kind">${machine.type === "slot" ? "POPULAR SLOT ARCHIVE" : "POPULAR PACHINKO ARCHIVE"}</span><h1>${machine.name}</h1><p>${machine.catchcopy}</p></div>
+      <div><span class="machine-kind">${machine.year.includes("2026") ? "NEW MACHINE 2026" : machine.type === "slot" ? "POPULAR SLOT ARCHIVE" : "POPULAR PACHINKO ARCHIVE"}</span><h1>${machine.name}</h1><p>${machine.catchcopy}</p></div>
       <dl><div><dt>導入</dt><dd>${machine.year}</dd></div><div><dt>メーカー</dt><dd>${machine.maker}</dd></div><div><dt>分類</dt><dd>${machine.type === "slot" ? "パチスロ" : "パチンコ"}</dd></div></dl>
     </section>
 
@@ -100,14 +100,24 @@
     const rush = Math.random() < sim.rushEntry;
     let payout = rush ? sim.firstPayoutIn : sim.firstPayoutOut;
     let hits = 1;
+    let upper = rush && Boolean(sim.upperLabel) && Math.random() < (sim.upperDirectChance || 0);
     const flow = [`${spins}回転で${sim.hitLabel}`, rush ? `${sim.rushLabel}突入` : `${sim.rushLabel}非突入`];
+    if (upper) flow.push(`${sim.upperLabel}直行`);
     if (rush) {
-      while (hits < 100 && Math.random() < sim.rushContinue) { hits += 1; payout += weighted(sim.rushPayouts); }
+      while (hits < 100 && Math.random() < (upper ? sim.upperContinue : sim.rushContinue)) {
+        hits += 1;
+        payout += weighted(sim.rushPayouts);
+        if (!upper && sim.upperLabel && Math.random() < (sim.upperUpgradeChance || 0)) {
+          upper = true;
+          flow.push(`${sim.upperLabel}昇格`);
+        }
+      }
       flow.push(`${hits}回当たりで終了`);
     }
     const usedBalls = investment / 4;
     const diff = payout - usedBalls;
-    return { title: rush ? `${sim.rushLabel} ${hits}回当たり` : "通常へ", summary: `${spins}回転で初当り。${rush ? `${sim.rushLabel}に突入しました。` : "RUSHには突入しませんでした。"}`, stats: [["今回の回転数", `${yen.format(spins)}回転`], ["投資目安", `${yen.format(investment)}円`], ["総出玉", `${yen.format(payout)}玉`], ["差玉目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}玉`]], flow, share: `${machine.shortName}｜${yen.format(spins)}回転｜投資${yen.format(investment)}円｜${rush ? sim.rushLabel : "通常"}｜${hits}回当たり｜${yen.format(payout)}玉｜差玉${diff >= 0 ? "+" : ""}${yen.format(diff)}玉` };
+    const rushResultLabel = upper ? sim.upperLabel : rush ? sim.rushLabel : "通常";
+    return { title: rush ? `${rushResultLabel} ${hits}回当たり` : "通常へ", summary: `${spins}回転で初当り。${upper ? `${sim.upperLabel}まで到達しました。` : rush ? `${sim.rushLabel}に突入しました。` : "RUSHには突入しませんでした。"}`, stats: [["今回の回転数", `${yen.format(spins)}回転`], ["投資目安", `${yen.format(investment)}円`], ["総出玉", `${yen.format(payout)}玉`], ["差玉目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}玉`]], flow, share: `${machine.shortName}｜${yen.format(spins)}回転｜投資${yen.format(investment)}円｜${rushResultLabel}｜${hits}回当たり｜${yen.format(payout)}玉｜差玉${diff >= 0 ? "+" : ""}${yen.format(diff)}玉` };
   }
 
   function runSlot() {

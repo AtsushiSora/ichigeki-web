@@ -11839,7 +11839,7 @@ body {
 .home-jump-nav {
   order: 2;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 8px;
   margin: 12px 0 8px;
 }
@@ -11871,6 +11871,10 @@ body {
 }
 
 .home-game-page > .machine-index-section { order: 3; margin: 12px 0; padding: 28px; }
+.home-game-page > .recent-machine-section {
+  border-color: rgba(107, 211, 79, .28);
+  background: radial-gradient(circle at 82% 0, rgba(107, 211, 79, .10), transparent 34%), var(--panel);
+}
 .home-game-page > .community-entry-banner { order: 4; margin: 0 0 12px; }
 .home-game-page > .game-lobby { order: 5; max-width: none; margin: 0 0 20px; }
 .home-game-page > .layout { order: 6; }
