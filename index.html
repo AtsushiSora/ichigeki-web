@@ -1,30 +1,30 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#050705">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <meta name="description" content="人気パチンコ・パチスロの記事、平均回転数・投資目安・コイン単価付きシミュレーター、機種別コミュニティを楽しめるICHIGEKIです。">
   <title>ICHIGEKI | 人気パチンコ・パチスロ機種シミュレーター</title>
-  <link rel="canonical" href="https://atsushisora.github.io/ichigeki-web/">
+  <link rel="canonical" href="https://ichigeki-pachislot.com/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ICHIGEKI">
   <meta property="og:title" content="ICHIGEKI | 人気パチンコ・パチスロ機種シミュレーター">
   <meta property="og:description" content="人気機種のスペック、平均回転数、投資目安を確認して、機種別シミュレーションとランキングを楽しめます。">
-  <meta property="og:url" content="https://atsushisora.github.io/ichigeki-web/">
-  <meta property="og:image" content="https://atsushisora.github.io/ichigeki-web/icon.svg">
+  <meta property="og:url" content="https://ichigeki-pachislot.com/">
+  <meta property="og:image" content="https://ichigeki-pachislot.com/icon.svg">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="ICHIGEKI | 人気パチンコ・パチスロ機種シミュレーター">
   <meta name="twitter:description" content="人気機種のスペック、平均回転数、投資目安を確認して、機種別シミュレーションとランキングを楽しめます。">
-  <link rel="stylesheet" href="style.css?v=107">
+  <link rel="stylesheet" href="style.css?v=132">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "ICHIGEKI",
-    "url": "https://atsushisora.github.io/ichigeki-web/",
+    "url": "https://ichigeki-pachislot.com/",
     "description": "人気機種のスペック、平均回転数、投資目安を確認して、機種別シミュレーションとランキングを楽しめるサイトです。",
     "inLanguage": "ja"
   }
@@ -40,15 +40,70 @@
       <nav class="nav">
         <a href="index.html">トップ</a>
         <a href="#popularMachines">人気機種</a>
-        <a href="#recentMachines">新台</a>
+        <a href="new-machines-2026-10.html">新台</a>
         <a href="community.html">新台・口コミ</a>
         <a href="guide.html">使い方</a>
         <a href="about.html">運営者</a>
       </nav>
+      <a class="mobile-header-button" href="guide.html">使い方</a>
     </div>
   </header>
 
-  <main class="page home-game-page">
+  <main class="page home-game-page" id="appHome">
+    <section class="mobile-app-home" aria-labelledby="mobileAppTitle">
+      <div class="mobile-app-heading"><span>QUICK START</span><h1 id="mobileAppTitle">気になる台を、すぐ試す。</h1><p>機種名やカテゴリからシミュレーターを探せます。</p></div>
+      <form class="mobile-app-search" id="mobileMachineSearchForm" role="search">
+        <label for="mobileMachineSearch"><span aria-hidden="true">⌕</span><input id="mobileMachineSearch" type="search" inputmode="search" autocomplete="off" placeholder="北斗、東京喰種、エヴァ…" aria-controls="mobileMachineSearchResults" aria-expanded="false"><button type="submit">検索</button></label>
+      </form>
+      <section class="mobile-machine-search-results" id="mobileMachineSearchResults" aria-label="機種検索結果" hidden>
+        <div class="mobile-search-result-head"><strong id="mobileMachineSearchStatus">検索結果</strong><button id="mobileMachineSearchClear" type="button">クリア</button></div>
+        <div class="mobile-search-result-list" id="mobileMachineSearchList"></div>
+        <a class="mobile-search-all-link" href="#popularMachines">全機種の一覧を見る ›</a>
+      </section>
+      <div class="mobile-app-categories" role="group" aria-label="機種カテゴリ">
+        <button type="button" data-home-machine-category="popular" aria-pressed="true">人気</button>
+        <button type="button" data-home-machine-category="new">新着</button>
+        <button type="button" data-home-machine-category="pachinko">パチンコ</button>
+        <button type="button" data-home-machine-category="slot">スロット</button>
+      </div>
+
+      <article class="mobile-featured-machine" id="appFeatured">
+        <a class="mobile-featured-title" href="valvrave2.html"><span>♛ 今日のおすすめ</span><strong>スマスロ ヴヴヴ2</strong><b aria-hidden="true">›</b></a>
+        <div class="mobile-featured-stats"><div><span>CZ</span><strong>約1/324</strong></div><div><span>平均</span><strong>476G</strong></div><div><span>コイン単価</span><strong>4.2円</strong></div></div>
+        <a class="mobile-featured-start" href="valvrave2.html#simulator"><span aria-hidden="true">▶</span>シミュレーターを試す<b aria-hidden="true">›</b></a>
+      </article>
+
+      <section class="mobile-weekly-ranking" aria-labelledby="mobileWeeklyTitle">
+        <div class="mobile-app-section-head"><h2 id="mobileWeeklyTitle"><span aria-hidden="true">♛</span> 今週の人気</h2><small id="mobileWeeklyStatus">直近7日を集計中</small></div>
+        <div class="mobile-weekly-ranking-list" id="mobileWeeklyRankingList" aria-live="polite">
+          <a href="valvrave2.html#simulator"><span>1</span><strong>スマスロ ヴヴヴ2</strong><small>シミュレーターへ ›</small></a>
+          <a href="smart-hokuto.html#simulator"><span>2</span><strong>スマスロ北斗の拳</strong><small>シミュレーターへ ›</small></a>
+          <a href="tokyo-ghoul-slot.html#simulator"><span>3</span><strong>スマスロ 東京喰種</strong><small>シミュレーターへ ›</small></a>
+        </div>
+      </section>
+
+      <section class="mobile-personal-machines" id="mobileRecentMachines" aria-labelledby="mobileRecentTitle" hidden>
+        <div class="mobile-app-section-head"><h2 id="mobileRecentTitle"><span aria-hidden="true">◷</span> 最近遊んだ台</h2><button type="button" id="clearRecentMachines">履歴を消す</button></div>
+        <div class="mobile-machine-shelf" id="mobileRecentMachineList"></div>
+      </section>
+
+      <section class="mobile-personal-machines" id="mobileFavoriteMachines" aria-labelledby="mobileFavoriteTitle">
+        <div class="mobile-app-section-head"><h2 id="mobileFavoriteTitle"><span aria-hidden="true">★</span> お気に入り</h2><small id="mobileFavoriteCount">0台</small></div>
+        <div class="mobile-machine-shelf" id="mobileFavoriteMachineList"></div>
+        <p class="mobile-machine-empty" id="mobileFavoriteEmpty">各機種ページの「☆ お気に入り」から登録できます。</p>
+      </section>
+
+      <section class="mobile-popular-machines" aria-labelledby="mobilePopularTitle">
+        <div class="mobile-app-section-head"><h2 id="mobilePopularTitle"><span aria-hidden="true">▥</span> 人気機種</h2><a href="#popularMachines">全機種を見る ›</a></div>
+        <div class="mobile-popular-grid" id="mobileCategoryMachineList">
+          <a href="smart-hokuto.html"><span>1</span><strong>スマスロ北斗</strong><b>平均383.4G</b><small>単価3.3円</small></a>
+          <a href="tokyo-ghoul-slot.html"><span>2</span><strong>東京喰種</strong><b>平均394.4G</b><small>単価4.1円</small></a>
+          <a href="monkey-turn-v.html"><span>3</span><strong>モンキーターンV</strong><b>平均299.8G</b><small>単価3.1円</small></a>
+          <a href="eva15.html"><span>4</span><strong>エヴァ15</strong><b>平均319.7回転</b><small>通常ヘソ</small></a>
+        </div>
+      </section>
+    </section>
+
     <section class="home-intro" aria-labelledby="homeTitle">
       <div class="home-intro-copy">
         <span class="home-eyebrow">PACHINKO &amp; SLOT COMMUNITY</span>
@@ -67,7 +122,7 @@
     </section>
 
     <nav class="home-jump-nav" aria-label="ホームのメニュー">
-      <a href="#recentMachines"><span>新</span>2026年9月新台</a>
+      <a href="new-machines-2026-10.html"><span>新</span>2026年10月新台</a>
       <a href="#popularMachines"><span>人気</span>機種一覧</a>
       <a href="#pachinkoMachines"><span>玉</span>パチンコ</a>
       <a href="#slotMachines"><span>枚</span>スロット</a>
@@ -75,16 +130,38 @@
       <a href="community.html"><span>話</span>コミュニティ</a>
     </nav>
 
+    <section class="editorial-hero" aria-labelledby="editorialHeroTitle">
+      <div class="editorial-hero-main">
+        <span class="machine-section-label">OCTOBER 2026 EDITORIAL</span>
+        <h2 id="editorialHeroTitle">新台を知ってから、試す。</h2>
+        <p>10月5日・19日導入予定の機種を整理しました。導入前は速報、導入後は公表スペックを確認してシミュレーションを追加します。</p>
+        <a class="button primary" href="new-machines-2026-10.html">10月の新台まとめを読む</a>
+      </div>
+      <div class="editorial-hero-links">
+        <a href="juggler-8000g-guide.html"><span>JUGGLER GUIDE</span><strong>8,000Gを4機種比較</strong><small>BIG・REGの理論回数を一覧化</small></a>
+        <a href="coin-unit-guide.html"><span>SLOT GUIDE</span><strong>コイン単価の見方</strong><small>荒さと投資目安を分けて確認</small></a>
+        <a href="deka-heso-guide.html"><span>PACHINKO GUIDE</span><strong>デカヘソの投資計算</strong><small>回転数を変えて平均投資を比較</small></a>
+      </div>
+    </section>
+
     <section class="community-entry-banner">
       <div><span>NEW MACHINE COMMUNITY</span><h2>打った感想や収支を、機種ごとに。</h2><p>口コミ・収支・画像／動画投稿と、シミュレーション結果を分けて見やすく共有できます。</p></div>
       <div class="community-entry-actions"><a class="button primary" href="community.html">コミュニティを見る</a><a class="button" href="slot-zone-demo.html">スロット体験版</a></div>
     </section>
 
     <section class="article-card machine-index-section recent-machine-section" id="recentMachines">
-      <span class="machine-section-label">SEPTEMBER 2026 NEW MACHINES</span>
+      <span class="machine-section-label">OCTOBER 2026 NEW MACHINES</span>
       <h2>最近導入された注目台</h2>
-      <p class="section-lead">2026年9月7日導入の6機種を追加しました。パチスロはCZ・特化ゾーン・上位CZ、パチンコは初当り・RUSH・出玉を簡易体験できます。</p>
+      <p class="section-lead">2026年10月5日導入の注目8機種を追加しました。固定レートで投資・換金・収支を計算し、機種別ランキングまで楽しめます。</p>
       <div class="machine-index-grid">
+        <a class="is-slot" href="juoh-slot.html"><span>OCT NEW 01 / SLOT</span><strong>スマスロ 獣王</strong><small>SC高確 → サバ連 → KSC</small><div><b>平均326.5G</b><b>単価4.0円</b></div></a>
+        <a class="is-slot" href="monster-hunter-sunbreak.html"><span>OCT NEW 02 / SLOT</span><strong>モンハン サンブレイク</strong><small>CZ → 盟勇クエスト → 上位AT</small><div><b>平均349.9G</b><b>単価3.2円</b></div></a>
+        <a class="is-pachinko" href="rezero-onigakari2.html"><span>OCT NEW 03 / PACHINKO</span><strong>eリゼロ 鬼がかり2</strong><small>RUSH → 6000個振り分け</small><div><b>平均349.9回転</b><b>通常ヘソ</b></div></a>
+        <a class="is-pachinko" href="baki-129.html"><span>OCT NEW 04 / PACHINKO</span><strong>e範馬刃牙 129</strong><small>3連勝 → 親子喧嘩 → LT90</small><div><b>平均129.7回転</b><b>通常ヘソ</b></div></a>
+        <a class="is-pachinko" href="godzilla7-choshinkan.html"><span>OCT NEW 05 / PACHINKO</span><strong>デカスタGODZILLA7</strong><small>役物挑戦 → UG-RUSH</small><div><b>役物約1/59</b><b>デカスタ</b></div></a>
+        <a class="is-pachinko" href="smart-pachinko-gantz.html"><span>OCT NEW 06 / PACHINKO</span><strong>SMART-PACHINKO GANTZ</strong><small>行って下ちい → 一つのBONUS</small><div><b>平均319回転</b><b>突入約66.7%</b></div></a>
+        <a class="is-slot" href="paripi-koumei-slot.html"><span>OCT NEW 07 / SLOT</span><strong>スマスロ パリピ孔明</strong><small>CZ → Party Time → 上位ST</small><div><b>平均309.9G</b><b>単価3.3円</b></div></a>
+        <a class="is-slot" href="my-juggler6.html"><span>OCT NEW 08 / NORMAL SLOT</span><strong>マイジャグラーVI</strong><small>設定1〜6ランダム・8,000G</small><div><b>設定を結果発表</b><b>BIG・REG</b></div></a>
         <a class="is-slot" href="lycoris-recoil-slot.html"><span>NEW 01 / SLOT</span><strong>スマスロ リコリコ</strong><small>CZ → リコリスラッシュW</small><div><b>平均328.8G</b><b>単価3.2円</b></div></a>
         <a class="is-pachinko" href="assault-lily.html"><span>NEW 02 / PACHINKO</span><strong>eアサルトリリィ</strong><small>約1/164.4 → ASSAULT RUSH</small><div><b>平均164.4回転</b><b>通常ヘソ</b></div></a>
         <a class="is-slot" href="kanokari-slot.html"><span>NEW 03 / SLOT</span><strong>スマスロ かのかり</strong><small>CZ → 妄想DTチャレンジ</small><div><b>平均269G</b><b>単価3.6円</b></div></a>
@@ -98,11 +175,28 @@
       <span class="machine-section-label">POPULAR MACHINE ARCHIVE</span>
       <h2>人気機種の記事・シミュレーター</h2>
       <p class="section-lead">平均初当り、投資目安、通常ヘソ／デカヘソ、50枚ベース、コイン単価を確認してから遊べます。</p>
+      <div class="machine-find-tools" data-machine-find>
+        <label for="machineSearch"><span>機種名で探す</span><input id="machineSearch" type="search" inputmode="search" autocomplete="off" placeholder="例：北斗、東京喰種、エヴァ"></label>
+        <div class="machine-filter-buttons" role="group" aria-label="機種タイプで絞り込む">
+          <button type="button" data-machine-filter="all" aria-pressed="true">すべて</button>
+          <button type="button" data-machine-filter="slot" aria-pressed="false">スロット</button>
+          <button type="button" data-machine-filter="pachinko" aria-pressed="false">パチンコ</button>
+        </div>
+        <p id="machineFilterStatus" aria-live="polite"></p>
+      </div>
       <div class="machine-index-grid" id="slotMachines">
+        <a class="is-slot" href="my-juggler6.html"><span>JUGGLER / RANDOM SETTING</span><strong>マイジャグラーVI</strong><small>設定1〜6 → 8,000G → 結果発表</small><div><b>公式設定別確率</b><b>BIG・REG</b></div></a>
+        <a class="is-slot" href="neo-im-juggler.html"><span>JUGGLER / RANDOM SETTING</span><strong>ネオアイムジャグラーEX</strong><small>設定1〜6 → 8,000G → 結果発表</small><div><b>公式設定別確率</b><b>BIG・REG</b></div></a>
+        <a class="is-slot" href="gogo-juggler3.html"><span>JUGGLER / RANDOM SETTING</span><strong>ゴーゴージャグラー3</strong><small>設定1〜6 → 8,000G → 結果発表</small><div><b>公式設定別確率</b><b>BIG・REG</b></div></a>
+        <a class="is-slot" href="funky-juggler2.html"><span>JUGGLER / RANDOM SETTING</span><strong>ファンキージャグラー2</strong><small>設定1〜6 → 8,000G → 結果発表</small><div><b>公式設定別確率</b><b>BIG・REG</b></div></a>
+        <a class="is-slot" href="sengoku-otome5.html"><span>NEW PICK / SLOT</span><strong>戦国乙女5</strong><small>強カワRUSH → 剣聖CHANCE</small><div><b>平均359.5G</b><b>単価3.5円</b></div></a>
+        <a class="is-slot" href="million-god-kiseki.html"><span>NEW PICK / SLOT</span><strong>ミリオンゴッド 神々の軌跡</strong><small>GOD GAME → Z-GAME・SGG</small><div><b>平均532.8G</b><b>純増約7.0枚/G</b></div></a>
+        <a class="is-pachinko" id="pachinkoMachines" href="lycoris-recoil-pachinko.html"><span>NEW PICK / PACHINKO</span><strong>eリコリス・リコイル</strong><small>RUSH → ULTIMATE DRIVE</small><div><b>平均259.7回転</b><b>通常ヘソ</b></div></a>
+        <a class="is-pachinko" href="okiumi6.html"><span>NEW PICK / PACHINKO</span><strong>スーパー海物語IN沖縄6</strong><small>確変ループ → ジンベェタイム</small><div><b>平均319.6回転</b><b>通常ヘソ</b></div></a>
         <a class="is-slot" href="tokyo-ghoul-slot.html"><span>01 / SLOT・MAJOR HALL</span><strong>L 東京喰種</strong><small>BITES → 有馬貴将JUDGEMENT</small><div><b>平均394.4G</b><b>単価4.1円</b></div></a>
         <a class="is-slot" href="valvrave2.html"><span>02 / SLOT・MAJOR HALL</span><strong>革命機ヴァルヴレイヴ2</strong><small>ハラキリ3連 → 超革命RUSH</small><div><b>平均476G</b><b>単価4.2円</b></div></a>
         <a class="is-slot" href="kabaneri-unato.html"><span>03 / SLOT・MAJOR HALL</span><strong>カバネリ 海門決戦</strong><small>ST → 海門回想 → 裏・景之ST</small><div><b>平均422.5G</b><b>単価3.1円</b></div></a>
-        <a class="is-pachinko" id="pachinkoMachines" href="tokyo-ghoul-e.html"><span>04 / PACHINKO・MAJOR HALL</span><strong>e 東京喰種</strong><small>ALL3000個以上・継続約75%</small><div><b>平均399.9回転</b><b>通常ヘソ</b></div></a>
+        <a class="is-pachinko" href="tokyo-ghoul-e.html"><span>04 / PACHINKO・MAJOR HALL</span><strong>e 東京喰種</strong><small>ALL3000個以上・継続約75%</small><div><b>平均399.9回転</b><b>通常ヘソ</b></div></a>
         <a class="is-pachinko" href="eva17-hajimari.html"><span>05 / PACHINKO・MAJOR HALL</span><strong>エヴァ17 はじまりの記憶</strong><small>ロングST・ALL2400個＋α</small><div><b>平均399.9回転</b><b>通常ヘソ</b></div></a>
         <a class="is-pachinko" href="garo12-gokugen.html"><span>06 / PACHINKO・MAJOR HALL</span><strong>牙狼12 黄金騎士極限</strong><small>極限7500 → 魔戒CHANCE LT</small><div><b>平均437.4回転</b><b>通常ヘソ</b></div></a>
         <a class="is-slot" href="hokuto-tensei2.html"><span>07 / SLOT</span><strong>北斗の拳 転生の章2</strong><small>神拳勝舞 → SPバトル</small><div><b>平均366G</b><b>単価3.5円</b></div></a>
@@ -146,9 +240,15 @@
         <section class="article-card">
           <h2>読み物・ガイド</h2>
           <ul class="info-list">
+            <li><strong><a href="new-machines-2026-10.html">2026年10月の新台まとめ</a></strong>導入予定機種と、ICHIGEKIで追加する体験内容をまとめています。</li>
+            <li><strong><a href="average-game-guide.html">平均G・平均回転はどう計算する？</a></strong>平均、中央値、ハマり確率、平均投資の違いを早見表で説明します。</li>
+            <li><strong><a href="continuation-rate-guide.html">継続率81%の平均連チャンは？</a></strong>継続率ごとの平均連、単発率、5連・10連・20連以上の確率を整理します。</li>
+            <li><strong><a href="coin-unit-guide.html">スマスロのコイン単価とは？</a></strong>コイン単価、50枚ベース、平均投資の違いを説明します。</li>
+            <li><strong><a href="deka-heso-guide.html">デカヘソの回転数と平均投資</a></strong>1,000円あたり回転数を使った計算方法を説明します。</li>
             <li><strong><a href="guide.html">パチンコ・パチスロ確率の見方</a></strong>大当たり確率、ハマり、継続率、差玉・差枚の基本をまとめています。</li>
             <li><strong><a href="glossary.html">用語集</a></strong>シミュレーター内で使う用語を短く整理しています。</li>
             <li><strong><a href="faq.html">よくある質問</a></strong>サイトの使い方、ランキング、注意点をまとめています。</li>
+            <li><strong><a href="simulation-policy.html">シミュレーターの計算・掲載方針</a></strong>抽選方法、投資目安、参照情報と再現しない要素を公開しています。</li>
           </ul>
         </section>
 
@@ -172,6 +272,18 @@
       </div>
     </div>
   </footer>
-  <script src="main.js?v=107"></script>
+  <nav class="mobile-app-bottom-nav" aria-label="アプリメニュー">
+    <a class="is-active" href="#appHome" aria-current="page"><span aria-hidden="true">⌂</span><b>ホーム</b></a>
+    <a href="#mobileMachineSearch"><span aria-hidden="true">⌕</span><b>機種検索</b></a>
+    <a href="valvrave2.html#simulator"><span aria-hidden="true">▷</span><b>シミュ</b></a>
+    <a href="community.html"><span aria-hidden="true">□</span><b>投稿</b></a>
+    <a href="ranking.html"><span aria-hidden="true">▥</span><b>マイ記録</b></a>
+  </nav>
+  <script src="community-config.js?v=2"></script>
+  <script src="machine-library.js?v=119"></script>
+  <script src="app-shell.js?v=4"></script>
+  <script src="main.js?v=118"></script>
+  <script src="site-insights.js?v=1"></script>
+  <script src="adsense-loader.js?v=2"></script>
 </body>
 </html>

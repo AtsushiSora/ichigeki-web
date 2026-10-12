@@ -1,235 +1,148 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,follow">
   <meta name="theme-color" content="#050705">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <meta name="description" content="ICHIGEKIのランキングバトル結果をまとめる、みんなの記録ページです。">
-  <title>みんなの記録・ランキング | ICHIGEKI</title>
-  <link rel="canonical" href="https://atsushisora.github.io/ichigeki-web/ranking.html">
+  <meta name="description" content="ICHIGEKIの機種シミュレーション結果を自動保存し、試行回数・最高収支・勝率・機種別成績を確認できるマイ記録ページです。">
+  <title>マイ記録 | ICHIGEKI</title>
+  <link rel="canonical" href="https://ichigeki-pachislot.com/ranking.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ICHIGEKI">
-  <meta property="og:title" content="みんなの記録・ランキング | ICHIGEKI">
-  <meta property="og:description" content="ICHIGEKIのランキングバトル結果をまとめる、みんなの記録ページです。">
-  <meta property="og:url" content="https://atsushisora.github.io/ichigeki-web/ranking.html">
-  <meta property="og:image" content="https://atsushisora.github.io/ichigeki-web/icon.svg">
+  <meta property="og:title" content="マイ記録 | ICHIGEKI">
+  <meta property="og:description" content="機種シミュレーションの成績と履歴を、この端末で振り返れます。">
+  <meta property="og:url" content="https://ichigeki-pachislot.com/ranking.html">
+  <meta property="og:image" content="https://ichigeki-pachislot.com/icon.svg">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="みんなの記録・ランキング | ICHIGEKI">
-  <meta name="twitter:description" content="ICHIGEKIのランキングバトル結果をまとめる、みんなの記録ページです。">
-  <link rel="stylesheet" href="style.css?v=96">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "みんなの記録・ランキング | ICHIGEKI",
-    "url": "https://atsushisora.github.io/ichigeki-web/ranking.html",
-    "description": "ジャグ連、二択、319一撃、東京喰種999、1/8192、399ハマりなどのランキングバトル結果を保存して見返せる記録ページです。",
-    "inLanguage": "ja"
-  }
-  </script>
+  <link rel="stylesheet" href="style.css?v=132">
 </head>
-<body class="ranking-arcade-page">
-  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">ランキングバトル</span></a><nav class="nav"><a href="index.html">トップ</a><a href="juggle-simple.html">ジャグ連</a><a href="pachinko-319.html">319</a><a href="guide.html">使い方</a></nav></div></header>
-  <main class="page">
-    <section class="hero ranking-hero">
+<body class="my-records-page">
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">MY RECORDS</span></a>
+      <nav class="nav"><a href="index.html">トップ</a><a href="index.html#popularMachines">機種を探す</a><a href="community.html">投稿</a></nav>
+    </div>
+  </header>
+
+  <main class="page my-records-shell">
+    <section class="my-records-hero">
       <div>
-        <div class="kicker">Records</div>
-        <h1>記録ランキング</h1>
-        <p class="lead">種目ごとの結果を保存できます。現在は端末内ランキングです。</p>
-        <div class="hero-actions">
-          <a class="button primary" href="juggle-simple.html">ジャグ連に挑戦</a>
-          <a class="button" href="two-choice-select.html">二択を試す</a>
-          <a class="button" href="rare-8192.html">8192を試す</a>
-          <button class="button danger" data-action="clearRanking">記録をリセット</button>
+        <span class="machine-section-label">MY RECORDS</span>
+        <h1>マイ記録</h1>
+        <p>機種シミュレーションの結果を、この端末へ自動で記録します。遊んだ回数、最高収支、勝率、機種ごとの成績をまとめて確認できます。</p>
+        <div class="my-records-actions">
+          <a class="button primary" href="index.html#popularMachines">機種を選んで遊ぶ</a>
+          <button class="button danger" id="clearAllMachineHistory" type="button">すべての記録を削除</button>
         </div>
       </div>
-      <div class="ranking-summary">
-        <span>端末内ランキング</span>
-        <strong id="rankingCount">0件</strong>
-        <small>ジャグ連 / 二択 / 319 / 999 / 8192 / ハマり</small>
+      <div class="my-records-total">
+        <span>この端末の総プレイ</span>
+        <strong id="recordTotalCount">0回</strong>
+        <small>結果が出るたび自動保存</small>
       </div>
     </section>
 
-    <div class="layout"><div class="main-column">
-      <section class="article-card compact-card">
-        <h2>すぐ挑戦</h2>
-        <p class="section-lead">ランキング対象の固定バトルです。結果が出たら、そのままこのページに保存できます。</p>
-        <div class="ranking-play-grid">
-          <a class="ranking-play-card primary rank-tone-juggle" href="juggle-simple.html"><span>777</span><strong>ジャグ連</strong><small>100G以内の連チャン数</small><b>START</b></a>
-          <a class="ranking-play-card rank-tone-choice" href="two-choice-select.html"><span>2択</span><strong>二択</strong><small>50%の連続正解</small><b>START</b></a>
-          <a class="ranking-play-card rank-tone-8192" href="rare-8192.html"><span>8192</span><strong>1/8192</strong><small>当選回転で勝負</small><b>START</b></a>
-          <a class="ranking-play-card rank-tone-319" href="pachinko-319.html"><span>319</span><strong>319一撃</strong><small>総出玉で勝負</small><b>START</b></a>
-          <a class="ranking-play-card rank-tone-ghoul" href="tokyo-ghoul-999.html"><span>999</span><strong>東京喰種999</strong><small>超デカ一撃で勝負</small><b>START</b></a>
-          <a class="ranking-play-card rank-tone-hamari" href="hamari.html"><span>399</span><strong>399ハマり</strong><small>深い回転数で勝負</small><b>START</b></a>
-        </div>
-      </section>
+    <section class="my-records-summary" aria-labelledby="recordSummaryTitle">
+      <div class="my-records-section-head">
+        <div><span>PERFORMANCE</span><h2 id="recordSummaryTitle">成績サマリー</h2></div>
+        <p id="recordSummaryPeriod">まだ記録がありません</p>
+      </div>
+      <div class="my-records-stat-grid">
+        <article class="is-featured"><span>最高収支</span><strong id="recordBestBalance">--</strong><small id="recordBestMachine">最初の記録を残そう</small></article>
+        <article><span>勝率</span><strong id="recordWinRate">--</strong><small id="recordWinCount">0勝 / 0回</small></article>
+        <article><span>累計収支</span><strong id="recordTotalBalance">--</strong><small>シミュレーション上の合計</small></article>
+        <article><span>平均収支</span><strong id="recordAverageBalance">--</strong><small>1回あたり</small></article>
+        <article><span>最高獲得</span><strong id="recordMaxPayout">--</strong><small id="recordMaxPayoutMachine">機種別の単位で表示</small></article>
+        <article><span>一番遊んだ台</span><strong id="recordMostPlayed">--</strong><small id="recordMostPlayedCount">0回</small></article>
+        <article><span>上位到達</span><strong id="recordUpperCount">0回</strong><small>上位RUSH・上位AT</small></article>
+        <article><span>コンプリート</span><strong id="recordCompleteCount">0回</strong><small>スロット19,000枚到達</small></article>
+        <article><span>累計差枚</span><strong id="recordCoinTotal">--</strong><small>スロット記録の合計</small></article>
+        <article><span>累計差玉</span><strong id="recordBallTotal">--</strong><small>パチンコ記録の合計</small></article>
+      </div>
+    </section>
 
-      <section class="article-card">
-        <h2>ランキング種目</h2>
-        <div class="record-summary-grid">
-          <div class="record-summary-card"><span>ジャグ連</span><strong id="juggleBestSummary">--</strong><small id="juggleRecordCount">0件</small></div>
-          <div class="record-summary-card"><span>319一撃</span><strong id="pachinkoBestSummary">--</strong><small id="pachinkoRecordCount">0件</small></div>
-          <div class="record-summary-card"><span>東京喰種999</span><strong id="tokyoGhoulBestSummary">--</strong><small id="tokyoGhoulRecordCount">0件</small></div>
-          <div class="record-summary-card"><span>1/8192</span><strong id="rare8192BestSummary">--</strong><small id="rare8192RecordCount">0件</small></div>
-          <div class="record-summary-card"><span>399ハマり</span><strong id="hamariBestSummary">--</strong><small id="hamariRecordCount">0件</small></div>
-          <div class="record-summary-card"><span>二択</span><strong id="twoChoiceBestSummary">--</strong><small id="twoChoiceRecordCount">0件</small></div>
-        </div>
-        <div class="rank-category-grid ranking-tabs" aria-label="ランキング種目タブ">
-          <a class="rank-category active rank-tone-juggle" data-rank-tab="juggle-ranking" href="#juggle-ranking"><span>777</span><strong>ジャグ連</strong><small>連数、BIG/REG、差枚で競う</small></a>
-          <a class="rank-category rank-tone-319" data-rank-tab="pachinko-ranking" href="#pachinko-ranking"><span>319</span><strong>319一撃</strong><small>総出玉、連チャン、差玉で競う</small></a>
-          <a class="rank-category rank-tone-ghoul" data-rank-tab="tokyo-ghoul-ranking" href="#tokyo-ghoul-ranking"><span>999</span><strong>東京喰種999</strong><small>LT突入と総出玉で競う</small></a>
-          <a class="rank-category rank-tone-8192" data-rank-tab="rare-8192-ranking" href="#rare-8192-ranking"><span>8192</span><strong>1/8192</strong><small>最速当選と長ハマりを見る</small></a>
-          <a class="rank-category rank-tone-hamari" data-rank-tab="hamari-ranking" href="#hamari-ranking"><span>399</span><strong>399ハマり</strong><small>当選までの深さで競う</small></a>
-          <a class="rank-category rank-tone-choice" data-rank-tab="two-choice-ranking" href="#two-choice-ranking"><span>2択</span><strong>二択</strong><small>50%の連続正解数で競う</small></a>
-        </div>
-      </section>
+    <section class="my-records-trend" aria-labelledby="recordTrendTitle">
+      <div class="my-records-section-head"><div><span>LAST 7 DAYS</span><h2 id="recordTrendTitle">直近7日間の収支</h2></div><p id="recordTrendSummary">記録が増えるとグラフになります</p></div>
+      <div class="my-records-trend-chart" id="recordTrendChart" role="img" aria-label="直近7日間のシミュレーション収支グラフ"></div>
+    </section>
 
-      <section class="article-card compact-card">
-        <h2>記録の保存方法</h2>
-        <div class="mini-guide">
-          <div><strong>1. スタート</strong><span>ランキング対象の固定スペックで結果を出します。</span></div>
-          <div><strong>2. 保存</strong><span>結果画面の「ランキングに保存」を押します。</span></div>
-          <div><strong>3. 確認</strong><span>このページで順位、内訳、保存日時を確認できます。</span></div>
-        </div>
-        <p class="small-note">ランキング対象バトルのスペックは固定です。記録は端末内保存で、スマホとPCでは別の記録になります。オンライン共有ランキングは、本稼働時に別途追加します。</p>
-      </section>
+    <section class="my-records-achievements" id="achievements" aria-labelledby="achievementTitle">
+      <div class="my-records-section-head">
+        <div><span>ACHIEVEMENTS</span><h2 id="achievementTitle">称号・実績</h2></div>
+        <p id="recordUnlockedCount">0 / 12 獲得</p>
+      </div>
+      <div class="achievement-feature-grid">
+        <article class="achievement-current">
+          <span class="achievement-caption">現在の称号</span>
+          <div><b id="selectedAchievementMark">?</b><p><strong id="selectedAchievementName">称号未獲得</strong><small id="selectedAchievementDescription">最初のシミュレーションを遊んでみよう</small></p></div>
+        </article>
+        <article class="achievement-next">
+          <span class="achievement-caption">次に近い称号</span>
+          <strong id="nextAchievementName">はじめの一撃</strong>
+          <p id="nextAchievementDescription">初めてシミュレーションを遊ぶ</p>
+          <div class="achievement-progress" role="progressbar" aria-label="次の称号までの進捗" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="nextAchievementBar"></i></div>
+          <small id="nextAchievementProgress">0 / 1</small>
+        </article>
+      </div>
+      <div class="achievement-badge-grid" id="achievementBadgeGrid"></div>
+      <p class="achievement-help">獲得済みの称号をタップすると「現在の称号」に設定できます。称号は記録を削除しても残ります。</p>
+    </section>
 
-      <section class="article-card ranking-panel" id="juggle-ranking" data-rank-panel="juggle-ranking">
-        <div class="section-head">
-          <div><h2>ジャグ連ランキング</h2><p>100G以内の連続当選数をメインに表示するランキングです。</p></div>
-          <div class="section-actions"><span class="status-pill">端末内保存</span><a class="mini-button" href="juggle-simple.html">挑戦する</a></div>
+    <section class="my-records-machines" aria-labelledby="machineRecordsTitle">
+      <div class="my-records-section-head">
+        <div><span>BY MACHINE</span><h2 id="machineRecordsTitle">機種別の成績</h2></div>
+        <div class="my-records-filters" role="group" aria-label="機種別成績の絞り込み">
+          <button class="is-active" type="button" data-record-filter="all">すべて</button>
+          <button type="button" data-record-filter="pachinko">パチンコ</button>
+          <button type="button" data-record-filter="slot">スロット</button>
+          <button type="button" data-record-filter="win">勝ち記録</button>
         </div>
-        <div class="ranking-winner-card" id="juggleWinnerCard"></div>
-        <div class="ranking-controls">
-          <label for="juggleSort">並び替え</label>
-          <select id="juggleSort" data-ranking-sort>
-            <option value="score">連数が多い順</option>
-            <option value="diff">差枚が多い順</option>
-            <option value="date">新しい順</option>
-            <option value="name">名前順</option>
+      </div>
+      <div class="my-records-machine-grid" id="machineRecordSummaryList"></div>
+    </section>
+
+    <section class="my-records-history" aria-labelledby="recordHistoryTitle">
+      <div class="my-records-section-head">
+        <div><span>HISTORY</span><h2 id="recordHistoryTitle">プレイ履歴</h2></div>
+        <label class="my-records-sort">並び順
+          <select id="machineHistorySort">
+            <option value="recent">新しい順</option>
+            <option value="best">収支が高い順</option>
+            <option value="worst">収支が低い順</option>
+            <option value="payout">獲得が多い順</option>
           </select>
-        </div>
-        <div class="table-wrap"><table class="ranking-table"><thead><tr><th>順位</th><th>名前</th><th>連数</th><th>内訳</th><th>差枚</th><th>保存日時</th><th>操作</th></tr></thead><tbody id="juggleRankingBody"><tr><td colspan="7">まだ記録がありません</td></tr></tbody></table></div>
-      </section>
+        </label>
+      </div>
+      <div class="my-records-empty" id="machineHistoryEmpty" hidden>
+        <span aria-hidden="true">▷</span>
+        <strong>まだ記録がありません</strong>
+        <p>好きな機種でSTARTを押すと、結果がここへ自動で追加されます。</p>
+        <a class="button primary" href="index.html#popularMachines">機種を探す</a>
+      </div>
+      <div class="my-records-history-list" id="machineHistoryList"></div>
+      <button class="button my-records-load-more" id="machineHistoryLoadMore" type="button" hidden>さらに表示</button>
+    </section>
 
-      <section class="article-card ranking-panel" id="pachinko-ranking" data-rank-panel="pachinko-ranking">
-        <div class="section-head">
-          <div><h2>319一撃ランキング</h2><p>総出玉、連チャン、差玉を見やすく並べるランキングです。</p></div>
-          <div class="section-actions"><span class="status-pill">端末内保存</span><a class="mini-button" href="pachinko-319.html">挑戦する</a></div>
-        </div>
-        <div class="ranking-winner-card" id="pachinkoWinnerCard"></div>
-        <div class="ranking-controls">
-          <label for="pachinko319Sort">並び替え</label>
-          <select id="pachinko319Sort" data-ranking-sort>
-            <option value="score">総出玉が多い順</option>
-            <option value="diff">差玉が多い順</option>
-            <option value="chain">連チャンが多い順</option>
-            <option value="date">新しい順</option>
-            <option value="name">名前順</option>
-          </select>
-        </div>
-        <div class="table-wrap"><table class="ranking-table"><thead><tr><th>順位</th><th>名前</th><th>総出玉</th><th>連チャン</th><th>差玉</th><th>保存日時</th><th>操作</th></tr></thead><tbody id="pachinkoRankingBody"><tr><td colspan="7">まだ記録がありません</td></tr></tbody></table></div>
-      </section>
-
-      <section class="article-card ranking-panel" id="tokyo-ghoul-ranking" data-rank-panel="tokyo-ghoul-ranking">
-        <div class="section-head">
-          <div><h2>東京喰種999ランキング</h2><p>図柄揃い1/999とチャージから超デカ一撃を狙うランキングです。</p></div>
-          <div class="section-actions"><span class="status-pill">端末内保存</span><a class="mini-button" href="tokyo-ghoul-999.html">挑戦する</a></div>
-        </div>
-        <div class="ranking-winner-card" id="tokyoGhoulWinnerCard"></div>
-        <div class="ranking-controls">
-          <label for="tokyoGhoul999Sort">並び替え</label>
-          <select id="tokyoGhoul999Sort" data-ranking-sort>
-            <option value="score">総出玉が多い順</option>
-            <option value="diff">差玉が多い順</option>
-            <option value="chain">連チャンが多い順</option>
-            <option value="spins">初当たりが早い順</option>
-            <option value="date">新しい順</option>
-            <option value="name">名前順</option>
-          </select>
-        </div>
-        <div class="table-wrap"><table class="ranking-table"><thead><tr><th>順位</th><th>名前</th><th>総出玉</th><th>連チャン</th><th>ルート</th><th>差玉</th><th>保存日時</th><th>操作</th></tr></thead><tbody id="tokyoGhoulRankingBody"><tr><td colspan="8">まだ記録がありません</td></tr></tbody></table></div>
-      </section>
-
-      <section class="article-card ranking-panel" id="rare-8192-ranking" data-rank-panel="rare-8192-ranking">
-        <div class="section-head">
-          <div><h2>1/8192当選ランキング</h2><p>1/8192を何回転目に引けたかを記録するランキングです。</p></div>
-          <div class="section-actions"><span class="status-pill">端末内保存</span><a class="mini-button" href="rare-8192.html">挑戦する</a></div>
-        </div>
-        <div class="ranking-winner-card" id="rare8192WinnerCard"></div>
-        <div class="ranking-controls">
-          <label for="rare8192Sort">並び替え</label>
-          <select id="rare8192Sort" data-ranking-sort>
-            <option value="score">最速当選順</option>
-            <option value="long">長ハマり順</option>
-            <option value="ratio">分母比が低い順</option>
-            <option value="date">新しい順</option>
-            <option value="name">名前順</option>
-          </select>
-        </div>
-        <div class="table-wrap"><table class="ranking-table"><thead><tr><th>順位</th><th>名前</th><th>当選回転</th><th>分母比</th><th>当選率</th><th>保存日時</th><th>操作</th></tr></thead><tbody id="rare8192RankingBody"><tr><td colspan="7">まだ記録がありません</td></tr></tbody></table></div>
-      </section>
-
-      <section class="article-card ranking-panel" id="hamari-ranking" data-rank-panel="hamari-ranking">
-        <div class="section-head">
-          <div><h2>399ハマりランキング</h2><p>1/399の当たりが何回転まで深くハマるかを競うランキングです。</p></div>
-          <div class="section-actions"><span class="status-pill">端末内保存</span><a class="mini-button" href="hamari.html">挑戦する</a></div>
-        </div>
-        <div class="ranking-winner-card" id="hamariWinnerCard"></div>
-        <div class="ranking-controls">
-          <label for="hamariSort">並び替え</label>
-          <select id="hamariSort" data-ranking-sort>
-            <option value="score">回転数が多い順</option>
-            <option value="probability">到達目安が低い順</option>
-            <option value="date">新しい順</option>
-            <option value="name">名前順</option>
-          </select>
-        </div>
-        <div class="table-wrap"><table class="ranking-table"><thead><tr><th>順位</th><th>名前</th><th>回転数</th><th>条件</th><th>到達目安</th><th>保存日時</th><th>操作</th></tr></thead><tbody id="hamariRankingBody"><tr><td colspan="7">まだ記録がありません</td></tr></tbody></table></div>
-      </section>
-
-      <section class="article-card ranking-panel" id="two-choice-ranking" data-rank-panel="two-choice-ranking">
-        <div class="section-head">
-          <div><h2>二択チャレンジランキング</h2><p>左か右の二択を何連続で当てられたかを記録する種目です。到達確率は「1/32」のような分母形式で表示します。</p></div>
-          <div class="section-actions"><span class="status-pill">端末内保存</span><a class="mini-button" href="two-choice-select.html">挑戦する</a></div>
-        </div>
-        <div class="ranking-winner-card" id="twoChoiceWinnerCard"></div>
-        <div class="ranking-controls">
-          <label for="twoChoiceSort">並び替え</label>
-          <select id="twoChoiceSort" data-ranking-sort>
-            <option value="score">連続正解が多い順</option>
-            <option value="probability">到達確率が低い順</option>
-            <option value="date">新しい順</option>
-            <option value="name">名前順</option>
-          </select>
-        </div>
-        <div class="table-wrap"><table class="ranking-table"><thead><tr><th>順位</th><th>名前</th><th>連続正解</th><th>挑戦回数</th><th>到達確率</th><th>保存日時</th><th>操作</th></tr></thead><tbody id="twoChoiceRankingBody"><tr><td colspan="7">まだ記録がありません</td></tr></tbody></table></div>
-      </section>
-
-      <div class="ad-box ad-box-wide ranking-inline-ad" data-ad-slot="ranking-inline"><span class="ad-label">PR</span><span class="ad-title">記事内広告枠</span><span class="ad-note">ランキング一覧の下</span></div>
-
-      <section class="article-card">
-        <h2>ランキングの扱いについて</h2>
-        <ul>
-          <li>現在のランキングは、この端末のブラウザ内に保存されるローカル記録です。</li>
-          <li>別のスマホやPCには自動共有されません。</li>
-          <li>実際の遊技結果、収支、景品、金銭的価値とは関係ありません。</li>
-          <li>ニックネーム登録時は個人情報を入力しないでください。</li>
-          <li>保存した記録は、名前変更または個別削除ができます。</li>
-          <li>不自然な記録や表示上の不具合がある場合は、調整・削除する場合があります。</li>
-        </ul>
-      </section>
-      <section class="article-card">
-        <h2>保存される内容</h2>
-        <p>ランキングに保存される内容は、ランキングバトルで出た数値、保存日時、入力されたランキング保存名です。メールアドレス、端末情報、個人を識別する情報は保存しません。</p>
-        <p>記録はブラウザのローカルストレージに保存されます。ブラウザの履歴やサイトデータを削除すると、保存したランキングも消えます。共有ランキングを本稼働させる場合は、別途オンライン保存の仕組みを追加します。</p>
-      </section>
-    </div><aside class="side-column"><div class="ad-box ad-box-sidebar" data-ad-slot="ranking-sidebar"><span class="ad-label">PR</span><span class="ad-title">サイドバー広告枠</span><span class="ad-note">PC表示向け</span></div><section class="side-card"><h2>関連ページ</h2><ul class="side-list"><li><a href="guide.html">確率の見方</a></li><li><a href="glossary.html">用語集</a></li><li><a href="faq.html">よくある質問</a></li></ul></section></aside></div>
-    <div class="ad-box ad-box-footer" data-ad-slot="ranking-footer"><span class="ad-label">PR</span><span class="ad-title">ページ下部広告枠</span><span class="ad-note">ランキング末尾の広告枠</span></div>
+    <section class="my-records-note">
+      <h2>記録について</h2>
+      <ul>
+        <li>結果は最大500件まで、このブラウザの端末内に自動保存されます。</li>
+        <li>別のスマホやPCには共有されません。ブラウザのサイトデータを消すと記録も消えます。</li>
+        <li>公開ランキングへの登録とコミュニティへの投稿は、自動では行われません。</li>
+        <li>表示する収支・獲得数はシミュレーション結果であり、実際の遊技収支ではありません。</li>
+      </ul>
+    </section>
   </main>
-  <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="sitemap.html">サイトマップ</a><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a></div></div></footer>
-  <script src="main.js?v=96"></script>
+
+  <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a></div></div></footer>
+  <script src="machine-library.js?v=119"></script>
+  <script src="achievements.js?v=1"></script>
+  <script src="site-insights.js?v=1"></script>
+  <script src="my-records.js?v=4"></script>
+  <script src="adsense-loader.js?v=2"></script>
+  <script src="app-shell.js?v=4"></script>
 </body>
 </html>

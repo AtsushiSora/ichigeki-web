@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050705">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <meta name="description" content="大きなSTARTボタンを押すだけでジャグ連を試せる、シンプルなランキングチャレンジです。">
+  <title>ジャグ連チャレンジ | ICHIGEKI</title>
+  <link rel="canonical" href="https://atsushisora.github.io/ichigeki-web/juggle-simple.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ICHIGEKI">
+  <meta property="og:title" content="ジャグ連チャレンジ | ICHIGEKI">
+  <meta property="og:description" content="大きなSTARTボタンを押すだけでジャグ連を試せる、シンプルなランキングチャレンジです。">
+  <meta property="og:url" content="https://atsushisora.github.io/ichigeki-web/juggle-simple.html">
+  <meta property="og:image" content="https://atsushisora.github.io/ichigeki-web/icon.svg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ジャグ連チャレンジ | ICHIGEKI">
+  <meta name="twitter:description" content="大きなSTARTボタンを押すだけでジャグ連を試せる、シンプルなランキングチャレンジです。">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="juggle-simple-page">
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-name">ICHIGEKI</span>
+        <span class="brand-sub">ジャグ連ランキング</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">トップ</a>
+        <a href="ranking.html#juggle-ranking">ランキング</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="simple-page">
+    <section class="juggle-simple-stage">
+      <div class="simple-title-line">
+        <span></span>
+        <h1>ジャグ連チャレンジ</h1>
+        <span></span>
+      </div>
+
+      <div class="simple-status-card">
+        <strong><span class="status-dot"></span><span id="simpleStatus">待機中</span></strong>
+        <p id="simpleStatusText">ボタンを押すと変動開始</p>
+      </div>
+
+      <div class="simple-rule-row" aria-label="チャレンジ条件">
+        <span><b>確率</b><strong>BIG/REG 1/255</strong></span>
+        <span><b>終了</b><strong>100G抜け</strong></span>
+        <span><b>記録</b><strong>連チャン数</strong></span>
+      </div>
+
+      <div class="simple-result-card">
+        <strong id="resultBonusType">--</strong>
+        <b id="resultHitGame">0G</b>
+        <small id="resultChain">0連</small>
+        <em id="resultBonusBreakdown">BIG 0 / REG 0</em>
+      </div>
+
+      <a class="simple-rank-link" href="ranking.html#juggle-ranking">ランキングを見る</a>
+
+      <div class="simple-start-area">
+        <button class="simple-start-button" data-action="juggleSimple">
+          <span>START</span>
+          <small>変動開始</small>
+        </button>
+      </div>
+
+      <div class="simple-sub-actions">
+        <button class="button" data-action="saveJuggle">ランキングに保存</button>
+        <button class="button" data-action="share">結果をコピー</button>
+        <a class="button" href="ranking.html#juggle-ranking">ランキングを見る</a>
+      </div>
+
+      <div class="simple-next-row" aria-label="次に遊ぶ">
+        <a href="two-choice-select.html">二択へ</a>
+        <a href="rare-8192.html">8192へ</a>
+        <a href="pachinko-319.html">319へ</a>
+      </div>
+
+      <div class="log-box simple-log" id="log">スタートするとジャグ連の結果を表示します。</div>
+      <div class="ad-box simple-ad" data-ad-slot="juggle-simple-footer"><span class="ad-label">PR</span><span class="ad-title">広告枠</span></div>
+    </section>
+
+    <section class="simple-info-section article-card">
+      <h2>ジャグ連チャレンジの遊び方</h2>
+      <p>STARTを押すと、BIGまたはREGを引いてから100G抜けまでを自動で進行します。100G以内に再び当たるとジャグ連としてカウントされ、当たり続けた回数がランキング対象になります。</p>
+      <div class="simple-info-grid">
+        <div><strong>ランキング基準</strong><span>連チャン数が多いほど上位です。同じ連数の場合は差枚や保存日時も確認材料になります。</span></div>
+        <div><strong>見る数字</strong><span>当選G、BIG/REG内訳、差枚を見れば、早い当たりと伸び方の両方を確認できます。</span></div>
+        <div><strong>固定条件</strong><span>BIGとREGはどちらも1/255、1,000円46枚、35G前後で計算します。</span></div>
+        <div><strong>注意点</strong><span>実在機種の設定、ぶどう確率、交換率、閉店時間などは反映していません。</span></div>
+      </div>
+      <div class="next-links"><a href="ranking.html#juggle-ranking">ジャグ連ランキングを見る</a><a href="guide.html">確率の見方を読む</a></div>
+    </section>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

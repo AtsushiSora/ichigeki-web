@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050705">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <meta name="description" content="ICHIGEKIのパチンコ・パチスロ簡易シミュレーターが使う数値、抽選方法、平均投資、コイン単価、ランキングの計算方針と再現しない要素を説明します。">
+  <title>シミュレーターの計算・掲載方針 | ICHIGEKI</title>
+  <link rel="canonical" href="https://ichigeki-pachislot.com/simulation-policy.html">
+  <meta property="og:type" content="article"><meta property="og:site_name" content="ICHIGEKI">
+  <meta property="og:title" content="シミュレーターの計算・掲載方針 | ICHIGEKI">
+  <meta property="og:description" content="抽選、投資目安、ランキング、参照情報と、シミュレーターが再現しない要素を明記します。">
+  <meta property="og:url" content="https://ichigeki-pachislot.com/simulation-policy.html">
+  <meta property="og:image" content="https://ichigeki-pachislot.com/icon.svg">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="style.css?v=131">
+</head>
+<body class="editorial-page">
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">SIMULATION POLICY</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#pachinko">パチンコ</a><a href="#slot">スロット</a><a href="#sources">参照情報</a></nav></div></header>
+  <main class="page editorial-shell"><article class="article-card editorial-article">
+    <div class="article-meta"><span>サイト方針</span><time datetime="2026-10-08">2026年10月8日更新</time></div>
+    <h1>シミュレーターの<br>計算・掲載方針</h1>
+    <p class="editorial-lead">ICHIGEKIは、機種の確率や出玉のばらつきを分かりやすく体験するための簡易シミュレーターです。実機の完全再現や攻略、収支予測を目的としていません。</p>
+
+    <h2>掲載する数値</h2>
+    <p>機種ページでは、初当り、RUSH・AT・ST、CZ、上位状態、継続率、出玉・獲得枚数など、体験の流れを作るために必要な項目を掲載します。参照先がある機種は、ページ内に出典リンクを表示します。</p>
+    <ul class="info-list">
+      <li><strong>導入前</strong>予定・暫定であることを明記し、確定情報のように扱いません。</li>
+      <li><strong>導入後</strong>メーカーや機種情報ページを確認し、重要な変更があれば掲載値を更新します。</li>
+      <li><strong>簡易化した値</strong>シミュレーション用の条件であることを明記し、実機値と区別します。</li>
+    </ul>
+
+    <h2 id="pachinko">パチンコの計算</h2>
+    <p>実店舗向けの初期値として、1,000円250玉貸し・28玉交換を使用します。機種ページでは遊技した店舗の条件に合わせて変更できます。</p>
+    <ul class="info-list">
+      <li><strong>初当り回転</strong>掲載した初当り確率を毎回一定の独立抽選として扱い、当たるまでの回転数を抽選します。</li>
+      <li><strong>RUSH突入</strong>掲載した突入率を使って、初当り後の突入・非突入を抽選します。</li>
+      <li><strong>継続</strong>通常RUSHと上位RUSHを分け、設定した継続率で終了するまで抽選します。極端な長時間処理を防ぐ上限を設けています。</li>
+      <li><strong>投資目安</strong>今回の回転数を、利用者が設定した1,000円あたり回転数で割り、1,000円単位へ切り上げます。</li>
+      <li><strong>差玉・収支目安</strong>総出玉から入力した貸玉数を使って使用玉を引き、入力した交換率で換金額と収支を計算します。</li>
+    </ul>
+
+    <h2 id="slot">パチスロの計算</h2>
+    <p>実店舗向けの初期値として、1,000円46枚貸し・5.2枚交換を使用します。機種ページでは遊技した店舗の条件に合わせて変更できます。</p>
+    <ul class="info-list">
+      <li><strong>設定抽選</strong>スタートごとに実機へ搭載される通常設定から同じ確率で1つを抽選し、遊技中は伏せ、最終結果・マイ記録・機種別ランキングに表示します。設定3非搭載機では1・2・4・5・6から抽選し、設定Lは対象外です。</li>
+      <li><strong>設定差</strong>ジャグラーはメーカー公表の設定別BIG・REG確率を使用します。AT・スマスロは、各通常設定の初当り値を確認できた機種ではその公開値を使用し、公開されていない特化・上位の設定差は加えません。設定別の数値が揃わない機種は、設定1相当の掲載値にサイト共通の固定補正を加える簡易モデルです。結果画面には、どちらのモデルかを表示します。</li>
+      <li><strong>初当りG</strong>掲載した平均Gを基準に、早い当りと深いハマりが発生する簡易抽選を行います。</li>
+      <li><strong>CZ・AT</strong>CZ成功、特化ゾーン、上位CZ・上位ATを段階ごとに抽選します。</li>
+      <li><strong>投資目安</strong>50枚あたりG数と、入力した1,000円あたり貸メダル枚数から回せるゲーム数を求め、1,000円単位へ切り上げます。</li>
+      <li><strong>コイン単価</strong>荒さや台売上傾向を見る指標として表示し、現金投資の直接計算には使いません。</li>
+      <li><strong>差枚・収支目安</strong>獲得枚数から入力した貸メダル枚数を使って使用枚数を引き、入力した交換率で換金額と収支を計算します。</li>
+      <li><strong>コンプリート</strong>1回の結果で獲得枚数が19,000枚へ達した場合はそこで打ち切り、結果に「コンプリート」と表示します。</li>
+    </ul>
+
+    <h2>再現しない要素</h2>
+    <p>次の要素は一部を除き再現しません。実機とは結果が異なる主な理由です。</p>
+    <div class="table-wrap"><table class="ranking-table editorial-table"><thead><tr><th>区分</th><th>主な未再現要素</th></tr></thead><tbody>
+      <tr><td>共通</td><td>端玉、特殊景品の最小単位、再プレイ上限、持ち玉比率、台ごとの調整・個体差、遊技者の打ち方</td></tr>
+      <tr><td>パチンコ</td><td>保留、先読み、時短中の細かな抽選、電サポ中の増減、オーバー入賞、出玉削り</td></tr>
+      <tr><td>パチスロ</td><td>全小役、設定差の全項目、内部状態、モード移行、ゾーン、天井短縮、有利区間の詳細</td></tr>
+      <tr><td>演出</td><td>実機の映像・音声・演出法則、正確な消化時間</td></tr>
+    </tbody></table></div>
+
+    <h2>ランキングの扱い</h2>
+    <p>ランキングはシミュレーション結果を同じ機種内で比べる遊びです。利用者が変更したレートで有利・不利が生まれないよう、パチンコは1,000円250玉貸し・28玉交換、パチスロは1,000円46枚貸し・5.2枚交換に固定し、回転率・50枚ベースも機種初期値で再計算します。スロットはスタートごとに実機へ搭載される通常設定をランダム抽選し、その設定を各ランキング記録にも表示します。差玉・差枚を主な順位条件にし、同じ場合は固定条件の投資目安が少ない結果を優先します。ランキング、玉、メダル、スコアに金銭的価値や交換価値はありません。</p>
+
+    <h2 id="sources">参照情報と更新</h2>
+    <p>新規掲載や修正では、メーカー公式情報、公式アーカイブ、機種データベース、専門メディアなどを確認します。数値はページごとの「参照情報」から確認できます。情報が一致しない場合は、数値の定義や時点を確認し、断定を避けます。</p>
+    <p>誤りや更新漏れに気づいた場合は、<a href="contact.html">お問い合わせ</a>から該当ページと内容をお知らせください。</p>
+
+    <div class="next-links"><a href="average-game-guide.html">平均Gの計算</a><a href="continuation-rate-guide.html">継続率の計算</a><a href="coin-unit-guide.html">コイン単価</a><a href="deka-heso-guide.html">デカヘソ</a></div>
+    <p class="note">ICHIGEKIの結果は娯楽・学習用の目安です。実際の遊技結果や収支、勝敗を保証しません。18歳未満の方の利用はお控えください。</p>
+  </article></main>
+  <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="about.html">運営者情報</a><a href="sitemap.html">サイトマップ</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a></div></div></footer>
+</body>
+</html>

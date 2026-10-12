@@ -1,6 +1,10 @@
 const yen = new Intl.NumberFormat("ja-JP");
 const rankingStorageKey = "ichigekiLocalRecordsV1";
-const rankingSpecVersion = "2026-07-fixed-v1";
+const rankingSpecVersion = "2026-10-real-store-v2";
+const realStoreRates = {
+  pachinko: { lendBalls: 250, exchangeBalls: 28 },
+  slot: { lendCoins: 46, exchangeCoins: 5.2 }
+};
 const latestResults = {
   juggle: null,
   pachinko319: null,
@@ -58,6 +62,19 @@ function clampNumber(value, fallback = 0) {
 function setText(id, value) {
   const element = document.getElementById(id);
   if (element) element.textContent = value;
+}
+
+function calculateRealStoreMoney(kind, payout, investment) {
+  const exchangeUnit = kind === "pachinko"
+    ? realStoreRates.pachinko.exchangeBalls
+    : realStoreRates.slot.exchangeCoins;
+  const cashout = Math.round(payout / exchangeUnit * 100);
+  return { cashout, balance: cashout - investment };
+}
+
+function setRealStoreMoneyResult(cashout, balance) {
+  setText("resultCashout", `${yen.format(cashout)}円`);
+  setText("resultBalance", `${balance >= 0 ? "+" : ""}${yen.format(balance)}円`);
 }
 
 function escapeHtml(value) {
@@ -277,9 +294,13 @@ function showSavedFeedback(type, record) {
 function getFixedSpecSnapshot(type) {
   const spec = fixedRankingSpecs[type];
   if (!spec) return null;
+  const rates = type === "juggle"
+    ? realStoreRates.slot
+    : (type === "pachinko319" || type === "tokyoGhoul999" ? realStoreRates.pachinko : null);
   return JSON.parse(JSON.stringify({
     version: rankingSpecVersion,
     type,
+    ...(rates ? { rates } : {}),
     ...spec
   }));
 }
@@ -290,7 +311,7 @@ const resultGuidesByAction = {
     points: [
       "ジャグ連は、初当たり後100G以内に当たり続けた回数です。",
       "総ゲームは、初当たりを引いてから100G抜けまでの合計です。",
-      "差枚は、1,000円46枚・35G前後で使った枚数を差し引いた目安です。"
+      "差枚は1,000円46枚貸し、換金・収支は5.2枚交換で計算した実店舗レートの目安です。"
     ]
   },
   pachinko319: {
@@ -298,7 +319,7 @@ const resultGuidesByAction = {
     points: [
       "初当たり回転数と投資を見ると、当たるまでの重さを確認できます。",
       "総出玉と連チャンは、一撃でどこまで伸びたかを見る主な数字です。",
-      "差玉は投資分を玉数換算して引いた目安で、プラスなら出玉が上回っています。"
+      "差玉は250玉貸し、換金・収支は28玉交換で計算した実店舗レートの目安です。"
     ]
   },
   genericPachinko: {
@@ -368,9 +389,9 @@ const resultGuidesByAction = {
 };
 
 const fixedConditionSummariesByAction = {
-  juggle: ["BIG 1/255", "REG 1/255", "1,000円46枚", "35G/1,000円", "100G抜けまで"],
-  pachinko319: ["大当たり 1/319", "RUSH突入 60%", "継続率 81%", "初当たり 300玉", "RUSH中 1,500玉", "17回転/1,000円"],
-  tokyoGhoul999: ["デカヘソ 35回/1,000円", "合算 約1/349.9", "図柄揃い 約1/999.9", "図柄揃い時LT 約50%", "突入時 7,500玉", "RUSH中 3,000玉", "ST5回"],
+  juggle: ["BIG 1/255", "REG 1/255", "1,000円46枚貸し", "5.2枚交換", "35G/1,000円", "100G抜けまで"],
+  pachinko319: ["大当たり 1/319", "RUSH突入 60%", "継続率 81%", "1,000円250玉貸し", "28玉交換", "初当たり 300玉", "RUSH中 1,500玉", "17回転/1,000円"],
+  tokyoGhoul999: ["デカヘソ 35回/1,000円", "1,000円250玉貸し", "28玉交換", "合算 約1/349.9", "図柄揃い 約1/999.9", "図柄揃い時LT 約50%", "突入時 7,500玉", "RUSH中 3,000玉", "ST5回"],
   hamari: ["大当たり 1/399", "当たるまで抽選", "深い回転数でランキング"],
   twoChoiceStart: ["成功率 50%", "外れた時点で終了", "連続正解数でランキング"],
   rare8192: ["当選確率 1/8192", "当選回転でランキング"]
@@ -1092,9 +1113,10 @@ function simulatePachinko319() {
       totalPayout += payout;
     }
   }
-  const usedBalls = Math.round(investment / 4);
+  const usedBalls = Math.round(investment / 1000 * realStoreRates.pachinko.lendBalls);
   const diff = totalPayout - usedBalls;
-  return { spins, investment, totalPayout, chain, diff, enteredRush, firstPayout, payout };
+  const { cashout, balance } = calculateRealStoreMoney("pachinko", totalPayout, investment);
+  return { spins, investment, totalPayout, chain, diff, cashout, balance, enteredRush, firstPayout, payout };
 }
 
 async function runPachinko319() {
@@ -1107,11 +1129,12 @@ async function runPachinko319() {
   setText("resultPayout", "0玉");
   setText("resultChain", "0連");
   setText("resultDiff", "0玉");
+  setRealStoreMoneyResult(0, 0);
   setText("resultRush", "抽選中");
   setText("log", "初当たり抽選中...");
 
   const result = simulatePachinko319();
-  const { spins, investment, totalPayout, chain, diff, enteredRush, firstPayout, payout } = result;
+  const { spins, investment, totalPayout, chain, diff, cashout, balance, enteredRush, firstPayout, payout } = result;
   await animateCount("resultSpins", spins, "回転", Math.min(3000, Math.max(1200, spins * 6)));
 
   flashStageEffect("is-hit");
@@ -1143,12 +1166,13 @@ async function runPachinko319() {
   setText("resultPayout", `${yen.format(totalPayout)}玉`);
   setText("resultChain", `${chain}連`);
   setText("resultDiff", `${diff > 0 ? "+" : ""}${yen.format(diff)}玉`);
+  setRealStoreMoneyResult(cashout, balance);
   setText("resultRush", enteredRush ? "突入" : "非突入");
-  setText("log", `${spins}回転で大当たり / ${chain}連 / 差玉 ${diff > 0 ? "+" : ""}${yen.format(diff)}玉`);
+  setText("log", `${spins}回転で大当たり / ${chain}連 / 差玉 ${diff > 0 ? "+" : ""}${yen.format(diff)}玉 / 収支 ${balance >= 0 ? "+" : ""}${yen.format(balance)}円（28玉交換）`);
   setText("simpleStatus", "結果確定");
   setText("simpleStatusText", `${chain}連 / 差玉 ${diff > 0 ? "+" : ""}${yen.format(diff)}玉`);
   finishStageEffects(diff > 0 ? "is-big-hit" : "is-finished");
-  latestResults.pachinko319 = { spins, investment, totalPayout, chain, diff, enteredRush };
+  latestResults.pachinko319 = { spins, investment, totalPayout, chain, diff, cashout, balance, enteredRush };
   markResultReady("pachinko319");
   setRunningButton("pachinko319", false);
   pachinkoRunning = false;
@@ -1180,7 +1204,7 @@ function simulateTokyoGhoul999() {
   }
 
   const investment = Math.ceil(spins / spinsPerUnit) * 1000;
-  const usedBalls = Math.round(investment / 4);
+  const usedBalls = Math.round(investment / 1000 * realStoreRates.pachinko.lendBalls);
   const enteredRush = route === "図柄揃い" && Math.random() < rushRate;
   let chain = 1;
   let totalPayout = enteredRush ? entryPayout : (route === "図柄揃い" ? figurePayout : chargePayout);
@@ -1209,7 +1233,8 @@ function simulateTokyoGhoul999() {
   }
 
   const diff = totalPayout - usedBalls;
-  return { spins, investment, usedBalls, route, enteredRush, chain, totalPayout, diff, events };
+  const { cashout, balance } = calculateRealStoreMoney("pachinko", totalPayout, investment);
+  return { spins, investment, usedBalls, route, enteredRush, chain, totalPayout, diff, cashout, balance, events };
 }
 
 async function runTokyoGhoul999() {
@@ -1222,6 +1247,7 @@ async function runTokyoGhoul999() {
   setText("resultPayout", "0玉");
   setText("resultChain", "0連");
   setText("resultDiff", "0玉");
+  setRealStoreMoneyResult(0, 0);
   setText("resultRoute", "抽選中");
   setText("log", "図柄揃い・チャージ抽選中...");
 
@@ -1261,8 +1287,9 @@ async function runTokyoGhoul999() {
   setText("resultPayout", `${yen.format(result.totalPayout)}玉`);
   setText("resultChain", `${result.chain}連`);
   setText("resultDiff", `${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
+  setRealStoreMoneyResult(result.cashout, result.balance);
   setText("resultRoute", result.enteredRush ? `${result.route} → LT突入` : `${result.route} → 通常`);
-  setText("log", `${result.route} / ${result.enteredRush ? "LT突入" : "通常終了"} / ${result.chain}連 / 差玉 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
+  setText("log", `${result.route} / ${result.enteredRush ? "LT突入" : "通常終了"} / ${result.chain}連 / 差玉 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉 / 収支 ${result.balance >= 0 ? "+" : ""}${yen.format(result.balance)}円（28玉交換）`);
   setText("simpleStatus", "結果確定");
   setText("simpleStatusText", `${result.chain}連 / 差玉 ${result.diff > 0 ? "+" : ""}${yen.format(result.diff)}玉`);
   finishStageEffects(result.enteredRush ? "is-big-hit" : "is-finished");
@@ -1274,7 +1301,9 @@ async function runTokyoGhoul999() {
     enteredRush: result.enteredRush,
     chain: result.chain,
     totalPayout: result.totalPayout,
-    diff: result.diff
+    diff: result.diff,
+    cashout: result.cashout,
+    balance: result.balance
   };
   markResultReady("tokyoGhoul999");
   setRunningButton("tokyoGhoul999", false);
@@ -1301,7 +1330,7 @@ function simulateGenericPachinko() {
       totalPayout += payout;
     }
   }
-  const diff = totalPayout - Math.round(investment / 4);
+  const diff = totalPayout - Math.round(investment / 1000 * realStoreRates.pachinko.lendBalls);
   return { hitRate, spins, investment, totalPayout, chain, diff, enteredRush, firstPayout, payout };
 }
 
@@ -1364,7 +1393,7 @@ function simulateLuckyTrigger() {
       totalPayout += triggerPayout;
     }
   }
-  const diff = totalPayout - Math.round(investment / 4);
+  const diff = totalPayout - Math.round(investment / 1000 * realStoreRates.pachinko.lendBalls);
   return { hitRate, spins, investment, enteredTrigger, chain, totalPayout, diff, firstPayout, triggerPayout };
 }
 
@@ -1560,7 +1589,8 @@ function simulateJuggle() {
   const finalMedals = Math.max(0, Math.round(medals));
   const investedMedals = Math.round(investment / 1000 * medalsPerUnit);
   const diff = finalMedals - investedMedals;
-  return { games, investment, finalMedals, diff, big, reg, chain, hitEvents };
+  const { cashout, balance } = calculateRealStoreMoney("slot", finalMedals, investment);
+  return { games, investment, finalMedals, diff, cashout, balance, big, reg, chain, hitEvents };
 }
 
 async function runJuggle() {
@@ -1573,6 +1603,7 @@ async function runJuggle() {
   setText("resultInvestment", "0円");
   setText("resultMedals", "0枚");
   setText("resultDiff", "0枚");
+  setRealStoreMoneyResult(0, 0);
   setText("resultBonus", "BIG 0 / REG 0");
   setText("log", "回転中...");
 
@@ -1580,15 +1611,16 @@ async function runJuggle() {
   await animateJuggleResult(result);
   await sleep(speedAdjustedDuration(160));
 
-  const { games, investment, finalMedals, diff, big, reg, chain } = result;
+  const { games, investment, finalMedals, diff, cashout, balance, big, reg, chain } = result;
   setText("resultChain", `${chain}連`);
   setText("resultGames", `${yen.format(games)}G`);
   setText("resultInvestment", `${yen.format(investment)}円`);
   setText("resultMedals", `${yen.format(finalMedals)}枚`);
   setText("resultDiff", `${diff > 0 ? "+" : ""}${yen.format(diff)}枚`);
+  setRealStoreMoneyResult(cashout, balance);
   setText("resultBonus", `BIG ${big} / REG ${reg}`);
-  setText("log", `${games}G / ${chain}連 / BIG ${big} REG ${reg} / 差枚 ${diff > 0 ? "+" : ""}${yen.format(diff)}枚`);
-  latestResults.juggle = { games, investment, finalMedals, diff, big, reg, chain };
+  setText("log", `${games}G / ${chain}連 / BIG ${big} REG ${reg} / 差枚 ${diff > 0 ? "+" : ""}${yen.format(diff)}枚 / 収支 ${balance >= 0 ? "+" : ""}${yen.format(balance)}円（5.2枚交換）`);
+  latestResults.juggle = { games, investment, finalMedals, diff, cashout, balance, big, reg, chain };
   markResultReady("juggle");
   setRunningButton("juggle", false);
   juggleRunning = false;
@@ -1609,6 +1641,10 @@ async function runJuggleSimple() {
   setText("simpleRuleGame", "0G");
   setText("simpleRuleChain", "0連");
   setText("resultBonusBreakdown", "BIG 0 / REG 0");
+  setText("resultInvestment", "0円");
+  setText("resultMedals", "0枚");
+  setText("resultDiff", "0枚");
+  setRealStoreMoneyResult(0, 0);
   setText("log", "変動開始...");
 
   const result = simulateJuggle();
@@ -1639,7 +1675,7 @@ async function runJuggleSimple() {
     }
   }
 
-  const { games, investment, finalMedals, diff, big, reg, chain } = result;
+  const { games, investment, finalMedals, diff, cashout, balance, big, reg, chain } = result;
   finishStageEffects(chain >= 3 ? "is-big-hit" : "is-finished");
   setText("simpleStatus", "結果確定");
   setText("simpleStatusText", "100G抜けで終了");
@@ -1650,8 +1686,12 @@ async function runJuggleSimple() {
   setText("simpleRuleGame", `${yen.format(lastInterval || games)}G`);
   setText("simpleRuleChain", `${chain}連`);
   setText("resultBonusBreakdown", `BIG ${big} / REG ${reg}`);
-  setText("log", `${games}G / ${chain}連 / BIG ${big} REG ${reg} / 差枚 ${diff > 0 ? "+" : ""}${yen.format(diff)}枚`);
-  latestResults.juggle = { games, investment, finalMedals, diff, big, reg, chain };
+  setText("resultInvestment", `${yen.format(investment)}円`);
+  setText("resultMedals", `${yen.format(finalMedals)}枚`);
+  setText("resultDiff", `${diff > 0 ? "+" : ""}${yen.format(diff)}枚`);
+  setRealStoreMoneyResult(cashout, balance);
+  setText("log", `${games}G / ${chain}連 / BIG ${big} REG ${reg} / 差枚 ${diff > 0 ? "+" : ""}${yen.format(diff)}枚 / 収支 ${balance >= 0 ? "+" : ""}${yen.format(balance)}円（5.2枚交換）`);
+  latestResults.juggle = { games, investment, finalMedals, diff, cashout, balance, big, reg, chain };
   markResultReady("juggle");
   if (startButton) startButton.disabled = false;
   juggleRunning = false;
@@ -2149,6 +2189,424 @@ function registerServiceWorker() {
   });
 }
 
+function initializeMachineFinder() {
+  const finder = document.querySelector("[data-machine-find]");
+  const grid = document.querySelector("#popularMachines .machine-index-grid");
+  if (!finder || !grid) return;
+  const search = finder.querySelector("#machineSearch");
+  const buttons = [...finder.querySelectorAll("[data-machine-filter]")];
+  const cards = [...grid.querySelectorAll(":scope > a")];
+  const status = finder.querySelector("#machineFilterStatus");
+  let activeFilter = "all";
+
+  const normalize = value => String(value || "").normalize("NFKC").toLocaleLowerCase("ja-JP").replace(/\s+/g, "");
+  const update = () => {
+    const query = normalize(search?.value);
+    let visible = 0;
+    cards.forEach(card => {
+      const matchesType = activeFilter === "all" || card.classList.contains(`is-${activeFilter}`);
+      const matchesSearch = !query || normalize(card.textContent).includes(query);
+      const show = matchesType && matchesSearch;
+      card.hidden = !show;
+      if (show) visible += 1;
+    });
+    if (status) status.textContent = query || activeFilter !== "all" ? `${visible}機種を表示中` : `全${cards.length}機種`;
+  };
+
+  search?.addEventListener("input", update);
+  buttons.forEach(button => button.addEventListener("click", () => {
+    activeFilter = button.dataset.machineFilter || "all";
+    buttons.forEach(item => item.setAttribute("aria-pressed", String(item === button)));
+    update();
+  }));
+  update();
+}
+
+function initializeMobileAppHome() {
+  const form = document.getElementById("mobileMachineSearchForm");
+  const mobileSearch = document.getElementById("mobileMachineSearch");
+  const machineSearch = document.getElementById("machineSearch");
+  const popularMachines = document.getElementById("popularMachines");
+  const appFilters = [...document.querySelectorAll("[data-app-machine-filter]")];
+  const results = document.getElementById("mobileMachineSearchResults");
+  const resultList = document.getElementById("mobileMachineSearchList");
+  const resultStatus = document.getElementById("mobileMachineSearchStatus");
+  const clearButton = document.getElementById("mobileMachineSearchClear");
+  if (!form || !mobileSearch || !machineSearch || !popularMachines) return;
+  const cards = [...popularMachines.querySelectorAll(".machine-index-grid > a")];
+  const normalize = value => String(value || "").normalize("NFKC").toLocaleLowerCase("ja-JP").replace(/\s+/g, "");
+  let activeMobileFilter = "all";
+
+  const renderResults = (force = false) => {
+    if (!results || !resultList || !resultStatus) return;
+    const query = normalize(mobileSearch.value);
+    const matches = cards.filter(card => {
+      const matchesType = activeMobileFilter === "all" || card.classList.contains(`is-${activeMobileFilter}`);
+      return matchesType && (!query || normalize(card.textContent).includes(query));
+    });
+    const shouldShow = force || Boolean(query);
+    results.hidden = !shouldShow;
+    mobileSearch.setAttribute("aria-expanded", String(shouldShow));
+    resultList.replaceChildren();
+    if (!shouldShow) return;
+
+    resultStatus.textContent = matches.length ? `${matches.length}機種が見つかりました` : "該当する機種がありません";
+    matches.slice(0, 6).forEach(card => {
+      const link = document.createElement("a");
+      link.href = card.getAttribute("href") || "#";
+      const kind = document.createElement("span");
+      kind.textContent = card.classList.contains("is-slot") ? "SLOT" : "PACHINKO";
+      const title = document.createElement("strong");
+      title.textContent = card.querySelector("strong")?.textContent || card.textContent.trim();
+      const detail = document.createElement("small");
+      detail.textContent = card.querySelector("small")?.textContent || "記事・シミュレーターを見る";
+      const arrow = document.createElement("b");
+      arrow.setAttribute("aria-hidden", "true");
+      arrow.textContent = "›";
+      link.append(kind, title, detail, arrow);
+      resultList.append(link);
+    });
+  };
+
+  const applyFilter = filter => {
+    const source = document.querySelector(`[data-machine-filter="${filter}"]`);
+    source?.click();
+    appFilters.forEach(button => button.setAttribute("aria-pressed", String(button.dataset.appMachineFilter === filter)));
+  };
+
+  mobileSearch.addEventListener("input", () => {
+    activeMobileFilter = "all";
+    applyFilter("all");
+    machineSearch.value = mobileSearch.value;
+    machineSearch.dispatchEvent(new Event("input", { bubbles: true }));
+    renderResults();
+  });
+
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    renderResults(true);
+    results?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  });
+
+  appFilters.forEach(button => button.addEventListener("click", () => {
+    mobileSearch.value = "";
+    machineSearch.value = "";
+    activeMobileFilter = button.dataset.appMachineFilter || "all";
+    applyFilter(activeMobileFilter);
+    renderResults(true);
+    results?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }));
+
+  clearButton?.addEventListener("click", () => {
+    mobileSearch.value = "";
+    machineSearch.value = "";
+    activeMobileFilter = "all";
+    applyFilter("all");
+    if (results) results.hidden = true;
+    mobileSearch.setAttribute("aria-expanded", "false");
+    mobileSearch.focus();
+  });
+
+  const focusSearchFromHash = () => {
+    if (location.hash !== "#mobileMachineSearch") return;
+    window.setTimeout(() => mobileSearch.focus({ preventScroll: true }), 80);
+  };
+  window.addEventListener("hashchange", focusSearchFromHash);
+  focusSearchFromHash();
+}
+
+function initializeDailyRecommendation() {
+  const featured = document.getElementById("appFeatured");
+  const machines = window.ICHIGEKI_MACHINES || {};
+  if (!featured || !Object.keys(machines).length) return;
+
+  const featuredSlugs = [
+    "valvrave2",
+    "smart-hokuto",
+    "tokyo-ghoul-slot",
+    "eva17-hajimari",
+    "sengoku-otome5",
+    "million-god-kiseki",
+    "lycoris-recoil-slot",
+    "lycoris-recoil-pachinko",
+    "okiumi6",
+    "hokuto-tensei2",
+    "tokyo-ghoul-super",
+    "bofuri-slot",
+    "gundam-seed-climax",
+    "aobuta-slot",
+    "my-juggler6",
+    "neo-im-juggler",
+    "gogo-juggler3",
+    "funky-juggler2"
+  ].filter(slug => machines[slug]);
+  if (!featuredSlugs.length) return;
+
+  const dateParts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Tokyo",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric"
+  }).formatToParts(new Date()).reduce((parts, part) => {
+    if (part.type !== "literal") parts[part.type] = Number(part.value);
+    return parts;
+  }, {});
+  const dayNumber = Math.floor(Date.UTC(dateParts.year, dateParts.month - 1, dateParts.day) / 86400000);
+  const slug = featuredSlugs[dayNumber % featuredSlugs.length];
+  const machine = machines[slug];
+  if (!machine) return;
+
+  const formatRate = value => {
+    const number = Number(value);
+    if (!Number.isFinite(number)) return "--";
+    return number.toFixed(number % 1 ? 1 : 0);
+  };
+  const stats = machine.sim.kind === "juggler"
+    ? [
+        ["BIG", `約1/${formatRate(machine.sim.bigRate)}`],
+        ["REG", `約1/${formatRate(machine.sim.regRate)}`],
+        ["設定", "1〜6ランダム"]
+      ]
+    : machine.type === "slot"
+    ? [
+        [machine.sim.triggerRate && machine.sim.triggerRate !== machine.sim.mainRate ? "CZ" : "初当り", `約1/${formatRate(machine.sim.triggerRate || machine.sim.mainRate)}`],
+        ["平均", `${formatRate(machine.sim.mainRate)}G`],
+        ["コイン単価", `${Number(machine.sim.coinUnit).toFixed(1)}円`]
+      ]
+    : [
+        ["大当り", `約1/${formatRate(machine.sim.hitRate)}`],
+        ["平均", `${formatRate(machine.sim.hitRate)}回転`],
+        ["タイプ", machine.sim.startType || "通常ヘソ"]
+      ];
+
+  const titleLink = featured.querySelector(".mobile-featured-title");
+  const startLink = featured.querySelector(".mobile-featured-start");
+  if (titleLink) {
+    titleLink.href = `${slug}.html`;
+    const title = titleLink.querySelector("strong");
+    if (title) title.textContent = machine.shortName;
+  }
+  if (startLink) startLink.href = `${slug}.html#simulator`;
+  featured.querySelectorAll(".mobile-featured-stats > div").forEach((item, index) => {
+    const stat = stats[index];
+    if (!stat) return;
+    const label = item.querySelector("span");
+    const value = item.querySelector("strong");
+    if (label) label.textContent = stat[0];
+    if (value) value.textContent = stat[1];
+  });
+  featured.dataset.dailyMachine = slug;
+  featured.addEventListener("click", event => {
+    if (event.target.closest("a")) window.ICHIGEKI_INSIGHTS?.track("home_machine_open", { machine_slug: slug, placement: "daily" });
+  }, { once: true });
+}
+
+async function initializeWeeklyRanking() {
+  const list = document.getElementById("mobileWeeklyRankingList");
+  const status = document.getElementById("mobileWeeklyStatus");
+  const machines = window.ICHIGEKI_MACHINES || {};
+  if (!list || !Object.keys(machines).length) return;
+
+  const fallback = ["valvrave2", "smart-hokuto", "tokyo-ghoul-slot", "eva17-hajimari", "sengoku-otome5"].filter(slug => machines[slug]);
+  let ranked = fallback.map((slug, index) => ({ slug, count: 0, rank: index + 1 }));
+  const config = window.ICHIGEKI_COMMUNITY_CONFIG || {};
+
+  try {
+    if (!config.supabaseUrl || !config.supabaseAnonKey) throw new Error("no community config");
+    const cutoff = new Date(Date.now() - 7 * 86400000).toISOString();
+    const endpoint = `${config.supabaseUrl}/rest/v1/machine_rankings?select=machine_slug,updated_at&updated_at=gte.${encodeURIComponent(cutoff)}&limit=1000`;
+    const response = await fetch(endpoint, {
+      headers: {
+        apikey: config.supabaseAnonKey,
+        Authorization: `Bearer ${config.supabaseAnonKey}`
+      }
+    });
+    if (!response.ok) throw new Error(`weekly ranking ${response.status}`);
+    const rows = await response.json();
+    const counts = new Map();
+    rows.forEach(row => {
+      const machineSlug = String(row.machine_slug || "").split("--")[0];
+      if (!machines[machineSlug]) return;
+      counts.set(machineSlug, (counts.get(machineSlug) || 0) + 1);
+    });
+    if (counts.size) {
+      ranked = [...counts.entries()]
+        .sort((a, b) => b[1] - a[1] || (machines[a[0]].order || 999) - (machines[b[0]].order || 999))
+        .slice(0, 5)
+        .map(([slug, count], index) => ({ slug, count, rank: index + 1 }));
+      if (status) status.textContent = "直近7日の公開記録";
+    } else if (status) status.textContent = "今週の注目機種";
+  } catch {
+    if (status) status.textContent = "今週の注目機種";
+  }
+
+  list.replaceChildren(...ranked.map(item => {
+    const machine = machines[item.slug];
+    const link = document.createElement("a");
+    link.href = `${item.slug}.html#simulator`;
+    const rank = document.createElement("span");
+    rank.textContent = String(item.rank);
+    const title = document.createElement("strong");
+    title.textContent = machine.shortName;
+    const detail = document.createElement("small");
+    detail.textContent = item.count ? `${item.count}件の公開記録 ›` : "シミュレーターへ ›";
+    link.append(rank, title, detail);
+    link.addEventListener("click", () => window.ICHIGEKI_INSIGHTS?.track("home_machine_open", { machine_slug: item.slug, placement: "weekly" }));
+    return link;
+  }));
+}
+
+function initializeMobileMachineShelves() {
+  const machines = window.ICHIGEKI_MACHINES || {};
+  const categoryList = document.getElementById("mobileCategoryMachineList");
+  const categoryTitle = document.getElementById("mobilePopularTitle");
+  const categoryButtons = [...document.querySelectorAll("[data-home-machine-category]")];
+  const recentSection = document.getElementById("mobileRecentMachines");
+  const recentList = document.getElementById("mobileRecentMachineList");
+  const favoriteSection = document.getElementById("mobileFavoriteMachines");
+  const favoriteList = document.getElementById("mobileFavoriteMachineList");
+  const favoriteEmpty = document.getElementById("mobileFavoriteEmpty");
+  const favoriteCount = document.getElementById("mobileFavoriteCount");
+  const clearRecentButton = document.getElementById("clearRecentMachines");
+  if (!categoryList || !categoryTitle || !Object.keys(machines).length) return;
+
+  const RECENT_KEY = "ichigekiRecentMachinesV1";
+  const FAVORITE_KEY = "ichigekiFavoriteMachinesV1";
+  const popularSlugs = ["sengoku-otome5", "million-god-kiseki", "lycoris-recoil-pachinko", "okiumi6", "tokyo-ghoul-slot", "valvrave2", "smart-hokuto", "eva17-hajimari"];
+  const categoryLabels = { popular: "人気機種", new: "新着機種", pachinko: "パチンコ", slot: "スロット" };
+  let activeCategory = "popular";
+
+  const readList = (key, fallback = []) => {
+    try {
+      const value = JSON.parse(localStorage.getItem(key) || "[]");
+      return Array.isArray(value) ? value : fallback;
+    } catch { return fallback; }
+  };
+  const writeList = (key, value) => {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch {}
+  };
+  const machineDate = machine => {
+    const match = String(machine?.year || "").match(/(\d{4})(?:年(\d{1,2})月?)?/);
+    return match ? Number(match[1]) * 100 + Number(match[2] || 0) : 0;
+  };
+  const metrics = machine => machine.type === "slot"
+    ? [`平均${Number(machine.sim.mainRate).toFixed(machine.sim.mainRate % 1 ? 1 : 0)}G`, `単価${Number(machine.sim.coinUnit).toFixed(1)}円`]
+    : [`平均${Number(machine.sim.hitRate).toFixed(1)}回転`, machine.sim.startType];
+
+  function createShelfCard(slug) {
+    const machine = machines[slug];
+    if (!machine) return null;
+    const card = document.createElement("article");
+    card.className = `mobile-shelf-card is-${machine.type}`;
+    const link = document.createElement("a");
+    link.href = `${slug}.html#simulator`;
+    const kind = document.createElement("span");
+    kind.textContent = machine.type === "slot" ? "SLOT" : "PACHINKO";
+    const title = document.createElement("strong");
+    title.textContent = machine.shortName;
+    const [primary, secondary] = metrics(machine);
+    const detail = document.createElement("small");
+    detail.textContent = `${primary}・${secondary}`;
+    link.append(kind, title, detail);
+    const favorite = document.createElement("button");
+    favorite.type = "button";
+    favorite.dataset.favoriteMachine = slug;
+    favorite.setAttribute("aria-label", `${machine.shortName}のお気に入りを切り替える`);
+    card.append(link, favorite);
+    return card;
+  }
+
+  function createCategoryCard(slug, index) {
+    const machine = machines[slug];
+    if (!machine) return null;
+    const card = document.createElement("a");
+    card.href = `${slug}.html`;
+    card.className = `is-${machine.type}`;
+    const number = document.createElement("span");
+    number.textContent = String(index + 1).padStart(2, "0");
+    const title = document.createElement("strong");
+    title.textContent = machine.shortName;
+    const [primary, secondary] = metrics(machine);
+    const first = document.createElement("b");
+    first.textContent = primary;
+    const second = document.createElement("small");
+    second.textContent = secondary;
+    card.append(number, title, first, second);
+    return card;
+  }
+
+  function favoriteSlugs() {
+    return readList(FAVORITE_KEY).filter(slug => machines[slug]);
+  }
+
+  function updateFavoriteButtons() {
+    const favorites = new Set(favoriteSlugs());
+    document.querySelectorAll("[data-favorite-machine]").forEach(button => {
+      const active = favorites.has(button.dataset.favoriteMachine);
+      button.textContent = active ? "★" : "☆";
+      button.setAttribute("aria-pressed", String(active));
+      button.title = active ? "お気に入りから外す" : "お気に入りに追加";
+    });
+  }
+
+  function renderPersonalShelves() {
+    const recent = readList(RECENT_KEY)
+      .map(item => typeof item === "string" ? { slug: item } : item)
+      .filter(item => machines[item?.slug])
+      .slice(0, 4);
+    if (recentList && recentSection) {
+      recentList.replaceChildren(...recent.map(item => createShelfCard(item.slug)).filter(Boolean));
+      recentSection.hidden = recent.length === 0;
+    }
+
+    const favorites = favoriteSlugs();
+    if (favoriteList && favoriteSection) {
+      favoriteList.replaceChildren(...favorites.slice(0, 6).map(createShelfCard).filter(Boolean));
+      favoriteSection.hidden = false;
+    }
+    if (favoriteEmpty) favoriteEmpty.hidden = favorites.length > 0;
+    if (favoriteCount) favoriteCount.textContent = `${favorites.length}台`;
+    updateFavoriteButtons();
+  }
+
+  function categorySlugs(category) {
+    const entries = Object.entries(machines);
+    if (category === "popular") return popularSlugs.filter(slug => machines[slug]);
+    if (category === "new") return entries.sort((a, b) => machineDate(b[1]) - machineDate(a[1]) || a[1].order - b[1].order).slice(0, 8).map(([slug]) => slug);
+    return entries.filter(([, machine]) => machine.type === category).sort((a, b) => a[1].order - b[1].order).slice(0, 10).map(([slug]) => slug);
+  }
+
+  function renderCategory(category = activeCategory) {
+    activeCategory = category;
+    const slugs = categorySlugs(category);
+    categoryList.replaceChildren(...slugs.map(createCategoryCard).filter(Boolean));
+    categoryTitle.innerHTML = `<span aria-hidden="true">▥</span> ${categoryLabels[category] || "機種"}`;
+    categoryButtons.forEach(button => button.setAttribute("aria-pressed", String(button.dataset.homeMachineCategory === category)));
+  }
+
+  categoryButtons.forEach(button => button.addEventListener("click", () => {
+    renderCategory(button.dataset.homeMachineCategory || "popular");
+    categoryTitle.closest("section")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }));
+
+  document.addEventListener("click", event => {
+    const button = event.target.closest("[data-favorite-machine]");
+    if (!button) return;
+    const slug = button.dataset.favoriteMachine;
+    const favorites = favoriteSlugs();
+    writeList(FAVORITE_KEY, favorites.includes(slug) ? favorites.filter(item => item !== slug) : [slug, ...favorites].slice(0, 20));
+    renderPersonalShelves();
+  });
+
+  clearRecentButton?.addEventListener("click", () => {
+    writeList(RECENT_KEY, []);
+    renderPersonalShelves();
+  });
+  window.addEventListener("storage", renderPersonalShelves);
+  renderPersonalShelves();
+  renderCategory();
+}
+
 document.addEventListener("click", event => {
   const target = event.target.closest("[data-action]");
   if (!target) return;
@@ -2203,4 +2661,9 @@ initializeTwoChoicePage();
 enhanceAdPlacement();
 initializeAnalytics();
 enhanceInstallCard();
+initializeMachineFinder();
+initializeMobileAppHome();
+initializeDailyRecommendation();
+initializeWeeklyRanking();
+initializeMobileMachineShelves();
 registerServiceWorker();

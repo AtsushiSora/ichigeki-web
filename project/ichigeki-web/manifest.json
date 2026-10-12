@@ -1,0 +1,19 @@
+{
+  "name": "ICHIGEKI ランキングバトル",
+  "short_name": "ICHIGEKI",
+  "description": "ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル集です。",
+  "start_url": "index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#050705",
+  "theme_color": "#050705",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

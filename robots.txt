@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://atsushisora.github.io/ichigeki-web/sitemap.xml
+Sitemap: https://ichigeki-pachislot.com/sitemap.xml

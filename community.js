@@ -1,8 +1,17 @@
 const COMMUNITY_LOCAL_KEY = "ichigekiCommunityPostsV1";
 const COMMUNITY_HIDDEN_KEY = "ichigekiCommunityHiddenV1";
+const COMMUNITY_NICKNAME_KEY = "ichigekiRankingNicknameV1";
 const machineMeta = {
   "slot-new": { name: "新台スロット（登録待ち）", simulator: "slot-zone-demo.html" },
   "gundam-unicorn": { name: "初代ガンダムユニコーン", simulator: "gundam-unicorn.html" },
+  "my-juggler6": { name: "マイジャグラーVI", simulator: "my-juggler6.html" },
+  "neo-im-juggler": { name: "ネオアイムジャグラーEX", simulator: "neo-im-juggler.html" },
+  "gogo-juggler3": { name: "ゴーゴージャグラー3", simulator: "gogo-juggler3.html" },
+  "funky-juggler2": { name: "ファンキージャグラー2", simulator: "funky-juggler2.html" },
+  "sengoku-otome5": { name: "L戦国乙女5 業火を穿つ宿焔の双刃", simulator: "sengoku-otome5.html" },
+  "million-god-kiseki": { name: "スマスロ ミリオンゴッド‐神々の軌跡‐", simulator: "million-god-kiseki.html" },
+  "lycoris-recoil-pachinko": { name: "eリコリス・リコイル", simulator: "lycoris-recoil-pachinko.html" },
+  "okiumi6": { name: "Pスーパー海物語IN沖縄6", simulator: "okiumi6.html" },
   "lycoris-recoil-slot": { name: "スマスロ リコリス・リコイル", simulator: "lycoris-recoil-slot.html" },
   "assault-lily": { name: "e アサルトリリィ", simulator: "assault-lily.html" },
   "kanokari-slot": { name: "Lパチスロ 彼女、お借りします", simulator: "kanokari-slot.html" },
@@ -34,7 +43,7 @@ const machineMeta = {
   "tokyo-ghoul-999": { name: "東京喰種999", simulator: "tokyo-ghoul-999.html" },
   "pachinko-319": { name: "一撃319", simulator: "pachinko-319.html" }
 };
-const communityState = { mode: "local", client: null, userId: null, posts: [], filter: "all", files: [], videoFile: null };
+const communityState = { mode: "local", client: null, userId: null, posts: [], filter: "all", files: [], imageObjectUrls: [], videoFile: null, videoObjectUrl: "" };
 
 function text(value) { return String(value ?? ""); }
 function safeUrl(value, allowDataImage = false) {
@@ -53,6 +62,21 @@ function readLocalPosts() {
 function writeLocalPosts(posts) { localStorage.setItem(COMMUNITY_LOCAL_KEY, JSON.stringify(posts)); }
 function hiddenIds() {
   try { return new Set(JSON.parse(localStorage.getItem(COMMUNITY_HIDDEN_KEY) || "[]")); } catch { return new Set(); }
+}
+function savedNickname() { return (localStorage.getItem(COMMUNITY_NICKNAME_KEY) || "").trim().slice(0, 16); }
+function rememberNickname(value) {
+  const nickname = text(value).trim().slice(0, 16);
+  if (!nickname) return;
+  localStorage.setItem(COMMUNITY_NICKNAME_KEY, nickname);
+  ["nickname", "simulationNickname"].forEach(id => {
+    const input = document.getElementById(id);
+    if (input && input.value !== nickname) input.value = nickname;
+  });
+}
+function restoreNickname() {
+  const nickname = savedNickname();
+  if (!nickname) return;
+  ["nickname", "simulationNickname"].forEach(id => { document.getElementById(id).value = nickname; });
 }
 function showNotice(message, tone = "info") {
   const notice = document.getElementById("communityNotice");
@@ -109,7 +133,13 @@ function isUploadedVideo(url) {
 
 function renderPosts() {
   const hidden = hiddenIds();
+  const sort = document.getElementById("communityPostSort")?.value || "newest";
   const posts = communityState.posts.filter(post => !hidden.has(post.id) && (communityState.filter === "all" || post.post_type === communityState.filter));
+  posts.sort((a, b) => {
+    if (sort === "rating") return Number(b.rating || 0) - Number(a.rating || 0) || new Date(b.created_at) - new Date(a.created_at);
+    if (sort === "balance") return (Number(b.return_amount || 0) - Number(b.investment || 0)) - (Number(a.return_amount || 0) - Number(a.investment || 0)) || new Date(b.created_at) - new Date(a.created_at);
+    return new Date(b.created_at) - new Date(a.created_at);
+  });
   const list = document.getElementById("postList");
   const empty = document.getElementById("emptyPosts");
   list.innerHTML = "";
@@ -195,10 +225,12 @@ async function submitPost(event) {
     }
     const mediaUrls = isSimulation ? [] : await uploadImages(userId);
     const uploadedVideoUrl = isSimulation ? "" : await uploadVideo(userId);
+    const nickname = document.getElementById(isSimulation ? "simulationNickname" : "nickname").value.trim().slice(0, 16);
+    rememberNickname(nickname);
     const post = {
       id: uid(), user_id: communityState.mode === "supabase" ? userId : null,
       machine_slug: selectedMachine(), post_type: isSimulation ? "simulation" : document.getElementById("postType").value,
-      nickname: document.getElementById(isSimulation ? "simulationNickname" : "nickname").value.trim().slice(0, 16),
+      nickname,
       rating: isSimulation ? 0 : Number(document.getElementById("rating").value),
       title: document.getElementById(isSimulation ? "simulationTitle" : "postTitle").value.trim().slice(0, 60),
       body: document.getElementById(isSimulation ? "simulationBody" : "postBody").value.trim().slice(0, 1000),
@@ -214,17 +246,22 @@ async function submitPost(event) {
       const all = readLocalPosts(); all.unshift(post); writeLocalPosts(all);
     }
     event.target.reset();
+    restoreNickname();
     if (isSimulation) {
       document.getElementById("simulationTitle").value = "シミュレーション結果";
       updateSimulationComposer();
     } else {
       communityState.files = [];
       communityState.videoFile = null;
+      clearImageObjectUrls();
+      clearVideoPreview();
       updateComposer();
       document.getElementById("imagePreview").innerHTML = "";
-      document.getElementById("videoPreview").innerHTML = "";
+      updateVideoChoiceState();
+      renderDraftPreview();
     }
     showNotice(communityState.mode === "local" ? "投稿をこの端末に保存しました。公開共有はバックエンド接続後に有効になります。" : "投稿を公開しました。", "success");
+    window.ICHIGEKI_INSIGHTS?.track("community_post", { machine_slug: post.machine_slug, post_type: post.post_type, public: communityState.mode === "supabase" });
     await refreshPosts();
   } catch (error) { showNotice(error.message || "投稿を保存できませんでした。", "error"); }
   finally { button.disabled = false; button.textContent = buttonLabel; }
@@ -234,10 +271,100 @@ function updateComposer() {
   const type = document.getElementById("postType").value;
   document.getElementById("balanceFields").hidden = type !== "result";
   document.getElementById("bodyCount").textContent = document.getElementById("postBody").value.length;
+  renderDraftPreview();
 }
 
 function updateSimulationComposer() {
   document.getElementById("simulationBodyCount").textContent = document.getElementById("simulationBody").value.length;
+}
+
+function clearImageObjectUrls() {
+  communityState.imageObjectUrls.forEach(url => URL.revokeObjectURL(url));
+  communityState.imageObjectUrls = [];
+}
+
+function renderImagePreviews() {
+  clearImageObjectUrls();
+  const preview = document.getElementById("imagePreview");
+  preview.innerHTML = "";
+  communityState.files.forEach((file, index) => {
+    const item = document.createElement("div");
+    item.className = "media-preview-item";
+    const img = document.createElement("img");
+    const objectUrl = URL.createObjectURL(file);
+    communityState.imageObjectUrls.push(objectUrl);
+    img.src = objectUrl;
+    img.alt = `投稿前の画像プレビュー ${index + 1}`;
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.dataset.removeImage = String(index);
+    remove.textContent = "削除";
+    remove.setAttribute("aria-label", `画像${index + 1}を取り消す`);
+    item.append(img, remove);
+    preview.appendChild(item);
+  });
+  renderDraftPreview();
+}
+
+function clearVideoPreview() {
+  if (communityState.videoObjectUrl) URL.revokeObjectURL(communityState.videoObjectUrl);
+  communityState.videoObjectUrl = "";
+  communityState.videoFile = null;
+  document.getElementById("videoPreview").innerHTML = "";
+}
+
+function renderVideoPreview(file) {
+  clearVideoPreview();
+  if (!file) return;
+  communityState.videoFile = file;
+  communityState.videoObjectUrl = URL.createObjectURL(file);
+  const preview = document.getElementById("videoPreview");
+  const item = document.createElement("div");
+  item.className = "video-preview-item";
+  const video = document.createElement("video");
+  video.src = communityState.videoObjectUrl;
+  video.controls = true;
+  video.preload = "metadata";
+  video.playsInline = true;
+  const remove = document.createElement("button");
+  remove.type = "button";
+  remove.dataset.removeVideo = "true";
+  remove.textContent = "動画を取り消す";
+  item.append(video, remove);
+  preview.appendChild(item);
+}
+
+function updateVideoChoiceState() {
+  const videoInput = document.getElementById("postVideo");
+  const urlInput = document.getElementById("videoUrl");
+  videoInput.disabled = Boolean(urlInput.value.trim());
+  urlInput.disabled = Boolean(communityState.videoFile);
+}
+
+function renderDraftPreview() {
+  const title = document.getElementById("postTitle").value.trim();
+  const body = document.getElementById("postBody").value.trim();
+  const nickname = document.getElementById("nickname").value.trim();
+  const preview = document.getElementById("postDraftPreview");
+  preview.hidden = !title && !body;
+  document.getElementById("draftPostType").textContent = document.getElementById("postType").value === "result" ? "実戦収支" : "口コミ";
+  const rating = Number(document.getElementById("rating").value);
+  document.getElementById("draftRating").textContent = rating ? `${"★".repeat(rating)}${"☆".repeat(5 - rating)}` : "";
+  document.getElementById("draftTitle").textContent = title || "タイトル";
+  document.getElementById("draftNickname").textContent = `${nickname || "ニックネーム"} さん`;
+  document.getElementById("draftBody").textContent = body || "本文を入力するとここに表示されます。";
+  const balance = document.getElementById("draftBalance");
+  if (document.getElementById("postType").value === "result") {
+    const investment = Number(document.getElementById("investment").value) || 0;
+    const returns = Number(document.getElementById("returnAmount").value) || 0;
+    const diff = returns - investment;
+    balance.hidden = false;
+    balance.textContent = `投資 ${money(investment)}円 ／ 回収 ${money(returns)}円 ／ 収支 ${diff >= 0 ? "+" : ""}${money(diff)}円`;
+  } else balance.hidden = true;
+  const media = [];
+  if (communityState.files.length) media.push(`画像 ${communityState.files.length}枚`);
+  if (communityState.videoFile || document.getElementById("videoUrl").value.trim()) media.push("動画あり");
+  document.getElementById("draftMedia").textContent = media.length ? media.join("・") : "画像・動画なし";
 }
 
 function showComposer(target, shouldScroll = false) {
@@ -271,37 +398,55 @@ document.getElementById("simulationPostForm").addEventListener("submit", submitP
 document.getElementById("postType").addEventListener("change", updateComposer);
 document.getElementById("postBody").addEventListener("input", updateComposer);
 document.getElementById("simulationBody").addEventListener("input", updateSimulationComposer);
+["nickname", "simulationNickname"].forEach(id => document.getElementById(id).addEventListener("input", event => { rememberNickname(event.currentTarget.value); renderDraftPreview(); }));
+["postTitle", "rating", "investment", "returnAmount"].forEach(id => document.getElementById(id).addEventListener("input", renderDraftPreview));
 document.querySelectorAll("[data-composer-target]").forEach(button => button.addEventListener("click", () => showComposer(button.dataset.composerTarget)));
 document.getElementById("postImages").addEventListener("change", event => {
-  communityState.files = [...event.target.files].slice(0, 3);
-  if ([...event.target.files].length > 3) showNotice("画像は最大3枚です。最初の3枚を選択しました。", "error");
-  const preview = document.getElementById("imagePreview"); preview.innerHTML = "";
-  communityState.files.forEach(file => { const img = document.createElement("img"); img.src = URL.createObjectURL(file); img.alt = "投稿前の画像プレビュー"; preview.appendChild(img); });
+  const selected = [...event.target.files];
+  const valid = selected.filter(file => ["image/jpeg", "image/png", "image/webp"].includes(file.type) && file.size <= 2 * 1024 * 1024).slice(0, 3);
+  communityState.files = valid;
+  event.target.value = "";
+  if (selected.length > 3) showNotice("画像は最大3枚です。最初の3枚を選択しました。", "error");
+  else if (valid.length !== selected.length) showNotice("JPEG・PNG・WebPの2MB以下の画像を選択してください。", "error");
+  renderImagePreviews();
+});
+document.getElementById("imagePreview").addEventListener("click", event => {
+  const button = event.target.closest("[data-remove-image]");
+  if (!button) return;
+  communityState.files.splice(Number(button.dataset.removeImage), 1);
+  renderImagePreviews();
 });
 document.getElementById("postVideo").addEventListener("change", event => {
   const file = event.target.files[0] || null;
   const preview = document.getElementById("videoPreview");
-  preview.innerHTML = "";
-  communityState.videoFile = null;
+  clearVideoPreview();
   if (!file) return;
   if (file.size > 20 * 1024 * 1024) {
     event.target.value = "";
     showNotice("動画は20MB以下にしてください。", "error");
+    updateVideoChoiceState();
+    renderDraftPreview();
     return;
   }
   if (!["video/mp4", "video/webm"].includes(file.type)) {
     event.target.value = "";
     showNotice("動画はMP4またはWebM形式にしてください。", "error");
+    updateVideoChoiceState();
+    renderDraftPreview();
     return;
   }
-  communityState.videoFile = file;
-  const video = document.createElement("video");
-  video.src = URL.createObjectURL(file);
-  video.controls = true;
-  video.preload = "metadata";
-  video.playsInline = true;
-  preview.appendChild(video);
+  renderVideoPreview(file);
+  updateVideoChoiceState();
+  renderDraftPreview();
 });
+document.getElementById("videoPreview").addEventListener("click", event => {
+  if (!event.target.closest("[data-remove-video]")) return;
+  clearVideoPreview();
+  document.getElementById("postVideo").value = "";
+  updateVideoChoiceState();
+  renderDraftPreview();
+});
+document.getElementById("videoUrl").addEventListener("input", () => { updateVideoChoiceState(); renderDraftPreview(); });
 document.getElementById("machineFilter").addEventListener("change", async event => {
   const simulator = machineMeta[event.target.value].simulator;
   document.getElementById("machineSimulatorLink").href = simulator;
@@ -312,6 +457,7 @@ document.querySelectorAll("[data-post-filter]").forEach(button => button.addEven
   document.querySelectorAll("[data-post-filter]").forEach(item => item.classList.remove("is-active"));
   button.classList.add("is-active"); communityState.filter = button.dataset.postFilter; renderPosts();
 }));
+document.getElementById("communityPostSort")?.addEventListener("change", renderPosts);
 document.getElementById("postList").addEventListener("click", async event => {
   const deleteButton = event.target.closest("[data-delete-post]");
   if (deleteButton) {
@@ -353,6 +499,9 @@ document.getElementById("postList").addEventListener("click", async event => {
 
 (async function initCommunity() {
   applyQueryDraft();
+  restoreNickname();
+  renderDraftPreview();
+  updateVideoChoiceState();
   document.getElementById("machineSimulatorLink").href = machineMeta[selectedMachine()].simulator;
   document.getElementById("composerSimulatorLink").href = machineMeta[selectedMachine()].simulator;
   try {

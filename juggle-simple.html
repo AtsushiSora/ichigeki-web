@@ -1,24 +1,25 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,follow">
   <meta name="theme-color" content="#050705">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <meta name="description" content="大きなSTARTボタンを押すだけでジャグ連を試せる、シンプルなランキングチャレンジです。">
   <title>ジャグ連チャレンジ | ICHIGEKI</title>
-  <link rel="canonical" href="https://atsushisora.github.io/ichigeki-web/juggle-simple.html">
+  <link rel="canonical" href="https://ichigeki-pachislot.com/juggle-simple.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="ICHIGEKI">
   <meta property="og:title" content="ジャグ連チャレンジ | ICHIGEKI">
   <meta property="og:description" content="大きなSTARTボタンを押すだけでジャグ連を試せる、シンプルなランキングチャレンジです。">
-  <meta property="og:url" content="https://atsushisora.github.io/ichigeki-web/juggle-simple.html">
-  <meta property="og:image" content="https://atsushisora.github.io/ichigeki-web/icon.svg">
+  <meta property="og:url" content="https://ichigeki-pachislot.com/juggle-simple.html">
+  <meta property="og:image" content="https://ichigeki-pachislot.com/icon.svg">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="ジャグ連チャレンジ | ICHIGEKI">
   <meta name="twitter:description" content="大きなSTARTボタンを押すだけでジャグ連を試せる、シンプルなランキングチャレンジです。">
-  <link rel="stylesheet" href="style.css?v=96">
+  <link rel="stylesheet" href="style.css?v=131">
 </head>
 <body class="juggle-simple-page">
   <header class="site-header">
@@ -95,6 +96,15 @@
         </div>
       </div>
 
+      <div class="simple-money-summary" aria-label="実店舗レートの収支目安">
+        <span><b>固定レート</b><strong>46枚貸し / 5.2枚交換</strong></span>
+        <span><b>投資目安</b><strong id="resultInvestment">0円</strong></span>
+        <span><b>持ちメダル</b><strong id="resultMedals">0枚</strong></span>
+        <span><b>換金目安</b><strong id="resultCashout">0円</strong></span>
+        <span><b>差枚目安</b><strong id="resultDiff">0枚</strong></span>
+        <span><b>収支目安</b><strong id="resultBalance">0円</strong></span>
+      </div>
+
       <div class="pixel-action-row">
         <div class="simple-start-area">
           <button class="simple-start-button" data-action="juggleSimple">
@@ -112,7 +122,6 @@
       </div>
 
       <div class="log-box simple-log" id="log">スタートするとジャグ連の結果を表示します。</div>
-      <div class="ad-box simple-ad" data-ad-slot="juggle-simple-footer"><span class="ad-label">PR</span><span class="ad-title">広告枠</span></div>
     </section>
 
     <section class="simple-info-section article-card">
@@ -121,13 +130,13 @@
       <div class="simple-info-grid">
         <div><strong>ランキング基準</strong><span>連チャン数が多いほど上位です。同じ連数の場合は差枚や保存日時も確認材料になります。</span></div>
         <div><strong>見る数字</strong><span>当選G、BIG/REG内訳、差枚を見れば、早い当たりと伸び方の両方を確認できます。</span></div>
-        <div><strong>固定条件</strong><span>BIGとREGはどちらも1/255、1,000円46枚、35G前後で計算します。</span></div>
-        <div><strong>注意点</strong><span>実在機種の設定、ぶどう確率、交換率、閉店時間などは反映していません。</span></div>
+        <div><strong>固定条件</strong><span>BIGとREGはどちらも1/255、1,000円46枚貸し・5.2枚交換、35G前後で計算します。</span></div>
+        <div><strong>注意点</strong><span>実在機種の設定、ぶどう確率、端数処理、特殊景品の最小単位、閉店時間などは反映していません。</span></div>
       </div>
       <div class="next-links"><a href="ranking.html#juggle-ranking">ジャグ連ランキングを見る</a><a href="guide.html">確率の見方を読む</a></div>
     </section>
   </main>
 
-  <script src="main.js?v=96"></script>
+  <script src="main.js?v=113"></script>
 </body>
 </html>
