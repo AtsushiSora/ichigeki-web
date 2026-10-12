@@ -36,6 +36,7 @@
   const usesAllSlotSettings = slotSettingPool.length === 6 && defaultSlotSettingPool.every(setting => slotSettingPool.includes(setting));
   const slotSettingNumberLabel = usesAllSlotSettings ? "1〜6" : slotSettingPool.join("・");
   const slotSettingLabel = `設定${slotSettingNumberLabel}`;
+  const slotBaselineSetting = slotSettingPool[0] || 1;
   const slotRankingVersion = machine.sim.kind !== "juggler" && machine.sim.settingRates ? "v3" : "v2";
   const rankingMachineSlug = machine.type === "slot" ? `${slug}--random-setting-${slotRankingVersion}` : `${slug}--fixed-rate-v1`;
   const RANKING_COOLDOWN_MS = 8000;
@@ -231,7 +232,7 @@
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
       const settingModelLabel = machine.sim.settingRates ? "公開設定別値" : "共通固定補正";
-      grid.innerHTML = `<div><span>設定抽選</span><strong>${slotSettingNumberLabel}均等</strong></div><div><span>設定差モデル</span><strong>${settingModelLabel}</strong></div><div><span>設定1基準の平均${machine.sim.mainLabel}まで</span><strong>${machine.sim.mainRate.toFixed(1)}G</strong></div><div><span>設定1基準の平均投資</span><strong>${yen.format(averageInvestment)}円</strong></div><div><span>交換単価</span><strong>${(100 / exchangeCoins).toFixed(2)}円/枚</strong></div><div><span>コイン単価</span><strong>${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}</strong></div><div><span>単価換算の台売上指標</span><strong>${yen.format(salesIndex)}円</strong></div>`;
+      grid.innerHTML = `<div><span>設定抽選</span><strong>${slotSettingNumberLabel}均等</strong></div><div><span>設定差モデル</span><strong>${settingModelLabel}</strong></div><div><span>設定${slotBaselineSetting}基準の平均${machine.sim.mainLabel}まで</span><strong>${machine.sim.mainRate.toFixed(1)}G</strong></div><div><span>設定${slotBaselineSetting}基準の平均投資</span><strong>${yen.format(averageInvestment)}円</strong></div><div><span>交換単価</span><strong>${(100 / exchangeCoins).toFixed(2)}円/枚</strong></div><div><span>コイン単価</span><strong>${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}</strong></div><div><span>単価換算の台売上指標</span><strong>${yen.format(salesIndex)}円</strong></div>`;
     }
   }
 
@@ -289,9 +290,15 @@
     const sim = machine.sim;
     const profile = settingProfile(setting);
     const publishedSetting = sim.settingRates?.[setting] || null;
-    const hasPublishedSettingRates = Number(publishedSetting?.trigger) > 0;
-    const triggerRate = hasPublishedSettingRates ? Number(publishedSetting.trigger) : Math.max(1, sim.triggerRate * profile.rate);
-    const mainRate = Number(publishedSetting?.main) > 0 ? Number(publishedSetting.main) : Math.max(1, sim.mainRate * profile.rate);
+    const hasPublishedTriggerRate = Number(publishedSetting?.trigger) > 0;
+    const hasPublishedMainRate = Number(publishedSetting?.main) > 0;
+    const hasPublishedSettingRates = hasPublishedTriggerRate || hasPublishedMainRate;
+    const mainRate = hasPublishedMainRate ? Number(publishedSetting.main) : Math.max(1, sim.mainRate * profile.rate);
+    const triggerRate = hasPublishedTriggerRate
+      ? Number(publishedSetting.trigger)
+      : hasPublishedMainRate
+        ? Math.max(1, mainRate * sim.triggerRate / sim.mainRate)
+        : Math.max(1, sim.triggerRate * profile.rate);
     const publishedEntry = Number(publishedSetting?.entry);
     const triggerSuccess = Number.isFinite(publishedEntry) && publishedEntry >= 0
       ? Math.min(0.98, publishedEntry)
@@ -304,7 +311,11 @@
     const upperChance = Number(publishedSetting?.upper) >= 0
       ? Math.min(0.98, Number(publishedSetting.upper))
       : hasPublishedSettingRates ? sim.upperChance : Math.min(0.98, sim.upperChance + profile.upper);
-    const settingModelLabel = hasPublishedSettingRates ? "公開設定別値（初当り）" : "サイト共通補正モデル";
+    const settingModelLabel = hasPublishedTriggerRate && hasPublishedMainRate
+      ? "公開設定別値（CZ・初当り）"
+      : hasPublishedMainRate
+        ? "公開設定別値（初当り）＋CZ簡易換算"
+        : "サイト共通補正モデル";
     const base = Math.max(20, Number(document.getElementById("baseRate").value) || sim.base50);
     const lendCoins = Math.max(40, Number(document.getElementById("lendCoins").value) || RANKING_RATE.slot.lendCoins);
     const exchangeCoins = Math.max(4, Number(document.getElementById("exchangeCoins").value) || RANKING_RATE.slot.exchangeCoins);

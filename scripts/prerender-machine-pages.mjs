@@ -60,15 +60,16 @@ function calculationSection(machine) {
   const gamesPerThousand = sim.base50 * 46 / 50;
   const averageInvestment = Math.round((sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
   const settingPool = Array.isArray(sim.settingPool) && sim.settingPool.length ? sim.settingPool : [1, 2, 3, 4, 5, 6];
+  const baselineSetting = settingPool[0] || 1;
   const usesAllSettings = settingPool.length === 6 && [1, 2, 3, 4, 5, 6].every(setting => settingPool.includes(setting));
   const settingLabel = usesAllSettings ? "設定1〜6" : `設定${settingPool.join("・")}`;
   const settingModelDescription = sim.settingRates
     ? `${settingLabel}で公開されている初当り値を個別に使います。公開されていない特化ゾーン・上位到達率の設定差は加えません。`
-    : "設定別の数値が揃わない機種は、設定1相当の掲載値へサイト共通の固定補正を加える体験用モデルです。非公表の実機値を推測したものではありません。";
+    : `設定別の数値が揃わない機種は、設定${baselineSetting}相当の掲載値へサイト共通の固定補正を加える体験用モデルです。非公表の実機値を推測したものではありません。`;
   return `
       <section class="machine-article-section">
         <h3>平均Gと投資目安の計算</h3>
-        <p>掲載する${escapeHtml(sim.mainLabel)}初当り約1/${escapeHtml(sim.mainRate)}は設定1基準です。当サイトでは50枚あたり${escapeHtml(sim.base50)}G、1,000円46枚貸しの固定条件から、設定1基準の平均投資目安を約${formatNumber(averageInvestment, 0)}円と計算します。</p>
+        <p>掲載する${escapeHtml(sim.mainLabel)}初当り約1/${escapeHtml(sim.mainRate)}は設定${baselineSetting}基準です。当サイトでは50枚あたり${escapeHtml(sim.base50)}G、1,000円46枚貸しの固定条件から、設定${baselineSetting}基準の平均投資目安を約${formatNumber(averageInvestment, 0)}円と計算します。</p>
         <p>シミュレーターでは${escapeHtml(settingLabel)}を均等抽選します。${escapeHtml(settingModelDescription)} 換金は5.2枚交換で固定し、結果とランキングに設定を表示します。</p>
       </section>`;
 }
@@ -179,14 +180,14 @@ for (const [slug, machine] of Object.entries(machines)) {
 
   html = html.replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${escapeHtml(machine.intro)}">`);
   html = html.replace(/style\.css\?v=\d+/, "style.css?v=133");
-  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=130");
-  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=119");
+  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=132");
+  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=120");
   html = html.replace(/app-shell\.js\?v=\d+/, "app-shell.js?v=4");
   html = html.replace(/adsense-loader\.js\?v=\d+/, "adsense-loader.js?v=2");
   if (!html.includes("site-insights.js")) html = html.replace(/(<script src="machine-detail\.js\?v=129"><\/script>)/, '<script src="site-insights.js?v=1"></script>\n  $1');
   if (!html.includes("adsense-loader.js")) html = html.replace("</body>", '  <script src="adsense-loader.js?v=2"></script>\n</body>');
 
-  fs.writeFileSync(htmlPath, html);
+  fs.writeFileSync(htmlPath, html.replace(/^[\t ]+$/gm, ""));
   updated += 1;
 }
 

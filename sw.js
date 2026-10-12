@@ -1,4 +1,4 @@
-const CACHE_NAME = "ichigeki-web-v147";
+const CACHE_NAME = "ichigeki-web-v149";
 const CORE_ASSETS = [
   "index.html",
   "new-machines-2026-10.html",
@@ -115,6 +115,7 @@ const CORE_ASSETS = [
   "machine-library.js?v=117",
   "machine-library.js?v=118",
   "machine-library.js?v=119",
+  "machine-library.js?v=120",
   "machine-detail.js",
   "machine-detail.js?v=99",
   "machine-detail.js?v=103",
@@ -138,6 +139,7 @@ const CORE_ASSETS = [
   "machine-detail.js?v=128",
   "machine-detail.js?v=129",
   "machine-detail.js?v=130",
+  "machine-detail.js?v=132",
   "achievements.js",
   "achievements.js?v=1",
   "my-records.js",
