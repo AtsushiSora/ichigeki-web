@@ -1,4 +1,4 @@
-const CACHE_NAME = "ichigeki-web-v149";
+const CACHE_NAME = "ichigeki-web-v150";
 const CORE_ASSETS = [
   "index.html",
   "new-machines-2026-10.html",
@@ -79,7 +79,7 @@ const CORE_ASSETS = [
   "style.css?v=130",
   "style.css?v=131",
   "style.css?v=132",
-  "style.css?v=133",
+  "style.css?v=134",
   "style.css?v=99",
   "style.css?v=96",
   "main.js",
@@ -94,7 +94,7 @@ const CORE_ASSETS = [
   "main.js?v=115",
   "main.js?v=116",
   "main.js?v=117",
-  "main.js?v=118",
+  "main.js?v=119",
   "app-shell.js",
   "app-shell.js?v=1",
   "app-shell.js?v=2",
@@ -115,7 +115,7 @@ const CORE_ASSETS = [
   "machine-library.js?v=117",
   "machine-library.js?v=118",
   "machine-library.js?v=119",
-  "machine-library.js?v=120",
+  "machine-library.js?v=121",
   "machine-detail.js",
   "machine-detail.js?v=99",
   "machine-detail.js?v=103",
@@ -139,7 +139,7 @@ const CORE_ASSETS = [
   "machine-detail.js?v=128",
   "machine-detail.js?v=129",
   "machine-detail.js?v=130",
-  "machine-detail.js?v=132",
+  "machine-detail.js?v=133",
   "achievements.js",
   "achievements.js?v=1",
   "my-records.js",

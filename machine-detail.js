@@ -23,6 +23,9 @@
   writeMachineList(RECENT_MACHINES_KEY, recentMachines.slice(0, 12));
 
   const yen = new Intl.NumberFormat("ja-JP");
+  const editorialUpdated = machine.updated || "2026-10-12";
+  const [editorialYear, editorialMonth, editorialDay] = editorialUpdated.split("-").map(Number);
+  const editorialUpdatedLabel = `${editorialYear}年${editorialMonth}月${editorialDay}日`;
   const ordered = Object.entries(machines).sort((a, b) => a[1].order - b[1].order);
   let latestResult = null;
   let rankingClient = null;
@@ -190,6 +193,7 @@
     <section class="machine-article-layout" id="article">
       <article class="machine-article">
         <span class="machine-section-label">MACHINE ARTICLE</span><h2>${machine.name}の見どころ</h2>
+        <div class="machine-article-meta"><span>編集・検証：<a href="about.html">ICHIGEKI編集部</a></span><time datetime="${editorialUpdated}">更新：${editorialUpdatedLabel}</time></div>
         <p>${machine.intro}</p>
         ${articleMarkup()}
         <h3>関連ガイド</h3><div class="next-links"><a href="average-game-guide.html">平均G・平均回転</a><a href="continuation-rate-guide.html">継続率と平均連</a><a href="simulation-policy.html">計算・掲載方針</a></div>

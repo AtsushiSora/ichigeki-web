@@ -2472,7 +2472,7 @@ function initializeMobileMachineShelves() {
 
   const RECENT_KEY = "ichigekiRecentMachinesV1";
   const FAVORITE_KEY = "ichigekiFavoriteMachinesV1";
-  const popularSlugs = ["sengoku-otome5", "million-god-kiseki", "lycoris-recoil-pachinko", "okiumi6", "tokyo-ghoul-slot", "valvrave2", "smart-hokuto", "eva17-hajimari"];
+  const popularSlugs = ["sengoku-otome5", "million-god-kiseki", "lycoris-recoil-pachinko", "okiumi6", "tokyo-ghoul-slot", "valvrave2", "smart-hokuto", "eva17-hajimari", "tokyo-ghoul-e", "monkey-turn-v"];
   const categoryLabels = { popular: "人気機種", new: "新着機種", pachinko: "パチンコ", slot: "スロット" };
   let activeCategory = "popular";
 

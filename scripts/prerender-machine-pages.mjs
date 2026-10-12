@@ -35,6 +35,15 @@ function typeLabel(machine) {
   return machine.type === "slot" ? "パチスロ" : "パチンコ";
 }
 
+function editorialDate(machine) {
+  return machine.updated || "2026-10-12";
+}
+
+function editorialDateLabel(machine) {
+  const [year, month, day] = editorialDate(machine).split("-").map(Number);
+  return `${year}年${month}月${day}日`;
+}
+
 function calculationSection(machine) {
   const sim = machine.sim;
   if (sim.kind === "pachinko") {
@@ -122,6 +131,7 @@ function staticMarkup(slug, machine) {
       <div class="machine-article">
         <span class="machine-section-label">MACHINE ARTICLE</span>
         <h2>${escapeHtml(machine.name)}の見どころと計算条件</h2>
+        <div class="machine-article-meta"><span>編集・検証：<a href="about.html">ICHIGEKI編集部</a></span><time datetime="${editorialDate(machine)}">更新：${editorialDateLabel(machine)}</time></div>
         <p>${escapeHtml(machine.intro)}</p>
         ${articleSections(machine)}
         ${calculationSection(machine)}
@@ -143,18 +153,36 @@ ${STATIC_END}`;
 }
 
 function schemaMarkup(slug, machine) {
+  const modified = editorialDate(machine);
   const schema = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: `${machine.name}｜スペック・シミュレーター`,
     description: machine.intro,
-    dateModified: "2026-10-08",
-    author: { "@type": "Organization", name: "ICHIGEKI" },
+    dateModified: `${modified}T00:00:00+09:00`,
+    author: { "@type": "Organization", name: "ICHIGEKI編集部", url: "https://ichigeki-pachislot.com/about.html" },
     publisher: { "@type": "Organization", name: "ICHIGEKI" },
     mainEntityOfPage: `https://ichigeki-pachislot.com/${slug}.html`,
     inLanguage: "ja"
   };
   return `${SCHEMA_START}<script type="application/ld+json">${JSON.stringify(schema)}</script>${SCHEMA_END}`;
+}
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function updateMachineSitemap() {
+  const sitemapPath = path.join(siteDirectory, "sitemap.xml");
+  let sitemap = fs.readFileSync(sitemapPath, "utf8");
+  for (const [slug, machine] of Object.entries(machines)) {
+    const url = `https://ichigeki-pachislot.com/${slug}.html`;
+    const entry = `  <url><loc>${url}</loc><lastmod>${editorialDate(machine)}</lastmod></url>`;
+    const pattern = new RegExp(`  <url><loc>${escapeRegExp(url)}</loc>(?:<lastmod>[^<]+</lastmod>)?</url>`);
+    if (pattern.test(sitemap)) sitemap = sitemap.replace(pattern, entry);
+    else sitemap = sitemap.replace("</urlset>", `${entry}\n</urlset>`);
+  }
+  fs.writeFileSync(sitemapPath, sitemap);
 }
 
 let updated = 0;
@@ -179,9 +207,9 @@ for (const [slug, machine] of Object.entries(machines)) {
   }
 
   html = html.replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${escapeHtml(machine.intro)}">`);
-  html = html.replace(/style\.css\?v=\d+/, "style.css?v=133");
-  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=132");
-  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=120");
+  html = html.replace(/style\.css\?v=\d+/, "style.css?v=134");
+  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=133");
+  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=121");
   html = html.replace(/app-shell\.js\?v=\d+/, "app-shell.js?v=4");
   html = html.replace(/adsense-loader\.js\?v=\d+/, "adsense-loader.js?v=2");
   if (!html.includes("site-insights.js")) html = html.replace(/(<script src="machine-detail\.js\?v=129"><\/script>)/, '<script src="site-insights.js?v=1"></script>\n  $1');
@@ -190,5 +218,7 @@ for (const [slug, machine] of Object.entries(machines)) {
   fs.writeFileSync(htmlPath, html.replace(/^[\t ]+$/gm, ""));
   updated += 1;
 }
+
+updateMachineSitemap();
 
 console.log(`Prerendered ${updated} machine pages.`);
