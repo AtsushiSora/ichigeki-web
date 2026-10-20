@@ -1,6 +1,8 @@
-const CACHE_NAME = "ichigeki-web-v150";
+const CACHE_NAME = "ichigeki-web-v151";
 const CORE_ASSETS = [
   "index.html",
+  "probability-tool.html",
+  "exchange-rate-tool.html",
   "new-machines-2026-10.html",
   "average-game-guide.html",
   "juggler-8000g-guide.html",
@@ -80,6 +82,7 @@ const CORE_ASSETS = [
   "style.css?v=131",
   "style.css?v=132",
   "style.css?v=134",
+  "style.css?v=135",
   "style.css?v=99",
   "style.css?v=96",
   "main.js",

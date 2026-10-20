@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050705">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <meta name="description" content="パチンコ・パチスロの当選確率と回転数から、1回以上当たる確率、ハマる確率、平均回転、中央値をその場で計算できる無料ツールです。">
+  <title>当たる確率・ハマり確率計算ツール | ICHIGEKI</title>
+  <link rel="canonical" href="https://ichigeki-pachislot.com/probability-tool.html">
+  <meta property="og:type" content="article"><meta property="og:site_name" content="ICHIGEKI">
+  <meta property="og:title" content="当たる確率・ハマり確率計算ツール | ICHIGEKI">
+  <meta property="og:description" content="確率分母と回転数を入力して、当選・ハマり・中央値を計算します。">
+  <meta property="og:url" content="https://ichigeki-pachislot.com/probability-tool.html">
+  <meta property="og:image" content="https://ichigeki-pachislot.com/icon.svg">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="style.css?v=135">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"当たる確率・ハマり確率計算ツール","description":"確率分母と回転数から当選確率、ハマり確率、平均、中央値を計算するツールと計算方法の解説です。","datePublished":"2026-10-20","dateModified":"2026-10-20T00:00:00+09:00","author":{"@type":"Organization","name":"ICHIGEKI編集部","url":"https://ichigeki-pachislot.com/about.html"},"publisher":{"@type":"Organization","name":"ICHIGEKI"},"mainEntityOfPage":"https://ichigeki-pachislot.com/probability-tool.html","inLanguage":"ja"}
+  </script>
+</head>
+<body class="editorial-page">
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">PROBABILITY TOOL</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#calculator">計算する</a><a href="#table">早見表</a><a href="average-game-guide.html">平均G</a></nav></div></header>
+  <main class="page editorial-shell"><article class="article-card editorial-article">
+    <div class="article-meta"><span>独自計算ツール ・ <a href="about.html">ICHIGEKI編集部</a></span><time datetime="2026-10-20">2026年10月20日公開</time></div>
+    <h1>当たる確率・<br>ハマり確率計算ツール</h1>
+    <p class="editorial-lead">「1/319.7を500回転まで回したら、1回以上当たる確率は？」をすぐ計算できます。確率の分母と回転数を入力すると、当選・ハマり・平均・中央値を同じ画面で比較できます。</p>
+
+    <section class="calculation-tool" id="calculator" aria-labelledby="calculatorTitle">
+      <div class="calculation-tool-head"><span>FREE CALCULATOR</span><h2 id="calculatorTitle">確率と回転数を入力</h2><p>各回転が同じ確率で、独立して抽選される場合の理論値です。</p></div>
+      <form class="calculation-form" id="probabilityForm">
+        <label><span>当選確率</span><div class="input-with-unit"><b>1 /</b><input id="probabilityDenominator" type="number" inputmode="decimal" min="1.01" max="100000" step="any" value="319.7" required></div></label>
+        <label><span>回転数・ゲーム数</span><div class="input-with-unit"><input id="probabilitySpins" type="number" inputmode="numeric" min="1" max="100000" step="1" value="500" required><b>回</b></div></label>
+        <div class="calculation-presets" aria-label="確率プリセット"><button type="button" data-denominator="99.9">1/99.9</button><button type="button" data-denominator="199.8">1/199.8</button><button type="button" data-denominator="319.7">1/319.7</button><button type="button" data-denominator="399.9">1/399.9</button></div>
+        <button class="button primary calculation-submit" type="submit">計算結果を見る</button>
+      </form>
+      <div class="calculation-results" id="probabilityResults" aria-live="polite">
+        <div><span>1回以上当たる</span><strong id="hitProbability">79.1%</strong><small id="hitProbabilityNote">約5回に4回</small></div>
+        <div><span>1回も当たらない</span><strong id="missProbability">20.9%</strong><small>入力回転までハマる確率</small></div>
+        <div><span>平均回転</span><strong id="meanSpins">319.7回</strong><small>長期試行の平均</small></div>
+        <div><span>中央値</span><strong id="medianSpins">約222回</strong><small>当選累計が50%を超える目安</small></div>
+      </div>
+      <p class="calculation-summary" id="probabilitySummary">1/319.7を500回転試すと、1回以上当たる確率は約79.1%、1回も当たらない確率は約20.9%です。</p>
+    </section>
+
+    <nav class="toc" aria-label="記事内メニュー"><a href="#formula">計算式</a><a href="#reading">結果の読み方</a><a href="#table">早見表</a><a href="#limits">実機との差</a></nav>
+
+    <h2 id="formula">使っている計算式</h2>
+    <p>当選確率を1/N、回転数をkとします。1回の抽選で外れる確率は「1−1/N」です。k回すべて外れる確率は、その値をk回掛けるため次の式になります。</p>
+    <div class="formula-box"><span>k回すべて外れる確率</span><strong>(1 − 1 ÷ N)<sup>k</sup></strong><small>1回以上当たる確率は「1 − すべて外れる確率」です。</small></div>
+    <p>たとえば1/319.7を500回転まで回した場合、500回すべて外れる確率は約20.9%です。その反対となる「500回転までに1回以上当たる確率」は約79.1%になります。</p>
+
+    <h2 id="reading">平均と中央値は役割が違う</h2>
+    <p>毎回同じ確率で独立抽選すると仮定した場合、当選までの平均回転は確率の分母Nと同じです。しかし、平均までに当たる確率は約63.2%であり、100%ではありません。</p>
+    <p>中央値は「半分の試行が当たる回転数」です。1/319.7なら約222回転で当選累計が50%を超えます。中央値が平均より小さいのは、一部の非常に深いハマりが平均を押し上げるためです。</p>
+    <ul class="info-list">
+      <li><strong>今回の当選確率</strong>入力した回転数までに、少なくとも1回当たる割合です。</li>
+      <li><strong>ハマり確率</strong>入力した回転数をすべて外す割合です。過去に外れた回数は次の1回の確率を変えません。</li>
+      <li><strong>平均</strong>大量に試したときの当選までの回転数の平均です。天井や当選保証ではありません。</li>
+      <li><strong>中央値</strong>半分が当たり、半分がまだ当たっていない境目の目安です。</li>
+    </ul>
+
+    <h2 id="table">代表的な確率の早見表</h2>
+    <div class="table-wrap"><table class="spec-table editorial-table"><thead><tr><th>確率</th><th>分母までに当たる</th><th>2倍まで</th><th>3倍まで</th><th>中央値</th></tr></thead><tbody>
+      <tr><td>1/99.9</td><td>約63.4%</td><td>約86.6%</td><td>約95.1%</td><td>約69回</td></tr>
+      <tr><td>1/199.8</td><td>約63.3%</td><td>約86.5%</td><td>約95.0%</td><td>約139回</td></tr>
+      <tr><td>1/319.7</td><td>約63.3%</td><td>約86.5%</td><td>約95.0%</td><td>約222回</td></tr>
+      <tr><td>1/399.9</td><td>約63.3%</td><td>約86.5%</td><td>約95.0%</td><td>約277回</td></tr>
+    </tbody></table></div>
+    <p>確率の分母までに当たる割合は、分母の大きさが変わっても約63.2%です。分母の3倍まで回しても、約5%は1回も当たりません。「3倍ハマり」は珍しいものの、独立抽選を数多く見れば一定の割合で起こります。</p>
+
+    <h2 id="limits">実機と計算ツールが異なる場合</h2>
+    <p>この計算は、毎回の当選確率が一定という条件に限定しています。パチスロのモード、ゾーン、天井、設定差、CZ経由、パチンコの時短・残保留など、回転数によって条件が変わる場合は単純な式だけでは再現できません。</p>
+    <p>また、「500回転までに当たる確率79.1%」は、500回転以内の勝率や収支のプラス率ではありません。初当り後のRUSH突入、継続、出玉、回転率、交換率は別に考える必要があります。</p>
+
+    <h2>シミュレーターと一緒に使う</h2>
+    <ol><li>機種ページで初当り確率と平均回転を確認する</li><li>このツールで任意の回転数までに当たる確率を計算する</li><li>機種シミュレーターを複数回動かし、理論値とのばらつきを見る</li><li>投資と換金は<a href="exchange-rate-tool.html">実店舗レート計算ツール</a>で別に確認する</li></ol>
+    <div class="next-links"><a href="average-game-guide.html">平均Gを詳しく読む</a><a href="continuation-rate-guide.html">継続率を計算する</a><a href="exchange-rate-tool.html">換金・収支を計算する</a><a href="index.html#popularMachines">機種を選ぶ</a></div>
+    <p class="note">計算結果は確率理解のための理論値です。実際の遊技結果、収支、勝敗を保証しません。18歳未満の方の利用はお控えください。</p>
+  </article></main>
+  <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="about.html">運営者情報</a><a href="simulation-policy.html">計算方針</a><a href="privacy.html">プライバシー</a><a href="contact.html">お問い合わせ</a></div></div></footer>
+  <script>
+  (() => {
+    const form = document.getElementById('probabilityForm');
+    const denominator = document.getElementById('probabilityDenominator');
+    const spins = document.getElementById('probabilitySpins');
+    const formatPercent = value => `${(value * 100).toFixed(value < 0.001 ? 3 : 1)}%`;
+    const update = event => {
+      if (event) event.preventDefault();
+      const n = Number(denominator.value);
+      const k = Math.floor(Number(spins.value));
+      if (!Number.isFinite(n) || !Number.isFinite(k) || n <= 1 || k < 1) return;
+      const miss = Math.pow(1 - 1 / n, k);
+      const hit = 1 - miss;
+      const median = Math.ceil(Math.log(0.5) / Math.log(1 - 1 / n));
+      document.getElementById('hitProbability').textContent = formatPercent(hit);
+      document.getElementById('missProbability').textContent = formatPercent(miss);
+      document.getElementById('meanSpins').textContent = `${n.toLocaleString('ja-JP')}回`;
+      document.getElementById('medianSpins').textContent = `約${median.toLocaleString('ja-JP')}回`;
+      document.getElementById('hitProbabilityNote').textContent = `100回試すと約${Math.round(hit * 100)}回の割合`;
+      document.getElementById('probabilitySummary').textContent = `1/${n.toLocaleString('ja-JP')}を${k.toLocaleString('ja-JP')}回試すと、1回以上当たる確率は${formatPercent(hit)}、1回も当たらない確率は${formatPercent(miss)}です。`;
+    };
+    form.addEventListener('submit', update);
+    form.querySelectorAll('[data-denominator]').forEach(button => button.addEventListener('click', () => { denominator.value = button.dataset.denominator; update(); }));
+    update();
+  })();
+  </script>
+</body>
+</html>

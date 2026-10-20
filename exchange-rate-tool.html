@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050705">
+  <link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml">
+  <meta name="description" content="46枚貸し・5.2枚交換や250玉貸し・28玉交換など、実店舗レートで換金額・収支・交換ギャップを計算できる無料ツールです。">
+  <title>46枚貸し・5.2枚交換の換金・収支計算ツール | ICHIGEKI</title>
+  <link rel="canonical" href="https://ichigeki-pachislot.com/exchange-rate-tool.html">
+  <meta property="og:type" content="article"><meta property="og:site_name" content="ICHIGEKI">
+  <meta property="og:title" content="実店舗レートの換金・収支計算ツール | ICHIGEKI">
+  <meta property="og:description" content="メダル・玉数と貸出・交換率から、換金額と収支を計算します。">
+  <meta property="og:url" content="https://ichigeki-pachislot.com/exchange-rate-tool.html"><meta property="og:image" content="https://ichigeki-pachislot.com/icon.svg">
+  <meta name="twitter:card" content="summary"><link rel="stylesheet" href="style.css?v=135">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"46枚貸し・5.2枚交換の換金・収支計算ツール","description":"パチスロ・パチンコの貸出率と交換率から換金額、収支、交換ギャップを計算するツールと解説です。","datePublished":"2026-10-20","dateModified":"2026-10-20T00:00:00+09:00","author":{"@type":"Organization","name":"ICHIGEKI編集部","url":"https://ichigeki-pachislot.com/about.html"},"publisher":{"@type":"Organization","name":"ICHIGEKI"},"mainEntityOfPage":"https://ichigeki-pachislot.com/exchange-rate-tool.html","inLanguage":"ja"}
+  </script>
+</head>
+<body class="editorial-page">
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">RATE TOOL</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#calculator">計算する</a><a href="#examples">計算例</a><a href="simulation-policy.html">計算方針</a></nav></div></header>
+  <main class="page editorial-shell"><article class="article-card editorial-article">
+    <div class="article-meta"><span>独自計算ツール ・ <a href="about.html">ICHIGEKI編集部</a></span><time datetime="2026-10-20">2026年10月20日公開</time></div>
+    <h1>実店舗レートの<br>換金・収支計算ツール</h1>
+    <p class="editorial-lead">46枚貸し・5.2枚交換、250玉貸し・28玉交換など、貸出と交換が等価ではない場合の換金額と収支を計算します。端数処理前の目安を、スロットとパチンコで切り替えられます。</p>
+
+    <section class="calculation-tool" id="calculator" aria-labelledby="rateCalculatorTitle">
+      <div class="calculation-tool-head"><span>REAL RATE CALCULATOR</span><h2 id="rateCalculatorTitle">貸出・交換レートを入力</h2><p>交換率は「100円あたり何枚・何玉か」で入力します。</p></div>
+      <form class="calculation-form" id="rateForm">
+        <label><span>遊技タイプ</span><select id="rateType"><option value="slot">パチスロ</option><option value="pachinko">パチンコ</option></select></label>
+        <label><span>現金投資</span><div class="input-with-unit"><input id="cashInvestment" type="number" inputmode="numeric" min="0" max="10000000" step="1000" value="20000"><b>円</b></div></label>
+        <label><span id="payoutLabel">獲得メダル</span><div class="input-with-unit"><input id="payoutUnits" type="number" inputmode="numeric" min="0" max="10000000" step="1" value="1500"><b id="payoutUnit">枚</b></div></label>
+        <label><span>1,000円の貸出</span><div class="input-with-unit"><input id="lendUnits" type="number" inputmode="decimal" min="1" max="10000" step="0.1" value="46"><b id="lendUnit">枚</b></div></label>
+        <label><span>100円の交換</span><div class="input-with-unit"><input id="exchangeUnits" type="number" inputmode="decimal" min="0.1" max="10000" step="0.1" value="5.2"><b id="exchangeUnit">枚</b></div></label>
+        <div class="calculation-presets" aria-label="レートプリセット"><button type="button" data-rate="slot">46枚貸し・5.2枚</button><button type="button" data-rate="pachinko">250玉貸し・28玉</button></div>
+        <button class="button primary calculation-submit" type="submit">換金・収支を計算</button>
+      </form>
+      <div class="calculation-results" id="rateResults" aria-live="polite">
+        <div><span>換金額の目安</span><strong id="exchangeValue">28,846円</strong><small>端数処理前</small></div>
+        <div><span>現金収支</span><strong id="profitValue">+8,846円</strong><small>換金額 − 現金投資</small></div>
+        <div><span>収支ゼロに必要</span><strong id="breakEvenUnits">1,040枚</strong><small>入力した投資額の場合</small></div>
+        <div><span>1,000円分を即交換</span><strong id="gapValue">約885円</strong><small>貸出と交換のギャップ</small></div>
+      </div>
+      <p class="calculation-summary" id="rateSummary">1,500枚を5.2枚交換すると換金額は約28,846円。20,000円投資に対する収支は約+8,846円です。</p>
+    </section>
+
+    <nav class="toc" aria-label="記事内メニュー"><a href="#meaning">レートの意味</a><a href="#formula">計算式</a><a href="#examples">計算例</a><a href="#limits">含まないもの</a></nav>
+
+    <h2 id="meaning">46枚貸し・5.2枚交換とは</h2>
+    <p>46枚貸しは、1,000円で46枚のメダルを借りる条件です。5.2枚交換は、100円相当へ交換するために5.2枚が必要という条件です。借りるときと交換するときの価値が異なるため、46枚をそのまま交換しても1,000円には戻りません。</p>
+    <div class="formula-box"><span>46枚を5.2枚交換した場合</span><strong>46 ÷ 5.2 × 100 ＝ 約884.6円</strong><small>この約115円の差が、貸出・交換ギャップの目安です。</small></div>
+    <p>パチンコの250玉貸し・28玉交換も同じ考え方です。1,000円で250玉を借り、100円相当への交換に28玉必要なら、250玉の交換価値は約892.9円です。</p>
+
+    <h2 id="formula">換金額と収支の計算式</h2>
+    <div class="formula-box"><span>換金額の目安</span><strong>獲得枚数・玉数 ÷ 交換単位 × 100円</strong><small>5.2枚交換で1,500枚なら、1,500 ÷ 5.2 × 100円です。</small></div>
+    <div class="formula-box"><span>現金収支の目安</span><strong>換金額 − 現金投資</strong><small>再プレイ、持ち玉移動、貯玉、手数料を使わない単純計算です。</small></div>
+    <p>収支ゼロに必要な枚数・玉数は「現金投資 ÷ 100 × 交換単位」で計算します。20,000円投資・5.2枚交換なら1,040枚、20,000円投資・28玉交換なら5,600玉が収支ゼロの目安です。</p>
+
+    <h2 id="examples">実店舗レートの計算例</h2>
+    <div class="table-wrap"><table class="spec-table editorial-table"><thead><tr><th>条件</th><th>投資</th><th>獲得</th><th>換金目安</th><th>収支目安</th></tr></thead><tbody>
+      <tr><td>46枚貸し・5.2枚交換</td><td>20,000円</td><td>1,500枚</td><td>約28,846円</td><td>約+8,846円</td></tr>
+      <tr><td>46枚貸し・5.2枚交換</td><td>30,000円</td><td>1,200枚</td><td>約23,077円</td><td>約−6,923円</td></tr>
+      <tr><td>250玉貸し・28玉交換</td><td>20,000円</td><td>8,000玉</td><td>約28,571円</td><td>約+8,571円</td></tr>
+      <tr><td>250玉貸し・28玉交換</td><td>30,000円</td><td>5,000玉</td><td>約17,857円</td><td>約−12,143円</td></tr>
+    </tbody></table></div>
+    <p>同じ差枚・差玉でも、貸出と交換の条件が変われば円換算の収支は変わります。そのためICHIGEKIの機種別ランキングでは、利用者ごとの入力レートではなく共通の固定条件を使っています。</p>
+
+    <h2>等価交換との違い</h2>
+    <p>貸出時と交換時の単価が同じなら等価交換です。非等価では、現金投資で借りた玉・メダルを交換するだけでギャップが生まれます。一方、すでに持っている玉・メダルで続ける場合は、新たな現金貸出を減らせるため、同じ回転数でも現金収支の見え方が変わります。</p>
+    <p>この違いから、現金投資だけでなく、持ち玉比率、再プレイ上限、貯玉手数料も実戦収支では重要です。本ツールは入力しやすさを優先し、まず「現金投資と最終獲得」の関係だけを計算します。</p>
+
+    <h2 id="limits">計算に含めないもの</h2>
+    <ul class="info-list"><li><strong>特殊景品の単位</strong>実店舗では500円・1,000円単位などで端数が生じる場合があります。</li><li><strong>余り玉・余りメダル</strong>端数景品への交換や会員カードへの貯玉は計算しません。</li><li><strong>再プレイ</strong>上限、手数料、持ち玉で遊技した区間は分けていません。</li><li><strong>地域・店舗差</strong>貸出・交換条件は店舗ごとに異なります。必ず店内表示を確認してください。</li></ul>
+
+    <h2>機種シミュレーターでの使い方</h2>
+    <ol><li>遊技した店舗の貸出枚数・玉数を確認する</li><li>交換率を「100円あたり何枚・何玉か」で確認する</li><li>各機種ページのレート欄へ入力してシミュレーションする</li><li>最終結果をこのツールでも確認し、端数処理前の収支を比較する</li></ol>
+    <div class="next-links"><a href="probability-tool.html">当選・ハマりを計算</a><a href="coin-unit-guide.html">コイン単価を読む</a><a href="deka-heso-guide.html">デカヘソを読む</a><a href="index.html#popularMachines">機種を選ぶ</a></div>
+    <p class="note">換金額は端数処理前の目安です。実店舗の交換率、特殊景品の単位、手数料などにより実際の金額と異なります。遊技や収支を保証・推奨するものではありません。</p>
+  </article></main>
+  <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="about.html">運営者情報</a><a href="simulation-policy.html">計算方針</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a></div></div></footer>
+  <script>
+  (() => {
+    const form = document.getElementById('rateForm');
+    const type = document.getElementById('rateType');
+    const investment = document.getElementById('cashInvestment');
+    const payout = document.getElementById('payoutUnits');
+    const lend = document.getElementById('lendUnits');
+    const exchange = document.getElementById('exchangeUnits');
+    const yen = value => `${Math.round(value).toLocaleString('ja-JP')}円`;
+    const signedYen = value => `${value >= 0 ? '+' : '−'}${Math.round(Math.abs(value)).toLocaleString('ja-JP')}円`;
+    const unit = () => type.value === 'slot' ? '枚' : '玉';
+    const setTypeLabels = () => {
+      const isSlot = type.value === 'slot';
+      document.getElementById('payoutLabel').textContent = isSlot ? '獲得メダル' : '獲得玉数';
+      document.getElementById('payoutUnit').textContent = unit();
+      document.getElementById('lendUnit').textContent = unit();
+      document.getElementById('exchangeUnit').textContent = unit();
+    };
+    const update = event => {
+      if (event) event.preventDefault();
+      setTypeLabels();
+      const cash = Math.max(0, Number(investment.value));
+      const won = Math.max(0, Number(payout.value));
+      const lent = Number(lend.value);
+      const exchanged = Number(exchange.value);
+      if (![cash, won, lent, exchanged].every(Number.isFinite) || lent <= 0 || exchanged <= 0) return;
+      const exchangeValue = won / exchanged * 100;
+      const profit = exchangeValue - cash;
+      const breakEven = cash / 100 * exchanged;
+      const gapValue = lent / exchanged * 100;
+      document.getElementById('exchangeValue').textContent = yen(exchangeValue);
+      document.getElementById('profitValue').textContent = signedYen(profit);
+      document.getElementById('breakEvenUnits').textContent = `${Math.ceil(breakEven).toLocaleString('ja-JP')}${unit()}`;
+      document.getElementById('gapValue').textContent = `約${yen(gapValue)}`;
+      document.getElementById('rateSummary').textContent = `${won.toLocaleString('ja-JP')}${unit()}を${exchanged.toLocaleString('ja-JP')}${unit()}交換すると換金額は約${yen(exchangeValue)}。${cash.toLocaleString('ja-JP')}円投資に対する収支は約${signedYen(profit)}です。`;
+    };
+    const applyPreset = preset => {
+      type.value = preset;
+      if (preset === 'slot') { lend.value = 46; exchange.value = 5.2; payout.value = 1500; }
+      else { lend.value = 250; exchange.value = 28; payout.value = 8000; }
+      update();
+    };
+    form.addEventListener('submit', update);
+    type.addEventListener('change', () => applyPreset(type.value));
+    form.querySelectorAll('[data-rate]').forEach(button => button.addEventListener('click', () => applyPreset(button.dataset.rate)));
+    update();
+  })();
+  </script>
+</body>
+</html>
