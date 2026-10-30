@@ -1,7 +1,9 @@
-const CACHE_NAME = "ichigeki-web-v153";
+const CACHE_NAME = "ichigeki-web-v154";
 const CORE_ASSETS = [
   "index.html",
   "account.html",
+  "machines.html",
+  "rankings.html",
   "probability-tool.html",
   "exchange-rate-tool.html",
   "new-machines-2026-10.html",
@@ -86,6 +88,7 @@ const CORE_ASSETS = [
   "style.css?v=135",
   "style.css?v=136",
   "style.css?v=137",
+  "style.css?v=138",
   "style.css?v=99",
   "style.css?v=96",
   "main.js",
@@ -108,6 +111,7 @@ const CORE_ASSETS = [
   "app-shell.js?v=3",
   "app-shell.js?v=4",
   "app-shell.js?v=5",
+  "app-shell.js?v=6",
   "auth.js",
   "auth.js?v=1",
   "machine-library.js",
@@ -126,6 +130,8 @@ const CORE_ASSETS = [
   "machine-library.js?v=118",
   "machine-library.js?v=119",
   "machine-library.js?v=121",
+  "machine-hub.js",
+  "machine-hub.js?v=1",
   "machine-detail.js",
   "machine-detail.js?v=99",
   "machine-detail.js?v=103",
