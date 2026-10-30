@@ -141,7 +141,7 @@
       const tags = machineTags(machine);
       return `<article class="machine-hub-item">
         <a class="machine-hub-card is-${machine.type} theme-${escapeHtml(machine.theme || "aqua")}" href="${destination(machine)}">
-          <div class="machine-hub-card-visual"><span>${machine.type === "slot" ? "SLOT" : "PACHINKO"}</span><em aria-hidden="true">${machine.type === "slot" ? "S" : "P"}</em><b>${escapeHtml(machine.shortName)}</b></div>
+          <div class="machine-hub-card-visual"><span>${machine.type === "slot" ? "SLOT" : "PACHINKO"}</span><em aria-hidden="true">${machine.type === "slot" ? "S" : "P"}</em></div>
           <div class="machine-hub-card-body"><small>${escapeHtml(machine.year || "PICK UP")}・${escapeHtml(machine.maker || "")}</small><strong>${escapeHtml(machine.shortName)}</strong>${tags.length ? `<div class="machine-hub-badges">${tags.map(tag => `<i>${escapeHtml(tag)}</i>`).join("")}</div>` : ""}<p>${escapeHtml(machine.catchcopy || "機種情報とシミュレーション")}</p><div><b>${escapeHtml(averageLabel(machine))}</b><b>${escapeHtml(subLabel(machine))}</b></div><span>${action} ›</span></div>
         </a>
         <button class="machine-hub-favorite" type="button" data-favorite-slug="${escapeHtml(machine.slug)}" aria-pressed="${isFavorite}" aria-label="${escapeHtml(machine.shortName)}を${isFavorite ? "お気に入りから外す" : "お気に入りに追加"}">${isFavorite ? "★" : "☆"}</button>
