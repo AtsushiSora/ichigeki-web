@@ -1,4 +1,4 @@
-const CACHE_NAME = "ichigeki-web-v158";
+const CACHE_NAME = "ichigeki-web-v159";
 const CORE_ASSETS = [
   "index.html",
   "account.html",
@@ -96,6 +96,7 @@ const CORE_ASSETS = [
   "style.css?v=140",
   "style.css?v=141",
   "style.css?v=142",
+  "style.css?v=143",
   "style.css?v=99",
   "style.css?v=96",
   "main.js",
@@ -142,6 +143,7 @@ const CORE_ASSETS = [
   "machine-hub.js?v=1",
   "machine-hub.js?v=2",
   "machine-hub.js?v=3",
+  "machine-hub.js?v=4",
   "machine-detail.js",
   "machine-detail.js?v=99",
   "machine-detail.js?v=103",
@@ -169,6 +171,7 @@ const CORE_ASSETS = [
   "machine-detail.js?v=134",
   "machine-detail.js?v=135",
   "machine-detail.js?v=136",
+  "machine-detail.js?v=137",
   "achievements.js",
   "achievements.js?v=1",
   "my-records.js",
@@ -189,11 +192,6 @@ const CORE_ASSETS = [
   "community.js?v=10",
   "community.js?v=11",
   "community.js?v=12",
-  "assets/home/home-background-generated-v1.jpg",
-  "assets/home/menu-play-generated-v1.jpg",
-  "assets/home/menu-records-generated-v1.jpg",
-  "assets/home/menu-ranking-generated-v1.jpg",
-  "assets/home/menu-community-generated-v1.jpg",
   "site-insights.js",
   "site-insights.js?v=1",
   "adsense-loader.js",
@@ -209,11 +207,6 @@ const CORE_ASSETS = [
   "gundam-unicorn.js?v=8",
   "gundam-unicorn.js?v=9",
   "gundam-unicorn.js?v=10",
-  "assets/juggle/start-button-v3.png",
-  "assets/juggle/result-panel-v2.png",
-  "assets/juggle/marquee-frame-v4.png",
-  "assets/juggle/slot-machine-v4.png",
-  "assets/juggle/rank-button-v4.png",
   "offline.html",
   "manifest.json",
   "icon.svg"

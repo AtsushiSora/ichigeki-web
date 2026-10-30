@@ -28,11 +28,11 @@
       if (!query) return true;
       return [machine.name, machine.shortName, machine.maker, machine.catchcopy].some(value => String(value || "").toLocaleLowerCase("ja").includes(query));
     });
-    grid.innerHTML = output.map((machine, index) => {
+    grid.innerHTML = output.map(machine => {
       const destination = `${encodeURIComponent(machine.slug)}.html${mode === "rankings" ? "#machineRanking" : "#simulator"}`;
       const action = mode === "rankings" ? "ランキングを見る" : "この台で遊ぶ";
       return `<a class="machine-hub-card is-${machine.type} theme-${escapeHtml(machine.theme || "aqua")}" href="${destination}">
-        <div class="machine-hub-card-visual"><img src="assets/machines/${encodeURIComponent(machine.slug)}-character-v1.jpg" alt="" loading="lazy" width="720" height="1080"><span>${machine.type === "slot" ? "SLOT" : "PACHINKO"}</span><b>${escapeHtml(machine.shortName)}</b></div>
+        <div class="machine-hub-card-visual"><span>${machine.type === "slot" ? "SLOT" : "PACHINKO"}</span><em aria-hidden="true">${machine.type === "slot" ? "S" : "P"}</em><b>${escapeHtml(machine.shortName)}</b></div>
         <div class="machine-hub-card-body"><small>${escapeHtml(machine.year || "PICK UP")}・${escapeHtml(machine.maker || "")}</small><strong>${escapeHtml(machine.shortName)}</strong><p>${escapeHtml(machine.catchcopy || "機種情報とシミュレーション")}</p><div><b>${escapeHtml(averageLabel(machine))}</b><b>${escapeHtml(subLabel(machine))}</b></div><span>${action} ›</span></div>
       </a>`;
     }).join("");
