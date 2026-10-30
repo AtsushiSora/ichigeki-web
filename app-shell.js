@@ -20,64 +20,29 @@
   removeOldRankings();
 
   const body = document.body;
-  const isMachinePage = body.classList.contains("machine-library-page") || body.classList.contains("unicorn-page");
-  const isCommunityPage = body.classList.contains("community-page");
-  const isRecordsPage = body.classList.contains("my-records-page");
+  document.querySelectorAll(".mobile-app-bottom-nav").forEach(nav => nav.remove());
+  body.classList.remove("has-mobile-app-nav");
 
-  if ((!isMachinePage && !isCommunityPage && !isRecordsPage) || document.querySelector(".mobile-app-bottom-nav")) return;
+  const header = document.querySelector(".site-header .header-inner");
+  if (header && !header.querySelector(".mobile-header-menu, .shared-site-menu")) {
+    const menu = document.createElement("details");
+    menu.className = "shared-site-menu";
+    menu.innerHTML = `<summary aria-label="メニューを開く"><span></span><span></span><span></span></summary>
+      <nav aria-label="サイトメニュー">
+        <a href="index.html#popularMachines"><b>台を選んで遊ぶ</b><small>人気台・新台・機種タイプ</small></a>
+        <a href="ranking.html"><b>マイ記録</b><small>成績・履歴・称号</small></a>
+        <a href="index.html#popularMachines"><b>機種別ランキング</b><small>遊ぶ台を選んで順位を見る</small></a>
+        <a href="community.html"><b>コミュニティ</b><small>口コミ・収支・画像・動画</small></a>
+        <a href="guide.html"><b>使い方・ガイド</b></a>
+        <a href="account.html"><b>アカウント</b></a>
+      </nav>`;
+    header.append(menu);
+  }
 
-  const machineSlug = body.dataset.machine || (body.classList.contains("unicorn-page") ? "gundam-unicorn" : "");
-  const currentSimulatorLink = () => {
-    if (isMachinePage) return "#simulator";
-    return document.getElementById("machineSimulatorLink")?.getAttribute("href") || "index.html#popularMachines";
-  };
-
-  const items = [
-    { key: "home", icon: "⌂", label: "ホーム", href: "index.html#appHome" },
-    { key: "search", icon: "⌕", label: "機種検索", href: "index.html#mobileMachineSearch" },
-    { key: "simulator", icon: "▷", label: "シミュ", href: currentSimulatorLink() },
-    {
-      key: "post",
-      icon: "□",
-      label: "投稿",
-      href: isMachinePage && machineSlug ? `community.html?machine=${encodeURIComponent(machineSlug)}#composerTitle` : "community.html#composerTitle"
-    },
-    { key: "records", icon: "▥", label: "マイ記録", href: "ranking.html" }
-  ];
-
-  const activeKey = isCommunityPage ? "post" : isRecordsPage ? "records" : "simulator";
-  const nav = document.createElement("nav");
-  nav.className = "mobile-app-bottom-nav mobile-app-bottom-nav-shared";
-  nav.setAttribute("aria-label", "アプリメニュー");
-
-  items.forEach(item => {
-    const link = document.createElement("a");
-    link.href = item.href;
-    link.dataset.appNav = item.key;
-    if (item.key === activeKey) {
-      link.classList.add("is-active");
-      link.setAttribute("aria-current", "page");
-    }
-
-    const icon = document.createElement("span");
-    icon.setAttribute("aria-hidden", "true");
-    icon.textContent = item.icon;
-    const label = document.createElement("b");
-    label.textContent = item.label;
-    link.append(icon, label);
-    nav.append(link);
-  });
-
-  body.classList.add("has-mobile-app-nav");
-  body.append(nav);
-
-  if (isCommunityPage) {
-    const machineFilter = document.getElementById("machineFilter");
-    const syncSimulatorLink = () => {
-      const link = nav.querySelector('[data-app-nav="simulator"]');
-      if (link) link.href = currentSimulatorLink();
-    };
-    machineFilter?.addEventListener("change", syncSimulatorLink);
-    syncSimulatorLink();
+  if (!document.getElementById("ichigeki-auth-script")) {
+    const auth = document.createElement("script");
+    auth.id = "ichigeki-auth-script";
+    auth.src = "auth.js?v=1";
+    document.head.appendChild(auth);
   }
 })();

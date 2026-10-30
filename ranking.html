@@ -17,7 +17,7 @@
   <meta property="og:url" content="https://ichigeki-pachislot.com/ranking.html">
   <meta property="og:image" content="https://ichigeki-pachislot.com/icon.svg">
   <meta name="twitter:card" content="summary">
-  <link rel="stylesheet" href="style.css?v=132">
+  <link rel="stylesheet" href="style.css?v=137">
 </head>
 <body class="my-records-page">
   <header class="site-header">
@@ -43,6 +43,15 @@
         <strong id="recordTotalCount">0回</strong>
         <small>結果が出るたび自動保存</small>
       </div>
+    </section>
+
+    <section class="my-records-auth-banner" data-auth-state="signed-out">
+      <div><span>GOOGLE SYNC</span><strong>記録を別の端末でも確認できます</strong><p>Googleでログインすると、この端末の記録をアカウントへ自動同期します。</p></div>
+      <button type="button" data-google-login><span aria-hidden="true">G</span>Googleでログイン</button>
+    </section>
+    <section class="my-records-auth-banner is-connected" data-auth-state="signed-in" hidden>
+      <div><span>SYNCED</span><strong><b data-auth-name>ユーザー</b>さんのマイ記録</strong><p>新しい結果はGoogleアカウントへ自動同期されます。</p></div>
+      <a href="account.html">アカウント設定</a>
     </section>
 
     <section class="my-records-summary" aria-labelledby="recordSummaryTitle">
@@ -130,7 +139,7 @@
       <h2>記録について</h2>
       <ul>
         <li>結果は最大500件まで、このブラウザの端末内に自動保存されます。</li>
-        <li>別のスマホやPCには共有されません。ブラウザのサイトデータを消すと記録も消えます。</li>
+        <li>Googleログイン中は、同じアカウントを使うスマホやPCにも同期されます。</li>
         <li>公開ランキングへの登録とコミュニティへの投稿は、自動では行われません。</li>
         <li>表示する収支・獲得数はシミュレーション結果であり、実際の遊技収支ではありません。</li>
       </ul>
@@ -141,8 +150,10 @@
   <script src="machine-library.js?v=121"></script>
   <script src="achievements.js?v=1"></script>
   <script src="site-insights.js?v=1"></script>
-  <script src="my-records.js?v=4"></script>
+  <script src="community-config.js?v=2"></script>
+  <script src="auth.js?v=1" id="ichigeki-auth-script"></script>
+  <script src="my-records.js?v=5"></script>
   <script src="adsense-loader.js?v=2"></script>
-  <script src="app-shell.js?v=4"></script>
+  <script src="app-shell.js?v=5"></script>
 </body>
 </html>

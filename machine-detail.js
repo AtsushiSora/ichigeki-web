@@ -452,6 +452,7 @@
     try {
       const savedRecords = records.slice(0, MACHINE_HISTORY_LIMIT);
       localStorage.setItem(MACHINE_HISTORY_KEY, JSON.stringify(savedRecords));
+      window.dispatchEvent(new CustomEvent("ichigeki:records-changed", { detail: { record, records: savedRecords } }));
       const achievementState = window.ICHIGEKI_ACHIEVEMENTS?.sync(savedRecords);
       return { count: Math.min(records.length, MACHINE_HISTORY_LIMIT), newTitles: achievementState?.newlyUnlocked || [] };
     } catch { return { count: null, newTitles: [] }; }
@@ -913,21 +914,14 @@
   async function initializeRanking() {
     renderRanking(readLocalRanking(), false);
     try {
-      await loadScript("community-config.js", "ichigeki-community-config");
-      const config = window.ICHIGEKI_COMMUNITY_CONFIG || {};
-      if (!config.supabaseUrl || !config.supabaseAnonKey) throw new Error("公開ランキング未設定");
-      await loadScript("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2", "ichigeki-supabase-js");
-      rankingClient = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
-      let { data } = await rankingClient.auth.getSession();
-      if (!data.session) {
-        const signedIn = await rankingClient.auth.signInAnonymously();
-        if (signedIn.error) throw signedIn.error;
-        data = { session: signedIn.data.session };
-      }
-      rankingUserId = data.session?.user?.id || null;
+      await loadScript("auth.js?v=1", "ichigeki-auth-script");
+      await window.ICHIGEKI_AUTH.ready();
+      rankingClient = await window.ICHIGEKI_AUTH.getClient();
+      rankingUserId = window.ICHIGEKI_AUTH.getUser()?.id || null;
       await refreshPublicRanking();
       rankingMode = "public";
-      document.getElementById("machineRankingNotice").textContent = machine.type === "slot" ? `${slotSettingLabel}ランダムで遊んだみんなの最高記録です。ランキングに設定も表示します。` : "この機種を遊んだみんなの最高記録です。各利用者の自己ベストだけを掲載します。";
+      const loginNote = rankingUserId ? "" : " 登録にはGoogleログインが必要です。";
+      document.getElementById("machineRankingNotice").textContent = machine.type === "slot" ? `${slotSettingLabel}ランダムで遊んだみんなの最高記録です。ランキングに設定も表示します。${loginNote}` : `この機種を遊んだみんなの最高記録です。各利用者の自己ベストだけを掲載します。${loginNote}`;
     } catch {
       rankingMode = "local";
       document.getElementById("machineRankingNotice").textContent = "現在はこの端末内のランキングを表示しています。公開ランキング準備後に自動で切り替わります。";
@@ -936,6 +930,12 @@
 
   async function registerRanking(rawNickname, button) {
     if (!latestResult) return;
+    if (!window.ICHIGEKI_AUTH?.isSignedIn()) {
+      document.getElementById("machineRankingNotice").textContent = "ランキング登録にはGoogleログインが必要です。ログイン後、もう一度結果を出して登録してください。";
+      await window.ICHIGEKI_AUTH?.signInWithGoogle();
+      return false;
+    }
+    rankingUserId = window.ICHIGEKI_AUTH.getUser()?.id || null;
     const nickname = cleanRankingNickname(rawNickname);
     if (!nickname) {
       nicknameInput.focus();

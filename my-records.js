@@ -262,13 +262,14 @@
     renderAchievements();
   });
 
-  $("machineHistoryList").addEventListener("click", event => {
+  $("machineHistoryList").addEventListener("click", async event => {
     const button = event.target.closest("[data-delete-machine-record]");
     if (!button) return;
     const id = button.dataset.deleteMachineRecord;
     records = records.filter(record => String(record.id || `${record.slug}-${record.savedAt}`) !== id);
     writeRecords();
     renderAll();
+    try { await window.ICHIGEKI_AUTH?.deleteRecord(id); } catch (error) { console.warn("ICHIGEKI record delete:", error.message); }
   });
 
   $("machineHistorySort").addEventListener("change", () => {
@@ -281,11 +282,19 @@
     renderHistory();
   });
 
-  $("clearAllMachineHistory").addEventListener("click", () => {
+  $("clearAllMachineHistory").addEventListener("click", async () => {
     if (!records.length || !window.confirm("この端末のマイ記録をすべて削除しますか？この操作は元に戻せません。")) return;
     records = [];
     writeRecords();
     activeSlug = "";
+    renderAll();
+    try { await window.ICHIGEKI_AUTH?.clearRecords(); } catch (error) { console.warn("ICHIGEKI records clear:", error.message); }
+  });
+
+  window.addEventListener("ichigeki:records-synced", event => {
+    records = Array.isArray(event.detail?.records) ? event.detail.records : readRecords();
+    activeSlug = "";
+    visibleCount = PAGE_SIZE;
     renderAll();
   });
 

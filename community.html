@@ -9,7 +9,7 @@
   <meta name="description" content="新台ごとの口コミ、実戦収支、画像、動画、シミュレーション結果を共有できるICHIGEKIコミュニティです。">
   <title>新台コミュニティ | ICHIGEKI</title>
   <link rel="canonical" href="https://ichigeki-pachislot.com/community.html">
-  <link rel="stylesheet" href="style.css?v=132">
+  <link rel="stylesheet" href="style.css?v=137">
 </head>
 <body class="community-page">
   <header class="site-header">
@@ -108,6 +108,12 @@
       <aside class="post-composer" aria-labelledby="composerTitle">
         <div class="composer-sticky">
           <span class="community-eyebrow">POST</span><h2 id="composerTitle">投稿メニュー</h2>
+          <div class="community-auth-gate" id="communityAuthGate" data-auth-state="signed-out">
+            <span aria-hidden="true">G</span><div><strong>投稿にはGoogleログインが必要です</strong><small>閲覧とシミュレーションはログインなしで利用できます。</small></div><button type="button" data-google-login>Googleでログイン</button>
+          </div>
+          <div class="community-auth-gate is-connected" data-auth-state="signed-in" hidden>
+            <span aria-hidden="true">✓</span><div><strong><b data-auth-name>ユーザー</b>さんで投稿</strong><small>ニックネームはアカウント設定から変更できます。</small></div><a href="account.html">設定</a>
+          </div>
           <div class="composer-switch" role="tablist" aria-label="投稿方法を選択">
             <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="regularComposer" data-composer-target="regular">口コミ・メディア投稿</button>
             <button type="button" role="tab" aria-selected="false" aria-controls="simulationComposer" data-composer-target="simulation">シミュ結果を投稿</button>
@@ -158,9 +164,10 @@
 
   <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="community-guidelines.html">投稿ガイドライン</a><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a><a href="contact.html">お問い合わせ</a><a href="community-admin.html">管理</a></div></div></footer>
   <script src="community-config.js?v=2"></script>
+  <script src="auth.js?v=1" id="ichigeki-auth-script"></script>
   <script src="site-insights.js?v=1"></script>
-  <script src="community.js?v=11"></script>
+  <script src="community.js?v=12"></script>
   <script src="adsense-loader.js?v=2"></script>
-  <script src="app-shell.js?v=3"></script>
+  <script src="app-shell.js?v=5"></script>
 </body>
 </html>

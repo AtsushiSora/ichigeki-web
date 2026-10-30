@@ -18,7 +18,7 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="ICHIGEKI | 人気パチンコ・パチスロ機種シミュレーター">
   <meta name="twitter:description" content="人気機種のスペック、平均回転数、投資目安を確認して、機種別シミュレーションとランキングを楽しめます。">
-  <link rel="stylesheet" href="style.css?v=136">
+  <link rel="stylesheet" href="style.css?v=137">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -48,12 +48,12 @@
       <details class="mobile-header-menu">
         <summary aria-label="メニューを開く"><span></span><span></span><span></span></summary>
         <nav aria-label="スマホメニュー">
-          <a href="index.html">ホーム</a>
-          <a href="#popularMachines">人気機種</a>
-          <a href="new-machines-2026-10.html">新台</a>
-          <a href="ranking.html">マイ記録</a>
-          <a href="community.html">コミュニティ</a>
-          <a href="guide.html">使い方</a>
+          <a href="#popularMachines"><b>台を選んで遊ぶ</b><small>人気台・新台・機種タイプ</small></a>
+          <a href="ranking.html"><b>マイ記録</b><small>成績・履歴・称号</small></a>
+          <a href="#popularMachines"><b>機種別ランキング</b><small>遊ぶ台を選んで順位を見る</small></a>
+          <a href="community.html"><b>コミュニティ</b><small>口コミ・収支・画像・動画</small></a>
+          <a href="guide.html"><b>使い方・ガイド</b></a>
+          <a href="account.html"><b>アカウント</b></a>
         </nav>
       </details>
     </div>
@@ -61,6 +61,16 @@
 
   <main class="page home-game-page" id="appHome">
     <section class="mobile-app-home" aria-label="機種を探してシミュレーションする">
+      <section class="home-action-menu" aria-labelledby="homeActionTitle">
+        <div class="home-action-heading"><span>ICHIGEKI MENU</span><h1 id="homeActionTitle">何をする？</h1></div>
+        <div class="home-action-grid">
+          <a class="is-play" href="#popularMachines"><span class="home-action-visual" aria-hidden="true"><i>▶</i><b>PLAY</b></span><strong>台を選んで遊ぶ</strong><small>人気台・新台・タイプから選ぶ</small></a>
+          <a class="is-records" href="ranking.html"><span class="home-action-visual" aria-hidden="true"><i>▥</i><b>RECORD</b></span><strong>マイ記録</strong><small>遊技回数・最高収支・称号</small></a>
+          <a class="is-ranking" href="#popularMachines"><span class="home-action-visual" aria-hidden="true"><i>♛</i><b>RANK</b></span><strong>ランキング</strong><small>台を選んでみんなの順位を見る</small></a>
+          <a class="is-community" href="community.html"><span class="home-action-visual" aria-hidden="true"><i>□</i><b>POST</b></span><strong>コミュニティ</strong><small>口コミ・収支・画像・動画</small></a>
+        </div>
+      </section>
+
       <article class="mobile-featured-machine" id="appFeatured">
         <a class="mobile-featured-title" href="valvrave2.html"><span>今日のおすすめ</span><strong>スマスロ ヴヴヴ2</strong><small>気になる台を選んで、すぐに一撃体験。</small><b aria-hidden="true">›</b></a>
         <a class="mobile-featured-start" href="valvrave2.html#simulator"><span aria-hidden="true">▶</span>シミュレーターを試す<b aria-hidden="true">›</b></a>
@@ -288,7 +298,7 @@
   </footer>
   <script src="community-config.js?v=2"></script>
   <script src="machine-library.js?v=121"></script>
-  <script src="app-shell.js?v=4"></script>
+  <script src="app-shell.js?v=5"></script>
   <script src="main.js?v=120"></script>
   <script src="site-insights.js?v=1"></script>
   <script src="adsense-loader.js?v=2"></script>

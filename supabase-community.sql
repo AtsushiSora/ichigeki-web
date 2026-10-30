@@ -52,10 +52,32 @@ create table if not exists public.machine_rankings (
   unique (user_id, machine_slug)
 );
 
+-- Googleログイン利用者の公開プロフィール。メールアドレスは保存・公開しません。
+create table if not exists public.profiles (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  nickname text not null check (char_length(nickname) between 1 and 16),
+  avatar_url text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+-- シミュレーション結果をGoogleアカウント単位で同期します。
+create table if not exists public.simulation_records (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  record_id text not null check (char_length(record_id) between 1 and 160),
+  record_data jsonb not null,
+  saved_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  unique (user_id, record_id)
+);
+
 alter table public.community_posts enable row level security;
 alter table public.community_reports enable row level security;
 alter table public.machine_rankings enable row level security;
 alter table public.community_admins enable row level security;
+alter table public.profiles enable row level security;
+alter table public.simulation_records enable row level security;
 
 create or replace function public.is_community_admin()
 returns boolean
@@ -82,6 +104,9 @@ create index if not exists community_reports_post_idx
 create index if not exists machine_rankings_machine_score_idx
   on public.machine_rankings (machine_slug, score desc, investment asc);
 
+create index if not exists simulation_records_user_updated_idx
+  on public.simulation_records (user_id, updated_at desc);
+
 drop policy if exists "published posts are public" on public.community_posts;
 drop policy if exists "authenticated users create own posts" on public.community_posts;
 drop policy if exists "users delete own posts" on public.community_posts;
@@ -96,6 +121,14 @@ drop policy if exists "users create own machine rankings" on public.machine_rank
 drop policy if exists "users update own machine rankings" on public.machine_rankings;
 drop policy if exists "users delete own machine rankings" on public.machine_rankings;
 drop policy if exists "admins delete machine rankings" on public.machine_rankings;
+drop policy if exists "profiles are publicly readable" on public.profiles;
+drop policy if exists "users create own profile" on public.profiles;
+drop policy if exists "users update own profile" on public.profiles;
+drop policy if exists "users delete own profile" on public.profiles;
+drop policy if exists "users read own simulation records" on public.simulation_records;
+drop policy if exists "users create own simulation records" on public.simulation_records;
+drop policy if exists "users update own simulation records" on public.simulation_records;
+drop policy if exists "users delete own simulation records" on public.simulation_records;
 
 create policy "published posts are public" on public.community_posts for select using (status = 'published');
 create policy "authenticated users create own posts" on public.community_posts for insert to authenticated with check (auth.uid() = user_id);
@@ -111,6 +144,32 @@ create policy "users create own machine rankings" on public.machine_rankings for
 create policy "users update own machine rankings" on public.machine_rankings for update to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);
 create policy "users delete own machine rankings" on public.machine_rankings for delete to authenticated using (auth.uid() = user_id);
 create policy "admins delete machine rankings" on public.machine_rankings for delete to authenticated using (public.is_community_admin());
+create policy "profiles are publicly readable" on public.profiles for select using (true);
+create policy "users create own profile" on public.profiles for insert to authenticated with check (auth.uid() = user_id);
+create policy "users update own profile" on public.profiles for update to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);
+create policy "users delete own profile" on public.profiles for delete to authenticated using (auth.uid() = user_id);
+create policy "users read own simulation records" on public.simulation_records for select to authenticated using (auth.uid() = user_id);
+create policy "users create own simulation records" on public.simulation_records for insert to authenticated with check (auth.uid() = user_id);
+create policy "users update own simulation records" on public.simulation_records for update to authenticated using (auth.uid() = user_id) with check (auth.uid() = user_id);
+create policy "users delete own simulation records" on public.simulation_records for delete to authenticated using (auth.uid() = user_id);
+
+-- 利用者本人だけが自分のAuthアカウントを削除できるRPCです。
+create or replace function public.delete_my_account()
+returns void
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if auth.uid() is null then
+    raise exception 'ログインが必要です。';
+  end if;
+  delete from auth.users where id = auth.uid();
+end;
+$$;
+
+revoke all on function public.delete_my_account() from public;
+grant execute on function public.delete_my_account() to authenticated;
 
 -- 匿名セッションを使った連続投稿・大量通報をDB側でも制限します。
 create or replace function public.limit_community_post_rate()

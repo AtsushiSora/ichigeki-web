@@ -90,22 +90,10 @@ function setStatus(mode, title, detail) {
 function selectedMachine() { return document.getElementById("machineFilter").value; }
 
 async function loadSupabase() {
-  const config = window.ICHIGEKI_COMMUNITY_CONFIG || {};
-  if (!config.supabaseUrl || !config.supabaseAnonKey) return false;
-  await new Promise((resolve, reject) => {
-    const script = document.createElement("script");
-    script.src = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
-    script.onload = resolve; script.onerror = reject; document.head.appendChild(script);
-  });
-  communityState.client = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
-  const { data } = await communityState.client.auth.getSession();
-  if (!data.session) {
-    const { error } = await communityState.client.auth.signInAnonymously();
-    if (error) throw error;
-  }
-  const { data: userData, error: userError } = await communityState.client.auth.getUser();
-  if (userError || !userData.user) throw userError || new Error("投稿用セッションを取得できませんでした。");
-  communityState.userId = userData.user.id;
+  if (!window.ICHIGEKI_AUTH) return false;
+  await window.ICHIGEKI_AUTH.ready();
+  communityState.client = await window.ICHIGEKI_AUTH.getClient();
+  communityState.userId = window.ICHIGEKI_AUTH.getUser()?.id || null;
   communityState.mode = "supabase";
   return true;
 }
@@ -210,6 +198,12 @@ async function uploadVideo(userId) {
 
 async function submitPost(event) {
   event.preventDefault();
+  if (!window.ICHIGEKI_AUTH?.isSignedIn()) {
+    showNotice("投稿にはGoogleログインが必要です。ログイン画面へ移動します。", "info");
+    await window.ICHIGEKI_AUTH?.signInWithGoogle();
+    return;
+  }
+  communityState.userId = window.ICHIGEKI_AUTH.getUser()?.id || null;
   const isSimulation = event.currentTarget.id === "simulationPostForm";
   const button = event.submitter;
   const buttonLabel = button.textContent;
@@ -218,7 +212,7 @@ async function submitPost(event) {
     const video = isSimulation ? "" : document.getElementById("videoUrl").value.trim();
     if (video && !/^https:\/\//i.test(video)) throw new Error("動画URLはhttps://から入力してください。");
     if (video && communityState.videoFile) throw new Error("動画ファイルと動画URLはどちらか一方だけ選んでください。");
-    let userId = "local";
+    let userId = communityState.userId || "local";
     if (communityState.mode === "supabase") {
       const { data } = await communityState.client.auth.getUser(); userId = data.user?.id;
       if (!userId) throw new Error("投稿用セッションを取得できませんでした。");
@@ -481,6 +475,11 @@ document.getElementById("postList").addEventListener("click", async event => {
   }
 
   const reportButton = event.target.closest("[data-report-post]"); if (!reportButton) return;
+  if (communityState.mode === "supabase" && !window.ICHIGEKI_AUTH?.isSignedIn()) {
+    showNotice("通報にはGoogleログインが必要です。", "info");
+    await window.ICHIGEKI_AUTH?.signInWithGoogle();
+    return;
+  }
   const id = reportButton.dataset.reportPost;
   reportButton.disabled = true;
   try {
@@ -506,10 +505,22 @@ document.getElementById("postList").addEventListener("click", async event => {
   document.getElementById("composerSimulatorLink").href = machineMeta[selectedMachine()].simulator;
   try {
     const connected = await loadSupabase();
-    setStatus(connected ? "online" : "preview", connected ? "公開コミュニティ" : "端末内プレビュー", connected ? "投稿は全ユーザーに共有されます" : "バックエンド接続後に公開共有されます");
+    const signedIn = window.ICHIGEKI_AUTH?.isSignedIn();
+    setStatus(connected ? "online" : "preview", connected ? "公開コミュニティ" : "端末内プレビュー", connected ? (signedIn ? "Googleアカウントで投稿できます" : "閲覧中・投稿にはGoogleログインが必要です") : "バックエンド接続後に公開共有されます");
+    if (signedIn) {
+      const nickname = window.ICHIGEKI_AUTH.getDisplayName();
+      if (nickname) rememberNickname(nickname);
+    }
   } catch {
     communityState.mode = "local";
     setStatus("error", "端末内プレビュー", "接続できないため、この端末だけに保存します");
   }
   await refreshPosts();
 })();
+
+window.addEventListener("ichigeki:auth-changed", event => {
+  communityState.userId = event.detail?.user?.id || null;
+  const nickname = window.ICHIGEKI_AUTH?.getDisplayName();
+  if (nickname) rememberNickname(nickname);
+  if (communityState.mode === "supabase") setStatus("online", "公開コミュニティ", communityState.userId ? "Googleアカウントで投稿できます" : "閲覧中・投稿にはGoogleログインが必要です");
+});
