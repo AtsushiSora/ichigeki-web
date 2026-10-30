@@ -15430,3 +15430,60 @@ textarea { min-height: 132px; line-height: 1.65; }
   .machine-hub-card { grid-template-rows: 120px 1fr; }
   .machine-hub-card-visual em { font-size: 58px; }
 }
+
+/* Machine discovery tools v144 */
+.machine-hub-tools { grid-template-columns: minmax(220px, 1fr) minmax(0, auto) 190px; }
+.machine-hub-tools > div { flex-wrap: nowrap; max-width: min(48vw, 620px); overflow-x: auto; padding-bottom: 2px; scrollbar-width: thin; }
+.machine-hub-sort {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  align-content: center;
+  gap: 2px;
+  min-height: 50px !important;
+  padding: 6px 11px !important;
+}
+.machine-hub-sort > span { color: #7f9187 !important; font-size: 9px !important; font-weight: 900; }
+.machine-hub-sort select { width: 100%; min-height: 28px; border: 0; outline: 0; color: #f6fff3; background: transparent; font: inherit; font-size: 13px; font-weight: 850; }
+.machine-hub-sort option { color: #111; background: #fff; }
+.machine-hub-tools > p { grid-column: 1 / -1; }
+
+.machine-hub-memory { display: grid; gap: 11px; }
+.machine-hub-memory[hidden],
+.machine-hub-shelf[hidden] { display: none !important; }
+.machine-hub-shelf { display: grid; gap: 9px; padding: 14px; border: 1px solid #26372e; border-radius: 18px; background: #08100c; }
+.machine-hub-shelf > div:first-child { display: flex; align-items: end; justify-content: space-between; gap: 10px; }
+.machine-hub-shelf > div:first-child span { color: #7b9484; font-size: 9px; font-weight: 1000; letter-spacing: .15em; }
+.machine-hub-shelf h2 { margin: 0; color: #f4fff1; font-size: 17px; }
+.machine-hub-shelf-list { display: grid; grid-auto-columns: minmax(180px, 230px); grid-auto-flow: column; gap: 8px; overflow-x: auto; padding-bottom: 3px; scroll-snap-type: x proximity; scrollbar-width: thin; }
+.machine-hub-shelf-list a { display: grid; gap: 4px; min-height: 92px; padding: 12px; border: 1px solid #31453a; border-radius: 13px; color: #eef8ef; background: linear-gradient(145deg, #111b15, #080d0a); text-decoration: none; scroll-snap-align: start; }
+.machine-hub-shelf-list a > span { color: #75e868; font-size: 8px; font-weight: 1000; letter-spacing: .12em; }
+.machine-hub-shelf-list a > strong { overflow: hidden; font-size: 14px; line-height: 1.3; text-overflow: ellipsis; white-space: nowrap; }
+.machine-hub-shelf-list a > small { color: #8fa095; font-size: 10px; }
+
+.machine-hub-item { position: relative; display: grid; min-width: 0; }
+.machine-hub-item .machine-hub-card { height: 100%; }
+.machine-hub-favorite { position: absolute; z-index: 5; top: 11px; right: 11px; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid rgba(255,255,255,.36); border-radius: 50%; color: #fff; background: rgba(0,0,0,.68); font: 900 23px/1 system-ui, sans-serif; cursor: pointer; backdrop-filter: blur(5px); }
+.machine-hub-favorite[aria-pressed="true"] { border-color: #ffd364; color: #ffd364; background: rgba(70,45,4,.82); }
+.machine-hub-favorite:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+.machine-hub-badges { display: flex !important; flex-wrap: wrap; gap: 5px !important; margin-top: 8px; }
+.machine-hub-badges i { padding: 4px 7px; border: 1px solid rgba(115,219,95,.28); border-radius: 999px; color: #bfeeb6; background: rgba(83,173,65,.08); font-size: 8px; font-style: normal; font-weight: 900; }
+
+@media (max-width: 900px) {
+  .machine-hub-tools { grid-template-columns: 1fr 190px; }
+  .machine-hub-tools > div { grid-column: 1 / -1; grid-row: 2; max-width: none; }
+  .machine-hub-sort { grid-column: 2; grid-row: 1; }
+}
+
+@media (max-width: 760px) {
+  .machine-hub-tools { grid-template-columns: 1fr; }
+  .machine-hub-tools > label:first-child,
+  .machine-hub-sort,
+  .machine-hub-tools > div,
+  .machine-hub-tools > p { grid-column: 1; grid-row: auto; }
+  .machine-hub-sort { min-height: 54px !important; }
+  .machine-hub-memory { gap: 8px; }
+  .machine-hub-shelf { padding: 11px; border-radius: 15px; }
+  .machine-hub-shelf-list { grid-auto-columns: minmax(160px, 70vw); }
+  .machine-hub-favorite { top: 8px; right: 8px; width: 40px; height: 40px; font-size: 21px; }
+  .machine-hub-badges { margin-top: 6px; }
+}
