@@ -1,4 +1,4 @@
-const CACHE_NAME = "ichigeki-web-v157";
+const CACHE_NAME = "ichigeki-web-v158";
 const CORE_ASSETS = [
   "index.html",
   "account.html",
@@ -95,6 +95,7 @@ const CORE_ASSETS = [
   "style.css?v=139",
   "style.css?v=140",
   "style.css?v=141",
+  "style.css?v=142",
   "style.css?v=99",
   "style.css?v=96",
   "main.js",
@@ -140,6 +141,7 @@ const CORE_ASSETS = [
   "machine-hub.js",
   "machine-hub.js?v=1",
   "machine-hub.js?v=2",
+  "machine-hub.js?v=3",
   "machine-detail.js",
   "machine-detail.js?v=99",
   "machine-detail.js?v=103",
@@ -166,6 +168,7 @@ const CORE_ASSETS = [
   "machine-detail.js?v=133",
   "machine-detail.js?v=134",
   "machine-detail.js?v=135",
+  "machine-detail.js?v=136",
   "achievements.js",
   "achievements.js?v=1",
   "my-records.js",

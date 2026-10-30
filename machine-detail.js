@@ -156,7 +156,7 @@
 
   const labels = simulationLabels();
   const startLabel = machine.sim.kind === "pachinko" ? "パチンコを始める" : machine.sim.kind === "juggler" ? "8,000Gを回す" : "レバーON";
-  const experienceVisual = machine.type === "slot" ? "assets/home/menu-ranking-generated-v1.jpg" : "assets/home/menu-play-generated-v1.jpg";
+  const experienceVisual = `assets/machines/${encodeURIComponent(slug)}-character-v1.jpg`;
   const neighbors = ordered.filter(([key]) => key !== slug).slice(0, 5);
   app.innerHTML = `
     <section class="machine-archive-hero theme-${machine.theme}">
