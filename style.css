@@ -14968,7 +14968,7 @@ textarea { min-height: 132px; line-height: 1.65; }
 .home-page {
   background:
     linear-gradient(180deg, rgba(1, 7, 6, .82), rgba(1, 8, 6, .96)),
-    url("assets/home/pachinko-hall.jpg") center 35% / cover fixed,
+    url("assets/home/home-background-generated-v1.jpg") center 35% / cover fixed,
     #020504;
 }
 
@@ -15133,4 +15133,62 @@ textarea { min-height: 132px; line-height: 1.65; }
   .home-page .home-action-visual { bottom: 75px; }
   .home-page .home-action-grid strong { font-size: 15px; }
   .home-page .home-action-grid small { font-size: 8px; }
+}
+
+/* Friendly generated-art home v140 */
+.home-page {
+  background:
+    linear-gradient(180deg, rgba(1, 7, 7, .7), rgba(1, 8, 8, .94)),
+    url("assets/home/home-background-generated-v1.jpg") center / cover fixed,
+    #020606;
+}
+
+.home-page .home-action-menu {
+  border-color: rgba(106, 240, 92, .46);
+  border-radius: 20px;
+  background: rgba(2, 15, 15, .91);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, .52);
+}
+
+.home-page .home-action-heading > span { color: #79ed67; }
+.home-page .home-action-heading h1 { color: #f7fff4; }
+
+.home-page .home-action-grid > a {
+  border-color: rgba(101, 226, 91, .56);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, .32);
+}
+
+.home-page .home-action-grid > a::before {
+  inset: 6px;
+  border-color: rgba(255, 255, 255, .18);
+  border-radius: 11px;
+  clip-path: none;
+}
+
+.home-page .home-action-grid > a::after {
+  background: linear-gradient(90deg, transparent, #75ed67, transparent);
+}
+
+.home-page .home-action-grid > a:hover,
+.home-page .home-action-grid > a:focus-visible {
+  border-color: #83f173;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, .42), 0 0 0 2px rgba(111, 240, 94, .15);
+}
+
+.home-page .home-action-visual b {
+  border-color: rgba(255, 255, 255, .48);
+  color: #fff;
+  background: rgba(3, 15, 18, .72);
+}
+
+.home-page .home-card-arrow { color: #7cf06b; }
+
+.home-page .home-action-grid .is-play .home-action-visual img { object-position: 50% 52%; }
+.home-page .home-action-grid .is-records .home-action-visual img { object-position: 55% 43%; }
+.home-page .home-action-grid .is-ranking .home-action-visual img { object-position: 50% 46%; }
+.home-page .home-action-grid .is-community .home-action-visual img { object-position: 50% 43%; }
+
+@media (max-width: 760px) {
+  .home-page { background-position: 50% 28%; }
 }

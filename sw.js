@@ -1,4 +1,4 @@
-const CACHE_NAME = "ichigeki-web-v155";
+const CACHE_NAME = "ichigeki-web-v156";
 const CORE_ASSETS = [
   "index.html",
   "account.html",
@@ -91,6 +91,7 @@ const CORE_ASSETS = [
   "style.css?v=137",
   "style.css?v=138",
   "style.css?v=139",
+  "style.css?v=140",
   "style.css?v=99",
   "style.css?v=96",
   "main.js",
@@ -179,11 +180,11 @@ const CORE_ASSETS = [
   "community.js?v=10",
   "community.js?v=11",
   "community.js?v=12",
-  "assets/home/pachinko-hall.jpg",
-  "assets/home/play-machine.jpg",
-  "assets/home/records-data.jpg",
-  "assets/home/ranking-parlor.jpg",
-  "assets/home/community-players.jpg",
+  "assets/home/home-background-generated-v1.jpg",
+  "assets/home/menu-play-generated-v1.jpg",
+  "assets/home/menu-records-generated-v1.jpg",
+  "assets/home/menu-ranking-generated-v1.jpg",
+  "assets/home/menu-community-generated-v1.jpg",
   "site-insights.js",
   "site-insights.js?v=1",
   "adsense-loader.js",
