@@ -2523,15 +2523,20 @@ function initializeMobileMachineShelves() {
     card.href = `${slug}.html`;
     card.className = `is-${machine.type}`;
     const number = document.createElement("span");
-    number.textContent = String(index + 1).padStart(2, "0");
+    number.textContent = String(index + 1);
     const title = document.createElement("strong");
     title.textContent = machine.shortName;
+    const kind = document.createElement("em");
+    kind.textContent = machine.type === "slot" ? "スマスロ" : "パチンコ";
     const [primary, secondary] = metrics(machine);
     const first = document.createElement("b");
     first.textContent = primary;
     const second = document.createElement("small");
     second.textContent = secondary;
-    card.append(number, title, first, second);
+    const arrow = document.createElement("i");
+    arrow.setAttribute("aria-hidden", "true");
+    arrow.textContent = "›";
+    card.append(number, title, kind, first, second, arrow);
     return card;
   }
 
@@ -2580,7 +2585,7 @@ function initializeMobileMachineShelves() {
     activeCategory = category;
     const slugs = categorySlugs(category);
     categoryList.replaceChildren(...slugs.map(createCategoryCard).filter(Boolean));
-    categoryTitle.innerHTML = `<span aria-hidden="true">▥</span> ${categoryLabels[category] || "機種"}`;
+    categoryTitle.innerHTML = `<span aria-hidden="true"></span> ${categoryLabels[category] || "機種"}`;
     categoryButtons.forEach(button => button.setAttribute("aria-pressed", String(button.dataset.homeMachineCategory === category)));
   }
 

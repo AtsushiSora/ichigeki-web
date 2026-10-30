@@ -18,7 +18,7 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="ICHIGEKI | 人気パチンコ・パチスロ機種シミュレーター">
   <meta name="twitter:description" content="人気機種のスペック、平均回転数、投資目安を確認して、機種別シミュレーションとランキングを楽しめます。">
-  <link rel="stylesheet" href="style.css?v=135">
+  <link rel="stylesheet" href="style.css?v=136">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -45,13 +45,28 @@
         <a href="guide.html">使い方</a>
         <a href="about.html">運営者</a>
       </nav>
-      <a class="mobile-header-button" href="guide.html">使い方</a>
+      <details class="mobile-header-menu">
+        <summary aria-label="メニューを開く"><span></span><span></span><span></span></summary>
+        <nav aria-label="スマホメニュー">
+          <a href="index.html">ホーム</a>
+          <a href="#popularMachines">人気機種</a>
+          <a href="new-machines-2026-10.html">新台</a>
+          <a href="ranking.html">マイ記録</a>
+          <a href="community.html">コミュニティ</a>
+          <a href="guide.html">使い方</a>
+        </nav>
+      </details>
     </div>
   </header>
 
   <main class="page home-game-page" id="appHome">
-    <section class="mobile-app-home" aria-labelledby="mobileAppTitle">
-      <div class="mobile-app-heading"><span>QUICK START</span><h1 id="mobileAppTitle">気になる台を、すぐ試す。</h1><p>機種名やカテゴリからシミュレーターを探せます。</p></div>
+    <section class="mobile-app-home" aria-label="機種を探してシミュレーションする">
+      <article class="mobile-featured-machine" id="appFeatured">
+        <a class="mobile-featured-title" href="valvrave2.html"><span>今日のおすすめ</span><strong>スマスロ ヴヴヴ2</strong><small>気になる台を選んで、すぐに一撃体験。</small><b aria-hidden="true">›</b></a>
+        <a class="mobile-featured-start" href="valvrave2.html#simulator"><span aria-hidden="true">▶</span>シミュレーターを試す<b aria-hidden="true">›</b></a>
+        <div class="mobile-featured-stats"><div><span>CZ</span><strong>約1/324</strong></div><div><span>平均</span><strong>476G</strong></div><div><span>コイン単価</span><strong>4.2円</strong></div></div>
+      </article>
+
       <form class="mobile-app-search" id="mobileMachineSearchForm" role="search">
         <label for="mobileMachineSearch"><span aria-hidden="true">⌕</span><input id="mobileMachineSearch" type="search" inputmode="search" autocomplete="off" placeholder="北斗、東京喰種、エヴァ…" aria-controls="mobileMachineSearchResults" aria-expanded="false"><button type="submit">検索</button></label>
       </form>
@@ -61,20 +76,24 @@
         <a class="mobile-search-all-link" href="#popularMachines">全機種の一覧を見る ›</a>
       </section>
       <div class="mobile-app-categories" role="group" aria-label="機種カテゴリ">
-        <button type="button" data-home-machine-category="popular" aria-pressed="true">人気</button>
-        <button type="button" data-home-machine-category="new">新着</button>
-        <button type="button" data-home-machine-category="pachinko">パチンコ</button>
-        <button type="button" data-home-machine-category="slot">スロット</button>
+        <button type="button" data-home-machine-category="popular" aria-pressed="true"><span aria-hidden="true">♛</span><b>人気</b></button>
+        <button type="button" data-home-machine-category="new"><span aria-hidden="true">✦</span><b>新台</b></button>
+        <button type="button" data-home-machine-category="pachinko"><span aria-hidden="true">◉</span><b>パチンコ</b></button>
+        <button type="button" data-home-machine-category="slot"><span aria-hidden="true">▣</span><b>スロット</b></button>
       </div>
 
-      <article class="mobile-featured-machine" id="appFeatured">
-        <a class="mobile-featured-title" href="valvrave2.html"><span>♛ 今日のおすすめ</span><strong>スマスロ ヴヴヴ2</strong><b aria-hidden="true">›</b></a>
-        <div class="mobile-featured-stats"><div><span>CZ</span><strong>約1/324</strong></div><div><span>平均</span><strong>476G</strong></div><div><span>コイン単価</span><strong>4.2円</strong></div></div>
-        <a class="mobile-featured-start" href="valvrave2.html#simulator"><span aria-hidden="true">▶</span>シミュレーターを試す<b aria-hidden="true">›</b></a>
-      </article>
+      <section class="mobile-popular-machines" aria-labelledby="mobilePopularTitle">
+        <div class="mobile-app-section-head"><h2 id="mobilePopularTitle"><span aria-hidden="true"></span> 人気機種</h2><a href="#popularMachines">全機種を見る ›</a></div>
+        <div class="mobile-popular-grid" id="mobileCategoryMachineList">
+          <a href="smart-hokuto.html"><span>1</span><strong>スマスロ北斗</strong><em>スマスロ</em><b>平均383.4G</b><small>単価3.3円</small><i aria-hidden="true">›</i></a>
+          <a href="tokyo-ghoul-slot.html"><span>2</span><strong>東京喰種</strong><em>スマスロ</em><b>平均394.4G</b><small>単価4.1円</small><i aria-hidden="true">›</i></a>
+          <a href="monkey-turn-v.html"><span>3</span><strong>モンキーターンV</strong><em>スマスロ</em><b>平均299.8G</b><small>単価3.1円</small><i aria-hidden="true">›</i></a>
+          <a href="eva15.html"><span>4</span><strong>エヴァ15</strong><em>パチンコ</em><b>平均319.7回転</b><small>通常ヘソ</small><i aria-hidden="true">›</i></a>
+        </div>
+      </section>
 
       <section class="mobile-weekly-ranking" aria-labelledby="mobileWeeklyTitle">
-        <div class="mobile-app-section-head"><h2 id="mobileWeeklyTitle"><span aria-hidden="true">♛</span> 今週の人気</h2><small id="mobileWeeklyStatus">直近7日を集計中</small></div>
+        <div class="mobile-app-section-head"><h2 id="mobileWeeklyTitle"><span aria-hidden="true"></span> みんなが遊んでいる台</h2><small id="mobileWeeklyStatus">直近7日を集計中</small></div>
         <div class="mobile-weekly-ranking-list" id="mobileWeeklyRankingList" aria-live="polite">
           <a href="valvrave2.html#simulator"><span>1</span><strong>スマスロ ヴヴヴ2</strong><small>シミュレーターへ ›</small></a>
           <a href="smart-hokuto.html#simulator"><span>2</span><strong>スマスロ北斗の拳</strong><small>シミュレーターへ ›</small></a>
@@ -93,15 +112,6 @@
         <p class="mobile-machine-empty" id="mobileFavoriteEmpty">各機種ページの「☆ お気に入り」から登録できます。</p>
       </section>
 
-      <section class="mobile-popular-machines" aria-labelledby="mobilePopularTitle">
-        <div class="mobile-app-section-head"><h2 id="mobilePopularTitle"><span aria-hidden="true">▥</span> 人気機種</h2><a href="#popularMachines">全機種を見る ›</a></div>
-        <div class="mobile-popular-grid" id="mobileCategoryMachineList">
-          <a href="smart-hokuto.html"><span>1</span><strong>スマスロ北斗</strong><b>平均383.4G</b><small>単価3.3円</small></a>
-          <a href="tokyo-ghoul-slot.html"><span>2</span><strong>東京喰種</strong><b>平均394.4G</b><small>単価4.1円</small></a>
-          <a href="monkey-turn-v.html"><span>3</span><strong>モンキーターンV</strong><b>平均299.8G</b><small>単価3.1円</small></a>
-          <a href="eva15.html"><span>4</span><strong>エヴァ15</strong><b>平均319.7回転</b><small>通常ヘソ</small></a>
-        </div>
-      </section>
     </section>
 
     <section class="home-intro" aria-labelledby="homeTitle">
@@ -276,17 +286,10 @@
       </div>
     </div>
   </footer>
-  <nav class="mobile-app-bottom-nav" aria-label="アプリメニュー">
-    <a class="is-active" href="#appHome" aria-current="page"><span aria-hidden="true">⌂</span><b>ホーム</b></a>
-    <a href="#mobileMachineSearch"><span aria-hidden="true">⌕</span><b>機種検索</b></a>
-    <a href="valvrave2.html#simulator"><span aria-hidden="true">▷</span><b>シミュ</b></a>
-    <a href="community.html"><span aria-hidden="true">□</span><b>投稿</b></a>
-    <a href="ranking.html"><span aria-hidden="true">▥</span><b>マイ記録</b></a>
-  </nav>
   <script src="community-config.js?v=2"></script>
   <script src="machine-library.js?v=121"></script>
   <script src="app-shell.js?v=4"></script>
-  <script src="main.js?v=119"></script>
+  <script src="main.js?v=120"></script>
   <script src="site-insights.js?v=1"></script>
   <script src="adsense-loader.js?v=2"></script>
 </body>

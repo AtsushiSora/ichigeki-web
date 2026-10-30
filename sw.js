@@ -1,4 +1,4 @@
-const CACHE_NAME = "ichigeki-web-v151";
+const CACHE_NAME = "ichigeki-web-v152";
 const CORE_ASSETS = [
   "index.html",
   "probability-tool.html",
@@ -83,6 +83,7 @@ const CORE_ASSETS = [
   "style.css?v=132",
   "style.css?v=134",
   "style.css?v=135",
+  "style.css?v=136",
   "style.css?v=99",
   "style.css?v=96",
   "main.js",
@@ -98,6 +99,7 @@ const CORE_ASSETS = [
   "main.js?v=116",
   "main.js?v=117",
   "main.js?v=119",
+  "main.js?v=120",
   "app-shell.js",
   "app-shell.js?v=1",
   "app-shell.js?v=2",
