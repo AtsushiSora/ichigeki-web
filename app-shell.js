@@ -29,7 +29,8 @@
     menu.className = "shared-site-menu";
     menu.innerHTML = `<summary aria-label="メニューを開く"><span></span><span></span><span></span></summary>
       <nav aria-label="サイトメニュー">
-        <a href="machines.html"><b>台を選んで遊ぶ</b><small>人気台・新台・機種タイプ</small></a>
+        <a href="pachinko.html"><b>パチンコで遊ぶ</b><small>人気台・新台・デカヘソ・LT</small></a>
+        <a href="slots.html"><b>スロットで遊ぶ</b><small>人気台・新台・スマスロ・Aタイプ</small></a>
         <a href="ranking.html"><b>マイ記録</b><small>成績・履歴・称号</small></a>
         <a href="rankings.html"><b>機種別ランキング</b><small>遊ぶ台を選んで順位を見る</small></a>
         <a href="community.html"><b>コミュニティ</b><small>口コミ・収支・画像・動画</small></a>

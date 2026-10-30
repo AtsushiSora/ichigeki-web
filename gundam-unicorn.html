@@ -14,7 +14,7 @@
   <meta property="og:title" content="初代Pフィーバー機動戦士ガンダムユニコーン | ICHIGEKI">
   <meta property="og:description" content="大当り1/319.7、RUSH突入60%、継続約81%の初代ユニコーンを記事と簡易シミュレーターで紹介。">
   <meta property="og:url" content="https://ichigeki-pachislot.com/gundam-unicorn.html">
-  <link rel="stylesheet" href="style.css?v=138">
+  <link rel="stylesheet" href="style.css?v=141">
 </head>
 <body class="unicorn-page">
   <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">MACHINE ARCHIVE</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#simulator">シミュレーター</a><a href="#unicornRanking">ランキング</a><a href="community.html?machine=gundam-unicorn">口コミ・収支</a></nav></div></header>
@@ -31,7 +31,7 @@
       </section>
 
       <section class="unicorn-simulator" id="simulator">
-        <div class="unicorn-sim-head"><div><span class="unicorn-kicker">EXPERIENCE SIMULATOR</span><h2>演出つき体験版</h2><p>通常回転からRUSH・連チャン・結果までを順番に体験できます。</p></div><button type="button" id="unicornStart" class="unicorn-start">演出を<br><strong>START</strong></button></div>
+        <div class="unicorn-sim-head"><div><span class="unicorn-kicker">EXPERIENCE SIMULATOR</span><h2>演出つき体験版</h2><p>通常回転からRUSH・連チャン・結果までを順番に体験できます。</p></div><button type="button" id="unicornStart" class="unicorn-start">パチンコを<br><strong>始める</strong></button></div>
         <div class="machine-fixed-rate-label"><span>FIXED PLAY RATE</span><strong>実店舗向け固定条件</strong></div>
         <div class="unicorn-cost-control"><label for="unicornSpinRate">1,000円あたり回転数<input id="unicornSpinRate" type="number" value="17" disabled><small>機種別固定値</small></label><label for="unicornLendBalls">1,000円の貸玉数<input id="unicornLendBalls" type="number" value="250" disabled><small>250玉貸しで固定</small></label><label for="unicornExchangeBalls">交換率（100円）<input id="unicornExchangeBalls" type="number" value="28" disabled><small>28玉交換で固定</small></label><div><span>平均初当り</span><strong>319.7回転</strong></div><div><span>平均投資目安</span><strong id="unicornAverageInvestment">18,800円</strong></div><div><span>交換単価</span><strong id="unicornExchangeValue">3.57円/玉</strong></div></div>
         <section class="unicorn-experience" id="unicornExperience" role="dialog" aria-modal="true" aria-label="シミュレーション演出" hidden>
@@ -47,16 +47,16 @@
             <span data-experience-step="0">通常</span><span data-experience-step="1">大当り</span><span data-experience-step="2">RUSH</span><span data-experience-step="3">連チャン</span><span data-experience-step="4">結果</span>
           </div>
           <section class="unicorn-experience-actions" id="unicornExperienceActions" aria-labelledby="unicornExperienceActionsTitle" hidden>
-            <div><span>RESULT MENU</span><strong id="unicornExperienceActionsTitle">この結果をどうする？</strong><small id="unicornOverlaySaveStatus">マイ記録へ自動保存しました</small></div>
-            <div class="unicorn-experience-main-actions"><button type="button" class="button primary" id="unicornOverlayRetry">もう一度試す</button><a class="button" href="ranking.html">マイ記録を見る</a><a class="button" id="unicornOverlayPost" href="community.html?machine=gundam-unicorn&compose=simulation#simulationComposer">結果を投稿</a></div>
+            <div><span>RESULT</span><strong id="unicornExperienceActionsTitle">今回の結果</strong><small id="unicornOverlaySaveStatus">マイ記録へ自動保存しました</small></div>
+            <div class="unicorn-experience-main-actions"><button type="button" class="button primary" id="unicornOverlayRetry">もう一度遊ぶ</button><a class="button" href="ranking.html">マイ記録</a><a class="button" id="unicornOverlayPost" href="community.html?machine=gundam-unicorn&compose=simulation#simulationComposer">結果を投稿</a></div>
             <div class="unicorn-experience-rank"><label for="unicornOverlayNickname">ランキング表示名<input id="unicornOverlayNickname" type="text" maxlength="16" autocomplete="nickname" placeholder="ニックネーム"></label><button type="button" class="button" id="unicornOverlayRank">ランキングに登録</button></div>
-            <button type="button" class="unicorn-experience-return" id="unicornOverlayClose">元の機種ページへ戻る</button>
+            <button type="button" class="unicorn-experience-return" id="unicornOverlayClose">機種ページへ戻る</button>
           </section>
         </section>
         <div class="unicorn-result" id="unicornResult" aria-live="polite">
           <div class="unicorn-result-main"><span id="unicornResultLabel">STANDBY</span><strong id="unicornPayout">0玉</strong><b id="unicornHits">0回</b></div>
           <div class="unicorn-result-grid"><div><small>初当たり</small><strong id="unicornSpins">--回転</strong></div><div><small>投資目安</small><strong id="unicornInvestment">--円</strong></div><div><small>換金目安</small><strong id="unicornCashout">--円</strong></div><div><small>差玉目安</small><strong id="unicornDiff">--玉</strong></div><div><small>収支目安</small><strong id="unicornBalance">--円</strong></div><div><small>到達状態</small><strong id="unicornMode">待機中</strong></div></div>
-          <div class="unicorn-flow" id="unicornFlow"><span>STARTで抽選します</span></div>
+          <div class="unicorn-flow" id="unicornFlow"><span>開始ボタンで抽選します</span></div>
         </div>
         <button type="button" class="button unicorn-retry" id="unicornRetry" disabled>もう一度試す</button>
         <p class="machine-auto-save-status" id="unicornAutoSaveStatus">結果は自動でマイ記録へ保存されます。</p>
@@ -91,6 +91,6 @@
 
   <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="community-guidelines.html">投稿ガイドライン</a><a href="privacy.html">プライバシー</a><a href="disclaimer.html">免責事項</a></div></div></footer>
   <script src="achievements.js?v=1"></script><script src="gundam-unicorn.js?v=10"></script>
-  <script src="app-shell.js?v=6"></script>
+  <script src="app-shell.js?v=7"></script>
 </body>
 </html>
