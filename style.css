@@ -15683,7 +15683,15 @@ textarea { min-height: 132px; line-height: 1.65; }
   .home-page .home-action-grid > a.is-community { min-height: 132px; }
   .home-action-grid > a { padding: 0 11px 13px; border-radius: 17px; }
   .home-action-visual { bottom: 72px; }
-  .home-action-visual i { width: 62px; border-radius: 17px; font-size: 32px; }
+  .home-action-visual i {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    width: 54px;
+    border-radius: 15px;
+    font-size: 29px;
+    transform: translateX(-50%);
+  }
   .home-action-visual b { margin-top: 7px; font-size: 8px; }
   .home-action-grid strong { margin-top: 8px; font-size: 17px; }
   .home-action-grid small { margin-top: 3px; font-size: 9px; line-height: 1.35; }
