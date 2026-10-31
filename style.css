@@ -15599,6 +15599,8 @@ textarea { min-height: 132px; line-height: 1.65; }
   color: var(--home-card-accent, var(--polish-green));
   font-size: 30px;
 }
+.home-action-grid > a.is-label-only strong { margin-bottom: 13px; }
+.home-action-grid > a.is-label-only .home-card-arrow { bottom: 25px; }
 .home-action-visual i {
   border-color: color-mix(in srgb, var(--home-card-accent, #fff) 70%, #fff);
   color: #fff;
