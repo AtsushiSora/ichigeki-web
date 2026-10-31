@@ -25,6 +25,14 @@ const INDEXABLE_MACHINE_SLUGS = new Set([
   "fever-yokai-watch",
   "juoh-shishi-no-ichigeki",
   "no-game-no-life-119",
+  "karakuri2-maou",
+  "shin-eva-type-rei",
+  "sao-senko-no-kiseki",
+  "hokuto10-pachinko",
+  "kaguya-sama-slot",
+  "shin-eva-slot",
+  "dumbbell-slot",
+  "symphogear-seigi-slot",
   "garo-yami-slot",
   "ragnador-slot",
   "seiya-ougon-slot",
@@ -196,6 +204,12 @@ function schemaMarkup(slug, machine) {
   return `${SCHEMA_START}<script type="application/ld+json">${JSON.stringify(schema)}</script>${SCHEMA_END}`;
 }
 
+function newMachinePage(slug, machine) {
+  const title = `${escapeHtml(machine.name)} | 記事・シミュレーター | ICHIGEKI`;
+  const description = escapeHtml(machine.intro);
+  return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#05232d"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml"><meta name="description" content="${description}"><title>${title}</title><link rel="canonical" href="https://ichigeki-pachislot.com/${slug}.html"><link rel="stylesheet" href="style.css?v=146"></head><body class="machine-library-page" data-machine="${escapeHtml(slug)}"><header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">MACHINE</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#simulator">シミュレーター</a><a href="community.html?machine=${escapeHtml(slug)}">投稿</a></nav></div></header><main class="page machine-detail-shell" id="machineApp"></main><footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="community.html">コミュニティ</a><a href="disclaimer.html">免責事項</a></div></div></footer><script src="machine-library.js?v=124"></script><script src="achievements.js?v=1"></script><script src="site-insights.js?v=1"></script><script src="machine-detail.js?v=140"></script><script src="app-shell.js?v=7"></script><script src="adsense-loader.js?v=2"></script></body></html>`;
+}
+
 function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -222,7 +236,7 @@ let updated = 0;
 for (const [slug, machine] of Object.entries(machines)) {
   if (requestedSlugs.size && !requestedSlugs.has(slug)) continue;
   const htmlPath = path.join(siteDirectory, `${slug}.html`);
-  if (!fs.existsSync(htmlPath)) throw new Error(`HTML file not found: ${htmlPath}`);
+  if (!fs.existsSync(htmlPath)) fs.writeFileSync(htmlPath, newMachinePage(slug, machine));
 
   let html = fs.readFileSync(htmlPath, "utf8");
   const content = staticMarkup(slug, machine);
@@ -247,8 +261,8 @@ for (const [slug, machine] of Object.entries(machines)) {
     html = html.replace('<meta charset="utf-8">', '<meta charset="utf-8"><meta name="robots" content="noindex,follow">');
   }
   html = html.replace(/style\.css\?v=\d+/, "style.css?v=146");
-  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=139");
-  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=123");
+  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=140");
+  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=124");
   html = html.replace(/app-shell\.js\?v=\d+/, "app-shell.js?v=7");
   html = html.replace(/adsense-loader\.js\?v=\d+/, "adsense-loader.js?v=2");
   if (!html.includes("site-insights.js")) html = html.replace(/(<script src="machine-detail\.js\?v=129"><\/script>)/, '<script src="site-insights.js?v=1"></script>\n  $1');

@@ -110,6 +110,126 @@ window.ICHIGEKI_MACHINES = {
     ],
     sources: [["P-WORLD 新台予定", "https://www.p-world.co.jp/database/machine/introduce_calendar.cgi?type=Pachi"], ["パチマガスロマガFREE スペック", "https://pachimaga.com/free/mach/maker-p/takao/e_nogamenolife119.php"], ["パチンコ・パチスロ.com スペック", "https://pachinkopachisro.com/archives/pachinko/e-no-game-no-life-119/"]]
   },
+  "karakuri2-maou": {
+    order: 0.119, type: "pachinko", theme: "violet", year: "2024年11月", maker: "SANKYO", updated: "2026-10-31",
+    name: "eフィーバーからくりサーカス2 魔王ver.", shortName: "からくり2 魔王",
+    catchcopy: "運命の一劇を突破し、最大7500個の超悪魔RUSHへ。",
+    intro: "図柄揃い約1/399.9、LT突入約52%、超悪魔RUSH継続約80%のスマパチLT機を固定条件で簡易体験できます。",
+    points: ["図柄揃い約1/399.9", "LT突入約52%・継続約80%", "右打ち最大7500個"],
+    specs: [["図柄揃い", "約1/399.9"], ["LT突入", "約52%"], ["ST回数", "135回"], ["LT継続", "約80%"], ["右打ち出玉", "1500〜7500個"], ["スタート", "通常ヘソ"]],
+    sim: { kind: "pachinko", hitRate: 399.9, hitLabel: "図柄揃い", startType: "通常ヘソ", spinsPer1k: 17.0, minSpins: 10, maxSpins: 30, rushLabel: "超悪魔RUSH", rushEntry: 0.52, rushContinue: 0.80, firstPayoutIn: 1200, firstPayoutOut: 1200, rushPayouts: [[1500, 0.40], [3000, 0.33], [4500, 0.17], [6000, 0.07], [7500, 0.03]] },
+    articleSections: [
+      { heading: "約52%で超悪魔RUSHへ", paragraphs: ["図柄揃いは約1/399.9。1200個大当りと300個LT突入大当りを合わせたトータルLT突入率は約52%です。", "シミュレーターでは入口を1回の突入抽選へまとめます。"] },
+      { heading: "運命の一劇と最大7500個", paragraphs: ["LTは135回のSTでトータル継続約80%。右打ち中は1500個を軸に、3000個から最大7500個までの大当りがあります。", "STリセットは継続率へ含め、独立した出玉としては扱いません。"] },
+      { heading: "固定レートと収支の条件", bullets: ["17.0回/1,000円・250玉貸し・28玉交換で固定", "平均図柄揃い投資目安は約23,500円", "結果は自動でマイ記録へ保存"] }
+    ],
+    sources: [["SANKYO 公式スペック", "https://www.sankyo-fever.jp/products/machine_list/prw/spec/"], ["SANKYO オンライン博物館", "https://www.sankyo-fever.jp/collection/968/"]]
+  },
+  "shin-eva-type-rei": {
+    order: 0.1192, type: "pachinko", theme: "ice", year: "2023年12月", maker: "ビスティ", updated: "2026-10-31",
+    name: "ぱちんこ シン・エヴァンゲリオン Type レイ", shortName: "シンエヴァ Type レイ",
+    catchcopy: "時短込み約73%から、163回のシン・IMPACT RUSHへ。",
+    intro: "大当り約1/319.7、時短引き戻し込みのRUSH突入約73%、トータル継続約81%の王道V-STを簡易体験できます。",
+    points: ["大当り約1/319.7", "RUSH突入約73%・継続約81%", "右打ちALL1500個"],
+    specs: [["大当り", "約1/319.7"], ["RUSH突入", "約73%"], ["ST回数", "163回"], ["RUSH継続", "約81%"], ["右打ち出玉", "ALL1500個"], ["スタート", "通常ヘソ"]],
+    sim: { kind: "pachinko", hitRate: 319.7, hitLabel: "初当り", startType: "通常ヘソ", spinsPer1k: 17.5, minSpins: 10, maxSpins: 30, rushLabel: "シン・IMPACT RUSH", rushEntry: 0.73, rushContinue: 0.81, firstPayoutIn: 1500, firstPayoutOut: 450, rushPayouts: [[1500, 1]] },
+    articleSections: [
+      { heading: "時短込み約73%でRUSHへ", paragraphs: ["初当りからのST突入に、時短100回と残保留の引き戻しを加えたトータル突入率は約73%です。", "サイトでは直行と時短引き戻しを1回の抽選へまとめます。"] },
+      { heading: "163回のロングST", paragraphs: ["シン・IMPACT RUSHは163回で、残保留を含む継続率は約81%。右打ち中の大当りはすべて1500個です。", "結果画面では連チャン数と総出玉を同じ固定条件で比較できます。"] },
+      { heading: "固定レートと収支の条件", bullets: ["17.5回/1,000円・250玉貸し・28玉交換で固定", "平均初当り投資目安は約18,300円", "結果は自動でマイ記録へ保存"] }
+    ],
+    sources: [["SANKYO オンライン博物館", "https://www.sankyo-fever.jp/collection/952/"], ["フィールズ 製品一覧", "https://www.fields.biz/products/ps/machine_list2023.html"]]
+  },
+  "sao-senko-no-kiseki": {
+    order: 0.1194, type: "pachinko", theme: "aqua", year: "2024年12月", maker: "KYORAKU", updated: "2026-10-31",
+    name: "e ソードアート・オンライン 閃光の軌跡", shortName: "SAO 閃光の軌跡",
+    catchcopy: "70%でSWORD RUSHへ。LIGHTNING RUSHは約90%継続。",
+    intro: "大当り約1/199.9、SWORD RUSH突入70%、上位LIGHTNING RUSH継続約90%のライトミドルLT機を簡易体験できます。",
+    points: ["大当り約1/199.9", "SWORD RUSH突入70%", "LIGHTNING RUSH継続約90%"],
+    specs: [["大当り", "約1/199.9"], ["RUSH突入", "70%"], ["SWORD RUSH継続", "約60%"], ["上位RUSH継続", "約90%"], ["上位中1500個", "約70%"], ["スタート", "通常ヘソ"]],
+    sim: { kind: "pachinko", hitRate: 199.9, hitLabel: "初当り", startType: "通常ヘソ", spinsPer1k: 18.0, minSpins: 10, maxSpins: 32, rushLabel: "SWORD RUSH", rushEntry: 0.70, rushContinue: 0.60, firstPayoutIn: 300, firstPayoutOut: 300, rushPayouts: [[300, 0.30], [1500, 0.70]], upperLabel: "LIGHTNING RUSH", upperDirectChance: 0, upperUpgradeChance: 0.40, upperContinue: 0.90 },
+    articleSections: [
+      { heading: "70%でSWORD RUSHへ", paragraphs: ["通常時は約1/199.9の大当りを目指し、初当りの70%でSWORD RUSHへ進みます。", "シミュレーターは初当り後に突入抽選を行い、RUSH中の1500個大当りから上位を目指します。"] },
+      { heading: "LIGHTNING RUSHは約90%継続", paragraphs: ["LAST ATTACK CHANCE成功で上位のLIGHTNING RUSHへ。継続率は約90%、右打ち中大当りの70%が1500個です。", "細かなC時短や保留の抽選順は代表的な継続抽選へ簡易化します。"] },
+      { heading: "固定レートと収支の条件", bullets: ["18.0回/1,000円・250玉貸し・28玉交換で固定", "平均初当り投資目安は約11,100円", "結果は自動でマイ記録へ保存"] }
+    ],
+    sources: [["KYORAKU 公式スペック", "https://www.kyoraku.co.jp/product_site/2024/sao_lt/view/spec/"], ["KYORAKU 導入案内", "https://www.kyoraku.co.jp/news/detail/798"]]
+  },
+  "hokuto10-pachinko": {
+    order: 0.1196, type: "pachinko", theme: "flame", year: "2024年8月", maker: "Sammy", updated: "2026-10-31",
+    name: "e北斗の拳10", shortName: "e北斗の拳10",
+    catchcopy: "約80%のBATTLE MODEから、約89%のHYPERへ。",
+    intro: "大当り約1/348.6、BATTLE MODE突入・継続とも約80%、上位HYPER継続約89%のバトルスペックを簡易体験できます。",
+    points: ["大当り約1/348.6", "BATTLE MODE突入・継続約80%", "HYPER継続約89%"],
+    specs: [["大当り", "約1/348.6"], ["BATTLE MODE突入", "約80%"], ["下位継続", "約80%"], ["HYPER継続", "約89%"], ["右打ち", "300〜1500個"], ["スタート", "通常ヘソ"]],
+    sim: { kind: "pachinko", hitRate: 348.6, hitLabel: "図柄揃い", startType: "通常ヘソ", spinsPer1k: 17.0, minSpins: 10, maxSpins: 30, rushLabel: "BATTLE MODE", rushEntry: 0.80, rushContinue: 0.80, firstPayoutIn: 300, firstPayoutOut: 300, rushPayouts: [[300, 0.15], [450, 0.15], [1500, 0.70]], upperLabel: "HYPER BATTLE MODE", upperDirectChance: 0.01, upperUpgradeChance: 0.05, upperContinue: 0.89 },
+    articleSections: [
+      { heading: "突入・継続とも約80%", paragraphs: ["図柄揃いは約1/348.6。初当りの約80%でBATTLE MODEへ進み、下位状態も約80%で継続します。", "転落抽選は1回ごとの継続判定へまとめています。"] },
+      { heading: "無想転生チャンスからHYPERへ", paragraphs: ["右打ち中大当りの一部で無想転生チャンスへ進み、成功すると継続約89%のHYPER BATTLE MODEへ昇格します。", "シミュレーターでは代表的な昇格抽選として簡易化します。"] },
+      { heading: "固定レートと収支の条件", bullets: ["17.0回/1,000円・250玉貸し・28玉交換で固定", "平均図柄揃い投資目安は約20,500円", "結果は自動でマイ記録へ保存"] }
+    ],
+    sources: [["Sammy 公式適合案内", "https://www.sammy.co.jp/japanese/news/detail/?id=123"], ["P-WORLD 基本スペック", "https://opt.p-world.co.jp/machine/database/10054"]]
+  },
+  "kaguya-sama-slot": {
+    order: 0.1198, type: "slot", theme: "magenta", year: "2024年9月", maker: "SANKYO", updated: "2026-10-31",
+    name: "Lパチスロ かぐや様は告らせたい", shortName: "スマスロ かぐや様",
+    catchcopy: "告らせたいチャレンジを突破し、BONUSループへ。",
+    intro: "設定別BONUS初当りを使い、告らせたいチャレンジ、1G連、チカブレイク、EXTRA BONUSまでを簡易体験できます。",
+    points: ["BONUS設定1約1/362〜設定6約1/335", "CZ成功期待度約58%", "BONUSループ最大約80%"],
+    specs: [["BONUS（設定1）", "約1/362"], ["BONUS（設定6）", "約1/335"], ["CZ期待度", "約58%"], ["BONUS純増", "約9.0枚/G"], ["ベース", "約31G/50枚"], ["ループ率", "最大約80%"]],
+    sim: { kind: "slot", triggerLabel: "告らせたいチャレンジ", triggerRate: 210, triggerSuccess: 0.58, mainLabel: "KAGUYA BONUS", mainRate: 362, base50: 31.0, coinUnit: 4.2, normalMin: 180, normalMax: 1000, specialLabel: "チカブレイク", specialChance: 0.35, specialMin: 250, specialMax: 1200, upperChallenge: "奇跡的相性MODE", upperChance: 0.20, upperSuccess: 0.55, upperLabel: "EXTRA BONUS", upperContinue: 0.80, upperPayout: 700, settingRates: { 1: { trigger: 210, main: 362, payout: 0.977 }, 2: { trigger: 208, main: 360, payout: 0.988 }, 3: { trigger: 205, main: 357, payout: 1.012 }, 4: { trigger: 200, main: 349, payout: 1.058 }, 5: { trigger: 196, main: 343, payout: 1.108 }, 6: { trigger: 192, main: 335, payout: 1.149 } } },
+    articleSections: [
+      { heading: "設定別BONUS初当りを反映", paragraphs: ["BONUS初当りは設定1約1/362から設定6約1/335。START時に設定1〜6を均等抽選し、結果とランキングに設定を表示します。", "CZ確率の詳細は公開値が限られるため、代表値で簡易化します。"] },
+      { heading: "1G連と引き戻しでループ", paragraphs: ["CZ告らせたいチャレンジの成功期待度は約58%。BONUSは純増約9.0枚/Gで、1G連と引き戻しを合わせたループ率は最大約80%です。", "チカブレイクとEXTRA BONUSは特化・上位演出としてまとめます。"] },
+      { heading: "固定レートと収支の条件", bullets: ["約31G/50枚・1,000円46枚貸し・5.2枚交換で固定", "コイン単価は設定1参考値約4.2円", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["SANKYO 公式機種情報", "https://www.sankyo-fever.jp/products/machine_list/sri/"], ["SANKYO オンライン博物館", "https://www.sankyo-fever.jp/collection/965/"]]
+  },
+  "shin-eva-slot": {
+    order: 0.11982, type: "slot", theme: "ice", year: "2025年1月", maker: "ビスティ", updated: "2026-10-31",
+    name: "Lパチスロ シン・エヴァンゲリオン", shortName: "スマスロ シンエヴァ",
+    catchcopy: "作戦STを突破し、オップファータイプ殲滅作戦へ。",
+    intro: "設定別初当りを使い、疑似ボーナス、作戦ST、三機殲滅、上位ATまでを簡易体験できます。",
+    points: ["初当り設定1約1/291.1〜設定6約1/212.5", "STと疑似BONUSのループ", "上位CZから上位ATへ"],
+    specs: [["初当り（設定1）", "約1/291.1"], ["初当り（設定6）", "約1/212.5"], ["タイプ", "ST＋疑似BONUS"], ["上位CZ", "マリ獣化チャレンジ"], ["上位AT", "オップファータイプ殲滅作戦"], ["設定", "1〜6"]],
+    sim: { kind: "slot", triggerLabel: "作戦ST", triggerRate: 291.1, triggerSuccess: 0.55, mainLabel: "シン・エヴァBONUS", mainRate: 291.1, base50: 32.0, coinUnit: 3.3, normalMin: 200, normalMax: 1000, specialLabel: "三機殲滅", specialChance: 0.34, specialMin: 200, specialMax: 950, upperChallenge: "マリ獣化チャレンジ", upperChance: 0.18, upperSuccess: 0.55, upperLabel: "オップファータイプ殲滅作戦", upperContinue: 0.78, upperPayout: 620, settingRates: { 1: { trigger: 291.1, main: 291.1, payout: 0.977 }, 2: { trigger: 283.5, main: 283.5, payout: 0.988 }, 3: { trigger: 264.5, main: 264.5, payout: 1.012 }, 4: { trigger: 236.6, main: 236.6, payout: 1.057 }, 5: { trigger: 224.8, main: 224.8, payout: 1.103 }, 6: { trigger: 212.5, main: 212.5, payout: 1.149 } } },
+    articleSections: [
+      { heading: "初当りは設定1約1/291.1から", paragraphs: ["初当りは設定1約1/291.1から設定6約1/212.5。開始時に設定1〜6を均等抽選し、選ばれた初当り確率を使用します。", "設定は最終結果と機種別ランキングへ表示します。"] },
+      { heading: "作戦STと上位AT", paragraphs: ["通常時はボーナスやSTを目指し、作戦中の進行ストックでBONUSループを伸ばします。", "上位CZマリ獣化チャレンジと上位ATはサイト共通の簡易抽選で表現します。"] },
+      { heading: "固定レートと収支の条件", bullets: ["約32G/50枚・1,000円46枚貸し・5.2枚交換で固定", "コイン単価は設定1参考値約3.3円", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["SANKYO オンライン博物館", "https://www.sankyo-fever.jp/collection/973/?r=portal_info"]]
+  },
+  "dumbbell-slot": {
+    order: 0.11984, type: "slot", theme: "gold", year: "2024年12月", maker: "SANKYO", updated: "2026-10-31",
+    name: "Lパチスロ ダンベル何キロ持てる？", shortName: "スマスロ ダンベル",
+    catchcopy: "MUSCLE ZONEを突破し、ゴールデンタイムへ。",
+    intro: "設定別CZ・AT確率を使い、MUSCLE ZONE、ダンベルBONUS、ゴールデンチャレンジ、上位ループまでを簡易体験できます。",
+    points: ["CZ設定1約1/247〜設定6約1/239", "AT設定1約1/591〜設定6約1/504", "AT純増約8.5枚/G"],
+    specs: [["CZ（設定1）", "約1/247"], ["CZ（設定6）", "約1/239"], ["AT（設定1）", "約1/591"], ["AT（設定6）", "約1/504"], ["CZ期待度", "約40%"], ["AT純増", "約8.5枚/G"]],
+    sim: { kind: "slot", triggerLabel: "MUSCLE ZONE", triggerRate: 247, triggerSuccess: 0.40, mainLabel: "ダンベルBONUS", mainRate: 591, base50: 31.5, coinUnit: 3.6, normalMin: 250, normalMax: 1200, specialLabel: "ゴールデンタイム", specialChance: 0.34, specialMin: 300, specialMax: 1200, upperChallenge: "ゴールデンチャレンジ", upperChance: 0.18, upperSuccess: 0.56, upperLabel: "金肉BONUS", upperContinue: 0.56, upperPayout: 650, settingRates: { 1: { trigger: 247, main: 591, payout: 0.977 }, 2: { trigger: 245, main: 576, payout: 0.988 }, 3: { trigger: 244, main: 546, payout: 1.012 }, 4: { trigger: 242, main: 532, payout: 1.057 }, 5: { trigger: 240, main: 512, payout: 1.105 }, 6: { trigger: 239, main: 504, payout: 1.149 } } },
+    articleSections: [
+      { heading: "CZ・ATを設定別に抽選", paragraphs: ["CZは設定1約1/247から設定6約1/239、ATは設定1約1/591から設定6約1/504です。", "START時に設定1〜6を均等抽選し、今回の設定を最終結果で発表します。"] },
+      { heading: "ゴールデンチャレンジから上位へ", paragraphs: ["MUSCLE ZONEは成功期待度約40%。ATは純増約8.5枚/Gです。", "ゴールデンチャレンジ成功期待度約56%と平均Vストック約4個の流れを、特化ゾーンと上位抽選へまとめます。"] },
+      { heading: "固定レートと収支の条件", bullets: ["約31.5G/50枚・1,000円46枚貸し・5.2枚交換で固定", "コイン単価は設定1参考値約3.6円", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["SANKYO 公式スペック", "https://www.sankyo-fever.jp/products/machine_list/slq/spec/"], ["SANKYO オンライン博物館", "https://www.sankyo-fever.jp/collection/971/"]]
+  },
+  "symphogear-seigi-slot": {
+    order: 0.11986, type: "slot", theme: "crimson", year: "2024年7月", maker: "SANKYO", updated: "2026-10-31",
+    name: "Lパチスロ 戦姫絶唱シンフォギア 正義の歌", shortName: "スマスロ シンフォギア",
+    catchcopy: "AXZ BATTLEを突破し、絶唱から黄金ATへ。",
+    intro: "設定別AT確率を使い、AXZ BATTLE、AXZラッシュ、ギアVアタック、黄金ATまでを簡易体験できます。",
+    points: ["AT設定1約1/295〜設定6約1/199", "AXZ BATTLE期待度約65%", "上位AT純増約5.0枚/G"],
+    specs: [["AT（設定1）", "約1/295"], ["AT（設定6）", "約1/199"], ["CZ期待度", "約65%"], ["通常AT純増", "約2.8枚/G"], ["上位AT純増", "約5.0枚/G"], ["絶唱BATTLE", "期待度約60%"]],
+    sim: { kind: "slot", triggerLabel: "AXZ BATTLE", triggerRate: 210, triggerSuccess: 0.65, mainLabel: "AXZラッシュ", mainRate: 295, base50: 32.0, coinUnit: 3.5, normalMin: 220, normalMax: 1100, specialLabel: "ギアVアタック", specialChance: 0.36, specialMin: 200, specialMax: 1050, upperChallenge: "絶唱BATTLE", upperChance: 0.20, upperSuccess: 0.60, upperLabel: "AXZラッシュ 黄金", upperContinue: 0.72, upperPayout: 600, settingPool: [1, 2, 4, 5, 6], settingRates: { 1: { trigger: 210, main: 295, payout: 0.978 }, 2: { trigger: 205, main: 285, payout: 0.988 }, 4: { trigger: 185, main: 250, payout: 1.054 }, 5: { trigger: 170, main: 227, payout: 1.105 }, 6: { trigger: 155, main: 199, payout: 1.149 } } },
+    articleSections: [
+      { heading: "設定別AT確率を反映", paragraphs: ["ATは設定1約1/295から設定6約1/199。実機と同じく設定3を除く1・2・4・5・6からランダム抽選します。", "選ばれた設定は結果と機種別ランキングへ表示します。"] },
+      { heading: "AXZラッシュから黄金へ", paragraphs: ["AXZ BATTLEの成功期待度は約65%。通常ATは純増約2.8枚/Gで、ギアVアタックを重ねて上位を目指します。", "絶唱BATTLE成功期待度約60%と上位AT純増約5.0枚/Gを代表的な上位抽選へまとめます。"] },
+      { heading: "固定レートと収支の条件", bullets: ["約32G/50枚・1,000円46枚貸し・5.2枚交換で固定", "コイン単価は設定1参考値約3.5円", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["SANKYO 公式スペック", "https://www.sankyo-fever.jp/products/machine_list/sqe/spec/"], ["SANKYO オンライン博物館", "https://www.sankyo-fever.jp/collection/962/"]]
+  },
   "garo-yami-slot": {
     order: 0.12, type: "slot", theme: "gold", year: "2026年11月", maker: "サンセイR&D", updated: "2026-10-31",
     name: "L牙狼 闇を照らす者", shortName: "スマスロ 牙狼",

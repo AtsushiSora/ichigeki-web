@@ -1,4 +1,4 @@
-const CACHE_NAME = "ichigeki-web-v179";
+const CACHE_NAME = "ichigeki-web-v180";
 const CORE_ASSETS = [
   "index.html",
   "account.html",
@@ -30,6 +30,14 @@ const CORE_ASSETS = [
   "fever-yokai-watch.html",
   "juoh-shishi-no-ichigeki.html",
   "no-game-no-life-119.html",
+  "karakuri2-maou.html",
+  "shin-eva-type-rei.html",
+  "sao-senko-no-kiseki.html",
+  "hokuto10-pachinko.html",
+  "kaguya-sama-slot.html",
+  "shin-eva-slot.html",
+  "dumbbell-slot.html",
+  "symphogear-seigi-slot.html",
   "garo-yami-slot.html",
   "ragnador-slot.html",
   "seiya-ougon-slot.html",
@@ -159,6 +167,7 @@ const CORE_ASSETS = [
   "machine-library.js?v=119",
   "machine-library.js?v=121",
   "machine-library.js?v=123",
+  "machine-library.js?v=124",
   "machine-hub.js",
   "machine-hub.js?v=1",
   "machine-hub.js?v=2",
@@ -194,6 +203,7 @@ const CORE_ASSETS = [
   "machine-detail.js?v=135",
   "machine-detail.js?v=136",
   "machine-detail.js?v=139",
+  "machine-detail.js?v=140",
   "machine-detail.js?v=137",
   "achievements.js",
   "achievements.js?v=1",
