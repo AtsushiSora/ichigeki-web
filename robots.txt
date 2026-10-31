@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /project/ichigeki-web/
 
 Sitemap: https://ichigeki-pachislot.com/sitemap.xml

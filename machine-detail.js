@@ -188,7 +188,7 @@
     </section>
 
     <section class="machine-ranking" id="machineRanking" aria-labelledby="machineRankingTitle">
-      <div class="machine-ranking-head"><div><span class="machine-section-label">MACHINE RANKING</span><h2 id="machineRankingTitle">${machine.shortName} ランキング</h2><p>差${machine.sim.kind === "pachinko" ? "玉" : "枚"}が多い順。同点の場合は投資が少ない記録を上位にします。</p><p class="machine-ranking-rules">条件：${machine.sim.kind === "pachinko" ? "1,000円250玉貸し・28玉交換・機種別回転率" : `${slotSettingLabel}均等ランダム・1,000円46枚貸し・5.2枚交換・機種別ベース`}。ランキングにも抽選された設定を表示します。</p></div><span class="machine-ranking-mode" id="machineRankingMode">この端末の記録</span></div>
+      <div class="machine-ranking-head"><div><span class="machine-section-label">MACHINE RANKING</span><h2 id="machineRankingTitle">${machine.shortName} ランキング</h2><p>差${machine.sim.kind === "pachinko" ? "玉" : "枚"}が多い順。同点の場合は投資が少ない記録を上位にします。</p><p class="machine-ranking-rules">条件：${machine.sim.kind === "pachinko" ? "1,000円250玉貸し・28玉交換・機種別回転率。" : `${slotSettingLabel}均等ランダム・1,000円46枚貸し・5.2枚交換・機種別ベース。ランキングにも抽選された設定を表示します。`}</p></div><span class="machine-ranking-mode" id="machineRankingMode">この端末の記録</span></div>
       ${machine.type === "slot" ? `<div class="machine-setting-legend" aria-label="設定バッジの色"><span>設定色</span>${slotSettingPool.map(setting => `<b class="machine-setting-badge is-setting-${setting}">設定${setting}</b>`).join("")}</div>` : ""}
       <div class="machine-ranking-self" id="machineRankingSelf"><span>MY BEST</span><strong>まだ記録がありません</strong><small>シミュレーション後にランキングへ登録できます。</small></div>
       <ol class="machine-ranking-list" id="machineRankingList"><li class="is-empty">まだランキング記録がありません。</li></ol>

@@ -2321,6 +2321,18 @@ function initializeDailyRecommendation() {
   if (!featured || !Object.keys(machines).length) return;
 
   const featuredSlugs = [
+    "sao-phantom-bullet",
+    "toaru3-pachinko",
+    "kamen-rider-black-light",
+    "garo-yami-slot",
+    "ragnador-slot",
+    "seiya-ougon-slot",
+    "ggo-slot",
+    "godzilla-eva2-slot",
+    "mahoako-slot",
+    "uminchu-slot",
+    "tenten-slot",
+    "eva319-red",
     "valvrave2",
     "smart-hokuto",
     "tokyo-ghoul-slot",

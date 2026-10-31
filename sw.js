@@ -1,4 +1,4 @@
-const CACHE_NAME = "ichigeki-web-v162";
+const CACHE_NAME = "ichigeki-web-v175";
 const CORE_ASSETS = [
   "index.html",
   "account.html",
@@ -22,6 +22,18 @@ const CORE_ASSETS = [
   "ranking.html",
   "slot-zone-demo.html",
   "gundam-unicorn.html",
+  "eva319-red.html",
+  "sao-phantom-bullet.html",
+  "toaru3-pachinko.html",
+  "kamen-rider-black-light.html",
+  "garo-yami-slot.html",
+  "ragnador-slot.html",
+  "seiya-ougon-slot.html",
+  "ggo-slot.html",
+  "godzilla-eva2-slot.html",
+  "mahoako-slot.html",
+  "uminchu-slot.html",
+  "tenten-slot.html",
   "sengoku-otome5.html",
   "million-god-kiseki.html",
   "lycoris-recoil-pachinko.html",

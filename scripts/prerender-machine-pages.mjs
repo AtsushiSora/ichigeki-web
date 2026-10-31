@@ -17,6 +17,29 @@ const STATIC_START = "<!-- MACHINE_STATIC_START -->";
 const STATIC_END = "<!-- MACHINE_STATIC_END -->";
 const SCHEMA_START = "<!-- MACHINE_SCHEMA_START -->";
 const SCHEMA_END = "<!-- MACHINE_SCHEMA_END -->";
+const INDEXABLE_MACHINE_SLUGS = new Set([
+  "sao-phantom-bullet",
+  "toaru3-pachinko",
+  "kamen-rider-black-light",
+  "garo-yami-slot",
+  "ragnador-slot",
+  "seiya-ougon-slot",
+  "ggo-slot",
+  "godzilla-eva2-slot",
+  "mahoako-slot",
+  "uminchu-slot",
+  "tenten-slot",
+  "eva319-red",
+  "rezero-onigakari",
+  "eva15",
+  "tokyo-ghoul-e",
+  "smart-hokuto",
+  "tokyo-ghoul-slot",
+  "valvrave2",
+  "monkey-turn-v",
+  "monster-hunter-sunbreak",
+  "neo-im-juggler"
+]);
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -179,6 +202,11 @@ function updateMachineSitemap() {
     const url = `https://ichigeki-pachislot.com/${slug}.html`;
     const entry = `  <url><loc>${url}</loc><lastmod>${editorialDate(machine)}</lastmod></url>`;
     const pattern = new RegExp(`  <url><loc>${escapeRegExp(url)}</loc>(?:<lastmod>[^<]+</lastmod>)?</url>`);
+    const removalPattern = new RegExp(`\\n?${pattern.source}`);
+    if (!INDEXABLE_MACHINE_SLUGS.has(slug)) {
+      sitemap = sitemap.replace(removalPattern, "");
+      continue;
+    }
     if (pattern.test(sitemap)) sitemap = sitemap.replace(pattern, entry);
     else sitemap = sitemap.replace("</urlset>", `${entry}\n</urlset>`);
   }
@@ -207,10 +235,15 @@ for (const [slug, machine] of Object.entries(machines)) {
   }
 
   html = html.replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${escapeHtml(machine.intro)}">`);
-  html = html.replace(/style\.css\?v=\d+/, "style.css?v=134");
-  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=133");
+  if (INDEXABLE_MACHINE_SLUGS.has(slug)) {
+    html = html.replace(/<meta name="robots" content="noindex,follow">/, "");
+  } else if (!html.includes('name="robots"')) {
+    html = html.replace('<meta charset="utf-8">', '<meta charset="utf-8"><meta name="robots" content="noindex,follow">');
+  }
+  html = html.replace(/style\.css\?v=\d+/, "style.css?v=146");
+  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=137");
   html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=121");
-  html = html.replace(/app-shell\.js\?v=\d+/, "app-shell.js?v=4");
+  html = html.replace(/app-shell\.js\?v=\d+/, "app-shell.js?v=7");
   html = html.replace(/adsense-loader\.js\?v=\d+/, "adsense-loader.js?v=2");
   if (!html.includes("site-insights.js")) html = html.replace(/(<script src="machine-detail\.js\?v=129"><\/script>)/, '<script src="site-insights.js?v=1"></script>\n  $1');
   if (!html.includes("adsense-loader.js")) html = html.replace("</body>", '  <script src="adsense-loader.js?v=2"></script>\n</body>');

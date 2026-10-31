@@ -1,4 +1,202 @@
 window.ICHIGEKI_MACHINES = {
+  "sao-phantom-bullet": {
+    order: 0.09, type: "pachinko", theme: "aqua", year: "2026年12月", maker: "KYORAKU", updated: "2026-10-31",
+    name: "e ソードアート・オンライン ファントム・バレット", shortName: "e SAO ファントム・バレット",
+    catchcopy: "FAIR STARTからBoBを勝ち抜き、FINALSへ。",
+    intro: "2026年12月21日導入予定の設定付きスマパチ。実機の設定1を基準に、BONUS約1/229.9、BoB突入約50%、BoB FINALS継続約80%の流れを固定条件で簡易体験できます。",
+    points: ["実機は設定1・2・4・5・6を搭載", "設定1のBONUSは約1/229.9・LT突入約50%", "BoB継続約70%・BoB FINALS継続約80%"],
+    specs: [["BONUS（設定1）", "約1/229.9"], ["BONUS（設定6）", "約1/189.8"], ["LT突入（設定1）", "約50.0%"], ["BoB継続", "約70%"], ["FINALS継続", "約80%"], ["スタート", "FAIR START"]],
+    sim: { kind: "pachinko", hitRate: 229.9, hitLabel: "BONUS", startType: "FAIR START", spinsPer1k: 19.2, minSpins: 10, maxSpins: 35, rushLabel: "BoB予選", rushEntry: 0.50, rushContinue: 0.70, firstPayoutIn: 300, firstPayoutOut: 300, rushPayouts: [[1500, 0.60], [300, 0.40]], upperLabel: "BoB FINALS", upperDirectChance: 0.01, upperUpgradeChance: 0.30, upperContinue: 0.80 },
+    articleSections: [
+      { heading: "実機は設定付き、シミュレーターは設定1固定", paragraphs: ["実機は設定1・2・4・5・6を搭載し、BONUS合算は約1/229.9から約1/189.8、LT突入は約50.0%から約57.5%です。", "パチンコ機種同士を同じ条件で比べやすくするため、サイトでは設定1の約1/229.9・LT突入約50.0%に固定します。スロットのようなランダム設定抽選は行いません。"] },
+      { heading: "BoB予選からFINALSへ", paragraphs: ["BoB予選は3回のワンショット型抽選で、最初の2回は約1/2.5、最後の1回は約1/6.0。トータル継続率は約70%です。", "上位LTのBoB FINALSは最初の2回が約1/1.9、最後の1回が約1/6.0で、トータル継続率は約80%です。シミュレーターは各区間を70%・80%の継続抽選へまとめます。"] },
+      { heading: "出玉とファントムモード", paragraphs: ["大当り出玉は300個・450個・1500個。BoB中は1500個比率60%で、その一部からBoB FINALSへの昇格を目指します。", "ファントムモード中のBONUSからFINALSへ直行する流れは、初当り時の直行抽選へ簡易化します。450個振り分けや内部モードの全移行は個別再現しません。"] },
+      { heading: "固定レートと収支の条件", bullets: ["19.2回/1,000円・1,000円250玉貸し・28玉交換で固定", "設定1基準の平均初当り投資目安は約12,000円", "結果は自動でマイ記録へ保存", "機種別ランキングは同じ固定条件で集計"] }
+    ],
+    sources: [["KYORAKU 公式発表", "https://www.kyoraku.co.jp/news/detail/900"], ["遊技通信web 機種発表", "https://www.yugitsushin.jp/news/%E6%80%A7%E8%83%BD%E7%89%B9%E5%8C%96%E3%81%AE%E8%B6%85%E7%81%AB%E5%8A%9B%E3%83%A9%E3%82%A4%E3%83%88%E3%83%9F%E3%83%89%E3%83%ABx%E3%83%95%E3%82%A7%E3%82%A2%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%88/"], ["Re.design スペック情報", "https://aaa.redesign777.tokyo/Spec/PachinkoView?flag=True&id=P2026092913480401"], ["パチヨミ！ ボーダー情報", "https://pachiyomi.com/pachinko/e-sao-phantom-bullet"]]
+  },
+  "toaru3-pachinko": {
+    order: 0.1, type: "pachinko", theme: "violet", year: "2026年11月", maker: "オレンジ", updated: "2026-10-31",
+    name: "eとある魔術の禁書目録3", shortName: "eとある3",
+    catchcopy: "約1/348.6から、3段階STと最大出玉ループへ。",
+    intro: "2026年11月2日導入予定のスマパチLT機。初当り約1/348.6、ST突入約50%、3段階STのTOTAL継続約75%を固定条件で簡易体験できます。",
+    points: ["通常時の図柄揃い約1/348.6", "ST突入約50%・TOTAL継続約75%", "STは前半30回＋後半100回＋最終1回"],
+    specs: [["図柄揃い", "約1/348.6"], ["ST突入", "約50%"], ["ST回数", "30＋100＋1回"], ["TOTAL継続", "約75%"], ["大当り出玉", "1500〜7500個以上"], ["スタート", "通常ヘソ"]],
+    sim: { kind: "pachinko", hitRate: 348.6, hitLabel: "図柄揃い", startType: "通常ヘソ", spinsPer1k: 17.0, minSpins: 10, maxSpins: 30, rushLabel: "とある魔術の最強激突", rushEntry: 0.50, rushContinue: 0.75, firstPayoutIn: 1500, firstPayoutOut: 1500, rushPayouts: [[1500, 0.40], [3000, 0.40], [4500, 0.12], [6000, 0.06], [7500, 0.02]] },
+    articleSections: [
+      { heading: "3段階STをひとつの流れで体験", paragraphs: ["STは前半30回のLIMIT BREAK CHANCE、後半100回のとある魔術の最強激突、最終1回のLAST CHANCEで構成されます。", "サイトではTOTAL継続約75%を使い、3段階の見せ方を一連の演出へまとめます。"] },
+      { heading: "出玉と簡易化の範囲", paragraphs: ["大当り出玉は1500個から7500個以上。前半・後半・最終回転で振り分けが異なります。", "簡易シミュレーターでは代表的な出玉分布へまとめ、実機の全振り分けを完全再現するものではありません。"] },
+      { heading: "固定レートと計算条件", bullets: ["250玉貸し・28玉交換で固定", "通常回転率は17.0回/1,000円で固定", "平均初当り投資目安は約20,500円", "結果は自動でマイ記録へ保存"] }
+    ],
+    sources: [["藤商事 公式機種情報", "https://www.fujimarukun.co.jp/products/e_toaru3/"], ["パチマガスロマガFREE 機種情報", "https://pachimaga.com/free/mach/maker-p/orange/e_toaru3.php"], ["ハズセ 機種情報", "https://hazuse.com/machine/pachinko/PX0388/"]]
+  },
+  "kamen-rider-black-light": {
+    order: 0.11, type: "pachinko", theme: "emerald", year: "2026年11月", maker: "KYORAKU", updated: "2026-10-31",
+    name: "e 仮面ライダーBLACK デカヘソ Light Version", shortName: "ライダーBLACK Light",
+    catchcopy: "デカヘソ×約1/129.9から、宿命BATTLEへ。",
+    intro: "2026年11月2日導入予定のデカヘソ搭載スマパチ。約1/129.9の初当り、JUSTICE RUSH、1G連特化ゾーン『宿命BATTLE』までを簡易体験できます。",
+    points: ["通常時約1/129.9・デカヘソ搭載", "JUSTICE RUSH突入60%・継続約72%", "RUSH中大当りの25%で宿命BATTLE"],
+    specs: [["通常時", "約1/129.9"], ["RUSH中", "約1/96.0"], ["RUSH突入", "60%"], ["RUSH継続", "約72%"], ["宿命BATTLE", "勝率約65%"], ["スタート", "デカヘソ"]],
+    sim: { kind: "pachinko", hitRate: 129.9, hitLabel: "初当り", startType: "デカヘソ", spinsPer1k: 31.0, minSpins: 20, maxSpins: 45, rushLabel: "JUSTICE RUSH", rushEntry: 0.60, rushContinue: 0.72, firstPayoutIn: 240, firstPayoutOut: 240, rushPayouts: [[400, 1]], upperLabel: "宿命BATTLE", upperDirectChance: 0, upperUpgradeChance: 0.25, upperContinue: 0.65 },
+    articleSections: [
+      { heading: "デカヘソの回転率を投資へ反映", paragraphs: ["通常時は約1/129.9。デカヘソとダイレクトスタートを搭載したライトスペックです。", "シミュレーターは28玉交換の参考ボーダーをもとに31.0回/1,000円で固定し、通常ヘソ機より平均投資が軽くなるよう計算します。実店舗の回転率を保証する値ではありません。"] },
+      { heading: "JUSTICE RUSHは120回転", paragraphs: ["初当りの60%でJUSTICE RUSHへ突入します。RUSH中は約1/96.0を120回転で抽選し、継続率は約72%です。", "初当り出玉は約240個、RUSH中は約400個の払い出しを使用します。"] },
+      { heading: "宿命BATTLEとEXTREME", paragraphs: ["RUSH中大当りの25%で1G連特化ゾーン『宿命BATTLE』へ進みます。初回は勝利濃厚、2連目以降の勝率は約65%です。", "EXTREME滞在時は勝率約90%ですが、昇格率が公表されていないため独立抽選にはせず、記事内の参考情報として扱います。"] },
+      { heading: "固定レートと収支の条件", bullets: ["31.0回/1,000円・250玉貸し・28玉交換で固定", "平均初当り投資目安は約4,200円", "デカヘソ表記を結果とランキング条件に表示", "結果は自動でマイ記録へ保存"] }
+    ],
+    sources: [["KYORAKU 公式発表", "https://www.kyoraku.co.jp/news/detail/895"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/machine/4847/1/1"], ["パチンコスペック解析 ボーダー", "https://pachinko-spec.info/spec/173543/"]]
+  },
+  "garo-yami-slot": {
+    order: 0.12, type: "slot", theme: "gold", year: "2026年11月", maker: "サンセイR&D", updated: "2026-10-31",
+    name: "L牙狼 闇を照らす者", shortName: "スマスロ 牙狼",
+    catchcopy: "金色になれ！を突破し、究極魔戒RUSHへ。",
+    intro: "2026年11月2日導入予定のスマスロ。設定別CZ・BONUS確率を使い、疑似ボーナス、SUPER GARO BONUS、金色になれ！、究極魔戒RUSHまでを簡易体験できます。",
+    points: ["CZは設定1約1/156.6〜設定6約1/141.1", "BONUSは設定1約1/291.1〜設定6約1/256.5", "純増約9.1枚/G・究極魔戒RUSH継続約82.6%"],
+    specs: [["CZ（設定1）", "約1/156.6"], ["CZ（設定6）", "約1/141.1"], ["BONUS（設定1）", "約1/291.1"], ["BONUS（設定6）", "約1/256.5"], ["ベース", "約33G/50枚"], ["究極魔戒RUSH", "継続約82.6%"]],
+    sim: { kind: "slot", triggerLabel: "牙狼モード", triggerRate: 156.6, triggerSuccess: 0.51, mainLabel: "GARO BONUS", mainRate: 291.1, base50: 33.0, coinUnit: 3.6, normalMin: 180, normalMax: 950, specialLabel: "SUPER GARO BONUS", specialChance: 0.32, specialMin: 800, specialMax: 1300, upperChallenge: "金色になれ！", upperChance: 0.22, upperSuccess: 0.50, upperLabel: "究極魔戒RUSH", upperContinue: 0.826, upperPayout: 740, settingRates: { 1: { trigger: 156.6, main: 291.1, payout: 0.975 }, 2: { trigger: 154.6, main: 283.7, payout: 0.988 }, 3: { trigger: 151.4, main: 276.1, payout: 1.012 }, 4: { trigger: 148.7, main: 265.8, payout: 1.046 }, 5: { trigger: 144.2, main: 259.4, payout: 1.105 }, 6: { trigger: 141.1, main: 256.5, payout: 1.149 } } },
+    articleSections: [
+      { heading: "設定別CZ・BONUS確率を反映", paragraphs: ["CZは設定1約1/156.6から設定6約1/141.1、BONUSは設定1約1/291.1から設定6約1/256.5です。", "START時に設定1〜6を均等抽選し、選ばれた設定のCZ・BONUS確率・出玉率を使用します。結果と機種別ランキングにも設定を表示します。"] },
+      { heading: "2種類のCZと疑似ボーナス", paragraphs: ["CZは牙狼モードと魔界の2種類。BONUSは20G、純増約9.1枚/Gで、BIG BONUS中はSUPER GARO BONUSを抽選します。", "サイトではCZを牙狼モードへまとめ、魔界やBIGの細かな振り分けは個別再現しません。"] },
+      { heading: "金色になれ！から究極魔戒RUSHへ", paragraphs: ["SUPER GARO BONUSは約1000枚獲得後、3戦突破を目指すCZ『金色になれ！』へ進みます。", "究極魔戒RUSHは平均約740枚のボーナスが約82.6%でループする最上位状態です。未公表の到達率はサイト共通の固定抽選で簡易化します。"] },
+      { heading: "固定レートと収支の条件", bullets: ["約33G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均BONUS投資目安は約9,600円", "コイン単価は設定1の参考値約3.6円として表示", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["サンセイR&D 公式製品情報", "https://www.sansei-rd.com/"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/vpage/2817/1"], ["天井・設定差まとめ", "https://tennabi.jp/garo-yami-wo-terasu-mono/"]]
+  },
+  "ragnador-slot": {
+    order: 0.14, type: "slot", theme: "violet", year: "2026年11月", maker: "ミズホ", updated: "2026-10-31",
+    name: "スマスロ ラグナドール", shortName: "スマスロ ラグナドール",
+    catchcopy: "爽怪Chainをつなぎ、真ラグナドールRUSHへ。",
+    intro: "2026年11月2日導入予定のスマスロ。設定別CZ・AT初当りを使い、ラグナドールバトル、チェインアタック、スペシャルジャッジ、上位ATまでを簡易体験できます。",
+    points: ["CZは設定1約1/172.8〜設定6約1/142.4", "ATは設定1約1/326.4〜設定6約1/258.3", "通常AT純増約2.5枚/G・上位AT約4.5枚/G"],
+    specs: [["CZ（設定1）", "約1/172.8"], ["CZ（設定6）", "約1/142.4"], ["AT（設定1）", "約1/326.4"], ["AT（設定6）", "約1/258.3"], ["ベース", "約31.0G/50枚"], ["スペシャルジャッジ", "成功期待度約70%"]],
+    sim: { kind: "slot", triggerLabel: "ラグナドールバトル", triggerRate: 172.8, triggerSuccess: 0.50, mainLabel: "ラグナドールRUSH", mainRate: 326.4, base50: 31.0, coinUnit: 3.6, normalMin: 250, normalMax: 1050, specialLabel: "チェインアタック", specialChance: 0.34, specialMin: 180, specialMax: 950, upperChallenge: "スペシャルジャッジ", upperChance: 0.20, upperSuccess: 0.70, upperLabel: "真ラグナドールRUSH", upperContinue: 0.75, upperPayout: 600, settingRates: { 1: { trigger: 172.8, main: 326.4, payout: 0.976 }, 2: { trigger: 167.2, main: 317.2, payout: 0.988 }, 3: { trigger: 161.8, main: 307.7, payout: 1.003 }, 4: { trigger: 145.0, main: 271.2, payout: 1.057 }, 5: { trigger: 143.0, main: 260.8, payout: 1.105 }, 6: { trigger: 142.4, main: 258.3, payout: 1.145 } } },
+    articleSections: [
+      { heading: "設定別CZ・AT初当りを反映", paragraphs: ["CZは設定1約1/172.8から設定6約1/142.4、AT初当りは設定1約1/326.4から設定6約1/258.3です。", "START時に設定1〜6を均等抽選し、選ばれた設定のCZ・AT初当り・出玉率を使用します。結果とランキングにも設定を表示します。"] },
+      { heading: "ラグナドールバトルからATへ", paragraphs: ["通常時は小役の連続やラグナ目からCZを目指します。CZ『ラグナドールバトル』の勝利期待度は約50%です。", "通常AT『ラグナドールRUSH』は40G＋α、純増約2.5枚/G。サイトではチェインやガチャ報酬を追加枚数抽選へまとめます。"] },
+      { heading: "スペシャルジャッジと上位AT", paragraphs: ["スペシャルジャッジは16G＋αで、白7またはBAR揃いによる成功期待度は約70%です。", "成功後は純増約4.5枚/Gの『真ラグナドールRUSH』へ。白7・BARの期待獲得枚数差は記事で紹介し、非公表の上位継続率は固定の簡易抽選で表現します。"] },
+      { heading: "固定レートと収支の条件", bullets: ["約31.0G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均AT投資目安は約11,400円", "コイン単価は設定1の参考値約3.6円として表示", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["ユニバーサル 公式製品情報", "https://www.universal-777.com/"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/vpage/2807/1"], ["パチマガスロマガFREE 機種情報", "https://pachimaga.com/free/mach/maker-s/mizuho/l_ragnador.php"]]
+  },
+  "seiya-ougon-slot": {
+    order: 0.15, type: "slot", theme: "gold", year: "2026年11月", maker: "サンスリー", updated: "2026-10-31",
+    name: "L聖闘士星矢 黄金十二宮", shortName: "スマスロ 聖闘士星矢",
+    catchcopy: "十二宮を突破し、SAGA BATTLEと千日戦争へ。",
+    intro: "2026年11月2日導入予定のスマスロ。設定別CZ・AT初当りを使い、Battle of ZODIACの継続バトルから上位AT『千日戦争』までを簡易体験できます。",
+    points: ["CZは設定1約1/214.4〜設定6約1/200.3", "ATは設定1約1/364.2〜設定6約1/310.5", "通常AT純増約4.0枚/G・千日戦争約6.6枚/G"],
+    specs: [["CZ（設定1）", "約1/214.4"], ["CZ（設定6）", "約1/200.3"], ["AT（設定1）", "約1/364.2"], ["AT（設定6）", "約1/310.5"], ["ベース", "約31.3G/50枚"], ["千日戦争", "継続期待度約88%"]],
+    sim: { kind: "slot", triggerLabel: "WHO ARE YOU？", triggerRate: 214.4, triggerSuccess: 0.50, mainLabel: "Battle of ZODIAC", mainRate: 364.2, base50: 31.3, coinUnit: 3.8, normalMin: 250, normalMax: 1100, specialLabel: "金牛激震", specialChance: 0.34, specialMin: 200, specialMax: 900, upperChallenge: "SAGA BATTLE", upperChance: 0.18, upperSuccess: 0.50, upperLabel: "千日戦争", upperContinue: 0.88, upperPayout: 660, settingRates: { 1: { trigger: 214.4, main: 364.2, payout: 0.975 }, 2: { trigger: 214.1, main: 356.1, payout: 0.985 }, 3: { trigger: 211.7, main: 345.6, payout: 1.005 }, 4: { trigger: 202.5, main: 322.3, payout: 1.052 }, 5: { trigger: 197.2, main: 313.7, payout: 1.100 }, 6: { trigger: 200.3, main: 310.5, payout: 1.149 } } },
+    articleSections: [
+      { heading: "CZ・AT初当りを設定別に反映", paragraphs: ["CZ合算は設定1約1/214.4から設定6約1/200.3、AT初当りは設定1約1/364.2から設定6約1/310.5です。設定6のCZが設定5よりわずかに重い点も公開値どおり反映します。", "START時に設定1〜6を均等抽選し、結果とランキングに今回の設定を表示します。"] },
+      { heading: "2種類のCZを代表演出へまとめる", paragraphs: ["実機には『WHO ARE YOU？』と『影ノ襲来』の2種類のCZがあります。小宇宙ポイントや周期からCZを目指し、突破できればATへ進みます。", "サイトでは2種類をWHO ARE YOU？へまとめ、CZ合算確率を使います。周期天井や各CZの細かな振り分けは個別再現しません。"] },
+      { heading: "Battle of ZODIACと継続バトル", paragraphs: ["通常ATは純増約4.0枚/G、1セット30G＋α。ATパート後の継続バトルを勝ち進み、十二宮突破を目指します。バトル勝率の目安は約76%です。", "金牛宮のアルデバラン撃破時に期待できる金牛激震などは、追加枚数抽選へまとめます。"] },
+      { heading: "SAGA BATTLEから千日戦争へ", paragraphs: ["十二宮突破後のSAGA BATTLEに勝利すると、上位AT『千日戦争』へ進みます。千日戦争は純増約6.6枚/G、継続期待度約88%です。", "上位への到達率はサイト共通の固定抽選で簡易化し、公開されている上位性能とは分けて扱います。"] },
+      { heading: "固定レートと収支の条件", bullets: ["約31.3G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均AT投資目安は約12,600円", "コイン単価は設定1の参考値約3.8円として表示", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["パチマガスロマガ 機種概要", "https://psmaga.com/e/pachi/pla/s_conq/santhree_slot/09/kh01.php"], ["一撃 2026年11月新台情報", "https://1geki.jp/newmachinecalender/202611/"], ["設定・天井まとめ", "https://tennabi.jp/seiya-ougon-junikyu/"]]
+  },
+  "ggo-slot": {
+    order: 0.2, type: "slot", theme: "magenta", year: "2026年11月", maker: "京楽／オッケー.", updated: "2026-10-31",
+    name: "Lソードアート・オンライン オルタナティブ ガンゲイル・オンライン", shortName: "スマスロ GGO",
+    catchcopy: "BONUSを重ね、SQUAD JAMと上位STへ。",
+    intro: "2026年11月2日導入予定のスマスロ。設定別の初当り・SQUAD JAM確率を使い、BONUS、ST、GGOストーム、上位ST『イカれたレン』までを簡易体験できます。",
+    points: ["初当りは設定1約1/192.0〜設定6約1/153.9", "SQUAD JAMは設定1約1/521.7〜設定6約1/392.6", "BONUS純増約3.4枚/G・上乗せBONUS約7.1枚/G"],
+    specs: [["初当り（設定1）", "約1/192.0"], ["初当り（設定6）", "約1/153.9"], ["SJ（設定1）", "約1/521.7"], ["SJ（設定6）", "約1/392.6"], ["ベース", "約31G/50枚"], ["コイン単価", "約3.5円"]],
+    sim: { kind: "slot", triggerLabel: "初当りBONUS", triggerRate: 192.0, triggerSuccess: 0.50, mainLabel: "SQUAD JAM", mainRate: 521.7, base50: 31.0, coinUnit: 3.5, normalMin: 180, normalMax: 1100, specialLabel: "GGO BONUS", specialChance: 0.36, specialMin: 180, specialMax: 900, upperChallenge: "GGOストーム", upperChance: 0.20, upperSuccess: 0.55, upperLabel: "イカれたレン", upperContinue: 0.80, upperPayout: 600, settingRates: { 1: { trigger: 192.0, main: 521.7, payout: 0.979 }, 2: { trigger: 189.2, main: 510.4, payout: 0.988 }, 3: { trigger: 180.9, main: 486.6, payout: 1.009 }, 4: { trigger: 168.6, main: 445.3, payout: 1.044 }, 5: { trigger: 155.4, main: 405.0, payout: 1.097 }, 6: { trigger: 153.9, main: 392.6, payout: 1.145 } } },
+    articleSections: [
+      { heading: "初当りとSQUAD JAMの設定差", paragraphs: ["初当り合算は設定1約1/192.0から設定6約1/153.9、ST『SQUAD JAM』は設定1約1/521.7から設定6約1/392.6です。", "START時に設定1〜6を均等抽選し、選ばれた設定の初当り・SQUAD JAM・出玉率を使用します。結果と機種別ランキングにも設定を表示します。"] },
+      { heading: "CZイエスマムとBONUS", paragraphs: ["CZ『イエスマム』は10G＋αで、成功期待度は約50%です。BONUSはREGが20G・約70枚、BIGが40G・約130枚で、純増は約3.4枚/Gです。", "サイトでは通常時の直撃やCZを初当りBONUSへまとめます。CZの特訓回数、モード、スルー回数は個別再現しません。"] },
+      { heading: "SQUAD JAMと上乗せBONUS", paragraphs: ["SQUAD JAMはバトル勝利で上乗せを目指すSTです。上乗せ分を払い出すガンゲイルBONUSは純増約7.1枚/Gです。", "シミュレーターではバトルと上乗せを追加枚数抽選へまとめ、1回の流れを短時間で確認できる構成にしています。"] },
+      { heading: "GGOストームから上位STへ", paragraphs: ["エンディング後などの有利区間リセット時はGGOストームを経由し、上位ST『イカれたレン』を目指します。", "上位到達率や継続率の全詳細は公開値が揃っていないため、サイト共通の固定抽選で簡易化し、実機値と区別します。"] },
+      { heading: "固定レートと収支の条件", bullets: ["約31G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均SQUAD JAM投資目安は約18,300円", "コイン単価は設定1の参考値約3.5円として表示", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["P-WORLD 新台スケジュール", "https://www.p-world.co.jp/database/machine.html"], ["一撃 2026年11月新台情報", "https://1geki.jp/newmachinecalender/202611/"], ["設定・天井まとめ", "https://tennabi.jp/gun-gale-online/"]]
+  },
+  "godzilla-eva2-slot": {
+    order: 0.25, type: "slot", theme: "ember", year: "2026年11月", maker: "ビスティ", updated: "2026-10-31",
+    name: "Lパチスロ ゴジラ対エヴァンゲリオン 2", shortName: "スマスロ ゴジエヴァ2",
+    catchcopy: "2種類のBONUSを越え、G覚醒RUSHへ。",
+    intro: "2026年11月2日導入予定のスマスロ。設定別BONUS・AT初当りを使い、集結バトル、ゴジエヴァRUSH、決戦カイザーギドラ、G覚醒RUSHまでを簡易体験できます。",
+    points: ["BONUSは設定1約1/234.2〜設定6約1/195.0", "ATは設定1約1/460.5〜設定6約1/355.5", "純増約5.2枚/G・上位AT期待獲得約3600枚"],
+    specs: [["BONUS（設定1）", "約1/234.2"], ["BONUS（設定6）", "約1/195.0"], ["AT（設定1）", "約1/460.5"], ["AT（設定6）", "約1/355.5"], ["ベース", "約30G/50枚"], ["AT純増", "約5.2枚/G"]],
+    sim: { kind: "slot", triggerLabel: "集結バトル", triggerRate: 234.2, triggerSuccess: 0.50, mainLabel: "ゴジエヴァRUSH", mainRate: 460.5, base50: 30.0, coinUnit: 3.7, normalMin: 250, normalMax: 1300, specialLabel: "震撃チャンス", specialChance: 0.36, specialMin: 200, specialMax: 1100, upperChallenge: "決戦カイザーギドラ", upperChance: 0.20, upperSuccess: 0.50, upperLabel: "G覚醒RUSH", upperContinue: 0.80, upperPayout: 750, settingRates: { 1: { trigger: 234.2, main: 460.5, payout: 0.977 }, 2: { trigger: 229.0, main: 446.5, payout: 0.989 }, 3: { trigger: 221.8, main: 425.5, payout: 1.012 }, 4: { trigger: 207.0, main: 390.4, payout: 1.058 }, 5: { trigger: 201.5, main: 374.2, payout: 1.106 }, 6: { trigger: 195.0, main: 355.5, payout: 1.149 } } },
+    articleSections: [
+      { heading: "BONUSとAT初当りの設定差", paragraphs: ["疑似BONUSは設定1約1/234.2から設定6約1/195.0、AT『ゴジエヴァRUSH』は設定1約1/460.5から設定6約1/355.5です。", "START時に設定1〜6を均等抽選し、選ばれた設定のBONUS・AT初当り・出玉率を使用します。設定は最終結果と機種別ランキングに表示します。"] },
+      { heading: "2種類のBONUSからATを目指す", paragraphs: ["エヴァンゲリオンBONUS後は『初号機vs魏怒羅零号機』、ゴジラBONUS後は『ゴジラチャレンジ』でATを目指します。公開されているAT期待度の目安はそれぞれ約41%と約64%です。", "シミュレーターでは2種類の入口を集結バトルとBONUS後ジャッジへまとめ、代表値50%の簡易抽選として進行します。"] },
+      { heading: "ゴジエヴァRUSHと震撃チャンス", paragraphs: ["AT『ゴジエヴァRUSH』は純増約5.2枚/Gで、初期ゲーム数は50G以上です。上乗せ時はゲーム数10倍をかけた震撃チャンスが見どころです。", "サイトでは上乗せを追加枚数抽選にまとめます。実機の小役、G侵食役、内部状態、上乗せゲーム数の全振り分けは個別再現しません。"] },
+      { heading: "決戦カイザーギドラからG覚醒RUSHへ", paragraphs: ["特定条件を満たしたAT終了後は決戦カイザーギドラへ進み、勝利すると上位AT『G覚醒RUSH』へ突入します。上位AT突入時の期待獲得枚数は約3600枚と案内されています。", "上位到達率とループ抽選はサイト共通の固定値で簡易化し、公開値と区別して表示します。"] },
+      { heading: "固定レートと収支の条件", bullets: ["約30G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均AT投資目安は約16,700円", "コイン単価は設定1の参考値約3.7円として表示", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["フィールズ公式 新製品情報", "https://www.fields.biz/?lang=ja"], ["エヴァンゲリオン系 開発こぼれ話", "https://blog.eva-project.jp/category/l_godzilla_vs_eva2/"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/vpage/2825/1"]]
+  },
+  "mahoako-slot": {
+    order: 0.75, type: "slot", theme: "magenta", year: "2026年10月", maker: "ニューギン", updated: "2026-10-31",
+    name: "L魔法少女にあこがれて", shortName: "スマスロ まほあこ",
+    catchcopy: "3種類のCZを突破し、超あこがれver.へ。",
+    intro: "2026年10月19日導入の疑似ボーナス＋AT機。全設定共通約1/249.6のBONUS、設定差のあるCZ・AT初当り、上乗せ特化ゾーンから上位ATまでを簡易体験できます。",
+    points: ["CZは設定1約1/357.0〜設定6約1/235.4", "BONUSは全設定共通約1/249.6", "通常AT約2.5枚/G・上位AT約5.0枚/G"],
+    specs: [["CZ（設定1）", "約1/357.0"], ["CZ（設定6）", "約1/235.4"], ["BONUS", "約1/249.6（全設定共通）"], ["AT（設定1）", "約1/436.3"], ["AT（設定6）", "約1/305.7"], ["ベース", "約31.4G/50枚"]],
+    sim: { kind: "slot", triggerLabel: "トランスマジア", triggerRate: 357.0, triggerSuccess: 0.42, mainLabel: "まほあこラッシュ", mainRate: 436.3, base50: 31.4, coinUnit: 3.2, normalMin: 200, normalMax: 1050, specialLabel: "あこがれATTACK", specialChance: 0.34, specialMin: 180, specialMax: 900, upperChallenge: "VSロードエノルメ", upperChance: 0.18, upperSuccess: 0.50, upperLabel: "まほあこラッシュ 超あこがれver.", upperContinue: 0.60, upperPayout: 520, settingRates: { 1: { trigger: 357.0, main: 436.3, payout: 0.976 }, 2: { trigger: 333.8, main: 422.7, payout: 0.988 }, 3: { trigger: 310.7, main: 401.4, payout: 1.005 }, 4: { trigger: 273.3, main: 352.4, payout: 1.050 }, 5: { trigger: 243.0, main: 316.1, payout: 1.102 }, 6: { trigger: 235.4, main: 305.7, payout: 1.120 } } },
+    articleSections: [
+      { heading: "BONUSと設定差の見方", paragraphs: ["BONUS確率は全設定共通で約1/249.6です。一方、CZとAT初当りには設定差があり、設定1のAT約1/436.3から設定6の約1/305.7まで段階的に軽くなります。", "シミュレーターはSTART時に設定1〜6を均等抽選し、選ばれた設定のCZ・AT初当り・出玉率を使用します。結果と機種別ランキングにも今回の設定を表示します。"] },
+      { heading: "3種類のCZをひとつの流れへ簡略化", paragraphs: ["実機にはトランスマジア、マジアマゼンタ決戦、マジアサルファ決戦の3種類のCZがあります。トランスマジアの成功期待度は約42%です。", "サイトでは演出を長くしすぎないため、3種類の入口を代表CZ『トランスマジア』へまとめています。実機のCZ振り分けや内部状態を完全再現するものではありません。"] },
+      { heading: "通常AT・特化ゾーン・上位AT", paragraphs: ["通常AT『まほあこラッシュ』は純増約2.5枚/G。サディスティックタイム、ぶるぶるマッサージタイム、マジアベーゼ無双などの上乗せ要素があります。", "上位AT『まほあこラッシュ 超あこがれver.』は純増約5.0枚/Gです。シミュレーターでは特化ゾーンを追加枚数抽選へまとめ、上位CZと上位ATはサイト共通の固定確率で簡易表現します。"] },
+      { heading: "設定1〜6の公開値を反映", bullets: ["設定1：CZ約1/357.0・AT約1/436.3・出玉率97.6%", "設定4：CZ約1/273.3・AT約1/352.4・出玉率105.0%", "設定6：CZ約1/235.4・AT約1/305.7・出玉率112.0%", "非公表の特化ゾーン・上位到達率には設定差を加えない"] },
+      { heading: "固定レートと収支の条件", bullets: ["約31.4G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均AT投資目安は約15,100円", "コイン単価は設定1の参考値約3.2円として表示", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["ニューギン公式 機種サイト", "https://www.newgin.co.jp/products/lmahoako/"], ["ニューギン開発者Q&A", "https://www.newgin.co.jp/devfaq/faq_category/lmahoako/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10563"], ["パチ＆スロ必勝本 機種情報", "https://p.hisshobon.jp/vpage/2818/1"]]
+  },
+  "uminchu-slot": {
+    order: 0.9, type: "slot", theme: "aqua", year: "2026年10月", maker: "岡崎産業", updated: "2026-10-31",
+    name: "L海人", shortName: "スマスロ 海人",
+    catchcopy: "フルーツ連を重ね、10連の先のIREGUIへ。",
+    intro: "2026年10月19日導入のスマスロ。Aタイプの分かりやすさとAT機の連チャン性を組み合わせ、フルーツ連状態からボーナスを重ねてIREGUIを目指す流れを簡易体験できます。",
+    points: ["設定は1・2・4・5・6（設定3非搭載）", "初当りは設定1約1/247.7〜設定6約1/207.6", "ボーナス10連後のIREGUIは平均22連OVER"],
+    specs: [["初当り（設定1）", "約1/247.7"], ["初当り（設定6）", "約1/207.6"], ["BIG平均", "約202枚"], ["REG平均", "約53枚"], ["ベース", "約29.9G/50枚"], ["IREGUI", "平均22連OVER"]],
+    sim: { kind: "slot", triggerLabel: "フルーツ連状態", triggerRate: 247.7, triggerSuccess: 0.55, mainLabel: "海人BONUS", mainRate: 247.7, base50: 29.9, coinUnit: 4.0, normalMin: 180, normalMax: 900, specialLabel: "ボーナスストック", specialChance: 0.38, specialMin: 100, specialMax: 700, upperChallenge: "ボーナス10連チャレンジ", upperChance: 0.16, upperSuccess: 0.45, upperLabel: "IREGUI", upperContinue: 0.82, upperPayout: 450, settingPool: [1, 2, 4, 5, 6], settingRates: { 1: { trigger: 247.7, main: 247.7, payout: 0.977 }, 2: { trigger: 243.3, main: 243.3, payout: 0.986 }, 4: { trigger: 219.8, main: 219.8, payout: 1.033 }, 5: { trigger: 211.0, main: 211.0, payout: 1.062 }, 6: { trigger: 207.6, main: 207.6, payout: 1.120 } } },
+    articleSections: [
+      { heading: "設定3を含めない実機どおりの抽選", paragraphs: ["通常遊技に使う設定は1・2・4・5・6の5段階です。設定3は搭載されておらず、設定Lも遊技用ではないため、シミュレーターのランダム設定から除外します。", "START時に5段階から均等抽選し、選ばれた設定の初当り確率と出玉率を使用します。設定は最終結果と機種別ランキングに表示します。"] },
+      { heading: "フルーツ連からボーナスを目指す", paragraphs: ["フルーツ連状態ではフルーツが揃うたびにボーナスを抽選します。ボーナス中はストック抽選が行われ、終了後もフルーツ連状態へ移行して次の当りを狙います。", "サイトでは複数の内部状態を『フルーツ連状態』へまとめ、ボーナスストックを追加枚数抽選として表現します。実機の全モードやゾロ目抽選は個別再現しません。"] },
+      { heading: "10連の先にあるIREGUI", paragraphs: ["32G以内のボーナスを10回獲得すると、ボーナスストック特化状態『IREGUI』へ進みます。公開情報では設定1でも平均22連OVERとされています。", "簡易シミュレーターでは10連到達を上位チャレンジとして短縮し、IREGUI中の連チャンをサイト共通の固定抽選で表示します。実機の平均連を保証するものではありません。"] },
+      { heading: "設定別の初当りと出玉率", bullets: ["設定1：約1/247.7・出玉率97.7%", "設定2：約1/243.3・出玉率98.6%", "設定4：約1/219.8・出玉率103.3%", "設定5：約1/211.0・出玉率106.2%", "設定6：約1/207.6・出玉率112.0%"] },
+      { heading: "固定レートと収支の条件", bullets: ["約29.9G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均初当り投資目安は約9,000円", "コイン単価は設定1の参考値約4.0円として表示", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10579"], ["パチマガスロマガFREE 機種情報", "https://pachimaga.com/free/mach/maker-s/okazaki/l_uminchu.php"], ["パチ7 新台試打・基本情報", "https://pachiseven.jp/articles/detail/26377"]]
+  },
+  "tenten-slot": {
+    order: 0.95, type: "slot", theme: "violet", year: "2026年10月", maker: "オリンピアエステート", updated: "2026-10-31",
+    name: "L転生王女と天才令嬢の魔法革命", shortName: "スマスロ 転天",
+    catchcopy: "EPISODE BATTLEを越え、ボーナス高確を重ねる。",
+    intro: "2026年10月5日導入の疑似ボーナスAT機。設定別CZ・転天BONUS初当りを使い、ボーナス後40Gの高確と輪廻転天チャレンジまでを簡易体験できます。",
+    points: ["CZは設定1約1/171.5〜設定6約1/136.0", "転天BONUSは設定1約1/320.0〜設定6約1/246.4", "純増約4.5枚/G・ボーナス後は40Gの高確"],
+    specs: [["CZ（設定1）", "約1/171.5"], ["CZ（設定6）", "約1/136.0"], ["BONUS（設定1）", "約1/320.0"], ["BONUS（設定6）", "約1/246.4"], ["ベース", "約32.4G/50枚"], ["純増", "約4.5枚/G"]],
+    sim: { kind: "slot", triggerLabel: "EPISODE BATTLE", triggerRate: 171.5, triggerSuccess: 0.503, mainLabel: "転天BONUS", mainRate: 320.0, base50: 32.4, coinUnit: 3.3, normalMin: 200, normalMax: 1000, specialLabel: "転天STOCKチャレンジ", specialChance: 0.34, specialMin: 160, specialMax: 800, upperChallenge: "輪廻転天チャレンジ", upperChance: 0.18, upperSuccess: 0.50, upperLabel: "上位ボーナス高確", upperContinue: 0.80, upperPayout: 520, settingRates: { 1: { trigger: 171.5, main: 320.0, payout: 0.979 }, 2: { trigger: 168.3, main: 314.7, payout: 0.989 }, 3: { trigger: 154.9, main: 294.2, payout: 1.010 }, 4: { trigger: 147.0, main: 276.9, payout: 1.036 }, 5: { trigger: 140.4, main: 260.0, payout: 1.076 }, 6: { trigger: 136.0, main: 246.4, payout: 1.103 } } },
+    articleSections: [
+      { heading: "CZとBONUSの両方に設定差を反映", paragraphs: ["CZ『EPISODE BATTLE』は設定1約1/171.5から設定6約1/136.0、転天BONUS初当りは設定1約1/320.0から設定6約1/246.4です。", "START時に設定1〜6を均等抽選し、選ばれた設定のCZ・BONUS初当り・出玉率を使用します。CZ成功期待度も公開値を参考に設定別確率へ反映します。"] },
+      { heading: "ボーナス後40Gが連チャンの入口", paragraphs: ["転天BONUS後は40Gのボーナス高確へ移行し、次の王宮BONUSを狙います。ボーナス中の純増は約4.5枚/Gです。", "シミュレーターではボーナス高確中の細かな状態差を継続抽選へまとめ、転天STOCKチャレンジを追加枚数抽選として表示します。"] },
+      { heading: "輪廻転天チャレンジと上位高確", paragraphs: ["ボーナスを重ねた先には上位CZ『輪廻転天チャレンジ』があり、成功で上位ボーナス高確へ進みます。", "上位到達率や上位中の全振り分けはサイト共通の固定抽選で簡易化しています。実機の全モード・ポイント・規定ゲーム数を完全再現するものではありません。"] },
+      { heading: "設定別の公開値", bullets: ["設定1：CZ約1/171.5・BONUS約1/320.0・出玉率97.9%", "設定3：CZ約1/154.9・BONUS約1/294.2・出玉率101.0%", "設定4：CZ約1/147.0・BONUS約1/276.9・出玉率103.6%", "設定6：CZ約1/136.0・BONUS約1/246.4・出玉率110.3%"] },
+      { heading: "固定レートと収支の条件", bullets: ["約32.4G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均BONUS投資目安は約10,700円", "コイン単価は設定1の参考値約3.3円として表示", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["平和 公式製品情報", "https://www.heiwanet.co.jp/products/1000/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10550"], ["パチマガスロマガFREE 機種情報", "https://pachimaga.com/free/mach/maker-s/olympiaestate/l_tenten.php"]]
+  },
+  "eva319-red": {
+    order: 0.5, type: "pachinko", theme: "crimson", year: "2026年10月", maker: "ビスティ", updated: "2026-10-31",
+    name: "P 新世紀エヴァンゲリオン -319 RED-", shortName: "エヴァ319 RED",
+    catchcopy: "約1/319.7から、161回転のIMPACT MODEへ。",
+    intro: "2026年10月19日導入のV-ST機。通常時約1/319.7、ST直行約65%と時短引き戻しを含む突入約75%、右打ちALL1500個の流れを固定条件で確認できます。",
+    points: ["通常時約1/319.7、ST中約1/98.9", "ST直行約65%、時短・残保留込み突入約75%", "ST161回・継続約81%、右打ちALL1500個"],
+    specs: [["通常時", "約1/319.7"], ["ST中", "約1/98.9"], ["ST直行", "約65%"], ["ST突入", "約75%"], ["ST回数／継続", "161回／約81%"], ["右打ち", "ALL 1500個"]],
+    sim: { kind: "pachinko", hitRate: 319.7, hitLabel: "初当り", startType: "通常ヘソ", spinsPer1k: 17.3, minSpins: 10, maxSpins: 30, rushLabel: "IMPACT MODE", rushEntry: 0.75, rushContinue: 0.81, firstPayoutIn: 300, firstPayoutOut: 300, rushPayouts: [[1500, 1]] },
+    articleSections: [
+      { heading: "319 REDを見分けるポイント", paragraphs: ["本機は2026年10月19日導入のP機・V-STタイプです。通常時約1/319.7、ST161回、右打ち中の大当りは1500個という構成で、図柄揃い約1/399.9・ST157回のスマパチ『はじまりの記憶』とは別スペックです。", "同じ約1/319帯の『未来への咆哮』ともST回数が異なります。記事とシミュレーターでは機種名、通常確率、ST161回の3点を揃えて扱います。"] },
+      { heading: "ST直行65%と突入75%の違い", paragraphs: ["初当りの約65%はST161回へ直行し、残る約35%は時短100回へ進みます。時短100回と残保留での引き戻しを含めたトータルST突入率が約75%です。", "シミュレーターは複数の入口を約75%の突入抽選へまとめます。時短だけを独立した100回転演出としては再現しないため、結果では『直行65%』ではなく『引き戻し込み75%』を使用します。"] },
+      { heading: "ST161回とALL1500個", paragraphs: ["ST中は約1/98.9、161回と残保留を含む継続率は約81%です。電チュー入賞時の大当りは1500個払い出し＋ST161回で、簡易モデルも右打ち出玉を1500個に固定しています。", "初当り時の約1%にある1500個振り分け、保留連示唆、電サポ中の増減、オーバー入賞は簡易結果へ個別反映しません。初回出玉は代表値の300個として計算します。"] },
+      { heading: "初当りまでの確率目安", paragraphs: ["約1/319.7を毎回同じ確率で抽選すると仮定した単純計算では、100回転以内に1回以上当たる確率は約26.9%、200回転以内は約46.6%、320回転以内は約63.3%、500回転以内は約79.1%です。", "平均319.7回転は『319回転までに必ず当たる』という意味ではありません。1回の結果ではなく、複数回の早い当りと深いハマりを比べて確率の幅を確認してください。"] },
+      { heading: "固定レートと収支の見方", bullets: ["17.3回/1,000円・250玉貸し・28玉交換で固定", "平均投資目安は約18,500円", "持ち玉比率・再プレイ・端玉・電サポ中の玉増減は含めない", "実機の当選・収支・遊技結果を保証しない娯楽用モデル"] }
+    ],
+    sources: [["フィールズ公式 機種サイト", "https://www.eva-project.jp/hajimarinokioku/index_319.html"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10583"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/machine/4797/1/1"]]
+  },
   "lycoris-recoil-slot": {
     order: 1, type: "slot", theme: "crimson", year: "2026年9月", maker: "サミー",
     name: "スマスロ リコリス・リコイル", shortName: "スマスロ リコリコ",

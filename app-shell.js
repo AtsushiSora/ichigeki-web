@@ -24,6 +24,28 @@
   body.classList.remove("has-mobile-app-nav");
 
   const header = document.querySelector(".site-header .header-inner");
+  const pageName = window.location.pathname.split("/").filter(Boolean).pop() || "index.html";
+  const isTopPage = pageName === "index.html";
+
+  if (body.classList.contains("juggle-simple-page") && !isTopPage && !document.querySelector(".standalone-top-return")) {
+    const topBar = document.createElement("div");
+    topBar.className = "standalone-top-bar";
+    topBar.innerHTML = `<a class="standalone-top-return" href="index.html" aria-label="TOPページへ戻る"><span aria-hidden="true">←</span><b>TOP</b></a>`;
+    body.prepend(topBar);
+  }
+
+  if (header && !isTopPage && !body.classList.contains("juggle-simple-page") && !header.querySelector(".global-top-return")) {
+    const topReturn = document.createElement("a");
+    topReturn.className = "global-top-return";
+    topReturn.href = "index.html";
+    topReturn.setAttribute("aria-label", "TOPページへ戻る");
+    topReturn.innerHTML = `<span aria-hidden="true">←</span><b>TOP</b>`;
+    header.prepend(topReturn);
+    header.querySelectorAll(":scope > .nav a[href='index.html']").forEach(link => {
+      link.classList.add("nav-top-duplicate");
+    });
+  }
+
   if (header && !header.querySelector(".mobile-header-menu, .shared-site-menu")) {
     const menu = document.createElement("details");
     menu.className = "shared-site-menu";
