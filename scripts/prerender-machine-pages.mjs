@@ -21,6 +21,10 @@ const INDEXABLE_MACHINE_SLUGS = new Set([
   "sao-phantom-bullet",
   "toaru3-pachinko",
   "kamen-rider-black-light",
+  "granbelm-319",
+  "fever-yokai-watch",
+  "juoh-shishi-no-ichigeki",
+  "no-game-no-life-119",
   "garo-yami-slot",
   "ragnador-slot",
   "seiya-ougon-slot",
@@ -40,6 +44,7 @@ const INDEXABLE_MACHINE_SLUGS = new Set([
   "monster-hunter-sunbreak",
   "neo-im-juggler"
 ]);
+const requestedSlugs = new Set(process.argv.slice(2));
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -59,7 +64,7 @@ function typeLabel(machine) {
 }
 
 function editorialDate(machine) {
-  return machine.updated || "2026-10-12";
+  return machine.updated || "2026-10-31";
 }
 
 function editorialDateLabel(machine) {
@@ -215,6 +220,7 @@ function updateMachineSitemap() {
 
 let updated = 0;
 for (const [slug, machine] of Object.entries(machines)) {
+  if (requestedSlugs.size && !requestedSlugs.has(slug)) continue;
   const htmlPath = path.join(siteDirectory, `${slug}.html`);
   if (!fs.existsSync(htmlPath)) throw new Error(`HTML file not found: ${htmlPath}`);
 
@@ -241,8 +247,8 @@ for (const [slug, machine] of Object.entries(machines)) {
     html = html.replace('<meta charset="utf-8">', '<meta charset="utf-8"><meta name="robots" content="noindex,follow">');
   }
   html = html.replace(/style\.css\?v=\d+/, "style.css?v=146");
-  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=137");
-  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=121");
+  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=139");
+  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=123");
   html = html.replace(/app-shell\.js\?v=\d+/, "app-shell.js?v=7");
   html = html.replace(/adsense-loader\.js\?v=\d+/, "adsense-loader.js?v=2");
   if (!html.includes("site-insights.js")) html = html.replace(/(<script src="machine-detail\.js\?v=129"><\/script>)/, '<script src="site-insights.js?v=1"></script>\n  $1');

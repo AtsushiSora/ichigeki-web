@@ -46,6 +46,70 @@ window.ICHIGEKI_MACHINES = {
     ],
     sources: [["KYORAKU 公式発表", "https://www.kyoraku.co.jp/news/detail/895"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/machine/4847/1/1"], ["パチンコスペック解析 ボーダー", "https://pachinko-spec.info/spec/173543/"]]
   },
+  "granbelm-319": {
+    order: 0.112, type: "pachinko", theme: "violet", year: "2026年11月", maker: "サンスリー", updated: "2026-10-31",
+    name: "eグランベルム 319ver.", shortName: "eグランベルム 319",
+    catchcopy: "約51%で直LTへ。RESTARTと超アドレナリンBOOSTを体験。",
+    intro: "2026年11月2日導入予定のスマパチLT機。初当り約1/319.6、グランベルムRUSH突入約51%、トータル継続約77%を固定条件で簡易体験できます。",
+    points: ["通常時の大当り約1/319.6", "グランベルムRUSH突入約51%", "RUSH継続はRESTART込み約77%"],
+    specs: [["大当り", "約1/319.6"], ["RUSH突入", "約51%"], ["RUSH回数", "130回"], ["トータル継続", "約77%"], ["右打ち出玉", "1500〜4500個＋α"], ["スタート", "通常ヘソ"]],
+    sim: { kind: "pachinko", hitRate: 319.6, hitLabel: "初当り", startType: "通常ヘソ", spinsPer1k: 17.5, minSpins: 10, maxSpins: 30, rushLabel: "グランベルムRUSH", rushEntry: 0.51, rushContinue: 0.77, firstPayoutIn: 1050, firstPayoutOut: 1050, rushPayouts: [[1500, 0.50], [3000, 0.375], [4500, 0.125]] },
+    articleSections: [
+      { heading: "約51%でグランベルムRUSHへ直行", paragraphs: ["通常時の大当りは約1/319.6。初当りの約51%で130回のグランベルムRUSHへ進む直LTタイプです。", "シミュレーターでは初当り後に約51%の突入抽選を行い、非突入時は初回出玉で終了します。"] },
+      { heading: "RESTART込み約77%を簡易抽選", paragraphs: ["RUSH中は1500個・3000個・4500個の出玉当りに加え、出玉を伴わずST回数を戻すRESTARTがあります。公表されるトータル継続率は約77%です。", "サイトではRESTARTを独立表示せず、約77%の継続抽選に含めます。出玉振り分けは出玉当りだけを代表比率へ整えています。"] },
+      { heading: "超アドレナリンBOOSTは記事で補足", paragraphs: ["3000個・4500個当りの一部では1500個以上の上乗せを狙う超アドレナリンBOOSTが発生します。", "上乗せ発生率の全条件が揃っていないため、シミュレーターでは最大出玉の可能性を4500個振り分けへまとめ、実機の上乗せループを完全再現しません。"] },
+      { heading: "固定レートと収支の条件", bullets: ["17.5回/1,000円・250玉貸し・28玉交換で固定", "平均初当り投資目安は約18,300円", "RESTART込み継続率として抽選", "結果は自動でマイ記録へ保存"] }
+    ],
+    sources: [["SANYO 公式更新情報", "https://www.sanyobussan.co.jp/information/information.html"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/machine/4807/1/2"], ["P-WORLD 新台予定", "https://www.p-world.co.jp/database/machine/introduce_calendar.cgi?type=Pachi"]]
+  },
+  "fever-yokai-watch": {
+    order: 0.114, type: "pachinko", theme: "gold", year: "2026年11月", maker: "SANKYO", updated: "2026-10-31",
+    name: "eフィーバー妖怪ウォッチ", shortName: "eF妖怪ウォッチ",
+    catchcopy: "コマチャレンジ込み約61%から、トータル約80%の怪闘へ。",
+    intro: "2026年11月2日導入予定のスマパチ。大当り約1/319.7、時短引き戻し込みのRUSH突入約61%、トータル継続約80%を簡易体験できます。",
+    points: ["通常時の大当り約1/319.7", "コマチャレンジ込みRUSH突入約61%", "トータル継続約80%・1500個以上中心"],
+    specs: [["大当り", "約1/319.7"], ["RUSH図柄揃い", "約1/41.9"], ["トータル突入", "約61%"], ["トータル継続", "約80%"], ["時短", "100回"], ["スタート", "通常ヘソ"]],
+    sim: { kind: "pachinko", hitRate: 319.7, hitLabel: "初当り", startType: "通常ヘソ", spinsPer1k: 17.2, minSpins: 10, maxSpins: 30, rushLabel: "ヨーデルSONIC怪闘", rushEntry: 0.61, rushContinue: 0.80, firstPayoutIn: 300, firstPayoutOut: 300, rushPayouts: [[1500, 0.72], [3000, 0.22], [4500, 0.06]] },
+    articleSections: [
+      { heading: "コマチャレンジ込みで突入約61%", paragraphs: ["初当りからのRUSH直行は約50%。非突入時は時短100回のコマチャレンジへ進み、引き戻しを含むトータルRUSH突入率は約61%です。", "サイトでは直行と時短引き戻しを1回の約61%抽選へまとめ、結果画面を分かりやすくしています。"] },
+      { heading: "RUSHと時短を合わせて約80%", paragraphs: ["ヨーデルSONIC怪闘の継続と、終了後のコマチャレンジ引き戻しを合わせたトータル継続率は約80%です。", "実機の転落・普電ロング開放・最終決戦は個別再現せず、1回ごとの継続抽選へまとめます。"] },
+      { heading: "1500個から上乗せルートへ", paragraphs: ["右打ち中は1500個を基本に、3000個やウバウネ決戦の上乗せルートがあります。", "シミュレーターでは代表的な1500個・3000個・4500個へ整理します。6000個以上の連続上乗せは、複数回の継続結果として表現される場合があります。"] },
+      { heading: "固定レートと収支の条件", bullets: ["17.2回/1,000円・250玉貸し・28玉交換で固定", "平均初当り投資目安は約18,600円", "時短込みの突入率・継続率を使用", "結果は自動でマイ記録へ保存"] }
+    ],
+    sources: [["SANKYO 公式スペック", "https://www.sankyo-fever.jp/products/machine_list/ppj/spec/"], ["パチ＆スロ必勝本 大当り振り分け", "https://p.hisshobon.jp/machine/4794/1/3"], ["P-WORLD 新台予定", "https://www.p-world.co.jp/database/machine/introduce_calendar.cgi?type=Pachi"]]
+  },
+  "juoh-shishi-no-ichigeki": {
+    order: 0.116, type: "pachinko", theme: "ember", year: "2026年11月", maker: "Sammy", updated: "2026-10-31",
+    name: "e 獣王 獅子の一撃", shortName: "e獣王 獅子の一撃",
+    catchcopy: "ドデカSTRAIGHTから、平均約9800個のサバンナチャンスへ。",
+    intro: "2026年11月2日導入予定のドデカSTRAIGHT搭載スマパチ。初当り約1/319.7、獣王RUSH突入50%、右打ち中約50%のサバンナチャンスを簡易体験できます。",
+    points: ["通常時の大当り約1/319.7", "獣王RUSH突入50%・継続約50%", "RUSH中約50%で平均約9800個のサバンナチャンス"],
+    specs: [["大当り", "約1/319.7"], ["RUSH中", "約1/144.7"], ["RUSH突入", "50%"], ["RUSH継続", "約50%"], ["サバンナチャンス", "平均約9800個"], ["スタート", "ドデカSTRAIGHT"]],
+    sim: { kind: "pachinko", hitRate: 319.7, hitLabel: "初当り", startType: "ドデカSTRAIGHT", spinsPer1k: 18.0, minSpins: 10, maxSpins: 32, rushLabel: "獣王RUSH", rushEntry: 0.50, rushContinue: 0.50, firstPayoutIn: 300, firstPayoutOut: 300, rushPayouts: [[1500, 0.33], [3000, 0.17], [9800, 0.50]] },
+    articleSections: [
+      { heading: "ドデカSTRAIGHTを固定回転率へ反映", paragraphs: ["通常時約1/319.7で、玉がスタート方向へ向かいやすい新ゲージのドデカSTRAIGHTを搭載しています。", "シミュレーターは比較用に18.0回/1,000円へ固定します。実店舗の釘調整や実測回転率を保証する値ではありません。"] },
+      { heading: "獣王RUSHは突入・継続とも約50%", paragraphs: ["初当りは約300個で、その50%が100回転の獣王RUSHへ進みます。RUSH中確率は約1/144.7で、継続率は約50%です。", "短い継続率の代わりに、右打ち中当りの出玉振り分けが大きい設計です。"] },
+      { heading: "約50%でサバンナチャンス", paragraphs: ["RUSH中大当りの約50%は、最低4500個＋上乗せループのサバンナチャンス。公表される平均出玉は約9800個です。", "サイトでは上乗せ回数を個別抽選せず、代表値9800個を1つの出玉結果として扱います。3000個は1500個×2回としてまとめています。"] },
+      { heading: "固定レートと収支の条件", bullets: ["18.0回/1,000円・250玉貸し・28玉交換で固定", "平均初当り投資目安は約17,800円", "サバンナチャンスは平均9800個で簡易化", "結果は自動でマイ記録へ保存"] }
+    ],
+    sources: [["Sammy 公式製品情報", "https://www.sammy.co.jp/japanese/product/pachinko/e_jyu_oh_sh/"], ["Sammy 発売案内", "https://www.sammy.co.jp/japanese/news/detail/?id=309"], ["パチセブン 基本スペック", "https://pachiseven.jp/articles/detail/26454"]]
+  },
+  "no-game-no-life-119": {
+    order: 0.118, type: "pachinko", theme: "aqua", year: "2026年11月", maker: "高尾", updated: "2026-10-31",
+    name: "e ノーゲーム・ノーライフ 119Ver.", shortName: "eノゲノラ 119",
+    catchcopy: "ALL1000個の初当りから、約80%のHYPERへ。",
+    intro: "2026年11月2日導入予定のライトスマパチ。初当り約1/119.8、ノゲノラッシュ突入50%、突破後のHYPER継続約80%を簡易体験できます。",
+    points: ["通常時約1/119.8・初当りALL1000個", "ノゲノラッシュ突入50%・突破約51%", "ノゲノラッシュHYPER継続約80%"],
+    specs: [["大当り", "約1/119.8"], ["右打ち中", "約1/23.1"], ["RUSH突入", "50%"], ["初回RUSH継続", "約51%"], ["HYPER継続", "約80%"], ["スタート", "通常ヘソ"]],
+    sim: { kind: "pachinko", hitRate: 119.8, hitLabel: "初当り", startType: "通常ヘソ", spinsPer1k: 17.5, minSpins: 10, maxSpins: 30, rushLabel: "ノゲノラッシュ", rushEntry: 0.50, rushContinue: 0.51, firstPayoutIn: 1000, firstPayoutOut: 1000, rushPayouts: [[300, 0.50], [1000, 0.50]], upperLabel: "ノゲノラッシュHYPER", upperDirectChance: 0, upperUpgradeChance: 1, upperContinue: 0.80 },
+    articleSections: [
+      { heading: "約1/119.8の初当りはALL1000個", paragraphs: ["通常時の大当りは約1/119.8で、初当りはすべて10R・約1000個です。その50%でノゲノラッシュへ進みます。", "ライト帯でも初回出玉がまとまっているため、早い初当りでは交換後収支が残りやすい構成です。"] },
+      { heading: "初回RUSH突破でHYPERへ", paragraphs: ["ノゲノラッシュは12回＋残保留4個で継続約51%。ここで当れば上位のノゲノラッシュHYPERへ移行します。", "シミュレーターでは初回約51%を突破した時点でHYPERへ昇格し、その後は約80%で継続します。"] },
+      { heading: "右打ちは300個・1000個が各50%", paragraphs: ["右打ち中の大当りは3R約300個と10R約1000個が各50%です。残保留当りもHYPERへ進む実機仕様を、同じ上位継続抽選へまとめています。", "保留の消化順、V入賞、小当りの細かな挙動は再現しません。"] },
+      { heading: "固定レートと収支の条件", bullets: ["17.5回/1,000円・250玉貸し・28玉交換で固定", "平均初当り投資目安は約6,800円", "初回突破後はHYPER継続率を使用", "結果は自動でマイ記録へ保存"] }
+    ],
+    sources: [["P-WORLD 新台予定", "https://www.p-world.co.jp/database/machine/introduce_calendar.cgi?type=Pachi"], ["パチマガスロマガFREE スペック", "https://pachimaga.com/free/mach/maker-p/takao/e_nogamenolife119.php"], ["パチンコ・パチスロ.com スペック", "https://pachinkopachisro.com/archives/pachinko/e-no-game-no-life-119/"]]
+  },
   "garo-yami-slot": {
     order: 0.12, type: "slot", theme: "gold", year: "2026年11月", maker: "サンセイR&D", updated: "2026-10-31",
     name: "L牙狼 闇を照らす者", shortName: "スマスロ 牙狼",
