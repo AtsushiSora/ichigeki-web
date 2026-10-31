@@ -174,7 +174,7 @@
       <div class="machine-sim-head"><div><span class="machine-section-label">SIMULATOR</span><h2>${machine.shortName} 簡易シミュレーター</h2></div><span class="machine-sim-badge">娯楽用</span></div>
       <p class="machine-sim-note">投資・換金・収支は固定レートで計算します。パチンコは250玉貸し・28玉交換、スロットは46枚貸し・5.2枚交換です。スロットは開始時に${slotSettingLabel}を均等抽選し、最終結果で設定を発表します。</p>
       <div class="machine-sim-layout">
-        <div class="machine-sim-controls">${controlMarkup()}<div class="machine-average-grid" id="averageGrid"></div><div class="machine-start-anchor" id="machineStartAnchor"></div><button class="machine-start-button" id="machineStart" type="button"><span>${startLabel}</span><small>${labels.join(" → ")}</small></button></div>
+        <div class="machine-sim-controls">${controlMarkup()}<div class="machine-average-grid" id="averageGrid"></div><div class="machine-start-anchor" id="machineStartAnchor"></div><button class="machine-start-button" id="machineStart" type="button"><span>${startLabel}</span><small>${labels.join(" → ")}</small></button><button class="machine-sticky-back" id="machineStickyBack" type="button" aria-label="前のページに戻る" hidden><span aria-hidden="true">←</span><strong>戻る</strong></button></div>
         <div class="machine-result" id="machineResult" aria-live="polite"><span>RESULT</span><strong id="resultTitle">開始ボタンを押してください</strong><p id="resultSummary">平均値と今回の結果を比較できます。</p><div class="machine-result-stats" id="resultStats"></div><div class="machine-flow" id="resultFlow"></div><p class="machine-auto-save-status" id="machineAutoSaveStatus">結果は自動でマイ記録へ保存されます。</p><div class="achievement-unlock-toast" id="machineAchievementUnlock" hidden><span>TITLE UNLOCKED</span><strong></strong><small>新しい称号を獲得しました</small></div><div class="machine-result-actions"><a class="button" href="ranking.html#achievements">称号・記録を見る</a><a class="button" id="shareMachineResult" href="community.html?machine=${slug}&compose=simulation#simulationComposer">結果を投稿</a></div><div class="machine-ranking-entry"><label class="machine-ranking-name"><span>ランキングに登録する名前</span><input id="rankingNickname" type="text" maxlength="16" autocomplete="nickname" placeholder="ニックネーム"></label><button class="button primary" id="rankMachineResult" type="button" disabled>ランキングに登録</button></div></div>
       </div>
       <section class="machine-experience" id="machineExperience" role="dialog" aria-modal="true" aria-label="${machine.shortName}のシミュレーション演出" data-profile="${experienceProfile.key}" data-machine-type="${machine.type}" hidden>
@@ -499,6 +499,7 @@
   }
 
   const startButton = document.getElementById("machineStart");
+  const stickyBackButton = document.getElementById("machineStickyBack");
   const simulator = document.getElementById("simulator");
   const startAnchor = document.getElementById("machineStartAnchor");
   let simulatorVisible = false;
@@ -508,8 +509,16 @@
   function updateStickyStart() {
     const shouldStick = simulatorVisible && !startAnchorVisible && !resultPosition;
     startButton.classList.toggle("is-sticky", shouldStick);
+    stickyBackButton.hidden = !shouldStick;
     document.body.classList.toggle("has-machine-sticky-start", shouldStick);
   }
+
+  stickyBackButton.addEventListener("click", () => {
+    let canReturnWithinSite = false;
+    try { canReturnWithinSite = Boolean(document.referrer) && new URL(document.referrer, window.location.href).origin === window.location.origin; } catch { /* Use the machine list fallback. */ }
+    if (canReturnWithinSite) window.history.back();
+    else window.location.href = machine.type === "slot" ? "slots.html" : "pachinko.html";
+  });
 
   if ("IntersectionObserver" in window) {
     const simulatorObserver = new IntersectionObserver(entries => {
@@ -659,6 +668,7 @@
     document.body.classList.add("has-machine-experience");
     document.body.classList.remove("has-machine-sticky-start");
     startButton.classList.remove("is-sticky");
+    stickyBackButton.hidden = true;
     document.getElementById("machineExperienceActions").hidden = true;
     document.getElementById("machineExperienceFinishActions").hidden = true;
     document.getElementById("machineExperiencePush").hidden = true;
