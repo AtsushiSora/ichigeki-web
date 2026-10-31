@@ -18,29 +18,6 @@ const STATIC_END = "<!-- MACHINE_STATIC_END -->";
 const SCHEMA_START = "<!-- MACHINE_SCHEMA_START -->";
 const SCHEMA_END = "<!-- MACHINE_SCHEMA_END -->";
 const INDEXABLE_MACHINE_SLUGS = new Set([
-  "sao-phantom-bullet",
-  "toaru3-pachinko",
-  "kamen-rider-black-light",
-  "granbelm-319",
-  "fever-yokai-watch",
-  "juoh-shishi-no-ichigeki",
-  "no-game-no-life-119",
-  "karakuri2-maou",
-  "shin-eva-type-rei",
-  "sao-senko-no-kiseki",
-  "hokuto10-pachinko",
-  "kaguya-sama-slot",
-  "shin-eva-slot",
-  "dumbbell-slot",
-  "symphogear-seigi-slot",
-  "garo-yami-slot",
-  "ragnador-slot",
-  "seiya-ougon-slot",
-  "ggo-slot",
-  "godzilla-eva2-slot",
-  "mahoako-slot",
-  "uminchu-slot",
-  "tenten-slot",
   "eva319-red",
   "rezero-onigakari",
   "eva15",
@@ -52,7 +29,9 @@ const INDEXABLE_MACHINE_SLUGS = new Set([
   "monster-hunter-sunbreak",
   "neo-im-juggler"
 ]);
-const requestedSlugs = new Set(process.argv.slice(2));
+const cliArgs = process.argv.slice(2);
+const indexOnly = cliArgs.includes("--index-only");
+const requestedSlugs = new Set(cliArgs.filter(argument => !argument.startsWith("--")));
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -210,6 +189,12 @@ function newMachinePage(slug, machine) {
   return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#05232d"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml"><meta name="description" content="${description}"><title>${title}</title><link rel="canonical" href="https://ichigeki-pachislot.com/${slug}.html"><link rel="stylesheet" href="style.css?v=146"></head><body class="machine-library-page" data-machine="${escapeHtml(slug)}"><header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">MACHINE</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#simulator">シミュレーター</a><a href="community.html?machine=${escapeHtml(slug)}">投稿</a></nav></div></header><main class="page machine-detail-shell" id="machineApp"></main><footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="community.html">コミュニティ</a><a href="disclaimer.html">免責事項</a></div></div></footer><script src="machine-library.js?v=124"></script><script src="achievements.js?v=1"></script><script src="site-insights.js?v=1"></script><script src="machine-detail.js?v=140"></script><script src="app-shell.js?v=7"></script><script src="adsense-loader.js?v=2"></script></body></html>`;
 }
 
+function updateRobotsMeta(html, isIndexable) {
+  if (isIndexable) return html.replace(/<meta name="robots" content="noindex,follow">/, "");
+  if (html.includes('name="robots"')) return html;
+  return html.replace('<meta charset="utf-8">', '<meta charset="utf-8"><meta name="robots" content="noindex,follow">');
+}
+
 function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -239,6 +224,12 @@ for (const [slug, machine] of Object.entries(machines)) {
   if (!fs.existsSync(htmlPath)) fs.writeFileSync(htmlPath, newMachinePage(slug, machine));
 
   let html = fs.readFileSync(htmlPath, "utf8");
+  if (indexOnly) {
+    html = updateRobotsMeta(html, INDEXABLE_MACHINE_SLUGS.has(slug));
+    fs.writeFileSync(htmlPath, html);
+    updated += 1;
+    continue;
+  }
   const content = staticMarkup(slug, machine);
   const schema = schemaMarkup(slug, machine);
 
@@ -255,11 +246,7 @@ for (const [slug, machine] of Object.entries(machines)) {
   }
 
   html = html.replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${escapeHtml(machine.intro)}">`);
-  if (INDEXABLE_MACHINE_SLUGS.has(slug)) {
-    html = html.replace(/<meta name="robots" content="noindex,follow">/, "");
-  } else if (!html.includes('name="robots"')) {
-    html = html.replace('<meta charset="utf-8">', '<meta charset="utf-8"><meta name="robots" content="noindex,follow">');
-  }
+  html = updateRobotsMeta(html, INDEXABLE_MACHINE_SLUGS.has(slug));
   html = html.replace(/style\.css\?v=\d+/, "style.css?v=146");
   html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=140");
   html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=124");
