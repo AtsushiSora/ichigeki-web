@@ -91,9 +91,9 @@
   }
 
   const filterSets = {
-    pachinko: [["all", "すべて"], ["popular", "人気"], ["new", "新台"], ["light", "ライト"], ["lt", "LT"], ["wide", "デカヘソ"], ["favorite", "お気に入り"]],
-    slot: [["all", "すべて"], ["popular", "人気"], ["new", "新台"], ["smart", "スマスロ"], ["juggler", "Aタイプ"], ["high-coin", "高コイン単価"], ["favorite", "お気に入り"]],
-    all: [["all", "すべて"], ["popular", "人気"], ["new", "新台"], ["pachinko", "パチンコ"], ["slot", "スロット"], ["favorite", "お気に入り"]]
+    pachinko: [["all", "すべて"], ["new", "新台"], ["light", "ライト"], ["lt", "LT"], ["wide", "デカヘソ"], ["favorite", "お気に入り"]],
+    slot: [["all", "すべて"], ["new", "新台"], ["smart", "スマスロ"], ["juggler", "Aタイプ"], ["high-coin", "高コイン単価"], ["favorite", "お気に入り"]],
+    all: [["all", "すべて"], ["new", "新台"], ["pachinko", "パチンコ"], ["slot", "スロット"], ["favorite", "お気に入り"]]
   };
   const filterGroup = tools?.querySelector('[role="group"]');
   if (filterGroup) {
