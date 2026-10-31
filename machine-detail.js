@@ -181,6 +181,7 @@
         <div class="machine-experience-head"><div class="machine-experience-ident"><span id="machineExperienceStep">STEP 1 / 5</span><strong>${machine.shortName}</strong></div><div><button type="button" id="machineExperienceSound" aria-pressed="${experienceSoundEnabled}">${experienceSoundEnabled ? "音ON" : "音OFF"}</button><button type="button" id="machineExperienceSkip">スキップ</button><button type="button" id="machineExperienceClose" aria-label="ゲーム画面を閉じる">×</button></div></div>
         <div class="machine-experience-hud"><div><span>${machine.sim.kind === "pachinko" ? "回転" : "ゲーム"}</span><strong id="machineExperienceCurrent">0${machine.sim.kind === "pachinko" ? "回転" : "G"}</strong></div><div><span>投資</span><strong id="machineExperienceInvestment">0円</strong></div><div><span>${machine.type === "slot" ? "獲得" : "出玉"}</span><strong id="machineExperienceReward">0${machine.type === "slot" ? "枚" : "玉"}</strong></div></div>
         <div class="machine-experience-screen" id="machineExperienceScreen"><div class="machine-experience-art" aria-hidden="true"><span>${machine.shortName}</span></div><span id="machineExperiencePhase">${experienceProfile.system}</span><strong id="machineExperienceTitle">抽選中</strong><b id="machineExperienceValue">0</b><p id="machineExperienceMessage">結果を抽選しています</p><div class="machine-expectation"><div><span id="machineExperienceCue">${experienceProfile.cue}</span><strong><small>演出期待度</small><b id="machineExperienceChance">抽選中</b></strong></div><div class="machine-expectation-track" role="progressbar" aria-label="演出期待度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="machineExperienceChanceBar"></i></div><small>シミュレーション上の抽選率目安</small></div></div>
+        <div class="machine-experience-finish-actions" id="machineExperienceFinishActions" aria-label="結果画面の操作" hidden><button type="button" class="machine-experience-finish-button is-replay" id="machineExperienceReplay"><span>もう一度</span><small>REPLAY</small></button><button type="button" class="machine-experience-finish-button is-back" id="machineExperienceBack"><span>戻る</span><small>BACK</small></button></div>
         <button type="button" class="machine-experience-push" id="machineExperiencePush" hidden>PUSH</button>
         <div class="machine-experience-progress" aria-label="演出の進行状況"><span data-machine-experience-step="0">${machine.sim.kind === "juggler" ? "実戦" : "通常"}</span><span data-machine-experience-step="1">${machine.sim.kind === "pachinko" ? "大当り" : machine.sim.kind === "juggler" ? "ペカリ" : "CZ"}</span><span data-machine-experience-step="2">${machine.sim.kind === "pachinko" ? "RUSH" : machine.sim.kind === "juggler" ? "BB/RB" : "AT"}</span><span data-machine-experience-step="3">${machine.sim.kind === "pachinko" ? "連チャン" : machine.sim.kind === "juggler" ? "8,000G" : "上位"}</span><span data-machine-experience-step="4">結果</span></div>
         <section class="machine-experience-actions" id="machineExperienceActions" aria-labelledby="machineExperienceActionsTitle" hidden><div><span>RESULT</span><strong id="machineExperienceActionsTitle">今回の結果</strong><small id="machineOverlaySaveStatus">マイ記録へ自動保存しました</small></div><div class="machine-experience-result-stats" id="machineExperienceResultStats"></div><div class="machine-experience-main-actions"><button type="button" class="button primary" id="machineOverlayRetry">もう一度遊ぶ</button><a class="button" href="ranking.html">マイ記録</a><a class="button is-post" id="machineOverlayPost" href="community.html?machine=${slug}&compose=simulation#simulationComposer">結果を投稿</a></div><div class="machine-experience-rank"><label for="machineOverlayNickname">ランキング表示名<input id="machineOverlayNickname" type="text" maxlength="16" autocomplete="nickname" placeholder="ニックネーム"></label><button type="button" class="button is-rank" id="machineOverlayRank">ランキングに登録</button></div><button type="button" class="machine-experience-return" id="machineOverlayClose">機種ページへ戻る</button></section>
@@ -659,6 +660,7 @@
     document.body.classList.remove("has-machine-sticky-start");
     startButton.classList.remove("is-sticky");
     document.getElementById("machineExperienceActions").hidden = true;
+    document.getElementById("machineExperienceFinishActions").hidden = true;
     document.getElementById("machineExperiencePush").hidden = true;
     setExperienceHud(`0${machine.sim.kind === "pachinko" ? "回転" : "G"}`, "0円", `0${machine.type === "slot" ? "枚" : "玉"}`);
     document.getElementById("machineOverlayNickname").value = document.getElementById("rankingNickname").value;
@@ -674,6 +676,7 @@
     document.body.classList.remove("has-machine-experience");
     startButton.disabled = false;
     document.getElementById("machineExperienceActions").hidden = true;
+    document.getElementById("machineExperienceFinishActions").hidden = true;
     updateStickyStart();
     if (experienceReturnFocus?.focus) experienceReturnFocus.focus({ preventScroll: true });
   }
@@ -825,6 +828,7 @@
     if (runId !== experienceRunId) return;
     setExperienceStage(4, "FINAL RESULT", result.title, result.experience.finalValue || `${yen.format(result.payout)}${result.scoreKind === "coins" ? "枚" : "玉"}`, `収支 ${result.balanceYen >= 0 ? "+" : ""}${yen.format(result.balanceYen)}円 / 差${result.scoreKind === "coins" ? "枚" : "玉"} ${result.score >= 0 ? "+" : ""}${yen.format(result.score)}`, result.complete ? "complete" : result.experience.kind === "juggler" ? (result.score >= 0 ? "rush" : "end") : result.experience.upper ? "hyper" : result.experience.entered ? "rush" : "end", 100, "今回の最終結果");
     document.getElementById("machineExperienceSkip").hidden = true;
+    document.getElementById("machineExperienceFinishActions").hidden = false;
     await waitForExperience(280);
     renderResult(result);
     showExperienceActions();
@@ -843,6 +847,8 @@
   document.getElementById("machineExperienceClose").addEventListener("click", closeExperience);
   document.getElementById("machineOverlayClose").addEventListener("click", closeExperience);
   document.getElementById("machineOverlayRetry").addEventListener("click", runMachineExperience);
+  document.getElementById("machineExperienceReplay").addEventListener("click", runMachineExperience);
+  document.getElementById("machineExperienceBack").addEventListener("click", closeExperience);
   document.getElementById("machineExperiencePush").addEventListener("click", () => {
     playExperienceSound("hit", true);
     if (experienceActionResolve) experienceActionResolve();

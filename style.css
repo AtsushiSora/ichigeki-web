@@ -13673,6 +13673,7 @@ body.has-mobile-app-nav { padding-bottom: 0 !important; }
 /* Shared full-screen machine experience v121 */
 .machine-experience[hidden],
 .machine-experience-actions[hidden],
+.machine-experience-finish-actions[hidden],
 .machine-experience-head button[hidden] { display: none !important; }
 body.has-machine-experience { overflow: hidden !important; }
 .machine-experience.is-fullscreen { position: fixed; z-index: 500; inset: 0; display: grid; grid-template-rows: auto minmax(180px, 1fr) auto auto; gap: 10px; width: 100%; height: 100dvh; padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left)); overflow-y: auto; background: radial-gradient(circle at 50% 0, color-mix(in srgb, var(--machine-accent) 15%, transparent), transparent 42%), #020504; color: #f7faf7; }
@@ -15344,6 +15345,19 @@ textarea { min-height: 132px; line-height: 1.65; }
 .machine-experience-push:active { transform: translateY(3px) scale(.98); }
 @keyframes machine-push-pulse { to { filter: brightness(1.18); box-shadow: 0 0 0 8px color-mix(in srgb, var(--game-button) 12%, transparent), 0 16px 34px rgba(0,0,0,.42); } }
 
+.machine-experience-finish-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; width: min(100%, 760px); margin-inline: auto; }
+.machine-experience-finish-button { position: relative; display: grid; place-items: center; align-content: center; min-width: 0; min-height: 64px; padding: 9px 8px 12px; overflow: hidden; border: 2px solid rgba(255,255,255,.88); border-radius: 17px; color: #fff; font: inherit; cursor: pointer; box-shadow: inset 0 3px 0 rgba(255,255,255,.26), inset 0 -5px 0 rgba(0,0,0,.24), 0 0 0 4px rgba(255,255,255,.055), 0 11px 20px rgba(0,0,0,.42); transition: transform .12s ease, filter .12s ease, box-shadow .12s ease; }
+.machine-experience-finish-button::after { content: ""; position: absolute; inset: 3px 8px auto; height: 40%; border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,.24), transparent); pointer-events: none; }
+.machine-experience-finish-button span,
+.machine-experience-finish-button small { position: relative; z-index: 1; }
+.machine-experience-finish-button span { font-size: clamp(17px, 4.8vw, 22px); font-weight: 1000; line-height: 1.1; letter-spacing: .02em; }
+.machine-experience-finish-button small { margin-top: 4px; font-size: 8px; font-weight: 900; line-height: 1; letter-spacing: .18em; opacity: .74; }
+.machine-experience-finish-button.is-replay { background: linear-gradient(180deg, color-mix(in srgb, var(--game-button) 95%, #fff), color-mix(in srgb, var(--game-button) 70%, #000)); box-shadow: inset 0 3px 0 rgba(255,255,255,.28), inset 0 -5px 0 rgba(0,0,0,.24), 0 0 0 4px color-mix(in srgb, var(--game-button) 14%, transparent), 0 11px 20px rgba(0,0,0,.42); }
+.machine-experience-finish-button.is-back { border-color: #66736b; background: linear-gradient(180deg, #28322c, #111713); color: #e7eee9; }
+.machine-experience-finish-button:hover { filter: brightness(1.12); }
+.machine-experience-finish-button:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.machine-experience-finish-button:active { transform: translateY(4px) scale(.985); box-shadow: inset 0 2px 0 rgba(255,255,255,.15), inset 0 -2px 0 rgba(0,0,0,.2), 0 0 0 3px rgba(255,255,255,.04), 0 5px 10px rgba(0,0,0,.38); }
+
 .machine-experience-progress { max-width: 760px; width: 100%; margin-inline: auto; }
 .machine-experience-progress span { min-height: 34px; display: grid; place-items: center; }
 .machine-experience-actions { width: min(100%, 760px); margin-inline: auto; padding: 14px; border-radius: 18px; }
@@ -15375,6 +15389,7 @@ textarea { min-height: 132px; line-height: 1.65; }
   .machine-experience-screen > b { font-size: clamp(30px, 10vw, 48px); }
   .machine-experience-hud > div { padding: 8px; }
   .machine-experience-push { min-height: 62px; border-radius: 16px; font-size: 21px; }
+  .machine-experience-finish-button { min-height: 60px; border-radius: 15px; }
   .machine-experience-result-stats { grid-template-columns: 1fr 1fr; }
 }
 
