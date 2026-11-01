@@ -7,6 +7,8 @@
 - `index.html`: トップ
 - `new-machines-2026-10.html`: 2026年10月の新台まとめ
 - `new-machines-2026-11.html`: 2026年11月の新台10機種比較
+- `new-machines-2026-12.html`: 2026年12月新台の先行比較
+- `shangri-la-frontier.html`: e シャングリラ・フロンティアの記事・簡易シミュレーター
 - `sao-phantom-bullet.html`: 2026年12月導入予定 e SAO ファントム・バレットの設定差・記事・簡易シミュレーター
 - `average-game-guide.html`: 平均G・平均回転、中央値、ハマり確率の計算ガイド
 - `continuation-rate-guide.html`: 継続率と平均連チャンの計算ガイド

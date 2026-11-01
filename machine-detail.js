@@ -50,6 +50,7 @@
     slot: { lendCoins: 46, exchangeCoins: 5.2 }
   };
   const NEW_MACHINE_ARTICLE_SLUGS = new Set([
+    "shangri-la-frontier",
     "sao-phantom-bullet",
     "toaru3-pachinko",
     "kamen-rider-black-light",
@@ -73,6 +74,10 @@
     "seiya-ougon-slot",
     "ggo-slot",
     "godzilla-eva2-slot"
+  ]);
+  const DECEMBER_NEW_MACHINE_SLUGS = new Set([
+    "shangri-la-frontier",
+    "sao-phantom-bullet"
   ]);
   const SLOT_SETTING_PROFILES = {
     1: { rate: 1, entry: 0, special: 0, upper: 0, big: 1, reg: 1, payout: 0 },
@@ -226,19 +231,22 @@
   const labels = simulationLabels();
   const startLabel = machine.sim.kind === "pachinko" ? "パチンコを始める" : machine.sim.kind === "juggler" ? "8,000Gを回す" : "レバーON";
   const isNovemberNewMachine = NOVEMBER_NEW_MACHINE_SLUGS.has(slug);
+  const isDecemberNewMachine = DECEMBER_NEW_MACHINE_SLUGS.has(slug);
   const hubHref = machine.type === "slot" ? "slots.html" : "pachinko.html";
   const hubLabel = machine.type === "slot" ? "パチスロ" : "パチンコ";
   const novemberBreadcrumb = isNovemberNewMachine ? '<span>›</span><a href="new-machines-2026-11.html">11月新台</a>' : "";
   const novemberQuickLink = isNovemberNewMachine ? '<a href="new-machines-2026-11.html">11月新台比較</a>' : "";
+  const decemberBreadcrumb = isDecemberNewMachine ? '<span>›</span><a href="new-machines-2026-12.html">12月新台</a>' : "";
+  const decemberQuickLink = isDecemberNewMachine ? '<a href="new-machines-2026-12.html">12月新台比較</a>' : "";
   const neighbors = ordered.filter(([key, item]) => key !== slug && item.type === machine.type).slice(0, 5);
   app.innerHTML = `
-    <nav class="article-breadcrumb machine-breadcrumb" aria-label="パンくず"><a href="index.html">TOP</a><span>›</span><a href="${hubHref}">${hubLabel}</a>${novemberBreadcrumb}<span>›</span><span aria-current="page">${machine.shortName}</span></nav>
+    <nav class="article-breadcrumb machine-breadcrumb" aria-label="パンくず"><a href="index.html">TOP</a><span>›</span><a href="${hubHref}">${hubLabel}</a>${novemberBreadcrumb}${decemberBreadcrumb}<span>›</span><span aria-current="page">${machine.shortName}</span></nav>
     <section class="machine-archive-hero theme-${machine.theme}">
       <div><span class="machine-kind">${machine.year.includes("2026") ? "NEW MACHINE 2026" : machine.type === "slot" ? "POPULAR SLOT ARCHIVE" : "POPULAR PACHINKO ARCHIVE"}</span><h1>${machine.name}</h1><p>${machine.catchcopy}</p></div>
       <dl><div><dt>導入</dt><dd>${machine.year}</dd></div><div><dt>メーカー</dt><dd>${machine.maker}</dd></div><div><dt>分類</dt><dd>${machine.type === "slot" ? "パチスロ" : "パチンコ"}</dd></div></dl>
     </section>
 
-    <nav class="machine-quick-nav" aria-label="ページ内メニュー"><a class="is-primary" href="#simulator">今すぐ試す</a><button class="machine-favorite-button" id="machineFavoriteButton" type="button" aria-pressed="false"><span aria-hidden="true">☆</span> お気に入り</button><a href="#spec">スペック</a><a href="#machineRanking">ランキング</a><a href="#article">記事</a>${machine.readerGuide ? '<a href="#reader-guide">30秒要点</a>' : ""}${novemberQuickLink}<a href="community.html?machine=${slug}">投稿</a></nav>
+    <nav class="machine-quick-nav" aria-label="ページ内メニュー"><a class="is-primary" href="#simulator">今すぐ試す</a><button class="machine-favorite-button" id="machineFavoriteButton" type="button" aria-pressed="false"><span aria-hidden="true">☆</span> お気に入り</button><a href="#spec">スペック</a><a href="#machineRanking">ランキング</a><a href="#article">記事</a>${machine.readerGuide ? '<a href="#reader-guide">30秒要点</a>' : ""}${novemberQuickLink}${decemberQuickLink}<a href="community.html?machine=${slug}">投稿</a></nav>
 
     <section class="machine-intro" id="spec">
       <div><span class="machine-section-label">SPEC GUIDE</span><h2>主要スペック</h2><p>${machine.intro}</p><ul>${machine.points.map(point => `<li>${point}</li>`).join("")}</ul></div>
@@ -279,7 +287,7 @@
         ${readerGuideMarkup()}
         ${articleMarkup()}
         ${machine.readerGuide ? `<div class="machine-article-sim-cta"><span>SIMULATOR</span><strong>読んだ内容を固定条件で試す</strong><p>同じ貸出・交換条件で、初当りから最終結果までを体験できます。</p><a class="button primary" href="#simulator">${startLabel}</a></div>` : ""}
-        <h3>関連ガイド</h3><div class="next-links">${isNovemberNewMachine ? '<a href="new-machines-2026-11.html">11月新台10機種を比較</a>' : ""}<a href="average-game-guide.html">平均G・平均回転</a><a href="continuation-rate-guide.html">継続率と平均連</a><a href="simulation-policy.html">計算・掲載方針</a></div>
+        <h3>関連ガイド</h3><div class="next-links">${isNovemberNewMachine ? '<a href="new-machines-2026-11.html">11月新台10機種を比較</a>' : ""}${isDecemberNewMachine ? '<a href="new-machines-2026-12.html">12月新台の先行比較</a>' : ""}<a href="average-game-guide.html">平均G・平均回転</a><a href="continuation-rate-guide.html">継続率と平均連</a><a href="simulation-policy.html">計算・掲載方針</a></div>
         <h3>参照情報</h3><ul class="machine-sources">${machine.sources.map(([label, url]) => `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${label} ↗</a></li>`).join("")}</ul>
       </article>
       <aside class="machine-side-list"><strong>次に試す人気機種</strong>${neighbors.map(([key, item]) => `<a href="${key}.html"><span>${item.type === "slot" ? "SLOT" : "PACHINKO"}</span>${item.shortName}</a>`).join("")}</aside>

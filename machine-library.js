@@ -1,4 +1,27 @@
 window.ICHIGEKI_MACHINES = {
+  "shangri-la-frontier": {
+    order: 0.08, type: "pachinko", theme: "emerald", year: "2026年12月", maker: "Sammy", updated: "2026-11-01",
+    name: "e シャングリラ・フロンティア", shortName: "eシャンフロ",
+    catchcopy: "約1/399.9から、1500個 or 4500個＋αの神ゲーRUSHへ。",
+    intro: "2026年12月7日導入予定のスマパチLT機。図柄揃い約1/399.9、RUSH突入約54%、ST134回・継続約75%の流れと、右打ち中1500個・4500個中心の出玉を固定条件で簡易体験できます。",
+    points: ["図柄揃い約1/399.9・RUSH突入約54%", "ST134回・RUSH継続約75%", "RUSH中は1500個または4500個以上が中心"],
+    specs: [["図柄揃い", "約1/399.9"], ["RUSH中", "約1/98.5"], ["RUSH突入", "約54%"], ["ST回数", "134回"], ["RUSH継続", "約75%"], ["右打ち出玉", "1500・4500個＋α"]],
+    sim: { kind: "pachinko", hitRate: 399.9, hitLabel: "図柄揃い", startType: "通常ヘソ", spinsPer1k: 19.0, minSpins: 10, maxSpins: 30, rushLabel: "神ゲー SHANGRI-LA FRONTIER", rushEntry: 0.54, rushContinue: 0.75, firstPayoutIn: 1500, firstPayoutOut: 1500, rushPayouts: [[1500, 0.50], [4500, 0.48], [7500, 0.02]] },
+    articleSections: [
+      { heading: "約1/399.9からRUSH突入約54%", paragraphs: ["通常時の図柄揃いは約1/399.9です。初当りの約53%は1500個獲得後にRUSHへ、約1%は300個獲得後にRUSHへ進み、合計突入率は約54%です。", "サイトでは初回300個の約1%を独立表示せず、初当り出玉を1500個の代表値へまとめています。RUSH非突入時も1500個として計算します。"] },
+      { heading: "ST134回・継続約75%", paragraphs: ["RUSH中は約1/98.5を134回転で抽選し、継続率は約75%です。シミュレーターではST中の各回転を個別表示せず、1回ごとに約75%の継続抽選へまとめます。", "平均連チャン回数は長期間の理論上の目安です。1回の結果は単発終了から複数回継続まで大きく変わります。"] },
+      { heading: "1500個・4500個と超神ゲーBOOST", paragraphs: ["右打ち中は1500個が約50%、4500個が約48%、4500個＋超神ゲーBOOSTが約2%です。BOOSTでは1500個・3000個・4500個の上乗せを狙います。", "BOOSTの上乗せループは公開されている代表振り分けを完全再現せず、サイトでは4500個＋BOOSTの一部を7500個の代表出玉へ簡易化します。実機の上限や期待出玉を保証するものではありません。"] },
+      { heading: "固定回転率と収支の条件", bullets: ["19.0回/1,000円・250玉貸し・28玉交換で固定", "平均初当り投資目安は約21,000円", "19.0回は比較用の参考値で実店舗の回転率を保証しない", "結果は自動でマイ記録へ保存し、同じ条件でランキング集計"] }
+    ],
+    faq: [
+      { question: "e シャングリラ・フロンティアはいつ導入される？", answer: "2026年12月7日から全国のホールへ順次導入予定です。地域や店舗によって導入日が異なる場合があります。" },
+      { question: "RUSH突入率と継続率は？", answer: "RUSH突入率は約54%、RUSH中は約1/98.5を134回転で抽選し、継続率は約75%です。" },
+      { question: "右打ち中の出玉は？", answer: "1500個が約50%、4500個が約48%、4500個＋超神ゲーBOOSTが約2%です。出玉は払い出し個数です。" },
+      { question: "平均投資目安はいくら？", answer: "図柄揃い約1/399.9と固定回転率19.0回/1,000円から、約21,000円を目安として表示します。実店舗の回転率や持ち玉状況で変わるため、実収支を保証する値ではありません。" },
+      { question: "超神ゲーBOOSTは完全再現している？", answer: "完全再現ではありません。4500個＋BOOSTの一部を7500個の代表出玉へまとめ、結果の幅を体験するための固定モデルにしています。" }
+    ],
+    sources: [["Sammy 公式発売発表", "https://www.sammy.co.jp/japanese/news/detail/?id=308"], ["Sammy 公式機種サイト", "https://www.sammy.co.jp/japanese/product/pachinko/e_sha_fr/"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/machine/4831/1/1"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10571"]]
+  },
   "sao-phantom-bullet": {
     order: 0.09, type: "pachinko", theme: "aqua", year: "2026年12月", maker: "KYORAKU", updated: "2026-11-01",
     name: "e ソードアート・オンライン ファントム・バレット", shortName: "e SAO ファントム・バレット",
@@ -974,6 +997,12 @@ window.ICHIGEKI_MACHINES = {
 
 (function applyNovemberNewMachineReaderGuides() {
   const guides = {
+    "shangri-la-frontier": {
+      verdict: "約1/399.9から約54%でRUSHへ進み、ST134回・継続約75%で1500個と4500個以上の出玉差を比べる機種です。初当りの重さとRUSH中の一撃出玉を分けて確認できます。",
+      bestFor: ["12月7日の導入前にゲームの流れを把握したい", "1500個と4500個中心の出玉差を比べたい", "約75%継続で連チャン結果の幅を見たい"],
+      check: ["平均投資目安は固定19.0回/1,000円で約21,000円", "初回300個の約1%は1500個の代表値へ集約", "超神ゲーBOOSTの上乗せループは完全再現しない"],
+      compare: [["sao-phantom-bullet", "e SAO ファントム・バレット", "設定付き約1/229.9の12月新台と比較"], ["juoh-shishi-no-ichigeki", "e獣王 獅子の一撃", "大きな出玉契機を持つ機種と比較"]]
+    },
     "sao-phantom-bullet": {
       verdict: "5段階設定とフェアスタートを搭載した約1/229.9〜約1/189.8のライトミドルです。ICHIGEKIでは設定1へ固定し、BoB予選約70%からBoB FINALS約80%へ進む流れと出玉差を比較できます。",
       bestFor: ["12月導入前にゲームの流れを把握したい", "BoB予選と上位FINALSの継続差を比べたい", "設定付きパチンコの設定1条件を試したい"],

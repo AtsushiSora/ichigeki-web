@@ -1,4 +1,4 @@
-const CACHE_NAME = "ichigeki-web-v197";
+const CACHE_NAME = "ichigeki-web-v198";
 const CORE_ASSETS = [
   "index.html",
   "account.html",
@@ -11,6 +11,7 @@ const CORE_ASSETS = [
   "exchange-rate-tool.html",
   "new-machines-2026-10.html",
   "new-machines-2026-11.html",
+  "new-machines-2026-12.html",
   "articles.html",
   "average-game-guide.html",
   "juggler-8000g-guide.html",
@@ -26,6 +27,7 @@ const CORE_ASSETS = [
   "gundam-unicorn.html",
   "eva319-red.html",
   "sao-phantom-bullet.html",
+  "shangri-la-frontier.html",
   "toaru3-pachinko.html",
   "kamen-rider-black-light.html",
   "granbelm-319.html",
@@ -92,11 +94,11 @@ const CORE_ASSETS = [
   "auth.js",
   "auth.js?v=1",
   "machine-library.js",
-  "machine-library.js?v=127",
+  "machine-library.js?v=128",
   "machine-hub.js",
   "machine-hub.js?v=10",
   "machine-detail.js",
-  "machine-detail.js?v=146",
+  "machine-detail.js?v=147",
   "achievements.js",
   "achievements.js?v=1",
   "my-records.js",
