@@ -111,6 +111,55 @@
     $("recordSummaryPeriod").textContent = dates.length ? `${dayDate(dates[0])} 〜 ${dayDate(dates[dates.length - 1])}` : "まだ記録がありません";
   }
 
+  function renderPlayStyle() {
+    const renderType = (type, prefix) => {
+      const items = records.filter(record => machineType(record) === type);
+      const wins = items.filter(record => numeric(record.balanceYen) > 0).length;
+      const total = items.reduce((sum, record) => sum + numeric(record.balanceYen), 0);
+      const favorite = groupRecords(items)[0];
+      const entered = items.filter(record => record.entered || record.upper).length;
+      $(`record${prefix}Count`).textContent = `${number.format(items.length)}回`;
+      $(`record${prefix}WinRate`).textContent = items.length ? `${Math.round(wins / items.length * 100)}%` : "--";
+      $(`record${prefix}Balance`).textContent = items.length ? signedYen(total) : "--";
+      $(`record${prefix}Favorite`).textContent = favorite?.name || "--";
+      $(`record${prefix}Upper`).textContent = `${number.format(entered)}回`;
+    };
+
+    renderType("pachinko", "Pachinko");
+    renderType("slot", "Slot");
+
+    const recent = [...records].sort((a, b) => timestamp(b) - timestamp(a)).slice(0, 5);
+    const recentWins = recent.filter(record => numeric(record.balanceYen) > 0).length;
+    const recentLosses = recent.filter(record => numeric(record.balanceYen) < 0).length;
+    const recentTotal = recent.reduce((sum, record) => sum + numeric(record.balanceYen), 0);
+    const recentForm = $("recordRecentForm");
+    $("recordRecentCount").textContent = `${number.format(recent.length)}回`;
+    recentForm.innerHTML = recent.length
+      ? recent.map(record => {
+          const balance = numeric(record.balanceYen);
+          const state = balance > 0 ? "is-win" : balance < 0 ? "is-loss" : "is-draw";
+          const label = balance > 0 ? "勝ち" : balance < 0 ? "負け" : "引き分け";
+          return `<i class="${state}" aria-label="${label}" title="${escapeHtml(machineTitle(record))}：${signedYen(balance)}"></i>`;
+        }).join("")
+      : '<i class="is-empty" aria-hidden="true"></i><i class="is-empty" aria-hidden="true"></i><i class="is-empty" aria-hidden="true"></i><i class="is-empty" aria-hidden="true"></i><i class="is-empty" aria-hidden="true"></i>';
+
+    if (!recent.length) {
+      $("recordRecentTitle").textContent = "まだ記録がありません";
+      $("recordRecentSummary").textContent = "遊ぶと直近の勝敗と収支を表示します。";
+      recentForm.setAttribute("aria-label", "直近の記録はまだありません");
+      return;
+    }
+
+    const firstSign = Math.sign(numeric(recent[0].balanceYen));
+    let streak = firstSign === 0 ? 0 : 1;
+    while (streak < recent.length && Math.sign(numeric(recent[streak].balanceYen)) === firstSign) streak += 1;
+    $("recordRecentTitle").textContent = streak >= 2
+      ? `${streak}連${firstSign > 0 ? "勝" : "敗"}中`
+      : `直近${recent.length}回：${recentWins}勝${recentLosses}敗`;
+    $("recordRecentSummary").textContent = `合計 ${signedYen(recentTotal)}・平均 ${signedYen(Math.round(recentTotal / recent.length))}`;
+    recentForm.setAttribute("aria-label", `直近${recent.length}回は${recentWins}勝${recentLosses}敗、合計${signedYen(recentTotal)}`);
+  }
+
   function renderTrend() {
     const chart = $("recordTrendChart");
     const today = new Date();
@@ -228,6 +277,7 @@
 
   function renderAll() {
     renderSummary();
+    renderPlayStyle();
     renderTrend();
     renderAchievements();
     renderMachineCards();

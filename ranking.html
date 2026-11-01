@@ -17,7 +17,7 @@
   <meta property="og:url" content="https://ichigeki-pachislot.com/ranking.html">
   <meta property="og:image" content="https://ichigeki-pachislot.com/icon.svg">
   <meta name="twitter:card" content="summary">
-  <link rel="stylesheet" href="style.css?v=154">
+  <link rel="stylesheet" href="style.css?v=155">
 </head>
 <body class="my-records-page">
   <header class="site-header">
@@ -70,6 +70,32 @@
         <article><span>コンプリート</span><strong id="recordCompleteCount">0回</strong><small>スロット19,000枚到達</small></article>
         <article><span>累計差枚</span><strong id="recordCoinTotal">--</strong><small>スロット記録の合計</small></article>
         <article><span>累計差玉</span><strong id="recordBallTotal">--</strong><small>パチンコ記録の合計</small></article>
+      </div>
+    </section>
+
+    <section class="my-records-play-style" aria-labelledby="recordPlayStyleTitle">
+      <div class="my-records-section-head">
+        <div><span>PLAY STYLE</span><h2 id="recordPlayStyleTitle">遊び方別の成績</h2></div>
+        <p>パチンコ・スロット・直近5回を分けて集計</p>
+      </div>
+      <div class="my-records-play-style-grid">
+        <article class="is-pachinko">
+          <header><span>PACHINKO</span><strong id="recordPachinkoCount">0回</strong></header>
+          <dl><div><dt>勝率</dt><dd id="recordPachinkoWinRate">--</dd></div><div><dt>累計収支</dt><dd id="recordPachinkoBalance">--</dd></div><div><dt>一番遊んだ台</dt><dd id="recordPachinkoFavorite">--</dd></div><div><dt>RUSH・上位到達</dt><dd id="recordPachinkoUpper">0回</dd></div></dl>
+          <a href="pachinko.html">パチンコを選ぶ</a>
+        </article>
+        <article class="is-slot">
+          <header><span>SLOT</span><strong id="recordSlotCount">0回</strong></header>
+          <dl><div><dt>勝率</dt><dd id="recordSlotWinRate">--</dd></div><div><dt>累計収支</dt><dd id="recordSlotBalance">--</dd></div><div><dt>一番遊んだ台</dt><dd id="recordSlotFavorite">--</dd></div><div><dt>AT・上位到達</dt><dd id="recordSlotUpper">0回</dd></div></dl>
+          <a href="slots.html">スロットを選ぶ</a>
+        </article>
+        <article class="is-recent">
+          <header><span>RECENT 5</span><strong id="recordRecentCount">0回</strong></header>
+          <div class="my-records-recent-form" id="recordRecentForm" aria-label="直近5回の収支結果"></div>
+          <strong class="my-records-recent-title" id="recordRecentTitle">まだ記録がありません</strong>
+          <p id="recordRecentSummary">遊ぶと直近の勝敗と収支を表示します。</p>
+          <a href="#recordHistoryTitle">履歴を見る</a>
+        </article>
       </div>
     </section>
 
@@ -152,7 +178,7 @@
   <script src="site-insights.js?v=1"></script>
   <script src="community-config.js?v=2"></script>
   <script src="auth.js?v=1" id="ichigeki-auth-script"></script>
-  <script src="my-records.js?v=5"></script>
+  <script src="my-records.js?v=6"></script>
   <script src="adsense-loader.js?v=2"></script>
   <script src="app-shell.js?v=10"></script>
 </body>

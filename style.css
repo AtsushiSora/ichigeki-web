@@ -14375,6 +14375,7 @@ textarea { min-height: 132px; line-height: 1.65; }
 
 .my-records-hero,
 .my-records-summary,
+.my-records-play-style,
 .my-records-achievements,
 .my-records-machines,
 .my-records-history,
@@ -14444,6 +14445,7 @@ textarea { min-height: 132px; line-height: 1.65; }
 .my-records-total strong { color: #9df57d; font-size: 38px; line-height: 1.3; }
 
 .my-records-summary,
+.my-records-play-style,
 .my-records-achievements,
 .my-records-machines,
 .my-records-history,
@@ -14491,6 +14493,32 @@ textarea { min-height: 132px; line-height: 1.65; }
 .my-records-stat-grid small { display: block; overflow: hidden; color: #8e998f; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
 .my-records-stat-grid strong { display: block; overflow: hidden; margin: 5px 0 3px; color: #f4f7f3; font-size: clamp(20px, 3vw, 28px); line-height: 1.25; text-overflow: ellipsis; white-space: nowrap; }
 .my-records-stat-grid .is-featured strong { color: #9df57d; }
+
+.my-records-play-style-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.my-records-play-style-grid article { position: relative; display: grid; align-content: start; gap: 16px; min-width: 0; padding: 20px; overflow: hidden; border: 1px solid #2a362e; border-radius: 18px; background: #0a0f0b; }
+.my-records-play-style-grid article::after { content: ""; position: absolute; top: -70px; right: -65px; width: 150px; height: 150px; border-radius: 50%; background: rgba(103, 217, 80, .08); pointer-events: none; }
+.my-records-play-style-grid article.is-pachinko { border-color: rgba(242, 96, 119, .34); background: linear-gradient(145deg, rgba(90, 20, 34, .18), #0a0f0b 65%); }
+.my-records-play-style-grid article.is-pachinko::after { background: rgba(242, 96, 119, .1); }
+.my-records-play-style-grid article.is-slot { border-color: rgba(91, 153, 243, .34); background: linear-gradient(145deg, rgba(22, 63, 119, .2), #0a0f0b 65%); }
+.my-records-play-style-grid article.is-slot::after { background: rgba(91, 153, 243, .1); }
+.my-records-play-style-grid article.is-recent { border-color: rgba(107, 211, 79, .35); background: linear-gradient(145deg, rgba(35, 104, 43, .18), #0a0f0b 65%); }
+.my-records-play-style-grid header { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.my-records-play-style-grid header span { color: #a6b0a8; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; font-weight: 900; letter-spacing: .16em; }
+.my-records-play-style-grid header strong { color: #f4f7f3; font-size: 23px; }
+.my-records-play-style-grid dl { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0; }
+.my-records-play-style-grid dl > div { min-width: 0; padding: 10px; border: 1px solid rgba(255, 255, 255, .065); border-radius: 11px; background: rgba(0, 0, 0, .16); }
+.my-records-play-style-grid dt { color: #7f8b81; font-size: 9px; }
+.my-records-play-style-grid dd { overflow: hidden; margin: 4px 0 0; color: #e8eee8; font-size: 13px; font-weight: 850; text-overflow: ellipsis; white-space: nowrap; }
+.my-records-play-style-grid article > a { justify-self: start; color: #9fe98e; font-size: 12px; font-weight: 850; text-decoration: none; }
+.my-records-play-style-grid article > a::after { content: " →"; }
+.my-records-recent-form { display: grid; grid-template-columns: repeat(5, 1fr); gap: 7px; }
+.my-records-recent-form i { display: block; height: 11px; border-radius: 999px; background: #354039; }
+.my-records-recent-form i.is-win { background: #6bd34f; box-shadow: 0 0 10px rgba(107, 211, 79, .24); }
+.my-records-recent-form i.is-loss { background: #ef6a62; box-shadow: 0 0 10px rgba(239, 106, 98, .18); }
+.my-records-recent-form i.is-draw { background: #d2b252; }
+.my-records-recent-form i.is-empty { background: #273029; }
+.my-records-recent-title { color: #f2f7f1; font-size: 21px; }
+.my-records-play-style-grid .is-recent p { min-height: 42px; margin: -8px 0 0; color: #89958b; font-size: 12px; line-height: 1.65; }
 
 .my-records-trend { display: grid; gap: 16px; padding: 20px; border: 1px solid #263229; border-radius: 20px; background: linear-gradient(145deg, #0c120d, #080b09); }
 .my-records-trend-chart { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; min-height: 238px; padding: 14px 8px 6px; border-top: 1px solid #27312a; }
@@ -14795,6 +14823,7 @@ textarea { min-height: 132px; line-height: 1.65; }
   .my-records-shell { padding: 12px 10px calc(112px + env(safe-area-inset-bottom)); gap: 12px; }
   .my-records-hero,
   .my-records-summary,
+  .my-records-play-style,
   .my-records-achievements,
   .my-records-machines,
   .my-records-history,
@@ -14806,6 +14835,7 @@ textarea { min-height: 132px; line-height: 1.65; }
   .my-records-total { padding: 16px; }
   .my-records-total strong { font-size: 32px; }
   .my-records-summary,
+  .my-records-play-style,
   .my-records-machines,
   .my-records-history,
   .my-records-note { padding: 18px 14px; }
@@ -14813,6 +14843,9 @@ textarea { min-height: 132px; line-height: 1.65; }
   .my-records-stat-grid { grid-template-columns: 1fr 1fr; gap: 7px; }
   .my-records-stat-grid article { padding: 13px 11px; border-radius: 13px; }
   .my-records-stat-grid strong { font-size: 20px; }
+  .my-records-play-style-grid { grid-template-columns: 1fr; gap: 8px; }
+  .my-records-play-style-grid article { gap: 13px; padding: 16px; border-radius: 14px; }
+  .my-records-play-style-grid dl { grid-template-columns: 1fr 1fr; }
   .achievement-feature-grid { grid-template-columns: 1fr; gap: 8px; }
   .achievement-current,
   .achievement-next { min-height: 0; padding: 15px; border-radius: 14px; }
