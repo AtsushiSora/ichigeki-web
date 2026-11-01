@@ -16143,3 +16143,156 @@ textarea { min-height: 132px; line-height: 1.65; }
   .machine-article-sim-cta { padding: 18px; }
   .machine-article-sim-cta .button { width: 100%; }
 }
+
+/* Machine key visuals v158 */
+.home-action-visual.has-image {
+  display: block;
+  overflow: hidden;
+  padding: 0;
+  background: #07131a !important;
+}
+.home-action-visual.has-image img {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(1.04) contrast(1.02);
+  transition: transform .22s ease, filter .22s ease;
+}
+.home-action-grid > a:hover .home-action-visual.has-image img,
+.home-action-grid > a:focus-visible .home-action-visual.has-image img {
+  filter: saturate(1.1) contrast(1.04) brightness(.92);
+  transform: scale(1.035);
+}
+.home-action-visual.has-image::after {
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(0,0,0,.02) 40%, rgba(0,0,0,.74));
+}
+.home-action-visual.has-image b {
+  position: absolute;
+  z-index: 3;
+  top: 10px;
+  right: auto;
+  bottom: auto;
+  left: 10px;
+  display: inline-flex;
+  width: auto;
+  margin: 0;
+  padding: 5px 8px;
+  color: #fff;
+  border-radius: 999px;
+  background: rgba(0,0,0,.72);
+  text-shadow: 0 2px 10px rgba(0,0,0,.95);
+}
+
+.machine-hub-card-visual.has-image {
+  display: block;
+  overflow: hidden;
+  padding: 0;
+  background: #07131a !important;
+}
+.machine-hub-card-visual.has-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(1.03) contrast(1.02);
+  transition: transform .22s ease, filter .22s ease;
+}
+.machine-hub-card:hover .machine-hub-card-visual.has-image img,
+.machine-hub-card:focus-visible .machine-hub-card-visual.has-image img {
+  filter: saturate(1.1) contrast(1.04) brightness(.94);
+  transform: scale(1.045);
+}
+.machine-hub-card-visual.has-image::after {
+  background: linear-gradient(180deg, rgba(0,0,0,.02) 48%, rgba(0,0,0,.58));
+}
+.machine-hub-card-visual.has-image > span {
+  border-color: rgba(255,255,255,.76);
+  background: rgba(0,0,0,.68);
+  backdrop-filter: blur(6px);
+}
+
+.machine-archive-hero.has-image {
+  grid-template-columns: minmax(380px, .95fr) minmax(0, 1.05fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 0;
+  align-items: stretch;
+  padding: 0;
+}
+.machine-archive-visual {
+  position: relative;
+  grid-column: 1;
+  grid-row: 1 / 3;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-height: 390px;
+  margin: 0;
+  overflow: hidden;
+  border-right: 1px solid color-mix(in srgb, var(--machine-accent) 38%, var(--line));
+  background: #e8f8ff;
+}
+.machine-archive-visual img {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: contain;
+  object-position: center;
+}
+.machine-archive-visual figcaption {
+  padding: 8px 12px;
+  border-top: 1px solid rgba(255,255,255,.1);
+  color: #a8b4ab;
+  background: #080c09;
+  font-size: 10px;
+  line-height: 1.45;
+}
+.machine-archive-visual figcaption a { color: #c9e9ff; }
+.machine-archive-hero.has-image .machine-archive-copy {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+  padding: clamp(24px, 4vw, 42px) clamp(22px, 4vw, 40px) 20px;
+}
+.machine-archive-hero.has-image dl {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: end;
+  margin: 0 clamp(22px, 4vw, 40px) clamp(24px, 4vw, 38px);
+}
+
+@media (max-width: 900px) {
+  .machine-archive-hero.has-image {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+  .machine-archive-visual {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 0;
+    border-right: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--machine-accent) 38%, var(--line));
+  }
+  .machine-archive-visual img {
+    aspect-ratio: 750 / 479;
+    height: auto;
+  }
+  .machine-archive-hero.has-image .machine-archive-copy {
+    grid-column: 1;
+    grid-row: 2;
+    padding: 22px 18px 16px;
+  }
+  .machine-archive-hero.has-image dl {
+    grid-column: 1;
+    grid-row: 3;
+    margin: 0 18px 20px;
+  }
+}
+
+@media (max-width: 760px) {
+  .home-action-visual.has-image b { top: 9px; left: 9px; }
+  .machine-hub-card-visual.has-image img { object-position: 50% 50%; }
+}

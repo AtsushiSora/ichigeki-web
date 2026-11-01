@@ -803,6 +803,10 @@ window.ICHIGEKI_MACHINES = {
   "okiumi6": {
     order: 32, type: "pachinko", theme: "ocean", year: "2025年10月", maker: "三洋物産",
     name: "Pスーパー海物語IN沖縄6", shortName: "沖海6",
+    image: "assets/machines/okiumi6-key-visual.jpg",
+    imageAlt: "Pスーパー海物語IN沖縄6のキービジュアル",
+    imageCredit: "©SANYO BUSSAN CO., LTD.",
+    imageSource: "https://www.sanyobussan.co.jp/products/pk_supersea_okinawa6/",
     catchcopy: "王道60%確変ループに、ジンベェタイムをプラス。",
     intro: "大当り約1/319.6、確変60%の王道ミドル。通常時の回転率と交換率を変えながら、確変・時短引き戻し・ジンベェタイムを含む連チャンを簡易体験できます。",
     points: ["通常時大当り約1/319.6、確変中約1/31.9", "確変割合60%、通常大当り後は時短100回", "ジンベェタイムは時短200回または次回大当りまで"],

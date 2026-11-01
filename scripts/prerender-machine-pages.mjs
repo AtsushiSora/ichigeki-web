@@ -228,13 +228,18 @@ function staticMarkup(slug, machine) {
     : machine.sim.kind === "juggler"
       ? `8,000G・BIG・REG・差枚`
       : `${machine.sim.triggerLabel}・${machine.sim.mainLabel}・${machine.sim.upperLabel}`;
+  const heroImage = machine.image ? `<figure class="machine-archive-visual">
+      <img src="${escapeHtml(machine.image)}" alt="${escapeHtml(machine.imageAlt || `${machine.shortName}の機種画像`)}" decoding="async">
+      ${machine.imageCredit ? `<figcaption>${machine.imageSource ? `<a href="${escapeHtml(machine.imageSource)}" target="_blank" rel="noopener noreferrer">${escapeHtml(machine.imageCredit)} ↗</a>` : escapeHtml(machine.imageCredit)}</figcaption>` : ""}
+    </figure>` : "";
 
   return `${STATIC_START}
 <main class="page machine-detail-shell" id="machineApp">
   <article class="machine-static-content">
     ${visibleBreadcrumb(slug, machine)}
-    <section class="machine-archive-hero theme-${escapeHtml(machine.theme)}">
-      <div><span class="machine-kind">${escapeHtml(typeLabel(machine))} 機種記事</span><h1>${escapeHtml(machine.name)}</h1><p>${escapeHtml(machine.catchcopy)}</p></div>
+    <section class="machine-archive-hero theme-${escapeHtml(machine.theme)}${machine.image ? " has-image" : ""}">
+      ${heroImage}
+      <div class="machine-archive-copy"><span class="machine-kind">${escapeHtml(typeLabel(machine))} 機種記事</span><h1>${escapeHtml(machine.name)}</h1><p>${escapeHtml(machine.catchcopy)}</p></div>
       <dl><div><dt>導入</dt><dd>${escapeHtml(machine.year)}</dd></div><div><dt>メーカー</dt><dd>${escapeHtml(machine.maker)}</dd></div><div><dt>分類</dt><dd>${escapeHtml(typeLabel(machine))}</dd></div></dl>
     </section>
     <nav class="machine-quick-nav" aria-label="ページ内メニュー"><a href="#spec">スペック</a><a href="#article">解説</a>${machine.readerGuide ? '<a href="#reader-guide">30秒要点</a>' : ""}${NOVEMBER_NEW_MACHINE_SLUGS.has(slug) ? '<a href="new-machines-2026-11.html">11月新台比較</a>' : ""}${DECEMBER_NEW_MACHINE_SLUGS.has(slug) ? '<a href="new-machines-2026-12.html">12月新台比較</a>' : ""}<a href="community.html?machine=${encodeURIComponent(slug)}">口コミ・投稿</a></nav>
@@ -282,6 +287,7 @@ function schemaMarkup(slug, machine) {
     mainEntityOfPage: `https://ichigeki-pachislot.com/${slug}.html`,
     inLanguage: "ja"
   };
+  if (machine.image) article.image = `https://ichigeki-pachislot.com/${machine.image}`;
   const breadcrumbs = {
     "@type": "BreadcrumbList",
     itemListElement: breadcrumbItems(slug, machine).map((item, index) => ({
@@ -313,7 +319,7 @@ function schemaMarkup(slug, machine) {
 function newMachinePage(slug, machine) {
   const title = `${escapeHtml(machine.name)} | 記事・シミュレーター | ICHIGEKI`;
   const description = escapeHtml(machine.intro);
-  return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#05232d"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml"><meta name="description" content="${description}"><title>${title}</title><link rel="canonical" href="https://ichigeki-pachislot.com/${slug}.html"><link rel="stylesheet" href="style.css?v=155"></head><body class="machine-library-page" data-machine="${escapeHtml(slug)}"><header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">MACHINE</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#simulator">シミュレーター</a><a href="community.html?machine=${escapeHtml(slug)}">投稿</a></nav></div></header><main class="page machine-detail-shell" id="machineApp"></main><footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="community.html">コミュニティ</a><a href="disclaimer.html">免責事項</a></div></div></footer><script src="machine-library.js?v=128"></script><script src="achievements.js?v=1"></script><script src="site-insights.js?v=1"></script><script src="machine-detail.js?v=147"></script><script src="app-shell.js?v=10"></script><script src="adsense-loader.js?v=2"></script></body></html>`;
+  return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#05232d"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml"><meta name="description" content="${description}"><title>${title}</title><link rel="canonical" href="https://ichigeki-pachislot.com/${slug}.html"><link rel="stylesheet" href="style.css?v=158"></head><body class="machine-library-page" data-machine="${escapeHtml(slug)}"><header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">MACHINE</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#simulator">シミュレーター</a><a href="community.html?machine=${escapeHtml(slug)}">投稿</a></nav></div></header><main class="page machine-detail-shell" id="machineApp"></main><footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="community.html">コミュニティ</a><a href="disclaimer.html">免責事項</a></div></div></footer><script src="machine-library.js?v=143"></script><script src="achievements.js?v=1"></script><script src="site-insights.js?v=1"></script><script src="machine-detail.js?v=150"></script><script src="app-shell.js?v=10"></script><script src="adsense-loader.js?v=2"></script></body></html>`;
 }
 
 function updateRobotsMeta(html, isIndexable) {
@@ -375,12 +381,12 @@ for (const [slug, machine] of Object.entries(machines)) {
   html = html.replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${escapeHtml(machine.intro)}">`);
   html = updateRobotsMeta(html, INDEXABLE_MACHINE_SLUGS.has(slug));
   if (/<link[^>]+rel="stylesheet"/.test(html)) {
-    html = html.replace(/style\.css(?:\?v=\d+)?/, "style.css?v=155");
+    html = html.replace(/style\.css(?:\?v=\d+)?/, "style.css?v=158");
   } else {
-    html = html.replace("</head>", '<link rel="stylesheet" href="style.css?v=155"></head>');
+    html = html.replace("</head>", '<link rel="stylesheet" href="style.css?v=158"></head>');
   }
-  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=147");
-  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=128");
+  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=150");
+  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=143");
   html = html.replace(/app-shell\.js\?v=\d+/, "app-shell.js?v=10");
   html = html.replace(/adsense-loader\.js\?v=\d+/, "adsense-loader.js?v=2");
   if (!html.includes("site-insights.js")) html = html.replace(/(<script src="machine-detail\.js\?v=129"><\/script>)/, '<script src="site-insights.js?v=1"></script>\n  $1');

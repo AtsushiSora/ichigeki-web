@@ -24,6 +24,7 @@
   writeMachineList(RECENT_MACHINES_KEY, recentMachines.slice(0, 12));
 
   const yen = new Intl.NumberFormat("ja-JP");
+  const escapeHtml = value => String(value ?? "").replace(/[&<>'"]/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[character]);
   const editorialUpdated = machine.updated || "2026-10-12";
   const [editorialYear, editorialMonth, editorialDay] = editorialUpdated.split("-").map(Number);
   const editorialUpdatedLabel = `${editorialYear}年${editorialMonth}月${editorialDay}日`;
@@ -240,6 +241,10 @@
   const novemberQuickLink = isNovemberNewMachine ? '<a href="new-machines-2026-11.html">11月新台比較</a>' : "";
   const decemberBreadcrumb = isDecemberNewMachine ? '<span>›</span><a href="new-machines-2026-12.html">12月新台</a>' : "";
   const decemberQuickLink = isDecemberNewMachine ? '<a href="new-machines-2026-12.html">12月新台比較</a>' : "";
+  const heroImage = machine.image ? `<figure class="machine-archive-visual">
+      <img src="${escapeHtml(machine.image)}" alt="${escapeHtml(machine.imageAlt || `${machine.shortName}の機種画像`)}" decoding="async">
+      ${machine.imageCredit ? `<figcaption>${machine.imageSource ? `<a href="${escapeHtml(machine.imageSource)}" target="_blank" rel="noopener noreferrer">${escapeHtml(machine.imageCredit)} ↗</a>` : escapeHtml(machine.imageCredit)}</figcaption>` : ""}
+    </figure>` : "";
   const comparableRate = item => Number(item.sim?.kind === "pachinko" ? item.sim.hitRate : item.sim?.mainRate || item.sim?.triggerRate) || 99999;
   const currentRate = comparableRate(machine);
   const currentYear = Number(String(machine.year || "").match(/\d{4}/)?.[0]) || 0;
@@ -262,8 +267,9 @@
     .slice(0, 5);
   app.innerHTML = `
     <nav class="article-breadcrumb machine-breadcrumb" aria-label="パンくず"><a href="index.html">TOP</a><span>›</span><a href="${hubHref}">${hubLabel}</a>${novemberBreadcrumb}${decemberBreadcrumb}<span>›</span><span aria-current="page">${machine.shortName}</span></nav>
-    <section class="machine-archive-hero theme-${machine.theme}">
-      <div><span class="machine-kind">${machine.year.includes("2026") ? "NEW MACHINE 2026" : machine.type === "slot" ? "POPULAR SLOT ARCHIVE" : "POPULAR PACHINKO ARCHIVE"}</span><h1>${machine.name}</h1><p>${machine.catchcopy}</p></div>
+    <section class="machine-archive-hero theme-${machine.theme}${machine.image ? " has-image" : ""}">
+      ${heroImage}
+      <div class="machine-archive-copy"><span class="machine-kind">${machine.year.includes("2026") ? "NEW MACHINE 2026" : machine.type === "slot" ? "POPULAR SLOT ARCHIVE" : "POPULAR PACHINKO ARCHIVE"}</span><h1>${machine.name}</h1><p>${machine.catchcopy}</p></div>
       <dl><div><dt>導入</dt><dd>${machine.year}</dd></div><div><dt>メーカー</dt><dd>${machine.maker}</dd></div><div><dt>分類</dt><dd>${machine.type === "slot" ? "パチスロ" : "パチンコ"}</dd></div></dl>
     </section>
 
