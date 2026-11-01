@@ -1,6 +1,6 @@
 window.ICHIGEKI_MACHINES = {
   "sao-phantom-bullet": {
-    order: 0.09, type: "pachinko", theme: "aqua", year: "2026年12月", maker: "KYORAKU", updated: "2026-10-31",
+    order: 0.09, type: "pachinko", theme: "aqua", year: "2026年12月", maker: "KYORAKU", updated: "2026-11-01",
     name: "e ソードアート・オンライン ファントム・バレット", shortName: "e SAO ファントム・バレット",
     catchcopy: "FAIR STARTからBoBを勝ち抜き、FINALSへ。",
     intro: "2026年12月21日導入予定の設定付きスマパチ。実機の設定1を基準に、BONUS約1/229.9、BoB突入約50%、BoB FINALS継続約80%の流れを固定条件で簡易体験できます。",
@@ -16,7 +16,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["KYORAKU 公式発表", "https://www.kyoraku.co.jp/news/detail/900"], ["遊技通信web 機種発表", "https://www.yugitsushin.jp/news/%E6%80%A7%E8%83%BD%E7%89%B9%E5%8C%96%E3%81%AE%E8%B6%85%E7%81%AB%E5%8A%9B%E3%83%A9%E3%82%A4%E3%83%88%E3%83%9F%E3%83%89%E3%83%ABx%E3%83%95%E3%82%A7%E3%82%A2%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%88/"], ["Re.design スペック情報", "https://aaa.redesign777.tokyo/Spec/PachinkoView?flag=True&id=P2026092913480401"], ["パチヨミ！ ボーダー情報", "https://pachiyomi.com/pachinko/e-sao-phantom-bullet"]]
   },
   "toaru3-pachinko": {
-    order: 0.1, type: "pachinko", theme: "violet", year: "2026年11月", maker: "オレンジ", updated: "2026-10-31",
+    order: 0.1, type: "pachinko", theme: "violet", year: "2026年11月", maker: "オレンジ", updated: "2026-11-01",
     name: "eとある魔術の禁書目録3", shortName: "eとある3",
     catchcopy: "約1/348.6から、3段階STと最大出玉ループへ。",
     intro: "2026年11月2日導入予定のスマパチLT機。初当り約1/348.6、ST突入約50%、3段階STのTOTAL継続約75%を固定条件で簡易体験できます。",
@@ -31,7 +31,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["藤商事 公式機種情報", "https://www.fujimarukun.co.jp/products/e_toaru3/"], ["パチマガスロマガFREE 機種情報", "https://pachimaga.com/free/mach/maker-p/orange/e_toaru3.php"], ["ハズセ 機種情報", "https://hazuse.com/machine/pachinko/PX0388/"]]
   },
   "kamen-rider-black-light": {
-    order: 0.11, type: "pachinko", theme: "emerald", year: "2026年11月", maker: "KYORAKU", updated: "2026-10-31",
+    order: 0.11, type: "pachinko", theme: "emerald", year: "2026年11月", maker: "KYORAKU", updated: "2026-11-01",
     name: "e 仮面ライダーBLACK デカヘソ Light Version", shortName: "ライダーBLACK Light",
     catchcopy: "デカヘソ×約1/129.9から、宿命BATTLEへ。",
     intro: "2026年11月2日導入予定のデカヘソ搭載スマパチ。約1/129.9の初当り、JUSTICE RUSH、1G連特化ゾーン『宿命BATTLE』までを簡易体験できます。",
@@ -63,7 +63,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["SANYO 公式更新情報", "https://www.sanyobussan.co.jp/information/information.html"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/machine/4807/1/2"], ["P-WORLD 新台予定", "https://www.p-world.co.jp/database/machine/introduce_calendar.cgi?type=Pachi"]]
   },
   "fever-yokai-watch": {
-    order: 0.114, type: "pachinko", theme: "gold", year: "2026年11月", maker: "SANKYO", updated: "2026-10-31",
+    order: 0.114, type: "pachinko", theme: "gold", year: "2026年11月", maker: "SANKYO", updated: "2026-11-01",
     name: "eフィーバー妖怪ウォッチ", shortName: "eF妖怪ウォッチ",
     catchcopy: "コマチャレンジ込み約61%から、トータル約80%の怪闘へ。",
     intro: "2026年11月2日導入予定のスマパチ。大当り約1/319.7、時短引き戻し込みのRUSH突入約61%、トータル継続約80%を簡易体験できます。",
@@ -79,7 +79,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["SANKYO 公式スペック", "https://www.sankyo-fever.jp/products/machine_list/ppj/spec/"], ["パチ＆スロ必勝本 大当り振り分け", "https://p.hisshobon.jp/machine/4794/1/3"], ["P-WORLD 新台予定", "https://www.p-world.co.jp/database/machine/introduce_calendar.cgi?type=Pachi"]]
   },
   "juoh-shishi-no-ichigeki": {
-    order: 0.116, type: "pachinko", theme: "ember", year: "2026年11月", maker: "Sammy", updated: "2026-10-31",
+    order: 0.116, type: "pachinko", theme: "ember", year: "2026年11月", maker: "Sammy", updated: "2026-11-01",
     name: "e 獣王 獅子の一撃", shortName: "e獣王 獅子の一撃",
     catchcopy: "ドデカSTRAIGHTから、平均約9800個のサバンナチャンスへ。",
     intro: "2026年11月2日導入予定のドデカSTRAIGHT搭載スマパチ。初当り約1/319.7、獣王RUSH突入50%、右打ち中約50%のサバンナチャンスを簡易体験できます。",
@@ -95,7 +95,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["Sammy 公式製品情報", "https://www.sammy.co.jp/japanese/product/pachinko/e_jyu_oh_sh/"], ["Sammy 発売案内", "https://www.sammy.co.jp/japanese/news/detail/?id=309"], ["パチセブン 基本スペック", "https://pachiseven.jp/articles/detail/26454"]]
   },
   "no-game-no-life-119": {
-    order: 0.118, type: "pachinko", theme: "aqua", year: "2026年11月", maker: "高尾", updated: "2026-10-31",
+    order: 0.118, type: "pachinko", theme: "aqua", year: "2026年11月", maker: "高尾", updated: "2026-11-01",
     name: "e ノーゲーム・ノーライフ 119Ver.", shortName: "eノゲノラ 119",
     catchcopy: "ALL1000個の初当りから、約80%のHYPERへ。",
     intro: "2026年11月2日導入予定のライトスマパチ。初当り約1/119.8、ノゲノラッシュ突入50%、突破後のHYPER継続約80%を簡易体験できます。",
@@ -231,7 +231,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["SANKYO 公式スペック", "https://www.sankyo-fever.jp/products/machine_list/sqe/spec/"], ["SANKYO オンライン博物館", "https://www.sankyo-fever.jp/collection/962/"]]
   },
   "garo-yami-slot": {
-    order: 0.12, type: "slot", theme: "gold", year: "2026年11月", maker: "サンセイR&D", updated: "2026-10-31",
+    order: 0.12, type: "slot", theme: "gold", year: "2026年11月", maker: "サンセイR&D", updated: "2026-11-01",
     name: "L牙狼 闇を照らす者", shortName: "スマスロ 牙狼",
     catchcopy: "金色になれ！を突破し、究極魔戒RUSHへ。",
     intro: "2026年11月2日導入予定のスマスロ。設定別CZ・BONUS確率を使い、疑似ボーナス、SUPER GARO BONUS、金色になれ！、究極魔戒RUSHまでを簡易体験できます。",
@@ -263,7 +263,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["ユニバーサル 公式製品情報", "https://www.universal-777.com/"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/vpage/2807/1"], ["パチマガスロマガFREE 機種情報", "https://pachimaga.com/free/mach/maker-s/mizuho/l_ragnador.php"]]
   },
   "seiya-ougon-slot": {
-    order: 0.15, type: "slot", theme: "gold", year: "2026年11月", maker: "サンスリー", updated: "2026-10-31",
+    order: 0.15, type: "slot", theme: "gold", year: "2026年11月", maker: "サンスリー", updated: "2026-11-01",
     name: "L聖闘士星矢 黄金十二宮", shortName: "スマスロ 聖闘士星矢",
     catchcopy: "十二宮を突破し、SAGA BATTLEと千日戦争へ。",
     intro: "2026年11月2日導入予定のスマスロ。設定別CZ・AT初当りを使い、Battle of ZODIACの継続バトルから上位AT『千日戦争』までを簡易体験できます。",
@@ -280,7 +280,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["パチマガスロマガ 機種概要", "https://psmaga.com/e/pachi/pla/s_conq/santhree_slot/09/kh01.php"], ["一撃 2026年11月新台情報", "https://1geki.jp/newmachinecalender/202611/"], ["設定・天井まとめ", "https://tennabi.jp/seiya-ougon-junikyu/"]]
   },
   "ggo-slot": {
-    order: 0.2, type: "slot", theme: "magenta", year: "2026年11月", maker: "京楽／オッケー.", updated: "2026-10-31",
+    order: 0.2, type: "slot", theme: "magenta", year: "2026年11月", maker: "京楽／オッケー.", updated: "2026-11-01",
     name: "Lソードアート・オンライン オルタナティブ ガンゲイル・オンライン", shortName: "スマスロ GGO",
     catchcopy: "BONUSを重ね、SQUAD JAMと上位STへ。",
     intro: "2026年11月2日導入予定のスマスロ。設定別の初当り・SQUAD JAM確率を使い、BONUS、ST、GGOストーム、上位ST『イカれたレン』までを簡易体験できます。",
@@ -297,7 +297,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["P-WORLD 新台スケジュール", "https://www.p-world.co.jp/database/machine.html"], ["一撃 2026年11月新台情報", "https://1geki.jp/newmachinecalender/202611/"], ["設定・天井まとめ", "https://tennabi.jp/gun-gale-online/"]]
   },
   "godzilla-eva2-slot": {
-    order: 0.25, type: "slot", theme: "ember", year: "2026年11月", maker: "ビスティ", updated: "2026-10-31",
+    order: 0.25, type: "slot", theme: "ember", year: "2026年11月", maker: "ビスティ", updated: "2026-11-01",
     name: "Lパチスロ ゴジラ対エヴァンゲリオン 2", shortName: "スマスロ ゴジエヴァ2",
     catchcopy: "2種類のBONUSを越え、G覚醒RUSHへ。",
     intro: "2026年11月2日導入予定のスマスロ。設定別BONUS・AT初当りを使い、集結バトル、ゴジエヴァRUSH、決戦カイザーギドラ、G覚醒RUSHまでを簡易体験できます。",

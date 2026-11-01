@@ -49,6 +49,18 @@
     pachinko: { lendBalls: 250, exchangeBalls: 28 },
     slot: { lendCoins: 46, exchangeCoins: 5.2 }
   };
+  const NEW_MACHINE_ARTICLE_SLUGS = new Set([
+    "sao-phantom-bullet",
+    "toaru3-pachinko",
+    "kamen-rider-black-light",
+    "fever-yokai-watch",
+    "juoh-shishi-no-ichigeki",
+    "no-game-no-life-119",
+    "garo-yami-slot",
+    "seiya-ougon-slot",
+    "ggo-slot",
+    "godzilla-eva2-slot"
+  ]);
   const SLOT_SETTING_PROFILES = {
     1: { rate: 1, entry: 0, special: 0, upper: 0, big: 1, reg: 1, payout: 0 },
     2: { rate: 0.97, entry: 0.01, special: 0.005, upper: 0.005, big: 0.99, reg: 0.94, payout: 0.007 },
@@ -124,34 +136,61 @@
     return [...new Set([machine.sim.triggerLabel, machine.sim.mainLabel, machine.sim.upperLabel].filter(Boolean))];
   }
 
+  function calculationMarkup() {
+    const sim = machine.sim;
+    if (sim.kind === "pachinko") {
+      const averageInvestment = Math.round((sim.hitRate / sim.spinsPer1k * 1000) / 100) * 100;
+      return `<section class="machine-article-section"><h3>平均回転と投資目安の計算</h3><p>通常時の${sim.hitLabel}確率は約1/${sim.hitRate}です。1,000円あたり${sim.spinsPer1k}回転という機種別固定条件を使い、平均投資目安を「${sim.hitRate} ÷ ${sim.spinsPer1k} × 1,000円」で計算します。この条件では約${yen.format(averageInvestment)}円が目安です。</p><p>${sim.startType}、250玉貸し・28玉交換で固定し、${sim.rushLabel}突入率${(sim.rushEntry * 100).toFixed(1).replace(".0", "")}%と継続率${(sim.rushContinue * 100).toFixed(1).replace(".0", "")}%を簡易抽選します。平均値は長期間の理論上の目安であり、1回ごとの結果や実際の遊技収支を保証しません。</p></section>`;
+    }
+    if (sim.kind === "juggler") return "";
+    const gamesPerThousand = sim.base50 * RANKING_RATE.slot.lendCoins / 50;
+    const averageInvestment = Math.round((sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
+    const settingModelText = sim.settingRates
+      ? `${slotSettingLabel}で公開されている初当り値を個別に使い、公開されていない特化・上位の設定差は加えません。`
+      : "設定別の数値が揃わないため、設定1基準値へサイト共通の固定補正を加える体験用モデルです。";
+    return `<section class="machine-article-section"><h3>平均Gと投資目安の計算</h3><p>${sim.mainLabel}初当りの目安は約1/${sim.mainRate}です。50枚あたり${sim.base50}G、1,000円46枚貸しの固定条件から、1,000円で回せるゲーム数を約${gamesPerThousand.toFixed(1)}Gとして計算します。この条件では約${yen.format(averageInvestment)}円が平均投資の目安です。</p><p>${settingModelText} コイン単価${sim.coinUnit}円は出玉の荒さを比べる指標で、現金投資額そのものではありません。換金は5.2枚交換で固定しています。</p></section>`;
+  }
+
+  function newMachineFaqMarkup() {
+    if (!NEW_MACHINE_ARTICLE_SLUGS.has(slug)) return "";
+    const sim = machine.sim;
+    const releaseSummary = String(machine.intro || "").split("。")[0] + "。";
+    let items;
+    if (sim.kind === "pachinko") {
+      const averageInvestment = Math.round((sim.hitRate / sim.spinsPer1k * 1000) / 100) * 100;
+      const upperFlow = sim.upperLabel ? `、さらに${sim.upperLabel}` : "";
+      items = [
+        [`${machine.shortName}の導入時期は？`, releaseSummary],
+        [`${machine.shortName}の平均投資目安は？`, `固定条件では1,000円あたり${sim.spinsPer1k}回転として、平均${yen.format(averageInvestment)}円が目安です。実店舗の回転率や持ち玉状況で変わるため、実収支を保証する値ではありません。`],
+        ["シミュレーターでは何を体験できる？", `${sim.hitLabel}までの回転数、${sim.rushLabel}への突入、連チャンと出玉${upperFlow}を固定条件で簡易抽選します。実機の全演出や内部状態を完全再現するものではありません。`]
+      ];
+    } else {
+      const gamesPerThousand = sim.base50 * RANKING_RATE.slot.lendCoins / 50;
+      const averageInvestment = Math.round((sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
+      items = [
+        [`${machine.shortName}の導入時期は？`, releaseSummary],
+        [`${machine.shortName}の平均投資目安は？`, `設定${slotBaselineSetting}基準の${sim.mainLabel}初当り約1/${sim.mainRate}と、50枚あたり${sim.base50}G・46枚貸しの固定条件から、平均${yen.format(averageInvestment)}円を目安として表示します。実際の設定や遊技状況で結果は変わります。`],
+        ["設定とゲームの流れはどう抽選する？", `開始時に${slotSettingLabel}から1つを均等抽選し、${sim.triggerLabel}、${sim.mainLabel}、${sim.upperChallenge}、${sim.upperLabel}の順で到達を判定します。設定は最終結果とランキングに表示します。`]
+      ];
+    }
+    return `<section class="machine-article-section machine-faq" aria-labelledby="machine-faq-title"><h3 id="machine-faq-title">${machine.shortName}のよくある質問</h3><div class="machine-faq-list">${items.map(([question, answer]) => `<div><h4>${question}</h4><p>${answer}</p></div>`).join("")}</div></section>`;
+  }
+
   function articleMarkup() {
     if (!Array.isArray(machine.articleSections) || !machine.articleSections.length) {
       const sim = machine.sim;
       const flow = sim.kind === "pachinko"
         ? `${sim.hitLabel}までの回転数、${sim.rushLabel}への突入、連チャン数と出玉を順番に抽選します。`
         : `${sim.triggerLabel}、${sim.mainLabel}、${sim.upperChallenge}、${sim.upperLabel}の順に、各段階への到達と獲得枚数を抽選します。`;
-      const calculation = sim.kind === "pachinko"
-        ? (() => {
-            const averageInvestment = Math.round((sim.hitRate / sim.spinsPer1k * 1000) / 100) * 100;
-            return `<h3>平均回転と投資目安の計算</h3><p>通常時の${sim.hitLabel}確率は約1/${sim.hitRate}です。1,000円あたり${sim.spinsPer1k}回転という機種別固定条件を使い、平均投資目安を「${sim.hitRate} ÷ ${sim.spinsPer1k} × 1,000円」で計算します。この条件では約${yen.format(averageInvestment)}円が目安です。</p><p>${sim.startType}、250玉貸し・28玉交換で固定し、${sim.rushLabel}突入率${(sim.rushEntry * 100).toFixed(1).replace(".0", "")}%と継続率${(sim.rushContinue * 100).toFixed(1).replace(".0", "")}%を簡易抽選します。</p>`;
-          })()
-        : (() => {
-            const gamesPerThousand = sim.base50 * RANKING_RATE.slot.lendCoins / 50;
-            const averageInvestment = Math.round((sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
-            const settingModelText = sim.settingRates
-              ? `${slotSettingLabel}で公開されている初当り値を個別に使い、公開されていない特化・上位の設定差は加えません。`
-              : "設定別の数値が揃わないため、設定1基準値へサイト共通の固定補正を加える体験用モデルです。";
-            return `<h3>平均Gと投資目安の計算</h3><p>${sim.mainLabel}初当りの目安は約1/${sim.mainRate}です。50枚あたり${sim.base50}G、1,000円46枚貸しの固定条件から、1,000円で回せるゲーム数を約${gamesPerThousand.toFixed(1)}Gとして計算します。この条件では約${yen.format(averageInvestment)}円が平均投資の目安です。</p><p>${settingModelText} コイン単価${sim.coinUnit}円は出玉の荒さを比べる指標で、現金投資額そのものではありません。換金は5.2枚交換で固定しています。</p>`;
-          })();
       return `<h3>${machine.shortName}で確認できること</h3>
         <p>${flow} 公開されている代表的な数値をもとに遊びやすく単純化し、同じ機種では全員が同じ貸出・交換条件で比較できるようにしています。</p>
         <p>実機にある全ての内部状態、設定差、演出、出玉削り、打ち方による差は再現していません。早い当りと深いハマり、通常結果と上位結果の幅を比べるための体験用モデルです。</p>
-        ${calculation}
+        ${calculationMarkup()}
         <h3>シミュレーターで比較するポイント</h3>
         <ul><li>平均値より早い当りと深いハマりの両方を複数回確認する</li><li>${sim.kind === "pachinko" ? `${sim.rushLabel}非突入時と連チャン時の出玉・収支を比べる` : `${sim.mainLabel}終了時と${sim.upperLabel}到達時の獲得枚数・収支を比べる`}</li><li>結果は自動保存されるマイ記録と機種別ランキングで振り返る</li></ul>
         <p>平均値は長期間の理論上の目安であり、1回ごとの結果や実際の遊技収支を保証するものではありません。</p>`;
     }
-    return machine.articleSections.map(section => `<section class="machine-article-section"><h3>${section.heading}</h3>${(section.paragraphs || []).map(paragraph => `<p>${paragraph}</p>`).join("")}${section.bullets?.length ? `<ul>${section.bullets.map(item => `<li>${item}</li>`).join("")}</ul>` : ""}</section>`).join("");
+    return machine.articleSections.map(section => `<section class="machine-article-section"><h3>${section.heading}</h3>${(section.paragraphs || []).map(paragraph => `<p>${paragraph}</p>`).join("")}${section.bullets?.length ? `<ul>${section.bullets.map(item => `<li>${item}</li>`).join("")}</ul>` : ""}</section>`).join("") + calculationMarkup() + newMachineFaqMarkup();
   }
 
   const labels = simulationLabels();

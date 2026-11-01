@@ -5465,6 +5465,10 @@ body.has-machine-sticky-start { padding-bottom: 96px; }
 .machine-article-section h3 { color: #f3f7f3; }
 .machine-article-section ul { padding-left: 20px; }
 .machine-article-section li { margin-top: 8px; color: #c2cbc4; line-height: 1.75; }
+.machine-faq-list { display: grid; gap: 12px; margin-top: 16px; }
+.machine-faq-list > div { padding: 16px; border: 1px solid rgba(141, 255, 116, .18); border-radius: 14px; background: rgba(255, 255, 255, .025); }
+.machine-faq-list h4 { margin: 0; color: #f3f7f3; font-size: 1rem; line-height: 1.55; }
+.machine-faq-list p { margin: 8px 0 0; }
 .machine-article .next-links { margin-top: 13px; }
 .machine-sources { padding-left: 20px; }
 .machine-sources li { margin: 8px 0; }
