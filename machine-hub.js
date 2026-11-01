@@ -13,6 +13,7 @@
   const tools = document.querySelector(".machine-hub-tools");
   let filter = fixedType || "all";
   let sort = "recommended";
+  const NEW_MACHINE_WINDOW_MONTHS = 3;
 
   const escapeHtml = value => String(value ?? "").replace(/[&<>'"]/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[character]);
   function readStored(key, fallback = []) {
@@ -36,7 +37,7 @@
   const subLabel = machine => machine.type === "slot"
     ? `コイン単価 ${Number(machine.sim.coinUnit || 0).toFixed(1)}円`
     : String(machine.sim.startType || "通常ヘソ");
-  const isPopular = machine => Number(machine.order || 999) <= 20 || /人気|定番|全国|大型ホール/.test(`${machine.intro || ""} ${machine.catchcopy || ""}`);
+  const isPopular = machine => Number(machine.order || 999) <= 10;
   const isSmartSlot = machine => machine.type === "slot" && (/スマスロ/.test(machine.name) || /^L/.test(machine.name));
   const isJuggler = machine => machine.type === "slot" && (machine.sim.kind === "juggler" || /ジャグラー/.test(machine.name));
   const isLt = machine => machine.type === "pachinko" && (Boolean(machine.sim.upperLabel) || /LT|ラッキートリガー|上位/.test(`${machine.intro || ""} ${machine.catchcopy || ""}`));
@@ -45,13 +46,20 @@
     const match = String(machine.year || "").match(/(\d{4})年(?:(\d{1,2})月)?/);
     return match ? Number(match[1]) * 100 + Number(match[2] || 0) : 0;
   };
+  const introducedMonthIndex = machine => {
+    const match = String(machine.year || "").match(/(\d{4})年(\d{1,2})月/);
+    return match ? Number(match[1]) * 12 + Number(match[2]) - 1 : 0;
+  };
+  const now = new Date();
+  const newestMonthCutoff = now.getFullYear() * 12 + now.getMonth() - (NEW_MACHINE_WINDOW_MONTHS - 1);
+  const isNewMachine = machine => introducedMonthIndex(machine) >= newestMonthCutoff;
   function matchesFilter(machine) {
     if (fixedType && machine.type !== fixedType) return false;
     if (filter === "all") return true;
     if (filter === "pachinko" || filter === "slot") return machine.type === filter;
     if (filter === "favorite") return favorites().includes(machine.slug);
     if (filter === "popular") return isPopular(machine);
-    if (filter === "new") return String(machine.year || "").includes("2026年");
+    if (filter === "new") return isNewMachine(machine);
     if (filter === "light") return machine.type === "pachinko" && Number(machine.sim.hitRate) <= 199.9;
     if (filter === "lt") return isLt(machine);
     if (filter === "wide") return isWideStart(machine);
@@ -62,7 +70,7 @@
   }
   function machineTags(machine) {
     const tags = [];
-    if (String(machine.year || "").includes("2026年")) tags.push("新台");
+    if (isNewMachine(machine)) tags.push("新台");
     if (machine.type === "pachinko") {
       if (Number(machine.sim.hitRate) <= 199.9) tags.push("ライト");
       if (isLt(machine)) tags.push("LT");
@@ -91,9 +99,9 @@
   }
 
   const filterSets = {
-    pachinko: [["all", "すべて"], ["new", "新台"], ["light", "ライト"], ["lt", "LT"], ["wide", "デカヘソ"], ["favorite", "お気に入り"]],
-    slot: [["all", "すべて"], ["new", "新台"], ["smart", "スマスロ"], ["juggler", "Aタイプ"], ["high-coin", "高コイン単価"], ["favorite", "お気に入り"]],
-    all: [["all", "すべて"], ["new", "新台"], ["pachinko", "パチンコ"], ["slot", "スロット"], ["favorite", "お気に入り"]]
+    pachinko: [["all", "すべて"], ["popular", "人気"], ["new", "新台"], ["light", "ライト"], ["lt", "LT"], ["wide", "デカヘソ"], ["favorite", "お気に入り"]],
+    slot: [["all", "すべて"], ["popular", "人気"], ["new", "新台"], ["smart", "スマスロ"], ["juggler", "Aタイプ"], ["high-coin", "高コイン単価"], ["favorite", "お気に入り"]],
+    all: [["all", "すべて"], ["popular", "人気"], ["new", "新台"], ["pachinko", "パチンコ"], ["slot", "スロット"], ["favorite", "お気に入り"]]
   };
   const filterGroup = tools?.querySelector('[role="group"]');
   if (filterGroup) {
@@ -148,7 +156,8 @@
       </article>`;
     }).join("");
     const sortLabels = { recommended: "おすすめ順", newest: "新しい順", name: "名前順", light: "初当り順" };
-    status.textContent = `${output.length}台を表示・${sortLabels[sort]}`;
+    const filterLabels = { all: "すべて", pachinko: "パチンコ", slot: "スロット", popular: "人気", new: "最近・導入予定の新台", light: "ライト", lt: "LT", wide: "デカヘソ", smart: "スマスロ", juggler: "Aタイプ", "high-coin": "高コイン単価", favorite: "お気に入り" };
+    status.textContent = `${filterLabels[filter] || "すべて"}・${output.length}台・${sortLabels[sort]}`;
     document.getElementById("machineHubEmpty").hidden = output.length > 0;
     renderMemory();
   }
@@ -156,7 +165,12 @@
   tools?.addEventListener("click", event => {
     const button = event.target.closest("[data-machine-hub-filter]");
     if (!button) return;
-    filter = button.dataset.machineHubFilter === "all" && fixedType ? fixedType : button.dataset.machineHubFilter;
+    const selectedFilter = button.dataset.machineHubFilter;
+    filter = selectedFilter === "all" && fixedType ? fixedType : selectedFilter;
+    if (selectedFilter === "new") sort = "newest";
+    else if (sort === "newest") sort = "recommended";
+    const sortControl = document.getElementById("machineHubSort");
+    if (sortControl) sortControl.value = sort;
     tools.querySelectorAll("[data-machine-hub-filter]").forEach(item => {
       const active = item === button;
       item.classList.toggle("is-active", active);

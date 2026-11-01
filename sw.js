@@ -1,4 +1,4 @@
-const CACHE_NAME = "ichigeki-web-v188";
+const CACHE_NAME = "ichigeki-web-v191";
 const CORE_ASSETS = [
   "index.html",
   "account.html",
@@ -83,7 +83,7 @@ const CORE_ASSETS = [
   "gogo-juggler3.html",
   "funky-juggler2.html",
   "style.css",
-  "style.css?v=151",
+  "style.css?v=152",
   "main.js",
   "main.js?v=120",
   "app-shell.js",
@@ -93,7 +93,7 @@ const CORE_ASSETS = [
   "machine-library.js",
   "machine-library.js?v=124",
   "machine-hub.js",
-  "machine-hub.js?v=7",
+  "machine-hub.js?v=10",
   "machine-detail.js",
   "machine-detail.js?v=142",
   "achievements.js",
