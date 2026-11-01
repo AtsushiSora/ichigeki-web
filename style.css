@@ -16545,3 +16545,23 @@ textarea { min-height: 132px; line-height: 1.65; }
   .home-daily-heading { gap: 5px; }
   .home-daily-all { grid-template-columns: 1fr; }
 }
+
+/* Clear account label on TOP v163 */
+.home-page .site-account-link > span,
+.home-page .site-account-link > img,
+.home-page .site-account-link > b { display: none; }
+.home-page .site-account-link::after {
+  content: "アカウント";
+  font-size: 12px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  body.home-page .site-account-link {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 82px;
+    padding-inline: 11px;
+  }
+}
