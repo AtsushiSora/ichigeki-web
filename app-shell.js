@@ -57,7 +57,7 @@
         <a href="ranking.html"><b>マイ記録</b><small>成績・履歴・称号</small></a>
         <a href="rankings.html"><b>機種別ランキング</b><small>遊ぶ台を選んで順位を見る</small></a>
         <a href="community.html"><b>コミュニティ</b><small>口コミ・収支・画像・動画</small></a>
-        <a href="guide.html"><b>使い方・ガイド</b></a>
+        <a href="articles.html"><b>記事・ガイド</b><small>新台記事・数値解説・計算ツール</small></a>
         <a href="account.html"><b>アカウント</b></a>
       </nav>`;
     header.append(menu);
