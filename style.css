@@ -15861,6 +15861,8 @@ textarea { min-height: 132px; line-height: 1.65; }
 /* November 2026 new-machine report */
 .article-breadcrumb { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; margin-bottom: 14px; color: #829087; font-size: 12px; }
 .article-breadcrumb a { color: #bfe9b7; font-weight: 800; }
+.machine-breadcrumb { padding-inline: 2px; }
+.machine-breadcrumb [aria-current="page"] { color: #d3ddd5; font-weight: 700; }
 .new-machine-picks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .new-machine-picks a { color: inherit; }
 .new-machine-comparison td { vertical-align: top; }
