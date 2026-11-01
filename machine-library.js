@@ -1275,6 +1275,230 @@ window.ICHIGEKI_MACHINES = {
     ],
     sources: [["北電子 公式製品情報", "https://www.kitadenshi.co.jp/slot/myjuggler5/"], ["P-WORLD 設置台数ランキング", "https://www.p-world.co.jp/info/ranks.htm"]]
   },
+  "mr-juggler": {
+    order: 10.11, type: "slot", theme: "gold", year: "2024年7月", maker: "北電子", updated: "2026-11-01",
+    name: "ミスタージャグラー", shortName: "ミスタージャグラー",
+    catchcopy: "ピエロとチェリーの同時抽選を搭載した新シリーズ。",
+    intro: "ミスタージャグラーの公式設定別確率を使い、次のBIG・REGまで進めながらボーナスごとに続行を選べます。設定は終了時に発表し、上限は8,000Gです。",
+    points: ["設定1〜6均等ランダム", "ボーナスごとに続ける・やめるを選択", "8,000G完走時だけランキングへ登録"],
+    specs: [["上限ゲーム数", "8,000G"], ["設定", "1〜6ランダム"], ["設定1 BIG", "約1/268.6"], ["設定1 REG", "約1/374.5"], ["設定1合算", "約1/156.4"], ["設定1出玉率", "97.0%"]],
+    sim: { kind: "juggler", games: 8000, bigRate: 268.6, regRate: 374.5, combinedRate: 156.4, bigPayout: 240, regPayout: 96, payoutRate: 0.970, settingRates: { 1: { big: 268.6, reg: 374.5, payout: 0.970 }, 2: { big: 267.5, reg: 354.2, payout: 0.980 }, 3: { big: 260.1, reg: 331.0, payout: 0.998 }, 4: { big: 249.2, reg: 291.3, payout: 1.027 }, 5: { big: 240.9, reg: 257.0, payout: 1.055 }, 6: { big: 237.4, reg: 237.4, payout: 1.073 } }, base50: 40.0, coinUnit: 2.0, mainRate: 156.4, mainLabel: "ボーナス合算", triggerLabel: "最大8,000G実戦", upperChallenge: "BIG・REG集計", upperLabel: "差枚結果" },
+    articleSections: [
+      { heading: "次のボーナスまで進んで続行判断", paragraphs: ["設定1〜6を均等抽選し、公式BIG・REG確率で次の当選までのゲーム数を抽選します。ボーナス後は続けるかやめるかを選べます。", "設定は終了時に発表し、途中終了はマイ記録へ、8,000G完走時だけ機種別ランキングへ登録できます。"] },
+      { heading: "設定差はREGと合算を合わせて確認", paragraphs: ["設定1の合算約1/156.4から設定6の約1/118.7まで、公式の設定別確率と出玉率を使用します。", "ピエロ・チェリーの同時抽選や告知演出は個別再現せず、BIG・REG回数と差枚を比べる簡易モデルです。"] }
+    ],
+    sources: [["北電子 公式製品情報", "https://www.kitadenshi.co.jp/slot/mrjuggler/"]]
+  },
+  "ultra-miracle-juggler": {
+    order: 10.12, type: "slot", theme: "violet", year: "2024年12月", maker: "北電子", updated: "2026-11-01",
+    name: "ウルトラミラクルジャグラー", shortName: "ウルトラミラクル",
+    catchcopy: "多彩なミラクル演出とBIG寄りの設定差を体験。",
+    intro: "ウルトラミラクルジャグラーの公式設定別確率を使い、ボーナスごとに続行か終了を選ぶ最大8,000GのAタイプシミュレーターです。",
+    points: ["BIG約240枚・REG約96枚", "設定1〜6均等ランダム", "46枚貸し・5.2枚交換で収支を計算"],
+    specs: [["上限ゲーム数", "8,000G"], ["設定", "1〜6ランダム"], ["設定1 BIG", "約1/267.5"], ["設定1 REG", "約1/425.6"], ["設定1合算", "約1/164.3"], ["設定1出玉率", "97.0%"]],
+    sim: { kind: "juggler", games: 8000, bigRate: 267.5, regRate: 425.6, combinedRate: 164.3, bigPayout: 240, regPayout: 96, payoutRate: 0.970, settingRates: { 1: { big: 267.5, reg: 425.6, payout: 0.970 }, 2: { big: 261.1, reg: 402.1, payout: 0.981 }, 3: { big: 256.0, reg: 350.5, payout: 0.998 }, 4: { big: 242.7, reg: 322.8, payout: 1.021 }, 5: { big: 233.2, reg: 297.9, payout: 1.045 }, 6: { big: 216.3, reg: 277.7, payout: 1.081 } }, base50: 40.0, coinUnit: 2.0, mainRate: 164.3, mainLabel: "ボーナス合算", triggerLabel: "最大8,000G実戦", upperChallenge: "BIG・REG集計", upperLabel: "差枚結果" },
+    articleSections: [
+      { heading: "BIG・REG当選ごとに続けるか選ぶ", paragraphs: ["次のボーナスまでのゲーム数とBIG・REG種別を一回ずつ表示します。設定は遊技中に伏せ、やめた時か8,000G到達時に発表します。", "途中でやめても総ゲーム数、当選回数、投資、差枚、収支はマイ記録へ自動保存されます。"] },
+      { heading: "ミラクル演出は確率結果へ簡略化", paragraphs: ["設定1のBIG約1/267.5・REG約1/425.6から設定6のBIG約1/216.3・REG約1/277.7までを個別に使用します。", "先告知・後告知、ミラクルアクション、チェリー同時当選は演出として再現せず、ボーナス確率と出玉率による差枚モデルです。"] }
+    ],
+    sources: [["北電子 公式製品情報", "https://www.kitadenshi.co.jp/slot/ultramiraclejuggler/"], ["北電子 公式特設サイト", "https://www.kitadenshi.co.jp/products/2024/umj/"]]
+  },
+  "matador3": {
+    order: 10.13, type: "slot", theme: "crimson", year: "2025年8月", maker: "北電子", updated: "2026-11-01",
+    name: "マタドールⅢ", shortName: "マタドールⅢ",
+    catchcopy: "ボーナストリガー搭載。最大約302枚のBIGを重ねる。",
+    intro: "ボーナストリガーを搭載したスマスロのノーマルタイプ。公式設定別BIG・REG確率で次の当選まで進み、ボーナスごとに続行を判断します。",
+    points: ["BIG最大約302枚・REG最大約104枚", "設定1〜6均等ランダム", "最大8,000G・終了時に設定発表"],
+    specs: [["上限ゲーム数", "8,000G"], ["設定", "1〜6ランダム"], ["設定1 BIG", "約1/278.9"], ["設定1 REG", "約1/434.0"], ["設定1合算", "約1/169.8"], ["設定1出玉率", "97.4%"]],
+    sim: { kind: "juggler", games: 8000, bigRate: 278.9, regRate: 434.0, combinedRate: 169.8, bigPayout: 302, regPayout: 104, payoutRate: 0.974, settingRates: { 1: { big: 278.9, reg: 434.0, payout: 0.974 }, 2: { big: 268.6, reg: 417.4, payout: 0.989 }, 3: { big: 260.1, reg: 402.1, payout: 1.003 }, 4: { big: 244.5, reg: 362.1, payout: 1.035 }, 5: { big: 231.6, reg: 334.4, payout: 1.065 }, 6: { big: 219.9, reg: 299.3, payout: 1.100 } }, base50: 40.0, coinUnit: 2.1, mainRate: 169.8, mainLabel: "ボーナス合算", triggerLabel: "最大8,000G実戦", upperChallenge: "BIG・REG集計", upperLabel: "差枚結果" },
+    articleSections: [
+      { heading: "ボーナストリガー機も同じ続行方式", paragraphs: ["次のBIG・REGまで進み、当選ゲーム数を確認して続けるかやめるかを選びます。BIGはBT込み最大約302枚、REGは最大約104枚で差枚を計算します。", "設定1〜6は開始時に均等抽選し、最終結果まで表示しません。"] },
+      { heading: "設定6は出玉率110.0%", paragraphs: ["公式値は設定1合算約1/169.8・出玉率97.4%から、設定6合算約1/126.8・出玉率110.0%です。", "告知モード、技術介入、全てのBT手順は再現せず、公式確率を使った体験用モデルです。"] }
+    ],
+      sources: [["北電子 公式特設サイト", "https://www.kitadenshi.co.jp/products/2025/mtd3/"]]
+  },
+  "dragon-hanahana-senko": {
+    order: 10.14, type: "slot", theme: "aqua", year: "2023年12月", maker: "パイオニア", updated: "2026-11-01",
+    name: "ドラゴンハナハナ～閃光～-30", shortName: "ドラゴンハナハナ閃光",
+    catchcopy: "ハイビスカス点灯でBIGかREG。30Φの定番を追加。",
+    intro: "ドラゴンハナハナ～閃光～-30の公式設定別確率を使い、次のBIG・REGまで進めるAタイプシミュレーターです。ボーナスごとに続行か終了を選べます。",
+    points: ["BIG最大252枚・REG最大96枚", "設定1〜6均等ランダム", "最大8,000G・8,000G完走時だけランキング登録"],
+    specs: [["上限ゲーム数", "8,000G"], ["設定", "1〜6ランダム"], ["設定1 BIG", "約1/256"], ["設定1 REG", "約1/642"], ["設定1合算", "約1/183"], ["設定1出玉率", "97%"]],
+    sim: { kind: "juggler", games: 8000, bigRate: 256.0, regRate: 642.0, combinedRate: 183.0, bigPayout: 252, regPayout: 96, payoutRate: 0.970, settingRates: { 1: { big: 256.0, reg: 642.0, payout: 0.970 }, 2: { big: 246.0, reg: 585.0, payout: 0.990 }, 3: { big: 235.0, reg: 537.0, payout: 1.010 }, 4: { big: 224.0, reg: 489.0, payout: 1.040 }, 5: { big: 212.0, reg: 442.0, payout: 1.070 }, 6: { big: 199.0, reg: 399.0, payout: 1.100 } }, base50: 40.0, coinUnit: 2.1, mainRate: 183.0, mainLabel: "ボーナス合算", triggerLabel: "最大8,000G実戦", upperChallenge: "BIG・REG集計", upperLabel: "差枚結果" },
+    articleSections: [
+      { heading: "ハイビスカス点灯から続行を選ぶ", paragraphs: ["次のボーナスまでのゲーム数を抽選し、BIGまたはREG当選後に続ける・やめるを選択します。設定は終了時に発表します。", "ジャグラー系と同じ固定レート・保存方式なので、異なるAタイプの結果をマイ記録で比較できます。"] },
+      { heading: "設定1〜6の公式確率を反映", paragraphs: ["設定1のBIG約1/256・REG約1/642・合算約1/183から、設定6のBIG約1/199・REG約1/399・合算約1/133までを使用します。", "告知タイミング、チェリー同時当選、設定示唆ランプ、取りこぼしは再現しない簡易モデルです。"] }
+    ],
+    sources: [["パイオニア 公式台間POP", "https://www.slot-pioneer.co.jp/product/dragon_hanahana_senko/pop/pop_pdf.pdf"]]
+  },
+  "fire-force2-shinra": {
+    order: 10.15, type: "pachinko", theme: "ember", year: "2025年7月", maker: "SANKYO", updated: "2026-11-01",
+    name: "eフィーバー炎炎ノ消防隊2 シンラver.", shortName: "炎炎2 シンラver.",
+    catchcopy: "約1/399.9から炎上バトルモードへ。超炎上BURSTまでを体験。",
+    intro: "図柄揃い約1/399.9、トータルRUSH突入約50.5%、継続約80%のLT機。初当りから炎上バトル、超炎上BURSTまでを固定条件で簡易抽選します。",
+    points: ["図柄揃い約1/399.9", "トータルRUSH突入約50.5%", "炎上バトルモード継続約80%"],
+    specs: [["図柄揃い", "約1/399.9"], ["大当り合算", "1/349.9"], ["RUSH突入", "約50.5%"], ["RUSH継続", "約80%"], ["大当り出玉", "300・1500・3000個"], ["スタート", "通常ヘソ"]],
+    sim: { kind: "pachinko", hitRate: 399.9, hitLabel: "図柄揃い", startType: "通常ヘソ", spinsPer1k: 17.0, minSpins: 10, maxSpins: 30, rushLabel: "炎上バトルモード", rushEntry: 0.505, rushContinue: 0.80, firstPayoutIn: 1500, firstPayoutOut: 1500, rushPayouts: [[1500, 0.80], [3000, 0.20]], upperLabel: "超炎上BURST", upperDirectChance: 0, upperUpgradeChance: 0.12, upperContinue: 0.80 },
+    articleSections: [
+      { heading: "初当りからLTまでを一連で表示", paragraphs: ["図柄揃い約1/399.9から約50.5%のRUSH突入を抽選し、突入後は約80%で継続します。", "命の呼吸チャレンジは突入率へ含め、結果画面では炎上バトルモードへの当落としてまとめます。"] },
+      { heading: "出玉上乗せは代表値へ簡略化", paragraphs: ["右打ち中は1500個を中心に3000個と超炎上BURSTへのルートを表現します。", "転落小当りや全振り分けは完全再現せず、250玉貸し・28玉交換の固定レートで収支を比較します。"] }
+    ],
+    sources: [["SANKYO 公式機種情報", "https://www.sankyo-fever.jp/collection/984/"], ["炎炎ノ消防隊 公式特設サイト", "https://fever-fireforce.com/pes2/"]]
+  },
+  "denonbu-4500": {
+    order: 10.16, type: "pachinko", theme: "aqua", year: "2026年10月", maker: "ミズホ", updated: "2026-11-01",
+    name: "Pドラムde 電音部 超ドラ熱4500ver.", shortName: "電音部4500",
+    catchcopy: "約1/259の高スタート機。1/2を突破して4500個＋αへ。",
+    intro: "通常時約1/259.0、チャレンジ突入50%、右打ち中約1/2.0の一回転勝負。300個の初当りから1500個、4500個以上の連続獲得までを簡易体験できます。",
+    points: ["通常時約1/259.0", "チャレンジ突入・成功ともに約50%", "超ドラ熱ATTACK成功で4500個以上"],
+    specs: [["通常時", "約1/259.0"], ["右打ち中", "約1/2.0"], ["チャレンジ突入", "50%"], ["チャレンジ成功", "約50%"], ["最大出玉契機", "4500個＋α"], ["遊タイム", "550回転"]],
+    sim: { kind: "pachinko", hitRate: 259.0, hitLabel: "初当り", startType: "高スタート", spinsPer1k: 29.9, minSpins: 20, maxSpins: 45, rushLabel: "りむるしか勝たんチャレンジ", rushEntry: 0.50, rushContinue: 0.50, firstPayoutIn: 300, firstPayoutOut: 300, rushPayouts: [[1500, 1]], upperLabel: "超ドラ熱ATTACK", upperDirectChance: 0, upperUpgradeChance: 0.50, upperContinue: 0.50 },
+    articleSections: [
+      { heading: "1/2の一回転勝負を段階表示", paragraphs: ["初当り後は約50%でチャレンジへ進み、約1/2を突破すると1500個を獲得します。", "その後の超ドラ熱ATTACKも約1/2で、成功時の4500個以上を上位ルートとして表示します。"] },
+      { heading: "高スタートを投資計算へ反映", paragraphs: ["比較用回転率は29.9回/1,000円に固定し、通常ヘソ機より投資が軽くなるモデルです。", "遊タイムや実店舗ごとの回転差は完全再現せず、結果はマイ記録へ自動保存します。"] }
+    ],
+    sources: [["ユニバチャンネル 公式PV", "https://www.youtube.com/watch?v=YRHMszsTImA"], ["P-WORLD 設置台数ランキング", "https://www.p-world.co.jp/info/rankp.htm?guid=ON"]]
+  },
+  "haru-ichiban-2026": {
+    order: 10.17, type: "pachinko", theme: "crimson", year: "2026年8月", maker: "ソフィア", updated: "2026-11-01",
+    name: "P春一番2026", shortName: "春一番2026",
+    catchcopy: "遊びやすい約1/89.9。100%突入の乱舞モードを楽しむ。",
+    intro: "通常時約1/89.9、全初当りから60回の乱舞モードへ突入する甘デジ。約60%継続と4R・10Rの出玉を固定条件で簡易体験できます。",
+    points: ["通常時約1/89.9", "乱舞モード突入100%", "ST60回・継続約60%"],
+    specs: [["通常時", "約1/89.9"], ["ST中", "約1/65.9"], ["RUSH突入", "100%"], ["RUSH継続", "約60%"], ["ST回数", "60回"], ["大当り出玉", "2R・4R・10R"]],
+    sim: { kind: "pachinko", hitRate: 89.9, hitLabel: "初当り", startType: "通常ヘソ", spinsPer1k: 19.4, minSpins: 10, maxSpins: 30, rushLabel: "乱舞モード", rushEntry: 1.0, rushContinue: 0.60, firstPayoutIn: 360, firstPayoutOut: 360, rushPayouts: [[360, 0.75], [900, 0.25]] },
+    articleSections: [
+      { heading: "初当り後は必ず乱舞モード", paragraphs: ["通常時約1/89.9の初当り後は100%で60回のSTへ進みます。", "ST中約1/65.9をまとめた約60%継続で、甘デジらしい短い一連の流れを体験できます。"] },
+      { heading: "4R・10Rを中心に収支計算", paragraphs: ["右打ち中は4R約360個と10R約900個の代表値を使用します。", "初当りの細かな2R・4R・10R振り分けは簡略化し、250玉貸し・28玉交換で比較します。"] }
+    ],
+    sources: [["西陣・ソフィア 公式サイト", "https://www.nishijin.co.jp/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/"]]
+  },
+  "gundam-unicorn-awakening-drive": {
+    order: 10.18, type: "slot", theme: "aqua", year: "2026年9月", maker: "ビスティ", updated: "2026-11-01",
+    name: "Lパチスロ 機動戦士ガンダムユニコーン 覚醒DRIVE", shortName: "ガンダムUC 覚醒DRIVE",
+    catchcopy: "彗星決戦から覚醒HYPER、Over The Rainbowと覚醒DRIVEへ。",
+    intro: "設定1のAT約1/471.9から設定6の約1/392.3までを反映。CZ、AT、上位AT、1000枚上乗せループの覚醒DRIVEを簡易体験できます。",
+    points: ["設定1 AT約1/471.9", "覚醒HYPERから上位ATへ", "覚醒DRIVEは1000枚上乗せ×約50%ループ"],
+    specs: [["AT（設定1）", "約1/471.9"], ["AT（設定6）", "約1/392.3"], ["上位AT", "Over The Rainbow"], ["最強特化", "覚醒DRIVE"], ["設定", "1〜6ランダム"], ["コンプリート", "19,000枚"]],
+    sim: { kind: "slot", triggerLabel: "彗星決戦", triggerRate: 260.0, triggerSuccess: 0.55, mainLabel: "覚醒HYPER", mainRate: 471.9, base50: 31.5, coinUnit: 4.1, normalMin: 300, normalMax: 1200, specialLabel: "エピソードボーナス", specialChance: 0.36, specialMin: 200, specialMax: 900, upperChallenge: "覚醒の光", upperChance: 0.18, upperSuccess: 0.50, upperLabel: "覚醒DRIVE", upperContinue: 0.50, upperPayout: 1000, settingRates: { 1: { main: 471.9, payout: 0.978 }, 2: { main: 456.6, payout: 0.988 }, 3: { main: 427.8, payout: 1.010 }, 4: { main: 403.9, payout: 1.054 }, 5: { main: 398.3, payout: 1.102 }, 6: { main: 392.3, payout: 1.145 } } },
+    articleSections: [
+      { heading: "公式AT確率とCZ簡易換算", paragraphs: ["設定別AT確率は公式公表値を使用し、CZ発生率はAT確率との比率から簡易換算します。", "設定は開始時に1〜6から均等抽選し、最終結果とランキングで発表します。"] },
+      { heading: "覚醒DRIVEの1000枚ループ", paragraphs: ["上位AT到達後の覚醒の光を突破すると、1000枚上乗せを約50%でループする覚醒DRIVEへ進みます。", "全役・モード・シナリオは再現せず、出玉段階とコンプリート到達を体験するモデルです。"] }
+    ],
+    sources: [["SANKYO 公式機種情報", "https://www.sankyo-fever.jp/collection/994/"], ["公式特設サイト", "https://www.l-gundamuc-kakuseidrive.jp/"]]
+  },
+  "toaru-index2-slot": {
+    order: 10.19, type: "slot", theme: "violet", year: "2026年8月", maker: "藤商事", updated: "2026-11-01",
+    name: "スマスロ とある魔術の禁書目録2", shortName: "スマスロ とある2",
+    catchcopy: "幻想リプレイで流れを変え、幻想BURSTと上位ATを目指す。",
+    intro: "設定1のCZ約1/235.6・AT約1/398.8から設定6のCZ約1/207.2・AT約1/338.4までを反映したATシミュレーターです。",
+    points: ["設定1 CZ約1/235.6・AT約1/398.8", "純増約4.0枚/G", "設定6出玉率113.3%"],
+    specs: [["CZ（設定1）", "約1/235.6"], ["AT（設定1）", "約1/398.8"], ["AT（設定6）", "約1/338.4"], ["AT純増", "約4.0枚/G"], ["設定", "1〜6ランダム"], ["上位契機", "幻想BURST"]],
+    sim: { kind: "slot", triggerLabel: "CZ", triggerRate: 235.6, triggerSuccess: 0.59, mainLabel: "幻想殺しRUSH", mainRate: 398.8, base50: 31.0, coinUnit: 4.0, normalMin: 260, normalMax: 1100, specialLabel: "幻想BURST", specialChance: 0.34, specialMin: 200, specialMax: 1000, upperChallenge: "最強特化ゾーン", upperChance: 0.17, upperSuccess: 0.50, upperLabel: "上位AT", upperContinue: 0.80, upperPayout: 600, settingRates: { 1: { trigger: 235.6, main: 398.8, payout: 0.979 }, 2: { trigger: 233.4, main: 394.5, payout: 0.987 }, 3: { trigger: 230.8, main: 389.6, payout: 1.000 }, 4: { trigger: 222.3, main: 369.5, payout: 1.045 }, 5: { trigger: 215.8, main: 358.0, payout: 1.082 }, 6: { trigger: 207.2, main: 338.4, payout: 1.133 } } },
+    articleSections: [
+      { heading: "CZ・ATの設定別公表値を反映", paragraphs: ["設定1〜6のCZ・AT確率を個別に使い、開始時に設定を均等抽選します。", "設定は遊技中に伏せ、結果・マイ記録・機種別ランキングへ表示します。"] },
+      { heading: "幻想BURSTから上位ATへ", paragraphs: ["純増約4.0枚/GのATと、平均上乗せに期待できる特化ゾーンを獲得枚数の幅で表現します。", "小役変換や全内部状態は完全再現せず、46枚貸し・5.2枚交換で収支を計算します。"] }
+    ],
+    sources: [["藤商事 公式機種情報", "https://www.fujimarukun.co.jp/products/l_toaru2/?search_type=2"], ["藤商事 公式特設サイト", "https://www.fujimarukun.co.jp/products/machine/l_toaru2/sp/lp.html"]]
+  },
+  "darling-in-the-franxx-slot": {
+    order: 10.195, type: "slot", theme: "crimson", year: "2025年8月", maker: "スパイキー", updated: "2026-11-01",
+    name: "L ダーリン・イン・ザ・フランキス", shortName: "スマスロ ダリフラ",
+    catchcopy: "コネクトチャンスからボーナス高確をつなぎ、比翼BEATSへ。",
+    intro: "CZ約1/125.1、ボーナス高確率約1/343.0の設定1から、設定6までの公表値を反映。疑似ボーナス連打と上位ATを簡易体験できます。",
+    points: ["設定1 CZ約1/125.1", "ボーナス高確率約1/343.0〜1/252.3", "純増約5.0枚/G"],
+    specs: [["CZ（設定1）", "約1/125.1"], ["ボーナス初当り", "約1/229.8"], ["ボーナス高確", "約1/343.0"], ["AT純増", "約5.0枚/G"], ["天井", "666G＋α"], ["設定", "1〜6ランダム"]],
+    sim: { kind: "slot", triggerLabel: "コネクトチャンス", triggerRate: 125.1, triggerSuccess: 0.36, mainLabel: "ボーナス高確率", mainRate: 343.0, base50: 30.8, coinUnit: 4.0, normalMin: 240, normalMax: 1000, specialLabel: "ダーリン・イン・ザ・ボーナス", specialChance: 0.35, specialMin: 180, specialMax: 900, upperChallenge: "エピソードボーナス", upperChance: 0.16, upperSuccess: 0.50, upperLabel: "比翼BEATS", upperContinue: 0.80, upperPayout: 550, settingRates: { 1: { trigger: 125.1, main: 343.0, payout: 0.978 }, 2: { trigger: 125.3, main: 334.1, payout: 0.989 }, 3: { trigger: 123.4, main: 320.1, payout: 1.006 }, 4: { trigger: 124.1, main: 298.9, payout: 1.054 }, 5: { trigger: 118.4, main: 270.3, payout: 1.105 }, 6: { trigger: 115.9, main: 252.3, payout: 1.145 } } },
+    articleSections: [
+      { heading: "CZとボーナス高確率を設定別に抽選", paragraphs: ["設定別CZ確率とボーナス高確率を使用し、当選後に疑似ボーナス連打を抽選します。", "設定は1〜6から均等に選び、最終結果で発表します。"] },
+      { heading: "比翼BEATSまでを段階表示", paragraphs: ["ボーナスからエピソードを経て、上位ATの比翼BEATSへ進む流れを簡易化しています。", "REGスルー天井、全小役、内部レベルは再現せず、最大19,000枚でコンプリート表示します。"] }
+    ],
+    sources: [["公式機種サイト", "https://www.l-darli-fra.jp/"], ["フィールズ 公式発表", "https://digitalpr.jp/pdf.php?r=113746"]]
+  },
+  "kaguya-sama-pachinko": {
+    order: 10.196, type: "pachinko", theme: "sakura", year: "2023年10月", maker: "SANKYO", updated: "2026-11-01",
+    name: "Pフィーバーかぐや様は告らせたい", shortName: "Pかぐや様",
+    catchcopy: "時短を含むRUSH突入約74%。右打ちはALL約1500個。",
+    intro: "約1/319.7の初当りからSTまたは時短へ進み、トータルRUSH突入約74%・継続約81%を体験できる王道STシミュレーターです。",
+    points: ["大当り約1/319.7", "トータルRUSH突入約74%", "ST中はALL約1500個"],
+    specs: [["大当り", "約1/319.7"], ["ST中", "約1/98.3"], ["ST突入", "約64%"], ["トータルRUSH突入", "約74%"], ["RUSH継続", "約81%"], ["ST", "160回"]],
+    sim: { kind: "pachinko", hitRate: 319.7, hitLabel: "初当り", startType: "通常ヘソ", spinsPer1k: 17.5, minSpins: 10, maxSpins: 30, rushLabel: "かぐや様は告らせたいRUSH", rushEntry: 0.74, rushContinue: 0.81, firstPayoutIn: 300, firstPayoutOut: 300, rushPayouts: [[1500, 1]] },
+    articleSections: [
+      { heading: "ST直行と時短引き戻しを合算", paragraphs: ["初当りの約64%がST160回へ直行し、残りは時短100回へ進みます。", "時短中の引き戻しを含めたトータルRUSH突入約74%を、サイトでは1回の突入抽選へまとめています。"] },
+      { heading: "右打ちはALL約1500個", paragraphs: ["RUSH中の大当りはすべて10R約1500個で、継続期待度は約81%です。", "保留、演出モード、時短とSTの途中経過は完全再現せず、17.5回/1,000円の固定条件で比較します。"] }
+    ],
+    sources: [["SANKYO 公式機種情報", "https://www.sankyo-fever.jp/products/machine_list/pif/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9888"]]
+  },
+  "toaru-index2-pachinko": {
+    order: 10.197, type: "pachinko", theme: "violet", year: "2024年1月", maker: "JFJ", updated: "2026-11-01",
+    name: "Pとある魔術の禁書目録2", shortName: "Pとある2",
+    catchcopy: "RUSH突入70%・継続約77%。約3000個大当りも搭載。",
+    intro: "約1/319.6の初当りから70%でST144回へ。約1500個と約3000個の出玉振り分けを反映したロングSTシミュレーターです。",
+    points: ["大当り約1/319.6", "RUSH突入70%・継続約77%", "約3000個比率を反映"],
+    specs: [["大当り", "約1/319.6"], ["ST中", "約1/99.9"], ["RUSH突入", "70%"], ["RUSH継続", "約77%"], ["ST", "144回"], ["出玉", "約1500・3000個"]],
+    sim: { kind: "pachinko", hitRate: 319.6, hitLabel: "初当り", startType: "通常ヘソ", spinsPer1k: 17.2, minSpins: 10, maxSpins: 30, rushLabel: "とある魔術の最強激突", rushEntry: 0.70, rushContinue: 0.77, firstPayoutIn: 1800, firstPayoutOut: 1500, rushPayouts: [[1500, 0.6875], [3000, 0.3125]] },
+    articleSections: [
+      { heading: "初当りの70%でST144回", paragraphs: ["通常時は約1/319.6、初当りの70%でRUSHへ突入します。", "RUSHはSTリセットを含めて約77%継続の公表値を使い、途中状態を一連の演出へまとめています。"] },
+      { heading: "約1500個と約3000個", paragraphs: ["初当りは約3000個＋RUSHが15%、約1500個＋RUSHが55%、約1500個通常が30%です。", "RUSH中のSTリセット20%は継続率へ含め、出玉あり大当りは約1500個と約3000個の比率へ換算しています。"] }
+    ],
+    sources: [["JFJ 公式機種情報", "https://www.fujimarukun.co.jp/products/p_toaru2/?search_type=1"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9957"]]
+  },
+  "hokuto-kyoteki-lt": {
+    order: 10.198, type: "pachinko", theme: "flame", year: "2024年3月", maker: "サミー", updated: "2026-11-01",
+    name: "P北斗の拳 強敵 LT", shortName: "北斗 強敵LT",
+    catchcopy: "約1/99.9から強敵RUSH、継続約95%のHYPERへ。",
+    intro: "甘デジ帯の初当りから50%で強敵RUSHへ入り、10R大当りを契機に継続約95%のHYPER強敵RUSHを目指すLTシミュレーターです。",
+    points: ["大当り約1/99.9", "強敵RUSH突入50%・継続約70%", "HYPER継続約95%"],
+    specs: [["大当り", "約1/99.9"], ["右打ち図柄揃い", "約1/45.2"], ["RUSH突入", "50%"], ["強敵RUSH継続", "約70%"], ["HYPER継続", "約95%"], ["出玉", "約300〜1000個"]],
+    sim: { kind: "pachinko", hitRate: 99.9, hitLabel: "初当り", startType: "通常ヘソ", spinsPer1k: 18.5, minSpins: 10, maxSpins: 35, rushLabel: "強敵RUSH", rushEntry: 0.50, rushContinue: 0.70, firstPayoutIn: 400, firstPayoutOut: 400, rushPayouts: [[300, 0.60], [600, 0.20], [1000, 0.20]], upperLabel: "HYPER強敵RUSH", upperDirectChance: 0, upperUpgradeChance: 0.20, upperContinue: 0.95 },
+    articleSections: [
+      { heading: "強敵RUSHからHYPERへ", paragraphs: ["初当りの50%で時短50回＋残保留の強敵RUSHへ進み、継続期待度は約70%です。", "RUSH中の10R大当りを上位契機として、HYPER強敵RUSHへ移行する流れを段階表示します。"] },
+      { heading: "HYPERは約95%継続", paragraphs: ["HYPER強敵RUSHは時短130回＋残保留で継続約95%。出玉は約300・600・1000個を6:2:2で抽選します。", "残保留の細かな振り分けやV入賞条件は簡略化し、18.5回/1,000円で収支を計算します。"] }
+    ],
+    sources: [["サミー 公式スペック", "https://www.sammy.co.jp/japanese/product/pachinko/hok_ke_tomo/spec.html"], ["P-WORLD 業界ニュース", "https://news.p-world.co.jp/articles/26665/nippon"]]
+  },
+  "gundam-seed-slot": {
+    order: 10.199, type: "slot", theme: "aqua", year: "2025年5月", maker: "ビスティ", updated: "2026-11-01",
+    name: "Lパチスロ 機動戦士ガンダムSEED", shortName: "スマスロ ガンダムSEED",
+    catchcopy: "CZと擬似ボーナスをつなぎ、継続約96%のフリーダムへ。",
+    intro: "設定別のCZ・AT初当りを反映。ストライクアタック、ストライクライド、宿命ZONEを経て上位ATを目指すシミュレーターです。",
+    points: ["設定1 CZ約1/362.2・AT約1/460.1", "約31.5G/50枚・純増約6.5枚/G", "上位AT継続約96%"],
+    specs: [["CZ（設定1）", "約1/362.2"], ["AT（設定1）", "約1/460.1"], ["AT（設定6）", "約1/318.4"], ["ベース", "約31.5G/50枚"], ["純増", "約6.5枚/G"], ["設定", "1〜6ランダム"]],
+    sim: { kind: "slot", triggerLabel: "ストライクアタック", triggerRate: 362.2, triggerSuccess: 0.60, mainLabel: "ストライクライド", mainRate: 460.1, base50: 31.5, coinUnit: 4.0, normalMin: 260, normalMax: 1100, specialLabel: "宿命ZONE", specialChance: 0.36, specialMin: 180, specialMax: 900, upperChallenge: "ストライクバースト", upperChance: 0.18, upperSuccess: 0.50, upperLabel: "フリーダムハイパー", upperContinue: 0.96, upperPayout: 500, settingRates: { 1: { trigger: 362.2, main: 460.1, payout: 0.977 }, 2: { trigger: 377.3, main: 446.9, payout: 0.988 }, 3: { trigger: 349.1, main: 411.8, payout: 1.012 }, 4: { trigger: 309.7, main: 364.5, payout: 1.054 }, 5: { trigger: 301.6, main: 355.6, payout: 1.107 }, 6: { trigger: 266.9, main: 318.4, payout: 1.149 } } },
+    articleSections: [
+      { heading: "設定別CZ・AT確率を反映", paragraphs: ["設定2のCZが設定1より重いなど、単純な並びではない公表値もそのまま使用します。", "設定は開始時に1〜6から均等抽選し、最終結果・記録・機種別ランキングで発表します。"] },
+      { heading: "ボーナスループからフリーダムへ", paragraphs: ["STと擬似ボーナスを重ね、宿命ZONEとストライクバーストを経て上位ATへ進む流れを簡易化しています。", "上位ATは継続約96%を採用し、全小役・モード・ポイントは完全再現しません。"] }
+    ],
+    sources: [["SANKYO 公式機種情報", "https://www.sankyo-fever.jp/collection/981/"], ["フィールズ 公式発表", "https://www.tsuburaya-fields.co.jp/ir/j/files/press/2025/press_20250217a.pdf"]]
+  },
+  "mushoku-tensei-slot": {
+    order: 10.1991, type: "slot", theme: "violet", year: "2025年12月", maker: "ニューギン", updated: "2026-11-01",
+    name: "L 無職転生 ～異世界行ったら本気だす～", shortName: "スマスロ 無職転生",
+    catchcopy: "ヒロイン役でCZとVストックをつなぎ、上位ATへ。",
+    intro: "設定別CZ・AT初当りを反映。無職CHANCE、ボーナス、Vストック特化、ターニングポイント2から上位ATを目指します。",
+    points: ["設定1 CZ約1/130・AT約1/416", "約33G/50枚", "上位AT純増約4.5枚/G"],
+    specs: [["CZ（設定1）", "約1/130"], ["AT（設定1）", "約1/416"], ["AT（設定6）", "約1/292"], ["ベース", "約33G/50枚"], ["上位AT純増", "約4.5枚/G"], ["設定", "1〜6ランダム"]],
+    sim: { kind: "slot", triggerLabel: "無職CHANCE", triggerRate: 130.0, triggerSuccess: 0.55, mainLabel: "異世界行ったら本気だす", mainRate: 416.0, base50: 33.0, coinUnit: 3.7, normalMin: 240, normalMax: 1000, specialLabel: "バケーションゾーン", specialChance: 0.35, specialMin: 180, specialMax: 850, upperChallenge: "ターニングポイント2", upperChance: 0.18, upperSuccess: 0.56, upperLabel: "上位AT＋オルステッド", upperContinue: 0.82, upperPayout: 560, settingRates: { 1: { trigger: 130, main: 416, payout: 0.977 }, 2: { trigger: 129, main: 406, payout: 0.991 }, 3: { trigger: 128, main: 394, payout: 1.009 }, 4: { trigger: 127, main: 361, payout: 1.054 }, 5: { trigger: 127, main: 327, payout: 1.095 }, 6: { trigger: 125, main: 292, payout: 1.137 } } },
+    articleSections: [
+      { heading: "CZ・ATを設定別に抽選", paragraphs: ["設定1のCZ約1/130・AT約1/416から設定6のCZ約1/125・AT約1/292まで、公表値を個別に使います。", "設定は遊技中に伏せ、結果・マイ記録・機種別ランキングへ表示します。"] },
+      { heading: "Vストックと上位CZ", paragraphs: ["バケーションゾーンをVストック特化、成功期待度約56%のターニングポイント2を上位CZとして表現します。", "ヒロイン役、全ボーナス、セットごとの継続は簡易化し、最大19,000枚でコンプリート表示します。"] }
+    ],
+    sources: [["ニューギン 公式情報", "https://www.newgin.co.jp/devfaq/devfaq_tag/info/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10395"]]
+  },
+  "super-bingo-neo-slot": {
+    order: 10.1992, type: "slot", theme: "gold", year: "2024年12月", maker: "ベルコ", updated: "2026-11-01",
+    name: "Lスーパービンゴネオ", shortName: "スマスロ ビンゴネオ",
+    catchcopy: "BINGO CHANCEからHooah!、純増約5枚の加速区間へ。",
+    intro: "実機の5段階設定を反映。CZからBINGO CHANCEへ入り、継続セットとHooah!によるゲーム数上乗せを簡易体験できます。",
+    points: ["設定1 AT約1/449.2", "約31.4G/50枚", "設定1・2・4・5・6から抽選"],
+    specs: [["AT（設定1）", "約1/449.2"], ["AT（設定6）", "約1/365.3"], ["ベース", "約31.4G/50枚"], ["純増", "約2.8・5.0枚/G"], ["天井", "999G＋α"], ["設定", "1・2・4・5・6"]],
+    sim: { kind: "slot", triggerLabel: "THE SEG", triggerRate: 240.0, triggerSuccess: 0.53, mainLabel: "BINGO CHANCE", mainRate: 449.2, base50: 31.4, coinUnit: 4.1, normalMin: 250, normalMax: 1200, specialLabel: "Hooah!", specialChance: 0.36, specialMin: 200, specialMax: 1200, upperChallenge: "Hooah!連続", upperChance: 0.18, upperSuccess: 0.50, upperLabel: "加速BINGO CHANCE", upperContinue: 0.80, upperPayout: 600, settingPool: [1, 2, 4, 5, 6], settingRates: { 1: { main: 449.2, payout: 0.973 }, 2: { main: 440.4, payout: 0.985 }, 4: { main: 404.5, payout: 1.043 }, 5: { main: 387.2, payout: 1.083 }, 6: { main: 365.3, payout: 1.149 } } },
+    articleSections: [
+      { heading: "実機どおり5段階設定", paragraphs: ["設定1・2・4・5・6から均等抽選し、公表されたAT初当りと出玉率を使用します。", "設定Lは通常遊技用ではないため抽選対象から除外し、CZはAT初当りからの簡易換算です。"] },
+      { heading: "Hooah!と純増加速を段階表示", paragraphs: ["継続率管理のBINGO CHANCEとHooah!によるゲーム数上乗せを、獲得枚数の幅として表現します。", "数字揃い、モード、天井恩恵は完全再現せず、46枚貸し・5.2枚交換で収支を計算します。"] }
+    ],
+    sources: [["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10142"], ["ベルコ 公式サイト", "https://www.bellco.co.jp/"]]
+  },
   "karakuri-circus2-slot": {
     order: 10.2, type: "slot", theme: "crimson", year: "2026年7月", maker: "SANKYO", updated: "2026-11-01",
     name: "Lパチスロ からくりサーカス2", shortName: "スマスロ からくり2",

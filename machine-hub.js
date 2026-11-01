@@ -13,6 +13,8 @@
   const tools = document.querySelector(".machine-hub-tools");
   let filter = fixedType || "all";
   let sort = "recommended";
+  const PAGE_SIZE = 24;
+  let visibleCount = PAGE_SIZE;
   const NEW_MACHINE_WINDOW_MONTHS = 3;
 
   const escapeHtml = value => String(value ?? "").replace(/[&<>'"]/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[character]);
@@ -117,6 +119,15 @@
     tools.insertBefore(sortLabel, status);
   }
 
+  let moreControls = document.getElementById("machineHubMore");
+  if (!moreControls && grid) {
+    moreControls = document.createElement("div");
+    moreControls.className = "machine-hub-more";
+    moreControls.id = "machineHubMore";
+    moreControls.innerHTML = `<button class="machine-hub-more-button" id="machineHubMoreButton" type="button"><strong>さらに表示</strong><small id="machineHubMoreCount"></small></button><button class="machine-hub-reset-button" id="machineHubResetButton" type="button" hidden>条件をリセット</button>`;
+    grid.after(moreControls);
+  }
+
   let memory = null;
   if (mode === "machines" && tools) {
     memory = document.createElement("section");
@@ -146,7 +157,8 @@
       if (!query) return true;
       return [machine.name, machine.shortName, machine.maker, machine.catchcopy, ...machineTags(machine)].some(value => String(value || "").toLocaleLowerCase("ja").includes(query));
     }));
-    grid.innerHTML = output.map(machine => {
+    const visibleOutput = output.slice(0, visibleCount);
+    grid.innerHTML = visibleOutput.map(machine => {
       const action = mode === "rankings" ? "ランキングを見る" : "この台で遊ぶ";
       const isFavorite = favoriteSlugs.includes(machine.slug);
       const tags = machineTags(machine);
@@ -160,9 +172,33 @@
     }).join("");
     const sortLabels = { recommended: "おすすめ順", newest: "新しい順", name: "名前順", light: "初当り順" };
     const filterLabels = { all: "すべて", pachinko: "パチンコ", slot: "スロット", popular: "人気", new: "最近・導入予定の新台", light: "ライト", lt: "LT", wide: "デカヘソ", smart: "スマスロ", juggler: "Aタイプ", "high-coin": "高コイン単価", favorite: "お気に入り" };
-    status.textContent = `${filterLabels[filter] || "すべて"}・${output.length}台・${sortLabels[sort]}`;
+    const visibleLabel = visibleOutput.length < output.length ? `${visibleOutput.length}/${output.length}台表示` : `${output.length}台`;
+    status.textContent = `${filterLabels[filter] || "すべて"}・${visibleLabel}・${sortLabels[sort]}`;
     document.getElementById("machineHubEmpty").hidden = output.length > 0;
+    const moreButton = document.getElementById("machineHubMoreButton");
+    const moreCount = document.getElementById("machineHubMoreCount");
+    const resetButton = document.getElementById("machineHubResetButton");
+    const remaining = Math.max(0, output.length - visibleOutput.length);
+    if (moreButton) moreButton.hidden = remaining === 0;
+    if (moreCount) moreCount.textContent = remaining ? `残り${remaining}台` : "";
+    if (resetButton) resetButton.hidden = !query && filter === (fixedType || "all") && sort === "recommended";
+    if (moreControls) moreControls.hidden = output.length === 0 || (!remaining && resetButton?.hidden);
     renderMemory();
+  }
+
+  function resetConditions() {
+    filter = fixedType || "all";
+    sort = "recommended";
+    visibleCount = PAGE_SIZE;
+    if (search) search.value = "";
+    const sortControl = document.getElementById("machineHubSort");
+    if (sortControl) sortControl.value = sort;
+    tools?.querySelectorAll("[data-machine-hub-filter]").forEach(item => {
+      const active = item.dataset.machineHubFilter === "all";
+      item.classList.toggle("is-active", active);
+      item.setAttribute("aria-pressed", String(active));
+    });
+    render();
   }
 
   tools?.addEventListener("click", event => {
@@ -170,6 +206,7 @@
     if (!button) return;
     const selectedFilter = button.dataset.machineHubFilter;
     filter = selectedFilter === "all" && fixedType ? fixedType : selectedFilter;
+    visibleCount = PAGE_SIZE;
     if (selectedFilter === "new") sort = "newest";
     else if (sort === "newest") sort = "recommended";
     const sortControl = document.getElementById("machineHubSort");
@@ -189,8 +226,10 @@
     writeFavorites(current.includes(slug) ? current.filter(item => item !== slug) : [slug, ...current]);
     render();
   });
-  search?.addEventListener("input", render);
-  document.getElementById("machineHubSort")?.addEventListener("change", event => { sort = event.target.value; render(); });
+  search?.addEventListener("input", () => { visibleCount = PAGE_SIZE; render(); });
+  document.getElementById("machineHubSort")?.addEventListener("change", event => { sort = event.target.value; visibleCount = PAGE_SIZE; render(); });
+  document.getElementById("machineHubMoreButton")?.addEventListener("click", () => { visibleCount += PAGE_SIZE; render(); });
+  document.getElementById("machineHubResetButton")?.addEventListener("click", resetConditions);
   window.addEventListener("storage", event => { if ([FAVORITES_KEY, RECENT_KEY].includes(event.key)) render(); });
   render();
 })();

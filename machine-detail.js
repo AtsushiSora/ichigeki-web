@@ -240,7 +240,26 @@
   const novemberQuickLink = isNovemberNewMachine ? '<a href="new-machines-2026-11.html">11月新台比較</a>' : "";
   const decemberBreadcrumb = isDecemberNewMachine ? '<span>›</span><a href="new-machines-2026-12.html">12月新台</a>' : "";
   const decemberQuickLink = isDecemberNewMachine ? '<a href="new-machines-2026-12.html">12月新台比較</a>' : "";
-  const neighbors = ordered.filter(([key, item]) => key !== slug && item.type === machine.type).slice(0, 5);
+  const comparableRate = item => Number(item.sim?.kind === "pachinko" ? item.sim.hitRate : item.sim?.mainRate || item.sim?.triggerRate) || 99999;
+  const currentRate = comparableRate(machine);
+  const currentYear = Number(String(machine.year || "").match(/\d{4}/)?.[0]) || 0;
+  const neighbors = ordered
+    .filter(([key, item]) => key !== slug && item.type === machine.type)
+    .map(([key, item]) => {
+      const itemRate = comparableRate(item);
+      const itemYear = Number(String(item.year || "").match(/\d{4}/)?.[0]) || 0;
+      let score = 0;
+      if (item.theme === machine.theme) score += 5;
+      if (item.sim?.kind === machine.sim.kind) score += 4;
+      if (machine.type === "pachinko" && Boolean(item.sim?.upperLabel) === Boolean(machine.sim?.upperLabel)) score += 2;
+      if (machine.type === "slot" && Boolean(item.sim?.settingRates) === Boolean(machine.sim?.settingRates)) score += 2;
+      score += Math.max(0, 5 - Math.abs(Math.log(Math.max(itemRate, 1) / Math.max(currentRate, 1))) * 6);
+      score += Math.max(0, 2 - Math.abs(itemYear - currentYear) * .5);
+      score += Math.max(0, 2 - Number(item.order || 999) * .08);
+      return [key, item, score];
+    })
+    .sort((a, b) => b[2] - a[2] || Number(a[1].order || 999) - Number(b[1].order || 999))
+    .slice(0, 5);
   app.innerHTML = `
     <nav class="article-breadcrumb machine-breadcrumb" aria-label="パンくず"><a href="index.html">TOP</a><span>›</span><a href="${hubHref}">${hubLabel}</a>${novemberBreadcrumb}${decemberBreadcrumb}<span>›</span><span aria-current="page">${machine.shortName}</span></nav>
     <section class="machine-archive-hero theme-${machine.theme}">
@@ -293,7 +312,7 @@
         <h3>関連ガイド</h3><div class="next-links">${isNovemberNewMachine ? '<a href="new-machines-2026-11.html">11月新台10機種を比較</a>' : ""}${isDecemberNewMachine ? '<a href="new-machines-2026-12.html">12月新台の先行比較</a>' : ""}<a href="average-game-guide.html">平均G・平均回転</a><a href="continuation-rate-guide.html">継続率と平均連</a><a href="simulation-policy.html">計算・掲載方針</a></div>
         <h3>参照情報</h3><ul class="machine-sources">${machine.sources.map(([label, url]) => `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${label} ↗</a></li>`).join("")}</ul>
       </article>
-      <aside class="machine-side-list"><strong>次に試す人気機種</strong>${neighbors.map(([key, item]) => `<a href="${key}.html"><span>${item.type === "slot" ? "SLOT" : "PACHINKO"}</span>${item.shortName}</a>`).join("")}</aside>
+      <aside class="machine-side-list"><strong>似た条件のおすすめ</strong>${neighbors.map(([key, item]) => `<a href="${key}.html"><span>${item.type === "slot" ? `平均${Number(item.sim.mainRate || item.sim.triggerRate).toLocaleString("ja-JP")}G` : `平均${Number(item.sim.hitRate).toLocaleString("ja-JP")}回転`}</span>${item.shortName}</a>`).join("")}</aside>
     </section>`;
 
   const favoriteButton = document.getElementById("machineFavoriteButton");

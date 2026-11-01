@@ -15067,6 +15067,48 @@ textarea { min-height: 132px; line-height: 1.65; }
 .machine-hub-card-body > span { margin-top: 15px; padding-top: 11px; border-top: 1px solid rgba(220, 184, 84, .32); color: #e7ca77; font-size: 11px; font-weight: 1000; }
 .machine-hub-empty { padding: 40px 18px; border: 1px dashed #405148; border-radius: 18px; color: #aebbb4; text-align: center; }
 .machine-hub-empty strong { color: #f5f1df; }
+.machine-hub-more {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 9px;
+  margin-top: -2px;
+}
+.machine-hub-more[hidden] { display: none !important; }
+.machine-hub-more button {
+  min-height: 52px;
+  border-radius: 15px;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+.machine-hub-more-button {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: 9px;
+  min-width: min(360px, 100%);
+  padding: 10px 20px;
+  border: 1px solid rgba(116, 239, 93, .48);
+  color: #071007;
+  background: linear-gradient(180deg, #8af672, #5fd650);
+  box-shadow: 0 10px 24px rgba(91, 220, 75, .16);
+}
+.machine-hub-more-button small {
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: #d9e8dc;
+  background: rgba(4, 15, 6, .72);
+  font-size: 10px;
+}
+.machine-hub-reset-button {
+  padding: 10px 18px;
+  border: 1px solid rgba(151, 176, 156, .28);
+  color: #d9e3db;
+  background: #101713;
+}
+.machine-hub-more button:hover,
+.machine-hub-more button:focus-visible { filter: brightness(1.08); transform: translateY(-1px); }
 
 @media (max-width: 760px) {
   .home-page .home-game-page { min-height: calc(100svh - 76px); padding: 14px 10px 24px !important; }
@@ -15086,6 +15128,9 @@ textarea { min-height: 132px; line-height: 1.65; }
   .machine-hub-card-body > p { min-height: 48px; font-size: 10px; }
   .machine-hub-card-body > div { display: grid; gap: 4px; }
   .machine-hub-card-body > div b { width: fit-content; }
+  .machine-hub-more { display: grid; grid-template-columns: 1fr; }
+  .machine-hub-more-button { width: 100%; min-width: 0; min-height: 58px; }
+  .machine-hub-reset-button { width: 100%; }
 }
 
 @media (max-width: 370px) {
