@@ -245,6 +245,7 @@
 
   function historyMarkup(record) {
     const balance = numeric(record.balanceYen);
+    const displayedPayout = numeric(record.displayedPayout);
     const recordId = escapeHtml(record.id || `${record.slug}-${record.savedAt}`);
     const flow = Array.isArray(record.flow) ? record.flow.slice(0, 6) : [];
     const badges = [machineType(record) === "slot" && numeric(record.setting) >= 1 ? `設定${numeric(record.setting)}` : "", record.complete ? "コンプリート" : "", record.upper ? "上位到達" : "", record.entered ? (machineType(record) === "slot" ? "AT突入" : "RUSH突入") : ""].filter(Boolean);
@@ -258,7 +259,7 @@
       </div>
       <div class="my-records-history-score">
         <span>収支</span><strong class="${balance >= 0 ? "is-plus" : "is-minus"}">${signedYen(balance)}</strong>
-        <dl><div><dt>開始</dt><dd>${number.format(numeric(record.attempts))}${attemptUnit(record)}</dd></div><div><dt>投資</dt><dd>¥${number.format(numeric(record.investment))}</dd></div><div><dt>獲得</dt><dd>${number.format(numeric(record.payout))}${payoutUnit(record)}</dd></div><div><dt>換金</dt><dd>¥${number.format(numeric(record.exchangeValue))}</dd></div></dl>
+        <dl><div><dt>開始</dt><dd>${number.format(numeric(record.attempts))}${attemptUnit(record)}</dd></div><div><dt>投資</dt><dd>¥${number.format(numeric(record.investment))}</dd></div>${displayedPayout > 0 && machineType(record) !== "slot" ? `<div><dt>表記</dt><dd>${number.format(displayedPayout)}玉</dd></div><div><dt>実獲得</dt><dd>${number.format(numeric(record.payout))}玉</dd></div>` : `<div><dt>獲得</dt><dd>${number.format(numeric(record.payout))}${payoutUnit(record)}</dd></div>`}<div><dt>換金</dt><dd>¥${number.format(numeric(record.exchangeValue))}</dd></div></dl>
         ${record.rateLabel ? `<small>${escapeHtml(record.rateLabel)}</small>` : ""}
         <button type="button" data-delete-machine-record="${recordId}" aria-label="${escapeHtml(machineTitle(record))}のこの記録を削除">この記録を削除</button>
       </div>

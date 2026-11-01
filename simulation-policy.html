@@ -20,7 +20,7 @@
 <body class="editorial-page">
   <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">SIMULATION POLICY</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#pachinko">パチンコ</a><a href="#slot">スロット</a><a href="#sources">参照情報</a></nav></div></header>
   <main class="page editorial-shell"><article class="article-card editorial-article">
-    <div class="article-meta"><span>サイト方針</span><time datetime="2026-10-08">2026年10月8日更新</time></div>
+    <div class="article-meta"><span>サイト方針</span><time datetime="2026-11-01">2026年11月1日更新</time></div>
     <h1>シミュレーターの<br>計算・掲載方針</h1>
     <p class="editorial-lead">ICHIGEKIは、機種の確率や出玉のばらつきを分かりやすく体験するための簡易シミュレーターです。実機の完全再現や攻略、収支予測を目的としていません。</p>
 
@@ -39,7 +39,9 @@
       <li><strong>RUSH突入</strong>掲載した突入率を使って、初当り後の突入・非突入を抽選します。</li>
       <li><strong>継続</strong>通常RUSHと上位RUSHを分け、設定した継続率で終了するまで抽選します。極端な長時間処理を防ぐ上限を設けています。</li>
       <li><strong>投資目安</strong>今回の回転数を、利用者が設定した1,000円あたり回転数で割り、1,000円単位へ切り上げます。</li>
-      <li><strong>差玉・収支目安</strong>総出玉から入力した貸玉数を使って使用玉を引き、入力した交換率で換金額と収支を計算します。</li>
+      <li><strong>表記出玉</strong>機種スペックに掲載される払い出し玉数として表示し、大当りの振り分け抽選に使用します。</li>
+      <li><strong>実獲得出玉</strong>表記出玉の約93.3%を基準に、ラウンド相当数ごとの打ち出しロスとオーバー入賞を簡易抽選します。1,500玉大当りは平均約1,400玉となり、結果ごとに数十玉前後します。</li>
+      <li><strong>差玉・収支目安</strong>実獲得出玉から入力した貸玉数を使って使用玉を引き、入力した交換率で換金額と収支を計算します。</li>
     </ul>
 
     <h2 id="slot">パチスロの計算</h2>
@@ -59,16 +61,20 @@
     <p>次の要素は一部を除き再現しません。実機とは結果が異なる主な理由です。</p>
     <div class="table-wrap"><table class="ranking-table editorial-table"><thead><tr><th>区分</th><th>主な未再現要素</th></tr></thead><tbody>
       <tr><td>共通</td><td>端玉、特殊景品の最小単位、再プレイ上限、持ち玉比率、台ごとの調整・個体差、遊技者の打ち方</td></tr>
-      <tr><td>パチンコ</td><td>保留、先読み、時短中の細かな抽選、電サポ中の増減、オーバー入賞、出玉削り</td></tr>
+      <tr><td>パチンコ</td><td>保留、先読み、時短中の細かな抽選、電サポ中の増減、機種固有のアタッカー形状・釘状態・遊技者ごとの打ち方</td></tr>
       <tr><td>パチスロ</td><td>全小役、設定差の全項目、内部状態、モード移行、ゾーン、天井短縮、有利区間の詳細</td></tr>
       <tr><td>演出</td><td>実機の映像・音声・演出法則、正確な消化時間</td></tr>
     </tbody></table></div>
 
     <h2>ランキングの扱い</h2>
-    <p>ランキングはシミュレーション結果を同じ機種内で比べる遊びです。利用者が変更したレートで有利・不利が生まれないよう、パチンコは1,000円250玉貸し・28玉交換、パチスロは1,000円46枚貸し・5.2枚交換に固定し、回転率・50枚ベースも機種初期値で再計算します。スロットはスタートごとに実機へ搭載される通常設定をランダム抽選し、その設定を各ランキング記録にも表示します。差玉・差枚を主な順位条件にし、同じ場合は固定条件の投資目安が少ない結果を優先します。ランキング、玉、メダル、スコアに金銭的価値や交換価値はありません。</p>
+    <p>ランキングはシミュレーション結果を同じ機種内で比べる遊びです。利用者が変更したレートで有利・不利が生まれないよう、パチンコは1,000円250玉貸し・28玉交換、パチスロは1,000円46枚貸し・5.2枚交換に固定し、回転率・50枚ベースも機種初期値で再計算します。パチンコは実獲得出玉をランキング計算に使用し、従来の表記出玉基準の記録とは分けます。スロットはスタートごとに実機へ搭載される通常設定をランダム抽選し、その設定を各ランキング記録にも表示します。差玉・差枚を主な順位条件にし、同じ場合は固定条件の投資目安が少ない結果を優先します。ランキング、玉、メダル、スコアに金銭的価値や交換価値はありません。</p>
 
     <h2 id="sources">参照情報と更新</h2>
     <p>新規掲載や修正では、メーカー公式情報、公式アーカイブ、機種データベース、専門メディアなどを確認します。数値はページごとの「参照情報」から確認できます。情報が一致しない場合は、数値の定義や時点を確認し、断定を避けます。</p>
+    <ul class="info-list">
+      <li><strong>出玉の定義</strong><a href="https://www.sankyo-fever.jp/research/31/" target="_blank" rel="noopener">SANKYO公式「初心者にもわかるスペックの見方」</a>を参照し、表記出玉を払い出し玉数、実獲得を打ち出し後に増える玉数として区別します。</li>
+      <li><strong>1,500玉の構成</strong><a href="https://www.sankyo-fever.jp/research/33/?r=research34" target="_blank" rel="noopener">SANKYO公式の10R・10カウント・賞球15個の解説</a>を基礎条件にしています。</li>
+    </ul>
     <p>誤りや更新漏れに気づいた場合は、<a href="contact.html">お問い合わせ</a>から該当ページと内容をお知らせください。</p>
 
     <div class="next-links"><a href="average-game-guide.html">平均Gの計算</a><a href="continuation-rate-guide.html">継続率の計算</a><a href="coin-unit-guide.html">コイン単価</a><a href="deka-heso-guide.html">デカヘソ</a></div>
