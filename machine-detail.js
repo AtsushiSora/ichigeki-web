@@ -169,7 +169,9 @@
     const sim = machine.sim;
     const releaseSummary = String(machine.intro || "").split("。")[0] + "。";
     let items;
-    if (sim.kind === "pachinko") {
+    if (Array.isArray(machine.faq) && machine.faq.length) {
+      items = machine.faq.map(item => [item.question, item.answer]);
+    } else if (sim.kind === "pachinko") {
       const averageInvestment = Math.round((sim.hitRate / sim.spinsPer1k * 1000) / 100) * 100;
       const upperFlow = sim.upperLabel ? `、さらに${sim.upperLabel}` : "";
       items = [
