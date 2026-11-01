@@ -1,4 +1,4 @@
-const CACHE_NAME = "ichigeki-web-v217";
+const CACHE_NAME = "ichigeki-web-v218";
 const CORE_ASSETS = [
   "index.html",
   "assets/machines/okiumi6-key-visual-v1.jpg",
@@ -211,6 +211,7 @@ const CORE_ASSETS = [
   "machine-library.js?v=142",
   "machine-library.js?v=143",
   "machine-library.js?v=144",
+  "machine-library.js?v=145",
   "machine-hub.js",
   "machine-hub.js?v=10",
   "machine-hub.js?v=11",
