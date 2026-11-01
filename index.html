@@ -4,6 +4,7 @@
   <meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#050705">
+  <link rel="preload" as="image" href="assets/home/ichigeki-mascot-hero-v1.jpg">
   <link rel="manifest" href="manifest.json">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <meta name="description" content="人気パチンコ・パチスロの記事、平均回転数・投資目安・コイン単価付きシミュレーター、機種別コミュニティを楽しめるICHIGEKIです。">
@@ -17,7 +18,7 @@
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="ICHIGEKI | 人気パチンコ・パチスロ機種シミュレーター">
   <meta name="twitter:description" content="人気機種のスペック、平均回転数、投資目安を確認して、機種別シミュレーションとランキングを楽しめます。">
-  <link rel="stylesheet" href="style.css?v=159">
+  <link rel="stylesheet" href="style.css?v=160">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -66,9 +67,19 @@
 
   <main class="page home-game-page" id="appHome">
     <section class="mobile-app-home" aria-label="機種を探してシミュレーションする">
+      <section class="home-mascot-hero" aria-labelledby="homeHeroTitle">
+        <img src="assets/home/ichigeki-mascot-hero-v1.jpg" alt="ICHIGEKIのオリジナル案内役と白い相棒キャラクター" width="1672" height="940" loading="eager" decoding="async" fetchpriority="high">
+        <div class="home-mascot-copy">
+          <span>ICHIGEKI NAVIGATOR</span>
+          <h1 id="homeHeroTitle"><span class="home-hero-title-wide">遊んで、比べて、記録する。</span><span class="home-hero-title-short">一撃体験！</span></h1>
+          <p>パチンコ・スロットの一撃シミュレーションを、気になる台からすぐに体験。</p>
+          <a href="#homeDailyTitle"><span class="home-hero-cta-wide">今日のおすすめを見る</span><span class="home-hero-cta-short">台を選ぶ</span> <b aria-hidden="true">↓</b></a>
+        </div>
+      </section>
+
       <section class="home-daily-picks" aria-labelledby="homeDailyTitle">
         <header class="home-daily-heading">
-          <div><span>DAILY PICK</span><h1 id="homeDailyTitle">今日のおすすめ</h1></div>
+          <div><span>DAILY PICK</span><h2 id="homeDailyTitle">今日のおすすめ</h2></div>
           <p id="homeDailyDate">毎日0時にパチンコ・スロット各1台を更新</p>
         </header>
         <div class="home-daily-grid">
