@@ -90,9 +90,20 @@
     }
   }
 
-  const today = japanToday();
-  renderCard("pachinko", pickMachine("pachinko", today.seed));
-  renderCard("slot", pickMachine("slot", today.seed));
-  const date = document.getElementById("homeDailyDate");
-  if (date) date.textContent = `${today.month}月${today.day}日のおすすめ・毎日0時更新`;
+  function renderToday() {
+    const today = japanToday();
+    renderCard("pachinko", pickMachine("pachinko", today.seed));
+    renderCard("slot", pickMachine("slot", today.seed));
+    const date = document.getElementById("homeDailyDate");
+    if (date) date.textContent = `${today.month}月${today.day}日のおすすめ・毎日0時更新`;
+    return today;
+  }
+
+  function scheduleNextDay(today) {
+    const nextMidnightInJapan = Date.UTC(today.year, today.month - 1, today.day + 1) - (9 * 60 * 60 * 1000);
+    const delay = Math.max(1000, nextMidnightInJapan - Date.now() + 1000);
+    window.setTimeout(() => scheduleNextDay(renderToday()), Math.min(delay, 2147483647));
+  }
+
+  scheduleNextDay(renderToday());
 })();
