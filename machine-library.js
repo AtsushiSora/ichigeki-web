@@ -803,7 +803,7 @@ window.ICHIGEKI_MACHINES = {
   "okiumi6": {
     order: 32, type: "pachinko", theme: "ocean", year: "2025年10月", maker: "三洋物産",
     name: "Pスーパー海物語IN沖縄6", shortName: "沖海6",
-    image: "assets/machines/okiumi6-key-visual.jpg",
+    image: "assets/machines/okiumi6-key-visual-v1.jpg",
     imageAlt: "Pスーパー海物語IN沖縄6のキービジュアル",
     imageCredit: "©SANYO BUSSAN CO., LTD.",
     imageSource: "https://www.sanyobussan.co.jp/products/pk_supersea_okinawa6/",
