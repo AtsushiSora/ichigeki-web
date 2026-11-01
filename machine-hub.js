@@ -40,7 +40,10 @@
   const isPopular = machine => Number(machine.order || 999) <= 10;
   const isSmartSlot = machine => machine.type === "slot" && (/スマスロ/.test(machine.name) || /^L/.test(machine.name));
   const isJuggler = machine => machine.type === "slot" && (machine.sim.kind === "juggler" || /ジャグラー/.test(machine.name));
-  const isLt = machine => machine.type === "pachinko" && (Boolean(machine.sim.upperLabel) || /LT|ラッキートリガー|上位/.test(`${machine.intro || ""} ${machine.catchcopy || ""}`));
+  const isLt = machine => {
+    const ltText = `${machine.intro || ""} ${machine.catchcopy || ""}`.replace(/全国設置上位/g, "");
+    return machine.type === "pachinko" && /LT|ラッキートリガー|上位/.test(ltText);
+  };
   const isWideStart = machine => machine.type === "pachinko" && /デカ|FAIR|BIG|超.*START/i.test(String(machine.sim.startType || ""));
   const introducedAt = machine => {
     const match = String(machine.year || "").match(/(\d{4})年(?:(\d{1,2})月)?/);
