@@ -47,7 +47,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["KYORAKU 公式発表", "https://www.kyoraku.co.jp/news/detail/895"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/machine/4847/1/1"], ["パチンコスペック解析 ボーダー", "https://pachinko-spec.info/spec/173543/"]]
   },
   "granbelm-319": {
-    order: 0.112, type: "pachinko", theme: "violet", year: "2026年11月", maker: "サンスリー", updated: "2026-10-31",
+    order: 0.112, type: "pachinko", theme: "violet", year: "2026年11月", maker: "サンスリー", updated: "2026-11-01",
     name: "eグランベルム 319ver.", shortName: "eグランベルム 319",
     catchcopy: "約51%で直LTへ。RESTARTと超アドレナリンBOOSTを体験。",
     intro: "2026年11月2日導入予定のスマパチLT機。初当り約1/319.6、グランベルムRUSH突入約51%、トータル継続約77%を固定条件で簡易体験できます。",
@@ -978,6 +978,12 @@ window.ICHIGEKI_MACHINES = {
       bestFor: ["まずは軽い初当りの新台から試したい", "デカヘソで投資目安がどう変わるか知りたい", "宿命BATTLE突入前後の出玉差を比べたい"],
       check: ["初当り出玉は約240個、RUSH中は約400個で計算", "RUSH継続は約72%で、短く終わる結果もある", "EXTREMEは昇格率未公表のため独立抽選しない"],
       compare: [["no-game-no-life-119", "eノゲノラ 119", "同じライト帯で初回出玉を比較"], ["juoh-shishi-no-ichigeki", "e獣王 獅子の一撃", "ワイドスタート機の投資差を比較"]]
+    },
+    "granbelm-319": {
+      verdict: "約1/319.6の初当りから約51%でグランベルムRUSHへ直行し、RESTART込み約77%の継続と1500〜4500個の出玉を比べる機種です。初回突入後の継続回数と一度の出玉の両方を確認できます。",
+      bestFor: ["直LTの分かりやすいRUSH突入を試したい", "約77%継続で連チャン数の幅を比べたい", "1500個・3000個・4500個の出玉差を見たい"],
+      check: ["平均投資目安は固定17.5回/1,000円で約18,300円", "RESTARTは独立表示せず継続率へ含める", "超アドレナリンBOOSTの上乗せ過程は完全再現しない"],
+      compare: [["fever-yokai-watch", "eF妖怪ウォッチ", "約80%継続と時短込み突入を比較"], ["toaru3-pachinko", "eとある3", "3段階STと大出玉振り分けを比較"]]
     },
     "fever-yokai-watch": {
       verdict: "RUSH直行だけでなく時短100回の引き戻しも含めて突入約61%、継続約80%を見る機種です。1500個以上を中心とした右打ちで、継続回数と出玉の両方を比べられます。",

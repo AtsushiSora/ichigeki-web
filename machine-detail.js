@@ -53,6 +53,7 @@
     "sao-phantom-bullet",
     "toaru3-pachinko",
     "kamen-rider-black-light",
+    "granbelm-319",
     "fever-yokai-watch",
     "juoh-shishi-no-ichigeki",
     "no-game-no-life-119",
@@ -64,6 +65,7 @@
   const NOVEMBER_NEW_MACHINE_SLUGS = new Set([
     "toaru3-pachinko",
     "kamen-rider-black-light",
+    "granbelm-319",
     "fever-yokai-watch",
     "juoh-shishi-no-ichigeki",
     "no-game-no-life-119",
@@ -275,7 +277,7 @@
         ${readerGuideMarkup()}
         ${articleMarkup()}
         ${machine.readerGuide ? `<div class="machine-article-sim-cta"><span>SIMULATOR</span><strong>読んだ内容を固定条件で試す</strong><p>同じ貸出・交換条件で、初当りから最終結果までを体験できます。</p><a class="button primary" href="#simulator">${startLabel}</a></div>` : ""}
-        <h3>関連ガイド</h3><div class="next-links">${isNovemberNewMachine ? '<a href="new-machines-2026-11.html">11月新台9機種を比較</a>' : ""}<a href="average-game-guide.html">平均G・平均回転</a><a href="continuation-rate-guide.html">継続率と平均連</a><a href="simulation-policy.html">計算・掲載方針</a></div>
+        <h3>関連ガイド</h3><div class="next-links">${isNovemberNewMachine ? '<a href="new-machines-2026-11.html">11月新台10機種を比較</a>' : ""}<a href="average-game-guide.html">平均G・平均回転</a><a href="continuation-rate-guide.html">継続率と平均連</a><a href="simulation-policy.html">計算・掲載方針</a></div>
         <h3>参照情報</h3><ul class="machine-sources">${machine.sources.map(([label, url]) => `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${label} ↗</a></li>`).join("")}</ul>
       </article>
       <aside class="machine-side-list"><strong>次に試す人気機種</strong>${neighbors.map(([key, item]) => `<a href="${key}.html"><span>${item.type === "slot" ? "SLOT" : "PACHINKO"}</span>${item.shortName}</a>`).join("")}</aside>

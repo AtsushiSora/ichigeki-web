@@ -6,6 +6,7 @@
 
 - `index.html`: トップ
 - `new-machines-2026-10.html`: 2026年10月の新台まとめ
+- `new-machines-2026-11.html`: 2026年11月の新台10機種比較
 - `average-game-guide.html`: 平均G・平均回転、中央値、ハマり確率の計算ガイド
 - `continuation-rate-guide.html`: 継続率と平均連チャンの計算ガイド
 - `coin-unit-guide.html`: スマスロのコイン単価ガイド
@@ -29,6 +30,7 @@
 - `community.html`: 機種別の口コミ・収支・画像／動画投稿と、独立したシミュレーション結果投稿
 - `slot-zone-demo.html`: CZ・特化ゾーン・上位CZのスロット新台用デモ
 - `gundam-unicorn.html`: 初代Pフィーバー機動戦士ガンダムユニコーンの記事・簡易シミュレーター
+- `granbelm-319.html`: eグランベルム 319ver.
 - `lycoris-recoil-slot.html`: スマスロ リコリス・リコイル
 - `assault-lily.html`: e アサルトリリィ
 - `kanokari-slot.html`: Lパチスロ 彼女、お借りします
