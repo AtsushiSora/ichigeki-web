@@ -15841,3 +15841,18 @@ textarea { min-height: 132px; line-height: 1.65; }
   .home-action-grid strong { font-size: 15px; }
   .machine-hub-card-body > p { display: none; }
 }
+
+/* November 2026 new-machine report */
+.article-breadcrumb { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; margin-bottom: 14px; color: #829087; font-size: 12px; }
+.article-breadcrumb a { color: #bfe9b7; font-weight: 800; }
+.new-machine-picks { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.new-machine-picks a { color: inherit; }
+.new-machine-comparison td { vertical-align: top; }
+.new-machine-comparison td:first-child { min-width: 170px; }
+.new-machine-report-page .machine-faq { margin-top: 42px; }
+.new-machine-report-page .machine-faq-list h3 { margin: 0; color: #f3f7f3; font-size: 1rem; line-height: 1.55; }
+
+@media (max-width: 760px) {
+  .new-machine-picks { grid-template-columns: 1fr; }
+  .new-machine-comparison { min-width: 720px; }
+}
