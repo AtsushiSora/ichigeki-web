@@ -16009,3 +16009,44 @@ textarea { min-height: 132px; line-height: 1.65; }
   .content-hub-grid.is-tools { grid-template-columns: 1fr; }
   .content-hub-grid > a { min-height: 105px; }
 }
+
+/* New-machine reader guide v154 */
+.machine-reader-guide {
+  margin: 24px 0 30px;
+  padding: clamp(18px, 3vw, 28px);
+  border: 1px solid rgba(112, 222, 91, .34);
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(32, 97, 48, .2), transparent 52%), #080c09;
+  box-shadow: inset 0 1px rgba(255, 255, 255, .035);
+}
+.machine-reader-guide-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid rgba(112, 222, 91, .18); }
+.machine-reader-guide-head span,
+.machine-article-sim-cta > span { color: #7eea6a; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; font-weight: 900; letter-spacing: .16em; }
+.machine-reader-guide-head h3 { margin: 0; color: #f5faf5; font-size: clamp(21px, 3vw, 28px); }
+.machine-reader-guide-lead { margin: 18px 0 0; color: #e2e8e3; font-size: 15px; line-height: 1.9; }
+.machine-reader-guide-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 18px; }
+.machine-reader-guide-grid > div { padding: 16px; border: 1px solid rgba(255, 255, 255, .09); border-radius: 16px; background: rgba(255, 255, 255, .025); }
+.machine-reader-guide h4 { margin: 0 0 10px; color: #f1f5f1; font-size: 14px; }
+.machine-reader-guide ul { margin: 0; padding-left: 18px; }
+.machine-reader-guide li { margin-top: 7px; color: #bcc7bf; font-size: 13px; line-height: 1.7; }
+.machine-reader-related { margin-top: 18px; }
+.machine-reader-related > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.machine-reader-related a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px 12px; min-height: 72px; padding: 13px 15px; border: 1px solid rgba(93, 164, 255, .3); border-radius: 14px; background: rgba(54, 106, 177, .08); color: #eef5ff; text-decoration: none; }
+.machine-reader-related a::after { content: "›"; grid-column: 2; grid-row: 1 / span 2; align-self: center; color: #80b5ff; font-size: 22px; }
+.machine-reader-related a strong { grid-column: 1; font-size: 14px; }
+.machine-reader-related a span { grid-column: 1; color: #9daaa1; font-size: 11px; line-height: 1.55; }
+.machine-reader-related a:hover { border-color: #80b5ff; transform: translateY(-1px); }
+.machine-article-sim-cta { display: grid; gap: 8px; margin: 30px 0; padding: 22px; border: 1px solid rgba(112, 222, 91, .42); border-radius: 20px; background: linear-gradient(135deg, rgba(45, 145, 61, .2), rgba(8, 12, 9, .95)); }
+.machine-article-sim-cta strong { color: #f5faf5; font-size: clamp(19px, 3vw, 25px); }
+.machine-article-sim-cta p { margin: 0; color: #aeb8b0; }
+.machine-article-sim-cta .button { justify-self: start; min-width: 190px; min-height: 46px; margin-top: 6px; }
+
+@media (max-width: 640px) {
+  .machine-reader-guide { margin-inline: -2px; padding: 17px; border-radius: 19px; }
+  .machine-reader-guide-head { display: grid; gap: 7px; }
+  .machine-reader-guide-grid { grid-template-columns: 1fr; }
+  .machine-reader-related > div { grid-template-columns: 1fr; }
+  .machine-reader-related a { min-height: 66px; }
+  .machine-article-sim-cta { padding: 18px; }
+  .machine-article-sim-cta .button { width: 100%; }
+}

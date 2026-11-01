@@ -965,6 +965,70 @@ window.ICHIGEKI_MACHINES = {
   }
 };
 
+(function applyNovemberNewMachineReaderGuides() {
+  const guides = {
+    "toaru3-pachinko": {
+      verdict: "約1/348.6の初当りと約50%のST突入を越えた先で、3段階STと大きな出玉振り分けを楽しむタイプです。初当りの軽さより、RUSH中の展開と一撃の幅を比べたい人に向いています。",
+      bestFor: ["前半・後半・最終回転と変化するSTの流れを見たい", "1500個から7500個以上までの出玉差を比べたい", "初当り投資とRUSH突入後の収支を分けて確認したい"],
+      check: ["平均投資目安は約20,500円で、9機種の中では重め", "初当り後も約50%のST突入抽選がある", "実機の細かな出玉振り分けは代表値へ簡略化"],
+      compare: [["fever-yokai-watch", "eF妖怪ウォッチ", "継続約80%と時短込み突入を比較"], ["juoh-shishi-no-ichigeki", "e獣王 獅子の一撃", "低継続・大出玉型との違いを比較"]]
+    },
+    "kamen-rider-black-light": {
+      verdict: "デカヘソの31回/1,000円と約1/129.9の初当りにより、短い時間でも初当りからRUSHまでを試しやすい機種です。RUSH中の出玉は小さめですが、宿命BATTLE到達で結果が変わります。",
+      bestFor: ["まずは軽い初当りの新台から試したい", "デカヘソで投資目安がどう変わるか知りたい", "宿命BATTLE突入前後の出玉差を比べたい"],
+      check: ["初当り出玉は約240個、RUSH中は約400個で計算", "RUSH継続は約72%で、短く終わる結果もある", "EXTREMEは昇格率未公表のため独立抽選しない"],
+      compare: [["no-game-no-life-119", "eノゲノラ 119", "同じライト帯で初回出玉を比較"], ["juoh-shishi-no-ichigeki", "e獣王 獅子の一撃", "ワイドスタート機の投資差を比較"]]
+    },
+    "fever-yokai-watch": {
+      verdict: "RUSH直行だけでなく時短100回の引き戻しも含めて突入約61%、継続約80%を見る機種です。1500個以上を中心とした右打ちで、継続回数と出玉の両方を比べられます。",
+      bestFor: ["時短引き戻し込みのRUSH突入率を体験したい", "約80%継続の連チャン幅を複数回比べたい", "1500個・3000個・4500個の出玉差を見たい"],
+      check: ["直行率と時短引き戻しを約61%の1回抽選へ集約", "転落や最終決戦などの細部は個別再現しない", "平均投資目安は固定17.2回/1,000円で約18,600円"],
+      compare: [["toaru3-pachinko", "eとある3", "約75%の3段階STと比較"], ["no-game-no-life-119", "eノゲノラ 119", "ライト帯の約80%上位RUSHと比較"]]
+    },
+    "juoh-shishi-no-ichigeki": {
+      verdict: "RUSH突入・継続がともに約50%である一方、右打ち大当りの約半分に平均約9800個のサバンナチャンスを置く振れ幅の大きい機種です。連チャン数より一度の出玉契機を重視して比べられます。",
+      bestFor: ["低継続でも大きな出玉契機を狙う流れを見たい", "ドデカSTRAIGHTの固定回転率を投資へ反映したい", "通常結果とサバンナチャンス結果の差を比べたい"],
+      check: ["RUSH非突入と単発終了が続く可能性がある", "サバンナチャンスは上乗せ過程を省き平均9800個で表示", "18回/1,000円は比較用の固定値で実店舗を保証しない"],
+      compare: [["kamen-rider-black-light", "ライダーBLACK Light", "デカヘソの軽い初当りと比較"], ["toaru3-pachinko", "eとある3", "高継続寄りの大出玉STと比較"]]
+    },
+    "no-game-no-life-119": {
+      verdict: "約1/119.8の初当りがすべて約1000個で、初回RUSH突破後は約80%継続のHYPERへ進む二段階タイプです。初当りの軽さと上位到達後の伸びを一緒に確認できます。",
+      bestFor: ["ライト帯で初回1000個の安心感を比べたい", "初回RUSH突破からHYPERへの流れを試したい", "短い投資と約80%継続の組み合わせを見たい"],
+      check: ["RUSH突入50%の後に約51%の初回突破が必要", "HYPER到達前に終了する結果も多い", "右打ち出玉は300個・1000個を各50%で計算"],
+      compare: [["kamen-rider-black-light", "ライダーBLACK Light", "初当りの軽さとデカヘソを比較"], ["fever-yokai-watch", "eF妖怪ウォッチ", "ミドル帯の約80%継続と比較"]]
+    },
+    "garo-yami-slot": {
+      verdict: "設定別CZ・BONUSからSUPER GARO BONUSを経由し、究極魔戒RUSHを目指す高純増タイプです。BONUSまでの投資と、上位到達後の約82.6%ループを分けて確認できます。",
+      bestFor: ["純増約9.1枚/Gの速い出玉展開を試したい", "設定ごとのCZ・BONUS初当り差を見たい", "究極魔戒RUSH到達前後の差枚を比べたい"],
+      check: ["設定1〜6は開始時に均等抽選し結果で発表", "魔界やBIGの細かな振り分けは代表ルートへ集約", "上位到達率の未公表部分は体験用固定値"],
+      compare: [["seiya-ougon-slot", "スマスロ 聖闘士星矢", "継続バトル型の上位ATと比較"], ["godzilla-eva2-slot", "スマスロ ゴジエヴァ2", "純増約5.2枚/GのATと比較"]]
+    },
+    "seiya-ougon-slot": {
+      verdict: "CZからBattle of ZODIACへ進み、十二宮突破とSAGA BATTLEを経て千日戦争を目指す段階型です。通常ATの継続と上位ATの約88%継続を一連の流れで比べられます。",
+      bestFor: ["CZ・AT・上位CZ・上位ATを順に体験したい", "設定別のAT初当りと継続結果を比べたい", "千日戦争到達時の差枚の伸びを見たい"],
+      check: ["設定1の平均AT投資目安は約12,600円", "2種類のCZは代表演出へまとめている", "上位到達率は公開性能と分けた固定抽選"],
+      compare: [["garo-yami-slot", "スマスロ 牙狼", "高純増ループ型と比較"], ["ggo-slot", "スマスロ GGO", "ST型の上位ルートと比較"]]
+    },
+    "ggo-slot": {
+      verdict: "初当りBONUSは比較的軽めですが、メインSTのSQUAD JAMは設定1で約1/521.7です。BONUS当選とST到達を分けて見ることで、初当りの早さだけでは測れない収支の幅を確認できます。",
+      bestFor: ["BONUSからSTへ進む二段階の流れを試したい", "設定差が大きいSQUAD JAM初当りを比べたい", "GGOストームから上位ST到達を目指したい"],
+      check: ["初当り約1/192.0とSJ約1/521.7は別の指標", "CZのモードやスルー回数は個別再現しない", "設定1基準の平均SJ投資目安は約18,300円"],
+      compare: [["seiya-ougon-slot", "スマスロ 聖闘士星矢", "継続バトル型ATと比較"], ["godzilla-eva2-slot", "スマスロ ゴジエヴァ2", "BONUS経由ATとの違いを比較"]]
+    },
+    "godzilla-eva2-slot": {
+      verdict: "2種類のBONUSからゴジエヴァRUSHを目指し、決戦カイザーギドラ突破でG覚醒RUSHへ進む機種です。BONUSの軽さとAT初当りの重さを分けて見ると結果を理解しやすくなります。",
+      bestFor: ["BONUS後のAT当落から上位までを一連で試したい", "設定別BONUS・AT初当り差を比べたい", "上位AT到達時の大きな差枚を確認したい"],
+      check: ["設定1のBONUS約1/234.2とAT約1/460.5は別抽選", "2種類のBONUS後ジャッジは代表値50%へ簡略化", "G覚醒RUSHの到達率・ループは体験用固定値"],
+      compare: [["ggo-slot", "スマスロ GGO", "BONUSからSTへ進む機種と比較"], ["garo-yami-slot", "スマスロ 牙狼", "高純増の上位ループ型と比較"]]
+    }
+  };
+
+  Object.entries(guides).forEach(([slug, readerGuide]) => {
+    const machine = window.ICHIGEKI_MACHINES[slug];
+    if (machine) machine.readerGuide = readerGuide;
+  });
+})();
+
 (function applyPopularMachineEditorialRefresh() {
   const updated = "2026-10-12";
   const editorial = {

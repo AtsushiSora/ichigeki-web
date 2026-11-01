@@ -187,6 +187,21 @@
     return `<section class="machine-article-section machine-faq" aria-labelledby="machine-faq-title"><h3 id="machine-faq-title">${machine.shortName}のよくある質問</h3><div class="machine-faq-list">${items.map(([question, answer]) => `<div><h4>${question}</h4><p>${answer}</p></div>`).join("")}</div></section>`;
   }
 
+  function readerGuideMarkup() {
+    const guide = machine.readerGuide;
+    if (!guide) return "";
+    const comparisonLinks = (guide.compare || []).map(([relatedSlug, label, note]) => `<a href="${relatedSlug}.html"><strong>${label}</strong><span>${note}</span></a>`).join("");
+    return `<section class="machine-reader-guide" id="reader-guide">
+      <div class="machine-reader-guide-head"><span>QUICK VERDICT</span><h3>30秒で分かる${machine.shortName}</h3></div>
+      <p class="machine-reader-guide-lead">${guide.verdict}</p>
+      <div class="machine-reader-guide-grid">
+        <div><h4>こんな遊び方に向いている</h4><ul>${guide.bestFor.map(item => `<li>${item}</li>`).join("")}</ul></div>
+        <div><h4>遊ぶ前に確認したいこと</h4><ul>${guide.check.map(item => `<li>${item}</li>`).join("")}</ul></div>
+      </div>
+      <div class="machine-reader-related"><h4>比較候補</h4><div>${comparisonLinks}</div></div>
+    </section>`;
+  }
+
   function articleMarkup() {
     if (!Array.isArray(machine.articleSections) || !machine.articleSections.length) {
       const sim = machine.sim;
@@ -219,7 +234,7 @@
       <dl><div><dt>導入</dt><dd>${machine.year}</dd></div><div><dt>メーカー</dt><dd>${machine.maker}</dd></div><div><dt>分類</dt><dd>${machine.type === "slot" ? "パチスロ" : "パチンコ"}</dd></div></dl>
     </section>
 
-    <nav class="machine-quick-nav" aria-label="ページ内メニュー"><a class="is-primary" href="#simulator">今すぐ試す</a><button class="machine-favorite-button" id="machineFavoriteButton" type="button" aria-pressed="false"><span aria-hidden="true">☆</span> お気に入り</button><a href="#spec">スペック</a><a href="#machineRanking">ランキング</a><a href="#article">記事</a>${novemberQuickLink}<a href="community.html?machine=${slug}">投稿</a></nav>
+    <nav class="machine-quick-nav" aria-label="ページ内メニュー"><a class="is-primary" href="#simulator">今すぐ試す</a><button class="machine-favorite-button" id="machineFavoriteButton" type="button" aria-pressed="false"><span aria-hidden="true">☆</span> お気に入り</button><a href="#spec">スペック</a><a href="#machineRanking">ランキング</a><a href="#article">記事</a>${machine.readerGuide ? '<a href="#reader-guide">30秒要点</a>' : ""}${novemberQuickLink}<a href="community.html?machine=${slug}">投稿</a></nav>
 
     <section class="machine-intro" id="spec">
       <div><span class="machine-section-label">SPEC GUIDE</span><h2>主要スペック</h2><p>${machine.intro}</p><ul>${machine.points.map(point => `<li>${point}</li>`).join("")}</ul></div>
@@ -257,7 +272,9 @@
         <span class="machine-section-label">MACHINE ARTICLE</span><h2>${machine.name}の見どころ</h2>
         <div class="machine-article-meta"><span>編集・検証：<a href="about.html">ICHIGEKI編集部</a></span><time datetime="${editorialUpdated}">更新：${editorialUpdatedLabel}</time></div>
         <p>${machine.intro}</p>
+        ${readerGuideMarkup()}
         ${articleMarkup()}
+        ${machine.readerGuide ? `<div class="machine-article-sim-cta"><span>SIMULATOR</span><strong>読んだ内容を固定条件で試す</strong><p>同じ貸出・交換条件で、初当りから最終結果までを体験できます。</p><a class="button primary" href="#simulator">${startLabel}</a></div>` : ""}
         <h3>関連ガイド</h3><div class="next-links">${isNovemberNewMachine ? '<a href="new-machines-2026-11.html">11月新台9機種を比較</a>' : ""}<a href="average-game-guide.html">平均G・平均回転</a><a href="continuation-rate-guide.html">継続率と平均連</a><a href="simulation-policy.html">計算・掲載方針</a></div>
         <h3>参照情報</h3><ul class="machine-sources">${machine.sources.map(([label, url]) => `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${label} ↗</a></li>`).join("")}</ul>
       </article>
