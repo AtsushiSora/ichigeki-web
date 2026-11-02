@@ -65,7 +65,8 @@
 - `robots.txt`: クロール設定
 - `sitemap.xml`: 検索エンジン向けサイトマップ
 - `ads.txt`: AdSense向け販売者情報
-- `netlify.toml`: Netlify配信・セキュリティヘッダー・キャッシュ設定
+- `404.html`: GitHub Pages用の日本語エラーページ
+- `CNAME`: GitHub Pagesの独自ドメイン設定
 
 ## 方針
 
@@ -75,6 +76,13 @@
 - 実際の遊技結果や収支を保証しないことを明記
 - 導入前情報は予定として明示し、参照元と更新日を掲載
 - 旧ランキングバトルページは互換性のため残し、検索対象からは除外
+
+## 公開先
+
+- GitHub Pages: `https://ichigeki-pachislot.com`
+- `www.ichigeki-pachislot.com` は上記URLへ転送
+- HTTPアクセスはHTTPSへ自動転送
+- `netlify.toml` は旧配信環境の設定記録として残していますが、現在の公開には使用していません
 
 ## 人気機種シミュレーターの投資計算
 
