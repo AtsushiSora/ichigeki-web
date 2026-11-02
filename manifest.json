@@ -1,9 +1,9 @@
 {
-  "name": "ICHIGEKI ランキングバトル",
+  "name": "ICHIGEKI パチンコ・スロットシミュレーター",
   "short_name": "ICHIGEKI",
-  "description": "ワンタップで挑戦できるパチンコ・パチスロ風ランキングバトル集です。",
-  "start_url": "index.html",
-  "scope": "./",
+  "description": "パチンコ・パチスロの機種記事、シミュレーター、記録、ランキングをまとめたサイトです。",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#050705",
   "theme_color": "#050705",
