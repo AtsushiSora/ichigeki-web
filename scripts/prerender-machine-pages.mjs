@@ -17,6 +17,7 @@ const STATIC_START = "<!-- MACHINE_STATIC_START -->";
 const STATIC_END = "<!-- MACHINE_STATIC_END -->";
 const SCHEMA_START = "<!-- MACHINE_SCHEMA_START -->";
 const SCHEMA_END = "<!-- MACHINE_SCHEMA_END -->";
+const CONTENT_UPDATE_DATE = "2026-11-02";
 const NEW_MACHINE_ARTICLE_SLUGS = new Set([
   "shangri-la-frontier",
   "sao-phantom-bullet",
@@ -98,7 +99,7 @@ function visibleBreadcrumb(slug, machine) {
 }
 
 function editorialDate(machine) {
-  return machine.updated || "2026-10-31";
+  return machine.updated && machine.updated > CONTENT_UPDATE_DATE ? machine.updated : CONTENT_UPDATE_DATE;
 }
 
 function editorialDateLabel(machine) {
@@ -114,7 +115,7 @@ function calculationSection(machine) {
       <section class="machine-article-section">
         <h3>平均回転と投資目安の計算</h3>
         <p>通常時の${escapeHtml(sim.hitLabel)}確率は約1/${escapeHtml(sim.hitRate)}です。当サイトでは、1,000円あたり${escapeHtml(sim.spinsPer1k)}回転という機種別の固定条件を使い、平均投資目安を「${escapeHtml(sim.hitRate)} ÷ ${escapeHtml(sim.spinsPer1k)} × 1,000円」で計算します。この条件では約${formatNumber(averageInvestment, 0)}円が平均投資の目安です。</p>
-        <p>${escapeHtml(sim.startType)}、250玉貸し・28玉交換で固定し、${escapeHtml(sim.rushLabel)}突入率${formatNumber(sim.rushEntry * 100)}%と継続率${formatNumber(sim.rushContinue * 100)}%を簡易抽選します。平均値は長期間の理論上の目安であり、1回ごとの結果や実際の遊技収支を保証するものではありません。</p>
+        <p>${escapeHtml(sim.startType)}、250玉貸し・28玉交換で固定し、${escapeHtml(sim.rushLabel)}突入率${formatNumber(sim.rushEntry * 100)}%と継続率${formatNumber(sim.rushContinue * 100)}%を簡易抽選します。表記出玉とは別に、打ち出しとオーバー入賞を簡易反映した実獲得出玉を収支へ使用します。平均値は長期間の理論上の目安であり、1回ごとの結果や実際の遊技収支を保証するものではありません。</p>
       </section>`;
   }
 
@@ -184,8 +185,66 @@ function readerGuideMarkup(machine) {
         </section>`;
 }
 
+function snapshotMarkup(machine) {
+  const sim = machine.sim;
+  let items;
+  let note;
+  if (sim.kind === "pachinko") {
+    const averageInvestment = Math.round((sim.hitRate / sim.spinsPer1k * 1000) / 100) * 100;
+    items = [
+      ["初当り", `約1/${sim.hitRate}`, `${sim.hitLabel}までの確率`],
+      ["平均投資", `約${formatNumber(averageInvestment, 0)}円`, `${sim.spinsPer1k}回/1,000円で計算`],
+      ["RUSH突入", `${formatNumber(sim.rushEntry * 100)}%`, sim.rushLabel],
+      ["RUSH継続", `${formatNumber(sim.rushContinue * 100)}%`, sim.upperLabel ? `${sim.upperLabel}は別抽選` : "継続抽選の基準"]
+    ];
+    note = "結果では表記出玉と実獲得出玉を分け、250玉貸し・28玉交換の固定条件で差玉と収支を計算します。";
+  } else if (sim.kind === "juggler") {
+    const settingPool = Array.isArray(sim.settingPool) && sim.settingPool.length ? sim.settingPool : [1, 2, 3, 4, 5, 6];
+    items = [
+      ["遊技上限", `${formatNumber(sim.games, 0)}G`, "続行・終了を選択"],
+      ["BIG", `約1/${sim.bigRate}`, "設定1の基準値"],
+      ["REG", `約1/${sim.regRate}`, "設定1の基準値"],
+      ["設定抽選", `設定${settingPool.join("・")}`, "開始時に均等抽選"]
+    ];
+    note = "ボーナスごとに続行を選び、終了時に設定・BIG回数・REG回数・差枚・収支をまとめて確認できます。";
+  } else {
+    const settingPool = Array.isArray(sim.settingPool) && sim.settingPool.length ? sim.settingPool : [1, 2, 3, 4, 5, 6];
+    const gamesPerThousand = sim.base50 * 46 / 50;
+    const averageInvestment = Math.round((sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
+    const risk = sim.coinUnit >= 4 ? "超高波" : sim.coinUnit >= 3.5 ? "高波" : sim.coinUnit >= 3 ? "中波" : "比較的穏やか";
+    items = [
+      ["初当り", `約1/${sim.mainRate}`, sim.mainLabel],
+      ["平均投資", `約${formatNumber(averageInvestment, 0)}円`, `設定${settingPool[0]}基準`],
+      ["コイン単価", `${sim.coinUnit}円`, risk],
+      ["設定抽選", `設定${settingPool.join("・")}`, "開始時に均等抽選"]
+    ];
+    note = `${sim.triggerLabel}から${sim.mainLabel}${sim.upperLabel ? `、${sim.upperLabel}` : ""}までの流れと、設定ごとの結果差を固定レートで比較できます。`;
+  }
+  return `
+        <section class="machine-snapshot" aria-labelledby="machine-snapshot-title">
+          <div class="machine-snapshot-head"><span>AT A GLANCE</span><h3 id="machine-snapshot-title">${escapeHtml(machine.shortName)}を数字で早分かり</h3></div>
+          <div class="machine-snapshot-grid">${items.map(([label, value, detail]) => `<div><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong><small>${escapeHtml(detail)}</small></div>`).join("")}</div>
+          <p>${escapeHtml(note)}</p>
+        </section>`;
+}
+
+function resultGuideMarkup(machine) {
+  const sim = machine.sim;
+  const settingPool = Array.isArray(sim.settingPool) && sim.settingPool.length ? sim.settingPool : [1, 2, 3, 4, 5, 6];
+  const items = sim.kind === "pachinko"
+    ? [["当るまで", `${sim.hitLabel}までの回転数と投資目安`], ["RUSH", `${sim.rushLabel}への突入と連チャン回数`], ["出玉", "表記出玉と、打ち出しを反映した実獲得出玉"], ["最終収支", "実獲得出玉を28玉交換で換算した収支目安"]]
+    : sim.kind === "juggler"
+      ? [["ボーナス", "何GでBIG・REGに当ったか"], ["続行判断", "ボーナスごとに続ける・やめるを選択"], ["実戦データ", "総G数、BIG・REG回数、合算"], ["最終収支", "差枚と5.2枚交換の収支目安"]]
+      : [["当るまで", `${sim.triggerLabel}・${sim.mainLabel}までのゲーム数`], ["設定", `設定${settingPool.join("・")}から抽選された今回の設定`], ["上位到達", `${sim.upperChallenge || "上位CZ"}と${sim.upperLabel || "上位AT"}への到達`], ["最終収支", "差枚と5.2枚交換の収支目安"]];
+  return `
+        <section class="machine-article-section machine-result-guide">
+          <h3>シミュレーション結果の見方</h3>
+          <div>${items.map(([label, detail]) => `<p><strong>${escapeHtml(label)}</strong><span>${escapeHtml(detail)}</span></p>`).join("")}</div>
+          <p class="machine-result-guide-note">結果は自動で「マイ記録」に保存され、同じ機種を何回試したか、最高収支、勝率をあとから確認できます。</p>
+        </section>`;
+}
+
 function faqItems(slug, machine) {
-  if (!NEW_MACHINE_ARTICLE_SLUGS.has(slug)) return [];
   if (Array.isArray(machine.faq) && machine.faq.length) return machine.faq;
   const sim = machine.sim;
   const releaseSummary = String(machine.intro || "").split("。")[0] + "。";
@@ -193,9 +252,10 @@ function faqItems(slug, machine) {
     const averageInvestment = Math.round((sim.hitRate / sim.spinsPer1k * 1000) / 100) * 100;
     const upperFlow = sim.upperLabel ? `、さらに${sim.upperLabel}` : "";
     return [
-      { question: `${machine.shortName}の導入時期は？`, answer: releaseSummary },
+      { question: `${machine.shortName}はどんな台？`, answer: `${releaseSummary}${machine.points?.[0] ? ` ${machine.points[0]}が主な確認ポイントです。` : ""}` },
       { question: `${machine.shortName}の平均投資目安は？`, answer: `当サイトの固定条件では1,000円あたり${sim.spinsPer1k}回転として、平均${formatNumber(averageInvestment, 0)}円が目安です。実店舗の回転率や持ち玉状況で変わるため、実収支を保証する値ではありません。` },
-      { question: `シミュレーターでは何を体験できる？`, answer: `${sim.hitLabel}までの回転数、${sim.rushLabel}への突入、連チャンと出玉${upperFlow}を固定条件で簡易抽選します。実機の全演出や内部状態を完全再現するものではありません。` }
+      { question: `シミュレーターでは何を体験できる？`, answer: `${sim.hitLabel}までの回転数、${sim.rushLabel}への突入、連チャンと出玉${upperFlow}を固定条件で簡易抽選します。実機の全演出や内部状態を完全再現するものではありません。` },
+      { question: `出玉と収支はどう計算する？`, answer: "スペック上の表記出玉とは別に、打ち出しロスとオーバー入賞を簡易反映した実獲得出玉を算出します。250玉貸し・28玉交換の固定条件で差玉と収支目安を表示します。" }
     ];
   }
 
@@ -203,9 +263,10 @@ function faqItems(slug, machine) {
   const averageInvestment = Math.round((sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
   const settingPool = Array.isArray(sim.settingPool) && sim.settingPool.length ? sim.settingPool : [1, 2, 3, 4, 5, 6];
   return [
-    { question: `${machine.shortName}の導入時期は？`, answer: releaseSummary },
+    { question: `${machine.shortName}はどんな台？`, answer: `${releaseSummary}${machine.points?.[0] ? ` ${machine.points[0]}が主な確認ポイントです。` : ""}` },
     { question: `${machine.shortName}の平均投資目安は？`, answer: `設定${settingPool[0]}基準の${sim.mainLabel}初当り約1/${sim.mainRate}と、50枚あたり${sim.base50}G・46枚貸しの固定条件から、平均${formatNumber(averageInvestment, 0)}円を目安として表示します。実際の設定や遊技状況で結果は変わります。` },
-    { question: `設定とゲームの流れはどう抽選する？`, answer: `開始時に設定${settingPool.join("・")}から1つを均等抽選し、${sim.triggerLabel}、${sim.mainLabel}、${sim.upperChallenge}、${sim.upperLabel}の順で到達を判定します。設定は最終結果とランキングに表示します。` }
+    { question: `設定とゲームの流れはどう抽選する？`, answer: sim.kind === "juggler" ? `開始時に設定${settingPool.join("・")}から1つを均等抽選し、最大${formatNumber(sim.games, 0)}GまでBIG・REGを抽選します。設定は終了時の結果とランキングに表示します。` : `開始時に設定${settingPool.join("・")}から1つを均等抽選し、${sim.triggerLabel}、${sim.mainLabel}、${sim.upperChallenge}、${sim.upperLabel}の順で到達を判定します。設定は最終結果とランキングに表示します。` },
+    { question: `収支はどう計算する？`, answer: "1,000円46枚貸し・5.2枚交換の固定条件で投資、換金、収支目安を計算します。実店舗の再プレイ、持ちメダル、端数処理は含みません。" }
   ];
 }
 
@@ -213,7 +274,7 @@ function faqMarkup(slug, machine) {
   const items = faqItems(slug, machine);
   if (!items.length) return "";
   return `
-        <section class="machine-article-section machine-faq" aria-labelledby="machine-faq-title">
+        <section class="machine-article-section machine-faq" id="faq" aria-labelledby="machine-faq-title">
           <h3 id="machine-faq-title">${escapeHtml(machine.shortName)}のよくある質問</h3>
           <div class="machine-faq-list">${items.map(item => `<div><h4>${escapeHtml(item.question)}</h4><p>${escapeHtml(item.answer)}</p></div>`).join("")}</div>
         </section>`;
@@ -242,7 +303,7 @@ function staticMarkup(slug, machine) {
       <div class="machine-archive-copy"><span class="machine-kind">${escapeHtml(typeLabel(machine))} 機種記事</span><h1>${escapeHtml(machine.name)}</h1><p>${escapeHtml(machine.catchcopy)}</p></div>
       <dl><div><dt>導入</dt><dd>${escapeHtml(machine.year)}</dd></div><div><dt>メーカー</dt><dd>${escapeHtml(machine.maker)}</dd></div><div><dt>分類</dt><dd>${escapeHtml(typeLabel(machine))}</dd></div></dl>
     </section>
-    <nav class="machine-quick-nav" aria-label="ページ内メニュー"><a href="#spec">スペック</a><a href="#article">解説</a>${machine.readerGuide ? '<a href="#reader-guide">30秒要点</a>' : ""}${NOVEMBER_NEW_MACHINE_SLUGS.has(slug) ? '<a href="new-machines-2026-11.html">11月新台比較</a>' : ""}${DECEMBER_NEW_MACHINE_SLUGS.has(slug) ? '<a href="new-machines-2026-12.html">12月新台比較</a>' : ""}<a href="community.html?machine=${encodeURIComponent(slug)}">口コミ・投稿</a></nav>
+    <nav class="machine-quick-nav" aria-label="ページ内メニュー"><a href="#spec">スペック</a><a href="#article">解説</a><a href="#faq">FAQ</a>${machine.readerGuide ? '<a href="#reader-guide">30秒要点</a>' : ""}${NOVEMBER_NEW_MACHINE_SLUGS.has(slug) ? '<a href="new-machines-2026-11.html">11月新台比較</a>' : ""}${DECEMBER_NEW_MACHINE_SLUGS.has(slug) ? '<a href="new-machines-2026-12.html">12月新台比較</a>' : ""}<a href="community.html?machine=${encodeURIComponent(slug)}">口コミ・投稿</a></nav>
     <section class="machine-intro" id="spec">
       <div><span class="machine-section-label">SPEC GUIDE</span><h2>主要スペック</h2><p>${escapeHtml(machine.intro)}</p><ul>${points}</ul></div>
       <div class="machine-spec-grid">${specs}</div>
@@ -253,15 +314,18 @@ function staticMarkup(slug, machine) {
         <h2>${escapeHtml(machine.name)}の見どころと計算条件</h2>
         <div class="machine-article-meta"><span>編集・検証：<a href="about.html">ICHIGEKI編集部</a></span><time datetime="${editorialDate(machine)}">更新：${editorialDateLabel(machine)}</time></div>
         <p>${escapeHtml(machine.intro)}</p>
+        ${snapshotMarkup(machine)}
         ${readerGuideMarkup(machine)}
         ${articleSections(machine)}
         ${calculationSection(machine)}
+        ${resultGuideMarkup(machine)}
         <section class="machine-article-section">
           <h3>簡易シミュレーターについて</h3>
           <p>${escapeHtml(simLabel)}の流れを固定条件で体験できます。JavaScriptを有効にすると、この位置にシミュレーター、演出、マイ記録、機種別ランキングが表示されます。</p>
           <p>結果は娯楽・確率理解のための参考表示です。金銭的価値や交換価値はなく、実際の勝敗や収支を保証しません。18歳未満の方の利用はお控えください。</p>
         </section>
         ${faqMarkup(slug, machine)}
+        <div class="machine-article-sim-cta"><span>SIMULATOR</span><strong>読んだ内容を固定条件で試す</strong><p>同じ貸出・交換条件で、初当りから最終結果までを体験できます。結果は自動でマイ記録へ保存されます。</p><a class="button primary" href="#simulator">シミュレーターを試す</a></div>
         <h3>関連ガイド</h3>
         <div class="next-links">${NOVEMBER_NEW_MACHINE_SLUGS.has(slug) ? '<a href="new-machines-2026-11.html">11月新台10機種を比較</a>' : ""}${DECEMBER_NEW_MACHINE_SLUGS.has(slug) ? '<a href="new-machines-2026-12.html">12月新台の先行比較</a>' : ""}<a href="average-game-guide.html">平均G・平均回転</a><a href="continuation-rate-guide.html">継続率と平均連</a><a href="simulation-policy.html">計算・掲載方針</a></div>
         <h3>参照情報</h3>
@@ -319,7 +383,7 @@ function schemaMarkup(slug, machine) {
 function newMachinePage(slug, machine) {
   const title = `${escapeHtml(machine.name)} | 記事・シミュレーター | ICHIGEKI`;
   const description = escapeHtml(machine.intro);
-  return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#05232d"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml"><meta name="description" content="${description}"><title>${title}</title><link rel="canonical" href="https://ichigeki-pachislot.com/${slug}.html"><link rel="stylesheet" href="style.css?v=158"></head><body class="machine-library-page" data-machine="${escapeHtml(slug)}"><header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">MACHINE</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#simulator">シミュレーター</a><a href="community.html?machine=${escapeHtml(slug)}">投稿</a></nav></div></header><main class="page machine-detail-shell" id="machineApp"></main><footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="community.html">コミュニティ</a><a href="disclaimer.html">免責事項</a></div></div></footer><script src="machine-library.js?v=145"></script><script src="achievements.js?v=1"></script><script src="site-insights.js?v=1"></script><script src="machine-detail.js?v=151"></script><script src="app-shell.js?v=10"></script><script src="adsense-loader.js?v=2"></script></body></html>`;
+  return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#05232d"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml"><meta name="description" content="${description}"><title>${title}</title><link rel="canonical" href="https://ichigeki-pachislot.com/${slug}.html"><link rel="stylesheet" href="style.css?v=164"></head><body class="machine-library-page" data-machine="${escapeHtml(slug)}"><header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">MACHINE</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#simulator">シミュレーター</a><a href="community.html?machine=${escapeHtml(slug)}">投稿</a></nav></div></header><main class="page machine-detail-shell" id="machineApp"></main><footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="community.html">コミュニティ</a><a href="disclaimer.html">免責事項</a></div></div></footer><script src="machine-library.js?v=145"></script><script src="achievements.js?v=1"></script><script src="site-insights.js?v=1"></script><script src="machine-detail.js?v=152"></script><script src="app-shell.js?v=10"></script><script src="adsense-loader.js?v=2"></script></body></html>`;
 }
 
 function updateRobotsMeta(html, isIndexable) {
@@ -381,11 +445,11 @@ for (const [slug, machine] of Object.entries(machines)) {
   html = html.replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${escapeHtml(machine.intro)}">`);
   html = updateRobotsMeta(html, INDEXABLE_MACHINE_SLUGS.has(slug));
   if (/<link[^>]+rel="stylesheet"/.test(html)) {
-    html = html.replace(/style\.css(?:\?v=\d+)?/, "style.css?v=158");
+    html = html.replace(/style\.css(?:\?v=\d+)?/, "style.css?v=164");
   } else {
-    html = html.replace("</head>", '<link rel="stylesheet" href="style.css?v=158"></head>');
+    html = html.replace("</head>", '<link rel="stylesheet" href="style.css?v=164"></head>');
   }
-  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=151");
+  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=152");
   html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=145");
   html = html.replace(/app-shell\.js\?v=\d+/, "app-shell.js?v=10");
   html = html.replace(/adsense-loader\.js\?v=\d+/, "adsense-loader.js?v=2");

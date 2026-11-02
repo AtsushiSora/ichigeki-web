@@ -1,4 +1,4 @@
-const CACHE_NAME = "ichigeki-web-v225";
+const CACHE_NAME = "ichigeki-web-v226";
 const CORE_ASSETS = [
   "index.html",
   "assets/home/ichigeki-mascot-hero-v1.jpg",
@@ -196,6 +196,7 @@ const CORE_ASSETS = [
   "style.css?v=161",
   "style.css?v=162",
   "style.css?v=163",
+  "style.css?v=164",
   "main.js",
   "main.js?v=120",
   "app-shell.js",
@@ -232,6 +233,7 @@ const CORE_ASSETS = [
   "machine-detail.js?v=148",
   "machine-detail.js?v=149",
   "machine-detail.js?v=151",
+  "machine-detail.js?v=152",
   "achievements.js",
   "achievements.js?v=1",
   "my-records.js",
