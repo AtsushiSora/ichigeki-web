@@ -17,7 +17,7 @@ const STATIC_START = "<!-- MACHINE_STATIC_START -->";
 const STATIC_END = "<!-- MACHINE_STATIC_END -->";
 const SCHEMA_START = "<!-- MACHINE_SCHEMA_START -->";
 const SCHEMA_END = "<!-- MACHINE_SCHEMA_END -->";
-const CONTENT_UPDATE_DATE = "2026-11-02";
+const CONTENT_UPDATE_DATE = "2026-11-03";
 const NEW_MACHINE_ARTICLE_SLUGS = new Set([
   "shangri-la-frontier",
   "sao-phantom-bullet",
@@ -344,7 +344,7 @@ function schemaMarkup(slug, machine) {
     "@type": "Article",
     headline: `${machine.name}｜スペック・シミュレーター`,
     description: machine.intro,
-    datePublished: `${modified}T00:00:00+09:00`,
+    datePublished: `${machine.published || modified}T00:00:00+09:00`,
     dateModified: `${modified}T00:00:00+09:00`,
     author: { "@type": "Organization", name: "ICHIGEKI編集部", url: "https://ichigeki-pachislot.com/about.html" },
     publisher: { "@type": "Organization", name: "ICHIGEKI" },
@@ -400,6 +400,7 @@ function updateMachineSitemap() {
   const sitemapPath = path.join(siteDirectory, "sitemap.xml");
   let sitemap = fs.readFileSync(sitemapPath, "utf8");
   for (const [slug, machine] of Object.entries(machines)) {
+    if (requestedSlugs.size && !requestedSlugs.has(slug)) continue;
     const url = `https://ichigeki-pachislot.com/${slug}.html`;
     const entry = `  <url><loc>${url}</loc><lastmod>${editorialDate(machine)}</lastmod></url>`;
     const pattern = new RegExp(`  <url><loc>${escapeRegExp(url)}</loc>(?:<lastmod>[^<]+</lastmod>)?</url>`);
