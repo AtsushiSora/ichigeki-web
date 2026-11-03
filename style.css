@@ -15545,6 +15545,14 @@ textarea { min-height: 132px; line-height: 1.65; }
   .machine-experience-finish-button { min-height: 60px; border-radius: 15px; }
   .machine-experience-result-stats { grid-template-columns: 1fr 1fr; }
   .machine-start-button.is-sticky { left: calc(50% - 47px); bottom: calc(10px + env(safe-area-inset-bottom)); width: calc(100vw - 114px); }
+  .machine-start-button.is-sticky.is-solo-sticky {
+    right: 12px;
+    left: 12px;
+    width: auto;
+    max-width: none;
+    min-height: 68px;
+    transform: none;
+  }
   .machine-sticky-back { right: 10px; bottom: calc(10px + env(safe-area-inset-bottom)); width: 86px; min-height: 64px; border-radius: 16px; }
 }
 

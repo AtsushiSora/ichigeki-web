@@ -726,13 +726,19 @@
   let simulatorVisible = false;
   let startAnchorVisible = false;
   let resultPosition = false;
+  const mobileStickyStart = window.matchMedia("(max-width: 760px)");
 
   function updateStickyStart() {
-    const shouldStick = simulatorVisible && !startAnchorVisible && !resultPosition;
+    const shouldStick = !startAnchorVisible && !resultPosition && (simulatorVisible || mobileStickyStart.matches);
+    const soloSticky = shouldStick && !simulatorVisible;
     startButton.classList.toggle("is-sticky", shouldStick);
-    stickyBackButton.hidden = !shouldStick;
+    startButton.classList.toggle("is-solo-sticky", soloSticky);
+    stickyBackButton.hidden = !shouldStick || soloSticky;
     document.body.classList.toggle("has-machine-sticky-start", shouldStick);
   }
+
+  if (typeof mobileStickyStart.addEventListener === "function") mobileStickyStart.addEventListener("change", updateStickyStart);
+  else mobileStickyStart.addListener(updateStickyStart);
 
   stickyBackButton.addEventListener("click", () => {
     let canReturnWithinSite = false;
@@ -753,6 +759,7 @@
     simulatorObserver.observe(simulator);
     anchorObserver.observe(startAnchor);
   }
+  updateStickyStart();
 
   function maybeRequestAdBreak() {
     const countKey = "ichigekiAdAttemptsV1";
