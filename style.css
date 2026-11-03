@@ -17258,6 +17258,64 @@ textarea { min-height: 132px; line-height: 1.65; }
   }
 }
 
+/* Keep the full-screen game inside narrow mobile viewports. */
+.machine-experience[data-ui="arcade"].is-fullscreen > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.machine-experience[data-ui="arcade"] .machine-experience-head,
+.machine-experience[data-ui="arcade"] .machine-experience-hud,
+.machine-experience[data-ui="arcade"] .machine-experience-screen,
+.machine-experience[data-ui="arcade"] .machine-experience-progress {
+  width: 100%;
+  min-width: 0;
+}
+
+.machine-experience[data-ui="arcade"] .machine-experience-ident {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.machine-experience[data-ui="arcade"] .machine-experience-ident > strong {
+  width: 100%;
+  max-width: none;
+}
+
+.machine-experience[data-ui="arcade"] .machine-experience-head > div:last-child {
+  flex: 0 0 auto;
+}
+
+.machine-experience[data-ui="arcade"] .machine-expectation {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.machine-experience[data-ui="arcade"] .machine-expectation > div:first-child,
+.machine-experience[data-ui="arcade"] .machine-expectation > div:first-child > span {
+  min-width: 0;
+}
+
+@media (max-width: 380px) {
+  .machine-experience[data-ui="arcade"] .machine-experience-head {
+    gap: 6px;
+  }
+
+  .machine-experience[data-ui="arcade"] .machine-experience-head > div:last-child {
+    gap: 4px;
+  }
+
+  .machine-experience[data-ui="arcade"] .machine-experience-head button {
+    min-width: 38px;
+    padding-inline: 6px;
+  }
+
+  .machine-experience[data-ui="arcade"] .machine-experience-progress span {
+    padding-inline: 1px;
+    font-size: 7px;
+  }
+}
+
 /* Machine-type themes for the shared game screen */
 .machine-experience[data-ui="arcade"][data-game-mode="pachinko-st"] {
   --arcade-main: #ff4938;
