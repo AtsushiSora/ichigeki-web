@@ -365,7 +365,7 @@
       <dl><div><dt>導入</dt><dd>${machine.year}</dd></div><div><dt>メーカー</dt><dd>${machine.maker}</dd></div><div><dt>分類</dt><dd>${machine.type === "slot" ? "パチスロ" : "パチンコ"}</dd></div></dl>
     </section>
 
-    <nav class="machine-quick-nav" aria-label="ページ内メニュー"><a class="is-primary" href="#simulator">今すぐ試す</a><button class="machine-favorite-button" id="machineFavoriteButton" type="button" aria-pressed="false"><span aria-hidden="true">☆</span> お気に入り</button><a href="#spec">スペック</a><a href="#machineRanking">ランキング</a><a href="#article">記事</a><a href="#faq">FAQ</a>${machine.readerGuide ? '<a href="#reader-guide">30秒要点</a>' : ""}${novemberQuickLink}${decemberQuickLink}<a href="community.html?machine=${slug}">投稿</a></nav>
+    <nav class="machine-quick-nav" aria-label="ページ内メニュー"><button class="machine-favorite-button" id="machineFavoriteButton" type="button" aria-pressed="false"><span aria-hidden="true">☆</span> お気に入り</button><a href="#spec">スペック</a><a href="#article">記事</a><a href="#machineRanking">ランキング</a><a href="#faq">FAQ</a>${machine.readerGuide ? '<a href="#reader-guide">30秒要点</a>' : ""}${novemberQuickLink}${decemberQuickLink}<a href="community.html?machine=${slug}">投稿</a></nav>
 
     <section class="machine-intro" id="spec">
       <div><span class="machine-section-label">SPEC GUIDE</span><h2>主要スペック</h2><p>${machine.intro}</p><ul>${machine.points.map(point => `<li>${point}</li>`).join("")}</ul></div>
