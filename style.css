@@ -15474,7 +15474,12 @@ textarea { min-height: 132px; line-height: 1.65; }
 .machine-experience[data-machine-type="pachinko"] { --game-button: #ff566b; }
 .machine-experience[data-machine-type="slot"] { --game-button: #4aa9ff; }
 
-.machine-experience-push { width: min(100%, 520px); min-height: 68px; margin: 0 auto; border: 2px solid #fff; border-radius: 18px; color: #fff; background: linear-gradient(180deg, color-mix(in srgb, var(--game-button) 92%, #fff), color-mix(in srgb, var(--game-button) 75%, #000)); box-shadow: 0 0 0 5px color-mix(in srgb, var(--game-button) 18%, transparent), 0 14px 28px rgba(0,0,0,.38); font: 1000 24px/1 system-ui, sans-serif; letter-spacing: .08em; cursor: pointer; animation: machine-push-pulse .8s ease-in-out infinite alternate; }
+.machine-experience-push { position: relative; display: grid; width: min(100%, 520px); min-height: 74px; margin: 0 auto; place-items: center; align-content: center; overflow: hidden; border: 2px solid #fff; border-radius: 18px; color: #fff; background: linear-gradient(180deg, color-mix(in srgb, var(--game-button) 92%, #fff), color-mix(in srgb, var(--game-button) 75%, #000)); box-shadow: 0 0 0 5px color-mix(in srgb, var(--game-button) 18%, transparent), 0 14px 28px rgba(0,0,0,.38); font: inherit; cursor: pointer; animation: machine-push-pulse .8s ease-in-out infinite alternate; }
+.machine-experience-push::before { content: ""; position: absolute; inset: 4px 12px auto; height: 42%; border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,.3), transparent); pointer-events: none; }
+.machine-experience-push span,
+.machine-experience-push small { position: relative; z-index: 1; }
+.machine-experience-push span { font-size: clamp(21px, 5vw, 27px); font-weight: 1000; line-height: 1; letter-spacing: .08em; }
+.machine-experience-push small { margin-top: 6px; font-size: 9px; font-weight: 900; letter-spacing: .1em; opacity: .78; }
 .machine-experience-push[hidden] { display: none !important; }
 .machine-experience-push:active { transform: translateY(3px) scale(.98); }
 @keyframes machine-push-pulse { to { filter: brightness(1.18); box-shadow: 0 0 0 8px color-mix(in srgb, var(--game-button) 12%, transparent), 0 16px 34px rgba(0,0,0,.42); } }

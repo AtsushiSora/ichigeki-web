@@ -79,6 +79,7 @@
   let experienceSkipped = false;
   let experienceDelayTimer = null;
   let experienceDelayResolve = null;
+  let experienceActionTimer = null;
   let experienceActionResolve = null;
   let experienceReturnFocus = null;
   let aTypeSession = null;
@@ -552,7 +553,7 @@
     }
     const stats = [["今回の設定", `設定${setting}`], ["設定差モデル", settingModelLabel], ["今回のゲーム数", `${yen.format(games)}G`], ...settingRateStats, ["現金投資目安", `${yen.format(investment)}円`], ["獲得枚数", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]];
     if (complete) stats.unshift(["到達状態", "コンプリート"]);
-    return { title: `設定${setting}｜${complete ? "コンプリート" : upper ? `${sim.upperLabel}到達` : entered ? `${sim.mainLabel}終了` : `${sim.triggerLabel}失敗`}`, summary: complete ? `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}、獲得枚数が${yen.format(SLOT_COMPLETE_LIMIT)}枚に到達し、コンプリートしました。` : `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}。${entered ? `${payout}枚を獲得しました。` : `${sim.mainLabel}には届きませんでした。`}`, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, entered, entryChance: triggerSuccess * 100, mainLabel: sim.mainLabel, specialChance: specialChance * 100, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upper, upperLabel: sim.upperLabel || "", complete, payout, payoutUnit: "枚", flow: [...flow] } };
+    return { title: `設定${setting}｜${complete ? "コンプリート" : upper ? `${sim.upperLabel}到達` : entered ? `${sim.mainLabel}終了` : `${sim.triggerLabel}失敗`}`, summary: complete ? `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}、獲得枚数が${yen.format(SLOT_COMPLETE_LIMIT)}枚に到達し、コンプリートしました。` : `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}。${entered ? `${payout}枚を獲得しました。` : `${sim.mainLabel}には届きませんでした。`}`, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, entered, entryChance: triggerSuccess * 100, mainLabel: sim.mainLabel, specialChance: specialChance * 100, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperChallenge: sim.upperChallenge || "", upper, upperLabel: sim.upperLabel || "", complete, payout, payoutUnit: "枚", flow: [...flow] } };
   }
 
   function createATypeSession(setting) {
@@ -754,28 +755,83 @@
     try {
       experienceAudioContext ||= new AudioContextClass();
       if (experienceAudioContext.state === "suspended") experienceAudioContext.resume();
-      const patterns = {
-        normal: [[220, 0, .035]],
-        hit: [[440, 0, .06], [660, .09, .07], [880, .18, .10]],
-        judge: [[330, 0, .07], [330, .16, .07]],
-        rush: [[440, 0, .05], [660, .07, .06]],
-        hyper: [[523, 0, .07], [784, .07, .08], [1046, .15, .12]],
-        complete: [[523, 0, .09], [659, .08, .09], [784, .16, .09], [1046, .25, .15]],
-        end: [[246, 0, .08], [196, .1, .12]]
-      };
       const now = experienceAudioContext.currentTime;
-      (patterns[tone] || patterns.normal).forEach(([frequency, offset, duration]) => {
+      const master = experienceAudioContext.createGain();
+      master.gain.setValueAtTime(.34, now);
+      master.connect(experienceAudioContext.destination);
+
+      const voice = ({ frequency, endFrequency = frequency, offset = 0, duration = .12, attack = .008, volume = .12, type = "triangle", detune = 0 }) => {
+        const start = now + offset;
         const oscillator = experienceAudioContext.createOscillator();
         const gain = experienceAudioContext.createGain();
-        oscillator.type = tone === "hyper" || tone === "complete" ? "triangle" : "sine";
-        oscillator.frequency.setValueAtTime(frequency, now + offset);
-        gain.gain.setValueAtTime(.0001, now + offset);
-        gain.gain.exponentialRampToValueAtTime(.055, now + offset + .012);
-        gain.gain.exponentialRampToValueAtTime(.0001, now + offset + duration);
-        oscillator.connect(gain).connect(experienceAudioContext.destination);
-        oscillator.start(now + offset);
-        oscillator.stop(now + offset + duration + .02);
-      });
+        oscillator.type = type;
+        oscillator.detune.setValueAtTime(detune, start);
+        oscillator.frequency.setValueAtTime(Math.max(1, frequency), start);
+        oscillator.frequency.exponentialRampToValueAtTime(Math.max(1, endFrequency), start + duration);
+        gain.gain.setValueAtTime(.0001, start);
+        gain.gain.exponentialRampToValueAtTime(Math.max(.0002, volume), start + Math.min(attack, duration * .45));
+        gain.gain.exponentialRampToValueAtTime(.0001, start + duration);
+        oscillator.connect(gain).connect(master);
+        oscillator.start(start);
+        oscillator.stop(start + duration + .03);
+      };
+
+      const noise = ({ offset = 0, duration = .08, volume = .05, frequency = 1200 }) => {
+        const start = now + offset;
+        const frameCount = Math.max(1, Math.floor(experienceAudioContext.sampleRate * duration));
+        const buffer = experienceAudioContext.createBuffer(1, frameCount, experienceAudioContext.sampleRate);
+        const channel = buffer.getChannelData(0);
+        for (let index = 0; index < frameCount; index += 1) channel[index] = Math.random() * 2 - 1;
+        const source = experienceAudioContext.createBufferSource();
+        const filter = experienceAudioContext.createBiquadFilter();
+        const gain = experienceAudioContext.createGain();
+        source.buffer = buffer;
+        filter.type = "bandpass";
+        filter.frequency.setValueAtTime(frequency, start);
+        filter.Q.setValueAtTime(.8, start);
+        gain.gain.setValueAtTime(volume, start);
+        gain.gain.exponentialRampToValueAtTime(.0001, start + duration);
+        source.connect(filter).connect(gain).connect(master);
+        source.start(start);
+      };
+
+      const chord = (frequencies, gap, options = {}) => frequencies.forEach((frequency, index) => voice({ frequency, offset: index * gap, ...options }));
+      const sounds = {
+        normal: () => voice({ frequency: 170, endFrequency: 105, duration: .09, volume: .08, type: "triangle" }),
+        push: () => {
+          voice({ frequency: 118, endFrequency: 46, duration: .2, volume: .2, type: "sine" });
+          voice({ frequency: 245, endFrequency: 120, offset: .008, duration: .07, volume: .08, type: "square" });
+          noise({ duration: .075, volume: .045, frequency: 850 });
+        },
+        hit: () => {
+          voice({ frequency: 130, endFrequency: 260, duration: .25, volume: .12, type: "sawtooth" });
+          chord([523.25, 659.25, 783.99, 1046.5], .065, { duration: .15, volume: .11, type: "triangle" });
+          noise({ offset: .18, duration: .12, volume: .035, frequency: 2600 });
+        },
+        judge: () => {
+          voice({ frequency: 196, endFrequency: 145, duration: .11, volume: .12, type: "square" });
+          voice({ frequency: 196, endFrequency: 145, offset: .18, duration: .11, volume: .12, type: "square" });
+        },
+        rush: () => {
+          voice({ frequency: 98, endFrequency: 196, duration: .3, volume: .13, type: "sawtooth" });
+          chord([392, 523.25, 659.25, 783.99], .055, { duration: .14, volume: .1, type: "triangle" });
+        },
+        hyper: () => {
+          voice({ frequency: 110, endFrequency: 440, duration: .38, volume: .15, type: "sawtooth" });
+          chord([523.25, 659.25, 783.99, 1046.5, 1318.5], .05, { duration: .16, volume: .1, type: "triangle" });
+          noise({ offset: .2, duration: .15, volume: .03, frequency: 3200 });
+        },
+        complete: () => {
+          voice({ frequency: 82, endFrequency: 328, duration: .55, volume: .16, type: "sawtooth" });
+          chord([392, 523.25, 659.25, 783.99, 1046.5, 1318.5], .07, { duration: .2, volume: .11, type: "triangle" });
+          chord([196, 261.63, 329.63], 0, { offset: .38, duration: .42, volume: .07, type: "sine" });
+        },
+        end: () => {
+          voice({ frequency: 293.66, endFrequency: 196, duration: .22, volume: .1, type: "triangle" });
+          voice({ frequency: 196, endFrequency: 82, offset: .15, duration: .32, volume: .12, type: "sine" });
+        }
+      };
+      (sounds[tone] || sounds.normal)();
     } catch { /* Audio is an optional enhancement. */ }
   }
 
@@ -815,17 +871,21 @@
     document.getElementById("machineExperienceReward").textContent = reward;
   }
 
-  function waitForExperienceAction(label) {
+  function waitForExperienceAction(label, autoDelay = 4500) {
     if (experienceSkipped) return Promise.resolve();
     const button = document.getElementById("machineExperiencePush");
-    button.textContent = label;
+    button.innerHTML = `<span>${label}</span><small>タップ / 自動で結果表示</small>`;
     button.hidden = false;
     return new Promise(resolve => {
-      experienceActionResolve = () => {
+      const completeAction = () => {
+        if (experienceActionTimer) window.clearTimeout(experienceActionTimer);
+        experienceActionTimer = null;
         button.hidden = true;
         experienceActionResolve = null;
         resolve();
       };
+      experienceActionResolve = completeAction;
+      experienceActionTimer = window.setTimeout(completeAction, autoDelay);
       window.setTimeout(() => button.focus({ preventScroll: true }), 60);
     });
   }
@@ -850,6 +910,8 @@
     experienceDelayResolve = null;
     if (experienceActionResolve) experienceActionResolve();
     experienceActionResolve = null;
+    if (experienceActionTimer) window.clearTimeout(experienceActionTimer);
+    experienceActionTimer = null;
     const pushButton = document.getElementById("machineExperiencePush");
     if (pushButton) pushButton.hidden = true;
   }
@@ -932,6 +994,13 @@
         if (runId !== experienceRunId || experienceSkipped) break;
         const upperReached = data.upper && hit === animatedHits;
         const estimatedPayout = data.payoutTimeline?.[hit - 1] ?? Math.max(1, Math.round(data.payout * hit / data.hits));
+        if (hit === 1 || upperReached) {
+          const decisionLabel = upperReached ? `${data.upperLabel} 突入ジャッジ` : `${data.mainLabel} 継続ジャッジ`;
+          const decisionChance = upperReached ? data.upperContinueChance : data.continueChance;
+          setExperienceStage(3, upperReached ? "UPPER JUDGE" : "RUSH JUDGE", decisionLabel, "PUSH", upperReached ? "上位RUSHの当落を開きます" : "大当たり中の当落を開きます", "judge", decisionChance, upperReached ? `${data.upperLabel}突入・継続目安` : `${data.mainLabel}継続率`);
+          await waitForExperienceAction(upperReached ? "上位PUSH" : "継続PUSH");
+          if (runId !== experienceRunId) return;
+        }
         setExperienceHud(`${yen.format(data.attempts)}回転`, `${yen.format(result.investment)}円`, `${yen.format(estimatedPayout)}玉`);
         setExperienceStage(3, upperReached ? "UPPER RUSH" : "RUSH MODE", upperReached ? data.upperLabel : hit === data.hits ? "RUSH 終了" : "RUSH 継続！", `${hit}回 / ${yen.format(estimatedPayout)}${data.payoutUnit}`, upperReached ? "上位RUSHへ到達" : hit === data.hits ? "最終結果へ" : "次の継続抽選へ", upperReached ? "hyper" : "rush", upperReached ? data.upperContinueChance : data.continueChance, upperReached ? `${data.upperLabel}継続率` : `${data.mainLabel}継続率`);
         await waitForExperience(upperReached ? 620 : 340);
@@ -976,9 +1045,21 @@
     await waitForExperience(720);
     if (data.entered) {
       const route = data.flow.slice(1, 7);
+      let upperDecisionRevealed = false;
       for (let index = 0; index < route.length; index += 1) {
         if (runId !== experienceRunId || experienceSkipped) break;
         const label = route[index];
+        const isUpperDecision = Boolean(data.upperChallenge) && label === data.upperChallenge;
+        if (isUpperDecision && !upperDecisionRevealed) {
+          setExperienceStage(3, "UPPER JUDGE", `${data.upperLabel} 突入ジャッジ`, "PUSH", `${data.upperChallenge}の当落を開きます`, "judge", data.upperSuccessChance, `${data.upperLabel}突破率`);
+          await waitForExperienceAction("上位PUSH");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, "UPPER JUDGE", data.upper ? `${data.upperLabel} 突入` : `${data.upperChallenge} 失敗`, data.upper ? "突破成功" : "通常AT終了", data.upper ? "上位ATへ進みます" : "最終結果へ進みます", data.upper ? "hyper" : "end", data.upper ? 100 : 0, "上位AT判定結果");
+          await waitForExperience(620);
+          upperDecisionRevealed = true;
+          continue;
+        }
+        if (upperDecisionRevealed && !data.upper && data.upperChallenge && label.includes(data.upperChallenge)) continue;
         const isUpper = data.upper && (label.includes(data.upperLabel) || index === route.length - 1);
         const estimatedPayout = Math.max(0, Math.round(data.payout * (index + 1) / Math.max(1, route.length)));
         setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(estimatedPayout)}枚`);
@@ -1106,7 +1187,7 @@
   document.getElementById("machineExperienceReplay").addEventListener("click", runMachineExperience);
   document.getElementById("machineExperienceBack").addEventListener("click", closeExperience);
   document.getElementById("machineExperiencePush").addEventListener("click", () => {
-    playExperienceSound("hit", true);
+    playExperienceSound("push", true);
     if (experienceActionResolve) experienceActionResolve();
   });
   document.getElementById("machineAtypeContinue").addEventListener("click", () => advanceATypeExperience(experienceRunId));
