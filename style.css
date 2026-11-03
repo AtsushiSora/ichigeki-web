@@ -17086,6 +17086,46 @@ textarea { min-height: 132px; line-height: 1.65; }
   font-size: 8px;
 }
 
+.machine-experience[data-ui="arcade-pilot"][data-push-variant="gold"] .machine-experience-screen {
+  border-color: #ffd66a;
+  box-shadow: inset 0 0 58px rgba(255, 185, 43, .19), 0 0 28px rgba(255, 189, 54, .22);
+}
+
+.machine-experience[data-ui="arcade-pilot"][data-push-variant="gold"] .machine-experience-push {
+  border-color: #fffbd4;
+  color: #281500;
+  background: radial-gradient(ellipse at 50% 8%, #fff7bc, #ffc436 44%, #c56d00 80%);
+  box-shadow: inset 0 6px 0 rgba(255,255,255,.56), inset 0 -8px 0 rgba(102,49,0,.26), 0 0 0 7px rgba(255, 197, 54, .16), 0 0 42px rgba(255, 185, 49, .7), 0 15px 24px rgba(0,0,0,.5);
+}
+
+.machine-experience[data-ui="arcade-pilot"][data-push-variant="gold"] .machine-experience-push span {
+  text-shadow: 0 2px 0 rgba(255,255,255,.45), 0 0 12px rgba(255,255,255,.6);
+}
+
+.machine-experience[data-ui="arcade-pilot"][data-push-variant="upper"] .machine-experience-screen {
+  border-color: #dc7cff;
+  background: radial-gradient(circle at 50% 45%, rgba(212, 70, 255, .34), transparent 34%), linear-gradient(145deg, #260633, #030105 72%);
+  box-shadow: inset 0 0 58px rgba(207, 67, 255, .22), 0 0 30px rgba(205, 75, 255, .28);
+}
+
+.machine-experience[data-ui="arcade-pilot"][data-push-variant="upper"] .machine-experience-push {
+  border-color: #fff;
+  background: linear-gradient(115deg, #6f3cff, #e34fff 42%, #ffcc48 72%, #5eeeff);
+  box-shadow: inset 0 6px 0 rgba(255,255,255,.46), inset 0 -8px 0 rgba(48,0,72,.28), 0 0 0 7px rgba(216, 92, 255, .15), 0 0 46px rgba(207, 71, 255, .72), 0 15px 24px rgba(0,0,0,.5);
+}
+
+.machine-experience[data-ui="arcade-pilot"][data-push-variant="revival"] .machine-experience-screen {
+  border-color: #8fffa0;
+  background: radial-gradient(circle at 50% 45%, rgba(85, 255, 128, .25), transparent 34%), linear-gradient(145deg, #05200d, #020503 72%);
+  box-shadow: inset 0 0 58px rgba(82, 255, 117, .16), 0 0 30px rgba(80, 255, 117, .22);
+}
+
+.machine-experience[data-ui="arcade-pilot"][data-push-variant="revival"] .machine-experience-push {
+  border-color: #effff1;
+  background: radial-gradient(ellipse at 50% 8%, #dffff0, #45e46c 42%, #087a31 80%);
+  box-shadow: inset 0 6px 0 rgba(255,255,255,.48), inset 0 -8px 0 rgba(0,65,25,.3), 0 0 0 7px rgba(75, 240, 111, .14), 0 0 44px rgba(71, 237, 111, .62), 0 15px 24px rgba(0,0,0,.5);
+}
+
 .machine-experience[data-ui="arcade-pilot"] .machine-experience-progress {
   gap: 3px;
 }
@@ -17134,7 +17174,7 @@ textarea { min-height: 132px; line-height: 1.65; }
 }
 
 @keyframes arcade-pilot-push {
-  to { filter: brightness(1.17); transform: scale(1.025); box-shadow: inset 0 6px 0 rgba(255,255,255,.4), inset 0 -8px 0 rgba(80,0,0,.32), 0 0 0 10px rgba(255, 65, 45, .09), 0 0 46px rgba(255, 69, 39, .75), 0 17px 25px rgba(0,0,0,.5); }
+  to { filter: brightness(1.17); transform: scale(1.025); }
 }
 
 @media (max-width: 560px) {

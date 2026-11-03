@@ -897,12 +897,13 @@
     document.getElementById("machineExperienceReward").textContent = reward;
   }
 
-  function waitForExperienceAction(label, autoDelay = 4500) {
+  function waitForExperienceAction(label, autoDelay = 4500, variant = "normal") {
     if (experienceSkipped) return Promise.resolve();
     const button = document.getElementById("machineExperiencePush");
     const experience = document.getElementById("machineExperience");
     button.innerHTML = `<span>${label}</span><small>タップ / 自動で結果表示</small>`;
     button.hidden = false;
+    experience.dataset.pushVariant = variant;
     experience.classList.add("is-action-ready");
     return new Promise(resolve => {
       const completeAction = () => {
@@ -910,6 +911,7 @@
         experienceActionTimer = null;
         button.hidden = true;
         experience.classList.remove("is-action-ready");
+        delete experience.dataset.pushVariant;
         experienceActionResolve = null;
         resolve();
       };
@@ -957,7 +959,9 @@
     experienceActionTimer = null;
     const pushButton = document.getElementById("machineExperiencePush");
     if (pushButton) pushButton.hidden = true;
-    document.getElementById("machineExperience")?.classList.remove("is-action-ready");
+    const experience = document.getElementById("machineExperience");
+    experience?.classList.remove("is-action-ready");
+    if (experience) delete experience.dataset.pushVariant;
   }
 
   function openExperience() {
@@ -1033,19 +1037,32 @@
     setExperienceHud(`${yen.format(data.attempts)}回転`, `${yen.format(result.investment)}円`, `${yen.format(data.entered ? 0 : data.payout)}玉`);
     await waitForExperience(760);
     if (data.entered) {
-      const animatedHits = Math.min(Math.max(1, data.hits), 10);
+      const animatedHits = arcadeUiPilot ? Math.max(1, data.hits) : Math.min(Math.max(1, data.hits), 10);
+      const revivalHit = arcadeUiPilot && data.hits >= 4 ? Math.min(3, data.hits - 1) : -1;
       for (let hit = 1; hit <= animatedHits; hit += 1) {
         if (runId !== experienceRunId || experienceSkipped) break;
         const upperReached = data.upper && hit === animatedHits;
+        const isFinalHit = hit === data.hits;
+        const isRevivalHit = hit === revivalHit && !upperReached;
+        const isHotHit = arcadeUiPilot && !upperReached && !isRevivalHit && !isFinalHit && hit > 1 && hit % 3 === 0;
         const estimatedPayout = data.payoutTimeline?.[hit - 1] ?? Math.max(1, Math.round(data.payout * hit / data.hits));
         const rushGames = data.rushGameTimeline?.[hit - 1] || data.rushGameLimit || 100;
         const counterComplete = await animateExperienceCounter(rushGames, "回転", upperReached ? "UPPER COUNT" : "RUSH COUNT", upperReached ? `${data.upperLabel}を抽選中` : `${data.mainLabel}消化中`, "当落まで数字が進みます", upperReached ? data.upperContinueChance : data.continueChance, upperReached ? `${data.upperLabel}突入・継続目安` : `${data.mainLabel}継続率`, runId);
         if (!counterComplete) return;
-        if (hit === 1 || upperReached) {
-          const decisionLabel = upperReached ? `${data.upperLabel} 突入ジャッジ` : `${data.mainLabel} 継続ジャッジ`;
+        if (arcadeUiPilot || hit === 1 || upperReached) {
+          if (isRevivalHit) {
+            setExperienceStage(3, "RUSH END?", "RUSH終了…", "…", "まだ終わらない？", "end", 0, "復活判定");
+            await waitForExperience(520);
+            if (runId !== experienceRunId) return;
+          }
+          const decisionLabel = upperReached ? `${data.upperLabel} 突入ジャッジ` : isRevivalHit ? "復活ジャッジ" : isHotHit ? "高期待度ジャッジ" : `${data.mainLabel} 継続ジャッジ`;
           const decisionChance = upperReached ? data.upperContinueChance : data.continueChance;
-          setExperienceStage(3, upperReached ? "UPPER JUDGE" : "RUSH JUDGE", decisionLabel, arcadeUiPilot ? `${yen.format(rushGames)}回転` : "PUSH", upperReached ? "上位RUSHの当落を開きます" : "大当たり中の当落を開きます", "judge", decisionChance, upperReached ? `${data.upperLabel}突入・継続目安` : `${data.mainLabel}継続率`);
-          await waitForExperienceAction(upperReached ? "上位PUSH" : "継続PUSH");
+          const decisionPhase = upperReached ? "UPPER JUDGE" : isRevivalHit ? "REVIVAL JUDGE" : isHotHit ? "HIGH CHANCE" : "RUSH JUDGE";
+          const decisionMessage = upperReached ? "上位RUSHの当落を開きます" : isRevivalHit ? "もう一度押して復活を掴め" : isHotHit ? "期待が高まる継続ジャッジ" : "大当たり中の当落を開きます";
+          const pushVariant = upperReached ? "upper" : isRevivalHit ? "revival" : isHotHit ? "gold" : "normal";
+          const pushLabel = upperReached ? "上位PUSH" : isRevivalHit ? "復活PUSH" : isHotHit ? "激熱PUSH" : "継続PUSH";
+          setExperienceStage(3, decisionPhase, decisionLabel, arcadeUiPilot ? `${yen.format(rushGames)}回転` : "PUSH", decisionMessage, "judge", decisionChance, upperReached ? `${data.upperLabel}突入・継続目安` : `${data.mainLabel}継続率`);
+          await waitForExperienceAction(pushLabel, arcadeUiPilot && hit > 10 ? 2200 : 4500, pushVariant);
           if (runId !== experienceRunId) return;
         }
         setExperienceHud(`${yen.format(data.attempts)}回転`, `${yen.format(result.investment)}円`, `${yen.format(estimatedPayout)}玉`);
