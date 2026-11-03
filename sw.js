@@ -1,7 +1,7 @@
-const CACHE_NAME = "ichigeki-web-v228";
+const CACHE_NAME = "ichigeki-web-v229";
 const CORE_ASSETS = [
   "offline.html",
-  "style.css?v=168",
+  "style.css?v=169",
   "manifest.json",
   "icon.svg"
 ];

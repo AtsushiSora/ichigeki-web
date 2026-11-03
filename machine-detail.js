@@ -4,7 +4,23 @@
   const machine = machines[slug];
   const app = document.getElementById("machineApp");
   if (!machine || !app) return;
-  const arcadeUiPilot = slug === "toaru3-pachinko";
+  const arcadePachinkoFlow = machine.sim.kind === "pachinko";
+  const pachinkoModeText = [
+    machine.name,
+    machine.shortName,
+    machine.catchcopy,
+    machine.intro,
+    ...(machine.points || []),
+    ...(machine.specs || []).flat()
+  ].join(" ");
+  const isLtPachinko = machine.type === "pachinko" && (Boolean(machine.sim.upperLabel) || /LT|ラッキートリガー/i.test(pachinkoModeText));
+  const gameExperienceMode = machine.sim.kind === "juggler"
+    ? "atype"
+    : machine.type === "slot"
+      ? "slot-at"
+      : isLtPachinko
+        ? "pachinko-lt"
+        : "pachinko-st";
   document.body.classList.add(`machine-type-${machine.type}`);
 
   const RECENT_MACHINES_KEY = "ichigekiRecentMachinesV1";
@@ -363,7 +379,7 @@
         <div class="machine-sim-controls">${controlMarkup()}<div class="machine-average-grid" id="averageGrid"></div><div class="machine-start-anchor" id="machineStartAnchor"></div><button class="machine-start-button" id="machineStart" type="button"><span>${startLabel}</span><small>${labels.join(" → ")}</small></button><button class="machine-sticky-back" id="machineStickyBack" type="button" aria-label="前のページに戻る" hidden><span aria-hidden="true">←</span><strong>戻る</strong></button></div>
         <div class="machine-result" id="machineResult" aria-live="polite"><span>RESULT</span><strong id="resultTitle">開始ボタンを押してください</strong><p id="resultSummary">平均値と今回の結果を比較できます。</p><div class="machine-result-stats" id="resultStats"></div><div class="machine-flow" id="resultFlow"></div><p class="machine-auto-save-status" id="machineAutoSaveStatus">結果は自動でマイ記録へ保存されます。</p><div class="achievement-unlock-toast" id="machineAchievementUnlock" hidden><span>TITLE UNLOCKED</span><strong></strong><small>新しい称号を獲得しました</small></div><div class="machine-result-actions"><a class="button" href="ranking.html#achievements">称号・記録を見る</a><a class="button" id="shareMachineResult" href="community.html?machine=${slug}&compose=simulation#simulationComposer">結果を投稿</a></div><div class="machine-ranking-entry"><label class="machine-ranking-name"><span>ランキングに登録する名前</span><input id="rankingNickname" type="text" maxlength="16" autocomplete="nickname" placeholder="ニックネーム"></label><button class="button primary" id="rankMachineResult" type="button" disabled>ランキングに登録</button></div></div>
       </div>
-      <section class="machine-experience" id="machineExperience" role="dialog" aria-modal="true" aria-label="${machine.shortName}のシミュレーション演出" data-profile="${experienceProfile.key}" data-machine-type="${machine.type}"${arcadeUiPilot ? ' data-ui="arcade-pilot"' : ""} hidden>
+      <section class="machine-experience" id="machineExperience" role="dialog" aria-modal="true" aria-label="${machine.shortName}のシミュレーション演出" data-profile="${experienceProfile.key}" data-machine-type="${machine.type}" data-ui="arcade" data-game-mode="${gameExperienceMode}" hidden>
         <div class="machine-experience-head"><div class="machine-experience-ident"><span id="machineExperienceStep">STEP 1 / 5</span><strong>${machine.shortName}</strong></div><div><button type="button" id="machineExperienceSound" aria-pressed="${experienceSoundEnabled}">${experienceSoundEnabled ? "音ON" : "音OFF"}</button><button type="button" id="machineExperienceSkip">スキップ</button><button type="button" id="machineExperienceClose" aria-label="ゲーム画面を閉じる">×</button></div></div>
         <div class="machine-experience-hud"><div><span>${machine.sim.kind === "pachinko" ? "回転" : "ゲーム"}</span><strong id="machineExperienceCurrent">0${machine.sim.kind === "pachinko" ? "回転" : "G"}</strong></div><div><span>投資</span><strong id="machineExperienceInvestment">0円</strong></div><div><span id="machineExperienceRewardLabel">${machine.sim.kind === "juggler" ? "差枚" : machine.type === "slot" ? "獲得" : "実獲得"}</span><strong id="machineExperienceReward">0${machine.type === "slot" ? "枚" : "玉"}</strong></div></div>
         <div class="machine-experience-screen" id="machineExperienceScreen"><div class="machine-experience-art" aria-hidden="true"><span>${machine.shortName}</span></div><span id="machineExperiencePhase">${experienceProfile.system}</span><strong id="machineExperienceTitle">抽選中</strong><b id="machineExperienceValue">0</b><p id="machineExperienceMessage">結果を抽選しています</p><div class="machine-expectation"><div><span id="machineExperienceCue">${experienceProfile.cue}</span><strong><small>演出期待度</small><b id="machineExperienceChance">抽選中</b></strong></div><div class="machine-expectation-track" role="progressbar" aria-label="演出期待度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="machineExperienceChanceBar"></i></div><small>シミュレーション上の抽選率目安</small></div></div>
@@ -1044,19 +1060,19 @@
     setExperienceHud(`${yen.format(data.attempts)}回転`, `${yen.format(result.investment)}円`, `${yen.format(data.entered ? 0 : data.payout)}玉`);
     await waitForExperience(760);
     if (data.entered) {
-      const animatedHits = arcadeUiPilot ? Math.max(1, data.hits) : Math.min(Math.max(1, data.hits), 10);
-      const revivalHit = arcadeUiPilot && data.hits >= 4 ? Math.min(3, data.hits - 1) : -1;
+      const animatedHits = arcadePachinkoFlow ? Math.max(1, data.hits) : Math.min(Math.max(1, data.hits), 10);
+      const revivalHit = arcadePachinkoFlow && data.hits >= 4 ? Math.min(3, data.hits - 1) : -1;
       for (let hit = 1; hit <= animatedHits; hit += 1) {
         if (runId !== experienceRunId || experienceSkipped) break;
         const upperReached = data.upper && hit === animatedHits;
         const isFinalHit = hit === data.hits;
         const isRevivalHit = hit === revivalHit && !upperReached;
-        const isHotHit = arcadeUiPilot && !upperReached && !isRevivalHit && !isFinalHit && hit > 1 && hit % 3 === 0;
+        const isHotHit = arcadePachinkoFlow && !upperReached && !isRevivalHit && !isFinalHit && hit > 1 && hit % 3 === 0;
         const estimatedPayout = data.payoutTimeline?.[hit - 1] ?? Math.max(1, Math.round(data.payout * hit / data.hits));
         const rushGames = data.rushGameTimeline?.[hit - 1] || data.rushGameLimit || 100;
         const counterComplete = await animateExperienceCounter(rushGames, "回転", upperReached ? "UPPER COUNT" : "RUSH COUNT", upperReached ? `${data.upperLabel}を抽選中` : `${data.mainLabel}消化中`, "当落まで数字が進みます", upperReached ? data.upperContinueChance : data.continueChance, upperReached ? `${data.upperLabel}突入・継続目安` : `${data.mainLabel}継続率`, runId);
         if (!counterComplete) return;
-        if (arcadeUiPilot || hit === 1 || upperReached) {
+        if (arcadePachinkoFlow || hit === 1 || upperReached) {
           if (isRevivalHit) {
             setExperienceStage(3, "RUSH END?", "RUSH終了…", "…", "まだ終わらない？", "end", 0, "復活判定");
             await waitForExperience(520);
@@ -1068,8 +1084,8 @@
           const decisionMessage = upperReached ? "上位RUSHの当落を開きます" : isRevivalHit ? "もう一度押して復活を掴め" : isHotHit ? "期待が高まる継続ジャッジ" : "大当たり中の当落を開きます";
           const pushVariant = upperReached ? "upper" : isRevivalHit ? "revival" : isHotHit ? "gold" : "normal";
           const pushLabel = upperReached ? "上位PUSH" : isRevivalHit ? "復活PUSH" : isHotHit ? "激熱PUSH" : "継続PUSH";
-          setExperienceStage(3, decisionPhase, decisionLabel, arcadeUiPilot ? `${yen.format(rushGames)}回転` : "PUSH", decisionMessage, "judge", decisionChance, upperReached ? `${data.upperLabel}突入・継続目安` : `${data.mainLabel}継続率`);
-          await waitForExperienceAction(pushLabel, arcadeUiPilot && hit > 10 ? 2200 : 4500, pushVariant);
+          setExperienceStage(3, decisionPhase, decisionLabel, arcadePachinkoFlow ? `${yen.format(rushGames)}回転` : "PUSH", decisionMessage, "judge", decisionChance, upperReached ? `${data.upperLabel}突入・継続目安` : `${data.mainLabel}継続率`);
+          await waitForExperienceAction(pushLabel, arcadePachinkoFlow && hit > 10 ? 2200 : 4500, pushVariant);
           if (runId !== experienceRunId) return;
         }
         setExperienceHud(`${yen.format(data.attempts)}回転`, `${yen.format(result.investment)}円`, `${yen.format(estimatedPayout)}玉`);
