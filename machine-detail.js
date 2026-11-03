@@ -127,6 +127,28 @@
     const probability = 1 / rate;
     return Math.max(1, Math.ceil(Math.log(1 - Math.random()) / Math.log(1 - probability)));
   }
+  function pachinkoRushGameModel(sim) {
+    const specs = Array.isArray(machine.specs) ? machine.specs : [];
+    const rateSpec = specs.find(([label, value]) => /RUSH中|RUSH図柄|ST中|右打ち中/.test(label) && /1\s*\/\s*[\d.]+/.test(value));
+    const rate = Number(String(rateSpec?.[1] || "").match(/1\s*\/\s*([\d.]+)/)?.[1]) || 0;
+    const gameSpec = specs.find(([label]) => /ST回数|RUSH回数|電サポ/.test(label));
+    const gameText = String(gameSpec?.[1] || "");
+    const gameNumbers = [...gameText.matchAll(/\d+(?:\.\d+)?/g)].map(match => Number(match[0])).filter(Number.isFinite);
+    let games = gameText.includes("＋") ? gameNumbers.reduce((sum, value) => sum + value, 0) : Math.max(0, ...gameNumbers);
+    const continuation = Math.max(.01, Math.min(.995, Number(sim.rushContinue) || .7));
+    if (!games && rate) games = Math.log(1 - continuation) / Math.log(1 - 1 / rate);
+    games = Math.max(10, Math.min(200, Math.round(games || 100)));
+    const derivedRate = 1 / (1 - Math.pow(1 - continuation, 1 / games));
+    return { rate: Math.max(1.01, rate || derivedRate), games };
+  }
+  function conditionalRushGame(rate, maxGames, success) {
+    if (!success) return maxGames;
+    for (let attempt = 0; attempt < 40; attempt += 1) {
+      const game = geometric(rate);
+      if (game <= maxGames) return game;
+    }
+    return Math.max(1, Math.round(maxGames * .55));
+  }
   function weighted(items) {
     const roll = Math.random();
     let total = 0;
@@ -461,6 +483,8 @@
       timeline.push((timeline[timeline.length - 1] || 0) + award);
       return timeline;
     }, []);
+    const rushGameModel = pachinkoRushGameModel(sim);
+    const rushGameTimeline = Array.from({ length: hits }, (_, index) => conditionalRushGame(rushGameModel.rate, rushGameModel.games, index < hits - 1 || upper));
     flow.push(`表記${yen.format(displayedPayout)}玉 → 実獲得${yen.format(payout)}玉`);
     const usedBalls = investmentUnits * lendBalls;
     const diff = payout - usedBalls;
@@ -470,7 +494,7 @@
     const rankInvestment = rankInvestmentUnits * 1000;
     const rankScore = Math.round(payout - rankInvestmentUnits * RANKING_RATE.pachinko.lendBalls);
     const rushResultLabel = upper ? sim.upperLabel : rush ? sim.rushLabel : "通常";
-    return { title: rush ? `${rushResultLabel} ${hits}回当たり` : "通常へ", summary: `${spins}回転で初当り。${upper ? `${sim.upperLabel}まで到達しました。` : rush ? `${sim.rushLabel}に突入しました。` : "RUSHには突入しませんでした。"} 表記${yen.format(displayedPayout)}玉に対して、今回の実獲得は${yen.format(payout)}玉です。`, stats: [["今回の回転数", `${yen.format(spins)}回転`], ["投資目安", `${yen.format(investment)}円`], ["表記出玉", `${yen.format(displayedPayout)}玉`], ["実獲得出玉", `${yen.format(payout)}玉`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差玉目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}玉`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendBalls)}玉貸し・${exchangeBalls}玉交換`]], flow, share: `${machine.shortName}｜${yen.format(spins)}回転｜投資${yen.format(investment)}円｜${rushResultLabel}｜${hits}回当たり｜表記${yen.format(displayedPayout)}玉｜実獲得${yen.format(payout)}玉｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendBalls)}玉貸し・${exchangeBalls}玉交換`, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "balls", balanceYen, exchangeValue, investment, displayedPayout, payout, attempts: spins, experience: { kind: "pachinko", attempts: spins, unit: "回転", hitLabel: sim.hitLabel, hitChance: 100 / sim.hitRate, entered: rush, entryChance: sim.rushEntry * 100, mainLabel: sim.rushLabel, continueChance: sim.rushContinue * 100, upper, upperLabel: sim.upperLabel || "", upperContinueChance: (sim.upperContinue || sim.rushContinue) * 100, hits, displayedPayout, payout, payoutTimeline, payoutUnit: "玉" } };
+    return { title: rush ? `${rushResultLabel} ${hits}回当たり` : "通常へ", summary: `${spins}回転で初当り。${upper ? `${sim.upperLabel}まで到達しました。` : rush ? `${sim.rushLabel}に突入しました。` : "RUSHには突入しませんでした。"} 表記${yen.format(displayedPayout)}玉に対して、今回の実獲得は${yen.format(payout)}玉です。`, stats: [["今回の回転数", `${yen.format(spins)}回転`], ["投資目安", `${yen.format(investment)}円`], ["表記出玉", `${yen.format(displayedPayout)}玉`], ["実獲得出玉", `${yen.format(payout)}玉`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差玉目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}玉`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendBalls)}玉貸し・${exchangeBalls}玉交換`]], flow, share: `${machine.shortName}｜${yen.format(spins)}回転｜投資${yen.format(investment)}円｜${rushResultLabel}｜${hits}回当たり｜表記${yen.format(displayedPayout)}玉｜実獲得${yen.format(payout)}玉｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendBalls)}玉貸し・${exchangeBalls}玉交換`, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "balls", balanceYen, exchangeValue, investment, displayedPayout, payout, attempts: spins, experience: { kind: "pachinko", attempts: spins, unit: "回転", hitLabel: sim.hitLabel, hitChance: 100 / sim.hitRate, entered: rush, entryChance: sim.rushEntry * 100, mainLabel: sim.rushLabel, continueChance: sim.rushContinue * 100, upper, upperLabel: sim.upperLabel || "", upperContinueChance: (sim.upperContinue || sim.rushContinue) * 100, hits, displayedPayout, payout, payoutTimeline, rushGameTimeline, rushGameLimit: rushGameModel.games, payoutUnit: "玉" } };
   }
 
   function runSlot(setting) {
@@ -547,13 +571,14 @@
     const rankScore = Math.round(payout - rankInvestmentUnits * RANKING_RATE.slot.lendCoins);
     const salesIndex = Math.round(usedCoins * coinUnit);
     const resultLabel = complete ? "コンプリート" : upper ? sim.upperLabel : entered ? sim.mainLabel : `${sim.triggerLabel}失敗`;
+    const atGameTimeline = flow.slice(1).map((_, index) => Math.max(1, Math.round(12 + Math.random() * (42 + index * 9))));
     const settingRateStats = [[`設定${setting}の${sim.triggerLabel}`, `約1/${triggerRate.toFixed(1)}`]];
     if (sim.mainLabel !== sim.triggerLabel || Math.abs(mainRate - triggerRate) >= 0.05) {
       settingRateStats.push([`設定${setting}の${sim.mainLabel}`, `約1/${mainRate.toFixed(1)}`]);
     }
     const stats = [["今回の設定", `設定${setting}`], ["設定差モデル", settingModelLabel], ["今回のゲーム数", `${yen.format(games)}G`], ...settingRateStats, ["現金投資目安", `${yen.format(investment)}円`], ["獲得枚数", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]];
     if (complete) stats.unshift(["到達状態", "コンプリート"]);
-    return { title: `設定${setting}｜${complete ? "コンプリート" : upper ? `${sim.upperLabel}到達` : entered ? `${sim.mainLabel}終了` : `${sim.triggerLabel}失敗`}`, summary: complete ? `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}、獲得枚数が${yen.format(SLOT_COMPLETE_LIMIT)}枚に到達し、コンプリートしました。` : `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}。${entered ? `${payout}枚を獲得しました。` : `${sim.mainLabel}には届きませんでした。`}`, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, entered, entryChance: triggerSuccess * 100, mainLabel: sim.mainLabel, specialChance: specialChance * 100, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperChallenge: sim.upperChallenge || "", upper, upperLabel: sim.upperLabel || "", complete, payout, payoutUnit: "枚", flow: [...flow] } };
+    return { title: `設定${setting}｜${complete ? "コンプリート" : upper ? `${sim.upperLabel}到達` : entered ? `${sim.mainLabel}終了` : `${sim.triggerLabel}失敗`}`, summary: complete ? `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}、獲得枚数が${yen.format(SLOT_COMPLETE_LIMIT)}枚に到達し、コンプリートしました。` : `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}。${entered ? `${payout}枚を獲得しました。` : `${sim.mainLabel}には届きませんでした。`}`, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, entered, entryChance: triggerSuccess * 100, mainLabel: sim.mainLabel, specialChance: specialChance * 100, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperChallenge: sim.upperChallenge || "", upper, upperLabel: sim.upperLabel || "", complete, payout, payoutUnit: "枚", atGameTimeline, flow: [...flow] } };
   }
 
   function createATypeSession(setting) {
@@ -902,6 +927,20 @@
     });
   }
 
+  async function animateExperienceCounter(total, unit, phase, title, message, expectancy, cue, runId) {
+    const countTo = Math.max(1, Math.round(Number(total) || 1));
+    setExperienceStage(3, phase, title, `0${unit}`, message, "normal", expectancy, cue);
+    for (const progress of [.08, .2, .36, .55, .73, .88, 1]) {
+      if (runId !== experienceRunId || experienceSkipped) return false;
+      const current = Math.max(1, Math.round(countTo * progress));
+      document.getElementById("machineExperienceValue").textContent = `${yen.format(current)}${unit}`;
+      document.getElementById("machineExperienceCurrent").textContent = `${yen.format(current)}${unit}`;
+      document.getElementById("machineExperienceMessage").textContent = `${yen.format(current)}${unit} / ${message}`;
+      await waitForExperience(72);
+    }
+    return runId === experienceRunId;
+  }
+
   function skipExperience() {
     experienceSkipped = true;
     if (experienceDelayTimer) window.clearTimeout(experienceDelayTimer);
@@ -994,6 +1033,9 @@
         if (runId !== experienceRunId || experienceSkipped) break;
         const upperReached = data.upper && hit === animatedHits;
         const estimatedPayout = data.payoutTimeline?.[hit - 1] ?? Math.max(1, Math.round(data.payout * hit / data.hits));
+        const rushGames = data.rushGameTimeline?.[hit - 1] || data.rushGameLimit || 100;
+        const counterComplete = await animateExperienceCounter(rushGames, "回転", upperReached ? "UPPER COUNT" : "RUSH COUNT", upperReached ? `${data.upperLabel}を抽選中` : `${data.mainLabel}消化中`, "当落まで数字が進みます", upperReached ? data.upperContinueChance : data.continueChance, upperReached ? `${data.upperLabel}突入・継続目安` : `${data.mainLabel}継続率`, runId);
+        if (!counterComplete) return;
         if (hit === 1 || upperReached) {
           const decisionLabel = upperReached ? `${data.upperLabel} 突入ジャッジ` : `${data.mainLabel} 継続ジャッジ`;
           const decisionChance = upperReached ? data.upperContinueChance : data.continueChance;
@@ -1051,6 +1093,9 @@
         const label = route[index];
         const isUpperDecision = Boolean(data.upperChallenge) && label === data.upperChallenge;
         if (isUpperDecision && !upperDecisionRevealed) {
+          const upperGames = data.atGameTimeline?.[index] || 30;
+          const counterComplete = await animateExperienceCounter(upperGames, "G", "AT COUNT", `${data.mainLabel}消化中`, `${data.upperChallenge}の当落まで数字が進みます`, data.upperRouteChance, "上位ルート期待度", runId);
+          if (!counterComplete) return;
           setExperienceStage(3, "UPPER JUDGE", `${data.upperLabel} 突入ジャッジ`, "PUSH", `${data.upperChallenge}の当落を開きます`, "judge", data.upperSuccessChance, `${data.upperLabel}突破率`);
           await waitForExperienceAction("上位PUSH");
           if (runId !== experienceRunId) return;
@@ -1060,6 +1105,9 @@
           continue;
         }
         if (upperDecisionRevealed && !data.upper && data.upperChallenge && label.includes(data.upperChallenge)) continue;
+        const atGames = data.atGameTimeline?.[index] || Math.max(1, 20 + index * 10);
+        const counterComplete = await animateExperienceCounter(atGames, "G", "AT COUNT", data.upper && label.includes(data.upperLabel) ? `${data.upperLabel}消化中` : `${data.mainLabel}消化中`, "次の演出まで数字が進みます", data.upper && label.includes(data.upperLabel) ? data.upperSuccessChance : data.upperRouteChance, data.upper && label.includes(data.upperLabel) ? `${data.upperLabel}継続目安` : "特化・上位ルート期待度", runId);
+        if (!counterComplete) return;
         const isUpper = data.upper && (label.includes(data.upperLabel) || index === route.length - 1);
         const estimatedPayout = Math.max(0, Math.round(data.payout * (index + 1) / Math.max(1, route.length)));
         setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(estimatedPayout)}枚`);
