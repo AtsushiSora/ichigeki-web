@@ -4,6 +4,7 @@
   const machine = machines[slug];
   const app = document.getElementById("machineApp");
   if (!machine || !app) return;
+  const arcadeUiPilot = slug === "toaru3-pachinko";
   document.body.classList.add(`machine-type-${machine.type}`);
 
   const RECENT_MACHINES_KEY = "ichigekiRecentMachinesV1";
@@ -362,7 +363,7 @@
         <div class="machine-sim-controls">${controlMarkup()}<div class="machine-average-grid" id="averageGrid"></div><div class="machine-start-anchor" id="machineStartAnchor"></div><button class="machine-start-button" id="machineStart" type="button"><span>${startLabel}</span><small>${labels.join(" → ")}</small></button><button class="machine-sticky-back" id="machineStickyBack" type="button" aria-label="前のページに戻る" hidden><span aria-hidden="true">←</span><strong>戻る</strong></button></div>
         <div class="machine-result" id="machineResult" aria-live="polite"><span>RESULT</span><strong id="resultTitle">開始ボタンを押してください</strong><p id="resultSummary">平均値と今回の結果を比較できます。</p><div class="machine-result-stats" id="resultStats"></div><div class="machine-flow" id="resultFlow"></div><p class="machine-auto-save-status" id="machineAutoSaveStatus">結果は自動でマイ記録へ保存されます。</p><div class="achievement-unlock-toast" id="machineAchievementUnlock" hidden><span>TITLE UNLOCKED</span><strong></strong><small>新しい称号を獲得しました</small></div><div class="machine-result-actions"><a class="button" href="ranking.html#achievements">称号・記録を見る</a><a class="button" id="shareMachineResult" href="community.html?machine=${slug}&compose=simulation#simulationComposer">結果を投稿</a></div><div class="machine-ranking-entry"><label class="machine-ranking-name"><span>ランキングに登録する名前</span><input id="rankingNickname" type="text" maxlength="16" autocomplete="nickname" placeholder="ニックネーム"></label><button class="button primary" id="rankMachineResult" type="button" disabled>ランキングに登録</button></div></div>
       </div>
-      <section class="machine-experience" id="machineExperience" role="dialog" aria-modal="true" aria-label="${machine.shortName}のシミュレーション演出" data-profile="${experienceProfile.key}" data-machine-type="${machine.type}" hidden>
+      <section class="machine-experience" id="machineExperience" role="dialog" aria-modal="true" aria-label="${machine.shortName}のシミュレーション演出" data-profile="${experienceProfile.key}" data-machine-type="${machine.type}"${arcadeUiPilot ? ' data-ui="arcade-pilot"' : ""} hidden>
         <div class="machine-experience-head"><div class="machine-experience-ident"><span id="machineExperienceStep">STEP 1 / 5</span><strong>${machine.shortName}</strong></div><div><button type="button" id="machineExperienceSound" aria-pressed="${experienceSoundEnabled}">${experienceSoundEnabled ? "音ON" : "音OFF"}</button><button type="button" id="machineExperienceSkip">スキップ</button><button type="button" id="machineExperienceClose" aria-label="ゲーム画面を閉じる">×</button></div></div>
         <div class="machine-experience-hud"><div><span>${machine.sim.kind === "pachinko" ? "回転" : "ゲーム"}</span><strong id="machineExperienceCurrent">0${machine.sim.kind === "pachinko" ? "回転" : "G"}</strong></div><div><span>投資</span><strong id="machineExperienceInvestment">0円</strong></div><div><span id="machineExperienceRewardLabel">${machine.sim.kind === "juggler" ? "差枚" : machine.type === "slot" ? "獲得" : "実獲得"}</span><strong id="machineExperienceReward">0${machine.type === "slot" ? "枚" : "玉"}</strong></div></div>
         <div class="machine-experience-screen" id="machineExperienceScreen"><div class="machine-experience-art" aria-hidden="true"><span>${machine.shortName}</span></div><span id="machineExperiencePhase">${experienceProfile.system}</span><strong id="machineExperienceTitle">抽選中</strong><b id="machineExperienceValue">0</b><p id="machineExperienceMessage">結果を抽選しています</p><div class="machine-expectation"><div><span id="machineExperienceCue">${experienceProfile.cue}</span><strong><small>演出期待度</small><b id="machineExperienceChance">抽選中</b></strong></div><div class="machine-expectation-track" role="progressbar" aria-label="演出期待度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="machineExperienceChanceBar"></i></div><small>シミュレーション上の抽選率目安</small></div></div>
@@ -899,13 +900,16 @@
   function waitForExperienceAction(label, autoDelay = 4500) {
     if (experienceSkipped) return Promise.resolve();
     const button = document.getElementById("machineExperiencePush");
+    const experience = document.getElementById("machineExperience");
     button.innerHTML = `<span>${label}</span><small>タップ / 自動で結果表示</small>`;
     button.hidden = false;
+    experience.classList.add("is-action-ready");
     return new Promise(resolve => {
       const completeAction = () => {
         if (experienceActionTimer) window.clearTimeout(experienceActionTimer);
         experienceActionTimer = null;
         button.hidden = true;
+        experience.classList.remove("is-action-ready");
         experienceActionResolve = null;
         resolve();
       };
@@ -953,6 +957,7 @@
     experienceActionTimer = null;
     const pushButton = document.getElementById("machineExperiencePush");
     if (pushButton) pushButton.hidden = true;
+    document.getElementById("machineExperience")?.classList.remove("is-action-ready");
   }
 
   function openExperience() {
@@ -1039,7 +1044,7 @@
         if (hit === 1 || upperReached) {
           const decisionLabel = upperReached ? `${data.upperLabel} 突入ジャッジ` : `${data.mainLabel} 継続ジャッジ`;
           const decisionChance = upperReached ? data.upperContinueChance : data.continueChance;
-          setExperienceStage(3, upperReached ? "UPPER JUDGE" : "RUSH JUDGE", decisionLabel, "PUSH", upperReached ? "上位RUSHの当落を開きます" : "大当たり中の当落を開きます", "judge", decisionChance, upperReached ? `${data.upperLabel}突入・継続目安` : `${data.mainLabel}継続率`);
+          setExperienceStage(3, upperReached ? "UPPER JUDGE" : "RUSH JUDGE", decisionLabel, arcadeUiPilot ? `${yen.format(rushGames)}回転` : "PUSH", upperReached ? "上位RUSHの当落を開きます" : "大当たり中の当落を開きます", "judge", decisionChance, upperReached ? `${data.upperLabel}突入・継続目安` : `${data.mainLabel}継続率`);
           await waitForExperienceAction(upperReached ? "上位PUSH" : "継続PUSH");
           if (runId !== experienceRunId) return;
         }

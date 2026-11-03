@@ -16858,3 +16858,354 @@ textarea { min-height: 132px; line-height: 1.65; }
     padding: 16px;
   }
 }
+
+/* Arcade one-screen UI pilot: eとある3 */
+.machine-experience[data-ui="arcade-pilot"] {
+  --arcade-main: #ff3d31;
+  --arcade-hot: #ff9b32;
+  --arcade-line: rgba(255, 103, 54, .62);
+  --arcade-panel: rgba(14, 8, 8, .94);
+}
+
+.machine-experience[data-ui="arcade-pilot"].is-fullscreen {
+  grid-template-rows: auto auto minmax(280px, 1fr) auto auto auto;
+  gap: 8px;
+  padding: max(9px, env(safe-area-inset-top)) max(9px, env(safe-area-inset-right)) max(9px, env(safe-area-inset-bottom)) max(9px, env(safe-area-inset-left));
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(255, 65, 42, .17), transparent 42%),
+    linear-gradient(rgba(255, 76, 50, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 76, 50, .025) 1px, transparent 1px),
+    #030101;
+  background-size: auto, 28px 28px, 28px 28px, auto;
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-head {
+  min-height: 48px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid rgba(255, 75, 44, .76);
+  box-shadow: 0 8px 22px rgba(255, 56, 36, .11);
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-ident > span {
+  width: max-content;
+  padding: 5px 10px;
+  border: 1px solid rgba(255,255,255,.82);
+  border-radius: 7px;
+  color: #fff;
+  background: linear-gradient(180deg, #f43f35, #8f0d12);
+  box-shadow: 0 0 16px rgba(255, 61, 49, .4);
+  font-size: 10px;
+  letter-spacing: .08em;
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-ident > strong {
+  max-width: min(49vw, 620px);
+  font-size: 13px;
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-head button {
+  border-color: rgba(255,255,255,.36);
+  border-radius: 13px;
+  background: linear-gradient(180deg, #1d1d1d, #080808);
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12);
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-head button.is-on {
+  border-color: #ff6d51;
+  color: #ffb19e;
+  background: linear-gradient(180deg, #35100e, #130504);
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-hud {
+  gap: 6px;
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-hud > div {
+  min-height: 62px;
+  padding: 8px 9px;
+  border: 1px solid rgba(255,255,255,.54);
+  border-bottom-color: var(--arcade-line);
+  border-radius: 11px;
+  background: linear-gradient(150deg, rgba(61, 13, 13, .96), rgba(8, 8, 8, .97) 72%);
+  box-shadow: inset 0 0 18px rgba(255, 58, 38, .08), 0 5px 16px rgba(0,0,0,.32);
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-hud > div:first-child {
+  border-color: rgba(255, 90, 63, .9);
+  background: linear-gradient(150deg, #641419, #170607 78%);
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-hud span {
+  color: #d9c5c0;
+  font-size: 9px;
+  letter-spacing: .08em;
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-hud strong {
+  color: #fff;
+  font-size: clamp(15px, 4.3vw, 21px);
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 10px rgba(255,255,255,.18);
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-screen {
+  min-height: 280px;
+  padding: 18px 10px 14px;
+  border: 2px solid rgba(255, 102, 61, .82);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 50% 47%, rgba(255, 75, 35, .3), transparent 28%),
+    linear-gradient(rgba(255, 81, 48, .055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 81, 48, .045) 1px, transparent 1px),
+    linear-gradient(160deg, #160503, #050101 64%);
+  background-size: auto, 24px 24px, 24px 24px, auto;
+  box-shadow: inset 0 0 52px rgba(255, 46, 26, .15), 0 0 22px rgba(255, 62, 38, .12);
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-screen::before {
+  z-index: 1;
+  inset: -30%;
+  background: repeating-conic-gradient(from 4deg at 50% 48%, transparent 0 7deg, rgba(255, 88, 47, .075) 8deg 9deg, transparent 10deg 17deg);
+  animation: arcade-pilot-rays 7s linear infinite;
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-screen::after {
+  z-index: 1;
+  width: min(62vw, 390px);
+  height: min(62vw, 390px);
+  border: 2px solid rgba(255, 102, 55, .26);
+  border-radius: 50%;
+  box-shadow: 0 0 0 14px rgba(255, 71, 37, .035), 0 0 0 32px rgba(255, 71, 37, .025), inset 0 0 36px rgba(255, 75, 42, .08);
+  transform: none;
+  animation: arcade-pilot-ring 2.4s ease-in-out infinite alternate;
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-art {
+  z-index: 0;
+  padding: 0;
+  background: none;
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-art::after {
+  background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(6,0,0,.18) 55%, rgba(3,0,0,.66));
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-art span {
+  display: none;
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-screen > span {
+  padding: 4px 12px;
+  border: 1px solid rgba(255, 127, 76, .68);
+  border-radius: 999px;
+  color: #ffbd8e;
+  background: rgba(38, 5, 3, .78);
+  font-size: 10px;
+  letter-spacing: .18em;
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-screen > strong {
+  margin-top: 8px;
+  color: #fff;
+  font-size: clamp(21px, 6vw, 36px);
+  text-shadow: 0 0 12px #ff6f4d, 0 3px 0 rgba(0,0,0,.8);
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-screen > b {
+  margin-top: 4px;
+  color: #fff6e9;
+  font-size: clamp(58px, 19vw, 132px);
+  font-style: italic;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.055em;
+  text-shadow: 0 0 5px #fff, 0 0 16px #ffb33b, 0 0 32px #ff382c, 0 7px 0 #761015;
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-screen > p {
+  margin-top: 5px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 850;
+  text-shadow: 0 1px 8px #000;
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-expectation {
+  gap: 5px;
+  width: min(520px, 94%);
+  margin-top: 12px;
+  padding: 8px 10px;
+  border-color: rgba(255, 155, 64, .64);
+  border-radius: 10px;
+  background: rgba(7, 1, 0, .78);
+  box-shadow: inset 0 0 16px rgba(255, 82, 41, .08);
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-expectation > div:first-child > span,
+.machine-experience[data-ui="arcade-pilot"] .machine-expectation > div:first-child b {
+  color: #ffbc78;
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-expectation-track {
+  height: 9px;
+  background: #21100d;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.16);
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-expectation-track i {
+  background: linear-gradient(90deg, #ff3b2f, #ffbd3f);
+  box-shadow: 0 0 13px #ff6538;
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-push {
+  width: min(92%, 520px);
+  min-height: 88px;
+  border: 3px solid #fff5da;
+  border-radius: 999px;
+  background: radial-gradient(ellipse at 50% 8%, #ffb679, #ff3c31 42%, #9d0711 78%);
+  box-shadow: inset 0 6px 0 rgba(255,255,255,.36), inset 0 -8px 0 rgba(80,0,0,.34), 0 0 0 7px rgba(255, 65, 45, .16), 0 0 36px rgba(255, 62, 38, .62), 0 15px 24px rgba(0,0,0,.5);
+  animation: arcade-pilot-push .75s ease-in-out infinite alternate;
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-push::before {
+  inset: 6px 22px auto;
+  height: 43%;
+  background: linear-gradient(180deg, rgba(255,255,255,.48), rgba(255,255,255,.02));
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-push span {
+  font-size: clamp(29px, 8vw, 44px);
+  font-style: italic;
+  letter-spacing: .04em;
+  text-shadow: 0 3px 0 #7e0b0e, 0 0 10px rgba(255,255,255,.5);
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-push small {
+  margin-top: 4px;
+  font-size: 8px;
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-progress {
+  gap: 3px;
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-progress span {
+  min-height: 32px;
+  padding: 6px 2px;
+  border-color: rgba(255,255,255,.25);
+  border-radius: 4px;
+  color: #887c79;
+  background: linear-gradient(180deg, #171414, #080606);
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-progress span.is-done {
+  border-color: rgba(93, 247, 91, .74);
+  color: #d5ffd4;
+  background: linear-gradient(180deg, #17651d, #092d0d);
+  box-shadow: 0 0 10px rgba(78, 238, 79, .24);
+}
+
+.machine-experience[data-ui="arcade-pilot"] .machine-experience-progress span.is-current {
+  border-color: #ff8d55;
+  color: #fff;
+  background: linear-gradient(180deg, #a62620, #4e090c);
+  box-shadow: 0 0 12px rgba(255, 72, 45, .36);
+}
+
+.machine-experience[data-ui="arcade-pilot"][data-tone="hyper"] {
+  --arcade-main: #c74dff;
+  --arcade-hot: #ffd356;
+  --arcade-line: rgba(207, 101, 255, .68);
+}
+
+.machine-experience[data-ui="arcade-pilot"][data-tone="hyper"] .machine-experience-screen {
+  border-color: #d670ff;
+  background: radial-gradient(circle at 50% 45%, rgba(208, 79, 255, .32), transparent 32%), linear-gradient(145deg, #22052e, #030105 72%);
+  box-shadow: inset 0 0 52px rgba(200, 58, 255, .2), 0 0 26px rgba(203, 80, 255, .22);
+}
+
+@keyframes arcade-pilot-rays {
+  to { transform: rotate(1turn); }
+}
+
+@keyframes arcade-pilot-ring {
+  to { opacity: .46; transform: scale(1.06); }
+}
+
+@keyframes arcade-pilot-push {
+  to { filter: brightness(1.17); transform: scale(1.025); box-shadow: inset 0 6px 0 rgba(255,255,255,.4), inset 0 -8px 0 rgba(80,0,0,.32), 0 0 0 10px rgba(255, 65, 45, .09), 0 0 46px rgba(255, 69, 39, .75), 0 17px 25px rgba(0,0,0,.5); }
+}
+
+@media (max-width: 560px) {
+  .machine-experience[data-ui="arcade-pilot"].is-fullscreen {
+    grid-template-rows: auto auto minmax(260px, 1fr) auto auto auto;
+    gap: 7px;
+  }
+
+  .machine-experience[data-ui="arcade-pilot"] .machine-experience-head button {
+    min-width: 42px;
+    min-height: 42px;
+    padding-inline: 8px;
+  }
+
+  .machine-experience[data-ui="arcade-pilot"] .machine-experience-hud > div {
+    min-height: 56px;
+    padding: 7px;
+  }
+
+  .machine-experience[data-ui="arcade-pilot"] .machine-experience-screen {
+    min-height: 260px;
+    padding-top: 14px;
+  }
+
+  .machine-experience[data-ui="arcade-pilot"] .machine-experience-push {
+    min-height: 78px;
+  }
+}
+
+@media (max-height: 720px) and (max-width: 560px) {
+  .machine-experience[data-ui="arcade-pilot"].is-fullscreen {
+    grid-template-rows: auto auto minmax(220px, 1fr) auto auto auto;
+    gap: 5px;
+  }
+
+  .machine-experience[data-ui="arcade-pilot"] .machine-experience-head {
+    min-height: 42px;
+  }
+
+  .machine-experience[data-ui="arcade-pilot"] .machine-experience-hud > div {
+    min-height: 50px;
+    padding-block: 5px;
+  }
+
+  .machine-experience[data-ui="arcade-pilot"] .machine-experience-screen {
+    min-height: 220px;
+    padding-block: 10px;
+  }
+
+  .machine-experience[data-ui="arcade-pilot"] .machine-experience-screen > strong {
+    font-size: 20px;
+  }
+
+  .machine-experience[data-ui="arcade-pilot"] .machine-experience-screen > b {
+    font-size: clamp(52px, 16vw, 88px);
+  }
+
+  .machine-experience[data-ui="arcade-pilot"] .machine-expectation {
+    margin-top: 7px;
+    padding-block: 6px;
+  }
+
+  .machine-experience[data-ui="arcade-pilot"] .machine-experience-push {
+    min-height: 66px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .machine-experience[data-ui="arcade-pilot"] .machine-experience-screen::before,
+  .machine-experience[data-ui="arcade-pilot"] .machine-experience-screen::after,
+  .machine-experience[data-ui="arcade-pilot"] .machine-experience-push {
+    animation: none;
+  }
+}
