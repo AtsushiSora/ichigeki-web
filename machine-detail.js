@@ -101,6 +101,7 @@
   let experienceReturnFocus = null;
   let aTypeSession = null;
   let aTypeBusy = false;
+  let machinePlaySession = null;
   const EXPERIENCE_SOUND_KEY = "ichigekiExperienceSoundV1";
   let experienceSoundEnabled = localStorage.getItem(EXPERIENCE_SOUND_KEY) === "on";
   let experienceAudioContext = null;
@@ -443,7 +444,7 @@
         <div class="machine-experience-hud"><div><span>${machine.sim.kind === "pachinko" ? "回転" : "ゲーム"}</span><strong id="machineExperienceCurrent">0${machine.sim.kind === "pachinko" ? "回転" : "G"}</strong></div><div><span>投資</span><strong id="machineExperienceInvestment">0円</strong></div><div><span id="machineExperienceRewardLabel">${machine.sim.kind === "juggler" ? "差枚" : machine.type === "slot" ? "獲得" : "実獲得"}</span><strong id="machineExperienceReward">0${machine.type === "slot" ? "枚" : "玉"}</strong></div></div>
         <div class="machine-experience-screen" id="machineExperienceScreen"><div class="machine-experience-art" aria-hidden="true"><span>${machine.shortName}</span></div><span id="machineExperiencePhase">${experienceProfile.system}</span><strong id="machineExperienceTitle">抽選中</strong><b id="machineExperienceValue">0</b><p id="machineExperienceMessage">結果を抽選しています</p><div class="machine-expectation"><div><span id="machineExperienceCue">${experienceProfile.cue}</span><strong><small>演出期待度</small><b id="machineExperienceChance">抽選中</b></strong></div><div class="machine-expectation-track" role="progressbar" aria-label="演出期待度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="machineExperienceChanceBar"></i></div><small>シミュレーション上の抽選率目安</small></div></div>
         <div class="machine-atype-actions" id="machineAtypeActions" aria-label="Aタイプの続行選択" hidden><button type="button" class="machine-atype-button is-continue" id="machineAtypeContinue"><span>続ける</span><small>NEXT BONUS</small></button><button type="button" class="machine-atype-button is-stop" id="machineAtypeStop"><span>やめる</span><small>RESULT</small></button></div>
-        <div class="machine-experience-finish-actions" id="machineExperienceFinishActions" aria-label="結果画面の操作" hidden><button type="button" class="machine-experience-finish-button is-replay" id="machineExperienceReplay"><span>もう一度</span><small>REPLAY</small></button><button type="button" class="machine-experience-finish-button is-back" id="machineExperienceBack"><span>戻る</span><small>BACK</small></button></div>
+        <div class="machine-experience-finish-actions" id="machineExperienceFinishActions" aria-label="結果画面の操作" hidden><div class="machine-experience-session-total" id="machineExperienceSessionTotal" hidden><span>SESSION TOTAL</span><strong id="machineExperienceSessionBalance">合計収支 0円</strong><small id="machineExperienceSessionDetail">1回目の結果を集計します</small></div><button type="button" class="machine-experience-finish-button is-replay" id="machineExperienceReplay"><span>もう一度</span><small>REPLAY</small></button><button type="button" class="machine-experience-finish-button is-back" id="machineExperienceBack"><span>戻る</span><small>BACK</small></button></div>
         <button type="button" class="machine-experience-push" id="machineExperiencePush" hidden>PUSH</button>
         <div class="machine-experience-progress" aria-label="演出の進行状況"><span data-machine-experience-step="0">${machine.sim.kind === "juggler" ? "スタート" : "通常"}</span><span data-machine-experience-step="1">${machine.sim.kind === "pachinko" ? "大当り" : machine.sim.kind === "juggler" ? "ボーナス" : "CZ"}</span><span data-machine-experience-step="2">${machine.sim.kind === "pachinko" ? "RUSH" : machine.sim.kind === "juggler" ? "続行判断" : "AT"}</span><span data-machine-experience-step="3">${machine.sim.kind === "pachinko" ? "連チャン" : machine.sim.kind === "juggler" ? "実戦データ" : "上位"}</span><span data-machine-experience-step="4">結果</span></div>
         <section class="machine-experience-actions" id="machineExperienceActions" aria-labelledby="machineExperienceActionsTitle" hidden><div><span>RESULT</span><strong id="machineExperienceActionsTitle">今回の結果</strong><small id="machineOverlaySaveStatus">マイ記録へ自動保存しました</small></div><div class="machine-experience-result-stats" id="machineExperienceResultStats"></div><div class="machine-experience-main-actions"><button type="button" class="button primary" id="machineOverlayRetry">もう一度遊ぶ</button><a class="button" href="ranking.html">マイ記録</a><a class="button is-post" id="machineOverlayPost" href="community.html?machine=${slug}&compose=simulation#simulationComposer">結果を投稿</a></div><div class="machine-experience-rank"><label for="machineOverlayNickname">ランキング表示名<input id="machineOverlayNickname" type="text" maxlength="16" autocomplete="nickname" placeholder="ニックネーム"></label><button type="button" class="button is-rank" id="machineOverlayRank">ランキングに登録</button></div><button type="button" class="machine-experience-return" id="machineOverlayClose">機種ページへ戻る</button></section>
@@ -717,6 +718,36 @@
       const records = JSON.parse(localStorage.getItem(MACHINE_HISTORY_KEY) || "[]");
       return Array.isArray(records) ? records : [];
     } catch { return []; }
+  }
+
+  function createMachinePlaySession() {
+    return { runs: 0, wins: 0, investment: 0, exchangeValue: 0, balanceYen: 0, attempts: 0, payout: 0, score: 0, scoreKind: machine.type === "slot" ? "coins" : "balls" };
+  }
+
+  function resetMachinePlaySession() {
+    machinePlaySession = null;
+    const panel = document.getElementById("machineExperienceSessionTotal");
+    if (panel) panel.hidden = true;
+  }
+
+  function addMachinePlaySessionResult(result) {
+    if (!machinePlaySession) machinePlaySession = createMachinePlaySession();
+    machinePlaySession.runs += 1;
+    machinePlaySession.wins += Number(result.balanceYen) > 0 ? 1 : 0;
+    machinePlaySession.investment += Number(result.investment) || 0;
+    machinePlaySession.exchangeValue += Number(result.exchangeValue) || 0;
+    machinePlaySession.balanceYen += Number(result.balanceYen) || 0;
+    machinePlaySession.attempts += Number(result.attempts) || 0;
+    machinePlaySession.payout += Number(result.payout) || 0;
+    machinePlaySession.score += Number(result.score) || 0;
+    machinePlaySession.scoreKind = result.scoreKind || machinePlaySession.scoreKind;
+    const balanceSign = machinePlaySession.balanceYen >= 0 ? "+" : "";
+    const scoreSign = machinePlaySession.score >= 0 ? "+" : "";
+    const unit = machinePlaySession.scoreKind === "coins" ? "枚" : "玉";
+    document.getElementById("machineExperienceSessionBalance").textContent = `合計収支 ${balanceSign}${yen.format(machinePlaySession.balanceYen)}円`;
+    document.getElementById("machineExperienceSessionDetail").textContent = `${machinePlaySession.runs}回・${machinePlaySession.wins}勝 / 総投資 ${yen.format(machinePlaySession.investment)}円 / 総換金 ${yen.format(machinePlaySession.exchangeValue)}円 / 合計差${unit} ${scoreSign}${yen.format(machinePlaySession.score)}${unit}`;
+    document.getElementById("machineExperienceSessionTotal").hidden = false;
+    return machinePlaySession;
   }
 
   function saveMachineHistory(result) {
@@ -1078,6 +1109,7 @@
     document.getElementById("machineAtypeActions").hidden = true;
     aTypeSession = null;
     aTypeBusy = false;
+    resetMachinePlaySession();
     updateStickyStart();
     if (experienceReturnFocus?.focus) experienceReturnFocus.focus({ preventScroll: true });
   }
@@ -1238,7 +1270,8 @@
     aTypeBusy = true;
     document.getElementById("machineAtypeActions").hidden = true;
     const result = buildATypeResult(aTypeSession, completed);
-    setExperienceStage(4, completed ? "8,000G COMPLETE" : "FINAL RESULT", result.title, result.experience.finalValue, `収支 ${result.balanceYen >= 0 ? "+" : ""}${yen.format(result.balanceYen)}円 / BIG ${aTypeSession.big}回・REG ${aTypeSession.reg}回`, result.score >= 0 ? "complete" : "end", 100, "設定と最終結果を発表");
+    addMachinePlaySessionResult(result);
+    setExperienceStage(4, completed ? "8,000G COMPLETE" : "FINAL RESULT", result.title, result.experience.finalValue, `今回の収支 ${result.balanceYen >= 0 ? "+" : ""}${yen.format(result.balanceYen)}円 / BIG ${aTypeSession.big}回・REG ${aTypeSession.reg}回`, result.score >= 0 ? "complete" : "end", 100, "今回の最終結果");
     setExperienceHud(`${yen.format(result.attempts)}G`, `${yen.format(result.investment)}円`, `${result.score >= 0 ? "+" : ""}${yen.format(result.score)}枚`);
     document.getElementById("machineExperienceFinishActions").hidden = false;
     renderResult(result);
@@ -1320,7 +1353,8 @@
     if (machine.sim.kind === "pachinko") await playPachinkoExperience(result, runId);
     else await playSlotExperience(result, runId);
     if (runId !== experienceRunId) return;
-    setExperienceStage(4, "FINAL RESULT", result.title, result.experience.finalValue || `${yen.format(result.payout)}${result.scoreKind === "coins" ? "枚" : "玉"}`, `収支 ${result.balanceYen >= 0 ? "+" : ""}${yen.format(result.balanceYen)}円 / 差${result.scoreKind === "coins" ? "枚" : "玉"} ${result.score >= 0 ? "+" : ""}${yen.format(result.score)}`, result.complete ? "complete" : result.experience.kind === "juggler" ? (result.score >= 0 ? "rush" : "end") : result.experience.upper ? "hyper" : result.experience.entered ? "rush" : "end", 100, "今回の最終結果");
+    addMachinePlaySessionResult(result);
+    setExperienceStage(4, "FINAL RESULT", result.title, result.experience.finalValue || `${yen.format(result.payout)}${result.scoreKind === "coins" ? "枚" : "玉"}`, `今回の収支 ${result.balanceYen >= 0 ? "+" : ""}${yen.format(result.balanceYen)}円 / 今回の差${result.scoreKind === "coins" ? "枚" : "玉"} ${result.score >= 0 ? "+" : ""}${yen.format(result.score)}`, result.complete ? "complete" : result.experience.kind === "juggler" ? (result.score >= 0 ? "rush" : "end") : result.experience.upper ? "hyper" : result.experience.entered ? "rush" : "end", 100, "今回の最終結果");
     document.getElementById("machineExperienceSkip").hidden = true;
     document.getElementById("machineExperienceFinishActions").hidden = false;
     await waitForExperience(280);
@@ -1330,7 +1364,11 @@
     maybeRequestAdBreak();
   }
 
-  startButton.addEventListener("click", runMachineExperience);
+  startButton.addEventListener("click", () => {
+    resetMachinePlaySession();
+    machinePlaySession = createMachinePlaySession();
+    runMachineExperience();
+  });
   document.getElementById("machineExperienceSound").addEventListener("click", () => {
     experienceSoundEnabled = !experienceSoundEnabled;
     localStorage.setItem(EXPERIENCE_SOUND_KEY, experienceSoundEnabled ? "on" : "off");
