@@ -5481,6 +5481,66 @@ body.has-machine-sticky-start { padding-bottom: 96px; }
 .machine-snapshot-grid strong { margin-top: 7px; color: #f4f8f4; font-size: clamp(17px, 2.4vw, 22px); line-height: 1.2; }
 .machine-snapshot-grid small { margin-top: 7px; color: #aab5ac; font-size: 10px; line-height: 1.5; }
 .machine-snapshot > p { margin: 15px 0 0; color: #b9c4bb; font-size: 12px; line-height: 1.75; }
+.machine-ratio-section {
+  margin: 28px 0 8px;
+  padding: 22px;
+  border: 1px solid color-mix(in srgb, var(--machine-accent, var(--accent)) 38%, rgba(255, 255, 255, .08));
+  border-radius: 20px;
+  background: radial-gradient(circle at 90% 0, color-mix(in srgb, var(--machine-accent, var(--accent)) 11%, transparent), transparent 36%), linear-gradient(145deg, rgba(12, 25, 16, .94), rgba(5, 9, 6, .98));
+}
+.machine-ratio-head > span,
+.machine-ratio-copy > span {
+  color: var(--machine-accent, var(--accent));
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .15em;
+}
+.machine-ratio-head h3 { margin: 5px 0 0; color: #f4f8f4; font-size: clamp(20px, 3vw, 27px); }
+.machine-ratio-head > p { margin: 8px 0 0; color: #b9c4bb; font-size: 12px; line-height: 1.7; }
+.machine-ratio-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 18px; }
+.machine-ratio-grid.is-single { grid-template-columns: minmax(0, 1fr); }
+.machine-ratio-card {
+  min-width: 0;
+  padding: 17px;
+  border: 1px solid rgba(255, 255, 255, .09);
+  border-radius: 16px;
+  background: rgba(0, 0, 0, .26);
+}
+.machine-ratio-grid.is-single .machine-ratio-card { max-width: 520px; }
+.machine-ratio-copy h4 { margin: 5px 0 0; color: #f2f7f3; font-size: 16px; line-height: 1.45; }
+.machine-ratio-copy p { margin: 7px 0 0; color: #adb8b0; font-size: 11px; line-height: 1.65; }
+.machine-ratio-visual { display: grid; grid-template-columns: 146px minmax(0, 1fr); gap: 15px; align-items: center; margin-top: 15px; }
+.machine-ratio-donut {
+  display: grid;
+  width: 146px;
+  aspect-ratio: 1;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--machine-ratio-gradient);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .08), 0 12px 30px rgba(0, 0, 0, .28);
+}
+.machine-ratio-donut > div {
+  display: grid;
+  width: 88px;
+  aspect-ratio: 1;
+  place-content: center;
+  place-items: center;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 50%;
+  background: #07100a;
+  text-align: center;
+  box-shadow: inset 0 0 18px rgba(255, 255, 255, .025);
+}
+.machine-ratio-donut strong { color: #f4f8f4; font-size: 15px; line-height: 1.2; overflow-wrap: anywhere; }
+.machine-ratio-donut small { margin-top: 4px; color: #8f9a92; font-size: 9px; font-weight: 900; letter-spacing: .1em; }
+.machine-ratio-visual ul { display: grid; gap: 8px; min-width: 0; margin: 0; padding: 0; list-style: none; }
+.machine-ratio-visual li { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; gap: 8px; align-items: center; min-width: 0; margin: 0; color: #bbc6bd; font-size: 11px; }
+.machine-ratio-visual li i { width: 10px; height: 10px; border-radius: 3px; background: var(--machine-ratio-color); box-shadow: 0 0 10px color-mix(in srgb, var(--machine-ratio-color) 45%, transparent); }
+.machine-ratio-visual li span { min-width: 0; overflow-wrap: anywhere; }
+.machine-ratio-visual li strong { color: #f4f8f4; font-size: 12px; font-variant-numeric: tabular-nums; }
+.machine-ratio-note { margin: 14px 0 0; padding: 12px 14px; border-left: 3px solid var(--machine-accent, var(--accent)); background: rgba(255, 255, 255, .025); color: #aeb9b0; font-size: 11px; line-height: 1.75; }
 .machine-game-guide {
   margin: 28px 0 8px;
   padding: 22px;
@@ -5555,6 +5615,13 @@ body.has-machine-sticky-start { padding-bottom: 96px; }
   .machine-snapshot-head { display: grid; gap: 6px; }
   .machine-snapshot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .machine-snapshot-grid > div { min-height: 96px; padding: 12px; }
+  .machine-ratio-section { padding: 16px; }
+  .machine-ratio-grid { grid-template-columns: 1fr; }
+  .machine-ratio-card { padding: 14px; }
+  .machine-ratio-visual { grid-template-columns: 132px minmax(0, 1fr); gap: 12px; }
+  .machine-ratio-donut { width: 132px; }
+  .machine-ratio-donut > div { width: 80px; }
+  .machine-ratio-donut strong { font-size: 14px; }
   .machine-game-guide { padding: 16px; }
   .machine-game-guide-grid { grid-template-columns: 1fr; }
   .machine-game-guide-grid article:first-child { grid-column: auto; }
@@ -5575,6 +5642,13 @@ body.has-machine-sticky-start { padding-bottom: 96px; }
   .machine-ranking-list li > small { grid-column: 2 / -1; text-align: left; }
   .machine-ranking-meta { justify-content: flex-start; }
   .machine-index-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 390px) {
+  .machine-ratio-visual { grid-template-columns: 118px minmax(0, 1fr); gap: 10px; }
+  .machine-ratio-donut { width: 118px; }
+  .machine-ratio-donut > div { width: 72px; padding: 6px; }
+  .machine-ratio-donut strong { font-size: 12px; }
+  .machine-ratio-visual li { gap: 6px; font-size: 10px; }
 }
 
 /* Juggle page rebuild: make the challenge feel like one arcade screen. */

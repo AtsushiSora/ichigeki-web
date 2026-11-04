@@ -267,6 +267,88 @@
     return `${numeric.toFixed(numeric < 10 && numeric % 1 ? 1 : 0).replace(".0", "")}%`;
   }
 
+  const ratioChartColors = ["#7cf45b", "#65a9ff", "#ffca58", "#d77bff", "#ff728f", "#54d6c1"];
+
+  function ratioChartMarkup(kicker, title, rawSlices, centerLabel, description) {
+    const merged = new Map();
+    rawSlices.forEach(([label, value]) => {
+      const numeric = Math.max(0, Number(value) || 0);
+      if (!numeric) return;
+      merged.set(label, (merged.get(label) || 0) + numeric);
+    });
+    const slices = [...merged.entries()];
+    const total = slices.reduce((sum, [, value]) => sum + value, 0);
+    if (!total) return "";
+    let cursor = 0;
+    const normalized = slices.map(([label, value], index) => {
+      const share = value / total;
+      const start = cursor;
+      cursor += share * 100;
+      return { label, share, start, end: cursor, color: ratioChartColors[index % ratioChartColors.length] };
+    });
+    const gradient = normalized.map(item => `${item.color} ${item.start.toFixed(3)}% ${item.end.toFixed(3)}%`).join(", ");
+    const ariaLabel = normalized.map(item => `${item.label} ${percent(item.share)}`).join("、");
+    return `<article class="machine-ratio-card"><div class="machine-ratio-copy"><span>${kicker}</span><h4>${title}</h4><p>${description}</p></div><div class="machine-ratio-visual"><div class="machine-ratio-donut" role="img" aria-label="${escapeHtml(`${title}：${ariaLabel}`)}" style="--machine-ratio-gradient: conic-gradient(${gradient})"><div><strong>${escapeHtml(centerLabel)}</strong><small>内訳</small></div></div><ul>${normalized.map(item => `<li><i style="--machine-ratio-color:${item.color}"></i><span>${escapeHtml(item.label)}</span><strong>${percent(item.share)}</strong></li>`).join("")}</ul></div></article>`;
+  }
+
+  function specRatioMarkup() {
+    const sim = machine.sim;
+    const charts = [];
+    let note;
+    if (sim.kind === "pachinko") {
+      charts.push(ratioChartMarkup(
+        "ENTRY",
+        `${sim.rushLabel}突入割合`,
+        [["突入", sim.rushEntry], ["非突入", 1 - sim.rushEntry]],
+        percent(sim.rushEntry),
+        `${sim.hitLabel}後に${sim.rushLabel}へ進む割合です。`
+      ));
+      const payouts = Array.isArray(sim.rushPayouts) ? sim.rushPayouts : [];
+      if (payouts.length) {
+        charts.push(ratioChartMarkup(
+          "PAYOUT",
+          "右打ち中の代表出玉",
+          payouts.map(([payout, weight]) => [`${yen.format(payout)}玉`, weight]),
+          `${payouts.length}種類`,
+          "右打ち大当り1回ごとの表記出玉を割合で比較します。"
+        ));
+      }
+      note = "突入割合と出玉振り分けは別々の抽選です。上位移行、時短引き戻し、残保留などは機種本文の補足も合わせて確認してください。";
+    } else if (sim.kind === "juggler") {
+      const bigChance = 1 / Math.max(1, Number(sim.bigRate) || 1);
+      const regChance = 1 / Math.max(1, Number(sim.regRate) || 1);
+      charts.push(ratioChartMarkup(
+        "BONUS MIX",
+        "設定1基準のボーナス内訳",
+        [["BIG", bigChance], ["REG", regChance]],
+        `合算 1/${sim.combinedRate}`,
+        "ボーナスに当選した場合のBIG・REG構成比です。"
+      ));
+      note = `設定1のBIG約1/${sim.bigRate}・REG約1/${sim.regRate}から算出した当選内訳です。設定が変わると構成比も変わります。`;
+    } else {
+      charts.push(ratioChartMarkup(
+        "AT ENTRY",
+        `${sim.triggerLabel}突破割合`,
+        [["突破", sim.triggerSuccess], ["非突破", 1 - sim.triggerSuccess]],
+        percent(sim.triggerSuccess),
+        `${sim.triggerLabel}から${sim.mainLabel}へ進む代表割合です。`
+      ));
+      if (sim.upperLabel && Number(sim.upperSuccess) > 0) {
+        charts.push(ratioChartMarkup(
+          "UPPER JUDGE",
+          `${sim.upperChallenge}成功割合`,
+          [["成功", sim.upperSuccess], ["失敗", 1 - sim.upperSuccess]],
+          percent(sim.upperSuccess),
+          `${sim.upperChallenge}到達後に${sim.upperLabel}へ進む割合です。`
+        ));
+      }
+      note = `${sim.triggerLabel}突破と${sim.upperChallenge}成功は別々の抽選です。ゾーン・上位ルート選択率を含む全体到達率ではありません。`;
+    }
+    const visibleCharts = charts.filter(Boolean);
+    if (!visibleCharts.length) return "";
+    return `<section class="machine-ratio-section" id="ratio-chart" aria-labelledby="machine-ratio-title"><div class="machine-ratio-head"><span>SPEC RATIO</span><h3 id="machine-ratio-title">${machine.shortName}の割合を円グラフで見る</h3><p>機種紹介に掲載している代表値を、スマホでも比較しやすい形にしました。</p></div><div class="machine-ratio-grid${visibleCharts.length === 1 ? " is-single" : ""}">${visibleCharts.join("")}</div><p class="machine-ratio-note">${note}</p></section>`;
+  }
+
   function detailedGameGuideMarkup() {
     const sim = machine.sim;
     let cards;
@@ -425,7 +507,7 @@
       <dl><div><dt>導入</dt><dd>${machine.year}</dd></div><div><dt>メーカー</dt><dd>${machine.maker}</dd></div><div><dt>分類</dt><dd>${machine.type === "slot" ? "パチスロ" : "パチンコ"}</dd></div></dl>
     </section>
 
-    <nav class="machine-quick-nav" aria-label="ページ内メニュー"><button class="machine-favorite-button" id="machineFavoriteButton" type="button" aria-pressed="false"><span aria-hidden="true">☆</span> お気に入り</button><a href="#spec">スペック</a><a href="#game-guide">遊び方</a><a href="#article">記事</a><a href="#machineRanking">ランキング</a><a href="#faq">FAQ</a>${machine.readerGuide ? '<a href="#reader-guide">30秒要点</a>' : ""}${novemberQuickLink}${decemberQuickLink}<a href="community.html?machine=${slug}">投稿</a></nav>
+    <nav class="machine-quick-nav" aria-label="ページ内メニュー"><button class="machine-favorite-button" id="machineFavoriteButton" type="button" aria-pressed="false"><span aria-hidden="true">☆</span> お気に入り</button><a href="#spec">スペック</a><a href="#ratio-chart">割合</a><a href="#game-guide">遊び方</a><a href="#article">記事</a><a href="#machineRanking">ランキング</a><a href="#faq">FAQ</a>${machine.readerGuide ? '<a href="#reader-guide">30秒要点</a>' : ""}${novemberQuickLink}${decemberQuickLink}<a href="community.html?machine=${slug}">投稿</a></nav>
 
     <section class="machine-intro" id="spec">
       <div><span class="machine-section-label">SPEC GUIDE</span><h2>主要スペック</h2><p>${machine.intro}</p><ul>${machine.points.map(point => `<li>${point}</li>`).join("")}</ul></div>
@@ -465,6 +547,7 @@
         <div class="machine-article-meta"><span>編集・検証：<a href="about.html">ICHIGEKI編集部</a></span><time datetime="${editorialUpdated}">更新：${editorialUpdatedLabel}</time></div>
         <p>${machine.intro}</p>
         ${snapshotMarkup()}
+        ${specRatioMarkup()}
         ${readerGuideMarkup()}
         ${detailedGameGuideMarkup()}
         ${articleMarkup()}
