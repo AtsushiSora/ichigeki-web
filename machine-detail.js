@@ -349,6 +349,41 @@
     return `<section class="machine-ratio-section" id="ratio-chart" aria-labelledby="machine-ratio-title"><div class="machine-ratio-head"><span>SPEC RATIO</span><h3 id="machine-ratio-title">${machine.shortName}の割合を円グラフで見る</h3><p>機種紹介に掲載している代表値を、スマホでも比較しやすい形にしました。</p></div><div class="machine-ratio-grid${visibleCharts.length === 1 ? " is-single" : ""}">${visibleCharts.join("")}</div><p class="machine-ratio-note">${note}</p></section>`;
   }
 
+  function czGameMarkup() {
+    const sim = machine.sim;
+    if (sim.kind !== "slot") return "";
+    const isDirectEntry = Number(sim.triggerSuccess) >= .995 || sim.triggerLabel === sim.mainLabel;
+    const triggerRate = Number(sim.triggerRate) || Number(sim.mainRate) || 0;
+    const mainRate = Number(sim.mainRate) || triggerRate;
+    const successRate = Math.max(0, Math.min(1, Number(sim.triggerSuccess) || 0));
+    const upperRoute = sim.upperLabel
+      ? `${sim.specialLabel}などで獲得を伸ばし、${sim.upperChallenge}成功から${sim.upperLabel}を目指します。`
+      : `${sim.specialLabel}などの出玉契機で獲得枚数を伸ばします。`;
+    const judgeText = isDirectEntry
+      ? `${sim.triggerLabel}を初当りとして扱い、独立したCZ突破抽選は行いません。`
+      : `${sim.triggerLabel}到達後、代表突破率${percent(successRate)}で${sim.mainLabel}への当落を判定します。`;
+    const missText = isDirectEntry
+      ? "初当り後はそのままメイン区間へ進みます。"
+      : `成功で${sim.mainLabel}、失敗時は通常時へ戻る流れです。`;
+    const flow = isDirectEntry
+      ? [
+          ["01", "通常時", `${sim.triggerLabel}を待つ`],
+          ["02", "初当り", `約1/${triggerRate}`],
+          ["03", "メイン", sim.mainLabel],
+          ["04", "出玉契機", sim.specialLabel]
+        ]
+      : [
+          ["01", "通常時", `${sim.triggerLabel}を目指す`],
+          ["02", "CZ・入口", `約1/${triggerRate}`],
+          ["03", "突破ジャッジ", `${percent(successRate)}で成功`],
+          ["04", "AT・ST", sim.mainLabel]
+        ];
+    const upperStep = sim.upperLabel
+      ? `<div class="machine-cz-upper"><span>その先</span><strong>${sim.upperChallenge}</strong><i aria-hidden="true">→</i><strong>${sim.upperLabel}</strong><small>上位ルートはCZ突破後の別抽選</small></div>`
+      : "";
+    return `<section class="machine-cz-guide${isDirectEntry ? " is-direct" : ""}" id="cz-game" aria-labelledby="machine-cz-title"><div class="machine-cz-head"><span>${isDirectEntry ? "DIRECT ENTRY FLOW" : "CHANCE ZONE GUIDE"}</span><h3 id="machine-cz-title">${machine.shortName}の${isDirectEntry ? "初当りゲーム性" : "CZのゲーム性"}</h3><p>${isDirectEntry ? "CZを経由しない初当りから、出玉を伸ばす流れを整理します。" : `${sim.triggerLabel}の役割、突破後の行き先、上位までの流れを整理します。`}</p></div><div class="machine-cz-flow" aria-label="${escapeHtml(`${machine.shortName}のゲームフロー`)}">${flow.map(([number, label, detail], index) => `<div><span>${number}</span><strong>${escapeHtml(label)}</strong><small>${escapeHtml(detail)}</small></div>${index < flow.length - 1 ? '<i aria-hidden="true">›</i>' : ""}`).join("")}</div>${upperStep}<div class="machine-cz-detail-grid"><article><span>ROLE</span><h4>${isDirectEntry ? "初当りの役割" : "CZの役割"}</h4><p>通常時の入口は${sim.triggerLabel}で、発生目安は約1/${triggerRate}です。${isDirectEntry ? `${sim.mainLabel}へ直接つながる代表ルートとして扱います。` : `${sim.mainLabel}へ進むための関門として扱います。`}</p></article><article><span>JUDGE</span><h4>${isDirectEntry ? "直結タイプ" : "CZ中の当落"}</h4><p>${judgeText} 実機の小役、ポイント、バトルなど複数の条件は、このサイトでは一連のジャッジへまとめています。</p></article><article><span>RESULT</span><h4>成功・失敗後</h4><p>${missText} ${sim.mainLabel}初当りの設定${slotBaselineSetting}基準は約1/${mainRate}です。</p></article><article><span>NEXT ROUTE</span><h4>AT中と上位ルート</h4><p>${upperRoute}</p></article></div><p class="machine-cz-note">表示するCZ発生率・突破率・上位到達率は、記事に収録した公表値または比較用の代表値です。実機の全小役、内部状態、モード、天井は完全再現していません。</p></section>`;
+  }
+
   function detailedGameGuideMarkup() {
     const sim = machine.sim;
     let cards;
@@ -507,7 +542,7 @@
       <dl><div><dt>導入</dt><dd>${machine.year}</dd></div><div><dt>メーカー</dt><dd>${machine.maker}</dd></div><div><dt>分類</dt><dd>${machine.type === "slot" ? "パチスロ" : "パチンコ"}</dd></div></dl>
     </section>
 
-    <nav class="machine-quick-nav" aria-label="ページ内メニュー"><button class="machine-favorite-button" id="machineFavoriteButton" type="button" aria-pressed="false"><span aria-hidden="true">☆</span> お気に入り</button><a href="#spec">スペック</a><a href="#ratio-chart">割合</a><a href="#game-guide">遊び方</a><a href="#article">記事</a><a href="#machineRanking">ランキング</a><a href="#faq">FAQ</a>${machine.readerGuide ? '<a href="#reader-guide">30秒要点</a>' : ""}${novemberQuickLink}${decemberQuickLink}<a href="community.html?machine=${slug}">投稿</a></nav>
+    <nav class="machine-quick-nav" aria-label="ページ内メニュー"><button class="machine-favorite-button" id="machineFavoriteButton" type="button" aria-pressed="false"><span aria-hidden="true">☆</span> お気に入り</button><a href="#spec">スペック</a><a href="#ratio-chart">割合</a>${machine.sim.kind === "slot" ? '<a href="#cz-game">CZ</a>' : ""}<a href="#game-guide">遊び方</a><a href="#article">記事</a><a href="#machineRanking">ランキング</a><a href="#faq">FAQ</a>${machine.readerGuide ? '<a href="#reader-guide">30秒要点</a>' : ""}${novemberQuickLink}${decemberQuickLink}<a href="community.html?machine=${slug}">投稿</a></nav>
 
     <section class="machine-intro" id="spec">
       <div><span class="machine-section-label">SPEC GUIDE</span><h2>主要スペック</h2><p>${machine.intro}</p><ul>${machine.points.map(point => `<li>${point}</li>`).join("")}</ul></div>
@@ -548,6 +583,7 @@
         <p>${machine.intro}</p>
         ${snapshotMarkup()}
         ${specRatioMarkup()}
+        ${czGameMarkup()}
         ${readerGuideMarkup()}
         ${detailedGameGuideMarkup()}
         ${articleMarkup()}
