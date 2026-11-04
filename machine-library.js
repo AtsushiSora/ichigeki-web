@@ -331,7 +331,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["SANKYO 公式スペック", "https://www.sankyo-fever.jp/products/machine_list/sqe/spec/"], ["SANKYO オンライン博物館", "https://www.sankyo-fever.jp/collection/962/"]]
   },
   "garo-yami-slot": {
-    order: 0.12, type: "slot", theme: "gold", year: "2026年11月", maker: "サンセイR&D", updated: "2026-11-03",
+    order: 0.12, type: "slot", theme: "gold", year: "2026年11月", maker: "サンセイR&D", updated: "2026-11-04",
     published: "2026-11-02",
     name: "L牙狼 闇を照らす者", shortName: "スマスロ 牙狼",
     image: "assets/machines/garo-yami-slot-key-visual.jpg",
@@ -349,27 +349,29 @@ window.ICHIGEKI_MACHINES = {
       { heading: "金色になれ！から究極魔戒RUSHへ", paragraphs: ["SUPER GARO BONUSは約1000枚獲得後、3戦突破を目指すCZ『金色になれ！』へ進みます。", "究極魔戒RUSHは平均約740枚のボーナスが約82.6%でループする最上位状態です。未公表の到達率はサイト共通の固定抽選で簡易化します。"] },
       { heading: "固定レートと収支の条件", bullets: ["約33G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均BONUS投資目安は約9,600円", "コイン単価は設定1の参考値約3.6円として表示", "19,000枚到達時はコンプリート表示"] }
     ],
-    sources: [["サンセイR&D 公式製品情報", "https://www.sansei-rd.com/"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/vpage/2817/1"], ["天井・設定差まとめ", "https://tennabi.jp/garo-yami-wo-terasu-mono/"]]
+    sources: [["サンセイR&D 公式製品情報", "https://www.sansei-rd.com/products23/l_garo/index.html"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/vpage/2817/1"], ["天井・設定差まとめ", "https://tennabi.jp/garo-yami-wo-terasu-mono/"]]
   },
   "ragnador-slot": {
-    order: 0.14, type: "slot", theme: "violet", year: "2026年11月", maker: "ミズホ", updated: "2026-10-31",
+    order: 0.14, type: "slot", theme: "violet", year: "2026年11月", maker: "ミズホ", updated: "2026-11-04",
+    published: "2026-11-02",
     name: "スマスロ ラグナドール", shortName: "スマスロ ラグナドール",
     image: "assets/machines/ragnador-slot-key-visual.jpg",
     imageAlt: "スマスロ ラグナドールのキービジュアル",
     imageCredit: "パチマガスロマガFREE 機種情報",
     imageSource: "https://pachimaga.com/free/mach/maker-s/mizuho/l_ragnador.php",
     catchcopy: "爽怪Chainをつなぎ、真ラグナドールRUSHへ。",
-    intro: "2026年11月2日導入予定のスマスロ。設定別CZ・AT初当りを使い、ラグナドールバトル、チェインアタック、スペシャルジャッジ、上位ATまでを簡易体験できます。",
+    intro: "2026年11月2日から導入が始まったスマスロ。公開されたデジタルガイドと設定別CZ・AT初当りをもとに、ラグナドールバトル、チェインアタック、スペシャルジャッジ、上位ATまでを簡易体験できます。",
     points: ["CZは設定1約1/172.8〜設定6約1/142.4", "ATは設定1約1/326.4〜設定6約1/258.3", "通常AT純増約2.5枚/G・上位AT約4.5枚/G"],
-    specs: [["CZ（設定1）", "約1/172.8"], ["CZ（設定6）", "約1/142.4"], ["AT（設定1）", "約1/326.4"], ["AT（設定6）", "約1/258.3"], ["ベース", "約31.0G/50枚"], ["スペシャルジャッジ", "成功期待度約70%"]],
+    specs: [["CZ（設定1）", "約1/172.8"], ["CZ（設定6）", "約1/142.4"], ["AT（設定1）", "約1/326.4"], ["AT（設定6）", "約1/258.3"], ["CZ間天井", "500G＋α"], ["AT間天井", "999G＋α"]],
     sim: { kind: "slot", triggerLabel: "ラグナドールバトル", triggerRate: 172.8, triggerSuccess: 0.50, mainLabel: "ラグナドールRUSH", mainRate: 326.4, base50: 31.0, coinUnit: 3.6, normalMin: 250, normalMax: 1050, specialLabel: "チェインアタック", specialChance: 0.34, specialMin: 180, specialMax: 950, upperChallenge: "スペシャルジャッジ", upperChance: 0.20, upperSuccess: 0.70, upperLabel: "真ラグナドールRUSH", upperContinue: 0.75, upperPayout: 600, settingRates: { 1: { trigger: 172.8, main: 326.4, payout: 0.976 }, 2: { trigger: 167.2, main: 317.2, payout: 0.988 }, 3: { trigger: 161.8, main: 307.7, payout: 1.003 }, 4: { trigger: 145.0, main: 271.2, payout: 1.057 }, 5: { trigger: 143.0, main: 260.8, payout: 1.105 }, 6: { trigger: 142.4, main: 258.3, payout: 1.145 } } },
     articleSections: [
       { heading: "設定別CZ・AT初当りを反映", paragraphs: ["CZは設定1約1/172.8から設定6約1/142.4、AT初当りは設定1約1/326.4から設定6約1/258.3です。", "START時に設定1〜6を均等抽選し、選ばれた設定のCZ・AT初当り・出玉率を使用します。結果とランキングにも設定を表示します。"] },
       { heading: "ラグナドールバトルからATへ", paragraphs: ["通常時は小役の連続やラグナ目からCZを目指します。CZ『ラグナドールバトル』の勝利期待度は約50%です。", "通常AT『ラグナドールRUSH』は40G＋α、純増約2.5枚/G。サイトではチェインやガチャ報酬を追加枚数抽選へまとめます。"] },
       { heading: "スペシャルジャッジと上位AT", paragraphs: ["スペシャルジャッジは16G＋αで、白7またはBAR揃いによる成功期待度は約70%です。", "成功後は純増約4.5枚/Gの『真ラグナドールRUSH』へ。白7・BARの期待獲得枚数差は記事で紹介し、非公表の上位継続率は固定の簡易抽選で表現します。"] },
+      { heading: "導入後に確認できる天井", paragraphs: ["CZ間は500G＋αでCZ、AT間は999G＋αでATへ進みます。設定変更後はAT間天井が500G＋αへ短縮されます。", "シミュレーターは平均的な初当りの幅を体験する用途のため、天井到達時の専用恩恵やCZ回数別の優遇は個別再現しません。"] },
       { heading: "固定レートと収支の条件", bullets: ["約31.0G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均AT投資目安は約11,400円", "コイン単価は設定1の参考値約3.6円として表示", "19,000枚到達時はコンプリート表示"] }
     ],
-    sources: [["ユニバーサル 公式製品情報", "https://www.universal-777.com/"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/vpage/2807/1"], ["パチマガスロマガFREE 機種情報", "https://pachimaga.com/free/mach/maker-s/mizuho/l_ragnador.php"]]
+    sources: [["ユニバーサル 公式デジタルガイド", "https://www.universal-777.com/product/digitalguide/ps/ragnador/"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/vpage/2807/1"], ["パチマガスロマガFREE 機種情報", "https://pachimaga.com/free/mach/maker-s/mizuho/l_ragnador.php"]]
   },
   "seiya-ougon-slot": {
     order: 0.15, type: "slot", theme: "gold", year: "2026年11月", maker: "サンスリー", updated: "2026-11-03",
@@ -394,7 +396,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["パチマガスロマガ 機種概要", "https://psmaga.com/e/pachi/pla/s_conq/santhree_slot/09/kh01.php"], ["一撃 2026年11月新台情報", "https://1geki.jp/newmachinecalender/202611/"], ["設定・天井まとめ", "https://tennabi.jp/seiya-ougon-junikyu/"]]
   },
   "ggo-slot": {
-    order: 0.2, type: "slot", theme: "magenta", year: "2026年11月", maker: "京楽／オッケー.", updated: "2026-11-03",
+    order: 0.2, type: "slot", theme: "magenta", year: "2026年11月", maker: "京楽／オッケー.", updated: "2026-11-04",
     published: "2026-11-02",
     name: "Lソードアート・オンライン オルタナティブ ガンゲイル・オンライン", shortName: "スマスロ GGO",
     image: "assets/machines/ggo-slot-key-visual.jpg",
@@ -413,10 +415,10 @@ window.ICHIGEKI_MACHINES = {
       { heading: "GGOストームから上位STへ", paragraphs: ["エンディング後などの有利区間リセット時はGGOストームを経由し、上位ST『イカれたレン』を目指します。", "上位到達率や継続率の全詳細は公開値が揃っていないため、サイト共通の固定抽選で簡易化し、実機値と区別します。"] },
       { heading: "固定レートと収支の条件", bullets: ["約31G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均SQUAD JAM投資目安は約18,300円", "コイン単価は設定1の参考値約3.5円として表示", "19,000枚到達時はコンプリート表示"] }
     ],
-    sources: [["P-WORLD 新台スケジュール", "https://www.p-world.co.jp/database/machine.html"], ["一撃 2026年11月新台情報", "https://1geki.jp/newmachinecalender/202611/"], ["設定・天井まとめ", "https://tennabi.jp/gun-gale-online/"]]
+    sources: [["KYORAKU 公式機種サイト", "https://www.kyoraku.co.jp/product_site/2026/ggo_s/"], ["一撃 2026年11月新台情報", "https://1geki.jp/newmachinecalender/202611/"], ["設定・天井まとめ", "https://tennabi.jp/gun-gale-online/"]]
   },
   "godzilla-eva2-slot": {
-    order: 0.25, type: "slot", theme: "ember", year: "2026年11月", maker: "ビスティ", updated: "2026-11-03",
+    order: 0.25, type: "slot", theme: "ember", year: "2026年11月", maker: "ビスティ", updated: "2026-11-04",
     published: "2026-11-02",
     name: "Lパチスロ ゴジラ対エヴァンゲリオン 2", shortName: "スマスロ ゴジエヴァ2",
     image: "assets/machines/godzilla-eva2-slot-key-visual.jpg",
@@ -435,7 +437,7 @@ window.ICHIGEKI_MACHINES = {
       { heading: "決戦カイザーギドラからG覚醒RUSHへ", paragraphs: ["特定条件を満たしたAT終了後は決戦カイザーギドラへ進み、勝利すると上位AT『G覚醒RUSH』へ突入します。上位AT突入時の期待獲得枚数は約3600枚と案内されています。", "上位到達率とループ抽選はサイト共通の固定値で簡易化し、公開値と区別して表示します。"] },
       { heading: "固定レートと収支の条件", bullets: ["約30G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均AT投資目安は約16,700円", "コイン単価は設定1の参考値約3.7円として表示", "19,000枚到達時はコンプリート表示"] }
     ],
-    sources: [["フィールズ公式 新製品情報", "https://www.fields.biz/?lang=ja"], ["エヴァンゲリオン系 開発こぼれ話", "https://blog.eva-project.jp/category/l_godzilla_vs_eva2/"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/vpage/2825/1"]]
+    sources: [["SANKYO公式 機種コレクション", "https://www.sankyo-fever.jp/collection/1001/"], ["エヴァンゲリオン系 開発こぼれ話", "https://blog.eva-project.jp/category/l_godzilla_vs_eva2/"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/vpage/2825/1"]]
   },
   "mahoako-slot": {
     order: 0.75, type: "slot", theme: "magenta", year: "2026年10月", maker: "ニューギン", updated: "2026-10-31",
@@ -2188,22 +2190,24 @@ window.ICHIGEKI_MACHINES = {
     sources: [["パチマガスロマガFREE 基本スペック", "https://pachimaga.com/free/mach/maker-p/sankyo/e_dumbbell2_77.php"], ["遊技日本 発表記事", "https://yugi-nippon.com/pachinko-new-machine/post-79593/"]]
   },
   "onepunchman2-99": {
-    order: 11.6, type: "pachinko", theme: "flame", year: "2026年11月", maker: "ニューギン", updated: "2026-11-01",
+    order: 11.6, type: "pachinko", theme: "flame", year: "2026年11月", maker: "ニューギン", updated: "2026-11-04",
+    published: "2026-11-02",
     name: "eワンパンマン2～正義執行 99ver.", shortName: "ワンパンマン2 99",
     image: "assets/machines/onepunchman2-99-key-visual.jpg",
     imageAlt: "eワンパンマン2～正義執行 99ver.のキービジュアル",
     imageCredit: "遊技日本 発表記事",
     imageSource: "https://yugi-nippon.com/pachinko-new-machine/post-80495/",
     catchcopy: "デカスタ×約1/99.9。RUSH中は約22%で5040個。",
-    intro: "2026年11月2日導入予定の甘デジ。初当り約1/99.9、RUSH突入40%、継続約50%で大きな出玉振り分けを狙います。",
-    points: ["大当り約1/99.9・RUSH40%", "ST66回・継続約50%", "RUSH中約22%で約5040個"],
-    specs: [["大当り", "約1/99.9"], ["RUSH突入", "40%"], ["RUSH継続", "約50%"], ["ST", "66回"], ["通常出玉", "約252個"], ["最大出玉", "約5040個"]],
+    intro: "2026年11月2日から導入が始まったデカスタ搭載の甘デジ。初当り約1/99.9、RUSH突入40%、SHOW DOWN約1/96.5、ST66回の流れと大きな出玉振り分けを簡易体験できます。",
+    points: ["大当り約1/99.9・RUSH40%", "SHOW DOWN約1/96.5・ST66回", "RUSH中約22%で約5040個"],
+    specs: [["大当り", "約1/99.9"], ["SHOW DOWN", "約1/96.5"], ["RUSH突入", "40%"], ["RUSH継続", "約50%"], ["ST", "66回"], ["最大出玉", "約5040個"]],
     sim: { kind: "pachinko", hitRate: 99.9, hitLabel: "初当り", startType: "デカスタ", spinsPer1k: 25.0, minSpins: 16, maxSpins: 40, rushLabel: "HERO RUSH", rushEntry: 0.40, rushContinue: 0.50, firstPayoutIn: 252, firstPayoutOut: 252, rushPayouts: [[1120, 0.56], [5040, 0.22], [0, 0.22]] },
     articleSections: [
       { heading: "デカスタ×約1/99.9", paragraphs: ["通常時の大当りは約1/99.9で、40%がHERO RUSHへ進みます。", "固定回転率は比較用に25.0回/1,000円とし、実店舗の回転率を保証しません。"] },
+      { heading: "SHOW DOWNは約1/96.5", paragraphs: ["HERO RUSHは66回のSTで、RUSH中のSHOW DOWN発生率は約1/96.5です。", "ST継続率は約50%。シミュレーターではSHOW DOWNの発生と出玉振り分けを一連の当落としてまとめます。"] },
       { heading: "約22%で5040個", paragraphs: ["RUSH中は約56%が1120個、約22%が5040個、約22%がSTリセットです。", "共通モデルではSTリセットを出玉0の継続結果として扱い、約50%のRUSH継続へまとめます。"] }
     ],
-    sources: [["遊技日本 発表記事", "https://yugi-nippon.com/pachinko-new-machine/post-80495/"], ["P-WORLD 新台スケジュール", "https://www.p-world.co.jp/database/machine.html"]]
+    sources: [["一撃 導入後機種情報", "https://1geki.jp/pachinko/e_onepanman2_99/"], ["HAZUSE DATA 基本スペック", "https://data.hazuse.com/index.php?machine_code=PX0396"], ["遊技日本 発表記事", "https://yugi-nippon.com/pachinko-new-machine/post-80495/"]]
   },
   "bancho-banzuke": {
     order: 11.7, type: "slot", theme: "crimson", year: "2026年12月導入予定", maker: "パオン・ディーピー", updated: "2026-11-01",

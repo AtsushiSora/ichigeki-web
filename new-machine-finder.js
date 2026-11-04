@@ -19,7 +19,7 @@
     "pachinko:easy": {
       title: "初当りを試しやすい2機種",
       machines: [
-        { slug: "kamen-rider-black-light", meta: "デカヘソ・約1/129.9", name: "ライダーBLACK Light", note: "固定31回/1,000円で、初当りまでの投資とJUSTICE RUSHを短時間で比較。" },
+        { slug: "onepunchman2-99", meta: "デカスタ・約1/99.9", name: "ワンパンマン2 99", note: "約1/99.9の初当りから、SHOW DOWNと大出玉振り分けを短時間で比較。" },
         { slug: "no-game-no-life-119", meta: "初当りALL1000個", name: "ノゲノラ 119", note: "約1/119.8の初当りから、初回RUSH突破とHYPERまでを体験。" }
       ]
     },
@@ -40,8 +40,8 @@
     "slot:entry": {
       title: "設定1の初当りが比較的軽い2機種",
       machines: [
-        { slug: "garo-yami-slot", meta: "BONUS 約1/291.1", name: "スマスロ 牙狼", note: "4機種の中で平均投資目安が最も軽く、BONUSから上位への流れを試せます。" },
-        { slug: "seiya-ougon-slot", meta: "AT 約1/364.2", name: "スマスロ 聖闘士星矢", note: "継続バトル型ATと設定別の初当り差を、固定レートで比較。" }
+        { slug: "garo-yami-slot", meta: "BONUS 約1/291.1", name: "スマスロ 牙狼", note: "5機種の中で平均投資目安が最も軽く、BONUSから上位への流れを試せます。" },
+        { slug: "ragnador-slot", meta: "AT 約1/326.4", name: "スマスロ ラグナドール", note: "設定別CZ・ATからスペシャルジャッジと上位ATまでを固定レートで比較。" }
       ]
     },
     "slot:continue": {
@@ -68,7 +68,7 @@
   let selectedPriority = priorities[selectedType][0].key;
 
   function machineCard(machine) {
-    return `<article><small>${machine.meta}</small><h3>${machine.name}</h3><p>${machine.note}</p><div><a href="${machine.slug}.html#reader-guide">記事を読む</a><a class="is-primary" href="${machine.slug}.html#simulator">すぐ試す</a></div></article>`;
+    return `<article><small>${machine.meta}</small><h3>${machine.name}</h3><p>${machine.note}</p><div><a href="${machine.slug}.html#article">記事を読む</a><a class="is-primary" href="${machine.slug}.html#simulator">すぐ試す</a></div></article>`;
   }
 
   function renderResults() {
