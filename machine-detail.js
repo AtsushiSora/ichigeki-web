@@ -261,6 +261,57 @@
     return `<section class="machine-snapshot" aria-labelledby="machine-snapshot-title"><div class="machine-snapshot-head"><span>AT A GLANCE</span><h3 id="machine-snapshot-title">${machine.shortName}を数字で早分かり</h3></div><div class="machine-snapshot-grid">${items.map(([label, value, detail]) => `<div><span>${label}</span><strong>${value}</strong><small>${detail}</small></div>`).join("")}</div><p>${note}</p></section>`;
   }
 
+  function percent(value) {
+    const numeric = Math.max(0, Number(value) || 0) * 100;
+    return `${numeric.toFixed(numeric < 10 && numeric % 1 ? 1 : 0).replace(".0", "")}%`;
+  }
+
+  function detailedGameGuideMarkup() {
+    const sim = machine.sim;
+    let cards;
+    let note;
+    if (sim.kind === "pachinko") {
+      const payoutDistribution = (sim.rushPayouts || []).map(([payout, weight]) => `${yen.format(payout)}玉 ${percent(weight)}`).join(" / ") || "代表出玉を抽選";
+      const firstPayout = sim.firstPayoutIn === sim.firstPayoutOut
+        ? `初当り出玉は表記${yen.format(sim.firstPayoutIn)}玉を基準にします。`
+        : `初当りは${sim.rushLabel}突入時が表記${yen.format(sim.firstPayoutIn)}玉、非突入時が表記${yen.format(sim.firstPayoutOut)}玉です。`;
+      const upperRoute = sim.upperLabel
+        ? `${sim.upperLabel}は${Number(sim.upperDirectChance) > 0 ? `初当り時の直行${percent(sim.upperDirectChance)}、` : ""}${Number(sim.upperUpgradeChance) > 0 ? `${sim.rushLabel}中の昇格${percent(sim.upperUpgradeChance)}` : "RUSH中の昇格抽選"}で判定します。`
+        : "独立した上位RUSHは設定していません。";
+      const upperContinue = sim.upperLabel ? `${sim.upperLabel}の継続率は${percent(sim.upperContinue || sim.rushContinue)}です。` : "";
+      cards = [
+        ["GAME FLOW", "ゲーム性", `${sim.startType}から${sim.hitLabel}を目指し、初当り後に${sim.rushLabel}突入を判定します。突入後は大当りごとに継続抽選と出玉抽選を行い${sim.upperLabel ? `、条件を満たすと${sim.upperLabel}へ進みます` : "、終了まで連チャンを重ねます"}。`],
+        ["DISTRIBUTION", "出玉振り分け", `${firstPayout} 右打ち中の代表振り分けは「${payoutDistribution}」です。表記出玉から打ち出し分などを差し引いた実獲得出玉も別に表示します。`],
+        ["ENTRY RATE", "突入率・突破率", `${sim.rushLabel}突入率は${percent(sim.rushEntry)}、継続率は${percent(sim.rushContinue)}です。${upperRoute} ${upperContinue}`],
+        ["NORMAL MODE", "通常時・ゾーン", `通常時の${sim.hitLabel}は約1/${sim.hitRate}、固定回転率は1,000円あたり${sim.spinsPer1k}回です。パチスロのようなゲーム数ゾーンではなく、1回転ごとの抽選として扱います。`],
+        ["PAYOUT / UPPER", "上乗せ・上位", `${sim.upperLabel ? `${sim.rushLabel}から${sim.upperLabel}への昇格と、上位中の継続差を確認できます。` : "大当りごとに出玉振り分けを抽選し、複数回分の出玉は連チャン結果として積み上げます。"} 3000玉以上などは「10R×2」のようにラウンド相当数も演出中に表示します。`]
+      ];
+      note = "出玉振り分け・突入率・継続率は、記事に収録した公表値またはサイトの代表値です。残保留、内部状態、時短回数の細分化などは機種ごとの本文で補足します。";
+    } else if (sim.kind === "juggler") {
+      cards = [
+        ["GAME FLOW", "ゲーム性", `1GごとにBIG・REGを抽選し、ボーナス後に「続ける」「やめる」を選びます。最大${yen.format(sim.games)}Gまで遊技でき、終了時に設定、ボーナス回数、合算、差枚をまとめて表示します。`],
+        ["DISTRIBUTION", "ボーナス振り分け", `設定1基準でBIG約1/${sim.bigRate}・約${yen.format(sim.bigPayout)}枚、REG約1/${sim.regRate}・約${yen.format(sim.regPayout)}枚です。実戦では設定ごとの確率でBIG・REGを別々に抽選します。`],
+        ["BONUS RATE", "当選率・合算", `設定1のボーナス合算は約1/${sim.combinedRate}です。開始時に${slotSettingLabel}を均等抽選し、設定は最終結果で発表します。`],
+        ["NORMAL MODE", "通常時・ゾーン", `Aタイプは特定ゲーム数のゾーンを狙う構成ではなく、毎ゲームのボーナス抽選が中心です。50枚あたり${sim.base50}Gを固定ベースとして投資を計算します。`],
+        ["BONUS", "上乗せ・出玉", `ATのゲーム数上乗せや上位ATはありません。BIG・REGの獲得枚数を積み重ね、総投入枚数との差から最終差枚と収支目安を算出します。`]
+      ];
+      note = "BIG・REG確率と出玉率は設定別値を使用します。小役確率、単独・重複当選、技術介入による差は簡易モデルに含めません。";
+    } else {
+      const upperRouteRate = Math.max(0, Number(sim.upperChance) || 0);
+      const upperSuccessRate = Math.max(0, Number(sim.upperSuccess) || 0);
+      const totalUpperRate = upperRouteRate * upperSuccessRate;
+      cards = [
+        ["GAME FLOW", "ゲーム性", `通常時は${sim.triggerLabel}を入口に${sim.mainLabel}を目指します。AT中は${sim.specialLabel}などの出玉契機を抽選し、${sim.upperChallenge}を突破すると${sim.upperLabel}へ進みます。`],
+        ["DISTRIBUTION", "獲得枚数の振り分け", `通常ATの代表獲得は${yen.format(sim.normalMin)}〜${yen.format(sim.normalMax)}枚、${sim.specialLabel}当選時は${yen.format(sim.specialMin)}〜${yen.format(sim.specialMax)}枚を抽選します。${sim.upperLabel}到達時は${yen.format(sim.upperPayout)}枚を加算する代表モデルです。`],
+        ["ENTRY RATE", "突破率", `${sim.triggerLabel}から${sim.mainLabel}への突破率は${percent(sim.triggerSuccess)}です。上位ルート選択率は${percent(upperRouteRate)}、${sim.upperChallenge}成功率は${percent(upperSuccessRate)}で、単純計算の上位到達目安は約${percent(totalUpperRate)}です。`],
+        ["ZONE", "通常時・ゾーン", `${sim.triggerLabel}の基準は約1/${sim.triggerRate}、${sim.mainLabel}初当りは設定${slotBaselineSetting}基準で約1/${sim.mainRate}です。50枚あたり${sim.base50}Gを固定ベースにし、ゲーム数ゾーン・周期・天井の全状態は個別再現していません。`],
+        ["ADD-ON", "上乗せ・特化ゾーン", `${sim.specialLabel}はAT中の代表的な上乗せ契機で、発生目安は${percent(sim.specialChance)}です。${sim.upperLabel}は代表継続率${percent(sim.upperContinue)}として抽選し、上乗せ枚数と上位到達の差を結果で比較できます。`]
+      ];
+      note = "突破率、上乗せ枚数、上位ルートは短時間でゲーム性を比較するための代表モデルです。実機の全小役、状態移行、規定ゲーム数、天井恩恵を完全再現するものではありません。";
+    }
+    return `<section class="machine-game-guide" id="game-guide" aria-labelledby="machine-game-guide-title"><div class="machine-game-guide-head"><span>HOW TO PLAY</span><h3 id="machine-game-guide-title">${machine.shortName}の詳しい遊び方</h3><p>ゲーム性、振り分け、突破率、ゾーン、上乗せを順番に確認できます。</p></div><div class="machine-game-guide-grid">${cards.map(([kicker, title, body]) => `<article><span>${kicker}</span><h4>${title}</h4><p>${body}</p></article>`).join("")}</div><p class="machine-game-guide-note">${note}</p></section>`;
+  }
+
   function resultGuideMarkup() {
     const sim = machine.sim;
     const items = sim.kind === "pachinko"
@@ -373,7 +424,7 @@
       <dl><div><dt>導入</dt><dd>${machine.year}</dd></div><div><dt>メーカー</dt><dd>${machine.maker}</dd></div><div><dt>分類</dt><dd>${machine.type === "slot" ? "パチスロ" : "パチンコ"}</dd></div></dl>
     </section>
 
-    <nav class="machine-quick-nav" aria-label="ページ内メニュー"><button class="machine-favorite-button" id="machineFavoriteButton" type="button" aria-pressed="false"><span aria-hidden="true">☆</span> お気に入り</button><a href="#spec">スペック</a><a href="#article">記事</a><a href="#machineRanking">ランキング</a><a href="#faq">FAQ</a>${machine.readerGuide ? '<a href="#reader-guide">30秒要点</a>' : ""}${novemberQuickLink}${decemberQuickLink}<a href="community.html?machine=${slug}">投稿</a></nav>
+    <nav class="machine-quick-nav" aria-label="ページ内メニュー"><button class="machine-favorite-button" id="machineFavoriteButton" type="button" aria-pressed="false"><span aria-hidden="true">☆</span> お気に入り</button><a href="#spec">スペック</a><a href="#game-guide">遊び方</a><a href="#article">記事</a><a href="#machineRanking">ランキング</a><a href="#faq">FAQ</a>${machine.readerGuide ? '<a href="#reader-guide">30秒要点</a>' : ""}${novemberQuickLink}${decemberQuickLink}<a href="community.html?machine=${slug}">投稿</a></nav>
 
     <section class="machine-intro" id="spec">
       <div><span class="machine-section-label">SPEC GUIDE</span><h2>主要スペック</h2><p>${machine.intro}</p><ul>${machine.points.map(point => `<li>${point}</li>`).join("")}</ul></div>
@@ -414,6 +465,7 @@
         <p>${machine.intro}</p>
         ${snapshotMarkup()}
         ${readerGuideMarkup()}
+        ${detailedGameGuideMarkup()}
         ${articleMarkup()}
         ${resultGuideMarkup()}
         ${machineFaqMarkup()}
