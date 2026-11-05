@@ -7,7 +7,8 @@ const UNICORN_SPEC = {
   rushContinueRate: 0.81,
   normalPayout: 450,
   rushPayout: 1500,
-  maxRushHits: 200
+  maxRushHits: 200,
+  finalRunoutGames: 20
 };
 const MACHINE_HISTORY_KEY = "ichigekiMachineHistoryV1";
 const UNICORN_RANKING_SLUG = "gundam-unicorn--fixed-rate-v1";
@@ -172,6 +173,24 @@ function waitForUnicornExperience(milliseconds) {
   });
 }
 
+async function animateUnicornRushRunout(result, runId) {
+  const totalGames = UNICORN_SPEC.finalRunoutGames;
+  setUnicornExperienceStage(3, "RUSH LAST", "転落後の残り回転", `0 / ${totalGames}回転`, "最後の復活を待ちながら消化します", "normal", UNICORN_SPEC.rushContinueRate * 100, "RUSH終了までの回転");
+  for (const progress of [.15, .3, .45, .6, .75, .9, 1]) {
+    if (runId !== unicornExperienceRunId || unicornExperienceSkipped) return false;
+    const current = Math.max(1, Math.round(totalGames * progress));
+    const remaining = Math.max(0, totalGames - current);
+    document.getElementById("unicornExperienceTitle").textContent = remaining ? `残り${remaining}回転` : "LAST 0";
+    document.getElementById("unicornExperienceValue").textContent = `${current} / ${totalGames}回転`;
+    document.getElementById("unicornExperienceMessage").textContent = remaining ? "数字が進む…復活を待っています" : "最終回転まで駆け抜けました";
+    await waitForUnicornExperience(72);
+  }
+  if (runId !== unicornExperienceRunId) return false;
+  setUnicornExperienceStage(3, "RUSH END", "RUSH終了", `${totalGames}回転 消化`, `大当りなし・${result.totalHits}回当たりで終了`, "end", 0, "駆け抜け結果");
+  await waitForUnicornExperience(620);
+  return runId === unicornExperienceRunId;
+}
+
 function skipUnicornExperience() {
   unicornExperienceSkipped = true;
   if (unicornExperienceDelayTimer) window.clearTimeout(unicornExperienceDelayTimer);
@@ -259,6 +278,8 @@ async function playUnicornExperience(result, runId) {
       setUnicornExperienceStage(3, "AWAKENING HYPER", "一気に連チャン！", `${result.totalHits}回 / ${formatUnicorn(result.totalPayout)}玉`, "高速演出で最終結果へ", "hyper", UNICORN_SPEC.rushContinueRate * 100, "覚醒HYPER継続率");
       await waitForUnicornExperience(650);
     }
+    if (runId !== unicornExperienceRunId) return;
+    await animateUnicornRushRunout(result, runId);
   } else {
     setUnicornExperienceStage(3, "NORMAL END", "通常へ", "連チャンなし", "最終結果を表示します", "end", 0, "RUSH判定結果");
     await waitForUnicornExperience(450);
