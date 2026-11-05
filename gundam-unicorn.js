@@ -15,6 +15,9 @@ let latestUnicornResult = null;
 let unicornRankingClient = null;
 let unicornRankingMode = "local";
 let unicornRankingUserId = null;
+let unicornRankingReadyPromise = null;
+let unicornRankingTicketId = null;
+let unicornRankingTicketPromise = null;
 let unicornExperienceRunId = 0;
 let unicornExperienceSkipped = false;
 let unicornExperienceDelayTimer = null;
@@ -273,6 +276,8 @@ async function runUnicornSimulation() {
   unicornExperienceSkipped = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches || false;
   openUnicornExperience();
   latestUnicornResult = null;
+  unicornRankingTicketId = null;
+  unicornRankingTicketPromise = requestUnicornRankingTicket();
   const start = document.getElementById("unicornStart");
   start.disabled = true;
   start.classList.add("is-running");
@@ -439,7 +444,7 @@ function loadUnicornScript(src, id) {
 }
 
 async function refreshUnicornPublicRanking() {
-  const { data, error } = await unicornRankingClient.from("machine_rankings").select("user_id,nickname,score,title,investment,payout,attempts,updated_at").eq("machine_slug", UNICORN_RANKING_SLUG).order("score", { ascending: false }).order("investment", { ascending: true }).limit(10);
+  const { data, error } = await unicornRankingClient.from("machine_rankings").select("user_id,nickname,score,title,investment,payout,attempts,verified,updated_at").eq("machine_slug", UNICORN_RANKING_SLUG).eq("verified", true).order("score", { ascending: false }).order("investment", { ascending: true }).limit(10);
   if (error) throw error;
   renderUnicornRanking(data || [], true);
 }
@@ -447,63 +452,92 @@ async function refreshUnicornPublicRanking() {
 async function initializeUnicornRanking() {
   renderUnicornRanking(readUnicornRanking(), false);
   try {
-    await loadUnicornScript("community-config.js", "ichigeki-community-config");
-    const config = window.ICHIGEKI_COMMUNITY_CONFIG || {};
-    if (!config.supabaseUrl || !config.supabaseAnonKey) throw new Error("公開ランキング未設定");
-    await loadUnicornScript("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2", "ichigeki-supabase-js");
-    unicornRankingClient = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey);
-    let { data } = await unicornRankingClient.auth.getSession();
-    if (!data.session) {
-      const signedIn = await unicornRankingClient.auth.signInAnonymously();
-      if (signedIn.error) throw signedIn.error;
-      data = { session: signedIn.data.session };
-    }
-    unicornRankingUserId = data.session?.user?.id || null;
+    await loadUnicornScript("auth.js?v=2", "ichigeki-auth-script");
+    await window.ICHIGEKI_AUTH.ready();
+    unicornRankingClient = await window.ICHIGEKI_AUTH.getClient();
+    unicornRankingUserId = window.ICHIGEKI_AUTH.getUser()?.id || null;
     await refreshUnicornPublicRanking();
     unicornRankingMode = "public";
-    document.getElementById("unicornRankingNotice").textContent = "この機種を遊んだみんなの最高記録です。各利用者の自己ベストだけを掲載します。";
+    document.getElementById("unicornRankingNotice").textContent = `サーバー検証済みの自己ベストだけを掲載します。${unicornRankingUserId ? "" : "登録にはGoogleログインが必要です。"}`;
   } catch {
     unicornRankingMode = "local";
     document.getElementById("unicornRankingNotice").textContent = "現在はこの端末内のランキングを表示しています。公開ランキング準備後に自動で切り替わります。";
   }
 }
 
+async function requestUnicornRankingTicket() {
+  try {
+    if (unicornRankingReadyPromise) await unicornRankingReadyPromise;
+    if (!unicornRankingClient || !window.ICHIGEKI_AUTH?.isSignedIn()) return null;
+    unicornRankingUserId = window.ICHIGEKI_AUTH.getUser()?.id || null;
+    if (!unicornRankingUserId) return null;
+    const { data, error } = await unicornRankingClient.rpc("start_verified_ranking_play", { p_machine_slug: UNICORN_RANKING_SLUG });
+    if (error) throw error;
+    unicornRankingTicketId = typeof data === "string" ? data : null;
+    return unicornRankingTicketId;
+  } catch (error) {
+    console.warn("ICHIGEKI unicorn ranking ticket:", error.message);
+    unicornRankingTicketId = null;
+    return null;
+  }
+}
+
 const unicornRankingNickname = document.getElementById("unicornRankingNickname");
 unicornRankingNickname.value = localStorage.getItem("ichigekiRankingNicknameV1") || "";
-document.getElementById("unicornRank")?.addEventListener("click", async event => {
+async function registerUnicornRanking(rawNickname, button) {
   if (!latestUnicornResult) return;
-  const nickname = unicornRankingNickname.value.trim().slice(0, 16);
+  if (!window.ICHIGEKI_AUTH?.isSignedIn()) {
+    document.getElementById("unicornRankingNotice").textContent = "ランキング登録にはGoogleログインが必要です。ログイン後、もう一度遊んでください。";
+    await window.ICHIGEKI_AUTH?.signInWithGoogle();
+    return false;
+  }
+  unicornRankingUserId = window.ICHIGEKI_AUTH.getUser()?.id || null;
+  const nickname = String(rawNickname || "").trim().replace(/\s+/g, " ").slice(0, 16);
   if (!nickname) {
     unicornRankingNickname.focus();
     document.getElementById("unicornRankingNotice").textContent = "ランキング表示名を入力してください。";
-    return;
+    return false;
   }
   localStorage.setItem("ichigekiRankingNicknameV1", nickname);
   saveUnicornLocalRanking(nickname);
-  event.currentTarget.disabled = true;
-  event.currentTarget.textContent = "登録中...";
+  button.disabled = true;
+  button.textContent = "検証中...";
   try {
     if (unicornRankingMode === "public" && unicornRankingClient && unicornRankingUserId) {
-      const { data: current, error: currentError } = await unicornRankingClient.from("machine_rankings").select("score,investment").eq("machine_slug", UNICORN_RANKING_SLUG).eq("user_id", unicornRankingUserId).maybeSingle();
-      if (currentError) throw currentError;
-      const isBetter = !current || Number(latestUnicornResult.rankScore) > Number(current.score) || (Number(latestUnicornResult.rankScore) === Number(current.score) && Number(latestUnicornResult.rankInvestment) < Number(current.investment));
-      if (isBetter) {
-        const payload = { user_id: unicornRankingUserId, machine_slug: UNICORN_RANKING_SLUG, nickname, score: latestUnicornResult.rankScore, score_kind: "balls", title: latestUnicornResult.route, summary: `初代ユニコーン ${latestUnicornResult.totalHits}回当たり（ランキング固定レート）`, investment: latestUnicornResult.rankInvestment, payout: latestUnicornResult.totalPayout, attempts: latestUnicornResult.spins, updated_at: new Date().toISOString() };
-        const { error } = await unicornRankingClient.from("machine_rankings").upsert(payload, { onConflict: "user_id,machine_slug" });
-        if (error) throw error;
-      }
+      const ticketId = unicornRankingTicketId || await unicornRankingTicketPromise;
+      if (!ticketId) throw new Error("検証用プレイ券を確認できません。ログイン後にもう一度遊んでください。");
+      const { data, error } = await unicornRankingClient.rpc("submit_verified_machine_ranking", {
+        p_ticket_id: ticketId,
+        p_nickname: nickname,
+        p_score: latestUnicornResult.rankScore,
+        p_score_kind: "balls",
+        p_title: latestUnicornResult.route,
+        p_investment: latestUnicornResult.rankInvestment,
+        p_payout: latestUnicornResult.totalPayout,
+        p_attempts: latestUnicornResult.spins,
+        p_setting: null
+      });
+      if (error) throw error;
+      const isBetter = Boolean(data?.updated);
+      unicornRankingTicketId = null;
       await refreshUnicornPublicRanking();
-      document.getElementById("unicornRankingNotice").textContent = isBetter ? "自己ベストを公開ランキングへ登録しました。" : "公開中の自己ベストの方が上位です。記録は更新されませんでした。";
+      document.getElementById("unicornRankingNotice").textContent = isBetter ? "サーバー検証済みの自己ベストを登録しました。" : "検証は完了しましたが、公開中の自己ベストの方が上位です。";
     } else {
       document.getElementById("unicornRankingNotice").textContent = "この端末の機種別ランキングへ登録しました。";
     }
-    event.currentTarget.textContent = "登録しました";
-  } catch {
+    button.textContent = "登録しました";
+    return true;
+  } catch (error) {
     unicornRankingMode = "local";
     renderUnicornRanking(readUnicornRanking(), false);
-    document.getElementById("unicornRankingNotice").textContent = "端末内ランキングへ登録しました。公開ランキングには現在接続できません。";
-    event.currentTarget.textContent = "端末に登録済み";
+    document.getElementById("unicornRankingNotice").textContent = error.message || "端末内ランキングへ登録しました。公開ランキングには現在接続できません。";
+    button.textContent = "端末に登録済み";
+    return true;
   }
+}
+
+document.getElementById("unicornRank")?.addEventListener("click", async event => {
+  await registerUnicornRanking(unicornRankingNickname.value, event.currentTarget);
 });
 
 document.getElementById("unicornStart")?.addEventListener("click", runUnicornSimulation);
@@ -521,7 +555,7 @@ document.getElementById("unicornOverlayRetry")?.addEventListener("click", runUni
 document.getElementById("unicornOverlayPost")?.addEventListener("click", () => {
   document.body.classList.remove("has-unicorn-experience");
 });
-document.getElementById("unicornOverlayRank")?.addEventListener("click", event => {
+document.getElementById("unicornOverlayRank")?.addEventListener("click", async event => {
   const input = document.getElementById("unicornOverlayNickname");
   const nickname = input.value.trim().slice(0, 16);
   if (!nickname) {
@@ -530,10 +564,8 @@ document.getElementById("unicornOverlayRank")?.addEventListener("click", event =
     return;
   }
   unicornRankingNickname.value = nickname;
-  document.getElementById("unicornRank").click();
-  event.currentTarget.textContent = "登録しました";
-  event.currentTarget.disabled = true;
-  window.setTimeout(closeUnicornExperience, 450);
+  const registered = await registerUnicornRanking(nickname, event.currentTarget);
+  if (registered) window.setTimeout(closeUnicornExperience, 450);
 });
 document.addEventListener("keydown", event => {
   if (event.key === "Escape" && !document.getElementById("unicornExperience").hidden) closeUnicornExperience();
@@ -549,4 +581,4 @@ document.querySelectorAll("#unicornSpinRate, #unicornLendBalls, #unicornExchange
 updateUnicornAverageInvestment();
 updateUnicornSoundButton();
 updateUnicornBest();
-initializeUnicornRanking();
+unicornRankingReadyPromise = initializeUnicornRanking();

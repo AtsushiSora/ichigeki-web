@@ -56,6 +56,9 @@
   let rankingMode = "local";
   let rankingUserId = null;
   let rankingOwnRecord = null;
+  let rankingReadyPromise = null;
+  let rankingTicketId = null;
+  let rankingTicketPromise = null;
   const defaultSlotSettingPool = [1, 2, 3, 4, 5, 6];
   const slotSettingPool = Array.isArray(machine.sim.settingPool) && machine.sim.settingPool.length
     ? machine.sim.settingPool.filter(setting => defaultSlotSettingPool.includes(Number(setting))).map(Number)
@@ -866,6 +869,9 @@
     const investment = investmentUnits * 1000;
     const purchasedCoins = investmentUnits * lendCoins;
     const payout = Math.max(0, purchasedCoins + diff);
+    const rankInvestmentUnits = Math.ceil(Math.max(0, -session.minDiff) / RANKING_RATE.slot.lendCoins);
+    const rankInvestment = rankInvestmentUnits * 1000;
+    const rankPayout = Math.max(0, rankInvestmentUnits * RANKING_RATE.slot.lendCoins + diff);
     const exchangeValue = Math.round(payout / exchangeCoins * 100);
     const balanceYen = exchangeValue - investment;
     const resultLabel = diff >= 0 ? `プラス${yen.format(diff)}枚` : `マイナス${yen.format(Math.abs(diff))}枚`;
@@ -873,7 +879,7 @@
     const flow = [`設定${setting}`, `${yen.format(games)}G消化`, `BIG ${big}回`, `REG ${reg}回`, `合算 ${combinedLabel}`, `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`];
     const stats = [["今回の設定", `設定${setting}`], ["総ゲーム数", `${yen.format(games)}G`], [`設定${setting}の抽選値`, `BIG 1/${bigRate.toFixed(1)}・REG 1/${regRate.toFixed(1)}・合算1/${combinedRate.toFixed(1)}`], ["BIG", `${big}回（実績1/${big ? (games / big).toFixed(1) : "-"}）`], ["REG", `${reg}回（実績1/${reg ? (games / reg).toFixed(1) : "-"}）`], ["ボーナス合算", `${bonusCount}回（${combinedLabel}）`], ["最大ハマり", `${yen.format(session.maxGap || 0)}G`], ["現金投資目安", `${yen.format(investment)}円`], ["交換枚数目安", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`]];
     const finishLabel = completed ? "8,000G完走" : `${yen.format(games)}Gで終了`;
-    return { title: `設定${setting}｜${finishLabel}・${resultLabel}`, summary: `今回の設定は設定${setting}。${yen.format(games)}GでBIG ${big}回・REG ${reg}回・合算${combinedLabel}でした。`, stats, flow, share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜BIG ${big}回｜REG ${reg}回｜合算${combinedLabel}｜差枚${diff >= 0 ? "+" : ""}${yen.format(diff)}枚｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`, setting, score: diff, rankScore: diff, rankInvestment: investment, rankingEligible: completed, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete: false, experience: { kind: "juggler", setting, attempts: games, unit: "G", hitLabel: "GOGO!ランプ", hitChance: 100 / combinedRate, entered: false, upper: false, mainLabel: "BIG・REG", big, reg, combinedLabel, diff, payout, payoutUnit: "枚", finalValue: `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`, flow: [...flow] } };
+    return { title: `設定${setting}｜${finishLabel}・${resultLabel}`, summary: `今回の設定は設定${setting}。${yen.format(games)}GでBIG ${big}回・REG ${reg}回・合算${combinedLabel}でした。`, stats, flow, share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜BIG ${big}回｜REG ${reg}回｜合算${combinedLabel}｜差枚${diff >= 0 ? "+" : ""}${yen.format(diff)}枚｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`, setting, score: diff, rankScore: diff, rankInvestment, rankPayout, rankingEligible: completed, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete: false, experience: { kind: "juggler", setting, attempts: games, unit: "G", hitLabel: "GOGO!ランプ", hitChance: 100 / combinedRate, entered: false, upper: false, mainLabel: "BIG・REG", big, reg, combinedLabel, diff, payout, payoutUnit: "枚", finalValue: `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`, flow: [...flow] } };
   }
 
   function readMachineHistory() {
@@ -1556,6 +1562,8 @@
     experienceSkipped = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches || false;
     openExperience();
     latestResult = null;
+    rankingTicketId = null;
+    rankingTicketPromise = requestRankingTicket();
     startButton.disabled = true;
     document.getElementById("rankMachineResult").disabled = true;
     document.getElementById("machineResult").classList.remove("has-result", "is-complete");
@@ -1723,10 +1731,10 @@
   }
   async function refreshPublicRanking() {
     if (!rankingClient) return;
-    const fields = "user_id,nickname,score,score_kind,title,summary,investment,payout,attempts,updated_at";
+    const fields = "user_id,nickname,score,score_kind,title,summary,investment,payout,attempts,verified,updated_at";
     const [rankingResult, ownResult] = await Promise.all([
-      rankingClient.from("machine_rankings").select(fields).eq("machine_slug", rankingMachineSlug).order("score", { ascending: false }).order("investment", { ascending: true }).limit(50),
-      rankingUserId ? rankingClient.from("machine_rankings").select(fields).eq("machine_slug", rankingMachineSlug).eq("user_id", rankingUserId).maybeSingle() : Promise.resolve({ data: null, error: null })
+      rankingClient.from("machine_rankings").select(fields).eq("machine_slug", rankingMachineSlug).eq("verified", true).order("score", { ascending: false }).order("investment", { ascending: true }).limit(50),
+      rankingUserId ? rankingClient.from("machine_rankings").select(fields).eq("machine_slug", rankingMachineSlug).eq("user_id", rankingUserId).eq("verified", true).maybeSingle() : Promise.resolve({ data: null, error: null })
     ]);
     if (rankingResult.error) throw rankingResult.error;
     if (ownResult.error) throw ownResult.error;
@@ -1747,6 +1755,23 @@
     } catch {
       rankingMode = "local";
       document.getElementById("machineRankingNotice").textContent = "現在はこの端末内のランキングを表示しています。公開ランキング準備後に自動で切り替わります。";
+    }
+  }
+
+  async function requestRankingTicket() {
+    try {
+      if (rankingReadyPromise) await rankingReadyPromise;
+      if (!rankingClient || !window.ICHIGEKI_AUTH?.isSignedIn()) return null;
+      rankingUserId = window.ICHIGEKI_AUTH.getUser()?.id || null;
+      if (!rankingUserId) return null;
+      const { data, error } = await rankingClient.rpc("start_verified_ranking_play", { p_machine_slug: rankingMachineSlug });
+      if (error) throw error;
+      rankingTicketId = typeof data === "string" ? data : null;
+      return rankingTicketId;
+    } catch (error) {
+      console.warn("ICHIGEKI ranking ticket:", error.message);
+      rankingTicketId = null;
+      return null;
     }
   }
 
@@ -1783,17 +1808,24 @@
     rankButtons.forEach(item => { item.disabled = true; item.textContent = "登録中..."; });
     try {
       if (rankingMode === "public" && rankingClient && rankingUserId) {
-        const { data: current, error: currentError } = await rankingClient.from("machine_rankings").select("score,investment").eq("machine_slug", rankingMachineSlug).eq("user_id", rankingUserId).maybeSingle();
-        if (currentError) throw currentError;
-        const candidate = { score: latestResult.rankScore, investment: latestResult.rankInvestment };
-        const isBetter = isBetterRanking(candidate, current);
-        if (isBetter) {
-          const payload = { user_id: rankingUserId, machine_slug: rankingMachineSlug, nickname, score: latestResult.rankScore, score_kind: latestResult.scoreKind, title: latestResult.title, summary: `${latestResult.setting ? `設定${latestResult.setting}・` : ""}ランキング固定レートで再計算・投資${yen.format(latestResult.rankInvestment)}円`, investment: latestResult.rankInvestment, payout: latestResult.payout, attempts: latestResult.attempts, updated_at: new Date().toISOString() };
-          const { error } = await rankingClient.from("machine_rankings").upsert(payload, { onConflict: "user_id,machine_slug" });
-          if (error) throw error;
-        }
+        const ticketId = rankingTicketId || await rankingTicketPromise;
+        if (!ticketId) throw new Error("検証用プレイ券を確認できません。ログイン後にもう一度遊んでください。");
+        const { data, error } = await rankingClient.rpc("submit_verified_machine_ranking", {
+          p_ticket_id: ticketId,
+          p_nickname: nickname,
+          p_score: latestResult.rankScore,
+          p_score_kind: latestResult.scoreKind,
+          p_title: latestResult.title,
+          p_investment: latestResult.rankInvestment,
+          p_payout: latestResult.rankPayout ?? latestResult.payout,
+          p_attempts: latestResult.attempts,
+          p_setting: latestResult.setting || null
+        });
+        if (error) throw error;
+        const isBetter = Boolean(data?.updated);
+        rankingTicketId = null;
         await refreshPublicRanking();
-        document.getElementById("machineRankingNotice").textContent = isBetter ? "自己ベストを公開ランキングへ登録しました。" : "公開中の自己ベストの方が上位です。記録は更新されませんでした。";
+        document.getElementById("machineRankingNotice").textContent = isBetter ? "サーバー検証済みの自己ベストを公開ランキングへ登録しました。" : "検証は完了しましたが、公開中の自己ベストの方が上位です。";
       } else {
         document.getElementById("machineRankingNotice").textContent = localUpdated ? "この端末の自己ベストを登録しました。" : "端末内の自己ベストの方が上位です。記録は更新されませんでした。";
       }
@@ -1832,5 +1864,5 @@
   });
 
   updateAverages();
-  initializeRanking();
+  rankingReadyPromise = initializeRanking();
 })();
