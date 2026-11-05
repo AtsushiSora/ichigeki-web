@@ -1243,14 +1243,14 @@
 
   async function animatePachinkoRushRunout(data, result, runId) {
     const totalGames = Math.max(10, Math.round(Number(data.rushGameLimit) || 100));
-    setExperienceStage(3, "RUSH LAST", `${data.upper ? data.upperLabel : data.mainLabel} 最終区間`, `0 / ${yen.format(totalGames)}回転`, "大当りを待ちながら最後まで消化します", "normal", data.upper ? data.upperContinueChance : data.continueChance, "RUSH終了までの回転");
+    setExperienceStage(3, "RUSH LAST", `${data.upper ? data.upperLabel : data.mainLabel} 最終区間`, `0 / ${yen.format(totalGames)}回転`, "RUSH終了まで残り回転を消化します", "normal", data.upper ? data.upperContinueChance : data.continueChance, "RUSH終了までの回転");
     for (const progress of [.12, .28, .45, .62, .76, .88, .96, 1]) {
       if (runId !== experienceRunId || experienceSkipped) return false;
       const current = Math.max(1, Math.round(totalGames * progress));
       const remaining = Math.max(0, totalGames - current);
       document.getElementById("machineExperienceValue").textContent = `${yen.format(current)} / ${yen.format(totalGames)}回転`;
       document.getElementById("machineExperienceTitle").textContent = remaining > 0 ? `残り${yen.format(remaining)}回転` : "LAST 0";
-      document.getElementById("machineExperienceMessage").textContent = remaining > 0 ? "数字が進む…大当りを待っています" : "最終回転まで駆け抜けました";
+      document.getElementById("machineExperienceMessage").textContent = remaining > 0 ? "数字が進む…残り回転を消化中" : "最終回転まで駆け抜けました";
       setExperienceHud(`${yen.format(current)}回転`, `${yen.format(result.investment)}円`, `${yen.format(data.payout)}${data.payoutUnit}`);
       await waitForExperience(68);
     }
@@ -1355,29 +1355,22 @@
     await waitForExperience(760);
     if (data.entered) {
       const animatedHits = arcadePachinkoFlow ? Math.max(1, data.hits) : Math.min(Math.max(1, data.hits), 10);
-      const revivalHit = arcadePachinkoFlow && data.hits >= 4 ? Math.min(3, data.hits - 1) : -1;
       for (let hit = 1; hit <= animatedHits; hit += 1) {
         if (runId !== experienceRunId || experienceSkipped) break;
         const upperReached = data.upper && hit === animatedHits;
         const isFinalHit = hit === data.hits;
-        const isRevivalHit = hit === revivalHit && !upperReached;
-        const isHotHit = arcadePachinkoFlow && !upperReached && !isRevivalHit && !isFinalHit && hit > 1 && hit % 3 === 0;
+        const isHotHit = arcadePachinkoFlow && !upperReached && !isFinalHit && hit > 1 && hit % 3 === 0;
         const estimatedPayout = data.payoutTimeline?.[hit - 1] ?? Math.max(1, Math.round(data.payout * hit / data.hits));
         const rushGames = data.rushGameTimeline?.[hit - 1] || data.rushGameLimit || 100;
         const counterComplete = await animateExperienceCounter(rushGames, "回転", upperReached ? "UPPER COUNT" : "RUSH COUNT", upperReached ? `${data.upperLabel}を抽選中` : `${data.mainLabel}消化中`, "当落まで数字が進みます", upperReached ? data.upperContinueChance : data.continueChance, upperReached ? `${data.upperLabel}突入・継続目安` : `${data.mainLabel}継続率`, runId);
         if (!counterComplete) return;
         if (arcadePachinkoFlow || hit === 1 || upperReached) {
-          if (isRevivalHit) {
-            setExperienceStage(3, "RUSH END?", "RUSH終了…", "…", "まだ終わらない？", "end", 0, "復活判定");
-            await waitForExperience(520);
-            if (runId !== experienceRunId) return;
-          }
-          const decisionLabel = upperReached ? `${data.upperLabel} 突入ジャッジ` : isRevivalHit ? "復活ジャッジ" : isHotHit ? "高期待度ジャッジ" : `${data.mainLabel} 継続ジャッジ`;
+          const decisionLabel = upperReached ? `${data.upperLabel} 突入ジャッジ` : isHotHit ? "高期待度ジャッジ" : `${data.mainLabel} 継続ジャッジ`;
           const decisionChance = upperReached ? data.upperContinueChance : data.continueChance;
-          const decisionPhase = upperReached ? "UPPER JUDGE" : isRevivalHit ? "REVIVAL JUDGE" : isHotHit ? "HIGH CHANCE" : "RUSH JUDGE";
-          const decisionMessage = upperReached ? "上位RUSHの当落を開きます" : isRevivalHit ? "もう一度押して復活を掴め" : isHotHit ? "期待が高まる継続ジャッジ" : "大当たり中の当落を開きます";
-          const pushVariant = upperReached ? "upper" : isRevivalHit ? "revival" : isHotHit ? "gold" : "normal";
-          const pushLabel = upperReached ? "上位PUSH" : isRevivalHit ? "復活PUSH" : isHotHit ? "激熱PUSH" : "継続PUSH";
+          const decisionPhase = upperReached ? "UPPER JUDGE" : isHotHit ? "HIGH CHANCE" : "RUSH JUDGE";
+          const decisionMessage = upperReached ? "上位RUSHの当落を開きます" : isHotHit ? "期待が高まる継続ジャッジ" : "大当たり中の当落を開きます";
+          const pushVariant = upperReached ? "upper" : isHotHit ? "gold" : "normal";
+          const pushLabel = upperReached ? "上位PUSH" : isHotHit ? "激熱PUSH" : "継続PUSH";
           setExperienceStage(3, decisionPhase, decisionLabel, arcadePachinkoFlow ? `${yen.format(rushGames)}回転` : "PUSH", decisionMessage, "judge", decisionChance, upperReached ? `${data.upperLabel}突入・継続目安` : `${data.mainLabel}継続率`);
           await waitForExperienceAction(pushLabel, arcadePachinkoFlow && hit > 10 ? 2200 : 4500, pushVariant);
           if (runId !== experienceRunId) return;

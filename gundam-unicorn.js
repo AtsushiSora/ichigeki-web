@@ -175,14 +175,14 @@ function waitForUnicornExperience(milliseconds) {
 
 async function animateUnicornRushRunout(result, runId) {
   const totalGames = UNICORN_SPEC.finalRunoutGames;
-  setUnicornExperienceStage(3, "RUSH LAST", "転落後の残り回転", `0 / ${totalGames}回転`, "最後の復活を待ちながら消化します", "normal", UNICORN_SPEC.rushContinueRate * 100, "RUSH終了までの回転");
+  setUnicornExperienceStage(3, "RUSH LAST", "最後の残り回転", `0 / ${totalGames}回転`, "RUSH終了まで回転数を消化します", "normal", UNICORN_SPEC.rushContinueRate * 100, "RUSH終了までの回転");
   for (const progress of [.15, .3, .45, .6, .75, .9, 1]) {
     if (runId !== unicornExperienceRunId || unicornExperienceSkipped) return false;
     const current = Math.max(1, Math.round(totalGames * progress));
     const remaining = Math.max(0, totalGames - current);
     document.getElementById("unicornExperienceTitle").textContent = remaining ? `残り${remaining}回転` : "LAST 0";
     document.getElementById("unicornExperienceValue").textContent = `${current} / ${totalGames}回転`;
-    document.getElementById("unicornExperienceMessage").textContent = remaining ? "数字が進む…復活を待っています" : "最終回転まで駆け抜けました";
+    document.getElementById("unicornExperienceMessage").textContent = remaining ? "数字が進む…残り回転を消化中" : "最終回転まで駆け抜けました";
     await waitForUnicornExperience(72);
   }
   if (runId !== unicornExperienceRunId) return false;
