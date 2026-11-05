@@ -160,6 +160,104 @@ window.ICHIGEKI_MACHINES = {
     ],
     sources: [["KYORAKU 公式発表", "https://www.kyoraku.co.jp/news/detail/900"], ["遊技通信web 機種発表", "https://www.yugitsushin.jp/news/%E6%80%A7%E8%83%BD%E7%89%B9%E5%8C%96%E3%81%AE%E8%B6%85%E7%81%AB%E5%8A%9B%E3%83%A9%E3%82%A4%E3%83%88%E3%83%9F%E3%83%89%E3%83%ABx%E3%83%95%E3%82%A7%E3%82%A2%E3%82%B9%E3%82%BF%E3%83%BC%E3%83%88/"], ["Re.design スペック情報", "https://aaa.redesign777.tokyo/Spec/PachinkoView?flag=True&id=P2026092913480401"], ["パチヨミ！ ボーダー情報", "https://pachiyomi.com/pachinko/e-sao-phantom-bullet"]]
   },
+  "milliongod-raigeki": {
+    order: 0.091, type: "pachinko", theme: "gold", year: "2026年12月", maker: "メーシー", updated: "2026-11-05", published: "2026-11-05",
+    availableFrom: "2026-12-07",
+    name: "eミリオンゴッド-天空の雷撃-", shortName: "eミリオンゴッド 天空の雷撃",
+    image: "assets/machines/milliongod-raigeki-key-visual.webp",
+    imageAlt: "eミリオンゴッド-天空の雷撃-の公式キービジュアル",
+    imageCredit: "ユニバーサルエンターテインメント 公式機種サイト",
+    imageSource: "https://www.universal-777.com/product/pachinko/milliongod_raigeki/",
+    catchcopy: "合算約1/259からGOD GAMEへ。右打ちはALL3000個＋α。",
+    intro: "2026年12月7日導入予定のスマパチLT機。図柄揃いとANGEL BONUSの合算約1/259、チャンスモード、継続約75%・ALL3000個＋αのGOD GAMEを代表条件で簡易体験できます。",
+    points: ["図柄揃いとANGEL BONUSの合算約1/259", "チャンスモードでLT突入確率が最大約1/259", "GOD GAMEは継続約75%・ALL3000個＋α"],
+    specs: [["合算大当り", "約1/259.0"], ["図柄揃い", "約1/1236.5"], ["ANGEL BONUS", "約1/327.6"], ["GOD GAME", "ST100回・継続約75%"], ["右打ち出玉", "ALL3000個＋α"], ["スタート", "メガサポ"]],
+    sim: { kind: "pachinko", hitRate: 259.0, hitLabel: "合算大当り", startType: "メガサポ", spinsPer1k: 29.4, minSpins: 20, maxSpins: 44, rushLabel: "GOD GAME", rushEntry: 0.60, rushContinue: 0.75, firstPayoutIn: 300, firstPayoutOut: 300, rushPayouts: [[3000, 0.80], [6000, 0.18], [9000, 0.02]] },
+    readerGuide: { verdict: "よく回る入口からチャンスモードを経由し、3000個以上を重ねるLTを狙いたい人向けです。", bestFor: ["メガサポの回転感を比較したい", "ALL3000個＋αの出玉を体験したい"], check: ["通常時は複数モードを持つ", "サイトのLT突入は比較用の代表モデル"], compare: [["shangri-la-frontier", "eシャンフロ", "4500個中心のLTと比較"], ["keiji-kumo", "花の慶次 雲", "ループ型スマパチと比較"]] },
+    articleSections: [
+      { heading: "メガサポと合算約1/259", paragraphs: ["通常時は図柄揃い約1/1236.5とANGEL BONUS約1/327.6を合わせ、合算約1/259.0で大当りを抽選します。神ルートと神デカスタートからなるメガサポで、連続回転率約99.9%を掲げる機種です。", "サイトでは比較用の回転率を29.4回/1,000円に固定します。ホールごとの実回転率や調整を保証する値ではありません。"] },
+      { heading: "チャンスモードからGOD GAMEへ", paragraphs: ["ANGEL BONUS後はモードが上がるほどLT突入期待度が上昇し、HEAVENでは次回大当りでのLT突入が濃厚とされます。", "モード移行の全振り分けは独立再現せず、通常時全体を約60%の代表的なLT突入抽選へまとめます。導入後に正式な全数値が確認できた場合は更新します。"] },
+      { heading: "ALL3000個＋αのGOD GAME", paragraphs: ["GOD GAMEはST100回・継続約75%。右打ち中の大当りはすべて3000個で、毎回1G連のチャンスがあります。GOD図柄なら最低6000個です。", "シミュレーターでは3000個を中心に6000個・9000個の代表出玉を加えます。1G連の全振り分けを完全再現するものではありません。"] },
+      { heading: "導入前の固定条件", bullets: ["2026年12月7日までは準備中表示", "29.4回/1,000円・250玉貸し・28玉交換で固定", "導入後に正式情報と実機挙動を再確認", "結果は解禁後にマイ記録へ自動保存"] }
+    ],
+    sources: [["ユニバーサル公式機種サイト", "https://www.universal-777.com/product/pachinko/milliongod_raigeki/"], ["パチヨミ！ 導入前スペック", "https://pachiyomi.com/pachinko/e-million-god-tenku-no-raigeki"], ["一撃 2026年12月新台カレンダー", "https://1geki.jp/newmachinecalender/202612/"]]
+  },
+  "garo13-hagane": {
+    order: 0.092, type: "pachinko", theme: "gold", year: "2026年12月", maker: "サンセイR&D", updated: "2026-11-05", published: "2026-11-05",
+    availableFrom: "2026-12-21",
+    name: "e牙狼13 ハガネを継ぐ者", shortName: "e牙狼13",
+    catchcopy: "図柄揃いの50%で真魔戒RUSHへ。右打ちの45%が6000個以上。",
+    intro: "2026年12月21日導入予定のスマパチLT機。図柄揃い約1/437、チャージ込み約1/349.9、真魔戒RUSH継続約75%と、玖千ノ宴モードの引き戻しを代表条件で簡易体験できます。",
+    points: ["図柄揃い約1/437・チャージ込み約1/349.9", "図柄揃いの50%で真魔戒RUSH", "RUSH中は1500個または6000個以上"],
+    specs: [["合算大当り", "約1/349.9"], ["図柄揃い", "約1/437"], ["ガロチャージ", "約1/1745"], ["RUSH突入", "図柄揃い時50%"], ["RUSH", "ST130回・継続約75%"], ["CZ", "40回・期待度約18%"]],
+    sim: { kind: "pachinko", hitRate: 349.9, hitLabel: "合算大当り", startType: "通常ヘソ", spinsPer1k: 17.0, minSpins: 10, maxSpins: 30, rushLabel: "真魔戒RUSH", rushEntry: 0.40, rushContinue: 0.75, firstPayoutIn: 1000, firstPayoutOut: 1000, rushPayouts: [[1500, 0.55], [6000, 0.38], [7500, 0.07]] },
+    readerGuide: { verdict: "重い図柄揃いを越え、6000個以上の比率が高いRUSHを狙いたい人向けです。", bestFor: ["大きな出玉振り分けを重視したい", "RUSH終了後のCZも含めて流れを知りたい"], check: ["RUSH突入50%は図柄揃い時", "合算初当り全体では代表値40%を使用"], compare: [["garo12-golden", "牙狼12 黄金騎士極限", "前作と比較"], ["milliongod-raigeki", "eミリオンゴッド", "3000個型LTと比較"]] },
+    articleSections: [
+      { heading: "図柄揃いとガロチャージ", paragraphs: ["通常時は図柄揃い約1/437とガロチャージ約1/1745を合わせ、合算約1/349.9です。図柄揃い時の50%が真魔戒RUSHへ進みます。", "チャージを含む初当り全体ではRUSH突入が約40%となるため、シミュレーターは合算大当り約1/349.9・突入約40%の代表モデルを使用します。"] },
+      { heading: "玖千ノ宴モード", paragraphs: ["ガロチャージ後、通常大当りの一部、RUSH終了後などは左打ち40回のCZへ。実質約1/199で、40回の大当り期待度は約18%です。", "CZ中は9000個振り分けもありますが、通常時フラグと大当りの全ループは独立再現せず、記事でゲーム性を説明します。"] },
+      { heading: "真魔戒RUSHの出玉", paragraphs: ["真魔戒RUSHは約1/95.1を130回で抽選し、継続約75%。大当りは1500個55%、6000個38%、7500個7%です。", "RUSH終了後のCZによる引き戻しは継続率へ含めず、約75%で一度区切って表示します。"] },
+      { heading: "導入前情報について", bullets: ["2026年12月21日までは準備中表示", "17.0回/1,000円・250玉貸し・28玉交換で固定", "メーカー正式値の追加公開時に再確認", "娯楽用の簡易モデルで実収支を保証しない"] }
+    ],
+    sources: [["サンセイR&D 2026年製品情報", "https://www.sansei-rd.com/products/index.html"], ["SLOT HACK 導入前スペック", "https://slothack.net/matome/206568/"], ["パチンコ・パチスロ.com 機種概要", "https://pachinkopachisro.com/archives/pachinko/e-garo13/"]]
+  },
+  "godzilla-eva-wind-burst": {
+    order: 0.093, type: "pachinko", theme: "ice", year: "2026年12月", maker: "ビスティ", updated: "2026-11-05", published: "2026-11-05",
+    availableFrom: "2026-12-21",
+    name: "e ゴジラ対エヴァンゲリオン ～WIND BURST～", shortName: "eゴジエヴァ WIND BURST",
+    catchcopy: "怪獣ごとに継続期待度が変わる、風体感デバイス搭載の新作。",
+    intro: "2026年12月21日導入予定のスマパチLT機。図柄揃い約1/399.9、RUSH突入約55%、対戦怪獣ごとに約71〜90%とされる継続性能を、導入前の代表条件で簡易体験できます。",
+    points: ["図柄揃い約1/399.9・合算約1/349.9", "図柄揃い時RUSH突入約55%", "対戦怪獣で継続期待度が変化"],
+    specs: [["図柄揃い", "約1/399.9"], ["合算大当り", "約1/349.9"], ["RUSH突入", "図柄揃い時約55%"], ["RUSH継続", "約71〜90%"], ["初回出玉", "図柄揃い時1500個"], ["導入予定", "2026年12月21日"]],
+    sim: { kind: "pachinko", hitRate: 399.9, hitLabel: "図柄揃い", startType: "通常ヘソ", spinsPer1k: 17.0, minSpins: 10, maxSpins: 30, rushLabel: "WIND BURST RUSH", rushEntry: 0.55, rushContinue: 0.80, firstPayoutIn: 1500, firstPayoutOut: 1500, rushPayouts: [[1500, 0.60], [3000, 0.25], [4500, 0.15]] },
+    readerGuide: { verdict: "対戦相手によって継続期待度が変わる、バトル型RUSHを試したい人向けです。", bestFor: ["継続率が変動するRUSHが好き", "ゴジラとエヴァの演出を重視したい"], check: ["導入前の暫定公開値を使用", "シミュレーターは平均約80%の代表モデル"], compare: [["godzilla-eva2-slot", "スマスロ ゴジエヴァ2", "スロット版と比較"], ["garo13-hagane", "e牙狼13", "同日導入の新基準機と比較"]] },
+    articleSections: [
+      { heading: "図柄揃いからRUSHへ", paragraphs: ["導入前情報では図柄揃い約1/399.9、チャージを含む合算約1/349.9、図柄揃い時のRUSH突入約55%です。図柄揃いは1500個が基本とされています。", "サイトでは図柄揃いを入口にして、チャージの細かな分岐を独立再現しません。"] },
+      { heading: "怪獣で変わる継続期待度", paragraphs: ["RUSHは対戦怪獣によって継続期待度が約71〜90%へ変わるゲーム性です。WIND BURSTの風体感を含む演出面も特徴です。", "対戦相手の選択率など全振り分けは導入前時点で揃っていないため、シミュレーターは平均約80%の代表値を使用します。"] },
+      { heading: "出玉は代表分布で表示", paragraphs: ["公開前の出玉モード差を断定せず、1500個を中心に3000個・4500個を加えた比較用分布へ整理します。", "メーカーの正式スペック公開後はRUSHモード、出玉、CZの条件を同時に更新します。"] },
+      { heading: "導入前情報について", bullets: ["2026年12月21日までは準備中表示", "17.0回/1,000円・250玉貸し・28玉交換で固定", "未確定値は代表モデルと明記", "導入後の正式情報で再検証"] }
+    ],
+    sources: [["フィールズ公式 新製品情報", "https://www.fields.biz/?lang=ja"], ["円谷フィールズHD 2026年ニュース", "https://www.tsuburaya-fields.co.jp/ir/e/news/index.html?cfg=pc"], ["パチンコスペック解析 機種概要", "https://pachinko-spec.info/spec/175034/"]]
+  },
+  "basilisk4-slot": {
+    order: 0.094, type: "slot", theme: "emerald", year: "2026年12月", maker: "アクロス", updated: "2026-11-05", published: "2026-11-05",
+    availableFrom: "2026-12-21",
+    name: "スマスロ バジリスク～甲賀忍法帖～IV", shortName: "スマスロ バジリスクIV",
+    image: "assets/machines/basilisk4-key-visual.webp",
+    imageAlt: "スマスロ バジリスク～甲賀忍法帖～IVの公式キービジュアル",
+    imageCredit: "ユニバーサルエンターテインメント 公式機種サイト",
+    imageSource: "https://www.universal-777.com/product/slot/basilisk4/",
+    catchcopy: "胎動の刻と争忍の刻を巡り、真瞳術から真バジリスクタイムへ。",
+    intro: "2026年12月21日導入予定のスマスロ。CZ、胎動の刻、争忍の刻、真瞳術チャンス、純増約5.3枚/Gの真バジリスクタイムまでを設定別の固定モデルで簡易体験できます。",
+    points: ["設定1 CZ約1/285.5・AT約1/334.7", "胎動の刻は差枚上乗せ・純増変動型", "真バジリスクタイムは期待獲得3000枚超"],
+    specs: [["CZ（設定1）", "約1/285.5"], ["AT（設定1）", "約1/334.7"], ["AT（設定6）", "約1/251.7"], ["ベース", "約30.6G/50枚"], ["純増", "約1.1・3.5・5.3枚/G"], ["出玉率", "97.8〜114.2%"]],
+    sim: { kind: "slot", triggerLabel: "破幻チャレンジ", triggerRate: 285.5, triggerSuccess: 0.55, mainLabel: "バジリスクタイム", mainRate: 334.7, base50: 30.6, coinUnit: 3.3, normalMin: 300, normalMax: 1300, specialLabel: "胎動の刻・連撃", specialChance: 0.38, specialMin: 250, specialMax: 1200, upperChallenge: "真眼の極", upperChance: 0.18, upperSuccess: 0.50, upperLabel: "真バジリスクタイム", upperContinue: 0.82, upperPayout: 900, settingRates: { 1: { trigger: 285.5, main: 334.7, payout: 0.978 }, 2: { trigger: 256.9, main: 299.4, payout: 0.987 }, 3: { trigger: 282.4, main: 329.4, payout: 1.014 }, 4: { trigger: 229.7, main: 264.6, payout: 1.060 }, 5: { trigger: 238.4, main: 274.1, payout: 1.098 }, 6: { trigger: 220.1, main: 251.7, payout: 1.142 } } },
+    readerGuide: { verdict: "王道の継続バトルに差枚上乗せと高純増の上位ATを加えた流れを試したい人向けです。", bestFor: ["絆高確と継続バトルが好き", "設定4・5の非直線的な初当り差も比べたい"], check: ["設定4は設定5よりCZ・ATが軽い", "上位到達は比較用の代表抽選"], compare: [["basilisk-tenzen-slot", "バジリスク絆2 天膳", "前作スマスロと比較"], ["bancho-banzuke", "押忍！番長番付", "12月のAT機と比較"]] },
+    articleSections: [
+      { heading: "設定別CZ・AT初当り", paragraphs: ["CZは設定1約1/285.5〜設定6約1/220.1、ATは設定1約1/334.7〜設定6約1/251.7です。設定4が設定5より軽い公開値もそのまま使用します。", "START時に設定1〜6を均等抽選し、今回の設定は最終結果・マイ記録・ランキングへ表示します。"] },
+      { heading: "胎動の刻と争忍の刻", paragraphs: ["ATは差枚数を上乗せする胎動の刻と、継続をかける争忍の刻で1セット。胎動の刻は純増が約1.1・3.5・5.3枚/Gへ変わり、上乗せや連撃の期待度も変化します。", "シミュレーターは全小役と絆高確を個別再現せず、特化ゾーンの獲得枚数へまとめます。"] },
+      { heading: "真瞳術から上位ATへ", paragraphs: ["エンディング後は真眼の極を経由し、真瞳術チャンスを目指します。真瞳術は平均約4.5個のATストックに加え、真バジリスクタイム突入のチャンスです。", "上位ATは純増約5.3枚/G、突入時の平均期待獲得は3000枚超。到達率はサイト内の代表抽選で、実機の結果を保証しません。"] },
+      { heading: "導入前の固定条件", bullets: ["2026年12月21日までは準備中表示", "30.6G/50枚・46枚貸し・5.2枚交換で固定", "コイン単価3.3円を荒さの目安として表記", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["ユニバーサル公式機種サイト", "https://www.universal-777.com/product/slot/basilisk4/"], ["パチマガスロマガFREE 基本情報", "https://psmaga.com/e/pachi/pla/s_conq/across_slot/24/kh01.php"], ["なな徹 設定別スペック", "https://nana-press.com/kaiseki/machine/1267/"]]
+  },
+  "assault-lily-slot": {
+    order: 0.095, type: "slot", theme: "sakura", year: "2026年12月", maker: "七匠", updated: "2026-11-05", published: "2026-11-05",
+    availableFrom: "2026-12-07",
+    name: "L アサルトリリィ", shortName: "スマスロ アサルトリリィ",
+    catchcopy: "規定ポイントとゲーム数から、差枚数管理のアサルトリリィRUSHへ。",
+    intro: "2026年12月7日導入予定のスマスロ。リリィチャレンジ、BONUS、純増約3.5枚/GのアサルトリリィRUSH、上乗せ特化、上位ATまでを設定別に簡易体験できます。",
+    points: ["設定1 初当り約1/273.4・RUSH約1/417.7", "RUSHは初期150枚＋α・純増約3.5枚/G", "上位ATは上乗せ性能が強化"],
+    specs: [["初当り（設定1）", "約1/273.4"], ["RUSH（設定1）", "約1/417.7"], ["RUSH（設定6）", "約1/296.8"], ["ベース", "約31G/50枚"], ["RUSH純増", "約3.5枚/G"], ["出玉率", "97.5〜112.5%"]],
+    sim: { kind: "slot", triggerLabel: "リリィチャレンジ", triggerRate: 273.4, triggerSuccess: 0.56, mainLabel: "アサルトリリィRUSH", mainRate: 417.7, base50: 31.0, coinUnit: 3.1, normalMin: 250, normalMax: 1150, specialLabel: "ヒュージバトル", specialChance: 0.38, specialMin: 200, specialMax: 1100, upperChallenge: "ラストバレットジャッジメント", upperChance: 0.18, upperSuccess: 0.50, upperLabel: "アサルトリリィRUSH SUPER", upperContinue: 0.80, upperPayout: 650, settingRates: { 1: { trigger: 273.4, main: 417.7, payout: 0.975 }, 2: { trigger: 266.6, main: 401.0, payout: 0.988 }, 3: { trigger: 257.0, main: 377.4, payout: 1.005 }, 4: { trigger: 243.5, main: 345.9, payout: 1.043 }, 5: { trigger: 232.3, main: 320.4, payout: 1.078 }, 6: { trigger: 220.6, main: 296.8, payout: 1.125 } } },
+    readerGuide: { verdict: "ポイント・ゲーム数・CZからRUSHを目指し、上乗せ特化を重ねる差枚ATが好きな人向けです。", bestFor: ["上乗せ特化を段階的に楽しみたい", "設定別RUSH初当りを比べたい"], check: ["BONUSとRUSH初当りは別の数値", "上位到達率は比較用の代表モデル"], compare: [["assault-lily", "eアサルトリリィ", "パチンコ版と比較"], ["blue-reflection-tie", "Lブルーリフレクション", "同月の作品系ATと比較"]] },
+    articleSections: [
+      { heading: "ポイント・ゲーム数・レア役が入口", paragraphs: ["通常時は梨璃・夢結のポイント、100Gごとの規定ゲーム数、レア役からBONUSやRUSHを目指します。CZは複数のリリィチャレンジで構成されます。", "サイトでは複数の入口を初当り確率へまとめ、設定1約1/273.4〜設定6約1/220.6でCZ演出を開始します。"] },
+      { heading: "BONUSとRUSHを分けて表示", paragraphs: ["赤7BONUSは約88枚で、RUSH期待度は約29%。メインRUSHは設定1約1/417.7〜設定6約1/296.8です。", "シミュレーターではBONUS・CZを前段に置き、公開RUSH初当りと整合するよう代表的な成功抽選へ整理します。"] },
+      { heading: "上乗せ特化と上位AT", paragraphs: ["アサルトリリィRUSHは初期150枚＋αの差枚数管理型。ボスヒュージ襲来、ヒュージバトル、アサルトスパイラルで上乗せを狙います。", "ラストバレットジャッジメント成功で上位ATへ。上位は純増を維持しながら上乗せ性能が強化されますが、全振り分けは導入後に再確認します。"] },
+      { heading: "導入前の固定条件", bullets: ["2026年12月7日までは準備中表示", "31.0G/50枚・46枚貸し・5.2枚交換で固定", "設定1〜6を開始時に均等抽選", "結果とランキングに設定を表示"] }
+    ],
+    sources: [["円谷フィールズHD 発売発表", "https://prtimes.jp/main/html/rd/p/000000069.000180393.html"], ["Re.design 機種基本情報", "https://aaa.redesign777.tokyo/Spec/SlotView?flag=True&id=S2026091020353401"], ["SLOT HACK 機種概要", "https://slothack.net/matome/203374/"]]
+  },
   "toaru3-pachinko": {
     order: 0.1, type: "pachinko", theme: "violet", year: "2026年11月", maker: "オレンジ", updated: "2026-11-03",
     published: "2026-11-02",
