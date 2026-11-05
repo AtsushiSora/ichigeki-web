@@ -16485,6 +16485,87 @@ textarea { min-height: 132px; line-height: 1.65; }
   backdrop-filter: blur(6px);
 }
 
+/* Future machines: readable articles, locked simulation until the introduction date. */
+.machine-hub-card.is-preparing {
+  border-color: rgba(255, 184, 74, .6);
+  filter: saturate(.72);
+}
+.machine-hub-card.is-preparing:hover,
+.machine-hub-card.is-preparing:focus-visible {
+  border-color: rgba(255, 196, 94, .82);
+  filter: saturate(.82) brightness(1.03);
+}
+.machine-hub-card.is-preparing .machine-hub-card-visual::after {
+  background: linear-gradient(180deg, rgba(10, 6, 0, .08) 22%, rgba(20, 11, 0, .9));
+}
+.machine-hub-card-visual mark {
+  position: absolute;
+  z-index: 3;
+  right: 11px;
+  bottom: 10px;
+  left: 11px;
+  padding: 7px 9px;
+  border: 1px solid rgba(255, 211, 125, .7);
+  border-radius: 10px;
+  color: #fff1c6;
+  background: rgba(38, 24, 3, .88);
+  font-size: 10px;
+  font-weight: 900;
+  text-align: center;
+}
+.machine-hub-card.is-preparing .machine-hub-card-body > span {
+  color: #ffc85d;
+  border-top-color: rgba(255, 196, 83, .4);
+}
+.machine-preparing-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+.machine-preparing-hero strong,
+.machine-preparing-hero span {
+  padding: 7px 11px;
+  border: 1px solid rgba(255, 197, 81, .55);
+  border-radius: 999px;
+  color: #ffe7a5;
+  background: rgba(54, 34, 3, .7);
+  font-size: 11px;
+}
+.machine-preparing-hero strong { color: #181006; background: #ffc95d; }
+.machine-preparing-notice {
+  display: grid;
+  gap: 5px;
+  margin: 14px 0 18px;
+  padding: 17px 18px;
+  border: 1px solid rgba(255, 191, 68, .48);
+  border-radius: 17px;
+  color: #d8d0bd;
+  background: linear-gradient(135deg, rgba(63, 39, 4, .78), rgba(16, 13, 8, .96));
+}
+.machine-preparing-notice > span { color: #ffc65d; font-size: 9px; font-weight: 1000; letter-spacing: .18em; }
+.machine-preparing-notice > strong { color: #fff4d2; font-size: 18px; }
+.machine-preparing-notice > p { margin: 0; line-height: 1.7; }
+.machine-sim-badge.is-preparing { color: #1b1203; background: #ffc75e; }
+.machine-start-button.is-preparing,
+.machine-start-button.is-preparing:disabled {
+  cursor: not-allowed;
+  opacity: 1;
+  border-color: #715629;
+  color: #c9b990;
+  background: linear-gradient(180deg, #342917, #1b160e);
+  box-shadow: none;
+}
+.machine-start-button.is-preparing small { color: #a69775; }
+.button.is-disabled {
+  cursor: not-allowed;
+  opacity: .72;
+  color: #c6b992;
+  background: #252015;
+  border-color: #5d4c2d;
+}
+
 .machine-archive-hero.has-image {
   grid-template-columns: minmax(380px, .95fr) minmax(0, 1.05fr);
   grid-template-rows: minmax(0, 1fr) auto;
@@ -17328,6 +17409,13 @@ textarea { min-height: 132px; line-height: 1.65; }
   color: #fff;
   background: linear-gradient(180deg, #a62620, #4e090c);
   box-shadow: 0 0 12px rgba(255, 72, 45, .36);
+}
+
+/* Unreleased machines keep their articles readable while play-related controls stay unavailable. */
+.machine-is-preparing #machineResult .machine-result-actions,
+.machine-is-preparing #machineResult .machine-ranking-entry,
+.machine-is-preparing #machineRanking {
+  display: none;
 }
 
 /* TOP brand: Japanese wordmark. */

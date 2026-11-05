@@ -3,6 +3,8 @@
     .map(([slug, machine]) => ({ slug, ...machine }))
     .filter(machine => machine.slug && machine.shortName && machine.sim);
   const machineMap = Object.fromEntries(machines.map(machine => [machine.slug, machine]));
+  const availability = window.ICHIGEKI_MACHINE_AVAILABILITY || { isReady: () => true, label: () => "" };
+  const isReady = machine => availability.isReady(machine);
   const mode = document.body.dataset.hubMode === "rankings" ? "rankings" : "machines";
   const fixedType = ["pachinko", "slot"].includes(document.body.dataset.machineType) ? document.body.dataset.machineType : "";
   const FAVORITES_KEY = "ichigekiFavoriteMachinesV1";
@@ -75,6 +77,7 @@
   }
   function machineTags(machine) {
     const tags = [];
+    if (!isReady(machine)) tags.push("準備中");
     if (isNewMachine(machine)) tags.push("新台");
     if (machine.type === "pachinko") {
       if (Number(machine.sim.hitRate) <= 199.9) tags.push("ライト");
@@ -88,6 +91,7 @@
     return tags.slice(0, 3);
   }
   function destination(machine) {
+    if (!isReady(machine)) return `${encodeURIComponent(machine.slug)}.html`;
     return `${encodeURIComponent(machine.slug)}.html${mode === "rankings" ? "#machineRanking" : "#simulator"}`;
   }
   function sortedMachines(list) {
@@ -159,15 +163,16 @@
     }));
     const visibleOutput = output.slice(0, visibleCount);
     grid.innerHTML = visibleOutput.map(machine => {
-      const action = mode === "rankings" ? "ランキングを見る" : "この台で遊ぶ";
+      const ready = isReady(machine);
+      const action = ready ? (mode === "rankings" ? "ランキングを見る" : "この台で遊ぶ") : "導入前・準備中";
       const isFavorite = favoriteSlugs.includes(machine.slug);
       const tags = machineTags(machine);
       const visual = machine.image
         ? `<img src="${escapeHtml(machine.image)}" alt="${escapeHtml(machine.imageAlt || `${machine.shortName}の機種画像`)}" loading="lazy" decoding="async">`
         : `<em aria-hidden="true">${machine.type === "slot" ? "S" : "P"}</em>`;
-      return `<article class="machine-hub-item">
-        <a class="machine-hub-card is-${machine.type} theme-${escapeHtml(machine.theme || "aqua")}" href="${destination(machine)}">
-          <div class="machine-hub-card-visual${machine.image ? " has-image" : ""}"><span>${machine.type === "slot" ? "SLOT" : "PACHINKO"}</span>${visual}</div>
+      return `<article class="machine-hub-item${ready ? "" : " is-preparing"}">
+        <a class="machine-hub-card is-${machine.type} theme-${escapeHtml(machine.theme || "aqua")}${ready ? "" : " is-preparing"}" href="${destination(machine)}"${ready ? "" : ` aria-label="${escapeHtml(machine.shortName)}は${escapeHtml(availability.label(machine))}のため準備中です。記事を読む"`}>
+          <div class="machine-hub-card-visual${machine.image ? " has-image" : ""}"><span>${ready ? (machine.type === "slot" ? "SLOT" : "PACHINKO") : "準備中"}</span>${visual}${ready ? "" : `<mark>${escapeHtml(availability.label(machine))}</mark>`}</div>
           <div class="machine-hub-card-body"><small>${escapeHtml(machine.year || "PICK UP")}・${escapeHtml(machine.maker || "")}</small><strong>${escapeHtml(machine.shortName)}</strong>${tags.length ? `<div class="machine-hub-badges">${tags.map(tag => `<i>${escapeHtml(tag)}</i>`).join("")}</div>` : ""}<p>${escapeHtml(machine.catchcopy || "機種情報とシミュレーション")}</p><div><b>${escapeHtml(averageLabel(machine))}</b><b>${escapeHtml(subLabel(machine))}</b></div><span>${action} ›</span></div>
         </a>
         <button class="machine-hub-favorite" type="button" data-favorite-slug="${escapeHtml(machine.slug)}" aria-pressed="${isFavorite}" aria-label="${escapeHtml(machine.shortName)}を${isFavorite ? "お気に入りから外す" : "お気に入りに追加"}">${isFavorite ? "★" : "☆"}</button>

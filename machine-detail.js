@@ -4,6 +4,10 @@
   const machine = machines[slug];
   const app = document.getElementById("machineApp");
   if (!machine || !app) return;
+  const availability = window.ICHIGEKI_MACHINE_AVAILABILITY || { isReady: () => true, label: () => "" };
+  const machineReady = availability.isReady(machine);
+  const availabilityLabel = availability.label(machine);
+  document.body.classList.toggle("machine-is-preparing", !machineReady);
   const arcadePachinkoFlow = machine.sim.kind === "pachinko";
   const pachinkoModeText = [
     machine.name,
@@ -538,11 +542,11 @@
     <nav class="article-breadcrumb machine-breadcrumb" aria-label="パンくず"><a href="index.html">TOP</a><span>›</span><a href="${hubHref}">${hubLabel}</a>${novemberBreadcrumb}${decemberBreadcrumb}<span>›</span><span aria-current="page">${machine.shortName}</span></nav>
     <section class="machine-archive-hero theme-${machine.theme}${machine.image ? " has-image" : ""}">
       ${heroImage}
-      <div class="machine-archive-copy"><span class="machine-kind">${machine.year.includes("2026") ? "NEW MACHINE 2026" : machine.type === "slot" ? "POPULAR SLOT ARCHIVE" : "POPULAR PACHINKO ARCHIVE"}</span><h1>${machine.name}</h1><p>${machine.catchcopy}</p></div>
+      <div class="machine-archive-copy"><span class="machine-kind">${machineReady ? (machine.year.includes("2026") ? "NEW MACHINE 2026" : machine.type === "slot" ? "POPULAR SLOT ARCHIVE" : "POPULAR PACHINKO ARCHIVE") : "COMING SOON・準備中"}</span><h1>${machine.name}</h1><p>${machine.catchcopy}</p>${machineReady ? "" : `<div class="machine-preparing-hero"><strong>準備中</strong><span>${availabilityLabel}</span></div>`}</div>
       <dl><div><dt>導入</dt><dd>${machine.year}</dd></div><div><dt>メーカー</dt><dd>${machine.maker}</dd></div><div><dt>分類</dt><dd>${machine.type === "slot" ? "パチスロ" : "パチンコ"}</dd></div></dl>
     </section>
 
-    <nav class="machine-quick-nav" aria-label="ページ内メニュー"><button class="machine-favorite-button" id="machineFavoriteButton" type="button" aria-pressed="false"><span aria-hidden="true">☆</span> お気に入り</button><a href="#spec">スペック</a><a href="#ratio-chart">割合</a>${machine.sim.kind === "slot" ? '<a href="#cz-game">CZ</a>' : ""}<a href="#game-guide">遊び方</a><a href="#article">記事</a><a href="#machineRanking">ランキング</a><a href="#faq">FAQ</a>${machine.readerGuide ? '<a href="#reader-guide">30秒要点</a>' : ""}${novemberQuickLink}${decemberQuickLink}<a href="community.html?machine=${slug}">投稿</a></nav>
+    <nav class="machine-quick-nav" aria-label="ページ内メニュー"><button class="machine-favorite-button" id="machineFavoriteButton" type="button" aria-pressed="false"><span aria-hidden="true">☆</span> お気に入り</button><a href="#spec">スペック</a><a href="#ratio-chart">割合</a>${machine.sim.kind === "slot" ? '<a href="#cz-game">CZ</a>' : ""}<a href="#game-guide">遊び方</a><a href="#article">記事</a>${machineReady ? '<a href="#machineRanking">ランキング</a>' : ""}<a href="#faq">FAQ</a>${machine.readerGuide ? '<a href="#reader-guide">30秒要点</a>' : ""}${novemberQuickLink}${decemberQuickLink}<a href="community.html?machine=${slug}">投稿</a></nav>
 
     <section class="machine-intro" id="spec">
       <div><span class="machine-section-label">SPEC GUIDE</span><h2>主要スペック</h2><p>${machine.intro}</p><ul>${machine.points.map(point => `<li>${point}</li>`).join("")}</ul></div>
@@ -550,11 +554,12 @@
     </section>
 
     <section class="machine-simulator" id="simulator">
-      <div class="machine-sim-head"><div><span class="machine-section-label">SIMULATOR</span><h2>${machine.shortName} 簡易シミュレーター</h2></div><span class="machine-sim-badge">娯楽用</span></div>
+      <div class="machine-sim-head"><div><span class="machine-section-label">SIMULATOR</span><h2>${machine.shortName} 簡易シミュレーター</h2></div><span class="machine-sim-badge${machineReady ? "" : " is-preparing"}">${machineReady ? "娯楽用" : "準備中"}</span></div>
+      ${machineReady ? "" : `<div class="machine-preparing-notice" role="status"><span>COMING SOON</span><strong>導入前のため、まだ遊べません</strong><p>${availabilityLabel}です。導入日を迎えると自動でスタートできるようになります。</p></div>`}
       <p class="machine-sim-note">投資・換金・収支は固定レートで計算します。パチンコは250玉貸し・28玉交換、スロットは46枚貸し・5.2枚交換です。${machine.sim.kind === "pachinko" ? "表記出玉と、打ち出し・オーバー入賞を簡易反映した実獲得出玉を分けて表示します。" : `スロットは開始時に${slotSettingLabel}を均等抽選し、最終結果で設定を発表します。`}</p>
       <div class="machine-sim-layout">
-        <div class="machine-sim-controls">${controlMarkup()}<div class="machine-average-grid" id="averageGrid"></div><div class="machine-start-anchor" id="machineStartAnchor"></div><button class="machine-start-button" id="machineStart" type="button"><span>${startLabel}</span><small>${labels.join(" → ")}</small></button><button class="machine-sticky-back" id="machineStickyBack" type="button" aria-label="前のページに戻る" hidden><span aria-hidden="true">←</span><strong>戻る</strong></button></div>
-        <div class="machine-result" id="machineResult" aria-live="polite"><span>RESULT</span><strong id="resultTitle">開始ボタンを押してください</strong><p id="resultSummary">平均値と今回の結果を比較できます。</p><div class="machine-result-stats" id="resultStats"></div><div class="machine-flow" id="resultFlow"></div><p class="machine-auto-save-status" id="machineAutoSaveStatus">結果は自動でマイ記録へ保存されます。</p><div class="achievement-unlock-toast" id="machineAchievementUnlock" hidden><span>TITLE UNLOCKED</span><strong></strong><small>新しい称号を獲得しました</small></div><div class="machine-result-actions"><a class="button" href="ranking.html#achievements">称号・記録を見る</a><a class="button" id="shareMachineResult" href="community.html?machine=${slug}&compose=simulation#simulationComposer">結果を投稿</a></div><div class="machine-ranking-entry"><label class="machine-ranking-name"><span>ランキングに登録する名前</span><input id="rankingNickname" type="text" maxlength="16" autocomplete="nickname" placeholder="ニックネーム"></label><button class="button primary" id="rankMachineResult" type="button" disabled>ランキングに登録</button></div></div>
+        <div class="machine-sim-controls">${controlMarkup()}<div class="machine-average-grid" id="averageGrid"></div><div class="machine-start-anchor" id="machineStartAnchor"></div><button class="machine-start-button${machineReady ? "" : " is-preparing"}" id="machineStart" type="button"${machineReady ? "" : " disabled"}><span>${machineReady ? startLabel : "準備中"}</span><small>${machineReady ? labels.join(" → ") : availabilityLabel}</small></button><button class="machine-sticky-back" id="machineStickyBack" type="button" aria-label="前のページに戻る" hidden><span aria-hidden="true">←</span><strong>戻る</strong></button></div>
+        <div class="machine-result" id="machineResult" aria-live="polite"><span>${machineReady ? "RESULT" : "COMING SOON"}</span><strong id="resultTitle">${machineReady ? "開始ボタンを押してください" : "導入後に遊べます"}</strong><p id="resultSummary">${machineReady ? "平均値と今回の結果を比較できます。" : `${availabilityLabel}です。現在は記事とスペックをご覧ください。`}</p><div class="machine-result-stats" id="resultStats"></div><div class="machine-flow" id="resultFlow"></div><p class="machine-auto-save-status" id="machineAutoSaveStatus">${machineReady ? "結果は自動でマイ記録へ保存されます。" : "シミュレーターは導入日に自動で有効になります。"}</p><div class="achievement-unlock-toast" id="machineAchievementUnlock" hidden><span>TITLE UNLOCKED</span><strong></strong><small>新しい称号を獲得しました</small></div><div class="machine-result-actions"><a class="button" href="ranking.html#achievements">称号・記録を見る</a><a class="button" id="shareMachineResult" href="community.html?machine=${slug}&compose=simulation#simulationComposer">結果を投稿</a></div><div class="machine-ranking-entry"><label class="machine-ranking-name"><span>ランキングに登録する名前</span><input id="rankingNickname" type="text" maxlength="16" autocomplete="nickname" placeholder="ニックネーム"></label><button class="button primary" id="rankMachineResult" type="button" disabled>ランキングに登録</button></div></div>
       </div>
       <section class="machine-experience" id="machineExperience" role="dialog" aria-modal="true" aria-label="${machine.shortName}のシミュレーション演出" data-profile="${experienceProfile.key}" data-machine-type="${machine.type}" data-ui="arcade" data-game-mode="${gameExperienceMode}" hidden>
         <div class="machine-experience-head"><div class="machine-experience-ident"><span id="machineExperienceStep">STEP 1 / 5</span><strong>${machine.shortName}</strong></div><div><button type="button" id="machineExperienceSound" aria-pressed="${experienceSoundEnabled}">${experienceSoundEnabled ? "音ON" : "音OFF"}</button><button type="button" id="machineExperienceSkip">スキップ</button><button type="button" id="machineExperienceClose" aria-label="ゲーム画面を閉じる">×</button></div></div>
@@ -589,7 +594,7 @@
         ${articleMarkup()}
         ${resultGuideMarkup()}
         ${machineFaqMarkup()}
-        <div class="machine-article-sim-cta"><span>SIMULATOR</span><strong>読んだ内容を固定条件で試す</strong><p>同じ貸出・交換条件で、初当りから最終結果までを体験できます。結果は自動でマイ記録へ保存されます。</p><a class="button primary" href="#simulator">${startLabel}</a></div>
+        <div class="machine-article-sim-cta"><span>SIMULATOR</span><strong>${machineReady ? "読んだ内容を固定条件で試す" : "導入前・シミュレーター準備中"}</strong><p>${machineReady ? "同じ貸出・交換条件で、初当りから最終結果までを体験できます。結果は自動でマイ記録へ保存されます。" : `${availabilityLabel}です。導入後に固定条件で遊べるようになります。`}</p>${machineReady ? `<a class="button primary" href="#simulator">${startLabel}</a>` : '<span class="button is-disabled" aria-disabled="true">準備中</span>'}</div>
         <h3>関連ガイド</h3><div class="next-links">${isNovemberNewMachine ? '<a href="new-machines-2026-11.html">11月新台10機種を比較</a>' : ""}${isDecemberNewMachine ? '<a href="new-machines-2026-12.html">12月新台の先行比較</a>' : ""}<a href="average-game-guide.html">平均G・平均回転</a><a href="continuation-rate-guide.html">継続率と平均連</a><a href="simulation-policy.html">計算・掲載方針</a></div>
         <h3>参照情報</h3><ul class="machine-sources">${machine.sources.map(([label, url]) => `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${label} ↗</a></li>`).join("")}</ul>
       </article>
@@ -946,6 +951,7 @@
   }
 
   const startButton = document.getElementById("machineStart");
+  startButton.disabled = !machineReady;
   const stickyBackButton = document.getElementById("machineStickyBack");
   const simulator = document.getElementById("simulator");
   const startAnchor = document.getElementById("machineStartAnchor");
@@ -955,7 +961,7 @@
   const mobileStickyStart = window.matchMedia("(max-width: 760px)");
 
   function updateStickyStart() {
-    const shouldStick = !startAnchorVisible && !resultPosition && (simulatorVisible || mobileStickyStart.matches);
+    const shouldStick = machineReady && !startAnchorVisible && !resultPosition && (simulatorVisible || mobileStickyStart.matches);
     const soloSticky = shouldStick && !simulatorVisible;
     startButton.classList.toggle("is-sticky", shouldStick);
     startButton.classList.toggle("is-solo-sticky", soloSticky);
@@ -1484,6 +1490,7 @@
   }
 
   startButton.addEventListener("click", () => {
+    if (!machineReady) return;
     resetMachinePlaySession();
     machinePlaySession = createMachinePlaySession();
     runMachineExperience();

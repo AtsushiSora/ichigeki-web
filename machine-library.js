@@ -106,6 +106,7 @@ window.ICHIGEKI_MACHINES = {
   },
   "shangri-la-frontier": {
     order: 0.08, type: "pachinko", theme: "emerald", year: "2026年12月", maker: "Sammy", updated: "2026-11-01",
+    availableFrom: "2026-12-07",
     name: "e シャングリラ・フロンティア", shortName: "eシャンフロ",
     image: "assets/machines/shangri-la-frontier-key-visual.jpg",
     imageAlt: "e シャングリラ・フロンティアのキービジュアル",
@@ -133,6 +134,7 @@ window.ICHIGEKI_MACHINES = {
   },
   "sao-phantom-bullet": {
     order: 0.09, type: "pachinko", theme: "aqua", year: "2026年12月", maker: "KYORAKU", updated: "2026-11-01",
+    availableFrom: "2026-12-21",
     name: "e ソードアート・オンライン ファントム・バレット", shortName: "e SAO ファントム・バレット",
     image: "assets/machines/sao-phantom-bullet-key-visual.jpg",
     imageAlt: "e ソードアート・オンライン ファントム・バレットのキービジュアル",
@@ -2129,6 +2131,7 @@ window.ICHIGEKI_MACHINES = {
   },
   "symphogear5-smartstart": {
     order: 10.7, type: "pachinko", theme: "flame", year: "2027年1月導入予定", maker: "SANKYO", updated: "2026-11-01",
+    availableFrom: "2027-01-12",
     name: "eフィーバー戦姫絶唱シンフォギア5 超デカ×スマートスタート", shortName: "シンフォギア5",
     image: "assets/machines/symphogear5-smartstart-key-visual.jpg",
     imageAlt: "eフィーバー戦姫絶唱シンフォギア5 超デカ×スマートスタートのキービジュアル",
@@ -2148,6 +2151,7 @@ window.ICHIGEKI_MACHINES = {
   },
   "keiji-kumo": {
     order: 10.8, type: "pachinko", theme: "crimson", year: "2026年12月導入予定", maker: "ニューギン", updated: "2026-11-01",
+    availableFrom: "2026-12-07",
     name: "e花の慶次～雲のかなたに", shortName: "花の慶次 雲のかなたに",
     image: "assets/machines/keiji-kumo-key-visual.jpg",
     imageAlt: "e花の慶次～雲のかなたにのキービジュアル",
@@ -2239,6 +2243,7 @@ window.ICHIGEKI_MACHINES = {
   },
   "oumi4-black-plus": {
     order: 11.3, type: "pachinko", theme: "ocean", year: "2026年12月導入予定", maker: "三洋物産", updated: "2026-11-01",
+    availableFrom: "2026-12-07",
     name: "P大海物語4スペシャル BLACK PLUS", shortName: "大海4 BLACK PLUS",
     image: "assets/machines/oumi4-black-plus-key-visual.jpg",
     imageAlt: "P大海物語4スペシャル BLACK PLUSのキービジュアル",
@@ -2258,6 +2263,7 @@ window.ICHIGEKI_MACHINES = {
   },
   "oumi5-special-yutime": {
     order: 11.4, type: "pachinko", theme: "ocean", year: "2026年12月導入予定", maker: "三洋物産", updated: "2026-11-01",
+    availableFrom: "2026-12-07",
     name: "e大海物語5スペシャル 319遊タイムver.", shortName: "e大海5SP 遊タイム",
     image: "assets/machines/oumi5-special-yutime-key-visual.jpg",
     imageAlt: "e大海物語5スペシャル 319遊タイムver.のキービジュアル",
@@ -2277,6 +2283,7 @@ window.ICHIGEKI_MACHINES = {
   },
   "dumbbell2-77": {
     order: 11.5, type: "pachinko", theme: "gold", year: "2026年12月導入予定", maker: "SANKYO", updated: "2026-11-01",
+    availableFrom: "2026-12-07",
     name: "eフィーバーダンベル何キロ持てる？2 77ver.", shortName: "ダンベル2 77",
     image: "assets/machines/dumbbell2-77-key-visual.jpg",
     imageAlt: "eフィーバーダンベル何キロ持てる？2 77ver.のキービジュアル",
@@ -2316,6 +2323,7 @@ window.ICHIGEKI_MACHINES = {
   },
   "bancho-banzuke": {
     order: 11.7, type: "slot", theme: "crimson", year: "2026年12月導入予定", maker: "パオン・ディーピー", updated: "2026-11-01",
+    availableFrom: "2026-12-07",
     name: "押忍！番長番付", shortName: "番長番付",
     image: "assets/machines/bancho-banzuke-key-visual.jpg",
     imageAlt: "押忍！番長番付のキービジュアル",
@@ -2335,6 +2343,7 @@ window.ICHIGEKI_MACHINES = {
   },
   "zegapain-etr": {
     order: 11.8, type: "slot", theme: "aqua", year: "2026年12月導入予定", maker: "山佐ネクスト", updated: "2026-11-01",
+    availableFrom: "2026-12-07",
     name: "スマスロゼーガペインETR", shortName: "ゼーガペインETR",
     image: "assets/machines/zegapain-etr-key-visual.jpg",
     imageAlt: "スマスロゼーガペインETRのキービジュアル",
@@ -2353,6 +2362,7 @@ window.ICHIGEKI_MACHINES = {
   },
   "twin-angel2-smart": {
     order: 11.9, type: "slot", theme: "sakura", year: "2026年12月導入予定", maker: "サミー", updated: "2026-11-01",
+    availableFrom: "2026-12-07",
     name: "スマスロ 快盗天使ツインエンジェル2", shortName: "スマスロ ツイン2",
     image: "assets/machines/twin-angel2-smart-key-visual.jpg",
     imageAlt: "スマスロ 快盗天使ツインエンジェル2のキービジュアル",
@@ -2371,6 +2381,7 @@ window.ICHIGEKI_MACHINES = {
   },
   "blue-reflection-tie": {
     order: 12.0, type: "slot", theme: "ice", year: "2026年12月導入予定", maker: "オリンピア", updated: "2026-11-01",
+    availableFrom: "2026-12-21",
     name: "Lブルーリフレクション帝", shortName: "ブルーリフレクション帝",
     image: "assets/machines/blue-reflection-tie-key-visual.jpg",
     imageAlt: "Lブルーリフレクション帝のキービジュアル",
@@ -2426,6 +2437,7 @@ window.ICHIGEKI_MACHINES = {
   },
   "bastard-light": {
     order: 12.3, type: "pachinko", theme: "flame", year: "2026年12月導入予定", maker: "SANKYO", updated: "2026-11-01",
+    availableFrom: "2026-12-07",
     name: "eフィーバーBASTARD!! -暗黒の破壊神- Light ver.", shortName: "BASTARD!! Light",
     image: "assets/machines/bastard-light-key-visual.jpg",
     imageAlt: "eフィーバーBASTARD!! -暗黒の破壊神- Light ver.のキービジュアル",
@@ -2444,6 +2456,7 @@ window.ICHIGEKI_MACHINES = {
   },
   "megami-cafe-collection": {
     order: 12.4, type: "pachinko", theme: "sakura", year: "2026年12月導入予定", maker: "JFJ", updated: "2026-11-01",
+    availableFrom: "2026-12-07",
     name: "e女神のカフェテラス ヒロインsコレクション", shortName: "女神のカフェテラス コレクション",
     image: "assets/machines/megami-cafe-collection-key-visual.jpg",
     imageAlt: "e女神のカフェテラス ヒロインsコレクションのキービジュアル",
@@ -2480,6 +2493,7 @@ window.ICHIGEKI_MACHINES = {
   },
   "haihai-shiosai-re": {
     order: 12.6, type: "slot", theme: "ocean", year: "2026年11月導入予定", maker: "パイオニア", updated: "2026-11-01",
+    availableFrom: "2026-11-16",
     name: "スマート沖スロ ハイハイシオサイRe", shortName: "ハイハイシオサイRe",
     image: "assets/machines/haihai-shiosai-re-key-visual.jpg",
     imageAlt: "スマート沖スロ ハイハイシオサイReの実機画像",
@@ -2498,6 +2512,7 @@ window.ICHIGEKI_MACHINES = {
   },
   "akamata-slot": {
     order: 12.7, type: "slot", theme: "crimson", year: "2026年12月導入予定", maker: "オーイズミ", updated: "2026-11-01",
+    availableFrom: "2026-12-07",
     name: "Lアカマター", shortName: "Lアカマター",
     image: "assets/machines/akamata-slot-key-visual.jpg",
     imageAlt: "Lアカマターのキービジュアル",
@@ -2516,6 +2531,7 @@ window.ICHIGEKI_MACHINES = {
   },
   "majo-to-yajuu-slot": {
     order: 12.8, type: "slot", theme: "violet", year: "2026年12月導入予定", maker: "オレンジ", updated: "2026-11-01",
+    availableFrom: "2026-12-21",
     name: "スマスロ 魔女と野獣", shortName: "スマスロ 魔女と野獣",
     image: "assets/machines/majo-to-yajuu-slot-key-visual.jpg",
     imageAlt: "スマスロ 魔女と野獣のキービジュアル",
@@ -3107,6 +3123,19 @@ window.ICHIGEKI_MACHINES = {
       { heading: "天国とパトランプ", paragraphs: ["REG約90枚、BIG約210枚、SBIG約350枚から32G以内の連チャンを狙います。", "チェリー天井や全モード移行は再現せず、天国・パトランプ・リミットレスを段階式の比較用抽選へまとめています。"] }
     ],
     sources: [["P-WORLD 基本情報", "https://www.p-world.co.jp/machine/database/10014"], ["なな徹 設定別スペック", "https://nana-press.com/kaiseki/machine/722/19929/"]]
+  }
+};
+
+window.ICHIGEKI_MACHINE_AVAILABILITY = {
+  isReady(machine, now = new Date()) {
+    if (!machine?.availableFrom) return true;
+    const release = new Date(`${machine.availableFrom}T00:00:00+09:00`);
+    return Number.isFinite(release.getTime()) && now.getTime() >= release.getTime();
+  },
+  label(machine) {
+    if (!machine?.availableFrom) return "";
+    const [year, month, day] = machine.availableFrom.split("-").map(Number);
+    return `${year}年${month}月${day}日導入予定`;
   }
 };
 
