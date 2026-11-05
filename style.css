@@ -441,7 +441,7 @@ svg {
 
 .play-button span {
   margin-top: 28px;
-  font-size: 34px;
+  font-size: 34px !important;
   font-weight: 950;
   line-height: 1;
 }
@@ -14736,7 +14736,7 @@ textarea { min-height: 132px; line-height: 1.65; }
   color: #8d978e;
   font-size: 10px;
   font-weight: 800;
-  letter-spacing: .12em;
+  letter-spacing: .12em !important;
 }
 
 .achievement-current > div {
@@ -17328,6 +17328,24 @@ textarea { min-height: 132px; line-height: 1.65; }
   color: #fff;
   background: linear-gradient(180deg, #a62620, #4e090c);
   box-shadow: 0 0 12px rgba(255, 72, 45, .36);
+}
+
+/* TOP brand: Japanese wordmark. */
+.home-page .brand-name.home-brand-kanji {
+  color: #fff;
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans JP", sans-serif;
+  font-size: 34px;
+  font-style: normal;
+  font-weight: 1000;
+  letter-spacing: .12em;
+  line-height: 1;
+}
+
+@media (max-width: 760px) {
+  .home-page .brand-name.home-brand-kanji {
+    font-size: 38px !important;
+    letter-spacing: .14em !important;
+  }
 }
 
 .machine-experience[data-ui="arcade"][data-tone="hyper"] {
