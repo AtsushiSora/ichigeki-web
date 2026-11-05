@@ -689,7 +689,7 @@
       return timeline;
     }, []);
     const rushGameModel = pachinkoRushGameModel(sim);
-    const rushGameTimeline = Array.from({ length: hits }, (_, index) => conditionalRushGame(rushGameModel.rate, rushGameModel.games, index < hits - 1 || upper));
+    const rushGameTimeline = Array.from({ length: hits }, () => conditionalRushGame(rushGameModel.rate, rushGameModel.games, true));
     flow.push(`表記${yen.format(displayedPayout)}玉 → 実獲得${yen.format(payout)}玉`);
     const usedBalls = investmentUnits * lendBalls;
     const diff = payout - usedBalls;
@@ -1241,6 +1241,26 @@
     return runId === experienceRunId;
   }
 
+  async function animatePachinkoRushRunout(data, result, runId) {
+    const totalGames = Math.max(10, Math.round(Number(data.rushGameLimit) || 100));
+    setExperienceStage(3, "RUSH LAST", `${data.upper ? data.upperLabel : data.mainLabel} 最終区間`, `0 / ${yen.format(totalGames)}回転`, "大当りを待ちながら最後まで消化します", "normal", data.upper ? data.upperContinueChance : data.continueChance, "RUSH終了までの回転");
+    for (const progress of [.12, .28, .45, .62, .76, .88, .96, 1]) {
+      if (runId !== experienceRunId || experienceSkipped) return false;
+      const current = Math.max(1, Math.round(totalGames * progress));
+      const remaining = Math.max(0, totalGames - current);
+      document.getElementById("machineExperienceValue").textContent = `${yen.format(current)} / ${yen.format(totalGames)}回転`;
+      document.getElementById("machineExperienceTitle").textContent = remaining > 0 ? `残り${yen.format(remaining)}回転` : "LAST 0";
+      document.getElementById("machineExperienceMessage").textContent = remaining > 0 ? "数字が進む…大当りを待っています" : "最終回転まで駆け抜けました";
+      setExperienceHud(`${yen.format(current)}回転`, `${yen.format(result.investment)}円`, `${yen.format(data.payout)}${data.payoutUnit}`);
+      await waitForExperience(68);
+    }
+    if (runId !== experienceRunId) return false;
+    setExperienceStage(3, "RUSH END", "RUSH終了", `${yen.format(totalGames)}回転 消化`, `大当りなし・${data.hits}回当たりで終了`, "end", 0, "駆け抜け結果");
+    setExperienceHud(`${yen.format(totalGames)}回転`, `${yen.format(result.investment)}円`, `${yen.format(data.payout)}${data.payoutUnit}`);
+    await waitForExperience(620);
+    return runId === experienceRunId;
+  }
+
   function skipExperience() {
     experienceSkipped = true;
     if (experienceDelayTimer) window.clearTimeout(experienceDelayTimer);
@@ -1367,13 +1387,15 @@
         const actualAward = data.actualAwards?.[hit - 1] ?? Math.max(0, estimatedPayout - previousPayout);
         const roundLabel = pachinkoRoundLabel(displayedAward);
         setExperienceHud(`${yen.format(data.attempts)}回転`, `${yen.format(result.investment)}円`, `${yen.format(estimatedPayout)}玉`);
-        setExperienceStage(3, upperReached ? "UPPER RUSH" : "RUSH MODE", upperReached ? data.upperLabel : hit === data.hits ? "RUSH 終了" : "RUSH 継続！", `${roundLabel} / +${yen.format(displayedAward)}${data.payoutUnit}`, `実獲得 +${yen.format(actualAward)}${data.payoutUnit} / 累計 ${yen.format(estimatedPayout)}${data.payoutUnit}`, upperReached ? "hyper" : "rush", upperReached ? data.upperContinueChance : data.continueChance, upperReached ? `${data.upperLabel}継続率` : `${data.mainLabel}継続率`);
+        setExperienceStage(3, upperReached ? "UPPER RUSH" : "RUSH MODE", upperReached ? data.upperLabel : hit === 1 ? "RUSH START" : "RUSH 継続！", `${roundLabel} / +${yen.format(displayedAward)}${data.payoutUnit}`, `実獲得 +${yen.format(actualAward)}${data.payoutUnit} / 累計 ${yen.format(estimatedPayout)}${data.payoutUnit}`, upperReached ? "hyper" : "rush", upperReached ? data.upperContinueChance : data.continueChance, upperReached ? `${data.upperLabel}継続率` : `${data.mainLabel}継続率`);
         await waitForExperience(1000);
       }
       if (data.hits > animatedHits && !experienceSkipped) {
         setExperienceStage(3, "RUSH MODE", "一気に連チャン！", `${data.hits}回 / ${yen.format(data.payout)}${data.payoutUnit}`, "高速演出で最終結果へ", data.upper ? "hyper" : "rush", data.upper ? data.upperContinueChance : data.continueChance, "継続率");
         await waitForExperience(580);
       }
+      if (runId !== experienceRunId) return;
+      await animatePachinkoRushRunout(data, result, runId);
     } else {
       setExperienceStage(3, "NORMAL END", "通常へ", "連チャンなし", "最終結果を表示します", "end", 0, "連チャン結果");
       await waitForExperience(420);
