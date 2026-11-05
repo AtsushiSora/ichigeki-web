@@ -556,7 +556,7 @@
     <section class="machine-simulator" id="simulator">
       <div class="machine-sim-head"><div><span class="machine-section-label">SIMULATOR</span><h2>${machine.shortName} 簡易シミュレーター</h2></div><span class="machine-sim-badge${machineReady ? "" : " is-preparing"}">${machineReady ? "娯楽用" : "準備中"}</span></div>
       ${machineReady ? "" : `<div class="machine-preparing-notice" role="status"><span>COMING SOON</span><strong>導入前のため、まだ遊べません</strong><p>${availabilityLabel}です。導入日を迎えると自動でスタートできるようになります。</p></div>`}
-      <p class="machine-sim-note">投資・換金・収支は固定レートで計算します。パチンコは250玉貸し・28玉交換、スロットは46枚貸し・5.2枚交換です。${machine.sim.kind === "pachinko" ? "表記出玉と、打ち出し・オーバー入賞を簡易反映した実獲得出玉を分けて表示します。" : `スロットは開始時に${slotSettingLabel}を均等抽選し、最終結果で設定を発表します。`}</p>
+      <p class="machine-sim-note">投資・換金・収支は固定レートで計算します。パチンコは250玉貸し・28玉交換、スロットは46枚貸し・5.2枚交換です。${machine.sim.kind === "pachinko" ? "表記出玉と、打ち出し・オーバー入賞を簡易反映した実獲得出玉を分けて表示します。" : machine.sim.kind === "juggler" ? `Aタイプは開始時に${slotSettingLabel}を均等抽選し、BIG・REGを重ねて終了時に設定を発表します。` : `開始時に${slotSettingLabel}を均等抽選し、AT中のレア役、上乗せ、特化ゾーン、上位ATを機種別の代表値で時系列表示します。設定は最終結果で発表します。`}</p>
       <div class="machine-sim-layout">
         <div class="machine-sim-controls">${controlMarkup()}<div class="machine-average-grid" id="averageGrid"></div><div class="machine-start-anchor" id="machineStartAnchor"></div><button class="machine-start-button${machineReady ? "" : " is-preparing"}" id="machineStart" type="button"${machineReady ? "" : " disabled"}><span>${machineReady ? startLabel : "準備中"}</span><small>${machineReady ? labels.join(" → ") : availabilityLabel}</small></button><button class="machine-sticky-back" id="machineStickyBack" type="button" aria-label="前のページに戻る" hidden><span aria-hidden="true">←</span><strong>戻る</strong></button></div>
         <div class="machine-result" id="machineResult" aria-live="polite"><span>${machineReady ? "RESULT" : "COMING SOON"}</span><strong id="resultTitle">${machineReady ? "開始ボタンを押してください" : "導入後に遊べます"}</strong><p id="resultSummary">${machineReady ? "平均値と今回の結果を比較できます。" : `${availabilityLabel}です。現在は記事とスペックをご覧ください。`}</p><div class="machine-result-stats" id="resultStats"></div><div class="machine-flow" id="resultFlow"></div><p class="machine-auto-save-status" id="machineAutoSaveStatus">${machineReady ? "結果は自動でマイ記録へ保存されます。" : "シミュレーターは導入日に自動で有効になります。"}</p><div class="achievement-unlock-toast" id="machineAchievementUnlock" hidden><span>TITLE UNLOCKED</span><strong></strong><small>新しい称号を獲得しました</small></div><div class="machine-result-actions"><a class="button" href="ranking.html#achievements">称号・記録を見る</a><a class="button" id="shareMachineResult" href="community.html?machine=${slug}&compose=simulation#simulationComposer">結果を投稿</a></div><div class="machine-ranking-entry"><label class="machine-ranking-name"><span>ランキングに登録する名前</span><input id="rankingNickname" type="text" maxlength="16" autocomplete="nickname" placeholder="ニックネーム"></label><button class="button primary" id="rankMachineResult" type="button" disabled>ランキングに登録</button></div></div>
@@ -564,7 +564,7 @@
       <section class="machine-experience" id="machineExperience" role="dialog" aria-modal="true" aria-label="${machine.shortName}のシミュレーション演出" data-profile="${experienceProfile.key}" data-machine-type="${machine.type}" data-ui="arcade" data-game-mode="${gameExperienceMode}" hidden>
         <div class="machine-experience-head"><div class="machine-experience-ident"><span id="machineExperienceStep">STEP 1 / 5</span><strong>${machine.shortName}</strong></div><div><button type="button" id="machineExperienceSound" aria-pressed="${experienceSoundEnabled}">${experienceSoundEnabled ? "音ON" : "音OFF"}</button><button type="button" id="machineExperienceSkip">スキップ</button><button type="button" id="machineExperienceClose" aria-label="ゲーム画面を閉じる">×</button></div></div>
         <div class="machine-experience-hud"><div><span>${machine.sim.kind === "pachinko" ? "回転" : "ゲーム"}</span><strong id="machineExperienceCurrent">0${machine.sim.kind === "pachinko" ? "回転" : "G"}</strong></div><div><span>投資</span><strong id="machineExperienceInvestment">0円</strong></div><div><span id="machineExperienceRewardLabel">${machine.sim.kind === "juggler" ? "差枚" : machine.type === "slot" ? "獲得" : "実獲得"}</span><strong id="machineExperienceReward">0${machine.type === "slot" ? "枚" : "玉"}</strong></div></div>
-        <div class="machine-experience-screen" id="machineExperienceScreen"><div class="machine-experience-art" aria-hidden="true"><span>${machine.shortName}</span></div><span id="machineExperiencePhase">${experienceProfile.system}</span><strong id="machineExperienceTitle">抽選中</strong><b id="machineExperienceValue">0</b><p id="machineExperienceMessage">結果を抽選しています</p><div class="machine-expectation"><div><span id="machineExperienceCue">${experienceProfile.cue}</span><strong><small>演出期待度</small><b id="machineExperienceChance">抽選中</b></strong></div><div class="machine-expectation-track" role="progressbar" aria-label="演出期待度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="machineExperienceChanceBar"></i></div><small>シミュレーション上の抽選率目安</small></div></div>
+        <div class="machine-experience-screen" id="machineExperienceScreen"><div class="machine-experience-art" aria-hidden="true"><span>${machine.shortName}</span></div><span id="machineExperiencePhase">${experienceProfile.system}</span><strong id="machineExperienceTitle">抽選中</strong><b id="machineExperienceValue">0</b><p id="machineExperienceMessage">結果を抽選しています</p><div class="machine-slot-at-status" id="machineSlotAtStatus" hidden><span>AT STATUS</span><strong id="machineSlotRemaining">消化 0G</strong><b id="machineSlotAddOn">上乗せ +0枚</b><small id="machineSlotTotal">累計 0枚</small></div><div class="machine-expectation"><div><span id="machineExperienceCue">${experienceProfile.cue}</span><strong><small>演出期待度</small><b id="machineExperienceChance">抽選中</b></strong></div><div class="machine-expectation-track" role="progressbar" aria-label="演出期待度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="machineExperienceChanceBar"></i></div><small>シミュレーション上の抽選率目安</small></div></div>
         <div class="machine-atype-actions" id="machineAtypeActions" aria-label="Aタイプの続行選択" hidden><button type="button" class="machine-atype-button is-continue" id="machineAtypeContinue"><span>続ける</span><small>NEXT BONUS</small></button><button type="button" class="machine-atype-button is-stop" id="machineAtypeStop"><span>やめる</span><small>RESULT</small></button></div>
         <div class="machine-experience-finish-actions" id="machineExperienceFinishActions" aria-label="結果画面の操作" hidden><div class="machine-experience-session-total" id="machineExperienceSessionTotal" hidden><span>SESSION TOTAL</span><strong id="machineExperienceSessionBalance">合計収支 0円</strong><small id="machineExperienceSessionDetail">1回目の結果を集計します</small></div><button type="button" class="machine-experience-finish-button is-replay" id="machineExperienceReplay"><span>もう一度</span><small>REPLAY</small></button><button type="button" class="machine-experience-finish-button is-back" id="machineExperienceBack"><span>戻る</span><small>BACK</small></button></div>
         <button type="button" class="machine-experience-push" id="machineExperiencePush" hidden>PUSH</button>
@@ -739,23 +739,61 @@
     const investment = investmentUnits * 1000;
     const usedCoins = investmentUnits * lendCoins;
     const flow = [`${games}Gで${sim.triggerLabel}`];
+    const atEvents = [];
     let payout = 0;
     let entered = Math.random() < triggerSuccess;
     let upper = false;
+    let addOnCount = 0;
+    let addOnTotal = 0;
+    let upperLoops = 0;
+    let upperPayoutTotal = 0;
+    let atGamesTotal = 0;
     if (!entered) {
       flow.push(`${sim.mainLabel}非突入`);
     } else {
-      payout = randomInt(sim.normalMin, sim.normalMax);
+      const basePayout = randomInt(sim.normalMin, sim.normalMax);
+      const pureIncreaseText = machine.specs?.find(([label]) => /純増/.test(label))?.[1] || "";
+      const publishedPureIncrease = Number.parseFloat(String(pureIncreaseText).match(/[\d.]+/)?.[0] || "");
+      const atPureIncrease = Math.max(1, Number(sim.atPureIncrease) || publishedPureIncrease || 4);
+      const baseAtGames = Math.max(20, Math.min(300, Math.round(basePayout / atPureIncrease)));
+      payout = basePayout;
+      atGamesTotal += baseAtGames;
       flow.push(`${sim.mainLabel}突入`);
-      if (Math.random() < specialChance) { const add = randomInt(sim.specialMin, sim.specialMax); payout += add; flow.push(`${sim.specialLabel} +${add}枚`); }
-      if (Math.random() < upperChance) {
+      atEvents.push({ kind: "at-start", label: sim.mainLabel, games: baseAtGames, award: basePayout, cumulative: payout });
+
+      // Keep the published overall special-zone chance while allowing rare multi-hit runs.
+      const specialChecks = Math.max(1, Math.min(3, Math.ceil(basePayout / 500)));
+      const perCheckChance = 1 - Math.pow(1 - specialChance, 1 / specialChecks);
+      for (let check = 0; check < specialChecks && payout < SLOT_COMPLETE_LIMIT; check += 1) {
+        if (Math.random() >= perCheckChance) continue;
+        const requestedAdd = randomInt(sim.specialMin, sim.specialMax);
+        const add = Math.max(0, Math.min(requestedAdd, SLOT_COMPLETE_LIMIT - payout));
+        if (!add) break;
+        const gameAdd = Math.max(10, Math.min(200, Math.round(add / 100) * 10));
+        const eventGames = randomInt(8, 38);
+        payout += add;
+        addOnCount += 1;
+        addOnTotal += add;
+        atGamesTotal += eventGames + gameAdd;
+        atEvents.push({ kind: "special", label: sim.specialLabel, trigger: "レア役成立", games: eventGames, gameAdd, award: add, cumulative: payout, number: addOnCount });
+        flow.push(`レア役 → ${sim.specialLabel} +${add}枚（+${gameAdd}G）`);
+      }
+      if (payout < SLOT_COMPLETE_LIMIT && Math.random() < upperChance) {
         flow.push(sim.upperChallenge);
+        atEvents.push({ kind: "upper-challenge", label: sim.upperChallenge, games: randomInt(18, 48), award: 0, cumulative: payout });
         upper = Math.random() < sim.upperSuccess;
         if (upper) {
-          let loops = 1;
-          payout += sim.upperPayout;
-          while (loops < 100 && Math.random() < sim.upperContinue) { loops += 1; payout += sim.upperPayout; }
-          flow.push(`${sim.upperLabel} ${loops}セット`);
+          do {
+            const award = Math.max(0, Math.min(sim.upperPayout, SLOT_COMPLETE_LIMIT - payout));
+            if (!award) break;
+            upperLoops += 1;
+            const upperGames = randomInt(24, 72);
+            payout += award;
+            upperPayoutTotal += award;
+            atGamesTotal += upperGames;
+            atEvents.push({ kind: "upper", label: sim.upperLabel, games: upperGames, award, cumulative: payout, set: upperLoops });
+          } while (upperLoops < 100 && payout < SLOT_COMPLETE_LIMIT && Math.random() < sim.upperContinue);
+          flow.push(`${sim.upperLabel} ${upperLoops}セット・+${yen.format(upperPayoutTotal)}枚`);
         } else flow.push(`${sim.upperChallenge}失敗`);
       }
     }
@@ -773,14 +811,15 @@
     const rankScore = Math.round(payout - rankInvestmentUnits * RANKING_RATE.slot.lendCoins);
     const salesIndex = Math.round(usedCoins * coinUnit);
     const resultLabel = complete ? "コンプリート" : upper ? sim.upperLabel : entered ? sim.mainLabel : `${sim.triggerLabel}失敗`;
-    const atGameTimeline = flow.slice(1).map((_, index) => Math.max(1, Math.round(12 + Math.random() * (42 + index * 9))));
+    const atGameTimeline = atEvents.map(event => Math.max(1, Number(event.games) || 1));
     const settingRateStats = [[`設定${setting}の${sim.triggerLabel}`, `約1/${triggerRate.toFixed(1)}`]];
     if (sim.mainLabel !== sim.triggerLabel || Math.abs(mainRate - triggerRate) >= 0.05) {
       settingRateStats.push([`設定${setting}の${sim.mainLabel}`, `約1/${mainRate.toFixed(1)}`]);
     }
-    const stats = [["今回の設定", `設定${setting}`], ["設定差モデル", settingModelLabel], ["今回のゲーム数", `${yen.format(games)}G`], ...settingRateStats, ["現金投資目安", `${yen.format(investment)}円`], ["獲得枚数", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]];
+    const atStats = entered ? [["AT消化モデル", `${yen.format(atGamesTotal)}G相当`], ["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnTotal)}枚` : "上乗せなし"], ["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : "非当選"], ["上位AT", upper ? `${sim.upperLabel} ${upperLoops}セット` : "非到達"]] : [];
+    const stats = [["今回の設定", `設定${setting}`], ["設定差モデル", settingModelLabel], ["今回のゲーム数", `${yen.format(games)}G`], ...settingRateStats, ["現金投資目安", `${yen.format(investment)}円`], ...atStats, ["獲得枚数", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]];
     if (complete) stats.unshift(["到達状態", "コンプリート"]);
-    return { title: `設定${setting}｜${complete ? "コンプリート" : upper ? `${sim.upperLabel}到達` : entered ? `${sim.mainLabel}終了` : `${sim.triggerLabel}失敗`}`, summary: complete ? `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}、獲得枚数が${yen.format(SLOT_COMPLETE_LIMIT)}枚に到達し、コンプリートしました。` : `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}。${entered ? `${payout}枚を獲得しました。` : `${sim.mainLabel}には届きませんでした。`}`, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, entered, entryChance: triggerSuccess * 100, mainLabel: sim.mainLabel, specialChance: specialChance * 100, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperChallenge: sim.upperChallenge || "", upper, upperLabel: sim.upperLabel || "", complete, payout, payoutUnit: "枚", atGameTimeline, flow: [...flow] } };
+    return { title: `設定${setting}｜${complete ? "コンプリート" : upper ? `${sim.upperLabel}到達` : entered ? `${sim.mainLabel}終了` : `${sim.triggerLabel}失敗`}`, summary: complete ? `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}、獲得枚数が${yen.format(SLOT_COMPLETE_LIMIT)}枚に到達し、コンプリートしました。` : `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}。${entered ? `${payout}枚を獲得しました。上乗せ${addOnCount}回・${upper ? `${sim.upperLabel} ${upperLoops}セット。` : "上位AT非到達。"}` : `${sim.mainLabel}には届きませんでした。`}`, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, entered, entryChance: triggerSuccess * 100, mainLabel: sim.mainLabel, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperChallenge: sim.upperChallenge || "", upper, upperLabel: sim.upperLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
   }
 
   function createATypeSession(setting) {
@@ -1136,6 +1175,16 @@
     document.getElementById("machineExperienceReward").textContent = reward;
   }
 
+  function setSlotAtStatus({ visible = false, games = 0, addOn = 0, total = 0 } = {}) {
+    const status = document.getElementById("machineSlotAtStatus");
+    if (!status) return;
+    status.hidden = !visible;
+    if (!visible) return;
+    document.getElementById("machineSlotRemaining").textContent = `消化 ${yen.format(Math.max(0, Math.round(games)))}G`;
+    document.getElementById("machineSlotAddOn").textContent = `上乗せ +${yen.format(Math.max(0, Math.round(addOn)))}枚`;
+    document.getElementById("machineSlotTotal").textContent = `累計 ${yen.format(Math.max(0, Math.round(total)))}枚`;
+  }
+
   function waitForExperienceAction(label, autoDelay = 4500, variant = "normal") {
     if (experienceSkipped) return Promise.resolve();
     const button = document.getElementById("machineExperiencePush");
@@ -1216,6 +1265,7 @@
     document.getElementById("machineExperienceFinishActions").hidden = true;
     document.getElementById("machineAtypeActions").hidden = true;
     document.getElementById("machineExperiencePush").hidden = true;
+    setSlotAtStatus();
     setExperienceHud(`0${machine.sim.kind === "pachinko" ? "回転" : "G"}`, "0円", `0${machine.type === "slot" ? "枚" : "玉"}`);
     document.getElementById("machineOverlayNickname").value = document.getElementById("rankingNickname").value;
     updateExperienceSoundButton();
@@ -1232,6 +1282,7 @@
     document.getElementById("machineExperienceActions").hidden = true;
     document.getElementById("machineExperienceFinishActions").hidden = true;
     document.getElementById("machineAtypeActions").hidden = true;
+    setSlotAtStatus();
     aTypeSession = null;
     aTypeBusy = false;
     resetMachinePlaySession();
@@ -1352,39 +1403,79 @@
     setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(data.entered ? 0 : data.payout)}枚`);
     await waitForExperience(720);
     if (data.entered) {
-      const route = data.flow.slice(1, 7);
-      let upperDecisionRevealed = false;
+      const sourceEvents = Array.isArray(data.atEvents) && data.atEvents.length
+        ? data.atEvents
+        : [{ kind: "at-start", label: data.mainLabel, games: data.atGameTimeline?.[0] || 40, award: data.payout, cumulative: data.payout }];
+      let route = [...sourceEvents];
+      if (route.length > 10) {
+        const visibleEvents = route.slice(0, 7);
+        const remainingEvents = route.slice(7);
+        const previousTotal = Number(visibleEvents[visibleEvents.length - 1]?.cumulative) || 0;
+        const finalTotal = Number(route[route.length - 1]?.cumulative) || data.payout;
+        route = [...visibleEvents, { kind: "summary", label: `残り${remainingEvents.length}演出を高速消化`, games: remainingEvents.reduce((sum, event) => sum + (Number(event.games) || 0), 0), award: Math.max(0, finalTotal - previousTotal), cumulative: finalTotal }];
+      }
+      let consumedGames = 0;
+      let runningAddOn = 0;
+      setSlotAtStatus({ visible: true, games: 0, addOn: 0, total: 0 });
       for (let index = 0; index < route.length; index += 1) {
         if (runId !== experienceRunId || experienceSkipped) break;
-        const label = route[index];
-        const isUpperDecision = Boolean(data.upperChallenge) && label === data.upperChallenge;
-        if (isUpperDecision && !upperDecisionRevealed) {
-          const upperGames = data.atGameTimeline?.[index] || 30;
-          const counterComplete = await animateExperienceCounter(upperGames, "G", "AT COUNT", `${data.mainLabel}消化中`, `${data.upperChallenge}の当落まで数字が進みます`, data.upperRouteChance, "上位ルート期待度", runId);
+        const event = route[index];
+        const eventGames = Math.max(1, Number(event.games) || data.atGameTimeline?.[index] || 20);
+
+        if (event.kind === "upper-challenge") {
+          const counterComplete = await animateExperienceCounter(eventGames, "G", "AT COUNT", `${data.mainLabel}消化中`, `${data.upperChallenge}の当落まで数字が進みます`, data.upperRouteChance, "上位ルート期待度", runId);
           if (!counterComplete) return;
+          consumedGames += eventGames;
+          setSlotAtStatus({ visible: true, games: consumedGames, addOn: runningAddOn, total: event.cumulative });
           setExperienceStage(3, "UPPER JUDGE", `${data.upperLabel} 突入ジャッジ`, "PUSH", `${data.upperChallenge}の当落を開きます`, "judge", data.upperSuccessChance, `${data.upperLabel}突破率`);
           await waitForExperienceAction("上位PUSH");
           if (runId !== experienceRunId) return;
           setExperienceStage(3, "UPPER JUDGE", data.upper ? `${data.upperLabel} 突入` : `${data.upperChallenge} 失敗`, data.upper ? "突破成功" : "通常AT終了", data.upper ? "上位ATへ進みます" : "最終結果へ進みます", data.upper ? "hyper" : "end", data.upper ? 100 : 0, "上位AT判定結果");
-          await waitForExperience(620);
-          upperDecisionRevealed = true;
+          await waitForExperience(820);
           continue;
         }
-        if (upperDecisionRevealed && !data.upper && data.upperChallenge && label.includes(data.upperChallenge)) continue;
-        const atGames = data.atGameTimeline?.[index] || Math.max(1, 20 + index * 10);
-        const counterComplete = await animateExperienceCounter(atGames, "G", "AT COUNT", data.upper && label.includes(data.upperLabel) ? `${data.upperLabel}消化中` : `${data.mainLabel}消化中`, "次の演出まで数字が進みます", data.upper && label.includes(data.upperLabel) ? data.upperSuccessChance : data.upperRouteChance, data.upper && label.includes(data.upperLabel) ? `${data.upperLabel}継続目安` : "特化・上位ルート期待度", runId);
+
+        if (event.kind === "summary") {
+          consumedGames = Number(data.atGamesTotal) || consumedGames + eventGames;
+          runningAddOn = Number(data.addOnTotal) || runningAddOn;
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, games: consumedGames, addOn: runningAddOn, total: event.cumulative });
+          setExperienceStage(3, "HIGH SPEED AT", event.label, `+${yen.format(event.award)}枚`, `累計 ${yen.format(event.cumulative)}枚まで一気に表示`, data.upper ? "hyper" : "rush", 100, "高速消化結果");
+          await waitForExperience(900);
+          continue;
+        }
+
+        const counterComplete = await animateExperienceCounter(eventGames, "G", "AT COUNT", event.kind === "upper" ? `${data.upperLabel}消化中` : `${data.mainLabel}消化中`, event.kind === "special" ? "レア役成立までゲーム数が進みます" : "次の出玉契機までゲーム数が進みます", event.kind === "upper" ? data.upperSuccessChance : data.specialChance, event.kind === "upper" ? `${data.upperLabel}継続目安` : `${data.specialLabel || "上乗せ"}当選目安`, runId);
         if (!counterComplete) return;
-        const isUpper = data.upper && (label.includes(data.upperLabel) || index === route.length - 1);
-        const estimatedPayout = Math.max(0, Math.round(data.payout * (index + 1) / Math.max(1, route.length)));
-        setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(estimatedPayout)}枚`);
-        setExperienceStage(3, isUpper ? "UPPER AT" : "AT MODE", label, index === route.length - 1 ? `${yen.format(data.payout)}${data.payoutUnit}` : `${index + 1} / ${route.length}`, isUpper ? "上位ATの結果を抽選中" : "獲得枚数を上乗せ中", isUpper ? "hyper" : "rush", isUpper ? data.upperSuccessChance : label.includes("+") ? data.specialChance : data.upperRouteChance, isUpper ? `${data.upperLabel}突破率` : "特化・上位ルート期待度");
-        await waitForExperience(isUpper ? 600 : 360);
+        consumedGames += eventGames;
+
+        if (event.kind === "special") {
+          setExperienceStage(3, "RARE ROLE", event.trigger || "レア役成立", "PUSH", `${event.label}の上乗せ枚数を決めます`, "judge", data.specialChance, `${event.label}当選目安`);
+          await waitForExperienceAction("上乗せPUSH", 4000, "gold");
+          if (runId !== experienceRunId) return;
+          consumedGames += Number(event.gameAdd) || 0;
+          runningAddOn += Number(event.award) || 0;
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, games: consumedGames, addOn: runningAddOn, total: event.cumulative });
+          setExperienceStage(3, "ADD ON", event.label, `+${yen.format(event.gameAdd)}G / +${yen.format(event.award)}枚`, `累計 ${yen.format(event.cumulative)}枚へ上乗せ`, "hit", 100, `${event.label} 結果`);
+          await waitForExperience(1350);
+          continue;
+        }
+
+        const isUpper = event.kind === "upper";
+        setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+        setSlotAtStatus({ visible: true, games: consumedGames, addOn: runningAddOn, total: event.cumulative });
+        setExperienceStage(3, isUpper ? "UPPER AT" : "AT MODE", isUpper ? `${event.label} SET ${event.set}` : `${event.label} START`, `+${yen.format(event.award)}枚`, isUpper ? `上位AT累計 ${yen.format(event.cumulative)}枚` : `基本獲得 ${yen.format(event.cumulative)}枚`, isUpper ? "hyper" : "rush", isUpper ? data.upperSuccessChance : data.specialChance, isUpper ? `${data.upperLabel}継続目安` : `${data.specialLabel || "上乗せ"}当選目安`);
+        await waitForExperience(isUpper ? 900 : 700);
       }
       if (data.complete) {
         setExperienceStage(3, "SLOT COMPLETE", "コンプリート", `${yen.format(data.payout)}枚`, "獲得上限へ到達", "complete", 100, "コンプリート到達");
+        setSlotAtStatus({ visible: true, games: Number(data.atGamesTotal) || consumedGames, addOn: Number(data.addOnTotal) || runningAddOn, total: data.payout });
         await waitForExperience(780);
       }
+      setSlotAtStatus({ visible: true, games: Number(data.atGamesTotal) || consumedGames, addOn: Number(data.addOnTotal) || runningAddOn, total: data.payout });
     } else {
+      setSlotAtStatus();
       setExperienceStage(3, "NORMAL END", "通常へ", "AT非突入", "最終結果を表示します", "end", 0, "AT判定結果");
       await waitForExperience(420);
     }
