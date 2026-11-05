@@ -654,6 +654,7 @@
     const displayedAwards = [rush ? sim.firstPayoutIn : sim.firstPayoutOut];
     let hits = 1;
     let upper = rush && Boolean(sim.upperLabel) && Math.random() < (sim.upperDirectChance || 0);
+    let upperEntryHit = upper ? 1 : 0;
     if (upper && sim.upperEntryPayout) displayedAwards[0] = sim.upperEntryPayout;
     const flow = [`${spins}回転で${sim.hitLabel}`, rush ? `${sim.rushLabel}突入` : `${sim.rushLabel}非突入`];
     if (upper) flow.push(`${sim.upperLabel}直行`);
@@ -668,6 +669,7 @@
             flow.push(`${challengeLabel}突入`);
             if (Math.random() < sim.upperChallengeSuccess) {
               upper = true;
+              upperEntryHit = hits;
               flow.push(`${sim.upperLabel}突入`);
             } else {
               flow.push(`${challengeLabel}失敗`);
@@ -675,6 +677,7 @@
             }
           } else if (Math.random() < (sim.upperUpgradeChance || 0)) {
             upper = true;
+            upperEntryHit = hits;
             flow.push(`${sim.upperLabel}昇格`);
           }
         }
@@ -699,7 +702,7 @@
     const rankInvestment = rankInvestmentUnits * 1000;
     const rankScore = Math.round(payout - rankInvestmentUnits * RANKING_RATE.pachinko.lendBalls);
     const rushResultLabel = upper ? sim.upperLabel : rush ? sim.rushLabel : "通常";
-    return { title: rush ? `${rushResultLabel} ${hits}回当たり` : "通常へ", summary: `${spins}回転で初当り。${upper ? `${sim.upperLabel}まで到達しました。` : rush ? `${sim.rushLabel}に突入しました。` : "RUSHには突入しませんでした。"} 表記${yen.format(displayedPayout)}玉に対して、今回の実獲得は${yen.format(payout)}玉です。`, stats: [["今回の回転数", `${yen.format(spins)}回転`], ["投資目安", `${yen.format(investment)}円`], ["表記出玉", `${yen.format(displayedPayout)}玉`], ["実獲得出玉", `${yen.format(payout)}玉`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差玉目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}玉`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendBalls)}玉貸し・${exchangeBalls}玉交換`]], flow, share: `${machine.shortName}｜${yen.format(spins)}回転｜投資${yen.format(investment)}円｜${rushResultLabel}｜${hits}回当たり｜表記${yen.format(displayedPayout)}玉｜実獲得${yen.format(payout)}玉｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendBalls)}玉貸し・${exchangeBalls}玉交換`, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "balls", balanceYen, exchangeValue, investment, displayedPayout, payout, attempts: spins, experience: { kind: "pachinko", attempts: spins, unit: "回転", hitLabel: sim.hitLabel, hitChance: 100 / sim.hitRate, entered: rush, entryChance: sim.rushEntry * 100, mainLabel: sim.rushLabel, continueChance: sim.rushContinue * 100, upper, upperLabel: sim.upperLabel || "", upperContinueChance: (sim.upperContinue || sim.rushContinue) * 100, hits, displayedPayout, payout, displayedAwards: [...displayedAwards], actualAwards: [...actualAwards], payoutTimeline, rushGameTimeline, rushGameLimit: rushGameModel.games, payoutUnit: "玉" } };
+    return { title: rush ? `${rushResultLabel} ${hits}回当たり` : "通常へ", summary: `${spins}回転で初当り。${upper ? `${sim.upperLabel}まで到達しました。` : rush ? `${sim.rushLabel}に突入しました。` : "RUSHには突入しませんでした。"} 表記${yen.format(displayedPayout)}玉に対して、今回の実獲得は${yen.format(payout)}玉です。`, stats: [["今回の回転数", `${yen.format(spins)}回転`], ["投資目安", `${yen.format(investment)}円`], ["表記出玉", `${yen.format(displayedPayout)}玉`], ["実獲得出玉", `${yen.format(payout)}玉`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差玉目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}玉`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendBalls)}玉貸し・${exchangeBalls}玉交換`]], flow, share: `${machine.shortName}｜${yen.format(spins)}回転｜投資${yen.format(investment)}円｜${rushResultLabel}｜${hits}回当たり｜表記${yen.format(displayedPayout)}玉｜実獲得${yen.format(payout)}玉｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendBalls)}玉貸し・${exchangeBalls}玉交換`, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "balls", balanceYen, exchangeValue, investment, displayedPayout, payout, attempts: spins, experience: { kind: "pachinko", attempts: spins, unit: "回転", hitLabel: sim.hitLabel, hitChance: 100 / sim.hitRate, entered: rush, entryChance: sim.rushEntry * 100, mainLabel: sim.rushLabel, continueChance: sim.rushContinue * 100, upper, upperEntryHit, upperLabel: sim.upperLabel || "", upperContinueChance: (sim.upperContinue || sim.rushContinue) * 100, hits, displayedPayout, payout, displayedAwards: [...displayedAwards], actualAwards: [...actualAwards], payoutTimeline, rushGameTimeline, rushGameLimit: rushGameModel.games, payoutUnit: "玉" } };
   }
 
   function runSlot(setting) {
@@ -1243,8 +1246,10 @@
 
   async function animatePachinkoRushRunout(data, result, runId) {
     const totalGames = Math.max(10, Math.round(Number(data.rushGameLimit) || 100));
-    setExperienceStage(3, "RUSH LAST", `${data.upper ? data.upperLabel : data.mainLabel} 最終区間`, `0 / ${yen.format(totalGames)}回転`, "RUSH終了まで残り回転を消化します", "normal", data.upper ? data.upperContinueChance : data.continueChance, "RUSH終了までの回転");
-    for (const progress of [.12, .28, .45, .62, .76, .88, .96, 1]) {
+    const checkpoints = data.upper ? [.07, .15, .24, .34, .45, .56, .67, .77, .86, .93, .97, 1] : [.12, .28, .45, .62, .76, .88, .96, 1];
+    const stepDelay = data.upper ? 115 : 68;
+    setExperienceStage(3, data.upper ? "UPPER RUSH LAST" : "RUSH LAST", `${data.upper ? data.upperLabel : data.mainLabel} 最終区間`, `0 / ${yen.format(totalGames)}回転`, "RUSH終了まで残り回転を消化します", data.upper ? "hyper" : "normal", data.upper ? data.upperContinueChance : data.continueChance, "RUSH終了までの回転");
+    for (const progress of checkpoints) {
       if (runId !== experienceRunId || experienceSkipped) return false;
       const current = Math.max(1, Math.round(totalGames * progress));
       const remaining = Math.max(0, totalGames - current);
@@ -1252,7 +1257,7 @@
       document.getElementById("machineExperienceTitle").textContent = remaining > 0 ? `残り${yen.format(remaining)}回転` : "LAST 0";
       document.getElementById("machineExperienceMessage").textContent = remaining > 0 ? "数字が進む…残り回転を消化中" : "最終回転まで駆け抜けました";
       setExperienceHud(`${yen.format(current)}回転`, `${yen.format(result.investment)}円`, `${yen.format(data.payout)}${data.payoutUnit}`);
-      await waitForExperience(68);
+      await waitForExperience(stepDelay);
     }
     if (runId !== experienceRunId) return false;
     setExperienceStage(3, "RUSH END", "RUSH終了", `${yen.format(totalGames)}回転 消化`, `大当りなし・${data.hits}回当たりで終了`, "end", 0, "駆け抜け結果");
@@ -1355,32 +1360,39 @@
     await waitForExperience(760);
     if (data.entered) {
       const animatedHits = arcadePachinkoFlow ? Math.max(1, data.hits) : Math.min(Math.max(1, data.hits), 10);
+      const upperEntryHit = data.upper ? Math.max(1, Math.min(animatedHits, Math.round(Number(data.upperEntryHit) || 1))) : Number.POSITIVE_INFINITY;
       for (let hit = 1; hit <= animatedHits; hit += 1) {
         if (runId !== experienceRunId || experienceSkipped) break;
-        const upperReached = data.upper && hit === animatedHits;
+        const inUpper = data.upper && hit >= upperEntryHit;
+        const upperReached = inUpper && hit === upperEntryHit;
         const isFinalHit = hit === data.hits;
-        const isHotHit = arcadePachinkoFlow && !upperReached && !isFinalHit && hit > 1 && hit % 3 === 0;
+        const isHotHit = arcadePachinkoFlow && !inUpper && !isFinalHit && hit > 1 && hit % 3 === 0;
         const estimatedPayout = data.payoutTimeline?.[hit - 1] ?? Math.max(1, Math.round(data.payout * hit / data.hits));
         const rushGames = data.rushGameTimeline?.[hit - 1] || data.rushGameLimit || 100;
-        const counterComplete = await animateExperienceCounter(rushGames, "回転", upperReached ? "UPPER COUNT" : "RUSH COUNT", upperReached ? `${data.upperLabel}を抽選中` : `${data.mainLabel}消化中`, "当落まで数字が進みます", upperReached ? data.upperContinueChance : data.continueChance, upperReached ? `${data.upperLabel}突入・継続目安` : `${data.mainLabel}継続率`, runId);
+        const counterComplete = await animateExperienceCounter(rushGames, "回転", inUpper ? "UPPER COUNT" : "RUSH COUNT", upperReached ? `${data.upperLabel}を抽選中` : inUpper ? `${data.upperLabel}消化中` : `${data.mainLabel}消化中`, "当落まで数字が進みます", inUpper ? data.upperContinueChance : data.continueChance, inUpper ? `${data.upperLabel}継続率` : `${data.mainLabel}継続率`, runId);
         if (!counterComplete) return;
         if (arcadePachinkoFlow || hit === 1 || upperReached) {
-          const decisionLabel = upperReached ? `${data.upperLabel} 突入ジャッジ` : isHotHit ? "高期待度ジャッジ" : `${data.mainLabel} 継続ジャッジ`;
-          const decisionChance = upperReached ? data.upperContinueChance : data.continueChance;
-          const decisionPhase = upperReached ? "UPPER JUDGE" : isHotHit ? "HIGH CHANCE" : "RUSH JUDGE";
-          const decisionMessage = upperReached ? "上位RUSHの当落を開きます" : isHotHit ? "期待が高まる継続ジャッジ" : "大当たり中の当落を開きます";
-          const pushVariant = upperReached ? "upper" : isHotHit ? "gold" : "normal";
-          const pushLabel = upperReached ? "上位PUSH" : isHotHit ? "激熱PUSH" : "継続PUSH";
-          setExperienceStage(3, decisionPhase, decisionLabel, arcadePachinkoFlow ? `${yen.format(rushGames)}回転` : "PUSH", decisionMessage, "judge", decisionChance, upperReached ? `${data.upperLabel}突入・継続目安` : `${data.mainLabel}継続率`);
+          const decisionLabel = upperReached ? `${data.upperLabel} 突入ジャッジ` : inUpper ? `${data.upperLabel} 継続ジャッジ` : isHotHit ? "高期待度ジャッジ" : `${data.mainLabel} 継続ジャッジ`;
+          const decisionChance = inUpper ? data.upperContinueChance : data.continueChance;
+          const decisionPhase = upperReached ? "UPPER JUDGE" : inUpper ? "UPPER RUSH" : isHotHit ? "HIGH CHANCE" : "RUSH JUDGE";
+          const decisionMessage = upperReached ? "上位RUSHの当落を開きます" : inUpper ? "上位RUSHの継続当落を開きます" : isHotHit ? "期待が高まる継続ジャッジ" : "大当たり中の当落を開きます";
+          const pushVariant = inUpper ? "upper" : isHotHit ? "gold" : "normal";
+          const pushLabel = upperReached ? "上位PUSH" : inUpper ? "上位継続PUSH" : isHotHit ? "激熱PUSH" : "継続PUSH";
+          setExperienceStage(3, decisionPhase, decisionLabel, arcadePachinkoFlow ? `${yen.format(rushGames)}回転` : "PUSH", decisionMessage, "judge", decisionChance, inUpper ? `${data.upperLabel}継続率` : `${data.mainLabel}継続率`);
           await waitForExperienceAction(pushLabel, arcadePachinkoFlow && hit > 10 ? 2200 : 4500, pushVariant);
           if (runId !== experienceRunId) return;
+          if (upperReached) {
+            setExperienceStage(3, "UPPER RUSH", `${data.upperLabel} 突入！`, "上位RUSH開始", "ここから上位継続抽選へ進みます", "hyper", data.upperContinueChance, `${data.upperLabel}継続率`);
+            await waitForExperience(850);
+            if (runId !== experienceRunId) return;
+          }
         }
         const displayedAward = data.displayedAwards?.[hit - 1] ?? Math.max(0, Math.round(data.displayedPayout / data.hits));
         const previousPayout = data.payoutTimeline?.[hit - 2] || 0;
         const actualAward = data.actualAwards?.[hit - 1] ?? Math.max(0, estimatedPayout - previousPayout);
         const roundLabel = pachinkoRoundLabel(displayedAward);
         setExperienceHud(`${yen.format(data.attempts)}回転`, `${yen.format(result.investment)}円`, `${yen.format(estimatedPayout)}玉`);
-        setExperienceStage(3, upperReached ? "UPPER RUSH" : "RUSH MODE", upperReached ? data.upperLabel : hit === 1 ? "RUSH START" : "RUSH 継続！", `${roundLabel} / +${yen.format(displayedAward)}${data.payoutUnit}`, `実獲得 +${yen.format(actualAward)}${data.payoutUnit} / 累計 ${yen.format(estimatedPayout)}${data.payoutUnit}`, upperReached ? "hyper" : "rush", upperReached ? data.upperContinueChance : data.continueChance, upperReached ? `${data.upperLabel}継続率` : `${data.mainLabel}継続率`);
+        setExperienceStage(3, inUpper ? "UPPER RUSH" : "RUSH MODE", upperReached ? `${data.upperLabel} 突入` : inUpper ? `${data.upperLabel} 継続！` : hit === 1 ? "RUSH START" : "RUSH 継続！", `${roundLabel} / +${yen.format(displayedAward)}${data.payoutUnit}`, `実獲得 +${yen.format(actualAward)}${data.payoutUnit} / 累計 ${yen.format(estimatedPayout)}${data.payoutUnit}`, inUpper ? "hyper" : "rush", inUpper ? data.upperContinueChance : data.continueChance, inUpper ? `${data.upperLabel}継続率` : `${data.mainLabel}継続率`);
         await waitForExperience(1000);
       }
       if (data.hits > animatedHits && !experienceSkipped) {
