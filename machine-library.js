@@ -728,6 +728,111 @@ window.ICHIGEKI_MACHINES = {
     ],
     sources: [["フィールズ公式 機種サイト", "https://www.eva-project.jp/hajimarinokioku/index_319.html"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10583"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/machine/4797/1/1"]]
   },
+  "wanwan-celebration": {
+    order: 0.51, type: "pachinko", theme: "aqua", year: "2026年10月", maker: "三洋物産", updated: "2026-11-05", published: "2026-11-05",
+    name: "eACわんわんパラダイスCELEBRATION", shortName: "わんわんCELEBRATION",
+    image: "assets/machines/wanwan-celebration-key-visual.jpg",
+    imageAlt: "eACわんわんパラダイスCELEBRATIONの公式キービジュアル",
+    imageCredit: "SANYO 公式機種サイト",
+    imageSource: "https://www.sanyobussan.co.jp/products/pk_ac_wanpara_celebration/",
+    catchcopy: "遊パチ77ver.から、わんわんRUSHと高継続モードへ。",
+    intro: "1台で2スペックを選べる2in1スマパチ。サイトでは遊パチ77ver.を採用し、約1/77.7の初当り、トータルRUSH突入約52%、継続約66%を固定条件で簡易体験できます。",
+    points: ["遊パチ77ver.は通常時約1/77.7", "トータルRUSH突入約52%・継続約66%", "上位わんわんCELEBRATIONは継続約85%"],
+    specs: [["通常時（遊パチ77）", "約1/77.7"], ["高確率時", "約1/39.9"], ["RUSH突入", "約52%"], ["RUSH継続", "約66%"], ["上位継続", "約85%"], ["遊タイム", "低確率149回で時短10000回"]],
+    sim: { kind: "pachinko", hitRate: 77.7, hitLabel: "初当り", startType: "遊パチ77ver.", spinsPer1k: 16.7, minSpins: 10, maxSpins: 30, rushLabel: "わんわんRUSH", rushEntry: 0.52, rushContinue: 0.66, firstPayoutIn: 420, firstPayoutOut: 280, rushPayouts: [[280, 0.40], [420, 0.40], [700, 0.20]], upperLabel: "わんわんCELEBRATION", upperUpgradeChance: 0.08, upperContinue: 0.85 },
+    readerGuide: { verdict: "軽い初当りと段階式のRUSHを遊びやすく体験したい人向けです。", bestFor: ["甘デジ帯で連チャンを楽しみたい", "上位約85%継続を狙いたい"], check: ["サイトでは遊パチ77ver.を採用", "2in1の49ver.は個別抽選していない"], compare: [["oumi-agnes-premium", "アグネス Premium", "甘海タイプと比較"], ["shin-ultraman-79", "シン・ウルトラマン79", "1回転決着型と比較"]] },
+    articleSections: [
+      { heading: "2in1のうち遊パチ77ver.を採用", paragraphs: ["実機は遊パチ77ver.と、ちょいパチ49ver.を1台に搭載します。営業中に内部スペックを変更することはできません。", "シミュレーターは遊パチ77ver.へ固定し、通常時約1/77.7、高確率時約1/39.9を基準にしています。49ver.との混合抽選は行いません。"] },
+      { heading: "チャレンジから2段階RUSHへ", paragraphs: ["初当り後は必ず右打ちへ進み、10Rの約3%はRUSHへ直行、それ以外はチャレンジ突破を目指します。トータルRUSH突入率は約52%です。", "わんわんRUSHは約66%継続。さらに上位のわんわんCELEBRATIONは約85%継続です。サイトでは複数の時短回数を突入・継続・上位昇格の3抽選へ整理します。"] },
+      { heading: "出玉と遊タイム", paragraphs: ["遊パチ77ver.の右打ち出玉は約280個40%・約420個40%・約700個20%。シミュレーターにもこの振り分けを反映します。", "低確率を149回消化すると時短10000回の遊タイムへ進みますが、現在の1回遊技シミュレーターでは遊タイム到達を独立演出にしていません。"] },
+      { heading: "固定条件", bullets: ["16.7回/1,000円・250玉貸し・28玉交換で固定", "平均初当り投資目安は約4,700円", "2in1は遊パチ77ver.のみを再現", "結果はマイ記録と機種別ランキングへ保存"] }
+    ],
+    sources: [["SANYO 公式機種サイト", "https://www.sanyobussan.co.jp/products/pk_ac_wanpara_celebration/"], ["天井ナビ スペックまとめ", "https://tenjo-navi.com/pachinko/e-ac-wanwan-celebration/"]]
+  },
+  "akina-forfans": {
+    order: 0.52, type: "pachinko", theme: "crimson", year: "2026年10月", maker: "D-light", updated: "2026-11-05", published: "2026-11-05",
+    name: "e中森明菜・歌姫伝説～FORFANS～", shortName: "e中森明菜 FORFANS",
+    image: "assets/machines/akina-forfans-key-visual.jpg",
+    imageAlt: "e中森明菜・歌姫伝説～FORFANS～の公式実機画像",
+    imageCredit: "Daiichi777 公式製品情報",
+    imageSource: "https://daiichi777.jp/product/detail/240/akina6",
+    catchcopy: "大入りスタートからST100回へ。3種類の当りで時短を目指す。",
+    intro: "通常時約1/319.7、全ての初当りからST100回へ進む歌パチです。ST継続約70%、4R・7R・10Rを集めるスタンプラリーと時短込み約78%の流れを簡易体験できます。",
+    points: ["通常時約1/319.7・ST突入100%", "ST100回・継続約70%", "4R・7R・10R獲得で時短100回を追加"],
+    specs: [["通常時", "1/319.7"], ["ST中", "1/85.6"], ["ST突入", "100%"], ["ST回数／継続", "100回／約70%"], ["時短込み継続", "約78%"], ["右打ち出玉", "400・700・1500個"]],
+    sim: { kind: "pachinko", hitRate: 319.7, hitLabel: "歌姫BONUS", startType: "大入りスタート・BIG8", spinsPer1k: 31.2, minSpins: 20, maxSpins: 42, rushLabel: "歌姫ST", rushEntry: 1, rushContinue: 0.70, firstPayoutIn: 400, firstPayoutOut: 400, rushPayouts: [[400, 0.33], [700, 0.33], [1500, 0.34]], upperLabel: "歌姫TIME", upperAfterHits: 4, upperEarlyChance: 0.04, upperChallengeSuccess: 1, upperContinue: 0.78 },
+    readerGuide: { verdict: "初当り後は必ずSTへ進み、楽曲とラウンド収集を楽しみたい人向けです。", bestFor: ["100%ST突入を重視したい", "400・700・1500個の当りを集めたい"], check: ["基本ST継続は約70%", "約78%は時短獲得時を含む目安"], compare: [["eva319-red", "エヴァ319 RED", "ミドルSTと比較"], ["wanwan-celebration", "わんわんCELEBRATION", "遊びやすい新台と比較"]] },
+    articleSections: [
+      { heading: "全ての初当りからST100回", paragraphs: ["通常時は約1/319.7、ST中は約1/85.6です。初当りのラウンドに関係なくST100回へ進み、残保留込みの継続期待度は約70%です。", "大入りスタートと8個保留を組み合わせたBIG8により、一般的なミドル機より高い回転率を想定します。"] },
+      { heading: "スタンプラリーで時短を獲得", paragraphs: ["ST中に4R・7R・10Rの3種類を全て獲得すると、ST終了後に時短100回が追加されます。STと時短を合わせた継続期待度は約78%です。", "サイトではラウンド履歴を個別に収集する完全再現ではなく、連チャンを重ねた際の上位昇格として歌姫TIMEを表示します。"] },
+      { heading: "右打ちの3つの出玉", paragraphs: ["右打ち中は4R約400個33%、7R約700個33%、10R約1500個34%です。初当りは10R24%・7R26%・4R50%ですが、簡易モデルの初回は400個へ固定します。", "各当り後のPUSH画面ではラウンドと表記出玉、打ち出しを考慮した実獲得出玉を分けて表示します。"] },
+      { heading: "固定条件", bullets: ["31.2回/1,000円・250玉貸し・28玉交換で固定", "平均初当り投資目安は約10,300円", "時短獲得条件は簡易昇格で表現", "結果はマイ記録と機種別ランキングへ保存"] }
+    ],
+    sources: [["Daiichi777 公式製品情報", "https://daiichi777.jp/product/detail/240/akina6"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10541"]]
+  },
+  "shin-ultraman-79": {
+    order: 1.1, type: "pachinko", theme: "ice", year: "2026年9月", maker: "オッケー.", updated: "2026-11-05", published: "2026-11-05",
+    name: "e シン・ウルトラマン 79ver.", shortName: "シン・ウルトラマン79",
+    image: "assets/machines/shin-ultraman-79-key-visual.png",
+    imageAlt: "e シン・ウルトラマン 79ver.の公式キービジュアル",
+    imageCredit: "オッケー. 公式機種サイト",
+    imageSource: "https://ok777.co.jp/lineup/shin_ultraman_79/r/on/",
+    catchcopy: "初当り後は必ず1回転勝負。突破すれば約80%のゼットンATTACKへ。",
+    intro: "通常時約1/79.9、初当り後は必ずウルトラバトルモードへ進む甘デジです。1回転の約33%を突破し、継続約80%のゼットンATTACKを目指す流れを簡易体験できます。",
+    points: ["通常時約1/79.9・初回500個", "ウルトラバトルモード突破約33%", "ゼットンATTACK継続約80%"],
+    specs: [["通常時", "約1/79.9"], ["初回バトル中", "約1/3.1"], ["初回バトル突入", "100%"], ["初回突破", "約33%"], ["ゼットンATTACK", "約1/1.26・継続約80%"], ["右打ち出玉", "300・1000個"]],
+    sim: { kind: "pachinko", hitRate: 79.9, hitLabel: "ウルトラBONUS", startType: "P-スキップ対応", spinsPer1k: 17.5, minSpins: 10, maxSpins: 30, rushLabel: "ゼットンATTACK", rushEntry: 0.33, rushContinue: 0.80, firstPayoutIn: 500, firstPayoutOut: 500, rushPayouts: [[300, 0.70], [1000, 0.30]] },
+    readerGuide: { verdict: "軽い初当りから1回転のPUSH勝負を繰り返したい人向けです。", bestFor: ["短い当落演出が好き", "約80%の1回転連チャンを試したい"], check: ["初当り後のバトル突入は100%", "ゼットンATTACK到達は約33%"], compare: [["wanwan-celebration", "わんわんCELEBRATION", "段階RUSH型と比較"], ["no-game-no-life-119", "ノゲノラ119", "ライト新台と比較"]] },
+    articleSections: [
+      { heading: "初当り後は必ず1回転バトル", paragraphs: ["通常時の大当りは約1/79.9で、初回出玉は500個。大当り後は必ず時短1回のウルトラバトルモードへ進みます。", "バトル中は約1/3.1を1回で抽選し、突破期待度は約33%。サイトではこの1回転をRUSH突入PUSHとして表示します。"] },
+      { heading: "ゼットンATTACKは約80%継続", paragraphs: ["ゼットンATTACK中は約1/1.26を時短1回で抽選し、継続率は約80%です。右打ち当りは300個70%・1000個30%。", "当りごとに数字が1回転進み、PUSH後はラウンドと獲得玉数を読める時間だけ保持してから次の当落へ進みます。"] },
+      { heading: "P-スキップ搭載", paragraphs: ["通常時はP-スキップを利用でき、演出を飛ばして当落へ進む遊び方に対応しています。", "サイトのスキップボタンは演出時間だけを短縮し、当選確率や抽選結果は変えません。"] },
+      { heading: "固定条件", bullets: ["17.5回/1,000円・250玉貸し・28玉交換で固定", "平均初当り投資目安は約4,600円", "1回転バトルをPUSH演出で表現", "結果はマイ記録と機種別ランキングへ保存"] }
+    ],
+    sources: [["オッケー. 公式機種サイト", "https://ok777.co.jp/lineup/shin_ultraman_79/r/on/"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/machine/4821/1/1"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10556"]]
+  },
+  "takt-opus-destiny": {
+    order: 1.2, type: "pachinko", theme: "violet", year: "2026年9月", maker: "ニューギン", updated: "2026-11-05", published: "2026-11-05",
+    name: "eタクトオーパス デスティニー", shortName: "eタクトオーパス",
+    image: "assets/machines/takt-opus-destiny-key-visual.jpg",
+    imageAlt: "eタクトオーパス デスティニーの公式機種画像",
+    imageCredit: "ニューギン 公式機種情報",
+    imageSource: "https://www.newgin.co.jp/products/etaktopdestiny/",
+    catchcopy: "合算約1/348.6からDESTINY CHALLENGEを掴み、ST144回へ。",
+    intro: "チャージを含む大当り合算約1/348.6、図柄揃い時の50%でDESTINY CHALLENGEへ進むLT機です。RUSH継続約77%と、1500～7500個の幅広い出玉を簡易体験できます。",
+    points: ["大当り合算約1/348.6・図柄揃い約1/1394.4", "全大当り基準のRUSHルート約12.5%", "DESTINY RUSHはST144回・継続約77%"],
+    specs: [["大当り合算", "約1/348.6"], ["図柄揃い", "約1/1394.4"], ["RUSH中", "約1/99.9"], ["ST回数／継続", "144回／約77%"], ["図柄揃い時RUSH", "50%"], ["右打ち出玉", "1500～7500個"]],
+    sim: { kind: "pachinko", hitRate: 348.6, hitLabel: "大当り・CHARGE", startType: "通常ヘソ", spinsPer1k: 19.0, minSpins: 10, maxSpins: 30, rushLabel: "DESTINY RUSH", rushEntry: 0.125, rushContinue: 0.77, firstPayoutIn: 1500, firstPayoutOut: 300, rushPayouts: [[1500, 0.259], [2700, 0.402], [3900, 0.249], [5100, 0.077], [6300, 0.012], [7500, 0.001]] },
+    readerGuide: { verdict: "低いRUSH入口を突破し、1回の大当りで大きな出玉を狙いたい人向けです。", bestFor: ["一撃の出玉幅を重視したい", "ST144回の約77%継続を試したい"], check: ["合算大当りの約75%はチャージ", "図柄揃い時のRUSHルートは50%"], compare: [["majo-to-yaju-pachinko", "e魔女と野獣", "上乗せ特化型と比較"], ["assault-lily", "eアサルトリリィ", "ライトLTと比較"]] },
+    articleSections: [
+      { heading: "合算確率と図柄揃いを分けて見る", paragraphs: ["通常時はチャージを含む大当り合算約1/348.6、図柄揃いは約1/1394.4です。全大当りの約75%は2Rチャージで通常へ戻ります。", "図柄揃いの50%がDESTINY CHALLENGEへ進むため、全大当り基準のRUSHルートは約12.5%です。サイトでは合算大当りから約12.5%でRUSHへ進む簡易抽選にしています。"] },
+      { heading: "DESTINY CHALLENGEは実質次回まで", paragraphs: ["DESTINY CHALLENGEは約1/99.9を実質次回まで抽選し、当選後はDESTINY RUSHへ。RUSHはST144回で継続率約77%です。", "チャレンジ内の当りとRUSH中の当りは同じ出玉振り分けとして扱い、複数回大当り分を合算した表記出玉を表示します。"] },
+      { heading: "右打ちは1500～7500個", paragraphs: ["右打ち中は1500個25.9%、2700個40.2%、3900個24.9%、5100個7.7%、6300個1.2%、7500個0.1%の代表値へ整理します。", "公表上は10R・18R・26R・34R・42R・50Rの合算表記です。サイトでは見やすい1500個単位に近い代表出玉へ丸めています。"] },
+      { heading: "固定条件", bullets: ["19.0回/1,000円・250玉貸し・28玉交換で固定", "合算初当りまでの平均投資目安は約18,400円", "チャージと図柄揃いを簡易分岐", "結果はマイ記録と機種別ランキングへ保存"] }
+    ],
+    sources: [["ニューギン 公式機種サイト", "https://www.newgin.co.jp/products/etaktopdestiny/"], ["PShort スペック", "https://pshort.jp/pachi/e_takt_op_destiny/"]]
+  },
+  "majo-to-yaju-pachinko": {
+    order: 1.3, type: "pachinko", theme: "violet", year: "2026年9月", maker: "藤商事", updated: "2026-11-05", published: "2026-11-05",
+    name: "e魔女と野獣", shortName: "e魔女と野獣",
+    image: "assets/machines/majo-to-yaju-pachinko-key-visual.jpg",
+    imageAlt: "e魔女と野獣の機種キービジュアル",
+    imageCredit: "P-WORLD 機種情報",
+    imageSource: "https://www.p-world.co.jp/machine/database/10545",
+    catchcopy: "BIGスタートから復讐RUSHへ。W上乗せで最大9000個帯を狙う。",
+    intro: "大当り合算約1/349、図柄揃い約1/399、復讐RUSH突入約51%のLT・上乗せ特化型スマパチです。ST75回・継続約55%と、運命分岐からの大型出玉を簡易体験できます。",
+    points: ["大当り合算約1/349・図柄揃い約1/399", "図柄揃い時RUSH突入約51%", "復讐RUSHはST75回・継続約55%"],
+    specs: [["大当り合算", "約1/349"], ["図柄揃い", "約1/399"], ["復讐CHARGE", "約1/2799"], ["RUSH中", "約1/95"], ["RUSH突入／継続", "約51%／約55%"], ["運命分岐成功", "約50%"]],
+    sim: { kind: "pachinko", hitRate: 349, hitLabel: "図柄揃い・CHARGE", startType: "BIGスタート", spinsPer1k: 27.0, minSpins: 18, maxSpins: 38, rushLabel: "復讐RUSH", rushEntry: 0.446, rushContinue: 0.55, firstPayoutIn: 350, firstPayoutOut: 350, rushPayouts: [[2800, 0.50], [5600, 0.29], [8400, 0.21]], upperLabel: "運命分岐", upperUpgradeChance: 0.52, upperContinue: 0.55 },
+    readerGuide: { verdict: "継続率よりも1回の大型上乗せを重視する人向けです。", bestFor: ["2800個以上の出玉演出を楽しみたい", "運命分岐のPUSH勝負を試したい"], check: ["約51%は図柄揃い基準", "CHARGE込みの突入は約44.6%"], compare: [["takt-opus-destiny", "eタクトオーパス", "大出玉STと比較"], ["majo-to-yajuu-slot", "スマスロ 魔女と野獣", "スロット版と比較"]] },
+    articleSections: [
+      { heading: "図柄揃いとCHARGEの合算", paragraphs: ["通常時の図柄揃いは約1/399、復讐CHARGEは約1/2799で、合算大当りは約1/349です。図柄揃い時のRUSH突入は約51%。", "CHARGEを含む全大当り基準ではRUSH突入が約44.6%になるため、シミュレーターは合算約1/349と突入約44.6%を組み合わせます。"] },
+      { heading: "ST75回・継続約55%", paragraphs: ["復讐RUSH中は約1/95を75回で抽選し、継続率は約55%です。初回RUSH中の大当り後は必ず運命分岐へ進み、2連目以降は約52%で分岐します。", "サイトでは連チャン中の上位昇格として運命分岐を表示し、成功率約50%の個別抽選は大型出玉振り分けへまとめています。"] },
+      { heading: "W上乗せと大型出玉", paragraphs: ["RUSH中は20R・40R・60R相当の大当りがあり、約2800個・約5600個・約8400個の代表出玉として扱います。公表上は最大9000個帯までの出玉があります。", "実際のアタッカー、V入賞、上乗せループ、打ち方による差は完全再現しません。結果では表記出玉と簡易的な実獲得出玉を分けます。"] },
+      { heading: "固定条件", bullets: ["27.0回/1,000円・250玉貸し・28玉交換で固定", "合算初当りまでの平均投資目安は約13,000円", "運命分岐とW上乗せは代表値で簡易化", "結果はマイ記録と機種別ランキングへ保存"] }
+    ],
+    sources: [["藤商事 公式機種ラインナップ", "https://www.fujimarukun.co.jp/products/"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/machine/4811/1/1"], ["PShort スペック", "https://pshort.jp/pachi/e_majo_to_yaju/"]]
+  },
   "lycoris-recoil-slot": {
     order: 1, type: "slot", theme: "crimson", year: "2026年9月", maker: "サミー",
     name: "スマスロ リコリス・リコイル", shortName: "スマスロ リコリコ",
