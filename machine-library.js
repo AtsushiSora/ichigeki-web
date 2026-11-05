@@ -1,4 +1,109 @@
 window.ICHIGEKI_MACHINES = {
+  "fire-force-pachinko": {
+    order: 16.5, type: "pachinko", theme: "flame", year: "2023年4月", maker: "SANKYO", updated: "2026-11-05",
+    published: "2026-11-05",
+    name: "Pフィーバー炎炎ノ消防隊", shortName: "P炎炎ノ消防隊",
+    image: "assets/machines/fire-force-pachinko-key-visual.jpg",
+    imageAlt: "Pフィーバー炎炎ノ消防隊の実機画像",
+    imageCredit: "P-WORLD 機種情報",
+    imageSource: "https://www.p-world.co.jp/machine/database/9795",
+    catchcopy: "約1/319.7から炎上モードを突破し、トータル継続約81%へ。",
+    intro: "初当り後はBATTLE BONUSと炎上モードを経由して炎炎激闘を目指す、二段階突破型のミドル機です。初当り約1/319.7、初回RUSH突入約51%、トータル継続約81%を固定条件で簡易体験できます。",
+    points: ["大当り約1/319.7", "初回BATTLE BONUS突入約51%", "炎炎激闘トータル継続約81%"],
+    specs: [["大当り", "約1/319.7"], ["右打ち中", "約1/2.0"], ["初回RUSH突入", "約51%"], ["炎上モード突破", "約50%"], ["トータル継続", "約81%"], ["大当り出玉", "ALL約1500個"]],
+    sim: { kind: "pachinko", hitRate: 319.7, hitLabel: "初当り", startType: "通常スタート", spinsPer1k: 18.0, minSpins: 12, maxSpins: 26, rushLabel: "炎炎激闘", rushEntry: 0.51, rushContinue: 0.81, firstPayoutIn: 1500, firstPayoutOut: 1500, rushPayouts: [[1500, 0.70], [3000, 0.30]] },
+    readerGuide: { verdict: "1500個を重ねながら、約1/2の短い当落をテンポよく楽しみたい人向けです。", bestFor: ["二段階突破の緊張感を楽しみたい", "右打ちALL1500個を重視したい"], check: ["初回RUSH突入は約51%", "炎上モードは約50%で炎炎激闘へ"], compare: [["fire-force2-benimaru", "炎炎2 紅丸ver.", "新しいLT型と比較"], ["fire-force2-slot", "L炎炎ノ消防隊2", "スロット版と比較"]] },
+    articleSections: [
+      { heading: "BATTLE BONUSから炎炎激闘へ", paragraphs: ["通常時の大当りは約1/319.7。初当りの約51%でBATTLE BONUSへ進み、継続抽選を重ねます。", "炎上モードに移行した場合は約50%で炎炎激闘へ。サイトでは初回ルートを約51%のRUSH突入抽選へまとめ、右打ち全体をトータル継続約81%で簡易抽選します。"] },
+      { heading: "右打ちはALL約1500個", paragraphs: ["右打ち中の大当りはALL約1500個で、約30%は次回大当りも含めて約3000個を獲得する超炎上FEVERです。", "シミュレーターでは1500個70%・3000個30%の代表振り分けに整理し、複数の内部状態は個別再現しません。"] },
+      { heading: "固定条件と遊び方", bullets: ["18.0回/1,000円・250玉貸し・28玉交換で固定", "平均初当り投資目安は約17,800円", "当り中はPUSH後にラウンドと実獲得出玉を表示", "結果は自動でマイ記録へ保存"] }
+    ],
+    sources: [["SANKYO 公式スペック", "https://www.sankyo-fever.jp/products/machine_list/pbc/spec/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9795"]]
+  },
+  "gundam-seed-pachinko": {
+    order: 16.6, type: "pachinko", theme: "ice", year: "2023年8月", maker: "SANKYO", updated: "2026-11-05",
+    published: "2026-11-05",
+    name: "Pフィーバー機動戦士ガンダムSEED", shortName: "PガンダムSEED",
+    image: "assets/machines/gundam-seed-pachinko-key-visual.jpg",
+    imageAlt: "Pフィーバー機動戦士ガンダムSEEDの実機画像",
+    imageCredit: "P-WORLD 機種情報",
+    imageSource: "https://www.p-world.co.jp/machine/database/9851",
+    catchcopy: "約1/319.7から時短引き戻し込み約66%で、フリーダムHYPERへ。",
+    intro: "初当り約1/319.7、時短引き戻し込みのRUSH突入約66%、ST120回の継続約78%を備えたロングST機です。3000FEVERを含む出玉の幅まで固定条件で簡易体験できます。",
+    points: ["大当り約1/319.7", "時短引き戻し込みRUSH突入約66%", "RUSH継続約78%・3000FEVER搭載"],
+    specs: [["大当り", "約1/319.7"], ["RUSH中", "約1/84.0"], ["RUSH突入", "約66%"], ["ST回数", "120回"], ["RUSH継続", "約78%"], ["右打ち3000個", "約15%"]],
+    sim: { kind: "pachinko", hitRate: 319.7, hitLabel: "初当り", startType: "通常スタート", spinsPer1k: 18.0, minSpins: 12, maxSpins: 26, rushLabel: "フリーダムHYPER", rushEntry: 0.66, rushContinue: 0.78, firstPayoutIn: 300, firstPayoutOut: 300, rushPayouts: [[1500, 0.85], [3000, 0.15]] },
+    readerGuide: { verdict: "時短による引き戻しと、120回の王道STをじっくり体験したい人向けです。", bestFor: ["ロングSTの回転演出が好き", "3000個当りも狙いたい"], check: ["RUSH突入約66%は時短引き戻し込み", "基本継続は約78%"], compare: [["gundam-seed-climax", "SEED LT-Light ver.", "ライトLT版と比較"], ["gundam-seed-slot", "スマスロ ガンダムSEED", "スロット版と比較"]] },
+    articleSections: [
+      { heading: "RUSH突入約66%の内訳", paragraphs: ["初当りは約1/319.7。約20%は3000FEVERからRUSH、約40%は300個からRUSH、残り約40%は300個と時短100回へ進みます。", "時短中の引き戻しを含めたトータルRUSH突入率は約66%です。サイトではルートを統合して約66%の突入抽選にしています。"] },
+      { heading: "ST120回・継続約78%", paragraphs: ["フリーダムHYPERは約1/84.0を120回で抽選し、継続率は約78%。右打ち当りは1500個が中心で、約15%が3000FEVERです。", "シミュレーターでは1500個85%・3000個15%に整理します。次回濃厚振り分けを含むTOTAL継続約81%ではなく、基本STの約78%を継続抽選へ使用します。"] },
+      { heading: "固定条件と遊び方", bullets: ["18.0回/1,000円・250玉貸し・28玉交換で固定", "平均初当り投資目安は約17,800円", "ST中は数字が進む演出とPUSH当落を表示", "結果は自動でマイ記録へ保存"] }
+    ],
+    sources: [["SANKYO 公式スペック", "https://www.sankyo-fever.jp/products/machine_list/pfo/spec/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9851"]]
+  },
+  "gen-san-chou-idaten": {
+    order: 16.7, type: "pachinko", theme: "aqua", year: "2020年4月", maker: "三洋物産", updated: "2026-11-05",
+    published: "2026-11-05",
+    name: "P大工の源さん 超韋駄天", shortName: "初代 超韋駄天",
+    image: "assets/machines/gen-san-chou-idaten-key-visual.jpg",
+    imageAlt: "P大工の源さん 超韋駄天の実機画像",
+    imageCredit: "P-WORLD 機種情報",
+    imageSource: "https://www.p-world.co.jp/machine/database/9168",
+    catchcopy: "約60.2%で超源RUSHへ。約1/2.06を4回転で狙う高速決着。",
+    intro: "初当り約1/318.13、RUSH突入約60.2%、継続約93%の超高継続機です。3カウント決着とFINAL JUDGE、330個・990個の出玉振り分けを簡易体験できます。",
+    points: ["BONUS確率約1/318.13", "RUSH突入約60.2%", "超源RUSH継続約93%"],
+    specs: [["BONUS", "約1/318.13"], ["RUSH中BONUS", "約1/2.06"], ["RUSH突入", "約60.2%"], ["RUSH継続", "約93%"], ["電サポ", "3回＋残保留1個"], ["右打ち出玉", "330個・990個"]],
+    sim: { kind: "pachinko", hitRate: 318.13, hitLabel: "BONUS", startType: "通常スタート", spinsPer1k: 20.0, minSpins: 14, maxSpins: 30, rushLabel: "超源RUSH", rushEntry: 0.602, rushContinue: 0.93, firstPayoutIn: 660, firstPayoutOut: 660, rushPayouts: [[330, 0.80], [990, 0.20]] },
+    readerGuide: { verdict: "少ない回転数で次々に当落が来る、高速・高継続のRUSHを試したい人向けです。", bestFor: ["短いPUSH当落を連続で楽しみたい", "約93%の高継続を体験したい"], check: ["右打ちの80%は約330個", "RUSH非突入時は初回約660個で終了"], compare: [["symphogear3-gold", "シンフォギア3", "高継続ライトミドルと比較"], ["hokuto-boukyousei", "北斗 暴凶星", "高出玉寄りの定番と比較"]] },
+    articleSections: [
+      { heading: "超源チャレンジ突破でRUSHへ", paragraphs: ["通常時BONUSは大当りと小当りを合算して約1/318.13。初当り後の約60.2%で超源RUSHへ進みます。", "初回は6R約660個。シミュレーターでは超源チャレンジの見せ方をRUSH突入PUSHへまとめています。"] },
+      { heading: "3回＋残保留1個で約93%継続", paragraphs: ["右打ち中のBONUSは約1/2.06。電サポ3回の継続期待度約86%と残保留1個約49%を合わせ、トータル約93%です。", "大当り後は約330個が80%、約990個が20%。高速消化を再現しつつ、ラウンドと獲得出玉は読める時間を確保して表示します。"] },
+      { heading: "固定条件と遊び方", bullets: ["20.0回/1,000円・250玉貸し・28玉交換で固定", "平均初当り投資目安は約15,900円", "3カウントとFINAL JUDGEをPUSH演出へ簡易化", "結果は自動でマイ記録へ保存"] }
+    ],
+    sources: [["SANYO 公式開発記事", "https://www.sanyobussan.co.jp/jobs/special02/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9168"]]
+  },
+  "goblin-slayer-slot": {
+    order: 16.8, type: "slot", theme: "violet", year: "2023年4月", maker: "JFJ", updated: "2026-11-05",
+    published: "2026-11-05",
+    name: "Lゴブリンスレイヤー", shortName: "スマスロ ゴブリンスレイヤー",
+    image: "assets/machines/goblin-slayer-slot-key-visual.jpg",
+    imageAlt: "Lゴブリンスレイヤーの実機画像",
+    imageCredit: "P-WORLD 機種情報",
+    imageSource: "https://www.p-world.co.jp/machine/database/9812",
+    catchcopy: "3種類のCZを突破し、約100枚＋純増約2.7枚/GのATへ。",
+    intro: "ミッション・チャンス・バトルの3種類のCZを経由してATを目指すスマスロです。設定1のAT初当り約1/547.9、上位ループ約82%までを設定別の固定モデルで簡易体験できます。",
+    points: ["設定1 AT初当り約1/547.9", "3種類のCZを搭載", "上位ATループ率約82%"],
+    specs: [["CZ合算（設定1）", "約1/226"], ["AT（設定1）", "約1/547.9"], ["AT（設定6）", "約1/435.7"], ["ベース", "約31.6G/50枚"], ["上位ループ", "約82%"], ["設定", "1〜6"]],
+    sim: { kind: "slot", triggerLabel: "CZ合算", triggerRate: 226, triggerSuccess: 0.412, mainLabel: "ゴブリンスレイヤーRUSH", mainRate: 547.9, base50: 31.6, coinUnit: 4.0, normalMin: 300, normalMax: 1400, specialLabel: "ゴブリンスレイヤーBONUS", specialChance: 0.34, specialMin: 250, specialMax: 1250, upperChallenge: "GOBLIN'S CROWN", upperChance: 0.14, upperSuccess: 0.50, upperLabel: "PREMIUM RUSH", upperContinue: 0.82, upperPayout: 850, settingRates: { 1: { trigger: 226, main: 547.9, payout: 0.978 }, 2: { trigger: 223, main: 538.4, payout: 0.989 }, 3: { trigger: 215, main: 517.7, payout: 1.012 }, 4: { trigger: 204, main: 492.3, payout: 1.054 }, 5: { trigger: 196, main: 470.5, payout: 1.100 }, 6: { trigger: 184, main: 435.7, payout: 1.149 } } },
+    readerGuide: { verdict: "CZの種類を見分け、重い初当りから高ループの上位ATを狙う流れを体験したい人向けです。", bestFor: ["段階式CZのゲーム性が好き", "高い出玉性能の上位ATを狙いたい"], check: ["設定1のAT初当りは約1/547.9", "サイトの上位到達率は比較用モデル"], compare: [["valvrave", "スマスロ ヴァルヴレイヴ", "高出玉ATと比較"], ["kinnikuman-7-slot", "スマスロ キン肉マン", "上位AT型と比較"]] },
+    articleSections: [
+      { heading: "3種類のCZとゲーム性", paragraphs: ["通常時はゴブリンスレイヤーミッション、ゴブリンスレイヤーチャンス、ゴブリンスレイヤーバトルの3種類のCZからATを目指します。", "CZ合算は設定1約1/226〜設定6約1/184。サイトでは各CZの個別成功率を一つの突破抽選へ整理し、AT初当りの公開値と整合する比較用モデルにしています。"] },
+      { heading: "ATと上位ループ", paragraphs: ["ゴブリンスレイヤーRUSHは初期約100枚＋純増約2.7枚/G。継続率は状況により約52〜80%で、上位ATは約82%ループです。", "天井・モード・小役履歴など全内部状態は再現せず、AT、特化ゾーン、上位CZ、上位ATの順に簡易抽選します。"] },
+      { heading: "設定別の固定モデル", bullets: ["設定1〜6を開始時に均等抽選", "CZ・AT初当りと機械割は公開値を使用", "50枚あたり31.6G・46枚貸し・5.2枚交換で固定", "設定は最終結果とランキングへ表示"] }
+    ],
+    sources: [["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9812"]]
+  },
+  "kinnikuman-7-slot": {
+    order: 16.9, type: "slot", theme: "crimson", year: "2023年8月", maker: "セブンリーグ", updated: "2026-11-05",
+    published: "2026-11-05",
+    name: "スマスロキン肉マン～7人の悪魔超人編～", shortName: "スマスロ キン肉マン",
+    image: "assets/machines/kinnikuman-7-slot-key-visual.jpg",
+    imageAlt: "スマスロキン肉マン～7人の悪魔超人編～の実機画像",
+    imageCredit: "P-WORLD 機種情報",
+    imageSource: "https://www.p-world.co.jp/machine/database/9849",
+    catchcopy: "正義超人チャレンジでパワーを集め、7セット突破から上位ATへ。",
+    intro: "規定超人パワーからATへ進み、7セット継続で上位ATを目指すスマスロです。設定1のAT初当り約1/404.1、上位AT期待獲得約3500枚の流れを設定別に簡易体験できます。",
+    points: ["設定1 AT初当り約1/404.1", "7セット継続で上位AT", "上位AT期待獲得約3500枚"],
+    specs: [["正義超人CZ（設定1）", "約1/99.8"], ["AT（設定1）", "約1/404.1"], ["AT（設定6）", "約1/336.5"], ["上位到達", "通常AT7セット継続"], ["上位期待獲得", "約3500枚"], ["設定", "1・2・4・5・6"]],
+    sim: { kind: "slot", settingPool: [1, 2, 4, 5, 6], triggerLabel: "正義超人チャレンジ", triggerRate: 99.8, triggerSuccess: 0.247, mainLabel: "7人の悪魔超人", mainRate: 404.1, base50: 31.0, coinUnit: 3.8, normalMin: 250, normalMax: 1250, specialLabel: "悪魔超人バトル", specialChance: 0.36, specialMin: 250, specialMax: 1200, upperChallenge: "7戦突破", upperChance: 0.20, upperSuccess: 0.50, upperLabel: "悪魔将軍バトル", upperContinue: 0.85, upperPayout: 1000, settingRates: { 1: { trigger: 99.8, main: 404.1, payout: 0.979 }, 2: { trigger: 98.6, main: 400.6, payout: 0.991 }, 4: { trigger: 96.3, main: 362.1, payout: 1.060 }, 5: { trigger: 94.2, main: 350.7, payout: 1.106 }, 6: { trigger: 91.7, main: 336.5, payout: 1.149 } } },
+    readerGuide: { verdict: "セット継続のバトルを重ね、7戦突破で大きな上位ATを狙いたい人向けです。", bestFor: ["継続バトル型ATが好き", "設定差も結果で比較したい"], check: ["実機に設定3は非搭載", "上位到達の詳細は比較用モデル"], compare: [["fever-kinnikuman", "eキン肉マン", "パチンコ版と比較"], ["goblin-slayer-slot", "スマスロ ゴブスレ", "高出玉型ATと比較"]] },
+    articleSections: [
+      { heading: "超人パワーを貯めてATへ", paragraphs: ["通常時は規定超人パワー到達でATを目指します。正義超人チャレンジは超人パワーの獲得ゾーンで、設定1約1/99.8〜設定6約1/91.7です。", "サイトでは規定パワーや内部モードを個別再現せず、正義超人チャレンジとAT初当りの公開値を使って段階表示します。"] },
+      { heading: "7セット突破から上位AT", paragraphs: ["通常ATは継続シナリオ管理で、7セット継続すると上位ATへ。上位ATの期待獲得は約3500枚です。", "セットごとのシナリオやバッファローマン乱入などは簡易化し、特化ゾーン、7戦突破、悪魔将軍バトルの順に抽選します。"] },
+      { heading: "設定1・2・4・5・6で抽選", bullets: ["実機に設定3はなく、5段階から均等抽選", "AT初当り・正義超人チャレンジ・機械割は公開値を使用", "50枚あたり31.0G・46枚貸し・5.2枚交換で固定", "コンプリート到達時は結果画面に表示"] }
+    ],
+    sources: [["山佐ネクスト 公式機種サイト", "https://www1.yamasa.co.jp/svakcj/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9849"]]
+  },
   "shangri-la-frontier": {
     order: 0.08, type: "pachinko", theme: "emerald", year: "2026年12月", maker: "Sammy", updated: "2026-11-01",
     name: "e シャングリラ・フロンティア", shortName: "eシャンフロ",

@@ -38,6 +38,11 @@ KNOWN_MAKER_DOMAINS = (
     "nishijin.co.jp", "takao.gr.jp", "bellco.co.jp", "net-fun.co.jp",
 )
 PWORLD_IDS = {
+    "fire-force-pachinko": "9795",
+    "gundam-seed-pachinko": "9851",
+    "gen-san-chou-idaten": "9168",
+    "goblin-slayer-slot": "9812",
+    "kinnikuman-7-slot": "9849",
     "rezero-season2": "9931",
     "bancho-otoko-no-itadaki": "10179",
     "kamen-rider-black-light": "10584",
@@ -90,6 +95,11 @@ EXTRA_SOURCES = {
     "majo-to-yajuu-slot": [("藤商事 公式機種情報", "https://www.fujimarukun.co.jp/products/l_majo/")],
 }
 DIRECT_IMAGES = {
+    "gen-san-chou-idaten": (
+        "https://idn.p-world.co.jp/machines/9168/image/thumb_1.jpg",
+        "https://www.p-world.co.jp/machine/database/9168",
+        "P-WORLD 機種情報",
+    ),
     "super-bingo-neo-slot": (
         "https://idn.p-world.co.jp/machines/10142/image/thumb_1.jpg",
         "https://www.p-world.co.jp/machine/database/10142",
