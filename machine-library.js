@@ -583,7 +583,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["ユニバーサル 公式デジタルガイド", "https://www.universal-777.com/product/digitalguide/ps/ragnador/"], ["一撃 機種解析", "https://1geki.jp/slot/l_ragnador/"], ["なな徹 AT・ボーナス解析", "https://nana-press.com/kaiseki/machine/1250/39828/"]]
   },
   "seiya-ougon-slot": {
-    order: 0.15, type: "slot", theme: "gold", year: "2026年11月", maker: "サンスリー", updated: "2026-11-03",
+    order: 0.15, type: "slot", theme: "gold", year: "2026年11月", maker: "サンスリー", updated: "2026-11-07",
     published: "2026-11-02",
     name: "L聖闘士星矢 黄金十二宮", shortName: "スマスロ 聖闘士星矢",
     image: "assets/machines/seiya-ougon-slot-key-visual.jpg",
@@ -591,18 +591,21 @@ window.ICHIGEKI_MACHINES = {
     imageCredit: "パチマガスロマガ 機種概要",
     imageSource: "https://psmaga.com/e/pachi/pla/s_conq/santhree_slot/09/kh01.php",
     catchcopy: "十二宮を突破し、SAGA BATTLEと千日戦争へ。",
-    intro: "2026年11月2日から順次導入が始まったスマスロ。設定別CZ・AT初当りを使い、Battle of ZODIACの継続バトルから上位AT『千日戦争』までを簡易体験できます。",
-    points: ["CZは設定1約1/214.4〜設定6約1/200.3", "ATは設定1約1/364.2〜設定6約1/310.5", "通常AT純増約4.0枚/G・千日戦争約6.6枚/G"],
-    specs: [["CZ（設定1）", "約1/214.4"], ["CZ（設定6）", "約1/200.3"], ["AT（設定1）", "約1/364.2"], ["AT（設定6）", "約1/310.5"], ["ベース", "約31.3G/50枚"], ["通常AT純増", "約4.0枚/G"], ["千日戦争純増", "約6.6枚/G"], ["千日戦争", "継続期待度約88%"]],
-    sim: { kind: "slot", triggerLabel: "WHO ARE YOU？", triggerRate: 214.4, triggerSuccess: 0.50, mainLabel: "Battle of ZODIAC", mainRate: 364.2, base50: 31.3, coinUnit: 3.8, normalMin: 250, normalMax: 1100, atPureIncrease: 4.0, specialLabel: "金牛激震", specialChance: 0.34, specialMin: 200, specialMax: 900, specialDisplay: "coins", cycleFlow: { phase: "BATTLE OF ZODIAC", label: "十二宮バトル", statLabel: "十二宮突破", games: 30, continueChance: 0.76, maxRounds: 12, upperAfterRounds: 12, upperOnlyAfterRounds: true, upperAfterRoundsAutoSuccess: false, rewards: [[{ label: "黄金聖闘士撃破", payout: 120 }, 0.55], [{ label: "金牛激震", payout: 300 }, 0.30], [{ label: "小宇宙覚醒", payout: 600 }, 0.15]], endLabel: "Battle of ZODIAC終了" }, upperChallenge: "SAGA BATTLE", upperChance: 0.18, upperSuccess: 0.50, upperLabel: "千日戦争", upperContinue: 0.88, upperPayout: 660, upperPureIncrease: 6.6, settingRates: { 1: { trigger: 214.4, main: 364.2, payout: 0.975 }, 2: { trigger: 214.1, main: 356.1, payout: 0.985 }, 3: { trigger: 211.7, main: 345.6, payout: 1.005 }, 4: { trigger: 202.5, main: 322.3, payout: 1.052 }, 5: { trigger: 197.2, main: 313.7, payout: 1.100 }, 6: { trigger: 200.3, main: 310.5, payout: 1.149 } } },
+    intro: "2026年11月2日導入のスマスロ。10Gの白羊宮から9人の黄金聖闘士へ挑み、エクストララウンド、SAGA BATTLE、上位AT『千日戦争』へ進む実機の順番を専用演出で体験できます。",
+    points: ["CZは設定1約1/214.4〜設定6約1/200.3", "黄金聖闘士バトルはVストック込みで勝利期待度約76%", "SAGA BATTLE成功期待度約59%・千日戦争継続期待度約88%"],
+    specs: [["CZ（設定1）", "約1/214.4"], ["CZ（設定6）", "約1/200.3"], ["AT（設定1）", "約1/364.2"], ["AT（設定6）", "約1/310.5"], ["ベース", "約31.3G/50枚"], ["通常AT", "30G＋バトル4/5G"], ["通常AT純増", "約4.0枚/G"], ["SAGA BATTLE", "成功期待度約59%"], ["千日戦争", "30G＋α・継続期待度約88%"], ["千日戦争純増", "約6.6枚/G"]],
+    rankingVersion: "v5",
+    sim: { kind: "slot", triggerLabel: "WHO ARE YOU？／影ノ襲来", triggerRate: 214.4, triggerSuccess: 0.50, mainLabel: "Battle of ZODIAC", mainRate: 364.2, base50: 31.3, coinUnit: 3.8, normalMin: 250, normalMax: 1200, atPureIncrease: 4.0, atPayoutVariance: 0.03, specialLabel: "星輝の加護", specialChance: 0.34, specialMin: 120, specialMax: 600, specialDisplay: "coins", seiyaTempleFlow: true, cycleFlow: { phase: "BATTLE OF ZODIAC", label: "黄金十二宮", statLabel: "黄金聖闘士撃破", continueChance: 0.76, maxRounds: 11, upperAfterRounds: 11, upperOnlyAfterRounds: true, upperAfterRoundsAutoSuccess: false, markFinalRoundComplete: true, endLabel: "Battle of ZODIAC終了" }, upperChallenge: "最終決戦 SAGA BATTLE", upperChallengeGames: 4, upperChance: 0, upperSuccess: 0.59, upperLabel: "千日戦争", upperContinue: 0.88, upperSetGames: [[30, 1]], upperPayout: 198, upperPureIncrease: 6.6, upperMaxLoops: 30, upperReturnGames: 100, upperLossEpisodeGames: 20, upperAwards: [[{ label: "千日戦争 30G", games: 30, payout: 198 }, 0.66], [{ label: "星輝の加護 +30G", games: 60, payout: 396 }, 0.19], [{ label: "聖闘士星矢BONUS 300枚", games: 45, payout: 300 }, 0.10], [{ label: "1000BONUS", games: 152, payout: 1000 }, 0.04], [{ label: "1000BONUS＋金牛激震", games: 228, payout: 1500 }, 0.01]], settingRates: { 1: { trigger: 214.4, main: 364.2, payout: 0.975 }, 2: { trigger: 214.1, main: 356.1, payout: 0.985 }, 3: { trigger: 211.7, main: 345.6, payout: 1.005 }, 4: { trigger: 202.5, main: 322.3, payout: 1.052 }, 5: { trigger: 197.2, main: 313.7, payout: 1.100 }, 6: { trigger: 200.3, main: 310.5, payout: 1.149 } } },
     articleSections: [
       { heading: "CZ・AT初当りを設定別に反映", paragraphs: ["CZ合算は設定1約1/214.4から設定6約1/200.3、AT初当りは設定1約1/364.2から設定6約1/310.5です。設定6のCZが設定5よりわずかに重い点も公開値どおり反映します。", "START時に設定1〜6を均等抽選し、結果とランキングに今回の設定を表示します。"] },
-      { heading: "2種類のCZを代表演出へまとめる", paragraphs: ["実機には『WHO ARE YOU？』と『影ノ襲来』の2種類のCZがあります。小宇宙ポイントや周期からCZを目指し、突破できればATへ進みます。", "サイトでは2種類をWHO ARE YOU？へまとめ、CZ合算確率を使います。周期天井や各CZの細かな振り分けは個別再現しません。"] },
-      { heading: "Battle of ZODIACと継続バトル", paragraphs: ["通常ATは純増約4.0枚/G、1セット30G＋α。ATパート後の継続バトルを勝ち進み、十二宮突破を目指します。バトル勝率の目安は約76%です。", "金牛宮のアルデバラン撃破時に期待できる金牛激震などは、追加枚数抽選へまとめます。"] },
-      { heading: "SAGA BATTLEから千日戦争へ", paragraphs: ["十二宮突破後のSAGA BATTLEに勝利すると、上位AT『千日戦争』へ進みます。千日戦争は純増約6.6枚/G、継続期待度約88%です。", "上位への到達率はサイト共通の固定抽選で簡易化し、公開されている上位性能とは分けて扱います。"] },
+      { heading: "2種類のCZと10GのWHO ARE YOU？", paragraphs: ["実機のCZは『WHO ARE YOU？』と『影ノ襲来』。WHO ARE YOU？は10Gで、小役2連続や強い小宇宙パターンが突破契機です。小宇宙ポイントや最大6周期の周期抽選からATを目指します。", "サイトではCZ合算確率と代表成功率50%で1回のPUSHへまとめます。CZごとの内部状態、小役別の細かな書き換え率は公開情報が揃うまで固定推測を加えません。"] },
+      { heading: "白羊宮から9人の黄金聖闘士へ", paragraphs: ["AT開始時は白羊宮の導入ムービー10G。続いて金牛宮アルデバラン、双児宮、巨蟹宮デスマスク、獅子宮アイオリア、処女宮シャカ、天蠍宮ミロ、磨羯宮シュラ、宝瓶宮カミュ、双魚宮アフロディーテの順で挑みます。天秤宮と人馬宮は黄金聖闘士との通常対戦ではなく特殊な宮として扱われます。", "各セットはAT30G＋黄金聖闘士バトル4Gまたは5G。バトル勝利期待度はVストック込み約76%で、小役成立なら勝利です。サイトでは各宮を30G消化後のPUSHで判定します。"] },
+      { heading: "星輝の加護・Vストック報酬", paragraphs: ["勝利後の4G突破エピソードから1Gの『星輝の加護』へ進むことがあり、Burning、COSMO BOOST、V GET CHALLENGE、Phoenix V GET CHALLENGEなどでVストックを狙います。", "シミュレーターでは通常撃破、Vストック、星輝の加護を代表報酬として表示します。小役の停止形やアイコン昇格、Vストック消費順までは個別再現していません。"] },
+      { heading: "エクストララウンドとSAGA BATTLE", paragraphs: ["9人撃破後はエクストララウンドへ進み、終了後のエピソードを経て4Gの最終決戦SAGA BATTLEへ。小役成立で勝利、成功期待度は約59%です。", "以前の自動成功モデルを廃止し、4Gカウント後のPUSHで約59%を判定します。失敗時は通常AT終了、成功時だけ千日戦争へ進みます。"] },
+      { heading: "千日戦争と上位BONUS", paragraphs: ["上位AT『千日戦争』は純増約6.6枚/G、1セット30G＋α、Vストック込みの継続期待度約88%。継続バトルは4Gまたは5Gです。", "星輝の加護によるゲーム数上乗せ、約300枚の聖闘士星矢BONUS、初期1000枚の1000BONUS、BONUS中の金牛激震を代表報酬へ反映します。敗北時は20Gのエンディングと通常100G＋αの引き戻し区間を簡易表示します。"] },
       { heading: "固定レートと収支の条件", bullets: ["約31.3G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均AT投資目安は約12,600円", "コイン単価は設定1の参考値約3.8円として表示", "19,000枚到達時はコンプリート表示"] }
     ],
-    sources: [["パチマガスロマガ 機種概要", "https://psmaga.com/e/pachi/pla/s_conq/santhree_slot/09/kh01.php"], ["一撃 2026年11月新台情報", "https://1geki.jp/newmachinecalender/202611/"], ["設定・天井まとめ", "https://tennabi.jp/seiya-ougon-junikyu/"]]
+    sources: [["SANYO 公式パチスロ製品一覧", "https://www.sanyobussan.co.jp/products/slot.html"], ["一撃 L聖闘士星矢 黄金十二宮 解析", "https://1geki.jp/slot/l_seiya_ougon/"], ["なな徹 Battle of ZODIAC・千日戦争解析", "https://nana-press.com/kaiseki/machine/1193/39943/"], ["なな徹 黄金聖闘士バトル・報酬解析", "https://nana-press.com/kaiseki/machine/1193/40126/"], ["なな徹 SAGA BATTLE解析", "https://nana-press.com/kaiseki/machine/1193/40128/"], ["なな徹 天井・周期解析", "https://nana-press.com/kaiseki/machine/1193/39926/"]]
   },
   "ggo-slot": {
     order: 0.2, type: "slot", theme: "magenta", year: "2026年11月", maker: "京楽／オッケー.", updated: "2026-11-04",
@@ -3705,20 +3708,28 @@ window.ICHIGEKI_MACHINES = {
       ]
     },
     "seiya-ougon-slot": {
-      maxRounds: 9,
-      upperAfterRounds: 9,
-      upperAfterRoundsAutoSuccess: true,
+      phase: "BATTLE OF ZODIAC",
+      label: "黄金十二宮",
+      statLabel: "黄金聖闘士撃破",
+      continueChance: 0.76,
+      maxRounds: 11,
+      upperAfterRounds: 11,
+      upperAfterRoundsAutoSuccess: false,
       upperOnlyAfterRounds: true,
+      markFinalRoundComplete: true,
+      endLabel: "Battle of ZODIAC終了",
       rounds: [
-        { title: "Battle of ZODIAC・白羊宮", detail: "30G＋αのメインパートで小宇宙とVストックを獲得します", games: 30, continueChance: 0.68, rewards: [[{ kind: "coins", label: "白羊宮突破", payout: 130 }, 0.72], [{ kind: "games", label: "Vストック獲得", games: 30 }, 0.28]] },
-        { title: "金牛宮・アルデバラン戦", detail: "黄金聖闘士バトルをPUSHで決着。勝利で次の宮へ進みます", games: 8, continueChance: 0.72, rewards: [[{ kind: "coins", label: "金牛宮突破", payout: 160 }, 0.68], [{ kind: "bonus", label: "金牛激震", games: 30, payout: 320 }, 0.32]] },
-        { title: "双児宮・幻影突破", detail: "メインパート中のアイテムと小宇宙で継続期待度を高めます", games: 30, continueChance: 0.74, rewards: [[{ kind: "coins", label: "双児宮突破", payout: 150 }, 0.66], [{ kind: "games", label: "小宇宙上乗せ", games: [[10, 0.65], [20, 0.25], [30, 0.10]] }, 0.34]] },
-        { title: "巨蟹宮・デスマスク戦", detail: "後半バトルで継続を書き換え、黄金聖闘士の撃破数を増やします", games: 8, continueChance: 0.76, rewards: [[{ kind: "coins", label: "巨蟹宮突破", payout: 170 }, 0.64], [{ kind: "bonus", label: "黄金聖闘士撃破報酬", games: 30, payout: 360 }, 0.36]] },
-        { title: "獅子宮・処女宮", detail: "30G＋αでVストックを狙い、連続する強敵バトルへ挑みます", games: 30, continueChance: 0.77, rewards: [[{ kind: "coins", label: "二宮連続突破", payout: 220 }, 0.60], [{ kind: "games", label: "Vストック＋1", games: 30 }, 0.40]] },
-        { title: "天秤宮・天蠍宮", detail: "中盤の連戦。小宇宙ポイントから継続と報酬昇格を抽選します", games: 30, continueChance: 0.78, rewards: [[{ kind: "coins", label: "天蠍宮突破", payout: 230 }, 0.58], [{ kind: "bonus", label: "黄金激闘BONUS", games: 40, payout: 450 }, 0.42]] },
-        { title: "人馬宮・磨羯宮", detail: "後半戦はVストックの有無が重要。PUSHで次の宮への扉を開きます", games: 30, continueChance: 0.80, rewards: [[{ kind: "coins", label: "磨羯宮突破", payout: 250 }, 0.56], [{ kind: "games", label: "Vストック＋2", games: 60 }, 0.44]] },
-        { title: "宝瓶宮・双魚宮", detail: "十二宮突破目前の最終連戦。高期待度バトルをまとめて判定します", games: 30, continueChance: 0.82, rewards: [[{ kind: "coins", label: "双魚宮突破", payout: 300 }, 0.55], [{ kind: "bonus", label: "黄金聖闘士全撃破報酬", games: 50, payout: 650 }, 0.45]] },
-        { title: "十二宮突破・エクストララウンド", detail: "黄金聖闘士9人撃破後の10G。完走してSAGA BATTLEへ進みます", games: 10, continueChance: 0.88, rewards: [[{ kind: "coins", label: "エクストララウンド完走", payout: 350 }, 0.62], [{ kind: "bonus", label: "女神覚醒報酬", games: 60, payout: 850 }, 0.38]] }
+        { title: "白羊宮・ムウの導き", detail: "AT開始時の10G導入ムービー。黄金十二宮を駆け抜ける戦いが始まります", games: 10, continueChance: 1, rewards: [[{ kind: "coins", label: "Battle of ZODIAC 開幕", payout: 40 }, 1]] },
+        { title: "金牛宮・アルデバラン", detail: "30GのAT後、4Gまたは5Gの黄金聖闘士バトルをPUSHで決着します", games: 30, continueChance: 0.76, rewards: [[{ kind: "coins", label: "アルデバラン撃破", payout: 120 }, 0.58], [{ kind: "coins", label: "星輝の加護・Vストック", payout: 120 }, 0.31], [{ kind: "coins", label: "Phoenix V GET CHALLENGE", payout: 120 }, 0.11]] },
+        { title: "双児宮・謎の黄金聖闘士", detail: "30Gで小宇宙とVストックを狙い、双児宮の幻影を突破します", games: 30, continueChance: 0.76, rewards: [[{ kind: "coins", label: "双児宮突破", payout: 120 }, 0.66], [{ kind: "coins", label: "V GET CHALLENGE成功", payout: 120 }, 0.34]] },
+        { title: "巨蟹宮・デスマスク", detail: "積尸気冥界波を越える継続バトル。小役成立なら勝利です", games: 30, continueChance: 0.76, rewards: [[{ kind: "coins", label: "デスマスク撃破", payout: 120 }, 0.69], [{ kind: "coins", label: "COSMO BOOST×2", payout: 120 }, 0.31]] },
+        { title: "獅子宮・アイオリア", detail: "30Gのメインパートで獲得したVストック込みの継続期待度は約76%です", games: 30, continueChance: 0.76, rewards: [[{ kind: "coins", label: "アイオリア撃破", payout: 120 }, 0.64], [{ kind: "coins", label: "Phoenix V GET CHALLENGE", payout: 120 }, 0.36]] },
+        { title: "処女宮・シャカ", detail: "中盤の強敵戦。4Gまたは5GのバトルをPUSHで判定します", games: 30, continueChance: 0.76, rewards: [[{ kind: "coins", label: "シャカ撃破", payout: 120 }, 0.70], [{ kind: "coins", label: "星輝の加護・Vストック", payout: 120 }, 0.30]] },
+        { title: "天蠍宮・ミロ", detail: "天秤宮の特殊区間を越え、ミロとの黄金聖闘士バトルへ進みます", games: 30, continueChance: 0.76, rewards: [[{ kind: "coins", label: "ミロ撃破", payout: 120 }, 0.68], [{ kind: "coins", label: "COSMO BOOST×4", payout: 120 }, 0.32]] },
+        { title: "磨羯宮・シュラ", detail: "後半戦。Vストックがあれば敗北を書き換えて次の宮へ進みます", games: 30, continueChance: 0.76, rewards: [[{ kind: "coins", label: "シュラ撃破", payout: 120 }, 0.67], [{ kind: "coins", label: "Vストック消費で復活", payout: 120 }, 0.33]] },
+        { title: "宝瓶宮・カミュ", detail: "人馬宮の特殊区間を経て宝瓶宮へ。勝利で最終の双魚宮が見えます", games: 30, continueChance: 0.76, rewards: [[{ kind: "coins", label: "カミュ撃破", payout: 120 }, 0.68], [{ kind: "coins", label: "Burning・Vストック", payout: 120 }, 0.32]] },
+        { title: "双魚宮・アフロディーテ", detail: "9人目の黄金聖闘士との最終戦。勝利でエクストララウンドへ進みます", games: 30, continueChance: 0.76, rewards: [[{ kind: "coins", label: "アフロディーテ撃破", payout: 120 }, 0.63], [{ kind: "coins", label: "黄金聖闘士9人撃破", payout: 120 }, 0.37]] },
+        { title: "エクストララウンド", detail: "9人撃破後の追加AT。終了後は10Gの前兆エピソードを経てSAGA BATTLEへ", games: 30, continueChance: 1, rewards: [[{ kind: "coins", label: "エクストララウンド完走", payout: 120 }, 1]] }
       ]
     },
     "lycoris-recoil-slot": {
@@ -3994,9 +4005,9 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
       compare: [["seiya-ougon-slot", "スマスロ 聖闘士星矢", "継続バトル型の上位ATと比較"], ["godzilla-eva2-slot", "スマスロ ゴジエヴァ2", "純増約5.2枚/GのATと比較"]]
     },
     "seiya-ougon-slot": {
-      verdict: "CZからBattle of ZODIACへ進み、十二宮突破とSAGA BATTLEを経て千日戦争を目指す段階型です。通常ATの継続と上位ATの約88%継続を一連の流れで比べられます。",
-      bestFor: ["CZ・AT・上位CZ・上位ATを順に体験したい", "設定別のAT初当りと継続結果を比べたい", "千日戦争到達時の差枚の伸びを見たい"],
-      check: ["設定1の平均AT投資目安は約12,600円", "2種類のCZは代表演出へまとめている", "上位到達率は公開性能と分けた固定抽選"],
+      verdict: "白羊宮10Gから9人の黄金聖闘士を約76%で撃破し、エクストララウンド、約59%のSAGA BATTLE、約88%継続の千日戦争へ進む実機順の段階型です。",
+      bestFor: ["黄金聖闘士ごとの30G＋継続PUSHを体験したい", "SAGA BATTLE約59%を自分で判定したい", "千日戦争の上乗せ・BONUS・終了後100Gを見たい"],
+      check: ["天秤宮・人馬宮は通常対戦相手として数えない", "通常バトルはVストック込み約76%", "上位報酬の出現比率は体験用の代表振り分け"],
       compare: [["garo-yami-slot", "スマスロ 牙狼", "高純増ループ型と比較"], ["ggo-slot", "スマスロ GGO", "ST型の上位ルートと比較"]]
     },
     "ggo-slot": {
