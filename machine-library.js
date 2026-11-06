@@ -3532,6 +3532,58 @@ window.ICHIGEKI_MACHINES = {
         { title: "BONUSループ高確", detail: "ステージ上昇後のBONUSループをPUSHで決着します", games: 32, continueChance: 0.74, rewards: [[{ kind: "bonus", label: "REGULAR BONUS", games: 10, payout: 83 }, 0.35], [{ kind: "bonus", label: "BIG BONUS", games: 30, payout: 270 }, 0.60], [{ kind: "bonus", label: "SUPER BIG BONUS", games: 54, payout: 490 }, 0.05]] },
         { title: "奇跡的相性ジャッジ", detail: "成功すると奇跡的相性マリアージュMODEへ進みます", games: 15, continueChance: 0.80, rewards: [[{ kind: "bonus", label: "BIG BONUS", games: 30, payout: 270 }, 0.70], [{ kind: "bonus", label: "SUPER BIG BONUS", games: 54, payout: 490 }, 0.30]] }
       ]
+    },
+    "assault-lily-slot": {
+      maxRounds: 6,
+      upperAfterRounds: 6,
+      upperAfterRoundsAutoSuccess: false,
+      rounds: [
+        { title: "ヒュージバトル", detail: "3Gの短期決戦。撃破してRUSHの次区間へ進みます", games: 3, continueChance: 0.56, rewards: [[{ kind: "coins", label: "ヒュージ撃破報酬", payout: 90 }, 0.72], [{ kind: "games", label: "レアスキル発動", games: [[10, 0.70], [20, 0.30]] }, 0.28]] },
+        { title: "チャームストライク", detail: "9Gの上乗せ区間で成立役からゲーム数を積み上げます", games: 9, continueChance: 0.62, rewards: [[{ kind: "games", label: "チャームストライク上乗せ", games: [[10, 0.50], [20, 0.32], [30, 0.18]] }, 0.82], [{ kind: "bonus", label: "リリィBONUS", games: 20, payout: 180 }, 0.18]] },
+        { title: "大型ヒュージバトル", detail: "大型ヒュージ撃破で強い報酬分岐を開きます", games: 3, continueChance: 0.68, rewards: [[{ kind: "games", label: "大型ヒュージ撃破上乗せ", games: [[20, 0.58], [30, 0.30], [50, 0.12]] }, 0.65], [{ kind: "bonus", label: "アサルトBONUS", games: 30, payout: 300 }, 0.35]] },
+        { title: "ノインヴェルト戦術", detail: "1G完結の一撃区間。PUSHで獲得枚数を開きます", games: 1, continueChance: 0.74, rewards: [[{ kind: "coins", label: "ノインヴェルト戦術", payout: 200 }, 0.56], [{ kind: "coins", label: "ノインヴェルト戦術", payout: 500 }, 0.30], [{ kind: "coins", label: "ノインヴェルト戦術", payout: 1000 }, 0.12], [{ kind: "coins", label: "ノインヴェルト戦術", payout: 3000 }, 0.02]] },
+        { title: "ルナティックトランサー", detail: "10G＋αの上乗せ区間。毎ゲームの成立役で加算を狙います", games: 10, continueChance: 0.79, rewards: [[{ kind: "games", label: "ルナティック上乗せ", games: [[30, 0.55], [50, 0.32], [100, 0.13]] }, 0.78], [{ kind: "bonus", label: "レアスキルBONUS", games: 40, payout: 450 }, 0.22]] },
+        { title: "アサルトスパイラル最終戦", detail: "最終ヒュージを撃破するとSUPERへの抽選に進みます", games: 3, continueChance: 0.84, rewards: [[{ kind: "coins", label: "ラストバレット成功", payout: 500 }, 0.62], [{ kind: "bonus", label: "アサルトスパイラル", games: 60, payout: 750 }, 0.38]] }
+      ]
+    },
+    "shin-eva-slot": {
+      maxRounds: 6,
+      upperAfterRounds: 6,
+      upperAfterRoundsAutoSuccess: false,
+      rounds: [
+        { title: "エヴァンゲリオンインパクト", detail: "搭乗機と作戦を決め、10G＋αの作戦STへ入ります", games: 1, continueChance: 0.55, rewards: [[{ kind: "coins", label: "8号機出撃", payout: 30 }, 0.46], [{ kind: "coins", label: "2号機出撃", payout: 50 }, 0.34], [{ kind: "coins", label: "初号機出撃", payout: 80 }, 0.20]] },
+        { title: "パリ作戦", detail: "ST中の対応役から疑似BONUS当選を狙います", games: 10, continueChance: 0.60, rewards: [[{ kind: "bonus", label: "エヴァンゲリオンBONUS", games: 30, payout: 150 }, 0.72], [{ kind: "bonus", label: "殲滅BONUS", games: 40, payout: 220 }, 0.28]] },
+        { title: "ヤマト作戦", detail: "作戦成功でBONUSを獲得し、次の10G＋αへつなぎます", games: 10, continueChance: 0.66, rewards: [[{ kind: "bonus", label: "エヴァンゲリオンBONUS", games: 30, payout: 150 }, 0.62], [{ kind: "bonus", label: "エピソードBONUS", games: 40, payout: 250 }, 0.38]] },
+        { title: "US作戦", detail: "機体ごとの対応役を引き、BONUS書き換えを狙います", games: 10, continueChance: 0.71, rewards: [[{ kind: "bonus", label: "エヴァンゲリオンBONUS", games: 30, payout: 150 }, 0.55], [{ kind: "bonus", label: "三機殲滅BONUS", games: 50, payout: 320 }, 0.45]] },
+        { title: "VSゲンドウ", detail: "決戦突破で三機殲滅へ。PUSHで作戦結果を開きます", games: 10, continueChance: 0.77, rewards: [[{ kind: "bonus", label: "ゲンドウ決戦BONUS", games: 40, payout: 260 }, 0.58], [{ kind: "bonus", label: "三機殲滅BONUS", games: 60, payout: 400 }, 0.42]] },
+        { title: "三機殲滅", detail: "三機共闘の最終作戦からマリ獣化チャレンジを抽選します", games: 10, continueChance: 0.82, rewards: [[{ kind: "bonus", label: "三機殲滅BONUS", games: 50, payout: 350 }, 0.65], [{ kind: "bonus", label: "エピソードBONUS", games: 70, payout: 500 }, 0.35]] }
+      ]
+    },
+    "dumbbell-slot": {
+      maxRounds: 6,
+      upperAfterRounds: 6,
+      upperAfterRoundsAutoSuccess: false,
+      rounds: [
+        { title: "ダンベル何キロ持てる？BONUS", detail: "30G＋α・純増約8.5枚/Gの初期BONUSを消化します", games: 30, continueChance: 0.50, rewards: [[{ kind: "coins", label: "初期BONUS獲得", payout: 255 }, 0.70], [{ kind: "games", label: "筋トレ上乗せ", games: [[10, 0.72], [20, 0.20], [30, 0.08]] }, 0.30]] },
+        { title: "トレーニング上乗せ", detail: "成立役でBONUSゲーム数を加算し、終了後の抽選を強化します", games: 10, continueChance: 0.54, rewards: [[{ kind: "games", label: "トレーニング成功", games: [[10, 0.55], [20, 0.30], [30, 0.12], [50, 0.03]] }, 0.80], [{ kind: "bonus", label: "マッスルBONUS", games: 30, payout: 255 }, 0.20]] },
+        { title: "ゴールデンチャレンジ", detail: "成功期待度約56％のPUSH判定からゴールデンタイムを狙います", games: 1, continueChance: 0.56, rewards: [[{ kind: "games", label: "ゴールデンタイム突入", games: 10 }, 0.74], [{ kind: "bonus", label: "VストックBONUS", games: 30, payout: 255 }, 0.26]] },
+        { title: "ゴールデンタイム", detail: "毎ゲームVストックを抽選する上乗せ区間です", games: 10, continueChance: 0.64, rewards: [[{ kind: "games", label: "Vストック獲得", games: [[30, 0.62], [60, 0.28], [90, 0.10]] }, 0.76], [{ kind: "bonus", label: "Vストック連", games: 40, payout: 340 }, 0.24]] },
+        { title: "Vストック連", detail: "貯めたストックからBONUS連と追加上乗せを判定します", games: 30, continueChance: 0.70, rewards: [[{ kind: "bonus", label: "ダンベルBONUS連", games: 30, payout: 255 }, 0.68], [{ kind: "games", label: "筋肉覚醒上乗せ", games: [[30, 0.55], [50, 0.30], [100, 0.15]] }, 0.32]] },
+        { title: "ライジングアッパーチャレンジ", detail: "最終PUSH成功で枚数上乗せ型の金肉BONUSを抽選します", games: 1, continueChance: 0.76, rewards: [[{ kind: "coins", label: "ライジングアッパー成功", payout: 500 }, 0.62], [{ kind: "bonus", label: "金肉BONUS", games: 80, payout: 1000 }, 0.38]] }
+      ]
+    },
+    "symphogear-seigi-slot": {
+      maxRounds: 6,
+      upperAfterRounds: 6,
+      upperAfterRoundsAutoSuccess: false,
+      rounds: [
+        { title: "ギアVチャンス", detail: "2Gの導入区間。成功するとキャラ別ギアVアタックへ進みます", games: 2, continueChance: 0.58, rewards: [[{ kind: "games", label: "ギアVアタック獲得", games: 10 }, 0.78], [{ kind: "bonus", label: "AXZ BONUS", games: 20, payout: 120 }, 0.22]] },
+        { title: "響 ギアVアタック", detail: "3G＋α、毎ゲーム上乗せをPUSHで開きます", games: 3, continueChance: 0.63, rewards: [[{ kind: "games", label: "響 上乗せ", games: [[10, 0.46], [20, 0.30], [30, 0.16], [50, 0.08]] }, 0.88], [{ kind: "bonus", label: "響BONUS", games: 30, payout: 180 }, 0.12]] },
+        { title: "翼 ギアVアタック", detail: "連撃型の上乗せで複数回のゲーム数加算を狙います", games: 5, continueChance: 0.68, rewards: [[{ kind: "games", label: "翼 連撃上乗せ", games: [[20, 0.48], [30, 0.32], [50, 0.16], [100, 0.04]] }, 0.84], [{ kind: "bonus", label: "翼BONUS", games: 30, payout: 180 }, 0.16]] },
+        { title: "クリス ギアVアタック", detail: "一撃上乗せ型。PUSHで大きなゲーム数を狙います", games: 1, continueChance: 0.73, rewards: [[{ kind: "games", label: "クリス 一撃上乗せ", games: [[20, 0.44], [30, 0.30], [50, 0.20], [100, 0.06]] }, 0.82], [{ kind: "bonus", label: "クリスBONUS", games: 30, payout: 180 }, 0.18]] },
+        { title: "マリア・調＆切歌 共闘", detail: "共闘演出から上乗せ連打またはBONUSを判定します", games: 5, continueChance: 0.78, rewards: [[{ kind: "games", label: "共闘上乗せ", games: [[30, 0.48], [50, 0.34], [100, 0.18]] }, 0.72], [{ kind: "bonus", label: "絶唱BONUS", games: 40, payout: 260 }, 0.28]] },
+        { title: "絶唱BATTLE", detail: "最終PUSHを突破するとAXZラッシュ黄金を抽選します", games: 8, continueChance: 0.82, rewards: [[{ kind: "games", label: "絶唱上乗せ", games: [[50, 0.55], [100, 0.35], [200, 0.10]] }, 0.62], [{ kind: "bonus", label: "絶唱BONUS", games: 60, payout: 450 }, 0.38]] }
+      ]
     }
   };
 
