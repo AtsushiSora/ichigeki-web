@@ -558,7 +558,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["サンセイR&D 公式製品情報", "https://www.sansei-rd.com/products23/l_garo/index.html"], ["サンセイR&D 公式スペック資料", "https://www.sansei-rd.com/products23/l_garo/assets/pdf/l_garo.pdf"], ["一撃 機種解析", "https://1geki.jp/slot/l_garo/"]]
   },
   "ragnador-slot": {
-    order: 0.14, type: "slot", theme: "violet", year: "2026年11月", maker: "ミズホ", updated: "2026-11-04",
+    order: 0.14, type: "slot", theme: "violet", year: "2026年11月", maker: "ミズホ", updated: "2026-11-07",
     published: "2026-11-02",
     name: "スマスロ ラグナドール", shortName: "スマスロ ラグナドール",
     image: "assets/machines/ragnador-slot-key-visual.jpg",
@@ -566,18 +566,21 @@ window.ICHIGEKI_MACHINES = {
     imageCredit: "パチマガスロマガFREE 機種情報",
     imageSource: "https://pachimaga.com/free/mach/maker-s/mizuho/l_ragnador.php",
     catchcopy: "爽怪Chainをつなぎ、真ラグナドールRUSHへ。",
-    intro: "2026年11月2日から導入が始まったスマスロ。公開されたデジタルガイドと設定別CZ・AT初当りをもとに、ラグナドールバトル、チェインアタック、スペシャルジャッジ、上位ATまでを簡易体験できます。",
-    points: ["CZは設定1約1/172.8〜設定6約1/142.4", "ATは設定1約1/326.4〜設定6約1/258.3", "通常AT純増約2.5枚/G・上位AT約4.5枚/G"],
-    specs: [["CZ（設定1）", "約1/172.8"], ["CZ（設定6）", "約1/142.4"], ["AT（設定1）", "約1/326.4"], ["AT（設定6）", "約1/258.3"], ["通常AT純増", "約2.5枚/G"], ["上位AT純増", "約4.5枚/G"], ["CZ間天井", "500G＋α"], ["AT間天井", "999G＋α"]],
-    sim: { kind: "slot", triggerLabel: "ラグナドールバトル", triggerRate: 172.8, triggerSuccess: 0.50, mainLabel: "ラグナドールRUSH", mainRate: 326.4, base50: 31.0, coinUnit: 3.6, normalMin: 250, normalMax: 1050, atPureIncrease: 2.5, specialLabel: "チェインアタック", specialChance: 0.34, specialMin: 180, specialMax: 950, specialOutcomes: [[{ kind: "games", label: "チェインアタック", games: [[10, 0.45], [20, 0.30], [30, 0.15], [50, 0.08], [100, 0.02]], triggerGames: 8 }, 0.70], [{ kind: "bonus", label: "ガチャBONUS", games: [[20, 0.60], [40, 0.40]], payouts: [[180, 0.60], [360, 0.40]], triggerGames: 10 }, 0.30]], upperChallenge: "スペシャルジャッジ", upperChance: 0.20, upperSuccess: 0.70, upperLabel: "真ラグナドールRUSH", upperContinue: 0.75, upperPayout: 600, upperPureIncrease: 4.5, settingRates: { 1: { trigger: 172.8, main: 326.4, payout: 0.976 }, 2: { trigger: 167.2, main: 317.2, payout: 0.988 }, 3: { trigger: 161.8, main: 307.7, payout: 1.003 }, 4: { trigger: 145.0, main: 271.2, payout: 1.057 }, 5: { trigger: 143.0, main: 260.8, payout: 1.105 }, 6: { trigger: 142.4, main: 258.3, payout: 1.145 } } },
+    intro: "2026年11月2日導入のスマスロ。設定別CZ・AT確率を使い、敵HPを削るラグナドールバトル、幻妖石を集めるチェインアタック、ガチャ、2種類のボーナス、スペシャルジャッジ、真ラグナドールRUSHまでを専用演出で体験できます。",
+    points: ["CZは約50%・敵ごとに10〜16G＋α", "通常ATは40G＋α・純増約2.5枚/G", "上位CZは16G・成功約70%、上位ATは純増約4.5枚/G"],
+    specs: [["CZ（設定1）", "約1/172.8"], ["CZ（設定6）", "約1/142.4"], ["AT（設定1）", "約1/326.4"], ["AT（設定6）", "約1/258.3"], ["ラグナドールバトル", "勝利期待度約50%"], ["通常AT", "40G＋α・純増約2.5枚/G"], ["チェインアタック", "5G保証・継続80/90/95%"], ["スペシャルジャッジ", "16G・成功期待度約70%"], ["上位AT", "40G＋α・純増約4.5枚/G"]],
+    sim: { kind: "slot", rankingVersion: "v6", triggerLabel: "ラグナドールバトル", triggerRate: 172.8, triggerSuccess: 0.50, mainLabel: "ラグナドールRUSH", mainRate: 326.4, base50: 31.0, coinUnit: 3.6, normalMin: 250, normalMax: 1050, atPureIncrease: 2.5, specialLabel: "チェインアタック／ガチャ", specialChance: 0.34, specialMin: 0, specialMax: 0, specialDisplay: "games", cycleFlow: { phase: "RAGNADOR RUSH", label: "ラグナドールRUSH", statLabel: "爽怪Chain", maxRounds: 5, continueChance: 0.72, upperAfterRounds: 99, upperOnlyAfterRounds: false, upperAfterRoundsAutoSuccess: false, markFinalRoundComplete: false, rounds: [{ title: "ラグナドールRUSH", detail: "40G＋α・純増約2.5枚/G。幻妖石300個とガチャ券を目指します", games: 40, continueChance: 0.82, rewards: [[{ kind: "coins", label: "初期40G消化", payout: 100 }, 1]] }, { title: "幻妖ミッション", detail: "リプレイ連から3Gまたは10Gのミッションへ。成功でチェインかガチャを獲得", games: [[3, 0.50], [10, 0.50]], continueChance: 0.76, rewards: [[{ kind: "coins", label: "チェインアタック獲得", payout: 10 }, 0.55], [{ kind: "games", label: "ガチャチャレンジ獲得", games: 10 }, 0.30], [{ kind: "games", label: "10連ガチャ獲得", games: 30 }, 0.15]] }, { title: "チェインアタック", detail: "5G保証。80%・90%・95%のいずれかで幻妖石を連続獲得します", games: [[5, 0.55], [8, 0.30], [12, 0.15]], continueChance: 0.80, rewards: [[{ kind: "games", label: "幻妖石300個・ガチャ到達", games: 10 }, 0.55], [{ kind: "games", label: "Wチェイン・10連ガチャ", games: 30 }, 0.30], [{ kind: "games", label: "極ラグナ目・10連ガチャ券", games: 50 }, 0.15]] }, { title: "ガチャチャレンジ", detail: "1G完結。ゲーム数上乗せ、お祈りガチャ、10連ガチャの報酬を開きます", games: 1, continueChance: 0.72, rewards: [[{ kind: "games", label: "ゲーム数上乗せ", games: [[10, 0.45], [20, 0.27], [30, 0.16], [50, 0.09], [100, 0.03]] }, 0.62], [{ kind: "bonus", label: "ストーリーボーナス", games: 20, payout: 90 }, 0.28], [{ kind: "bonus", label: "クライマックスボーナス", games: 30, payout: 135 }, 0.10]] }, { title: "ボーナス高確／ラストミッション", detail: "8Gのボーナス高確とAT終了時のラストミッションをPUSHで決着します", games: 8, continueChance: 0.58, rewards: [[{ kind: "bonus", label: "ストーリーボーナス＋10G", games: 20, payout: 90 }, 0.58], [{ kind: "bonus", label: "クライマックスボーナス", games: 30, payout: 135 }, 0.22], [{ kind: "games", label: "ラストミッション成功・ガチャ復帰", games: [[10, 0.70], [30, 0.25], [100, 0.05]] }, 0.20]] }], endLabel: "ラグナドールRUSH終了" }, upperChallenge: "スペシャルジャッジ", upperChance: 0.20, upperSuccess: 0.70, upperLabel: "真ラグナドールRUSH", upperContinue: 0, upperPayout: 2100, upperPureIncrease: 4.5, upperGameManaged: true, upperGameRange: "期待約1500枚／2700枚", ragnadorUpperFlow: true, upperAwards: [[{ label: "黒BAR・スペシャルEP 冥界", games: 333, payout: 1500 }, 0.50], [{ label: "白7・スペシャルEP 天界", games: 600, payout: 2700 }, 0.50]], upperFailureLabel: "スペシャルエピソード 現世", upperFailurePhase: "SPECIAL EPISODE", upperFailureGames: 20, upperFailurePureIncrease: 4.5, upperFailureRewardLabel: "現世20G→通常AT", upperFailureMessage: "失敗時も現世エピソード20G後に通常ATへ戻ります", settingRates: { 1: { trigger: 172.8, main: 326.4, payout: 0.976 }, 2: { trigger: 167.2, main: 317.2, payout: 0.988 }, 3: { trigger: 161.8, main: 307.7, payout: 1.003 }, 4: { trigger: 145.0, main: 271.2, payout: 1.057 }, 5: { trigger: 143.0, main: 260.8, payout: 1.105 }, 6: { trigger: 142.4, main: 258.3, payout: 1.145 } } },
+    readerGuide: { verdict: "40Gの通常ATでチェインとガチャを重ね、スペシャルジャッジから上位ATを狙う流れを段階的に楽しみたい人向けです。", bestFor: ["ガチャ型の報酬抽選が好き", "CZ・通常AT・上位CZを順番に体験したい"], check: ["通常ATは純増約2.5枚/G", "上位の1500枚・2700枚は継続率ではなく期待枚数"], compare: [["seiya-ougon-slot", "L聖闘士星矢 黄金十二宮", "継続バトル型と比較"], ["ggo-slot", "スマスロ GGO", "BONUS・ST型と比較"]] },
     articleSections: [
       { heading: "設定別CZ・AT初当りを反映", paragraphs: ["CZは設定1約1/172.8から設定6約1/142.4、AT初当りは設定1約1/326.4から設定6約1/258.3です。", "START時に設定1〜6を均等抽選し、選ばれた設定のCZ・AT初当り・出玉率を使用します。結果とランキングにも設定を表示します。"] },
-      { heading: "ラグナドールバトルからATへ", paragraphs: ["通常時は小役の連続やラグナ目からCZを目指します。CZ『ラグナドールバトル』の勝利期待度は約50%です。", "通常AT『ラグナドールRUSH』は40G＋α、純増約2.5枚/G。サイトではチェインやガチャ報酬を追加枚数抽選へまとめます。"] },
-      { heading: "スペシャルジャッジと上位AT", paragraphs: ["スペシャルジャッジは16G＋αで、白7またはBAR揃いによる成功期待度は約70%です。", "成功後は純増約4.5枚/Gの『真ラグナドールRUSH』へ。白7・BARの期待獲得枚数差は記事で紹介し、非公表の上位継続率は固定の簡易抽選で表現します。"] },
+      { heading: "ラグナドールバトルはHPを削るCZ", paragraphs: ["CZはバトルパートとチェインパートの2部構成。敵は青龍・白虎・玄武・朱雀で、規定ゲーム数は10G＋αから16G＋α、トータル勝利期待度は約50%です。", "小役でダメージとチェイン移行を抽選し、ラグナ目では0G連が発生。オトモ参戦時は固有の恩恵が付き、妖主参戦時は勝利期待度約90%です。シミュレーターは敵HP・小役別ダメージを約50%の代表PUSHへまとめます。"] },
+      { heading: "40GのATで幻妖石とガチャを集める", paragraphs: ["ラグナドールRUSHは初期40G＋α、純増約2.5枚/G。幻妖石を300個集めるかガチャ券を獲得すると、1G完結のガチャチャレンジへ進みます。", "チェインアタックは5G保証で継続率80%・90%・95%。Wチェインは毎ゲーム2回報酬を獲得し、10チェインごとにチェインボーナスが発生します。サイトでは幻妖ミッション→チェイン→ガチャを別PUSHで表示します。"] },
+      { heading: "ガチャ・2種類のボーナス・上乗せ", paragraphs: ["ガチャチャレンジはゲーム数上乗せ、お祈りガチャ、10連ガチャを決める1Gゾーンで、ゲーム数上乗せは最大100Gです。", "ストーリーボーナスは20G・純増約4.5枚/Gで終了時に10G上乗せ。クライマックスボーナスは30Gで、勝利時はエンディングストックと100G・300G・500Gのいずれかを獲得します。ボーナス回数に応じたクライマックス比率は調査中のため、サイトでは代表振り分けです。"] },
+      { heading: "スペシャルジャッジと3つのエピソード", paragraphs: ["規定枚数到達やエンディングストック発動後は16Gのスペシャルジャッジへ。成功期待度は約70%で、白7と黒BARは1:1です。", "白7は天界＋10連ガチャ券で期待約2700枚、黒BARは冥界＋ガチャ券で期待約1500枚。失敗しても現世エピソード20G後に通常ATへ戻ります。上位は初期40G＋α・純増約4.5枚/Gで通常ATと同じガチャ型ゲーム性です。期待枚数は継続率ではなく、各エピソード突入後の平均値として1回の代表結果へ反映します。"] },
       { heading: "導入後に確認できる天井", paragraphs: ["CZ間は500G＋αでCZ、AT間は999G＋αでATへ進みます。設定変更後はAT間天井が500G＋αへ短縮されます。", "シミュレーターは平均的な初当りの幅を体験する用途のため、天井到達時の専用恩恵やCZ回数別の優遇は個別再現しません。"] },
       { heading: "固定レートと収支の条件", bullets: ["約31.0G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均AT投資目安は約11,400円", "コイン単価は設定1の参考値約3.6円として表示", "19,000枚到達時はコンプリート表示"] }
     ],
-    sources: [["ユニバーサル 公式デジタルガイド", "https://www.universal-777.com/product/digitalguide/ps/ragnador/"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/vpage/2807/1"], ["パチマガスロマガFREE 機種情報", "https://pachimaga.com/free/mach/maker-s/mizuho/l_ragnador.php"]]
+    sources: [["ユニバーサル 公式デジタルガイド", "https://www.universal-777.com/product/digitalguide/ps/ragnador/"], ["一撃 機種解析", "https://1geki.jp/slot/l_ragnador/"], ["なな徹 AT・ボーナス解析", "https://nana-press.com/kaiseki/machine/1250/39828/"]]
   },
   "seiya-ougon-slot": {
     order: 0.15, type: "slot", theme: "gold", year: "2026年11月", maker: "サンスリー", updated: "2026-11-03",
@@ -3495,6 +3498,24 @@ window.ICHIGEKI_MACHINES = {
     [{ kind: "bonus", label: "SUPER BIG", games: 70, payout: 315 }, 0.15]
   ];
   const models = {
+    "ragnador-slot": {
+      phase: "RAGNADOR RUSH",
+      label: "ラグナドールRUSH",
+      statLabel: "爽怪Chain",
+      maxRounds: 5,
+      upperAfterRounds: 0,
+      upperOnlyAfterRounds: false,
+      upperAfterRoundsAutoSuccess: false,
+      markFinalRoundComplete: false,
+      endLabel: "ラグナドールRUSH終了",
+      rounds: [
+        { title: "ラグナドールRUSH", detail: "40G＋α・純増約2.5枚/G。幻妖石300個とガチャ券を目指します", games: 40, continueChance: 0.82, rewards: [[{ kind: "coins", label: "初期40G消化", payout: 100 }, 1]] },
+        { title: "幻妖ミッション", detail: "リプレイ連から3Gまたは10Gのミッションへ。成功でチェインかガチャを獲得", games: [[3, 0.50], [10, 0.50]], continueChance: 0.76, rewards: [[{ kind: "coins", label: "チェインアタック獲得", payout: 10 }, 0.55], [{ kind: "games", label: "ガチャチャレンジ獲得", games: 10 }, 0.30], [{ kind: "games", label: "10連ガチャ獲得", games: 30 }, 0.15]] },
+        { title: "チェインアタック", detail: "5G保証。80%・90%・95%のいずれかで幻妖石を連続獲得します", games: [[5, 0.55], [8, 0.30], [12, 0.15]], continueChance: 0.80, rewards: [[{ kind: "games", label: "幻妖石300個・ガチャ到達", games: 10 }, 0.55], [{ kind: "games", label: "Wチェイン・10連ガチャ", games: 30 }, 0.30], [{ kind: "games", label: "極ラグナ目・10連ガチャ券", games: 50 }, 0.15]] },
+        { title: "ガチャチャレンジ", detail: "1G完結。ゲーム数上乗せ、お祈りガチャ、10連ガチャの報酬を開きます", games: 1, continueChance: 0.72, rewards: [[{ kind: "games", label: "ゲーム数上乗せ", games: [[10, 0.45], [20, 0.27], [30, 0.16], [50, 0.09], [100, 0.03]] }, 0.62], [{ kind: "bonus", label: "ストーリーボーナス", games: 20, payout: 90 }, 0.28], [{ kind: "bonus", label: "クライマックスボーナス", games: 30, payout: 135 }, 0.10]] },
+        { title: "ボーナス高確／ラストミッション", detail: "8Gのボーナス高確とAT終了時のラストミッションをPUSHで決着します", games: 8, continueChance: 0.58, rewards: [[{ kind: "bonus", label: "ストーリーボーナス＋10G", games: 20, payout: 90 }, 0.58], [{ kind: "bonus", label: "クライマックスボーナス", games: 30, payout: 135 }, 0.22], [{ kind: "games", label: "ラストミッション成功・ガチャ復帰", games: [[10, 0.70], [30, 0.25], [100, 0.05]] }, 0.20]] }
+      ]
+    },
     "garo-yami-slot": {
       phase: "金色になれ！",
       label: "金色になれ！",
