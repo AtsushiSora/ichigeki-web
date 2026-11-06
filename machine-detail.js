@@ -987,10 +987,11 @@
           if (!continued) break;
         }
         basePayout = payout - entryPayout;
-        if (payout < SLOT_COMPLETE_LIMIT && Math.random() < upperChance) {
+        const cycleUpperReached = Number(cycle.upperAfterRounds) > 0 && cycleRounds >= Number(cycle.upperAfterRounds);
+        if (payout < SLOT_COMPLETE_LIMIT && (cycleUpperReached || Math.random() < upperChance)) {
           atEvents.push({ kind: "upper-challenge", label: sim.upperChallenge, games: randomInt(8, 18), award: 0, cumulative: payout });
           flow.push(sim.upperChallenge);
-          upper = Math.random() < sim.upperSuccess;
+          upper = cycleUpperReached || Math.random() < sim.upperSuccess;
           if (upper) {
             do {
               const upperGames = Array.isArray(sim.upperSetGames)
@@ -1327,14 +1328,29 @@
         const perCheckChance = 1 - Math.pow(1 - specialChance, 1 / specialChecks);
         for (let check = 0; check < specialChecks && payout < SLOT_COMPLETE_LIMIT; check += 1) {
           if (Math.random() >= perCheckChance) continue;
-          const requestedAdd = randomInt(sim.specialMin, sim.specialMax);
+          const configuredOutcome = Array.isArray(sim.specialOutcomes) && sim.specialOutcomes.length
+            ? weighted(sim.specialOutcomes)
+            : null;
+          const specialLabel = configuredOutcome?.label || sim.specialLabel;
+          const specialDisplay = String(configuredOutcome?.kind || sim.specialDisplay || "").toLowerCase();
+          const isBonusEvent = specialDisplay === "bonus" || /BONUS|ボーナス|BIG|REG|1G連|エピソード/i.test(String(specialLabel || ""));
+          const isCoinAddEvent = specialDisplay === "coins";
+          const configuredGameAdd = specialDisplay === "games" && Array.isArray(configuredOutcome?.games)
+            ? Math.max(1, Number(weighted(configuredOutcome.games)) || 1)
+            : 0;
+          const configuredPayout = Array.isArray(configuredOutcome?.payouts)
+            ? Math.max(0, Number(weighted(configuredOutcome.payouts)) || 0)
+            : 0;
+          const requestedAdd = configuredGameAdd
+            ? slotAwardForGames(configuredGameAdd, atPureIncrease, sim.atPayoutVariance)
+            : configuredPayout || randomInt(sim.specialMin, sim.specialMax);
           const add = Math.max(0, Math.min(requestedAdd, SLOT_COMPLETE_LIMIT - payout));
           if (!add) break;
-          const specialDisplay = String(sim.specialDisplay || "").toLowerCase();
-          const isBonusEvent = specialDisplay === "bonus" || /BONUS|ボーナス|BIG|REG|1G連|エピソード/i.test(String(sim.specialLabel || ""));
-          const isCoinAddEvent = specialDisplay === "coins";
-          const gameAdd = isBonusEvent || isCoinAddEvent ? 0 : Math.max(1, Math.min(500, Math.round(add / atPureIncrease)));
-          const eventGames = randomInt(8, 38);
+          const gameAdd = isBonusEvent || isCoinAddEvent ? 0 : configuredGameAdd || Math.max(1, Math.min(500, Math.round(add / atPureIncrease)));
+          const bonusGames = isBonusEvent && Array.isArray(configuredOutcome?.games)
+            ? Math.max(1, Number(weighted(configuredOutcome.games)) || 1)
+            : 0;
+          const eventGames = Math.max(1, Number(configuredOutcome?.triggerGames) || randomInt(8, 38));
           payout += add;
           if (isBonusEvent) {
             bonusCount += 1;
@@ -1349,9 +1365,9 @@
             addOnTotal += add;
             addOnGamesTotal += gameAdd;
           }
-          atGamesTotal += eventGames + gameAdd;
-          atEvents.push({ kind: isBonusEvent ? "slot-bonus" : isCoinAddEvent ? "coin-add" : "special", label: sim.specialLabel, trigger: "レア役成立", games: eventGames, gameAdd, award: add, cumulative: payout, number: isBonusEvent ? bonusCount : addOnCount });
-          flow.push(isBonusEvent ? `レア役 → ${sim.specialLabel} +${add}枚` : isCoinAddEvent ? `${sim.specialLabel} +${add}枚` : `レア役 → ${sim.specialLabel} +${gameAdd}G`);
+          atGamesTotal += eventGames + gameAdd + bonusGames;
+          atEvents.push({ kind: isBonusEvent ? "slot-bonus" : isCoinAddEvent ? "coin-add" : "special", label: specialLabel, trigger: configuredOutcome?.trigger || "レア役成立", games: eventGames, gameAdd, bonusGames, award: add, cumulative: payout, number: isBonusEvent ? bonusCount : addOnCount });
+          flow.push(isBonusEvent ? `${specialLabel} +${add}枚` : isCoinAddEvent ? `${specialLabel} +${add}枚` : `${specialLabel} +${gameAdd}G`);
         }
         let upperRouteStarted = false;
         if (sim.setPushFlow) {
@@ -2438,8 +2454,14 @@
           setExperienceStage(3, "CHANCE", "抽選結果", "PUSH", "上乗せかボーナスか、PUSHで結果を開きます", "judge", data.specialChance, "抽選結果はPUSH後に発表");
           await waitForExperienceAction(`${event.label} PUSH`, 4000, "gold");
           if (runId !== experienceRunId) return;
-          setExperienceStage(3, "BONUS HIT", event.label, "BONUS", "ボーナス当選！獲得結果を発表します", "hit", 100, `${event.label} 当選`);
+          const bonusGames = Math.max(0, Number(event.bonusGames) || 0);
+          setExperienceStage(3, "BONUS HIT", event.label, bonusGames ? `${yen.format(bonusGames)}G` : "BONUS", bonusGames ? "ボーナス消化を開始します" : "ボーナス当選！獲得結果を発表します", "hit", 100, `${event.label} 当選`);
           await waitForExperience(850);
+          if (bonusGames) {
+            const bonusCounterComplete = await animateExperienceCounter(bonusGames, "G", "BONUS COUNT", `${event.label} 消化中`, "残りゲーム数が減っていきます", 100, "ボーナス消化", runId);
+            if (!bonusCounterComplete) return;
+            consumedGames += bonusGames;
+          }
           setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
           setSlotAtStatus({ visible: true, remaining: 0, addOnGames: runningAddOnGames, total: event.cumulative });
           setExperienceStage(3, "BONUS RESULT", event.label, `+${yen.format(event.award)}枚`, `ボーナス終了・累計 ${yen.format(event.cumulative)}枚`, "hit", 100, `${event.label} 結果`);
