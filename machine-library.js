@@ -2854,15 +2854,15 @@ window.ICHIGEKI_MACHINES = {
     imageCredit: "P-WORLD 機種情報",
     imageSource: "https://www.p-world.co.jp/machine/database/10313",
     catchcopy: "周期から東卍RUSHへ。上位は純増約8枚・継続約80%。",
-    intro: "東卍チャンスとBREAK CHANCEを重ね、上位ATの天上天下唯我独尊を目指します。",
+    intro: "BREAK CHANCEで初期差枚を決め、東卍RUSHからリベンジチャンス経由で東卍RUSH BURSTを目指します。",
     points: ["設定1 AT約1/482.2", "設定6 AT約1/373.1", "上位純増約8.0枚/G"],
     specs: [["AT（設定1）", "約1/482.2"], ["AT（設定6）", "約1/373.1"], ["ベース", "約32G/50枚"], ["通常AT純増", "約3.2枚/G"], ["上位純増", "約8.0枚/G"], ["設定", "1〜6"]],
     sim: { kind: "slot", triggerLabel: "東卍チャンス", triggerRate: 282.4, triggerSuccess: 0.46, mainLabel: "東卍RUSH", mainRate: 482.2, base50: 32.0, coinUnit: 3.6, normalMin: 240, normalMax: 1100, specialLabel: "BREAK CHANCE", specialChance: 0.36, specialMin: 220, specialMax: 1000, specialDisplay: "coins", cycleFlow: { phase: "TOMAN RUSH", label: "東卍RUSH", statLabel: "東卍RUSH継続", games: 30, continueChance: 0.72, maxRounds: 10, rewards: [[{ label: "BREAK CHANCE", payout: 220 }, 0.55], [{ label: "東卍BONUS", payout: 440 }, 0.30], [{ label: "黒い衝動", payout: 880 }, 0.15]], endLabel: "東卍RUSH終了" }, upperChallenge: "リベンジチャンス", upperChance: 0.18, upperSuccess: 0.55, upperLabel: "天上天下唯我独尊", upperContinue: 0.80, upperPayout: 700, settingRates: { 1: { trigger: 282.4, main: 482.2, payout: 0.978 }, 2: { trigger: 277.2, main: 474.7, payout: 0.988 }, 3: { trigger: 270.1, main: 456.9, payout: 1.014 }, 4: { trigger: 255.8, main: 414.0, payout: 1.063 }, 5: { trigger: 248.3, main: 393.8, payout: 1.112 }, 6: { trigger: 240.1, main: 373.1, payout: 1.149 } } },
     articleSections: [
       { heading: "周期抽選とAT初当り", paragraphs: ["初当り合算は設定1約1/282.4〜設定6約1/240.1、東卍RUSH初当りは約1/482.2〜約1/373.1です。", "サイトでは東卍チャンスを経由する段階とAT初当りを分けて表示します。"] },
-      { heading: "上位ATは純増約8枚", paragraphs: ["通常ATの東卍RUSHは純増約3.2枚/G。BREAK CHANCEの報酬を獲得しながら継続します。", "上位AT『天上天下唯我独尊』は純増約8.0枚/G・継続約80%として簡易抽選します。"] }
+      { heading: "上位ATは純増約8枚", paragraphs: ["通常ATの東卍RUSHは純増約3.2枚/G。BREAK CHANCEで決めた150枚以上の差枚を消化しながら、直乗せや一触即発から東卍ATTACKを狙います。", "リベンジチャンス成功後の上位AT『東卍RUSH BURST』は純増約8.0枚/G・継続約80%として簡易抽選します。"] }
     ],
-    sources: [["天井ナビ 設定別スペック", "https://tenjo-navi.com/machines/smart-tokyo-revengers/"], ["P-WORLD 業界ニュース", "https://news.p-world.co.jp/articles/31329/greenbelt"]]
+    sources: [["天井ナビ 設定別スペック", "https://tenjo-navi.com/machines/smart-tokyo-revengers/"], ["P-WORLD 業界ニュース", "https://news.p-world.co.jp/articles/31384/yugitsushin"], ["Sammy 東京リベンジャーズ特設サイト", "https://www.sammy.co.jp/japanese/product/rev_slo_special/"]]
   },
   "shin-onimusha3-slot": {
     order: 13.5, type: "slot", theme: "flame", year: "2025年10月", maker: "レオスター", updated: "2026-11-01",
@@ -3696,6 +3696,20 @@ window.ICHIGEKI_MACHINES = {
         { title: "ダークネス計画", detail: "5Gの特化区間で毎ゲームSTゲーム数を加算し、上乗せ分を持ち越します", games: 5, continueChance: 0.64, rewards: [[{ kind: "games", label: "STゲーム数上乗せ", games: [[10, 0.45], [20, 0.32], [30, 0.16], [50, 0.07]] }, 0.82], [{ kind: "bonus", label: "ヤミエピソード", games: 20, payout: 400 }, 0.18]] },
         { title: "楽園計画・ヒロイン3人攻略", detail: "三人目攻略後のPUSHで上位『ハーレムモード』突入を判定します", games: 10, continueChance: 0.70, rewards: [[{ kind: "coins", label: "ヒロイン3人攻略", payout: 300 }, 0.58], [{ kind: "coins", label: "400枚BONUS", payout: 400 }, 0.28], [{ kind: "bonus", label: "上位準備エピソード", games: 20, payout: 600 }, 0.14]] }
       ]
+    },
+    "tokyo-revengers-slot": {
+      maxRounds: 6,
+      upperAfterRounds: 6,
+      upperAfterRoundsAutoSuccess: false,
+      upperOnlyAfterRounds: true,
+      rounds: [
+        { title: "BREAK CHANCE", detail: "PUSHで東卍RUSHの初期差枚を決定。150枚以上からATを開始します", games: 1, continueChance: 0.72, rewards: [[{ kind: "coins", label: "初期150枚", payout: 150 }, 0.55], [{ kind: "coins", label: "初期200枚", payout: 200 }, 0.28], [{ kind: "coins", label: "初期300枚", payout: 300 }, 0.13], [{ kind: "coins", label: "初期500枚", payout: 500 }, 0.04]] },
+        { title: "東卍RUSH・差枚消化", detail: "純増約3.2枚/Gの差枚管理AT。レア役から直乗せと東卍チャージを狙います", games: 47, continueChance: 0.68, rewards: [[{ kind: "coins", label: "差枚上乗せ +20枚", payout: 20 }, 0.52], [{ kind: "coins", label: "差枚上乗せ +50枚", payout: 50 }, 0.30], [{ kind: "coins", label: "差枚上乗せ +100枚", payout: 100 }, 0.13], [{ kind: "coins", label: "東卍チャージ +200枚", payout: 200 }, 0.05]] },
+        { title: "一触即発", detail: "規定ポイントから突入するバトル。PUSHで勝利と東卍ATTACKを判定します", games: 8, continueChance: 0.64, rewards: [[{ kind: "coins", label: "一触即発 勝利", payout: 100 }, 0.58], [{ kind: "coins", label: "マイキー一触即発", payout: 200 }, 0.27], [{ kind: "bonus", label: "東卍ATTACK獲得", games: 10, payout: 300 }, 0.15]] },
+        { title: "東卍ATTACK", detail: "昇格型報酬ゾーン。上乗せ枚数や上位CZアイコンをPUSHで開きます", games: 10, continueChance: 0.70, rewards: [[{ kind: "coins", label: "東卍ATTACK +100枚", payout: 100 }, 0.42], [{ kind: "coins", label: "東卍ATTACK +200枚", payout: 200 }, 0.31], [{ kind: "coins", label: "東卍ATTACK +300枚", payout: 300 }, 0.19], [{ kind: "bonus", label: "上位CZアイコン獲得", games: 10, payout: 500 }, 0.08]] },
+        { title: "LEAP上乗せ", detail: "上乗せの次ゲームで再抽選。LEAPまたは日和ってループで獲得を伸ばします", games: 1, continueChance: 0.75, rewards: [[{ kind: "coins", label: "LEAP上乗せ +50枚", payout: 50 }, 0.48], [{ kind: "coins", label: "LEAP上乗せ +100枚", payout: 100 }, 0.30], [{ kind: "coins", label: "日和ってループ +200枚", payout: 200 }, 0.17], [{ kind: "coins", label: "日和ってループ +300枚", payout: 300 }, 0.05]] },
+        { title: "黒い衝動・最終抗争", detail: "AT終盤の最終抗争。突破すると上位CZ『リベンジチャンス』へ進みます", games: 10, continueChance: 0.80, rewards: [[{ kind: "coins", label: "最終抗争突破", payout: 250 }, 0.58], [{ kind: "bonus", label: "天上天下唯我独尊", games: 30, payout: 500 }, 0.28], [{ kind: "bonus", label: "リベンジチャンス獲得", games: 10, payout: 700 }, 0.14]] }
+      ]
     }
   };
 
@@ -3715,6 +3729,13 @@ window.ICHIGEKI_MACHINES = {
     if (slug === "toloveru-darkness-slot") {
       sim.upperChallenge = "ヒロイン3人攻略ジャッジ";
       sim.upperSuccess = 0.34;
+    }
+    if (slug === "tokyo-revengers-slot") {
+      sim.upperChallenge = "リベンジチャンス";
+      sim.upperLabel = "東卍RUSH BURST";
+      sim.upperPureIncrease = 8.0;
+      sim.upperPayout = 700;
+      sim.upperContinue = 0.80;
     }
   });
 })();
