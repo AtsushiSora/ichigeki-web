@@ -763,9 +763,25 @@
       const atPureIncrease = Math.max(1, Number(sim.atPureIncrease) || publishedPureIncrease || 4);
       const baseAtGames = Math.max(20, Math.min(300, Math.round(basePayout / atPureIncrease)));
       payout = basePayout;
-      atGamesTotal += baseAtGames;
       flow.push(`${sim.mainLabel}突入`);
-      atEvents.push({ kind: "at-start", label: sim.mainLabel, games: baseAtGames, award: basePayout, cumulative: payout });
+      let rushSetCount = 1;
+      if (sim.setPushFlow) {
+        while (rushSetCount < 3 && Math.random() < (sim.mainSetContinue || 0.75)) rushSetCount += 1;
+        const setGames = Array.from({ length: rushSetCount }, () => weighted(sim.rushSetGames || [[10, 1]]));
+        const totalSetGames = setGames.reduce((sum, games) => sum + games, 0);
+        let distributedPayout = 0;
+        setGames.forEach((games, index) => {
+          const remainingPayout = Math.max(0, basePayout - distributedPayout);
+          const award = index === setGames.length - 1 ? remainingPayout : Math.min(remainingPayout, Math.max(0, Math.round(basePayout * games / totalSetGames / 10) * 10));
+          distributedPayout += award;
+          atGamesTotal += games;
+          atEvents.push({ kind: "rush-set", label: sim.mainLabel, games, award, cumulative: distributedPayout, set: index + 1, setCount: rushSetCount });
+        });
+        flow.push(`${sim.mainLabel} ${rushSetCount}セット`);
+      } else {
+        atGamesTotal += baseAtGames;
+        atEvents.push({ kind: "at-start", label: sim.mainLabel, games: baseAtGames, award: basePayout, cumulative: payout });
+      }
 
       // Keep the published overall special-zone chance while allowing rare multi-hit runs.
       const specialChecks = Math.max(1, Math.min(3, Math.ceil(basePayout / 500)));
@@ -793,7 +809,7 @@
             const award = Math.max(0, Math.min(sim.upperPayout, SLOT_COMPLETE_LIMIT - payout));
             if (!award) break;
             upperLoops += 1;
-            const upperGames = randomInt(24, 72);
+            const upperGames = Array.isArray(sim.upperSetGames) ? weighted(sim.upperSetGames) : randomInt(24, 72);
             payout += award;
             upperPayoutTotal += award;
             atGamesTotal += upperGames;
@@ -825,7 +841,7 @@
     const atStats = entered ? [["AT消化モデル", `${yen.format(atGamesTotal)}G相当`], ["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnTotal)}枚` : "上乗せなし"], ["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : "非当選"], ["上位AT", upper ? `${sim.upperLabel} ${upperLoops}セット` : "非到達"]] : [];
     const stats = [["今回の設定", `設定${setting}`], ["設定差モデル", settingModelLabel], ["今回のゲーム数", `${yen.format(games)}G`], ...settingRateStats, ["現金投資目安", `${yen.format(investment)}円`], ...atStats, ["獲得枚数", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]];
     if (complete) stats.unshift(["到達状態", "コンプリート"]);
-    return { title: `設定${setting}｜${complete ? "コンプリート" : upper ? `${sim.upperLabel}到達` : entered ? `${sim.mainLabel}終了` : `${sim.triggerLabel}失敗`}`, summary: complete ? `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}、獲得枚数が${yen.format(SLOT_COMPLETE_LIMIT)}枚に到達し、コンプリートしました。` : `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}。${entered ? `${payout}枚を獲得しました。上乗せ${addOnCount}回・${upper ? `${sim.upperLabel} ${upperLoops}セット。` : "上位AT非到達。"}` : `${sim.mainLabel}には届きませんでした。`}`, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, entered, entryChance: triggerSuccess * 100, mainLabel: sim.mainLabel, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperChallenge: sim.upperChallenge || "", upper, upperLabel: sim.upperLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
+    return { title: `設定${setting}｜${complete ? "コンプリート" : upper ? `${sim.upperLabel}到達` : entered ? `${sim.mainLabel}終了` : `${sim.triggerLabel}失敗`}`, summary: complete ? `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}、獲得枚数が${yen.format(SLOT_COMPLETE_LIMIT)}枚に到達し、コンプリートしました。` : `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}。${entered ? `${payout}枚を獲得しました。上乗せ${addOnCount}回・${upper ? `${sim.upperLabel} ${upperLoops}セット。` : "上位AT非到達。"}` : `${sim.mainLabel}には届きませんでした。`}`, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, entered, entryChance: triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, setPushFlow: Boolean(sim.setPushFlow), specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: sim.upperContinue * 100, upperChallenge: sim.upperChallenge || "", upper, upperLabel: sim.upperLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
   }
 
   function createATypeSession(setting) {
@@ -1246,6 +1262,21 @@
     return runId === experienceRunId;
   }
 
+  async function animateValvrave100GameBonus({ upper = false, set = 1 } = {}, runId) {
+    setExperienceStage(3, upper ? "SUPER REVOLUTION DRIVE" : "REVOLUTION DRIVE", "ゲーム数上乗せ", "+10G", "100G到達まで数字が加速します", "judge", 100, `SET ${set} 100G振り分け`);
+    for (const games of [20, 30, 50, 70, 90]) {
+      if (runId !== experienceRunId || experienceSkipped) return false;
+      document.getElementById("machineExperienceTitle").textContent = games >= 70 ? "まだ上がる！" : "上乗せ加速中";
+      document.getElementById("machineExperienceValue").textContent = `+${games}G`;
+      document.getElementById("machineExperienceMessage").textContent = `SET ${set} ゲーム数振り分け・${games}G`;
+      await waitForExperience(170);
+    }
+    if (runId !== experienceRunId) return false;
+    setExperienceStage(3, upper ? "SUPER REVOLUTION DRIVE" : "REVOLUTION DRIVE", "100G 上乗せ！", "+100G", `SET ${set} は100Gに決定`, upper ? "hyper" : "hit", 100, "PREMIUM GAME ALLOCATION");
+    await waitForExperience(1050);
+    return runId === experienceRunId;
+  }
+
   async function animatePachinkoRushRunout(data, result, runId) {
     const totalGames = Math.max(10, Math.round(Number(data.rushGameLimit) || 100));
     const checkpoints = data.upper ? [.07, .15, .24, .34, .45, .56, .67, .77, .86, .93] : [.12, .28, .45, .62, .76, .88];
@@ -1453,8 +1484,11 @@
       const sourceEvents = Array.isArray(data.atEvents) && data.atEvents.length
         ? data.atEvents
         : [{ kind: "at-start", label: data.mainLabel, games: data.atGameTimeline?.[0] || 40, award: data.payout, cumulative: data.payout }];
+      const setPushFlow = Boolean(data.setPushFlow);
+      const normalSetCount = sourceEvents.filter(event => event.kind === "rush-set").length;
+      const hadUpperChallenge = sourceEvents.some(event => event.kind === "upper-challenge");
       let route = [...sourceEvents];
-      if (route.length > 10) {
+      if (!setPushFlow && route.length > 10) {
         const visibleEvents = route.slice(0, 7);
         const remainingEvents = route.slice(7);
         const previousTotal = Number(visibleEvents[visibleEvents.length - 1]?.cumulative) || 0;
@@ -1469,6 +1503,29 @@
         const event = route[index];
         const eventGames = Math.max(1, Number(event.games) || data.atGameTimeline?.[index] || 20);
 
+        if (event.kind === "rush-set") {
+          const firstSet = Number(event.set) === 1;
+          const setChance = firstSet ? 100 : data.mainSetContinueChance;
+          setExperienceStage(3, "REVOLUTION SET", `${event.label} SET ${event.set}`, "PUSH", firstSet ? "開始セットのゲーム数を決定します" : "継続判定とゲーム数振り分けを開きます", "judge", setChance, firstSet ? "革命RUSH開始" : `セット継続率 ${Math.round(data.mainSetContinueChance)}%`);
+          await waitForExperienceAction(`SET ${event.set} PUSH`, 4500, firstSet ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          if (eventGames >= 100) {
+            const bonusComplete = await animateValvrave100GameBonus({ set: event.set }, runId);
+            if (!bonusComplete) return;
+          } else {
+            setExperienceStage(3, "SET RESULT", firstSet ? "革命RUSH START" : "継続成功！", `${yen.format(eventGames)}G`, `ゲーム数振り分けは ${yen.format(eventGames)}G`, "rush", 100, `SET ${event.set} 振り分け結果`);
+            await waitForExperience(850);
+          }
+          const setCounterComplete = await animateExperienceCounter(eventGames, "G", "REVOLUTION RUSH", `${event.label} SET ${event.set}消化中`, `${yen.format(eventGames)}Gを消化します`, data.mainSetContinueChance, `${event.label}継続目安`, runId);
+          if (!setCounterComplete) return;
+          consumedGames += eventGames;
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, games: consumedGames, addOn: runningAddOn, total: event.cumulative });
+          setExperienceStage(3, "REVOLUTION RUSH", `${event.label} SET ${event.set}`, `${yen.format(eventGames)}G / +${yen.format(event.award)}枚`, `セット終了・累計 ${yen.format(event.cumulative)}枚`, "rush", data.mainSetContinueChance, `SET ${event.set} / ${event.setCount}`);
+          await waitForExperience(780);
+          continue;
+        }
+
         if (event.kind === "upper-challenge") {
           const counterComplete = await animateExperienceCounter(eventGames, "G", "AT COUNT", `${data.mainLabel}消化中`, `${data.upperChallenge}の当落まで数字が進みます`, data.upperRouteChance, "上位ルート期待度", runId);
           if (!counterComplete) return;
@@ -1479,6 +1536,10 @@
           if (runId !== experienceRunId) return;
           setExperienceStage(3, "UPPER JUDGE", data.upper ? `${data.upperLabel} 突入` : `${data.upperChallenge} 失敗`, data.upper ? "突破成功" : "通常AT終了", data.upper ? "上位ATへ進みます" : "最終結果へ進みます", data.upper ? "hyper" : "end", data.upper ? 100 : 0, "上位AT判定結果");
           await waitForExperience(820);
+          if (data.upper) {
+            setExperienceStage(3, "SUPER REVOLUTION RUSH", `${data.upperLabel} 突入！`, `${Math.round(data.upperContinueChance)}% LOOP`, "赤・金モードでセット継続抽選へ", "hyper", data.upperContinueChance, "超革命RUSH開始");
+            await waitForExperience(1100);
+          }
           continue;
         }
 
@@ -1492,7 +1553,19 @@
           continue;
         }
 
-        const counterComplete = await animateExperienceCounter(eventGames, "G", "AT COUNT", event.kind === "upper" ? `${data.upperLabel}消化中` : `${data.mainLabel}消化中`, event.kind === "special" ? "レア役成立までゲーム数が進みます" : "次の出玉契機までゲーム数が進みます", event.kind === "upper" ? data.upperSuccessChance : data.specialChance, event.kind === "upper" ? `${data.upperLabel}継続目安` : `${data.specialLabel || "上乗せ"}当選目安`, runId);
+        if (setPushFlow && event.kind === "upper") {
+          setExperienceStage(3, "SUPER REVOLUTION SET", `${data.upperLabel} SET ${event.set}`, "PUSH", "上位継続とゲーム数振り分けを開きます", "judge", data.upperContinueChance, `${data.upperLabel} ${Math.round(data.upperContinueChance)}% LOOP`);
+          await waitForExperienceAction(`超革命 SET ${event.set} PUSH`, 4500, "upper");
+          if (runId !== experienceRunId) return;
+          if (eventGames >= 100) {
+            const bonusComplete = await animateValvrave100GameBonus({ upper: true, set: event.set }, runId);
+            if (!bonusComplete) return;
+          } else {
+            setExperienceStage(3, "SUPER REVOLUTION RESULT", "上位継続成功！", `${yen.format(eventGames)}G`, `ゲーム数振り分けは ${yen.format(eventGames)}G`, "hyper", 100, `超革命 SET ${event.set} 振り分け結果`);
+            await waitForExperience(950);
+          }
+        }
+        const counterComplete = await animateExperienceCounter(eventGames, "G", event.kind === "upper" ? "SUPER REVOLUTION RUSH" : "AT COUNT", event.kind === "upper" ? `${data.upperLabel} SET ${event.set}消化中` : `${data.mainLabel}消化中`, event.kind === "special" ? "レア役成立までゲーム数が進みます" : "次の出玉契機までゲーム数が進みます", event.kind === "upper" ? data.upperContinueChance : data.specialChance, event.kind === "upper" ? `${data.upperLabel}継続目安` : `${data.specialLabel || "上乗せ"}当選目安`, runId);
         if (!counterComplete) return;
         consumedGames += eventGames;
 
@@ -1512,8 +1585,23 @@
         const isUpper = event.kind === "upper";
         setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
         setSlotAtStatus({ visible: true, games: consumedGames, addOn: runningAddOn, total: event.cumulative });
-        setExperienceStage(3, isUpper ? "UPPER AT" : "AT MODE", isUpper ? `${event.label} SET ${event.set}` : `${event.label} START`, `+${yen.format(event.award)}枚`, isUpper ? `上位AT累計 ${yen.format(event.cumulative)}枚` : `基本獲得 ${yen.format(event.cumulative)}枚`, isUpper ? "hyper" : "rush", isUpper ? data.upperSuccessChance : data.specialChance, isUpper ? `${data.upperLabel}継続目安` : `${data.specialLabel || "上乗せ"}当選目安`);
+        setExperienceStage(3, isUpper ? "SUPER REVOLUTION RUSH" : "AT MODE", isUpper ? `${event.label} SET ${event.set}` : `${event.label} START`, isUpper ? `${yen.format(eventGames)}G / +${yen.format(event.award)}枚` : `+${yen.format(event.award)}枚`, isUpper ? `超革命RUSH累計 ${yen.format(event.cumulative)}枚` : `基本獲得 ${yen.format(event.cumulative)}枚`, isUpper ? "hyper" : "rush", isUpper ? data.upperContinueChance : data.specialChance, isUpper ? `${data.upperLabel} ${Math.round(data.upperContinueChance)}% LOOP` : `${data.specialLabel || "上乗せ"}当選目安`);
         await waitForExperience(isUpper ? 900 : 700);
+      }
+      if (setPushFlow && !data.complete && data.upper) {
+        const nextSet = Math.max(1, Number(data.upperLoops) + 1);
+        setExperienceStage(3, "SUPER REVOLUTION SET", `${data.upperLabel} SET ${nextSet}`, "PUSH", "最後の継続判定を開きます", "judge", data.upperContinueChance, `${data.upperLabel} ${Math.round(data.upperContinueChance)}% LOOP`);
+        await waitForExperienceAction(`超革命 SET ${nextSet} PUSH`, 4500, "upper");
+        if (runId !== experienceRunId) return;
+        setExperienceStage(3, "RUSH END", "継続失敗", `${yen.format(data.upperLoops)} SET`, `${data.upperLabel}終了・最終結果へ`, "end", 0, "超革命RUSH終了");
+        await waitForExperience(800);
+      } else if (setPushFlow && !data.complete && !data.upper && !hadUpperChallenge && normalSetCount) {
+        const nextSet = normalSetCount + 1;
+        setExperienceStage(3, "REVOLUTION SET", `${data.mainLabel} SET ${nextSet}`, "PUSH", "最後の継続判定を開きます", "judge", data.mainSetContinueChance, `セット継続率 ${Math.round(data.mainSetContinueChance)}%`);
+        await waitForExperienceAction(`SET ${nextSet} PUSH`);
+        if (runId !== experienceRunId) return;
+        setExperienceStage(3, "RUSH END", "継続失敗", `${normalSetCount} SET`, `${data.mainLabel}終了・最終結果へ`, "end", 0, "革命RUSH終了");
+        await waitForExperience(800);
       }
       if (data.complete) {
         setExperienceStage(3, "SLOT COMPLETE", "コンプリート", `${yen.format(data.payout)}枚`, "獲得上限へ到達", "complete", 100, "コンプリート到達");

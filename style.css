@@ -17759,3 +17759,39 @@ textarea { min-height: 132px; line-height: 1.65; }
   background: linear-gradient(180deg, color-mix(in srgb, var(--arcade-main) 72%, #111), var(--arcade-dark));
   box-shadow: 0 0 12px color-mix(in srgb, var(--arcade-main) 40%, transparent);
 }
+
+/* Valvrave: distinguish Revolution RUSH from the red-gold Super Revolution mode. */
+.machine-experience[data-ui="arcade"][data-profile="revolution"][data-tone="hyper"] {
+  --arcade-main: #ff274f;
+  --arcade-dark: #5b0012;
+  --arcade-soft: #ffe47c;
+  --arcade-hot: #fff3a8;
+  --arcade-line: rgba(255, 62, 92, .78);
+}
+
+.machine-experience[data-ui="arcade"][data-profile="revolution"][data-tone="hyper"] .machine-experience-screen {
+  border-color: #ffd75c;
+  background:
+    repeating-conic-gradient(from 0deg at 50% 48%, rgba(255, 214, 66, .11) 0deg 7deg, transparent 7deg 18deg),
+    radial-gradient(circle at 50% 45%, rgba(255, 42, 68, .48), transparent 35%),
+    linear-gradient(145deg, #3d020b, #050101 74%);
+  box-shadow: inset 0 0 64px rgba(255, 38, 69, .28), 0 0 34px rgba(255, 204, 58, .32);
+}
+
+.machine-experience[data-ui="arcade"][data-profile="revolution"][data-tone="hyper"] .machine-experience-screen > span,
+.machine-experience[data-ui="arcade"][data-profile="revolution"][data-tone="hyper"] .machine-experience-screen > b {
+  color: #ffe36d;
+}
+
+.machine-experience[data-ui="arcade"][data-profile="revolution"][data-push-variant="upper"] .machine-experience-screen {
+  border-color: #ffe278;
+  background: radial-gradient(circle at 50% 45%, rgba(255, 43, 74, .42), transparent 35%), linear-gradient(145deg, #46020f, #060101 74%);
+  box-shadow: inset 0 0 62px rgba(255, 45, 75, .3), 0 0 38px rgba(255, 210, 74, .4);
+}
+
+.machine-experience[data-ui="arcade"][data-profile="revolution"][data-push-variant="upper"] .machine-experience-push {
+  border-color: #fff7c7;
+  color: #2b0500;
+  background: radial-gradient(ellipse at 50% 8%, #fffbd7, #ffd849 34%, #ff344f 66%, #760015 100%);
+  box-shadow: inset 0 6px 0 rgba(255,255,255,.55), inset 0 -8px 0 rgba(90,0,15,.35), 0 0 0 7px rgba(255, 55, 82, .2), 0 0 50px rgba(255, 207, 65, .7), 0 15px 24px rgba(0,0,0,.5);
+}
