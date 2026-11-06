@@ -352,7 +352,17 @@
         percent(sim.triggerSuccess),
         `${sim.triggerLabel}から${hasEntryBonuses ? (machine.initialHitLabel || "初当りBONUS") : sim.mainLabel}へ進む代表割合です。`
       ));
-      if (sim.upperLabel && Number(sim.upperSuccess) > 0) {
+      if (sim.upperLabel && Number(sim.upperAfterSuccesses) > 0) {
+        const requiredSuccesses = Math.max(1, Number(sim.upperAfterSuccesses));
+        const overallUpperChance = Math.pow(Math.max(0, Math.min(1, Number(sim.mainSetContinue) || 0)), requiredSuccesses);
+        charts.push(ratioChartMarkup(
+          "UPPER ROUTE",
+          `${sim.upperLabel}到達割合`,
+          [["3回成功", overallUpperChance], ["途中終了", 1 - overallUpperChance]],
+          percent(overallUpperChance),
+          `ハラキリチャレンジ約${percent(sim.mainSetContinue)}を${requiredSuccesses}回続けて成功し、4セット目から${sim.upperLabel}へ進む割合です。`
+        ));
+      } else if (sim.upperLabel && Number(sim.upperSuccess) > 0) {
         charts.push(ratioChartMarkup(
           "UPPER JUDGE",
           `${sim.upperChallenge}成功割合`,
@@ -372,7 +382,9 @@
         note = `${sim.triggerLabel}突破、激情ジャッジの成功回数、運命の一劇・運命連鎖は段階ごとの別抽選です。表示割合を掛け合わせた単純な上位到達率ではありません。`;
       } else {
         note = hasEntryBonuses
-          ? `${sim.triggerLabel}突破、ボーナス種別ごとの${sim.mainLabel}抽選、${sim.upperChallenge}成功は別々の抽選です。表示割合を掛け合わせただけの全体到達率ではありません。`
+          ? Number(sim.upperAfterSuccesses) > 0
+            ? `${sim.triggerLabel}突破、ボーナス種別ごとの${sim.mainLabel}抽選、ハラキリチャレンジの継続は段階ごとの別抽選です。3回成功後の追加抽選はなく、4セット目から${sim.upperLabel}へ移行します。`
+            : `${sim.triggerLabel}突破、ボーナス種別ごとの${sim.mainLabel}抽選、${sim.upperChallenge}成功は別々の抽選です。表示割合を掛け合わせただけの全体到達率ではありません。`
           : `${sim.triggerLabel}突破と${sim.upperChallenge}成功は別々の抽選です。ゾーン・上位ルート選択率を含む全体到達率ではありません。`;
       }
     }
@@ -393,6 +405,8 @@
     const upperRoute = sim.upperLabel
       ? sim.karakuriJudgeFlow
         ? `${sim.specialLabel}を3回成功させて${sim.upperChallenge}、4回目以降の成功時は運命連鎖から${sim.upperLabel}を目指します。`
+        : Number(sim.upperAfterSuccesses) > 0
+          ? `${sim.specialLabel}などで獲得を伸ばし、ハラキリチャレンジを3回成功させると4セット目から${sim.upperLabel}へ移行します。`
         : `${sim.specialLabel}などで獲得を伸ばし、${sim.upperChallenge}成功から${sim.upperLabel}を目指します。`
       : `${sim.specialLabel}などの出玉契機で獲得枚数を伸ばします。`;
     const judgeText = isDirectEntry
@@ -472,7 +486,7 @@
       cards = [
         ["GAME FLOW", "ゲーム性", `通常時は${sim.triggerLabel}を入口に${initialHitLabel}を経て${sim.mainLabel}を目指します。${sim.mainLabel}はセット継続を重ね、${sim.upperChallenge}から${sim.upperLabel}へ進みます。`],
         ["DISTRIBUTION", "ゲーム数と獲得枚数", `${entryBonusText}${firstSetText}継続セットは10G・20G・50G・100Gの簡易振り分けです。ボーナス出玉を先に加算し、RUSH中は各セットのゲーム数×純増約${pureIncrease.toFixed(1)}枚/Gを中心に、短期的なブレを加えて計算します。`],
-        ["ENTRY RATE", "突破率", `${Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length ? `${sim.triggerLabel}からボーナスへの簡易到達率は${percent(sim.triggerSuccess)}です。ボーナス後の${sim.mainLabel}はボーナス種別ごとのAT期待度で判定します。` : `${sim.triggerLabel}から${sim.mainLabel}への簡易突破率は${percent(sim.triggerSuccess)}です。`}上位ルート選択率は${percent(sim.upperChance)}、${sim.upperChallenge}成功率は${percent(sim.upperSuccess)}として段階ごとに抽選します。`],
+        ["ENTRY RATE", "突破率", `${Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length ? `${sim.triggerLabel}からボーナスへの簡易到達率は${percent(sim.triggerSuccess)}です。ボーナス後の${sim.mainLabel}はボーナス種別ごとのAT期待度で判定します。` : `${sim.triggerLabel}から${sim.mainLabel}への簡易突破率は${percent(sim.triggerSuccess)}です。`}${Number(sim.upperAfterSuccesses) > 0 ? `ハラキリチャレンジは約${percent(sim.mainSetContinue)}で継続し、3回成功すると4セット目から${sim.upperLabel}へ移行します。` : `上位ルート選択率は${percent(sim.upperChance)}、${sim.upperChallenge}成功率は${percent(sim.upperSuccess)}として段階ごとに抽選します。`}`],
         ["ZONE", "通常時・ゾーン", `${sim.triggerLabel}の基準は約1/${sim.triggerRate}、${initialHitLabel}初当りは設定${slotBaselineSetting}基準で約1/${sim.mainRate}です。50枚あたり${sim.base50}Gを固定ベースにし、内部モード・周期・天井の全状態は個別再現していません。`],
         ["ADD-ON", "上乗せ・上位", `${sim.specialLabel}を代表的な上乗せ契機として簡易抽選します。${sim.upperLabel}到達後もセットゲーム数×純増約${pureIncrease.toFixed(1)}枚/Gで獲得を計算し、代表継続率${percent(sim.upperContinue)}で継続判定します。`]
       ];
@@ -820,6 +834,7 @@
     let karakuriJudgeAttempts = 0;
     let karakuriJudgeSuccesses = 0;
     let karakuriUpperRoute = "";
+    let setPushUpperResolved = false;
     if (triggerSucceeded && Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length) {
       const entryBonusTemplate = weighted(sim.entryBonusAwards);
       const entryChance = Math.max(0, Math.min(1, Number(entryBonusTemplate.atChance) || 0));
@@ -866,6 +881,10 @@
       let rushSetCount = 1;
       if (sim.setPushFlow) {
         while (rushSetCount < 3 && Math.random() < (sim.mainSetContinue || 0.75)) rushSetCount += 1;
+        if (rushSetCount === 3 && Number(sim.upperAfterSuccesses) === 3) {
+          setPushUpperResolved = true;
+          upper = Math.random() < (sim.mainSetContinue || 0.75);
+        }
         const setGames = Array.from({ length: rushSetCount }, (_, index) => weighted(
           index === 0 && Array.isArray(sim.firstRushSetGames)
             ? sim.firstRushSetGames
@@ -884,6 +903,10 @@
         basePayout = distributedPayout - entryPayout;
         payout = distributedPayout;
         flow.push(`${sim.mainLabel} ${rushSetCount}セット`);
+        if (setPushUpperResolved) {
+          atEvents.push({ kind: "upper-challenge", label: "ハラキリチャレンジ 3回目", games: 3, award: 0, cumulative: payout, chance: (sim.mainSetContinue || 0.75) * 100, success: upper, valvraveThirdChallenge: true });
+          flow.push(`ハラキリチャレンジ3回目 ${upper ? `成功 → 4セット目から${sim.upperLabel}` : "失敗"}`);
+        }
       } else {
         atGamesTotal += baseAtGames;
         atEvents.push({ kind: "at-start", label: baseEventLabel, games: baseAtGames, award: basePayout, cumulative: payout });
@@ -958,29 +981,35 @@
           atEvents.push({ kind: "special", label: sim.specialLabel, trigger: "レア役成立", games: eventGames, gameAdd, award: add, cumulative: payout, number: addOnCount });
           flow.push(`レア役 → ${sim.specialLabel} +${add}枚（+${gameAdd}G）`);
         }
-        if (payout < SLOT_COMPLETE_LIMIT && Math.random() < upperChance) {
+        let upperRouteStarted = false;
+        if (sim.setPushFlow) {
+          upperRouteStarted = setPushUpperResolved;
+        } else if (payout < SLOT_COMPLETE_LIMIT && Math.random() < upperChance) {
+          upperRouteStarted = true;
           flow.push(sim.upperChallenge);
           atEvents.push({ kind: "upper-challenge", label: sim.upperChallenge, games: randomInt(18, 48), award: 0, cumulative: payout });
           upper = Math.random() < sim.upperSuccess;
-          if (upper) {
-            do {
-              const derivesUpperAward = sim.setPushFlow || Number(sim.upperPureIncrease) || publishedUpperPureIncrease || Array.isArray(sim.upperSetGames);
-              const upperGames = Array.isArray(sim.upperSetGames)
-                ? weighted(sim.upperSetGames)
-                : Math.max(1, Math.round((Number(sim.upperPayout) || 0) / upperPureIncrease));
-              const requestedAward = derivesUpperAward
-                ? slotAwardForGames(upperGames, upperPureIncrease, sim.atPayoutVariance)
-                : sim.upperPayout;
-              const award = Math.max(0, Math.min(requestedAward, SLOT_COMPLETE_LIMIT - payout));
-              if (!award) break;
-              upperLoops += 1;
-              payout += award;
-              upperPayoutTotal += award;
-              atGamesTotal += upperGames;
-              atEvents.push({ kind: "upper", label: sim.upperLabel, games: upperGames, award, cumulative: payout, set: upperLoops });
-            } while (upperLoops < 100 && payout < SLOT_COMPLETE_LIMIT && Math.random() < sim.upperContinue);
-            flow.push(`${sim.upperLabel} ${upperLoops}セット・+${yen.format(upperPayoutTotal)}枚`);
-          } else flow.push(`${sim.upperChallenge}失敗`);
+        }
+        if (upperRouteStarted && upper) {
+          do {
+            const derivesUpperAward = sim.setPushFlow || Number(sim.upperPureIncrease) || publishedUpperPureIncrease || Array.isArray(sim.upperSetGames);
+            const upperGames = Array.isArray(sim.upperSetGames)
+              ? weighted(sim.upperSetGames)
+              : Math.max(1, Math.round((Number(sim.upperPayout) || 0) / upperPureIncrease));
+            const requestedAward = derivesUpperAward
+              ? slotAwardForGames(upperGames, upperPureIncrease, sim.atPayoutVariance)
+              : sim.upperPayout;
+            const award = Math.max(0, Math.min(requestedAward, SLOT_COMPLETE_LIMIT - payout));
+            if (!award) break;
+            upperLoops += 1;
+            payout += award;
+            upperPayoutTotal += award;
+            atGamesTotal += upperGames;
+            atEvents.push({ kind: "upper", label: sim.upperLabel, games: upperGames, award, cumulative: payout, set: upperLoops, displaySet: sim.setPushFlow ? upperLoops + 3 : upperLoops });
+          } while (upperLoops < 100 && payout < SLOT_COMPLETE_LIMIT && Math.random() < sim.upperContinue);
+          flow.push(`${sim.upperLabel} ${upperLoops}セット・+${yen.format(upperPayoutTotal)}枚`);
+        } else if (upperRouteStarted && !upper && !sim.setPushFlow) {
+          flow.push(`${sim.upperChallenge}失敗`);
         }
       }
     }
@@ -1755,6 +1784,15 @@
           continue;
         }
 
+        if (event.kind === "upper-challenge" && event.valvraveThirdChallenge) {
+          setExperienceStage(3, "ハラキリチャレンジ", "3回目の継続ジャッジ", "PUSH", `成功なら4セット目から${data.upperLabel}`, "judge", event.chance, `継続率 ${Math.round(event.chance)}%`);
+          await waitForExperienceAction("3回目 ハラキリPUSH", 5000, "upper");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, "ハラキリチャレンジ", event.success ? "3回成功！" : "継続失敗", event.success ? `${data.upperLabel} 突入` : `${data.mainLabel} 終了`, event.success ? `4セット目から${data.upperLabel}へ` : "最終結果へ進みます", event.success ? "hyper" : "end", event.success ? 100 : 0, "ハラキリチャレンジ3回目");
+          await waitForExperience(event.success ? 1100 : 800);
+          continue;
+        }
+
         if (event.kind === "upper-challenge") {
           const counterComplete = await animateExperienceCounter(eventGames, "G", "AT COUNT", `${data.mainLabel}消化中`, `${data.upperChallenge}の当落まで数字が進みます`, data.upperRouteChance, "上位ルート期待度", runId);
           if (!counterComplete) return;
@@ -1785,19 +1823,21 @@
         }
 
         if (setPushFlow && event.kind === "upper") {
-          setExperienceStage(3, "SUPER REVOLUTION SET", `${data.upperLabel} SET ${event.set}`, "PUSH", "上位継続とゲーム数振り分けを開きます", "judge", data.upperContinueChance, `${data.upperLabel} ${Math.round(data.upperContinueChance)}% LOOP`);
-          await waitForExperienceAction(`超革命 SET ${event.set} PUSH`, 4500, "upper");
+          const displaySet = Number(event.displaySet) || Number(event.set);
+          setExperienceStage(3, "SUPER REVOLUTION SET", `${data.upperLabel} SET ${displaySet}`, "PUSH", displaySet === 4 ? "4セット目・上位開始ゲーム数を開きます" : "上位継続とゲーム数振り分けを開きます", "judge", data.upperContinueChance, `${data.upperLabel} ${Math.round(data.upperContinueChance)}% LOOP`);
+          await waitForExperienceAction(`超革命 SET ${displaySet} PUSH`, 4500, "upper");
           if (runId !== experienceRunId) return;
           if (eventGames >= 100) {
-            const bonusComplete = await animateValvrave100GameBonus({ upper: true, set: event.set }, runId);
+            const bonusComplete = await animateValvrave100GameBonus({ upper: true, set: displaySet }, runId);
             if (!bonusComplete) return;
           } else {
-            setExperienceStage(3, "SUPER REVOLUTION RESULT", "上位継続成功！", `${yen.format(eventGames)}G`, `ゲーム数振り分けは ${yen.format(eventGames)}G`, "hyper", 100, `超革命 SET ${event.set} 振り分け結果`);
+            setExperienceStage(3, "SUPER REVOLUTION RESULT", displaySet === 4 ? "超革命RUSH START" : "上位継続成功！", `${yen.format(eventGames)}G`, `ゲーム数振り分けは ${yen.format(eventGames)}G`, "hyper", 100, `超革命 SET ${displaySet} 振り分け結果`);
             await waitForExperience(950);
           }
         }
         const upperCounterPhase = setPushFlow ? "SUPER REVOLUTION RUSH" : karakuriJudgeFlow ? "超からくりサーカス" : "UPPER AT";
-        const counterComplete = await animateExperienceCounter(eventGames, "G", event.kind === "upper" ? upperCounterPhase : "AT COUNT", event.kind === "upper" ? `${data.upperLabel} SET ${event.set}消化中` : `${data.mainLabel}消化中`, event.kind === "special" ? "レア役成立までゲーム数が進みます" : "次の出玉契機までゲーム数が進みます", event.kind === "upper" ? data.upperContinueChance : data.specialChance, event.kind === "upper" ? `${data.upperLabel}継続目安` : `${data.specialLabel || "上乗せ"}当選目安`, runId);
+        const upperDisplaySet = Number(event.displaySet) || Number(event.set);
+        const counterComplete = await animateExperienceCounter(eventGames, "G", event.kind === "upper" ? upperCounterPhase : "AT COUNT", event.kind === "upper" ? `${data.upperLabel} SET ${upperDisplaySet}消化中` : `${data.mainLabel}消化中`, event.kind === "special" ? "レア役成立までゲーム数が進みます" : "次の出玉契機までゲーム数が進みます", event.kind === "upper" ? data.upperContinueChance : data.specialChance, event.kind === "upper" ? `${data.upperLabel}継続目安` : `${data.specialLabel || "上乗せ"}当選目安`, runId);
         if (!counterComplete) return;
         consumedGames += eventGames;
 
@@ -1819,11 +1859,11 @@
         setSlotAtStatus({ visible: true, games: consumedGames, addOn: runningAddOn, total: event.cumulative });
         const upperPhase = setPushFlow ? "SUPER REVOLUTION RUSH" : karakuriJudgeFlow ? "超からくりサーカス" : "UPPER AT";
         const upperTotalLabel = karakuriJudgeFlow ? "上位AT累計" : setPushFlow ? "超革命RUSH累計" : "上位AT累計";
-        setExperienceStage(3, isUpper ? upperPhase : "AT MODE", isUpper ? `${event.label} SET ${event.set}` : `${event.label} START`, isUpper ? `${yen.format(eventGames)}G / +${yen.format(event.award)}枚` : `+${yen.format(event.award)}枚`, isUpper ? `${upperTotalLabel} ${yen.format(event.cumulative)}枚` : `基本獲得 ${yen.format(event.cumulative)}枚`, isUpper ? "hyper" : "rush", isUpper ? data.upperContinueChance : data.specialChance, isUpper ? `${data.upperLabel} ${Math.round(data.upperContinueChance)}% LOOP` : `${data.specialLabel || "上乗せ"}当選目安`);
+        setExperienceStage(3, isUpper ? upperPhase : "AT MODE", isUpper ? `${event.label} SET ${upperDisplaySet}` : `${event.label} START`, isUpper ? `${yen.format(eventGames)}G / +${yen.format(event.award)}枚` : `+${yen.format(event.award)}枚`, isUpper ? `${upperTotalLabel} ${yen.format(event.cumulative)}枚` : `基本獲得 ${yen.format(event.cumulative)}枚`, isUpper ? "hyper" : "rush", isUpper ? data.upperContinueChance : data.specialChance, isUpper ? `${data.upperLabel} ${Math.round(data.upperContinueChance)}% LOOP` : `${data.specialLabel || "上乗せ"}当選目安`);
         await waitForExperience(isUpper ? 900 : 700);
       }
       if (setPushFlow && !data.complete && data.upper) {
-        const nextSet = Math.max(1, Number(data.upperLoops) + 1);
+        const nextSet = Math.max(4, Number(data.upperLoops) + 4);
         setExperienceStage(3, "SUPER REVOLUTION SET", `${data.upperLabel} SET ${nextSet}`, "PUSH", "最後の継続判定を開きます", "judge", data.upperContinueChance, `${data.upperLabel} ${Math.round(data.upperContinueChance)}% LOOP`);
         await waitForExperienceAction(`超革命 SET ${nextSet} PUSH`, 4500, "upper");
         if (runId !== experienceRunId) return;
