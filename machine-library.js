@@ -3315,7 +3315,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["ユニバーサル 公式機種サイト", "https://www.universal-777.com/product/slot/bk2t/"], ["P-WORLD 設定別スペック", "https://www.p-world.co.jp/machine/database/9944"], ["一撃 BT・宿怨チャレンジ解析", "https://1geki.jp/slot/l_b_kizuna2_tnzn/"]]
   },
   "chibariyo2-slot": {
-    order: 16.0, type: "slot", theme: "flame", year: "2024年3月", maker: "ネット", updated: "2026-11-01",
+    order: 16.0, type: "slot", theme: "flame", year: "2024年3月", maker: "ネット", updated: "2026-11-07",
     name: "チバリヨ2", shortName: "チバリヨ2",
     image: "assets/machines/chibariyo2-slot-key-visual.jpg",
     imageAlt: "チバリヨ2のキービジュアル",
@@ -3328,9 +3328,9 @@ window.ICHIGEKI_MACHINES = {
     sim: { kind: "slot", settingPool: [1, 2, 4, 5, 6], triggerLabel: "チェリー前兆", triggerRate: 165, triggerSuccess: 0.50, mainLabel: "花笠ボーナス", mainRate: 328.0, base50: 27.9, coinUnit: 4.5, normalMin: 90, normalMax: 315, atPureIncrease: 3.0, specialLabel: "天国モード", specialChance: 0.38, specialMin: 90, specialMax: 315, specialDisplay: "bonus", cycleFlow: { phase: "CHIBARIYO HEAVEN", label: "天国32G", statLabel: "花笠ボーナス連", games: 32, continueChance: 0.68, maxRounds: 20, rewards: [[{ label: "REG BONUS", payout: 90 }, 0.28], [{ label: "BIG BONUS", payout: 210 }, 0.57], [{ label: "SUPER BIG", payout: 315 }, 0.15]], endLabel: "天国モード終了" }, upperChallenge: "パトランプ点灯", upperChance: 0.18, upperSuccess: 0.55, upperLabel: "リミットレス", upperContinue: 0.88, upperPayout: 650, upperPureIncrease: 4.5, upperSetGames: [[70, 1]], settingRates: { 1: { main: 328.0, payout: 0.973 }, 2: { main: 314.4, payout: 0.993 }, 4: { main: 281.1, payout: 1.047 }, 5: { main: 263.3, payout: 1.096 }, 6: { main: 224.8, payout: 1.149 } } },
     articleSections: [
       { heading: "実機搭載の5段階設定", paragraphs: ["設定1・2・4・5・6から均等抽選し、設定3は対象外です。初当りは約1/328.0〜約1/224.8です。", "設定1のベース約27.9G/50枚と公開出玉率97.3%〜114.9%を使用します。"] },
-      { heading: "天国とパトランプ", paragraphs: ["REG約90枚、BIG約210枚、SBIG約315枚から32G以内の連チャンを狙います。", "ボーナス種類の比率はモードで変わるため固定せず、出玉範囲を90〜315枚に限定しています。チェリー天井や全モード移行は再現せず、天国・パトランプ・リミットレスを段階式の比較用抽選へまとめています。"] }
+      { heading: "天国とパトランプ", paragraphs: ["REG約90枚、BIG約210枚、SBIG約315枚から32G以内の連チャンを狙います。", "天国の継続率66%・75%・80%を段階的に反映し、6連目のパトランプ昇格抽選、10連目の赤パトモード、15連目の虹パトモードを節目として表示します。赤パトは約88%、虹パトは約92%継続の代表値です。", "15連後に終了した場合はリミットレスモードへ進みます。弱チェリー・強チェリー契機の1G連は各BONUSの振り分けへまとめ、チェリー天井や全モード移行は完全再現していません。"] }
     ],
-    sources: [["P-WORLD 基本情報", "https://www.p-world.co.jp/machine/database/10014"], ["なな徹 設定別スペック", "https://nana-press.com/kaiseki/machine/722/19929/"]]
+    sources: [["NET 公式機種情報", "https://www.net-fun.co.jp/chibariyo2/"], ["Pachibee BONUS・設定別スペック", "https://www.pachibee.jp/machines/index/224020004"], ["なな徹 天国・パトランプモード", "https://nana-press.com/kaiseki/machine/722/19944/"], ["P-WORLD 基本情報", "https://www.p-world.co.jp/machine/database/10014"]]
   }
 };
 
@@ -3486,6 +3486,11 @@ window.ICHIGEKI_MACHINES = {
     [{ kind: "bonus", label: "同色バジリスクチャンス", games: 16, payout: 46 }, 0.16],
     [{ kind: "bonus", label: "エピソードBC", games: 30, payout: 87 }, 0.06],
     [{ kind: "bonus", label: "プレミアムBC", games: 30, payout: 87 }, 0.01]
+  ];
+  const chibariyoBonusRewards = () => [
+    [{ kind: "bonus", label: "REG BONUS", games: 30, payout: 90 }, 0.28],
+    [{ kind: "bonus", label: "BIG BONUS", games: 70, payout: 210 }, 0.57],
+    [{ kind: "bonus", label: "SUPER BIG", games: 70, payout: 315 }, 0.15]
   ];
   const models = {
     "goblin-slayer-slot": {
@@ -3754,6 +3759,35 @@ window.ICHIGEKI_MACHINES = {
         { title: "争忍の刻・駿府城・11セット目", detail: "高期待度ステージから完走目前の継続をPUSHで判定します", games: 40, continueChance: 0.82, rewards: tenzenBtRewards() },
         { title: "12セット目・シナリオ完走", detail: "12セット目を突破してエンディングへ。終了後は宿怨チャレンジへ進みます", games: 40, continueChance: 0.98, rewards: [[{ kind: "coins", label: "12セット完走・エンディング", payout: 300 }, 0.84], [{ kind: "bonus", label: "月下閃滅", games: 20, payout: 360 }, 0.16]] }
       ]
+    },
+    "chibariyo2-slot": {
+      phase: "CHIBARIYO HEAVEN",
+      label: "天国32G",
+      statLabel: "花笠BONUS連",
+      maxRounds: 15,
+      upperAfterRounds: 15,
+      upperAfterRoundsAutoSuccess: true,
+      upperOnlyAfterRounds: true,
+      routeSummary: "花笠BONUS後32G以内の天国連を重ね、6連目でパトランプ昇格抽選、10連目から赤パトモード、15連目から虹パトモードの節目を再現します",
+      rewardSummary: "各連はREG約90枚・BIG約210枚・SUPER BIG約315枚のいずれか。弱チェリー・強チェリー契機の1G連はボーナス振り分けにまとめ、15連後はリミットレスモードへ進みます。",
+      endLabel: "天国モード終了",
+      rounds: [
+        { title: "天国32G・1連目", detail: "花笠BONUS後32G以内の再点灯を狙います。PUSHでBONUS種別と次回継続を開きます", games: 32, continueChance: 0.66, rewards: chibariyoBonusRewards() },
+        { title: "天国32G・2連目", detail: "32G以内の花笠点灯で連チャン継続。チェリー成立時は1G連にも期待します", games: 32, continueChance: 0.66, rewards: chibariyoBonusRewards() },
+        { title: "天国32G・3連目", detail: "天国モードの継続率をもとに、花笠BONUSの再当選を判定します", games: 32, continueChance: 0.68, rewards: chibariyoBonusRewards() },
+        { title: "天国32G・4連目", detail: "REG・BIG・SUPER BIGのいずれかを獲得し、次の32G連へ進みます", games: 32, continueChance: 0.68, rewards: chibariyoBonusRewards() },
+        { title: "天国32G・5連目", detail: "パトランプ昇格抽選の節目前。PUSHで5連目のBONUSを告知します", games: 32, continueChance: 0.70, rewards: chibariyoBonusRewards() },
+        { title: "6連目・パトランプ昇格抽選", detail: "6回目のBONUSを契機にパトランプモードへの昇格を抽選し、連チャン性能を高めます", games: 32, continueChance: 0.75, rewards: chibariyoBonusRewards() },
+        { title: "パトランプモード・7連目", detail: "パトランプ点灯後の高継続区間。32G以内の花笠点灯を目指します", games: 32, continueChance: 0.75, rewards: chibariyoBonusRewards() },
+        { title: "パトランプモード・8連目", detail: "高継続モードからREG・BIG・SUPER BIGを抽選します", games: 32, continueChance: 0.78, rewards: chibariyoBonusRewards() },
+        { title: "パトランプモード・9連目", detail: "赤パトモード移行の節目前。PUSHでBONUS種別を告知します", games: 32, continueChance: 0.80, rewards: chibariyoBonusRewards() },
+        { title: "10連目・赤パトモード", detail: "10回目のBONUSで赤パトモードへ。約88%継続の代表値で次回を判定します", games: 32, continueChance: 0.88, rewards: chibariyoBonusRewards() },
+        { title: "赤パトモード・11連目", detail: "約88%継続の赤パトモードでBONUS連を伸ばします", games: 32, continueChance: 0.88, rewards: chibariyoBonusRewards() },
+        { title: "赤パトモード・12連目", detail: "32G以内の再点灯とチェリー契機の1G連をまとめて判定します", games: 32, continueChance: 0.88, rewards: chibariyoBonusRewards() },
+        { title: "赤パトモード・13連目", detail: "虹パトモード到達まで残り2回。PUSHでBONUSを開きます", games: 32, continueChance: 0.88, rewards: chibariyoBonusRewards() },
+        { title: "赤パトモード・14連目", detail: "次回15連目の虹パトモード到達をかけた高継続区間です", games: 32, continueChance: 0.88, rewards: chibariyoBonusRewards() },
+        { title: "15連目・虹パトモード", detail: "15回目のBONUSで約92%継続の虹パトモードへ。終了後はリミットレスモードへ進みます", games: 32, continueChance: 0.92, rewards: chibariyoBonusRewards() }
+      ]
     }
   };
 
@@ -3799,6 +3833,15 @@ window.ICHIGEKI_MACHINES = {
       sim.upperContinue = 0.80;
       sim.upperFailureLabel = "通常バジリスクタイム";
       sim.upperFailureGames = 40;
+    }
+    if (slug === "chibariyo2-slot") {
+      sim.upperChallenge = "虹パトモード終了後";
+      sim.upperSuccess = 1;
+      sim.upperLabel = "リミットレスモード";
+      sim.upperPureIncrease = 3.0;
+      sim.upperPayout = 210;
+      sim.upperSetGames = [[30, 0.28], [70, 0.72]];
+      sim.upperContinue = 0.88;
     }
   });
 })();
