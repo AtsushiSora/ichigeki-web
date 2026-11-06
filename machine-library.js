@@ -3334,6 +3334,41 @@ window.ICHIGEKI_MACHINES = {
   }
 };
 
+// Machines below use a named, machine-specific sequence instead of the generic
+// add-on/bonus draw. The shared renderer keeps the UI consistent while each
+// machine owns its phase, loop unit, rewards and exit wording.
+(() => {
+  const dedicatedCycleModels = {
+    "symphogear-seigi-slot": { phase: "AXZ RUSH", label: "ギアVアタック", statLabel: "ギアVアタック", games: 30, continueChance: 0.68, maxRounds: 10, rewards: [[{ kind: "games", label: "ギアVアタック成功", games: [[10, 0.45], [20, 0.30], [30, 0.15], [50, 0.08], [100, 0.02]] }, 0.70], [{ kind: "bonus", label: "絶唱", games: 30, payout: 300 }, 0.30]], endLabel: "AXZラッシュ終了" },
+    "ragnador-slot": { phase: "RAGNADOR RUSH", label: "チェインアタック", statLabel: "チェイン継続", games: 40, continueChance: 0.70, maxRounds: 10, rewards: [[{ kind: "games", label: "チェイン上乗せ", games: [[10, 0.45], [20, 0.30], [30, 0.15], [50, 0.08], [100, 0.02]] }, 0.70], [{ kind: "bonus", label: "ガチャBONUS", games: 30, payout: 270 }, 0.30]], endLabel: "ラグナドールRUSH終了" },
+    "godzilla-eva2-slot": { phase: "GODZILLA VS EVA", label: "震撃チャンス", statLabel: "震撃継続", games: 50, continueChance: 0.62, maxRounds: 8, rewards: [[{ kind: "games", label: "10倍上乗せ", games: [[10, 0.45], [20, 0.30], [30, 0.15], [50, 0.08], [100, 0.02]] }, 0.65], [{ kind: "bonus", label: "ゴジエヴァBONUS", games: 30, payout: 390 }, 0.35]], endLabel: "ゴジエヴァRUSH終了" },
+    "mahoako-slot": { phase: "MAHOAKO RUSH", label: "あこがれATTACK", statLabel: "あこがれATTACK", games: 30, continueChance: 0.68, maxRounds: 10, rewards: [[{ kind: "games", label: "あこがれ上乗せ", games: [[10, 0.45], [20, 0.30], [30, 0.15], [50, 0.08], [100, 0.02]] }, 0.60], [{ kind: "bonus", label: "サディスティックBONUS", games: 30, payout: 270 }, 0.40]], endLabel: "まほあこラッシュ終了" },
+    "monster-hunter-sunbreak": { phase: "HUNTING QUEST", label: "盟勇クエスト", statLabel: "モンスター討伐", games: 40, continueChance: 0.72, maxRounds: 10, rewards: [[{ kind: "games", label: "討伐成功・剥ぎ取り", games: [[10, 0.35], [20, 0.30], [30, 0.20], [50, 0.10], [100, 0.05]] }, 0.65], [{ kind: "bonus", label: "サンブレイクBONUS", games: 30, payout: 300 }, 0.25], [{ kind: "games", label: "剥ぎ取りRUSH", games: [[50, 0.70], [100, 0.30]] }, 0.10]], endLabel: "サンブレイクRUSH終了" },
+    "magia-record-slot": { phase: "MAGIA RUSH", label: "マギアアタック", statLabel: "マギアアタック", games: 40, continueChance: 0.67, maxRounds: 10, rewards: [[{ kind: "games", label: "ドッペル上乗せ", games: [[10, 0.45], [20, 0.30], [30, 0.15], [50, 0.08], [100, 0.02]] }, 0.70], [{ kind: "bonus", label: "マギアボーナス", games: 30, payout: 225 }, 0.30]], endLabel: "マギアラッシュ終了" },
+    "shin-onimusha3-slot": { phase: "SOUKEN RUSH", label: "蒼剣RUSHセット", statLabel: "蒼剣RUSH継続", games: 40, continueChance: 0.72, maxRounds: 12, rewards: [[{ kind: "games", label: "鬼武侠", games: [[10, 0.45], [20, 0.30], [30, 0.15], [50, 0.08], [100, 0.02]] }, 0.60], [{ kind: "bonus", label: "蒼剣BONUS", games: 30, payout: 270 }, 0.40]], endLabel: "蒼剣RUSH終了" },
+    "bancho4-slot": { phase: "ITADAKI RISE", label: "対決", statLabel: "対決勝利", games: 30, continueChance: 0.68, maxRounds: 10, rewards: [[{ kind: "games", label: "頂RISE UP", games: [[10, 0.45], [20, 0.30], [30, 0.15], [50, 0.08], [100, 0.02]] }, 0.65], [{ kind: "bonus", label: "番長ボーナス", games: 30, payout: 270 }, 0.35]], endLabel: "頂RISE終了" },
+    "zenigata4-slot": { phase: "ARREST RUSH", label: "デカチャンス", statLabel: "逮捕成功", games: 50, continueChance: 0.66, maxRounds: 10, rewards: [[{ kind: "games", label: "ゼニロボ起動", games: [[10, 0.40], [20, 0.30], [30, 0.18], [50, 0.10], [100, 0.02]] }, 0.65], [{ kind: "bonus", label: "逮捕BONUS", games: 30, payout: 330 }, 0.35]], endLabel: "逮捕RUSH終了" },
+    "gundam-unicorn-awakening-drive": { phase: "AWAKENING HYPER", label: "覚醒HYPER", statLabel: "覚醒上乗せ", games: 40, continueChance: 0.66, maxRounds: 10, rewards: [[{ kind: "games", label: "覚醒HYPER上乗せ", games: [[10, 0.45], [20, 0.30], [30, 0.15], [50, 0.08], [100, 0.02]] }, 0.60], [{ kind: "bonus", label: "エピソードボーナス", games: 30, payout: 300 }, 0.40]], endLabel: "覚醒HYPER終了" },
+    "toaru-index2-slot": { phase: "IMAGINE BREAKER RUSH", label: "幻想BURST", statLabel: "幻想BURST", games: 30, continueChance: 0.68, maxRounds: 10, rewards: [[{ kind: "games", label: "幻想BURST上乗せ", games: [[10, 0.40], [20, 0.30], [30, 0.18], [50, 0.10], [100, 0.02]] }, 0.65], [{ kind: "bonus", label: "超電磁砲BONUS", games: 30, payout: 300 }, 0.35]], endLabel: "幻想殺しRUSH終了" },
+    "iza-bancho": { phase: "ITADAKI ZBASH", label: "斬揃いジャッジ", statLabel: "頂ZBASH継続", games: 40, continueChance: 0.66, maxRounds: 10, rewards: [[{ kind: "games", label: "頂ZBASH上乗せ", games: [[10, 0.34], [20, 0.28], [30, 0.20], [50, 0.13], [100, 0.05]] }, 0.65], [{ kind: "bonus", label: "絶頂決戦～巌流島～", games: 30, payout: 375 }, 0.35]], endLabel: "頂ZBASH終了" },
+    "biohazard5-slot": { phase: "HAZARD RUSH", label: "ウロボロス", statLabel: "増殖上乗せ", games: 40, continueChance: 0.69, maxRounds: 10, rewards: [[{ kind: "games", label: "増殖上乗せ", games: [[10, 0.45], [20, 0.30], [30, 0.15], [50, 0.08], [100, 0.02]] }, 0.65], [{ kind: "bonus", label: "エピソードBONUS", games: 30, payout: 300 }, 0.35]], endLabel: "ハザードラッシュ終了" },
+    "bancho-banzuke": { phase: "TODOROKI CHANCE", label: "番付決戦", statLabel: "番付決戦勝利", games: 30, continueChance: 0.67, maxRounds: 10, rewards: [[{ kind: "games", label: "轟チャンス上乗せ", games: [[10, 0.42], [20, 0.30], [30, 0.18], [50, 0.08], [100, 0.02]] }, 0.58], [{ kind: "bonus", label: "番付決戦勝利", games: 30, payout: 420 }, 0.42]], endLabel: "轟チャンス終了" },
+    "zegapain-etr": { phase: "RESURRECTION", label: "ゼーガバースト", statLabel: "リザレクション継続", games: 30, continueChance: 0.65, maxRounds: 10, rewards: [[{ kind: "games", label: "ゼーガバースト上乗せ", games: [[30, 0.42], [50, 0.30], [100, 0.18], [200, 0.08], [300, 0.02]] }, 0.62], [{ kind: "bonus", label: "リザレクションボーナス再点灯", games: 45, payout: 315 }, 0.38]], endLabel: "リザレクション終了" },
+    "blue-reflection-tie": { phase: "BLUE REFLECTION RUSH", label: "全刈ジャッジ", statLabel: "全刈上乗せ", games: 30, continueChance: 0.68, maxRounds: 10, rewards: [[{ kind: "games", label: "全刈上乗せ", games: [[10, 0.38], [20, 0.30], [30, 0.20], [50, 0.10], [100, 0.02]] }, 0.68], [{ kind: "bonus", label: "リフレクションBONUS", games: 30, payout: 300 }, 0.32]], endLabel: "BLUE REFLECTION RUSH終了" },
+    "vivy-slot": { phase: "PROJECT SINGULARITY", label: "SINGULARITY BATTLE", statLabel: "ミッション成功", games: 30, continueChance: 0.70, maxRounds: 10, rewards: [[{ kind: "games", label: "OVER DRIVE", games: [[10, 0.44], [20, 0.30], [30, 0.16], [50, 0.08], [100, 0.02]] }, 0.65], [{ kind: "bonus", label: "SINGULARITY BONUS", games: 30, payout: 240 }, 0.35]], endLabel: "プロジェクトシンギュラリティ終了" },
+    "golden-kamuy-slot": { phase: "GOLDEN KAMUY", label: "ゴールドラッシュ", statLabel: "金塊争奪", games: 100, continueChance: 0.60, maxRounds: 8, rewards: [[{ kind: "games", label: "ゴールドラッシュ上乗せ", games: [[10, 0.40], [20, 0.30], [30, 0.20], [50, 0.08], [100, 0.02]] }, 0.65], [{ kind: "bonus", label: "決戦ボーナス", games: 30, payout: 375 }, 0.35]], endLabel: "黄金神威終了" },
+    "shin-onimusha2-slot": { phase: "SOUKEN RUSH", label: "鬼武侠", statLabel: "蒼剣RUSH継続", games: 40, continueChance: 0.70, maxRounds: 12, rewards: [[{ kind: "games", label: "鬼武侠上乗せ", games: [[10, 0.45], [20, 0.30], [30, 0.15], [50, 0.08], [100, 0.02]] }, 0.60], [{ kind: "bonus", label: "蒼剣BONUS", games: 30, payout: 240 }, 0.40]], endLabel: "蒼剣RUSH終了" },
+    "lupin-dai-koukaisha": { phase: "SUPER HERO", label: "デカ目高確", statLabel: "デカ目成功", games: 30, continueChance: 0.68, maxRounds: 10, rewards: [[{ kind: "games", label: "デカ目上乗せ", games: [[10, 0.42], [20, 0.28], [30, 0.18], [50, 0.10], [100, 0.02]] }, 0.62], [{ kind: "bonus", label: "HERO BONUS", games: 30, payout: 270 }, 0.38]], endLabel: "SUPER HERO終了" },
+    "godzilla-eva-slot": { phase: "G AWAKENING RUSH", label: "殲滅作戦", statLabel: "殲滅作戦", games: 50, continueChance: 0.64, maxRounds: 8, rewards: [[{ kind: "games", label: "怪獣撃破上乗せ", games: [[10, 0.40], [20, 0.30], [30, 0.18], [50, 0.10], [100, 0.02]] }, 0.58], [{ kind: "bonus", label: "殲滅作戦BONUS", games: 30, payout: 375 }, 0.42]], endLabel: "G覚醒RUSH終了" }
+  };
+  Object.entries(dedicatedCycleModels).forEach(([slug, cycleFlow]) => {
+    const sim = window.ICHIGEKI_MACHINES[slug]?.sim;
+    if (!sim) return;
+    sim.cycleFlow = cycleFlow;
+    delete sim.specialOutcomes;
+  });
+})();
+
 window.ICHIGEKI_MACHINE_AVAILABILITY = {
   isReady(machine, now = new Date()) {
     if (!machine?.availableFrom) return true;
