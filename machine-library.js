@@ -608,7 +608,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["SANYO 公式パチスロ製品一覧", "https://www.sanyobussan.co.jp/products/slot.html"], ["一撃 L聖闘士星矢 黄金十二宮 解析", "https://1geki.jp/slot/l_seiya_ougon/"], ["なな徹 Battle of ZODIAC・千日戦争解析", "https://nana-press.com/kaiseki/machine/1193/39943/"], ["なな徹 黄金聖闘士バトル・報酬解析", "https://nana-press.com/kaiseki/machine/1193/40126/"], ["なな徹 SAGA BATTLE解析", "https://nana-press.com/kaiseki/machine/1193/40128/"], ["なな徹 天井・周期解析", "https://nana-press.com/kaiseki/machine/1193/39926/"]]
   },
   "ggo-slot": {
-    order: 0.2, type: "slot", theme: "magenta", year: "2026年11月", maker: "京楽／オッケー.", updated: "2026-11-04",
+    order: 0.2, type: "slot", theme: "magenta", year: "2026年11月", maker: "京楽／オッケー.", updated: "2026-11-07",
     published: "2026-11-02",
     name: "Lソードアート・オンライン オルタナティブ ガンゲイル・オンライン", shortName: "スマスロ GGO",
     image: "assets/machines/ggo-slot-key-visual.jpg",
@@ -616,18 +616,20 @@ window.ICHIGEKI_MACHINES = {
     imageCredit: "P-WORLD 発表記事",
     imageSource: "https://news.p-world.co.jp/articles/34077/amusement",
     catchcopy: "BONUSを重ね、SQUAD JAMと上位STへ。",
-    intro: "2026年11月2日から順次導入が始まったスマスロ。設定別の初当り・SQUAD JAM確率を使い、BONUS、ST、GGOストーム、上位ST『イカれたレン』までを簡易体験できます。",
-    points: ["初当りは設定1約1/192.0〜設定6約1/153.9", "SQUAD JAMは設定1約1/521.7〜設定6約1/392.6", "BONUS純増約3.4枚/G・上乗せBONUS約7.1枚/G"],
-    specs: [["初当り（設定1）", "約1/192.0"], ["初当り（設定6）", "約1/153.9"], ["SJ（設定1）", "約1/521.7"], ["SJ（設定6）", "約1/392.6"], ["ベース", "約31G/50枚"], ["コイン単価", "約3.5円"], ["BONUS純増", "約3.4枚/G"], ["上乗せBONUS純増", "約7.1枚/G"]],
-    sim: { kind: "slot", triggerLabel: "初当りBONUS", triggerRate: 192.0, triggerSuccess: 0.50, mainLabel: "SQUAD JAM", mainRate: 521.7, base50: 31.0, coinUnit: 3.5, normalMin: 180, normalMax: 1100, atPureIncrease: 3.4, specialLabel: "GGO BONUS", specialChance: 0.36, specialMin: 180, specialMax: 900, specialDisplay: "bonus", cycleFlow: { phase: "SQUAD JAM", label: "SQUAD JAMバトル", statLabel: "SJ勝利", games: 20, continueChance: 0.72, maxRounds: 12, rewards: [[{ label: "GGO BONUS", payout: 130 }, 0.55], [{ label: "ガンゲイルBONUS", payout: 260 }, 0.30], [{ label: "上乗せBONUS", payout: 520 }, 0.15]], endLabel: "SQUAD JAM終了" }, upperChallenge: "GGOストーム", upperChance: 0.20, upperSuccess: 0.55, upperLabel: "イカれたレン", upperContinue: 0.80, upperPayout: 600, upperPureIncrease: 7.1, settingRates: { 1: { trigger: 192.0, main: 521.7, payout: 0.979 }, 2: { trigger: 189.2, main: 510.4, payout: 0.988 }, 3: { trigger: 180.9, main: 486.6, payout: 1.009 }, 4: { trigger: 168.6, main: 445.3, payout: 1.044 }, 5: { trigger: 155.4, main: 405.0, payout: 1.097 }, 6: { trigger: 153.9, main: 392.6, payout: 1.145 } } },
+    intro: "2026年11月2日導入のスマスロ。BIG／REGからSJ1、5Gバトル、ガンゲイルストーム、SJ2、上位ST『イカれたレン』へ進む実機の段階を専用演出で体験できます。",
+    points: ["BIGは40G・約130枚、REGは20G・約70枚", "SJ1は25G・約70%、SJ2は30G・約77%", "イカれたレンは8G・約85%継続・期待約3600枚"],
+    specs: [["初当り（設定1）", "約1/192.0"], ["初当り（設定6）", "約1/153.9"], ["SJ（設定1）", "約1/521.7"], ["SJ（設定6）", "約1/392.6"], ["ベース", "約31G/50枚"], ["BIG", "40G・約130枚"], ["REG", "20G・約70枚"], ["SJ1", "25G・継続率約70%"], ["SJ2", "30G・継続率約77%"], ["イカれたレン", "8G・継続率約85%"], ["通常BONUS純増", "約3.4枚/G"], ["ガンゲイルBONUS純増", "約7.1枚/G"]],
+    rankingVersion: "v5",
+    sim: { kind: "slot", triggerLabel: "初当りBONUS", triggerRate: 192.0, triggerSuccess: 1, mainLabel: "SQUAD JAM 1", mainRate: 521.7, base50: 31.0, coinUnit: 3.5, normalMin: 70, normalMax: 130, atPureIncrease: 7.1, atPayoutVariance: 0.02, entryBonusAwards: [[{ label: "BIG BONUS", games: 40, payout: 130, atChance: 0.368 }, 0.50], [{ label: "REG BONUS", games: 20, payout: 70, atChance: 0.368 }, 0.50]], specialLabel: "ガンゲイルストーム", specialChance: 0.70, specialMin: 100, specialMax: 1000, specialDisplay: "bonus", ggoStFlow: true, cycleFlow: { phase: "SQUAD JAM", label: "SQUAD JAM", statLabel: "BONUS当選", continueChance: 0.70, maxRounds: 5, upperAfterRounds: 5, upperOnlyAfterRounds: true, upperAfterRoundsAutoSuccess: false, markFinalRoundComplete: true, endLabel: "SQUAD JAM終了" }, upperChallenge: "SJ2 ボスバトル vs KKHC", upperChallengeGames: 5, upperChance: 0, upperSuccess: 0.50, upperLabel: "イカれたレン", upperContinue: 0.85, upperPayout: 500, upperPureIncrease: 7.1, upperMaxLoops: 40, upperAwards: [[{ label: "ガンゲイルストーム 100枚", games: 8, bonusGames: 14, payout: 100 }, 0.18], [{ label: "ガンゲイルストーム 150枚", games: 8, bonusGames: 21, payout: 150 }, 0.15], [{ label: "ガンゲイルストーム 200枚", games: 8, bonusGames: 28, payout: 200 }, 0.15], [{ label: "ガンゲイルストーム 250枚", games: 8, bonusGames: 35, payout: 250 }, 0.10], [{ label: "ガンゲイルストーム 300枚", games: 8, bonusGames: 42, payout: 300 }, 0.10], [{ label: "ガンゲイルストーム 500枚", games: 8, bonusGames: 70, payout: 500 }, 0.12], [{ label: "ガンゲイルストーム 1000枚", games: 8, bonusGames: 141, payout: 1000 }, 0.10], [{ label: "ガンゲイルストーム 1500枚", games: 8, bonusGames: 211, payout: 1500 }, 0.05], [{ label: "ガンゲイルストーム 2000枚", games: 8, bonusGames: 282, payout: 2000 }, 0.03], [{ label: "ガンゲイルストーム 3000枚OVER", games: 8, bonusGames: 423, payout: 3000 }, 0.02]], settingRates: { 1: { trigger: 192.0, main: 521.7, payout: 0.979 }, 2: { trigger: 189.2, main: 510.4, payout: 0.988 }, 3: { trigger: 180.9, main: 486.6, payout: 1.009 }, 4: { trigger: 168.6, main: 445.3, payout: 1.042 }, 5: { trigger: 155.4, main: 405.0, payout: 1.097 }, 6: { trigger: 153.9, main: 392.6, payout: 1.145 } } },
     articleSections: [
       { heading: "初当りとSQUAD JAMの設定差", paragraphs: ["初当り合算は設定1約1/192.0から設定6約1/153.9、ST『SQUAD JAM』は設定1約1/521.7から設定6約1/392.6です。", "START時に設定1〜6を均等抽選し、選ばれた設定の初当り・SQUAD JAM・出玉率を使用します。結果と機種別ランキングにも設定を表示します。"] },
-      { heading: "CZイエスマムとBONUS", paragraphs: ["CZ『イエスマム』は10G＋αで、成功期待度は約50%です。BONUSはREGが20G・約70枚、BIGが40G・約130枚で、純増は約3.4枚/Gです。", "サイトでは通常時の直撃やCZを初当りBONUSへまとめます。CZの特訓回数、モード、スルー回数は個別再現しません。"] },
-      { heading: "SQUAD JAMと上乗せBONUS", paragraphs: ["SQUAD JAMはバトル勝利で上乗せを目指すSTです。上乗せ分を払い出すガンゲイルBONUSは純増約7.1枚/Gです。", "シミュレーターではバトルと上乗せを追加枚数抽選へまとめ、1回の流れを短時間で確認できる構成にしています。"] },
-      { heading: "GGOストームから上位STへ", paragraphs: ["エンディング後などの有利区間リセット時はGGOストームを経由し、上位ST『イカれたレン』を目指します。", "上位到達率や継続率の全詳細は公開値が揃っていないため、サイト共通の固定抽選で簡易化し、実機値と区別します。"] },
+      { heading: "BIG・REGとYes Ma’am", paragraphs: ["通常時のBIGは40G・約130枚、REGは20G・約70枚で、純増は約3.4枚/G。消化中に報酬を獲得するたび、Yes Ma’am、SJ1、SAO失敗者、イカれたレンの順で格上げされます。", "Yes Ma’amは10G＋α、成功期待度約50%。サイトでは設定別の初当りとSJ確率を合わせ、初当りBONUS後の代表SJ突入率約36.8%で判定します。BIG・REG別の突入率は未公表のため同率です。"] },
+      { heading: "SJ1・5Gバトル・ガンゲイルストーム", paragraphs: ["SJ1は25G・継続率約70%。初回はバレットライン2本から始まり、小Vベルやライン上の小役で5Gのバトルへ発展します。バトル勝利後はガンゲイルストームでBONUS枚数を決定します。", "ガンゲイルストームは赤7揃い約1/8.0。100枚から3000枚OVERまで13段階のマスがあり、小役で昇格を抽選します。サイトではPUSHで代表枚数を開き、純増約7.1枚/GのガンゲイルBONUSを残りゲーム表示で消化します。"] },
+      { heading: "SAO失敗者からSJ2へ", paragraphs: ["SJ1のボスチームSHINC撃破などで50GのエピソードAT『SAO失敗者』へ進み、消化後はSJ2へ。SJ2は30G・継続率約77%です。", "SAO失敗者中にエピソードブレイクを獲得した場合も上位STへ進みます。サイトではSJ1ボス、50Gエピソード、SJ2を順番に表示し、公開されていないボス出現・勝利割合は代表値で簡略化します。"] },
+      { heading: "イカれたレンと引き戻し", paragraphs: ["SJ2のボスチームKKHC撃破などで上位ST『イカれたレン』へ。8Gのボーナス超高確率STで継続率約85%、純増約7.1枚/G、初回STからの獲得期待枚数は約3600枚です。", "各8G後にPUSHし、ガンゲイルストームの枚数とBONUSを表示します。終了後は引き戻し状態へ移行してYes Ma’amを抽選しますが、滞在ゲーム数は調査中のため固定ゲーム数は表示しません。"] },
       { heading: "固定レートと収支の条件", bullets: ["約31G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均SQUAD JAM投資目安は約18,300円", "コイン単価は設定1の参考値約3.5円として表示", "19,000枚到達時はコンプリート表示"] }
     ],
-    sources: [["KYORAKU 公式機種サイト", "https://www.kyoraku.co.jp/product_site/2026/ggo_s/"], ["一撃 2026年11月新台情報", "https://1geki.jp/newmachinecalender/202611/"], ["設定・天井まとめ", "https://tennabi.jp/gun-gale-online/"]]
+    sources: [["KYORAKU 公式機種サイト", "https://www.kyoraku.co.jp/product_site/2026/ggo_s/"], ["一撃 GGO 機種概要・スペック", "https://1geki.jp/slot/l_sao_ggo/"], ["一撃 BIG・REG解析", "https://1geki.jp/slot/l_sao_ggo/61/"], ["一撃 SQUAD JAM解析", "https://1geki.jp/slot/l_sao_ggo/81/"], ["一撃 ガンゲイルストーム解析", "https://1geki.jp/slot/l_sao_ggo/83/"], ["一撃 イカれたレン解析", "https://1geki.jp/slot/l_sao_ggo/91/"]]
   },
   "godzilla-eva2-slot": {
     order: 0.25, type: "slot", theme: "ember", year: "2026年11月", maker: "ビスティ", updated: "2026-11-04",
@@ -3500,6 +3502,15 @@ window.ICHIGEKI_MACHINES = {
     [{ kind: "bonus", label: "BIG BONUS", games: 70, payout: 210 }, 0.57],
     [{ kind: "bonus", label: "SUPER BIG", games: 70, payout: 315 }, 0.15]
   ];
+  const ggoStormRewards = () => [
+    [{ kind: "bonus", label: "ガンゲイルストーム 100枚", games: 14, payout: 100 }, 0.30],
+    [{ kind: "bonus", label: "ガンゲイルストーム 150枚", games: 21, payout: 150 }, 0.25],
+    [{ kind: "bonus", label: "ガンゲイルストーム 200枚", games: 28, payout: 200 }, 0.20],
+    [{ kind: "bonus", label: "ガンゲイルストーム 250枚", games: 35, payout: 250 }, 0.10],
+    [{ kind: "bonus", label: "ガンゲイルストーム 300枚", games: 42, payout: 300 }, 0.08],
+    [{ kind: "bonus", label: "ガンゲイルストーム 500枚", games: 70, payout: 500 }, 0.05],
+    [{ kind: "bonus", label: "ガンゲイルストーム 1000枚", games: 141, payout: 1000 }, 0.02]
+  ];
   const models = {
     "ragnador-slot": {
       phase: "RAGNADOR RUSH",
@@ -3730,6 +3741,24 @@ window.ICHIGEKI_MACHINES = {
         { title: "宝瓶宮・カミュ", detail: "人馬宮の特殊区間を経て宝瓶宮へ。勝利で最終の双魚宮が見えます", games: 30, continueChance: 0.76, rewards: [[{ kind: "coins", label: "カミュ撃破", payout: 120 }, 0.68], [{ kind: "coins", label: "Burning・Vストック", payout: 120 }, 0.32]] },
         { title: "双魚宮・アフロディーテ", detail: "9人目の黄金聖闘士との最終戦。勝利でエクストララウンドへ進みます", games: 30, continueChance: 0.76, rewards: [[{ kind: "coins", label: "アフロディーテ撃破", payout: 120 }, 0.63], [{ kind: "coins", label: "黄金聖闘士9人撃破", payout: 120 }, 0.37]] },
         { title: "エクストララウンド", detail: "9人撃破後の追加AT。終了後は10Gの前兆エピソードを経てSAGA BATTLEへ", games: 30, continueChance: 1, rewards: [[{ kind: "coins", label: "エクストララウンド完走", payout: 120 }, 1]] }
+      ]
+    },
+    "ggo-slot": {
+      phase: "SQUAD JAM",
+      label: "SQUAD JAM",
+      statLabel: "BONUS当選",
+      maxRounds: 5,
+      upperAfterRounds: 5,
+      upperAfterRoundsAutoSuccess: false,
+      upperOnlyAfterRounds: true,
+      markFinalRoundComplete: true,
+      endLabel: "SQUAD JAM終了",
+      rounds: [
+        { title: "SQUAD JAM 1・バレットライン", detail: "25GのST。初回2ラインから小Vベル・レア役・ライン対応役で5Gバトルを狙います", games: 25, continueChance: 0.70, awardOnContinueOnly: true, rewards: ggoStormRewards() },
+        { title: "SJ1 ボスバトル vs SHINC", detail: "5Gのボスチームバトル。勝利でEPISODE BONUSとSAO失敗者へ進みます", games: 5, continueChance: 0.40, awardOnContinueOnly: true, rewards: [[{ kind: "bonus", label: "EPISODE BONUS・ラストバトルは私に", games: 20, payout: 130 }, 1]] },
+        { title: "SAO失敗者（ルーザー）", detail: "50GのエピソードAT。ポイントMAXからエピソードブレイクも抽選し、終了後はSJ2へ", games: 50, continueChance: 1, rewards: [[{ kind: "coins", label: "SAO失敗者 完走・SJ2獲得", payout: 355 }, 1]] },
+        { title: "SQUAD JAM 2・バレットライン", detail: "30G・継続率約77%のST。バトル勝利でガンゲイルストームへ進みます", games: 30, continueChance: 0.77, awardOnContinueOnly: true, rewards: ggoStormRewards() },
+        { title: "SJ2 ボスチーム KKHC出現", detail: "30GのSJ2を進め、最後の5Gボスバトルでイカれたレンへの当落を開きます", games: 30, continueChance: 1, rewards: [[{ kind: "coins", label: "KKHC ボスバトル到達", payout: 50 }, 1]] }
       ]
     },
     "lycoris-recoil-slot": {
@@ -4011,9 +4040,9 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
       compare: [["garo-yami-slot", "スマスロ 牙狼", "高純増ループ型と比較"], ["ggo-slot", "スマスロ GGO", "ST型の上位ルートと比較"]]
     },
     "ggo-slot": {
-      verdict: "初当りBONUSは比較的軽めですが、メインSTのSQUAD JAMは設定1で約1/521.7です。BONUS当選とST到達を分けて見ることで、初当りの早さだけでは測れない収支の幅を確認できます。",
-      bestFor: ["BONUSからSTへ進む二段階の流れを試したい", "設定差が大きいSQUAD JAM初当りを比べたい", "GGOストームから上位ST到達を目指したい"],
-      check: ["初当り約1/192.0とSJ約1/521.7は別の指標", "CZのモードやスルー回数は個別再現しない", "設定1基準の平均SJ投資目安は約18,300円"],
+      verdict: "BIG約130枚／REG約70枚からSJ1の25G ST、5Gバトル、ガンゲイルストーム、50GのSAO失敗者、SJ2、8G・約85%のイカれたレンへ進む段階型です。",
+      bestFor: ["25GのSJ1と30GのSJ2を別々に体験したい", "PUSHでガンゲイルストームの枚数を開きたい", "8G上位STと純増約7.1枚/GのBONUSを見たい"],
+      check: ["初当り約1/192.0とSJ約1/521.7は別の指標", "ボス出現・勝利率は未公表のため代表値", "GGOストームは100〜3000枚OVERの代表振り分け"],
       compare: [["seiya-ougon-slot", "スマスロ 聖闘士星矢", "継続バトル型ATと比較"], ["godzilla-eva2-slot", "スマスロ ゴジエヴァ2", "BONUS経由ATとの違いを比較"]]
     },
     "godzilla-eva2-slot": {

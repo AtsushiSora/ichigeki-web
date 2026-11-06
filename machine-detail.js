@@ -1107,12 +1107,13 @@
                   : sim.upperPayout;
               const award = Math.max(0, Math.min(requestedAward, SLOT_COMPLETE_LIMIT - payout));
               if (!award) break;
+              const upperBonusGames = upperReward ? Math.max(0, Number(upperReward.bonusGames) || 0) : 0;
               upperLoops += 1;
               payout += award;
               upperPayoutTotal += award;
-              atGamesTotal += upperGames;
+              atGamesTotal += upperGames + upperBonusGames;
               const upperContinued = payout < SLOT_COMPLETE_LIMIT && upperLoops < upperLoopLimit && Math.random() < sim.upperContinue;
-              atEvents.push({ kind: "upper", label: sim.upperLabel, rewardLabel: upperReward?.label || sim.upperLabel, games: upperGames, award, cumulative: payout, set: upperLoops, continued: upperContinued });
+              atEvents.push({ kind: "upper", label: sim.upperLabel, rewardLabel: upperReward?.label || sim.upperLabel, games: upperGames, bonusGames: upperBonusGames, award, cumulative: payout, set: upperLoops, continued: upperContinued });
               continueUpper = upperContinued;
             } while (continueUpper);
             flow.push(`${sim.upperLabel} ${upperLoops}セット・+${yen.format(upperPayoutTotal)}枚`);
@@ -1574,7 +1575,7 @@
         ? (Number(sim.kabaneriUpperRareContinue) || 0.95)
         : (Number(sim.kabaneriUpperNormalContinue) || 0.80)) * 100
       : sim.upperContinue * 100;
-    return { title: `設定${setting}｜${resultTitle}`, summary: resultSummary, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, triggerSucceeded, triggerSuccessChance: triggerSuccess * 100, entryBonusModel: Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0, entryBonus, entered, entryChance: entryBonus ? (Number(entryBonus.atChance) || 0) * 100 : triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, setPushFlow: Boolean(sim.setPushFlow), karakuriJudgeFlow: Boolean(sim.karakuriJudgeFlow), battleBonusFlow: Boolean(sim.battleBonusFlow), garoBattleFlow: Boolean(sim.garoBattleFlow), ragnadorUpperFlow: Boolean(sim.ragnadorUpperFlow), seiyaTempleFlow: Boolean(sim.seiyaTempleFlow), sgRaceFlow: Boolean(sim.sgRaceFlow), kabaneriStFlow: Boolean(sim.kabaneriStFlow), otomeRushFlow: Boolean(sim.otomeRushFlow), cycleFlow: Boolean(sim.cycleFlow), cycleRounds, cycleContinues, kabaneriStBonuses, kabaneriUpperMode, otomeAddedGames, otomeBonusCount, otomeAwakeningCount, otomeBattleWon, otomeAddOnChance: (Number(sim.otomeAddOnChance) || 0) * 100, battleBonusSets, battleContinuationRate: battleContinuationRate * 100, sgRushSets, sgScenarioName, karakuriJudgeAttempts, karakuriJudgeSuccesses, karakuriUpperRoute, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, addOnGamesTotal, coinAddOnCount, coinAddOnTotal, bonusCount, bonusPayoutTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: kabaneriUpperContinueChance, upperChallenge: sim.upperChallenge || "", upper, upperLabel: kabaneriUpperMode || sim.upperLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
+    return { title: `設定${setting}｜${resultTitle}`, summary: resultSummary, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, triggerSucceeded, triggerSuccessChance: triggerSuccess * 100, entryBonusModel: Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0, entryBonus, entered, entryChance: entryBonus ? (Number(entryBonus.atChance) || 0) * 100 : triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, setPushFlow: Boolean(sim.setPushFlow), karakuriJudgeFlow: Boolean(sim.karakuriJudgeFlow), battleBonusFlow: Boolean(sim.battleBonusFlow), garoBattleFlow: Boolean(sim.garoBattleFlow), ragnadorUpperFlow: Boolean(sim.ragnadorUpperFlow), seiyaTempleFlow: Boolean(sim.seiyaTempleFlow), ggoStFlow: Boolean(sim.ggoStFlow), sgRaceFlow: Boolean(sim.sgRaceFlow), kabaneriStFlow: Boolean(sim.kabaneriStFlow), otomeRushFlow: Boolean(sim.otomeRushFlow), cycleFlow: Boolean(sim.cycleFlow), cycleRounds, cycleContinues, kabaneriStBonuses, kabaneriUpperMode, otomeAddedGames, otomeBonusCount, otomeAwakeningCount, otomeBattleWon, otomeAddOnChance: (Number(sim.otomeAddOnChance) || 0) * 100, battleBonusSets, battleContinuationRate: battleContinuationRate * 100, sgRushSets, sgScenarioName, karakuriJudgeAttempts, karakuriJudgeSuccesses, karakuriUpperRoute, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, addOnGamesTotal, coinAddOnCount, coinAddOnTotal, bonusCount, bonusPayoutTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: kabaneriUpperContinueChance, upperChallenge: sim.upperChallenge || "", upper, upperLabel: kabaneriUpperMode || sim.upperLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
   }
 
   function createATypeSession(setting) {
@@ -2253,6 +2254,7 @@
       const garoBattleFlow = Boolean(data.garoBattleFlow);
       const ragnadorUpperFlow = Boolean(data.ragnadorUpperFlow);
       const seiyaTempleFlow = Boolean(data.seiyaTempleFlow);
+      const ggoStFlow = Boolean(data.ggoStFlow);
       const sgRaceFlow = Boolean(data.sgRaceFlow);
       const kabaneriStFlow = Boolean(data.kabaneriStFlow);
       const otomeRushFlow = Boolean(data.otomeRushFlow);
@@ -2538,11 +2540,12 @@
         }
 
         if (event.kind === "upper-challenge") {
-          const challengePhase = seiyaTempleFlow ? "SAGA BATTLE" : "AT COUNT";
-          const challengeTitle = seiyaTempleFlow ? "最終決戦・サガとの4Gバトル" : `${data.mainLabel}消化中`;
-          const challengeDetail = seiyaTempleFlow ? "小役成立なら勝利。最後のPUSHで千日戦争への当落を開きます" : `${data.upperChallenge}の当落まで数字が進みます`;
-          const challengeChance = seiyaTempleFlow ? data.upperSuccessChance : data.upperRouteChance;
-          const counterComplete = await animateExperienceCounter(eventGames, "G", challengePhase, challengeTitle, challengeDetail, challengeChance, seiyaTempleFlow ? "SAGA BATTLE 成功期待度" : "上位ルート期待度", runId);
+          const challengePhase = seiyaTempleFlow ? "SAGA BATTLE" : ggoStFlow ? "SJ2 BOSS BATTLE" : "AT COUNT";
+          const challengeTitle = seiyaTempleFlow ? "最終決戦・サガとの4Gバトル" : ggoStFlow ? "vs KKHC・5Gボスバトル" : `${data.mainLabel}消化中`;
+          const challengeDetail = seiyaTempleFlow ? "小役成立なら勝利。最後のPUSHで千日戦争への当落を開きます" : ggoStFlow ? "バレットライン対応役で勝利濃厚。PUSHで上位STへの当落を開きます" : `${data.upperChallenge}の当落まで数字が進みます`;
+          const challengeChance = seiyaTempleFlow || ggoStFlow ? data.upperSuccessChance : data.upperRouteChance;
+          const challengeRateLabel = seiyaTempleFlow ? "SAGA BATTLE 成功期待度" : ggoStFlow ? "ボスバトル代表成功率" : "上位ルート期待度";
+          const counterComplete = await animateExperienceCounter(eventGames, "G", challengePhase, challengeTitle, challengeDetail, challengeChance, challengeRateLabel, runId);
           if (!counterComplete) return;
           consumedGames += eventGames;
           setSlotAtStatus({ visible: true, remaining: 0, addOn: runningAddOn, addOnGames: gameAddOnFlow ? runningAddOnGames : null, total: event.cumulative });
@@ -2552,8 +2555,8 @@
           setExperienceStage(3, "UPPER JUDGE", data.upper ? `${data.upperLabel} 突入` : `${data.upperChallenge} 失敗`, data.upper ? "突破成功" : machine.sim.upperFailureLabel ? `${machine.sim.upperFailureLabel} 確定` : "通常AT終了", data.upper ? "上位ATへ進みます" : machine.sim.upperFailureLabel ? (machine.sim.upperFailureMessage || `失敗でも${machine.sim.upperFailureLabel}へ進みます`) : "最終結果へ進みます", data.upper ? "hyper" : machine.sim.upperFailureLabel ? "rush" : "end", data.upper || machine.sim.upperFailureLabel ? 100 : 0, "上位AT判定結果");
           await waitForExperience(820);
           if (data.upper) {
-            const upperPhase = setPushFlow ? "SUPER REVOLUTION RUSH" : battleBonusFlow ? "無想転生バトル" : garoBattleFlow ? "究極魔戒RUSH" : ragnadorUpperFlow ? "真ラグナドールRUSH" : seiyaTempleFlow ? "千日戦争" : sgRaceFlow ? "青島SG" : "UPPER AT";
-            const upperMessage = setPushFlow ? "赤・金モードでセット継続抽選へ" : battleBonusFlow ? "継続率約94%のバトルへ" : garoBattleFlow ? "金色バトル勝利から陰我消滅ノ刻の報酬へ" : ragnadorUpperFlow ? "スペシャルエピソードを経由して純増約4.5枚/Gの上位ATへ" : seiyaTempleFlow ? "30G＋4/5Gバトル・継続期待度約88%の上位ATへ" : sgRaceFlow ? "上位SGの継続レースへ" : upperGameManaged ? `純増約${Number(machine.sim.upperPureIncrease).toFixed(1)}枚/Gのゲーム数管理型ATへ` : "上位ATの継続抽選へ進みます";
+            const upperPhase = setPushFlow ? "SUPER REVOLUTION RUSH" : battleBonusFlow ? "無想転生バトル" : garoBattleFlow ? "究極魔戒RUSH" : ragnadorUpperFlow ? "真ラグナドールRUSH" : seiyaTempleFlow ? "千日戦争" : ggoStFlow ? "イカれたレン" : sgRaceFlow ? "青島SG" : "UPPER AT";
+            const upperMessage = setPushFlow ? "赤・金モードでセット継続抽選へ" : battleBonusFlow ? "継続率約94%のバトルへ" : garoBattleFlow ? "金色バトル勝利から陰我消滅ノ刻の報酬へ" : ragnadorUpperFlow ? "スペシャルエピソードを経由して純増約4.5枚/Gの上位ATへ" : seiyaTempleFlow ? "30G＋4/5Gバトル・継続期待度約88%の上位ATへ" : ggoStFlow ? "8G・継続率約85%のボーナス超高確率STへ" : sgRaceFlow ? "上位SGの継続レースへ" : upperGameManaged ? `純増約${Number(machine.sim.upperPureIncrease).toFixed(1)}枚/Gのゲーム数管理型ATへ` : "上位ATの継続抽選へ進みます";
             const upperIntroValue = upperGameManaged ? (machine.sim.upperGameRange || "100〜300G") : `${Math.round(data.upperContinueChance)}% LOOP`;
             setExperienceStage(3, upperPhase, `${data.upperLabel} 突入！`, upperIntroValue, upperMessage, "hyper", upperGameManaged ? 100 : data.upperContinueChance, `${data.upperLabel}開始`);
             await waitForExperience(1100);
@@ -2603,6 +2606,26 @@
           const isHeaven = String(event.rewardLabel || "").includes("天界");
           setExperienceStage(3, "SPECIAL EPISODE", event.rewardLabel || "スペシャルエピソード", isHeaven ? "白7・天界" : "黒BAR・冥界", isHeaven ? "10連ガチャ券を獲得し、期待約2700枚の上位ATへ" : "ガチャ券を獲得し、期待約1500枚の上位ATへ", "hyper", 100, `${isHeaven ? "天界" : "冥界"}ルート`);
           await waitForExperience(1100);
+        }
+        if (ggoStFlow && event.kind === "upper") {
+          const ggoSetLabel = `${data.upperLabel} ${event.set}回目`;
+          const stComplete = await animateExperienceCounter(eventGames, "G", "イカれたレン", `${ggoSetLabel}・8G ST`, "成立役でボーナスを抽選し、最後のPUSHで結果を開きます", data.upperContinueChance, `継続率 約${Math.round(data.upperContinueChance)}%`, runId);
+          if (!stComplete) return;
+          consumedGames += eventGames;
+          setExperienceStage(3, "CLIMAX BATTLE", ggoSetLabel, "PUSH", "バトル結果とガンゲイルストームの獲得枚数を開きます", "judge", data.upperContinueChance, `イカれたレン 約${Math.round(data.upperContinueChance)}% LOOP`);
+          await waitForExperienceAction(`${ggoSetLabel} PUSH`, 5000, "upper");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, "GUN GALE STORM", event.rewardLabel || "ガンゲイルストーム", `+${yen.format(event.award)}枚`, "決定した枚数でガンゲイルBONUSを開始します", "hyper", 100, "赤7揃いで枚数決定");
+          await waitForExperience(950);
+          const ggoBonusGames = Math.max(1, Number(event.bonusGames) || Math.round(Number(event.award) / 7.1));
+          const bonusComplete = await animateExperienceCounter(ggoBonusGames, "G", "GUN GALE BONUS", `${yen.format(event.award)}枚BONUS 消化中`, "純増約7.1枚/G・終了後はSTへ戻ります", 100, "ガンゲイルBONUS", runId);
+          if (!bonusComplete) return;
+          consumedGames += ggoBonusGames;
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: 0, addOn: runningAddOn, addOnGames: gameAddOnFlow ? runningAddOnGames : null, total: event.cumulative });
+          setExperienceStage(3, event.continued ? "ST RESET" : "ST END", event.continued ? "イカれたレン 8G再セット" : "イカれたレン終了", event.continued ? `累計 ${yen.format(event.cumulative)}枚` : `最終BONUS +${yen.format(event.award)}枚`, event.continued ? "次の8G STへ進みます" : "引き戻し状態へ移行して最終結果へ", event.continued ? "hyper" : "end", event.continued ? data.upperContinueChance : 0, event.continued ? "上位ST継続" : "上位ST終了");
+          await waitForExperience(event.continued ? 850 : 1050);
+          continue;
         }
         const upperCounterPhase = setPushFlow ? "SUPER REVOLUTION RUSH" : karakuriJudgeFlow ? "超からくりサーカス" : battleBonusFlow ? "無想転生バトル" : garoBattleFlow ? "究極魔戒RUSH" : ragnadorUpperFlow ? "真ラグナドールRUSH" : seiyaTempleFlow ? "千日戦争" : sgRaceFlow ? "青島SG" : "UPPER AT";
         const upperDisplaySet = Number(event.displaySet) || Number(event.set);
