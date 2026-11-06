@@ -987,6 +987,30 @@
           if (!continued) break;
         }
         basePayout = payout - entryPayout;
+        if (payout < SLOT_COMPLETE_LIMIT && Math.random() < upperChance) {
+          atEvents.push({ kind: "upper-challenge", label: sim.upperChallenge, games: randomInt(8, 18), award: 0, cumulative: payout });
+          flow.push(sim.upperChallenge);
+          upper = Math.random() < sim.upperSuccess;
+          if (upper) {
+            do {
+              const upperGames = Array.isArray(sim.upperSetGames)
+                ? weighted(sim.upperSetGames)
+                : Math.max(1, Math.round((Number(sim.upperPayout) || 0) / upperPureIncrease));
+              const derivesUpperAward = Number(sim.upperPureIncrease) || publishedUpperPureIncrease || Array.isArray(sim.upperSetGames);
+              const requestedAward = derivesUpperAward
+                ? slotAwardForGames(upperGames, upperPureIncrease, sim.atPayoutVariance)
+                : sim.upperPayout;
+              const award = Math.max(0, Math.min(requestedAward, SLOT_COMPLETE_LIMIT - payout));
+              if (!award) break;
+              upperLoops += 1;
+              payout += award;
+              upperPayoutTotal += award;
+              atGamesTotal += upperGames;
+              atEvents.push({ kind: "upper", label: sim.upperLabel, games: upperGames, award, cumulative: payout, set: upperLoops });
+            } while (payout < SLOT_COMPLETE_LIMIT && upperLoops < 100 && Math.random() < sim.upperContinue);
+            flow.push(`${sim.upperLabel} ${upperLoops}セット・+${yen.format(upperPayoutTotal)}枚`);
+          }
+        }
       } else if (sim.kabaneriStFlow) {
         payout = entryPayout;
         basePayout = 0;
@@ -1297,7 +1321,7 @@
           }
           flow.push(`${karakuriUpperRoute}突破 → ${sim.upperLabel} ${upperLoops}セット・+${yen.format(upperPayoutTotal)}枚`);
         }
-      } else if (!sim.battleBonusFlow && !sim.sgRaceFlow && !sim.kabaneriStFlow && !sim.otomeRushFlow) {
+      } else if (!sim.battleBonusFlow && !sim.sgRaceFlow && !sim.kabaneriStFlow && !sim.otomeRushFlow && !sim.cycleFlow) {
         // Keep the published overall special-zone chance while allowing rare multi-hit runs.
         const specialChecks = Math.max(1, Math.min(3, Math.ceil(payout / 500)));
         const perCheckChance = 1 - Math.pow(1 - specialChance, 1 / specialChecks);
