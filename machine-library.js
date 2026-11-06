@@ -3637,6 +3637,65 @@ window.ICHIGEKI_MACHINES = {
         { title: "BITES 4段階", detail: "高報酬テーブルなら1000枚以上が見える最終手前のPUSHです", games: 1, continueChance: 0.45, rewards: [[{ kind: "coins", label: "BITES 300枚", payout: 300 }, 0.36], [{ kind: "coins", label: "BITES 500枚", payout: 500 }, 0.40], [{ kind: "coins", label: "BITES 1000枚", payout: 1000 }, 0.24]] },
         { title: "BITES MAX", detail: "5段階到達。報酬テーブルに応じて500〜2000枚を獲得します", games: 1, continueChance: 0.80, rewards: [[{ kind: "coins", label: "BITES MAX 500枚", payout: 500 }, 0.45], [{ kind: "coins", label: "BITES MAX 1000枚", payout: 1000 }, 0.38], [{ kind: "coins", label: "BITES MAX 2000枚", payout: 2000 }, 0.17]] }
       ]
+    },
+    "hokuto-tensei2": {
+      maxRounds: 6,
+      upperAfterRounds: 6,
+      upperAfterRoundsAutoSuccess: false,
+      upperOnlyAfterRounds: true,
+      rounds: [
+        { title: "闘神演舞・闘神レベル決定", detail: "30GのATで勝舞魂を集め、終了後の神拳勝舞へ備えます", games: 30, continueChance: 0.68, rewards: [[{ kind: "coins", label: "勝舞魂獲得", payout: 120 }, 0.70], [{ kind: "bonus", label: "北斗揃い・勝舞魂大量獲得", games: 30, payout: 280 }, 0.30]] },
+        { title: "神拳勝舞・1戦目", detail: "勝舞魂1個につき1Gの勝負。PUSHでAT継続を判定します", games: 1, continueChance: 0.52, rewards: [[{ kind: "coins", label: "神拳勝舞 勝利", payout: 80 }, 0.78], [{ kind: "games", label: "勝舞魂連続獲得", games: [[10, 0.72], [20, 0.22], [30, 0.06]] }, 0.22]] },
+        { title: "闘神演舞・闘神B", detail: "再び30Gを消化し、闘神レベルと勝舞魂の上積みを狙います", games: 30, continueChance: 0.72, rewards: [[{ kind: "coins", label: "勝舞魂追加獲得", payout: 120 }, 0.66], [{ kind: "bonus", label: "北斗揃い", games: 30, payout: 320 }, 0.34]] },
+        { title: "神拳勝舞・2戦目", detail: "勝舞揃いなら約50%の勝負。連続勝利で次の強区間へ進みます", games: 1, continueChance: 0.58, rewards: [[{ kind: "coins", label: "神拳勝舞 連勝", payout: 100 }, 0.72], [{ kind: "games", label: "闘神演舞ゲーム上乗せ", games: [[10, 0.62], [20, 0.28], [30, 0.10]] }, 0.28]] },
+        { title: "拳王強襲", detail: "3Gの強襲区間。毎ゲーム勝舞魂の大量獲得を狙います", games: 3, continueChance: 0.72, rewards: [[{ kind: "coins", label: "拳王強襲・勝舞魂大量獲得", payout: 250 }, 0.62], [{ kind: "bonus", label: "拳王強襲ロング", games: 30, payout: 500 }, 0.38]] },
+        { title: "天撃ジャッジ", detail: "最終PUSH成功で上位AT『裏闘神演舞』への入口を開きます", games: 8, continueChance: 0.80, rewards: [[{ kind: "coins", label: "天撃到達", payout: 300 }, 0.65], [{ kind: "bonus", label: "SPバトル報酬", games: 50, payout: 650 }, 0.35]] }
+      ]
+    },
+    "seiya-ougon-slot": {
+      maxRounds: 9,
+      upperAfterRounds: 9,
+      upperAfterRoundsAutoSuccess: true,
+      upperOnlyAfterRounds: true,
+      rounds: [
+        { title: "Battle of ZODIAC・白羊宮", detail: "30G＋αのメインパートで小宇宙とVストックを獲得します", games: 30, continueChance: 0.68, rewards: [[{ kind: "coins", label: "白羊宮突破", payout: 130 }, 0.72], [{ kind: "games", label: "Vストック獲得", games: 30 }, 0.28]] },
+        { title: "金牛宮・アルデバラン戦", detail: "黄金聖闘士バトルをPUSHで決着。勝利で次の宮へ進みます", games: 8, continueChance: 0.72, rewards: [[{ kind: "coins", label: "金牛宮突破", payout: 160 }, 0.68], [{ kind: "bonus", label: "金牛激震", games: 30, payout: 320 }, 0.32]] },
+        { title: "双児宮・幻影突破", detail: "メインパート中のアイテムと小宇宙で継続期待度を高めます", games: 30, continueChance: 0.74, rewards: [[{ kind: "coins", label: "双児宮突破", payout: 150 }, 0.66], [{ kind: "games", label: "小宇宙上乗せ", games: [[10, 0.65], [20, 0.25], [30, 0.10]] }, 0.34]] },
+        { title: "巨蟹宮・デスマスク戦", detail: "後半バトルで継続を書き換え、黄金聖闘士の撃破数を増やします", games: 8, continueChance: 0.76, rewards: [[{ kind: "coins", label: "巨蟹宮突破", payout: 170 }, 0.64], [{ kind: "bonus", label: "黄金聖闘士撃破報酬", games: 30, payout: 360 }, 0.36]] },
+        { title: "獅子宮・処女宮", detail: "30G＋αでVストックを狙い、連続する強敵バトルへ挑みます", games: 30, continueChance: 0.77, rewards: [[{ kind: "coins", label: "二宮連続突破", payout: 220 }, 0.60], [{ kind: "games", label: "Vストック＋1", games: 30 }, 0.40]] },
+        { title: "天秤宮・天蠍宮", detail: "中盤の連戦。小宇宙ポイントから継続と報酬昇格を抽選します", games: 30, continueChance: 0.78, rewards: [[{ kind: "coins", label: "天蠍宮突破", payout: 230 }, 0.58], [{ kind: "bonus", label: "黄金激闘BONUS", games: 40, payout: 450 }, 0.42]] },
+        { title: "人馬宮・磨羯宮", detail: "後半戦はVストックの有無が重要。PUSHで次の宮への扉を開きます", games: 30, continueChance: 0.80, rewards: [[{ kind: "coins", label: "磨羯宮突破", payout: 250 }, 0.56], [{ kind: "games", label: "Vストック＋2", games: 60 }, 0.44]] },
+        { title: "宝瓶宮・双魚宮", detail: "十二宮突破目前の最終連戦。高期待度バトルをまとめて判定します", games: 30, continueChance: 0.82, rewards: [[{ kind: "coins", label: "双魚宮突破", payout: 300 }, 0.55], [{ kind: "bonus", label: "黄金聖闘士全撃破報酬", games: 50, payout: 650 }, 0.45]] },
+        { title: "十二宮突破・エクストララウンド", detail: "黄金聖闘士9人撃破後の10G。完走してSAGA BATTLEへ進みます", games: 10, continueChance: 0.88, rewards: [[{ kind: "coins", label: "エクストララウンド完走", payout: 350 }, 0.62], [{ kind: "bonus", label: "女神覚醒報酬", games: 60, payout: 850 }, 0.38]] }
+      ]
+    },
+    "lycoris-recoil-slot": {
+      maxRounds: 6,
+      upperAfterRounds: 6,
+      upperAfterRoundsAutoSuccess: false,
+      upperOnlyAfterRounds: true,
+      rounds: [
+        { title: "リコリスラッシュ・初回20G", detail: "初回20G＋αで最初のリコリスBONUS当選を狙います", games: 20, continueChance: 0.55, rewards: [[{ kind: "bonus", label: "リコリスBONUS", games: 12, payout: 100 }, 0.68], [{ kind: "bonus", label: "BONUS W", games: 24, payout: 200 }, 0.32]] },
+        { title: "バレットジャッジ", detail: "1GのPUSHでBONUS種別を決め、RUSH50への移行を判定します", games: 1, continueChance: 0.62, rewards: [[{ kind: "bonus", label: "リコリスBONUS", games: 12, payout: 100 }, 0.52], [{ kind: "bonus", label: "BONUS W", games: 24, payout: 200 }, 0.35], [{ kind: "bonus", label: "エピソードBONUS", games: 36, payout: 300 }, 0.13]] },
+        { title: "リコリスラッシュ50・前半", detail: "50G＋αの前半区間でポイントとBONUSの複数獲得を狙います", games: 50, continueChance: 0.68, rewards: [[{ kind: "bonus", label: "リコリスBONUS", games: 12, payout: 100 }, 0.52], [{ kind: "bonus", label: "BONUS W", games: 24, payout: 200 }, 0.33], [{ kind: "bonus", label: "エピソードBONUS", games: 36, payout: 300 }, 0.15]] },
+        { title: "リコリスBONUSポイント獲得", detail: "BONUS消化中に1000ptを目指し、上位CZへの道を進めます", games: 12, continueChance: 0.70, rewards: [[{ kind: "bonus", label: "リコリスBONUS 100枚", games: 12, payout: 100 }, 0.54], [{ kind: "bonus", label: "BONUS W 200枚以上", games: 24, payout: 220 }, 0.32], [{ kind: "bonus", label: "りこりすぷらっしゅ", games: 46, payout: 385 }, 0.14]] },
+        { title: "リコリスラッシュ50・ST区間", detail: "後半10G＋αのST。BONUS当選で残りゲームを再セットします", games: 10, continueChance: 0.72, rewards: [[{ kind: "bonus", label: "リコリスBONUS再セット", games: 12, payout: 100 }, 0.48], [{ kind: "bonus", label: "BONUS W再セット", games: 24, payout: 220 }, 0.38], [{ kind: "bonus", label: "カウントダウン1000", games: 100, payout: 1000 }, 0.14]] },
+        { title: "1000pt到達", detail: "ポイント到達後の最終PUSHから『リコイル オブ リコリス』へ挑みます", games: 8, continueChance: 0.78, rewards: [[{ kind: "bonus", label: "エピソードBONUS", games: 36, payout: 300 }, 0.65], [{ kind: "bonus", label: "カウントダウン2000", games: 100, payout: 2000 }, 0.35]] }
+      ]
+    },
+    "toloveru-darkness-slot": {
+      maxRounds: 6,
+      upperAfterRounds: 6,
+      upperAfterRoundsAutoSuccess: false,
+      upperOnlyAfterRounds: true,
+      rounds: [
+        { title: "メモリアルBONUS", detail: "約100枚の初期BONUSを獲得し、楽園計画への入口を抽選します", games: 15, continueChance: 0.52, rewards: [[{ kind: "bonus", label: "メモリアルBONUS 100枚", games: 15, payout: 100 }, 0.84], [{ kind: "bonus", label: "ToLOVEるエピソード", games: 20, payout: 132 }, 0.16]] },
+        { title: "楽園計画・ヒロイン1人目", detail: "10G＋αのST。BONUS当選で残りゲームを再セットします", games: 10, continueChance: 0.52, rewards: [[{ kind: "coins", label: "100枚BONUS", payout: 100 }, 0.52], [{ kind: "coins", label: "200枚BONUS", payout: 200 }, 0.33], [{ kind: "coins", label: "400枚BONUS", payout: 400 }, 0.15]] },
+        { title: "プレゼントちゃんす", detail: "1GのPUSHで100〜1600枚のBONUS振り分けを開きます", games: 1, continueChance: 0.58, rewards: [[{ kind: "coins", label: "100枚BONUS", payout: 100 }, 0.42], [{ kind: "coins", label: "200枚BONUS", payout: 200 }, 0.32], [{ kind: "coins", label: "400枚BONUS", payout: 400 }, 0.18], [{ kind: "coins", label: "800枚BONUS", payout: 800 }, 0.06], [{ kind: "coins", label: "1600枚BONUS", payout: 1600 }, 0.02]] },
+        { title: "楽園計画・ヒロイン2人目", detail: "BONUS後にSTを再セット。二人目の攻略で上位期待度を高めます", games: 10, continueChance: 0.56, rewards: [[{ kind: "coins", label: "200枚BONUS", payout: 200 }, 0.55], [{ kind: "coins", label: "400枚BONUS", payout: 400 }, 0.32], [{ kind: "bonus", label: "ToLOVEるエピソード", games: 20, payout: 500 }, 0.13]] },
+        { title: "ダークネス計画", detail: "5Gの特化区間で毎ゲームSTゲーム数を加算し、上乗せ分を持ち越します", games: 5, continueChance: 0.64, rewards: [[{ kind: "games", label: "STゲーム数上乗せ", games: [[10, 0.45], [20, 0.32], [30, 0.16], [50, 0.07]] }, 0.82], [{ kind: "bonus", label: "ヤミエピソード", games: 20, payout: 400 }, 0.18]] },
+        { title: "楽園計画・ヒロイン3人攻略", detail: "三人目攻略後のPUSHで上位『ハーレムモード』突入を判定します", games: 10, continueChance: 0.70, rewards: [[{ kind: "coins", label: "ヒロイン3人攻略", payout: 300 }, 0.58], [{ kind: "coins", label: "400枚BONUS", payout: 400 }, 0.28], [{ kind: "bonus", label: "上位準備エピソード", games: 20, payout: 600 }, 0.14]] }
+      ]
     }
   };
 
@@ -3647,6 +3706,16 @@ window.ICHIGEKI_MACHINES = {
     Object.assign(cycle, stageModel);
     if (slug === "kinnikuman-7-slot") sim.upperSuccess = 1;
     if (slug === "god-eater-resurrection") sim.upperChallenge = "リザレクションゲート";
+    if (slug === "hokuto-tensei2") {
+      sim.upperChallenge = "天撃";
+      sim.upperLabel = "裏闘神演舞";
+      sim.upperPayout = 600;
+      sim.upperPureIncrease = 4.0;
+    }
+    if (slug === "toloveru-darkness-slot") {
+      sim.upperChallenge = "ヒロイン3人攻略ジャッジ";
+      sim.upperSuccess = 0.34;
+    }
   });
 })();
 
