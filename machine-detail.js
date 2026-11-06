@@ -197,6 +197,19 @@
     for (const [value, weight] of items) { total += weight; if (roll <= total) return value; }
     return items[items.length - 1][0];
   }
+  function rushSetGamesForSetting(sim, setting) {
+    const longRate = Number(sim.rushSetLongRateBySetting?.[setting]);
+    if (!Number.isFinite(longRate)) return sim.rushSetGames || [[10, 1]];
+    const clampedLongRate = Math.max(0, Math.min(1, longRate));
+    const hundredShare = Math.max(0, Math.min(1, Number(sim.rushSet100Share) || .25));
+    const twentyShare = Math.max(0, Math.min(1, Number(sim.rushSet20Share) || .25));
+    return [
+      [10, (1 - clampedLongRate) * (1 - twentyShare)],
+      [20, (1 - clampedLongRate) * twentyShare],
+      [50, clampedLongRate * (1 - hundredShare)],
+      [100, clampedLongRate * hundredShare]
+    ];
+  }
   function riskLabel(value) {
     if (value >= 4) return "超高波";
     if (value >= 3.5) return "高波";
@@ -888,7 +901,7 @@
         const setGames = Array.from({ length: rushSetCount }, (_, index) => weighted(
           index === 0 && Array.isArray(sim.firstRushSetGames)
             ? sim.firstRushSetGames
-            : sim.rushSetGames || [[10, 1]]
+            : rushSetGamesForSetting(sim, setting)
         ));
         let distributedPayout = entryPayout;
         setGames.forEach((games, index) => {
