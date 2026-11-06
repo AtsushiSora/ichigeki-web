@@ -24,11 +24,37 @@ let unicornExperienceSkipped = false;
 let unicornExperienceDelayTimer = null;
 let unicornExperienceDelayResolve = null;
 let unicornExperienceReturnFocus = null;
+let unicornPlaySession = null;
 const UNICORN_SOUND_KEY = "ichigekiExperienceSoundV1";
 let unicornSoundEnabled = localStorage.getItem(UNICORN_SOUND_KEY) === "on";
 let unicornAudioContext = null;
 
 function formatUnicorn(value) { return new Intl.NumberFormat("ja-JP").format(value); }
+
+function createUnicornPlaySession() {
+  return { runs: 0, wins: 0, spins: 0, investment: 0, exchangeValue: 0, balanceYen: 0, payout: 0 };
+}
+
+function resetUnicornPlaySession() {
+  unicornPlaySession = null;
+  const panel = document.getElementById("unicornExperienceSessionTotal");
+  if (panel) panel.hidden = true;
+}
+
+function addUnicornPlaySessionResult(result) {
+  if (!unicornPlaySession) unicornPlaySession = createUnicornPlaySession();
+  unicornPlaySession.runs += 1;
+  unicornPlaySession.wins += Number(result.balanceYen) > 0 ? 1 : 0;
+  unicornPlaySession.spins += Number(result.spins) || 0;
+  unicornPlaySession.investment += Number(result.investment) || 0;
+  unicornPlaySession.exchangeValue += Number(result.exchangeValue) || 0;
+  unicornPlaySession.balanceYen += Number(result.balanceYen) || 0;
+  unicornPlaySession.payout += Number(result.totalPayout) || 0;
+  const balanceSign = unicornPlaySession.balanceYen >= 0 ? "+" : "";
+  document.getElementById("unicornExperienceSessionBalance").innerHTML = `合計収支 ${balanceSign}${formatUnicorn(unicornPlaySession.balanceYen)}円<br>通常時総回転数 ${formatUnicorn(unicornPlaySession.spins)}回転`;
+  document.getElementById("unicornExperienceSessionDetail").textContent = `${unicornPlaySession.runs}回・${unicornPlaySession.wins}勝 / 総投資 ${formatUnicorn(unicornPlaySession.investment)}円 / 総換金 ${formatUnicorn(unicornPlaySession.exchangeValue)}円 / 総出玉 ${formatUnicorn(unicornPlaySession.payout)}玉`;
+  document.getElementById("unicornExperienceSessionTotal").hidden = false;
+}
 
 function drawUntilHit(rate) {
   let spins = 1;
@@ -233,6 +259,7 @@ function closeUnicornExperience() {
   document.getElementById("unicornStart").disabled = false;
   document.getElementById("unicornStart").classList.remove("is-running");
   document.getElementById("unicornExperienceActions").hidden = true;
+  resetUnicornPlaySession();
   if (unicornExperienceReturnFocus?.focus) unicornExperienceReturnFocus.focus({ preventScroll: true });
 }
 
@@ -321,6 +348,7 @@ async function runUnicornSimulation() {
   const { result, flow } = calculateUnicornSimulation();
   await playUnicornExperience(result, runId);
   if (runId !== unicornExperienceRunId) return;
+  addUnicornPlaySessionResult(result);
   latestUnicornResult = result;
   renderUnicornResult(result, flow);
   showUnicornExperienceActions();
@@ -574,7 +602,11 @@ document.getElementById("unicornRank")?.addEventListener("click", async event =>
   await registerUnicornRanking(unicornRankingNickname.value, event.currentTarget);
 });
 
-document.getElementById("unicornStart")?.addEventListener("click", runUnicornSimulation);
+document.getElementById("unicornStart")?.addEventListener("click", () => {
+  resetUnicornPlaySession();
+  unicornPlaySession = createUnicornPlaySession();
+  runUnicornSimulation();
+});
 document.getElementById("unicornRetry")?.addEventListener("click", runUnicornSimulation);
 document.getElementById("unicornSound")?.addEventListener("click", () => {
   unicornSoundEnabled = !unicornSoundEnabled;

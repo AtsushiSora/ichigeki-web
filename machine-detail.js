@@ -916,7 +916,9 @@
     const balanceSign = machinePlaySession.balanceYen >= 0 ? "+" : "";
     const scoreSign = machinePlaySession.score >= 0 ? "+" : "";
     const unit = machinePlaySession.scoreKind === "coins" ? "枚" : "玉";
-    document.getElementById("machineExperienceSessionBalance").textContent = `合計収支 ${balanceSign}${yen.format(machinePlaySession.balanceYen)}円`;
+    const attemptsLabel = machine.sim.kind === "pachinko" ? "通常時総回転数" : machine.sim.kind === "juggler" ? "総ゲーム数" : "通常時総G";
+    const attemptsUnit = machine.sim.kind === "pachinko" ? "回転" : "G";
+    document.getElementById("machineExperienceSessionBalance").innerHTML = `合計収支 ${balanceSign}${yen.format(machinePlaySession.balanceYen)}円<br>${attemptsLabel} ${yen.format(machinePlaySession.attempts)}${attemptsUnit}`;
     document.getElementById("machineExperienceSessionDetail").textContent = `${machinePlaySession.runs}回・${machinePlaySession.wins}勝 / 総投資 ${yen.format(machinePlaySession.investment)}円 / 総換金 ${yen.format(machinePlaySession.exchangeValue)}円 / 合計差${unit} ${scoreSign}${yen.format(machinePlaySession.score)}${unit}`;
     document.getElementById("machineExperienceSessionTotal").hidden = false;
     return machinePlaySession;
