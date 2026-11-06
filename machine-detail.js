@@ -573,25 +573,40 @@
       note = `${sim.entryBonusAwardsNote ? `${sim.entryBonusAwardsNote}。` : ""}セットのゲーム数と獲得枚数を別々には抽選せず、公表純増を基準に連動させています。実機の全小役・内部状態・有利区間は完全再現していません。`;
     } else if (sim.cycleFlow) {
       const cycle = sim.cycleFlow;
-      const gameOptions = Array.isArray(cycle.games)
-        ? cycle.games.map(([games]) => `${yen.format(games)}G`).join("・")
-        : `${yen.format(cycle.games || 20)}G`;
-      const roundRoute = Array.isArray(cycle.roundLabels) && cycle.roundLabels.length
-        ? cycle.roundLabels.join(" → ")
-        : "";
-      const rewards = (cycle.rewards || []).map(([reward, weight]) => {
+      const configuredRounds = Array.isArray(cycle.rounds) ? cycle.rounds : [];
+      const roundGameValues = configuredRounds.length
+        ? configuredRounds.flatMap(round => Array.isArray(round.games) ? round.games.map(([games]) => games) : [round.games]).filter(Number.isFinite)
+        : [];
+      const gameOptions = roundGameValues.length
+        ? [...new Set(roundGameValues)].map(games => `${yen.format(games)}G`).join("・")
+        : Array.isArray(cycle.games)
+          ? cycle.games.map(([games]) => `${yen.format(games)}G`).join("・")
+          : `${yen.format(cycle.games || 20)}G`;
+      const roundRoute = configuredRounds.length
+        ? configuredRounds.map(round => round.title).filter(Boolean).join(" → ")
+        : Array.isArray(cycle.roundLabels) && cycle.roundLabels.length
+          ? cycle.roundLabels.join(" → ")
+          : "";
+      const rewardText = ([reward, weight]) => {
         const rewardKind = String(reward.kind || "coins").toLowerCase();
         const rewardValue = rewardKind === "games"
           ? `${Array.isArray(reward.games) ? reward.games.map(([games]) => yen.format(games)).join("・") : yen.format(reward.games || 0)}G`
           : `約${yen.format(reward.payout)}枚`;
         return `${reward.label} ${rewardValue} ${percent(weight)}`;
-      }).join(" / ");
+      };
+      const rewards = configuredRounds.length
+        ? configuredRounds.map(round => `${round.title}: ${(round.rewards || cycle.rewards || []).map(rewardText).join("・")}`).join(" / ")
+        : (cycle.rewards || []).map(rewardText).join(" / ");
+      const roundChances = configuredRounds.map(round => Number(round.continueChance)).filter(Number.isFinite);
+      const continueText = roundChances.length
+        ? `${percent(Math.min(...roundChances))}〜${percent(Math.max(...roundChances))}`
+        : `約${percent(cycle.continueChance)}`;
       const upperCondition = Number(cycle.upperAfterRounds) > 0
         ? `${yen.format(cycle.upperAfterRounds)}回到達で${sim.upperChallenge}へ進み${cycle.upperAfterRoundsAutoSuccess === false ? `、成功率${percent(sim.upperSuccess)}で${sim.upperLabel}を判定します。` : `、${sim.upperLabel}へ移行します。`}`
         : `${sim.upperChallenge}への移行抽選後、成功率${percent(sim.upperSuccess)}で${sim.upperLabel}へ進みます。`;
       cards = [
         ["GAME FLOW", "ゲーム性", `${sim.triggerLabel}を経て${sim.mainLabel}へ突入すると、${cycle.label || sim.mainLabel}を1区間ずつ進めます。各区間の最後にPUSHで報酬と継続結果を開き、終了まで獲得枚数を積み上げます。`],
-        ["LOOP UNIT", "区間・セットの構成", `1区間は${gameOptions}の代表振り分けです。継続期待度は約${percent(cycle.continueChance)}、最大${yen.format(cycle.maxRounds || 10)}回まで抽選します。${roundRoute ? `進行順は「${roundRoute}」です。` : ""}`],
+        ["LOOP UNIT", "区間・セットの構成", `1区間は${gameOptions}の代表振り分けです。区間別の継続期待度は${continueText}、最大${yen.format(cycle.maxRounds || 10)}回まで抽選します。${roundRoute ? `進行順は「${roundRoute}」です。` : ""}`],
         ["REWARD", "報酬振り分け", rewards || `${cycle.rewardLabel || "報酬獲得"}を区間ごとに抽選します。ゲーム数上乗せとボーナスは別々に表示します。`],
         ["ENTRY / ZONE", "初当り・突破率", `${sim.triggerLabel}の基準は約1/${sim.triggerRate}、${sim.mainLabel}初当りは設定${slotBaselineSetting}基準で約1/${sim.mainRate}です。通常時の全モード・規定ゲーム数・天井は初当り確率へまとめています。`],
         ["UPPER", "上位ルート", `${upperCondition}${sim.upperLabel}は代表継続率${percent(sim.upperContinue)}でセットを重ね、通常ループと分けて結果へ記録します。`]
@@ -1009,11 +1024,17 @@
         const maxRounds = Math.max(1, Math.min(30, Number(cycle.maxRounds) || 10));
         const continueChance = Math.max(0.05, Math.min(0.98, Number(cycle.continueChance) || 0.72));
         for (let round = 1; round <= maxRounds && payout < SLOT_COMPLETE_LIMIT; round += 1) {
-          const cycleGames = Array.isArray(cycle.games) ? Math.max(1, Number(weighted(cycle.games)) || 20) : Math.max(1, Number(cycle.games) || 20);
-          const roundTitle = Array.isArray(cycle.roundLabels) && cycle.roundLabels.length
+          const roundConfig = Array.isArray(cycle.rounds) && cycle.rounds.length
+            ? cycle.rounds[Math.min(round - 1, cycle.rounds.length - 1)]
+            : null;
+          const roundGames = roundConfig?.games ?? cycle.games;
+          const cycleGames = Array.isArray(roundGames) ? Math.max(1, Number(weighted(roundGames)) || 20) : Math.max(1, Number(roundGames) || 20);
+          const roundTitle = roundConfig?.title || (Array.isArray(cycle.roundLabels) && cycle.roundLabels.length
             ? cycle.roundLabels[Math.min(round - 1, cycle.roundLabels.length - 1)]
-            : `${cycle.label || sim.mainLabel} ${round}回目`;
-          const rewardTemplate = weighted(cycle.rewards || [[{ label: cycle.rewardLabel || "報酬獲得", payout: 200 }, 1]]);
+            : `${cycle.label || sim.mainLabel} ${round}回目`);
+          const roundDetail = roundConfig?.detail || "";
+          const rewardTemplate = weighted(roundConfig?.rewards || cycle.rewards || [[{ label: cycle.rewardLabel || "報酬獲得", payout: 200 }, 1]]);
+          const roundContinueChance = Math.max(0.05, Math.min(0.98, Number(roundConfig?.continueChance) || continueChance));
           const rewardKind = String(rewardTemplate.kind || "coins").toLowerCase();
           const gameAdd = rewardKind === "games"
             ? Math.max(1, Array.isArray(rewardTemplate.games) ? Number(weighted(rewardTemplate.games)) || 1 : Number(rewardTemplate.games) || 1)
@@ -1046,9 +1067,9 @@
             coinAddOnTotal += award;
           }
           cycleRounds = round;
-          const continued = round < maxRounds && payout < SLOT_COMPLETE_LIMIT && Math.random() < continueChance;
+          const continued = round < maxRounds && payout < SLOT_COMPLETE_LIMIT && Math.random() < roundContinueChance;
           if (continued) cycleContinues += 1;
-          atEvents.push({ kind: "cycle-round", label: cycle.label || sim.mainLabel, roundTitle, phase: cycle.phase || "AT LOOP", rewardLabel: rewardTemplate.label || cycle.rewardLabel || "報酬獲得", rewardKind, games: cycleGames, gameAdd, bonusGames, award, cumulative: payout, round, continued, continueChance: continueChance * 100, endLabel: cycle.endLabel || "AT終了" });
+          atEvents.push({ kind: "cycle-round", label: cycle.label || sim.mainLabel, roundTitle, roundDetail, phase: cycle.phase || "AT LOOP", rewardLabel: rewardTemplate.label || cycle.rewardLabel || "報酬獲得", rewardKind, games: cycleGames, gameAdd, bonusGames, award, cumulative: payout, round, continued, continueChance: roundContinueChance * 100, endLabel: cycle.endLabel || "AT終了" });
           const rewardResult = gameAdd ? `+${gameAdd}G` : `+${award}枚`;
           flow.push(`${roundTitle} ${rewardTemplate.label || "報酬獲得"} ${rewardResult}${continued ? "・継続" : "・終了"}`);
           if (!continued) break;
@@ -2230,12 +2251,13 @@
 
         if (event.kind === "cycle-round") {
           const cycleRoundTitle = event.roundTitle || `${event.label} ${event.round}回目`;
-          const counterComplete = await animateExperienceCounter(eventGames, "G", event.phase || "AT LOOP", cycleRoundTitle, "残りゲーム数を消化し、最後のPUSHで継続と報酬を開きます", event.continueChance, `${event.label} 継続目安`, runId);
+          const cycleRoundDetail = event.roundDetail || "残りゲーム数を消化し、最後のPUSHで継続と報酬を開きます";
+          const counterComplete = await animateExperienceCounter(eventGames, "G", event.phase || "AT LOOP", cycleRoundTitle, cycleRoundDetail, event.continueChance, `${cycleRoundTitle} 継続目安`, runId);
           if (!counterComplete) return;
           consumedGames += eventGames;
           setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
           setSlotAtStatus({ visible: true, remaining: 0, addOn: runningAddOn, addOnGames: gameAddOnFlow ? runningAddOnGames : null, total: event.cumulative });
-          setExperienceStage(3, event.phase || "AT LOOP", cycleRoundTitle, "PUSH", "継続結果と今回の報酬を開きます", "judge", event.continueChance, `継続期待度 約${Math.round(event.continueChance)}%`);
+          setExperienceStage(3, event.phase || "AT LOOP", cycleRoundTitle, "PUSH", event.roundDetail || "継続結果と今回の報酬を開きます", "judge", event.continueChance, `継続期待度 約${Math.round(event.continueChance)}%`);
           await waitForExperienceAction(`${cycleRoundTitle} PUSH`, 5000, event.round >= 3 ? "gold" : "normal");
           if (runId !== experienceRunId) return;
           const cycleGameAdd = Math.max(0, Number(event.gameAdd) || 0);

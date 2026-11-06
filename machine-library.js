@@ -3476,6 +3476,74 @@ window.ICHIGEKI_MACHINES = {
   });
 })();
 
+// Stage-specific cycle definitions. These models vary the game count,
+// continuation expectation and reward table by the current machine phase
+// instead of repeating one shared draw under different titles.
+(() => {
+  const models = {
+    "goblin-slayer-slot": {
+      maxRounds: 5,
+      upperAfterRounds: 5,
+      upperAfterRoundsAutoSuccess: false,
+      rounds: [
+        { title: "依頼受注・初期AT", detail: "初期報酬を確定し、小鬼の巣へ向かいます", games: 30, continueChance: 0.55, rewards: [[{ kind: "coins", label: "初期討伐報酬", payout: 100 }, 0.70], [{ kind: "bonus", label: "ゴブリンスレイヤーBONUS", games: 30, payout: 300 }, 0.30]] },
+        { title: "小鬼の巣", detail: "成立役で小鬼を討伐し、ゲーム数上乗せを狙います", games: 30, continueChance: 0.62, rewards: [[{ kind: "games", label: "小鬼討伐上乗せ", games: [[10, 0.55], [20, 0.30], [30, 0.15]] }, 0.72], [{ kind: "bonus", label: "ゴブリンスレイヤーBONUS", games: 30, payout: 300 }, 0.28]] },
+        { title: "ホブゴブリン戦", detail: "強敵撃破で高配当報酬またはBONUSを獲得します", games: 40, continueChance: 0.68, rewards: [[{ kind: "coins", label: "ホブゴブリン撃破", payout: 250 }, 0.55], [{ kind: "bonus", label: "ゴブリンスレイヤーBONUS", games: 50, payout: 600 }, 0.45]] },
+        { title: "ゴブリンチャンピオン戦", detail: "上乗せ特化と高配当BONUSの分岐をPUSHで開きます", games: 50, continueChance: 0.74, rewards: [[{ kind: "games", label: "チャンピオン討伐上乗せ", games: [[30, 0.50], [50, 0.35], [100, 0.15]] }, 0.60], [{ kind: "bonus", label: "討伐BONUS", games: 70, payout: 800 }, 0.40]] },
+        { title: "ゴブリンロード決戦", detail: "最終決戦を突破するとGOBLIN'S CROWNへ進みます", games: 100, continueChance: 0.80, rewards: [[{ kind: "coins", label: "ゴブリンロード撃破", payout: 500 }, 0.60], [{ kind: "bonus", label: "ULTIMATE LOOP報酬", games: 100, payout: 1200 }, 0.40]] }
+      ]
+    },
+    "kinnikuman-7-slot": {
+      maxRounds: 7,
+      upperAfterRounds: 7,
+      upperAfterRoundsAutoSuccess: true,
+      upperOnlyAfterRounds: true,
+      rounds: [
+        { title: "悪魔超人 1戦目", detail: "26Gの前半パート後に最初の継続バトルへ", games: 26, continueChance: 0.55, rewards: [[{ kind: "coins", label: "1戦目勝利", payout: 160 }, 0.75], [{ kind: "games", label: "Vストック獲得", games: 26 }, 0.25]] },
+        { title: "悪魔超人 2戦目", detail: "成立役でVストックと継続書き換えを狙います", games: 26, continueChance: 0.60, rewards: [[{ kind: "coins", label: "2戦目勝利", payout: 160 }, 0.68], [{ kind: "games", label: "炎のキン肉マンチャレンジ", games: [[26, 0.70], [52, 0.30]] }, 0.32]] },
+        { title: "悪魔超人 3戦目", detail: "シナリオ継続と自力書き換えを合わせて判定します", games: 26, continueChance: 0.65, rewards: [[{ kind: "coins", label: "3戦目勝利", payout: 160 }, 0.65], [{ kind: "bonus", label: "マッスルボーナス", games: 20, payout: 240 }, 0.35]] },
+        { title: "悪魔超人 4戦目", detail: "後半の継続バトルへ向けてVストックを抽選します", games: 26, continueChance: 0.70, rewards: [[{ kind: "coins", label: "4戦目勝利", payout: 160 }, 0.62], [{ kind: "games", label: "Vストック獲得", games: [[26, 0.70], [52, 0.30]] }, 0.38]] },
+        { title: "悪魔超人 5戦目", detail: "高継続シナリオと特化ゾーン報酬を判定します", games: 26, continueChance: 0.75, rewards: [[{ kind: "coins", label: "5戦目勝利", payout: 160 }, 0.58], [{ kind: "bonus", label: "悪魔大行進", games: 40, payout: 500 }, 0.42]] },
+        { title: "悪魔超人 6戦目", detail: "上位AT目前の継続バトルをPUSHで決着します", games: 26, continueChance: 0.80, rewards: [[{ kind: "coins", label: "6戦目勝利", payout: 160 }, 0.55], [{ kind: "games", label: "正義超人Vストック", games: [[26, 0.60], [52, 0.40]] }, 0.45]] },
+        { title: "悪魔超人 7戦目", detail: "7戦突破で悪魔将軍バトルへ直行します", games: 26, continueChance: 0.85, rewards: [[{ kind: "coins", label: "7戦突破", payout: 250 }, 0.60], [{ kind: "bonus", label: "バッファローマン撃破", games: 30, payout: 750 }, 0.40]] }
+      ]
+    },
+    "basilisk4-slot": {
+      maxRounds: 6,
+      upperAfterRounds: 6,
+      upperAfterRoundsAutoSuccess: false,
+      rounds: [
+        { title: "追想の刻", detail: "追想パートで絆玉と次戦の高確を準備します", games: 10, continueChance: 0.55, rewards: [[{ kind: "games", label: "追想ゲーム上乗せ", games: [[10, 0.70], [20, 0.30]] }, 0.70], [{ kind: "bonus", label: "バジリスクチャンス", games: 20, payout: 120 }, 0.30]] },
+        { title: "人数決定パート", detail: "対戦人数を決め、絆高確と継続期待度を示します", games: 3, continueChance: 0.60, rewards: [[{ kind: "coins", label: "甲賀優勢", payout: 90 }, 0.65], [{ kind: "games", label: "絆高確獲得", games: 10 }, 0.35]] },
+        { title: "争忍の刻・昼", detail: "成立役でBCと甲賀勝利への書き換えを狙います", games: 27, continueChance: 0.65, rewards: [[{ kind: "coins", label: "甲賀勝利", payout: 120 }, 0.62], [{ kind: "bonus", label: "異色BC", games: 20, payout: 180 }, 0.38]] },
+        { title: "争忍の刻・夕方", detail: "夕方ステージで継続期待度とBC期待度が上昇します", games: 30, continueChance: 0.70, rewards: [[{ kind: "games", label: "絆高確ストック", games: [[10, 0.65], [20, 0.35]] }, 0.58], [{ kind: "bonus", label: "同色BC", games: 30, payout: 240 }, 0.42]] },
+        { title: "争忍の刻・夜", detail: "高継続ステージから天膳バトルへ進みます", games: 30, continueChance: 0.76, rewards: [[{ kind: "coins", label: "夜ステージ勝利", payout: 180 }, 0.55], [{ kind: "bonus", label: "エピソードBC", games: 40, payout: 360 }, 0.45]] },
+        { title: "天膳バトル", detail: "最終バトル勝利で宿怨チャレンジを抽選します", games: 8, continueChance: 0.82, rewards: [[{ kind: "coins", label: "天膳撃破", payout: 240 }, 0.60], [{ kind: "bonus", label: "完全勝利・月下閃滅", games: 50, payout: 600 }, 0.40]] }
+      ]
+    },
+    "kaguya-sama-slot": {
+      maxRounds: 5,
+      upperAfterRounds: 5,
+      upperAfterRoundsAutoSuccess: false,
+      rounds: [
+        { title: "初回BONUS", detail: "REG・BIG・SUPER BIGの初回種別をPUSHで開きます", games: [[10, 0.49], [30, 0.50], [54, 0.01]], continueChance: 0.62, rewards: [[{ kind: "bonus", label: "REGULAR BONUS", games: 10, payout: 83 }, 0.49], [{ kind: "bonus", label: "BIG BONUS", games: 30, payout: 270 }, 0.50], [{ kind: "bonus", label: "SUPER BIG BONUS", games: 54, payout: 490 }, 0.01]] },
+        { title: "1G連ジャッジ", detail: "BONUS中に獲得したストックから1G連を判定します", games: 1, continueChance: 0.66, rewards: [[{ kind: "bonus", label: "REGULAR BONUS 1G連", games: 10, payout: 83 }, 0.42], [{ kind: "bonus", label: "BIG BONUS 1G連", games: 30, payout: 270 }, 0.56], [{ kind: "bonus", label: "SUPER BIG 1G連", games: 54, payout: 490 }, 0.02]] },
+        { title: "引き戻しステージ", detail: "1G連後の引き戻し区間で次のBONUSを狙います", games: 32, continueChance: 0.70, rewards: [[{ kind: "bonus", label: "REGULAR BONUS", games: 10, payout: 83 }, 0.40], [{ kind: "bonus", label: "BIG BONUS", games: 30, payout: 270 }, 0.57], [{ kind: "bonus", label: "SUPER BIG BONUS", games: 54, payout: 490 }, 0.03]] },
+        { title: "BONUSループ高確", detail: "ステージ上昇後のBONUSループをPUSHで決着します", games: 32, continueChance: 0.74, rewards: [[{ kind: "bonus", label: "REGULAR BONUS", games: 10, payout: 83 }, 0.35], [{ kind: "bonus", label: "BIG BONUS", games: 30, payout: 270 }, 0.60], [{ kind: "bonus", label: "SUPER BIG BONUS", games: 54, payout: 490 }, 0.05]] },
+        { title: "奇跡的相性ジャッジ", detail: "成功すると奇跡的相性マリアージュMODEへ進みます", games: 15, continueChance: 0.80, rewards: [[{ kind: "bonus", label: "BIG BONUS", games: 30, payout: 270 }, 0.70], [{ kind: "bonus", label: "SUPER BIG BONUS", games: 54, payout: 490 }, 0.30]] }
+      ]
+    }
+  };
+
+  Object.entries(models).forEach(([slug, stageModel]) => {
+    const sim = window.ICHIGEKI_MACHINES[slug]?.sim;
+    const cycle = sim?.cycleFlow;
+    if (!cycle) return;
+    Object.assign(cycle, stageModel);
+    if (slug === "kinnikuman-7-slot") sim.upperSuccess = 1;
+  });
+})();
+
 window.ICHIGEKI_MACHINE_AVAILABILITY = {
   isReady(machine, now = new Date()) {
     if (!machine?.availableFrom) return true;
