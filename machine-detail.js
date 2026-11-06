@@ -2111,7 +2111,7 @@
         if (event.kind === "otome-addon" || event.kind === "otome-bonus" || event.kind === "otome-special") {
           const isSpecial = event.kind === "otome-special";
           const isBonus = event.kind === "otome-bonus";
-          setExperienceStage(3, "CHANCE", "何が起きる？", "PUSH", "上乗せかボーナスか、PUSHで結果を開きます", "judge", isSpecial || isBonus ? 100 : data.otomeAddOnChance, "抽選結果はPUSH後に発表");
+          setExperienceStage(3, "CHANCE", "抽選結果", "PUSH", "上乗せかボーナスか、PUSHで結果を開きます", "judge", isSpecial || isBonus ? 100 : data.otomeAddOnChance, "抽選結果はPUSH後に発表");
           await waitForExperienceAction(`${event.label} PUSH`, 5000, isSpecial ? "upper" : "gold");
           if (runId !== experienceRunId) return;
           if (isBonus) {
@@ -2346,7 +2346,7 @@
         setSlotAtStatus({ visible: true, remaining: 0, addOn: runningAddOn, addOnGames: gameAddOnFlow ? runningAddOnGames : null, total: event.cumulative });
 
         if (event.kind === "special") {
-          setExperienceStage(3, "CHANCE", "何が起きる？", "PUSH", "上乗せかボーナスか、PUSHで結果を開きます", "judge", data.specialChance, "抽選結果はPUSH後に発表");
+          setExperienceStage(3, "CHANCE", "抽選結果", "PUSH", "上乗せかボーナスか、PUSHで結果を開きます", "judge", data.specialChance, "抽選結果はPUSH後に発表");
           await waitForExperienceAction(`${event.label} PUSH`, 4000, "gold");
           if (runId !== experienceRunId) return;
           runningAddOn += Number(event.award) || 0;
@@ -2363,7 +2363,7 @@
         }
 
         if (event.kind === "slot-bonus") {
-          setExperienceStage(3, "CHANCE", "何が起きる？", "PUSH", "上乗せかボーナスか、PUSHで結果を開きます", "judge", data.specialChance, "抽選結果はPUSH後に発表");
+          setExperienceStage(3, "CHANCE", "抽選結果", "PUSH", "上乗せかボーナスか、PUSHで結果を開きます", "judge", data.specialChance, "抽選結果はPUSH後に発表");
           await waitForExperienceAction(`${event.label} PUSH`, 4000, "gold");
           if (runId !== experienceRunId) return;
           setExperienceStage(3, "BONUS HIT", event.label, "BONUS", "ボーナス当選！獲得結果を発表します", "hit", 100, `${event.label} 当選`);
