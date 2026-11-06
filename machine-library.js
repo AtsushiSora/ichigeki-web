@@ -3279,22 +3279,23 @@ window.ICHIGEKI_MACHINES = {
     sources: [["P-WORLD 設定別スペック", "https://www.p-world.co.jp/machine/database/10097"]]
   },
   "lupin-dai-koukaisha": {
-    order: 15.8, type: "slot", theme: "crimson", year: "2024年12月", maker: "平和", updated: "2026-11-01",
+    order: 15.8, type: "slot", theme: "crimson", year: "2024年12月", maker: "平和", updated: "2026-11-07",
     name: "Lルパン三世 大航海者の秘宝", shortName: "ルパン 大航海者",
     image: "assets/machines/lupin-dai-koukaisha-key-visual.jpg",
     imageAlt: "Lルパン三世 大航海者の秘宝のキービジュアル",
     imageCredit: "P-WORLD 設定別スペック",
     imageSource: "https://www.p-world.co.jp/machine/database/10157",
-    catchcopy: "ICPOチャレンジからSUPER HEROへ。デカ目で上乗せを狙う。",
-    intro: "ボーナス・ATのダブルセブンと上位AT『盗り放題RUSH』を備えたスマスロです。",
+    catchcopy: "SUPER HERO中のデカ目から、直乗せ・ルパンゲーム・BIG CHANCEを狙う。",
+    intro: "初当りからSUPER HEROへ進み、デカ目・BIG CHANCEでゲーム数を伸ばして上位AT『盗り放題スーパーヒーロー』を目指すスマスロです。",
     points: ["設定1 AT約1/421.5", "設定6 AT約1/327.5", "ベース約31.1G/50枚"],
     specs: [["初当り（設定1）", "約1/289.1"], ["AT（設定1）", "約1/421.5"], ["AT（設定6）", "約1/327.5"], ["ベース", "約31.1G/50枚"], ["通常AT純増", "約2.7枚/G"], ["上位AT純増", "約4.7枚/G"], ["出玉率（設定6）", "約114.3%"], ["設定", "1〜6"]],
-    sim: { kind: "slot", triggerLabel: "ICPOチャレンジ", triggerRate: 289.1, triggerSuccess: 0.55, mainLabel: "SUPER HERO", mainRate: 421.5, base50: 31.1, coinUnit: 3.3, normalMin: 220, normalMax: 1050, atPureIncrease: 2.7, specialLabel: "デカ目高確", specialChance: 0.36, specialMin: 250, specialMax: 1100, specialOutcomes: [[{ kind: "games", label: "デカ目上乗せ", games: [[10, 0.42], [20, 0.28], [30, 0.18], [50, 0.10], [100, 0.02]], triggerGames: 8 }, 0.62], [{ kind: "bonus", label: "HERO BONUS", games: [[20, 0.65], [40, 0.35]], payouts: [[180, 0.65], [360, 0.35]], triggerGames: 10 }, 0.38]], upperChallenge: "ダブルセブン", upperChance: 0.18, upperSuccess: 0.55, upperLabel: "盗り放題RUSH", upperContinue: 0.82, upperPayout: 650, upperPureIncrease: 4.7, upperSetGames: [[50, 0.70], [100, 0.30]], settingRates: { 1: { trigger: 289.1, main: 421.5, payout: 0.977 }, 2: { trigger: 275.6, main: 401.4, payout: 0.991 }, 3: { trigger: 262.6, main: 383.9, payout: 1.014 }, 4: { trigger: 233.9, main: 355.1, payout: 1.061 }, 5: { trigger: 223.6, main: 345.6, payout: 1.101 }, 6: { trigger: 216.3, main: 327.5, payout: 1.143 } } },
+    sim: { kind: "slot", rankingVersion: "v6", triggerLabel: "初当り", triggerRate: 289.1, triggerSuccess: 1, mainLabel: "SUPER HERO", mainRate: 421.5, base50: 31.1, coinUnit: 3.3, normalMin: 220, normalMax: 1050, atPureIncrease: 2.7, entryBonusAwards: [[{ label: "ダブルセブン揃い・AT直行", payout: 0, games: 1, atChance: 1, directEntry: true }, 0.70], [{ label: "シングルセブン揃い・BONUS", payout: 81, games: 30, atChance: 0.30 }, 0.30]], entryBonusAwardsNote: "初当り時はダブルセブン約70%をAT直行、シングルセブン約30%を30GのBONUSとして代表配分。シングルセブンからのAT期待度は約30%", specialLabel: "デカ目・BIG CHANCE", specialChance: 0.36, specialMin: 250, specialMax: 1100, upperChallenge: "俺の名はルパン三世ゾーン", upperChance: 0, upperSuccess: 0.55, upperLabel: "盗り放題スーパーヒーロー", upperContinue: 0, upperPayout: 470, upperPureIncrease: 4.7, upperSetGames: [[100, 0.76], [200, 0.19], [300, 0.05]], upperMaxLoops: 1, upperGameManaged: true, upperGameRange: "100〜300G", settingRates: { 1: { trigger: 289.1, main: 421.5, payout: 0.977 }, 2: { trigger: 275.6, main: 401.4, payout: 0.991 }, 3: { trigger: 262.6, main: 383.9, payout: 1.014 }, 4: { trigger: 233.9, main: 355.1, payout: 1.061 }, 5: { trigger: 223.6, main: 345.6, payout: 1.101 }, 6: { trigger: 216.3, main: 327.5, payout: 1.143 } } },
     articleSections: [
       { heading: "初当り・ATとも設定差あり", paragraphs: ["初当りは設定1約1/289.1〜設定6約1/216.3、ATは約1/421.5〜約1/327.5です。", "設定1〜6を均等抽選し、公開出玉率97.7%〜114.3%を結果へ反映します。"] },
-      { heading: "デカ目と盗り放題RUSH", paragraphs: ["AT中はデカ目と高確率状態が上乗せの中心です。", "上位AT到達率などの非公表部分は全設定共通の簡易抽選で、実戦の内部状態は再現しません。"] }
+      { heading: "SUPER HEROとデカ目", paragraphs: ["通常ATは初期50〜300G・純増約2.7枚/Gのゲーム数管理型です。レア役やデカ目で、ゲーム数直乗せ・8Gのルパンゲーム・BIG CHANCEをトリプル抽選します。", "BIG CHANCEは次元の一発上乗せ、五ェ門の分裂上乗せ、ルパンの超高継続ループ上乗せ、不二子の怪盗RUSHを分けて表示します。"] },
+      { heading: "俺の名はルパン三世ゾーンと上位AT", paragraphs: ["エンディング後は32Gの『俺の名はルパン三世ゾーン』へ進み、成功期待度50%超で上位ATを目指します。", "成功時の盗り放題スーパーヒーローは初期100〜300G・純増約4.7枚/G。失敗時も通常SUPER HEROの100G以上スタートとして表示します。"] }
     ],
-    sources: [["P-WORLD 設定別スペック", "https://www.p-world.co.jp/machine/database/10157"]]
+    sources: [["平和 公式ゲームフロー", "https://www.heiwanet.co.jp/assets/images/products/guide/l-l13.pdf"], ["P-WORLD 設定別スペック", "https://www.p-world.co.jp/machine/database/10157"], ["なな徹 SUPER HERO解析", "https://nana-press.com/kaiseki/machine/851/25855/"], ["なな徹 BIG CHANCE解析", "https://nana-press.com/kaiseki/machine/851/25857/"], ["なな徹 上位AT解析", "https://nana-press.com/kaiseki/machine/851/25861/"]]
   },
   "basilisk-tenzen-slot": {
     order: 15.9, type: "slot", theme: "violet", year: "2023年12月", maker: "ミズホ", updated: "2026-11-07",
@@ -3760,6 +3761,26 @@ window.ICHIGEKI_MACHINES = {
         { title: "12セット目・シナリオ完走", detail: "12セット目を突破してエンディングへ。終了後は宿怨チャレンジへ進みます", games: 40, continueChance: 0.98, rewards: [[{ kind: "coins", label: "12セット完走・エンディング", payout: 300 }, 0.84], [{ kind: "bonus", label: "月下閃滅", games: 20, payout: 360 }, 0.16]] }
       ]
     },
+    "lupin-dai-koukaisha": {
+      phase: "SUPER HERO",
+      label: "SUPER HERO",
+      statLabel: "上乗せ契機",
+      maxRounds: 6,
+      upperAfterRounds: 6,
+      upperAfterRoundsAutoSuccess: false,
+      upperOnlyAfterRounds: true,
+      routeSummary: "初期50〜300G → デカ目高確 → 8Gのルパンゲーム → キャラ別BIG CHANCE → 怪盗RUSH → エンディング後の俺の名はルパン三世ゾーン",
+      rewardSummary: "デカ目は直乗せ・ルパンゲーム・BIG CHANCEを抽選。BIG CHANCEは次元30〜500G、五ェ門20〜600G、ルパン50〜700G、不二子は怪盗RUSHとして個別表示します。",
+      endLabel: "SUPER HERO終了",
+      rounds: [
+        { title: "SUPER HERO・初期ゲーム", detail: "初期50〜300G・純増約2.7枚/Gで開始。レア役とデカ目から最初の上乗せ契機を狙います", games: [[50, 0.70], [100, 0.20], [200, 0.08], [300, 0.02]], continueChance: 0.78, rewards: [[{ kind: "games", label: "デカ目直乗せ", games: [[10, 0.59], [30, 0.30], [50, 0.10], [100, 0.01]] }, 0.72], [{ kind: "games", label: "強チェリー直乗せ", games: [[10, 0.59], [30, 0.30], [50, 0.10], [100, 0.01]] }, 0.28]] },
+        { title: "デカ目高確", detail: "デカ目出現率約1/25の高確区間。PUSHで直乗せかルパンゲームへの発展を開きます", games: 25, continueChance: 0.72, rewards: [[{ kind: "games", label: "デカ目直乗せ", games: [[30, 0.68], [50, 0.19], [100, 0.13]] }, 0.65], [{ kind: "bonus", label: "ルパンゲーム獲得", games: 8, payout: 22 }, 0.35]] },
+        { title: "ルパンゲーム", detail: "8GのAT中CZ。デカ目・強チェリーなら勝利濃厚、最終PUSHでBIG CHANCEへの当落を開きます", games: 8, continueChance: 0.50, rewards: [[{ kind: "coins", label: "ルパンゲーム勝利", payout: 0 }, 0.78], [{ kind: "bonus", label: "ゼニロボルパンゲーム勝利", games: 8, payout: 45 }, 0.22]] },
+        { title: "BIG CHANCE・キャラ決定", detail: "PUSHで次元・五ェ門・ルパン・不二子のいずれかを決定し、キャラ別の上乗せを開きます", games: 1, continueChance: 0.72, rewards: [[{ kind: "games", label: "次元BIG CHANCE・一発上乗せ", games: [[30, 0.745], [100, 0.20], [200, 0.04], [300, 0.01], [500, 0.005]] }, 0.36], [{ kind: "games", label: "五ェ門BIG CHANCE・分裂上乗せ", games: [[20, 0.45], [60, 0.30], [120, 0.17], [300, 0.07], [600, 0.01]] }, 0.28], [{ kind: "games", label: "ルパンBIG CHANCE・ループ上乗せ", games: [[50, 0.495], [100, 0.28], [150, 0.14], [200, 0.06], [300, 0.02], [700, 0.005]] }, 0.28], [{ kind: "bonus", label: "不二子・怪盗RUSH", games: 30, payout: 420 }, 0.08]] },
+        { title: "怪盗RUSH・お宝アイコン", detail: "セットごとにゲーム数上乗せ・BIG CHANCE・ATストック・上位ATのお宝をPUSHで開きます", games: 30, continueChance: 0.75, rewards: [[{ kind: "games", label: "お宝・ゲーム数上乗せ", games: [[30, 0.48], [50, 0.30], [100, 0.17], [200, 0.05]] }, 0.52], [{ kind: "games", label: "お宝・BIG CHANCE", games: [[50, 0.55], [100, 0.30], [200, 0.15]] }, 0.30], [{ kind: "bonus", label: "お宝・ATストック", games: 50, payout: 300 }, 0.13], [{ kind: "bonus", label: "お宝・上位ATアイコン", games: 100, payout: 470 }, 0.05]] },
+        { title: "エンディング・大航海の果て", detail: "規定枚数到達後のエンディングを経て、32Gの『俺の名はルパン三世ゾーン』へ進みます", games: 32, continueChance: 0.98, rewards: [[{ kind: "coins", label: "エンディング完走", payout: 160 }, 0.74], [{ kind: "games", label: "裏デカ目高確ストック", games: 50 }, 0.26]] }
+      ]
+    },
     "chibariyo2-slot": {
       phase: "CHIBARIYO HEAVEN",
       label: "天国32G",
@@ -3833,6 +3854,23 @@ window.ICHIGEKI_MACHINES = {
       sim.upperContinue = 0.80;
       sim.upperFailureLabel = "通常バジリスクタイム";
       sim.upperFailureGames = 40;
+    }
+    if (slug === "lupin-dai-koukaisha") {
+      sim.upperChallenge = "俺の名はルパン三世ゾーン";
+      sim.upperSuccess = 0.55;
+      sim.upperLabel = "盗り放題スーパーヒーロー";
+      sim.upperPureIncrease = 4.7;
+      sim.upperSetGames = [[100, 0.76], [200, 0.19], [300, 0.05]];
+      sim.upperContinue = 0;
+      sim.upperMaxLoops = 1;
+      sim.upperGameManaged = true;
+      sim.upperGameRange = "100〜300G";
+      sim.upperFailureLabel = "SUPER HERO 100G以上";
+      sim.upperFailureGames = 100;
+      sim.upperFailurePhase = "SUPER HERO";
+      sim.upperFailureDetail = "ゾーン失敗でも通常SUPER HEROへ。100G以上の初期ゲームを消化します";
+      sim.upperFailureRewardLabel = "通常SUPER HERO確定";
+      sim.upperFailureMessage = "失敗でも通常SUPER HERO 100G以上へ進みます";
     }
     if (slug === "chibariyo2-slot") {
       sim.upperChallenge = "虹パトモード終了後";

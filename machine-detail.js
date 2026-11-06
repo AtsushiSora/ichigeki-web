@@ -604,12 +604,15 @@
       const upperCondition = Number(cycle.upperAfterRounds) > 0
         ? `${yen.format(cycle.upperAfterRounds)}回到達で${sim.upperChallenge}へ進み${cycle.upperAfterRoundsAutoSuccess === false ? `、成功率${percent(sim.upperSuccess)}で${sim.upperLabel}を判定します。` : `、${sim.upperLabel}へ移行します。`}`
         : `${sim.upperChallenge}への移行抽選後、成功率${percent(sim.upperSuccess)}で${sim.upperLabel}へ進みます。`;
+      const upperDescription = sim.upperGameManaged
+        ? `${sim.upperLabel}は初期${sim.upperGameRange || "100〜300G"}・純増約${Number(sim.upperPureIncrease || 0).toFixed(1)}枚/Gのゲーム数管理型として、通常ATと分けて結果へ記録します。`
+        : `${sim.upperLabel}は代表継続率${percent(sim.upperContinue)}でセットを重ね、通常ループと分けて結果へ記録します。`;
       cards = [
         ["GAME FLOW", "ゲーム性", `${sim.triggerLabel}を経て${sim.mainLabel}へ突入すると、${cycle.label || sim.mainLabel}を1区間ずつ進めます。各区間の最後にPUSHで報酬と継続結果を開き、終了まで獲得枚数を積み上げます。`],
         ["LOOP UNIT", "区間・セットの構成", `1区間は${gameOptions}の代表振り分けです。区間別の継続期待度は${continueText}、最大${yen.format(cycle.maxRounds || 10)}回まで抽選します。${roundRoute ? `進行順は「${roundRoute}」です。` : ""}`],
         ["REWARD", "報酬振り分け", rewards || `${cycle.rewardLabel || "報酬獲得"}を区間ごとに抽選します。ゲーム数上乗せとボーナスは別々に表示します。`],
         ["ENTRY / ZONE", "初当り・突破率", `${sim.triggerLabel}の基準は約1/${sim.triggerRate}、${sim.mainLabel}初当りは設定${slotBaselineSetting}基準で約1/${sim.mainRate}です。通常時の全モード・規定ゲーム数・天井は初当り確率へまとめています。`],
-        ["UPPER", "上位ルート", `${upperCondition}${sim.upperLabel}は代表継続率${percent(sim.upperContinue)}でセットを重ね、通常ループと分けて結果へ記録します。`]
+        ["UPPER", "上位ルート", `${upperCondition}${upperDescription}`]
       ];
       note = `${cycle.label || sim.mainLabel}の区間順序、代表報酬、継続判定を個別表示する体験モデルです。成立役別抽選、内部状態、全報酬振り分けは短時間で比較できる形へ簡略化しています。`;
     } else {
@@ -1084,6 +1087,7 @@
             ? true
             : Math.random() < sim.upperSuccess;
           if (upper) {
+            const upperLoopLimit = Math.max(1, Math.min(100, Number(sim.upperMaxLoops) || 100));
             do {
               const upperGames = Array.isArray(sim.upperSetGames)
                 ? weighted(sim.upperSetGames)
@@ -1099,14 +1103,14 @@
               upperPayoutTotal += award;
               atGamesTotal += upperGames;
               atEvents.push({ kind: "upper", label: sim.upperLabel, games: upperGames, award, cumulative: payout, set: upperLoops });
-            } while (payout < SLOT_COMPLETE_LIMIT && upperLoops < 100 && Math.random() < sim.upperContinue);
+            } while (payout < SLOT_COMPLETE_LIMIT && upperLoops < upperLoopLimit && Math.random() < sim.upperContinue);
             flow.push(`${sim.upperLabel} ${upperLoops}セット・+${yen.format(upperPayoutTotal)}枚`);
           } else if (sim.upperFailureLabel) {
             const fallbackGames = Math.max(1, Number(sim.upperFailureGames) || 40);
             const fallbackAward = Math.max(0, Math.min(slotAwardForGames(fallbackGames, atPureIncrease, sim.atPayoutVariance), SLOT_COMPLETE_LIMIT - payout));
             payout += fallbackAward;
             atGamesTotal += fallbackGames;
-            atEvents.push({ kind: "cycle-round", label: sim.upperFailureLabel, roundTitle: sim.upperFailureLabel, roundDetail: `${sim.upperChallenge}失敗でもBTへ。通常シナリオで1セットを消化します`, phase: "BASILISK TIME", rewardLabel: "通常BT確定", rewardKind: "coins", games: fallbackGames, gameAdd: 0, bonusGames: 0, award: fallbackAward, cumulative: payout, round: cycleRounds + 1, continued: false, continueChance: 100, endLabel: `${sim.upperFailureLabel}終了` });
+            atEvents.push({ kind: "cycle-round", label: sim.upperFailureLabel, roundTitle: sim.upperFailureLabel, roundDetail: sim.upperFailureDetail || `${sim.upperChallenge}失敗でも${sim.upperFailureLabel}へ進みます`, phase: sim.upperFailurePhase || cycle.phase || "AT MODE", rewardLabel: sim.upperFailureRewardLabel || `${sim.upperFailureLabel}確定`, rewardKind: "coins", games: fallbackGames, gameAdd: 0, bonusGames: 0, award: fallbackAward, cumulative: payout, round: cycleRounds + 1, continued: false, continueChance: 100, endLabel: `${sim.upperFailureLabel}終了` });
             flow.push(`${sim.upperChallenge}失敗 → ${sim.upperFailureLabel}確定・+${yen.format(fallbackAward)}枚`);
           }
         }
@@ -2235,6 +2239,7 @@
       const kabaneriStFlow = Boolean(data.kabaneriStFlow);
       const otomeRushFlow = Boolean(data.otomeRushFlow);
       const cycleFlow = Boolean(data.cycleFlow);
+      const upperGameManaged = Boolean(machine.sim.upperGameManaged);
       const normalSetCount = rushEvents.filter(event => event.kind === "rush-set").length;
       const hadUpperChallenge = rushEvents.some(event => event.kind === "upper-challenge");
       let route = [...rushEvents];
@@ -2513,12 +2518,13 @@
           setExperienceStage(3, "UPPER JUDGE", `${data.upperLabel} 突入ジャッジ`, "PUSH", `${data.upperChallenge}の当落を開きます`, "judge", data.upperSuccessChance, `${data.upperLabel}突破率`);
           await waitForExperienceAction("上位PUSH");
           if (runId !== experienceRunId) return;
-          setExperienceStage(3, "UPPER JUDGE", data.upper ? `${data.upperLabel} 突入` : `${data.upperChallenge} 失敗`, data.upper ? "突破成功" : machine.sim.upperFailureLabel ? `${machine.sim.upperFailureLabel} 確定` : "通常AT終了", data.upper ? "上位ATへ進みます" : machine.sim.upperFailureLabel ? "失敗でも通常BTへ進みます" : "最終結果へ進みます", data.upper ? "hyper" : machine.sim.upperFailureLabel ? "rush" : "end", data.upper || machine.sim.upperFailureLabel ? 100 : 0, "上位AT判定結果");
+          setExperienceStage(3, "UPPER JUDGE", data.upper ? `${data.upperLabel} 突入` : `${data.upperChallenge} 失敗`, data.upper ? "突破成功" : machine.sim.upperFailureLabel ? `${machine.sim.upperFailureLabel} 確定` : "通常AT終了", data.upper ? "上位ATへ進みます" : machine.sim.upperFailureLabel ? (machine.sim.upperFailureMessage || `失敗でも${machine.sim.upperFailureLabel}へ進みます`) : "最終結果へ進みます", data.upper ? "hyper" : machine.sim.upperFailureLabel ? "rush" : "end", data.upper || machine.sim.upperFailureLabel ? 100 : 0, "上位AT判定結果");
           await waitForExperience(820);
           if (data.upper) {
             const upperPhase = setPushFlow ? "SUPER REVOLUTION RUSH" : battleBonusFlow ? "無想転生バトル" : sgRaceFlow ? "青島SG" : "UPPER AT";
-            const upperMessage = setPushFlow ? "赤・金モードでセット継続抽選へ" : battleBonusFlow ? "継続率約94%のバトルへ" : sgRaceFlow ? "上位SGの継続レースへ" : "上位ATの継続抽選へ進みます";
-            setExperienceStage(3, upperPhase, `${data.upperLabel} 突入！`, `${Math.round(data.upperContinueChance)}% LOOP`, upperMessage, "hyper", data.upperContinueChance, `${data.upperLabel}開始`);
+            const upperMessage = setPushFlow ? "赤・金モードでセット継続抽選へ" : battleBonusFlow ? "継続率約94%のバトルへ" : sgRaceFlow ? "上位SGの継続レースへ" : upperGameManaged ? `純増約${Number(machine.sim.upperPureIncrease).toFixed(1)}枚/Gのゲーム数管理型ATへ` : "上位ATの継続抽選へ進みます";
+            const upperIntroValue = upperGameManaged ? (machine.sim.upperGameRange || "100〜300G") : `${Math.round(data.upperContinueChance)}% LOOP`;
+            setExperienceStage(3, upperPhase, `${data.upperLabel} 突入！`, upperIntroValue, upperMessage, "hyper", upperGameManaged ? 100 : data.upperContinueChance, `${data.upperLabel}開始`);
             await waitForExperience(1100);
           }
           continue;
@@ -2557,7 +2563,7 @@
         const upperCounterPhase = setPushFlow ? "SUPER REVOLUTION RUSH" : karakuriJudgeFlow ? "超からくりサーカス" : battleBonusFlow ? "無想転生バトル" : sgRaceFlow ? "青島SG" : "UPPER AT";
         const upperDisplaySet = Number(event.displaySet) || Number(event.set);
         const isChanceEvent = event.kind === "special" || event.kind === "slot-bonus" || event.kind === "coin-add";
-        const counterComplete = await animateExperienceCounter(eventGames, "G", event.kind === "upper" ? upperCounterPhase : "AT COUNT", event.kind === "upper" ? `${data.upperLabel} SET ${upperDisplaySet}消化中` : `${data.mainLabel}消化中`, isChanceEvent ? "抽選契機まで残りゲーム数が減っていきます" : "次の出玉契機まで残りゲーム数が減っていきます", event.kind === "upper" ? data.upperContinueChance : data.specialChance, event.kind === "upper" ? `${data.upperLabel}継続目安` : "上乗せ・ボーナス抽選", runId);
+        const counterComplete = await animateExperienceCounter(eventGames, "G", event.kind === "upper" ? upperCounterPhase : "AT COUNT", event.kind === "upper" ? (upperGameManaged ? `${data.upperLabel}消化中` : `${data.upperLabel} SET ${upperDisplaySet}消化中`) : `${data.mainLabel}消化中`, isChanceEvent ? "抽選契機まで残りゲーム数が減っていきます" : "次の出玉契機まで残りゲーム数が減っていきます", event.kind === "upper" ? (upperGameManaged ? 100 : data.upperContinueChance) : data.specialChance, event.kind === "upper" ? (upperGameManaged ? "上位ATゲーム消化" : `${data.upperLabel}継続目安`) : "上乗せ・ボーナス抽選", runId);
         if (!counterComplete) return;
         consumedGames += eventGames;
         setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
@@ -2617,7 +2623,7 @@
         const upperPhase = setPushFlow ? "SUPER REVOLUTION RUSH" : karakuriJudgeFlow ? "超からくりサーカス" : battleBonusFlow ? "無想転生バトル" : sgRaceFlow ? "青島SG" : "UPPER AT";
         const upperTotalLabel = karakuriJudgeFlow ? "上位AT累計" : setPushFlow ? "超革命RUSH累計" : battleBonusFlow ? "無想転生累計" : sgRaceFlow ? "青島SG累計" : "上位AT累計";
         const customUpperEnded = isUpper && (battleBonusFlow || sgRaceFlow) && event.continued === false;
-        setExperienceStage(3, isUpper ? upperPhase : "AT MODE", customUpperEnded ? `${event.label} 終了` : isUpper ? `${event.label} SET ${upperDisplaySet}` : `${event.label} START`, isUpper ? `${yen.format(eventGames)}G / +${yen.format(event.award)}枚` : `+${yen.format(event.award)}枚`, customUpperEnded ? `${upperTotalLabel} ${yen.format(event.cumulative)}枚・最終結果へ` : isUpper ? `${upperTotalLabel} ${yen.format(event.cumulative)}枚` : `基本獲得 ${yen.format(event.cumulative)}枚`, customUpperEnded ? "end" : isUpper ? "hyper" : "rush", customUpperEnded ? 0 : isUpper ? data.upperContinueChance : data.specialChance, customUpperEnded ? `${data.upperLabel}継続終了` : isUpper ? `${data.upperLabel} ${Math.round(data.upperContinueChance)}% LOOP` : `${data.specialLabel || "上乗せ"}当選目安`);
+        setExperienceStage(3, isUpper ? upperPhase : "AT MODE", customUpperEnded ? `${event.label} 終了` : isUpper ? (upperGameManaged ? `${event.label} RESULT` : `${event.label} SET ${upperDisplaySet}`) : `${event.label} START`, isUpper ? `${yen.format(eventGames)}G / +${yen.format(event.award)}枚` : `+${yen.format(event.award)}枚`, customUpperEnded ? `${upperTotalLabel} ${yen.format(event.cumulative)}枚・最終結果へ` : isUpper ? `${upperTotalLabel} ${yen.format(event.cumulative)}枚` : `基本獲得 ${yen.format(event.cumulative)}枚`, customUpperEnded ? "end" : isUpper ? "hyper" : "rush", customUpperEnded ? 0 : isUpper ? (upperGameManaged ? 100 : data.upperContinueChance) : data.specialChance, customUpperEnded ? `${data.upperLabel}継続終了` : isUpper ? (upperGameManaged ? `${machine.sim.upperGameRange || "100〜300G"} 消化結果` : `${data.upperLabel} ${Math.round(data.upperContinueChance)}% LOOP`) : `${data.specialLabel || "上乗せ"}当選目安`);
         await waitForExperience(isUpper ? 900 : 700);
       }
       if (setPushFlow && !data.complete && data.upper) {
