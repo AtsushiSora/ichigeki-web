@@ -2865,7 +2865,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["天井ナビ 設定別スペック", "https://tenjo-navi.com/machines/smart-tokyo-revengers/"], ["P-WORLD 業界ニュース", "https://news.p-world.co.jp/articles/31384/yugitsushin"], ["Sammy 東京リベンジャーズ特設サイト", "https://www.sammy.co.jp/japanese/product/rev_slo_special/"]]
   },
   "shin-onimusha3-slot": {
-    order: 13.5, type: "slot", theme: "flame", year: "2025年10月", maker: "レオスター", updated: "2026-11-01",
+    order: 13.5, type: "slot", theme: "flame", year: "2025年10月", maker: "レオスター", updated: "2026-11-07",
     name: "スマスロ 新鬼武者3", shortName: "新鬼武者3",
     image: "assets/machines/shin-onimusha3-slot-key-visual.jpg",
     imageAlt: "スマスロ 新鬼武者3のキービジュアル",
@@ -2880,7 +2880,7 @@ window.ICHIGEKI_MACHINES = {
       { heading: "設定別AT初当り", paragraphs: ["蒼剣RUSH初当りは設定1約1/379.7から設定6約1/293.1。機械割は97.5%〜113.0%です。", "開始時に設定1〜6を均等抽選し、結果画面で発表します。"] },
       { heading: "蒼剣RUSHから真蒼剣RUSHへ", paragraphs: ["通常ATは純増約2.5枚/G、ボーナスは約4.6枚/G。ゲーム数上乗せとセット継続で出玉を伸ばします。", "上位の真蒼剣RUSHは純増約5.5枚/G・継続率89%として簡易化しています。"] }
     ],
-    sources: [["なな徹 設定別スペック", "https://nana-press.com/kaiseki/machine/1015/31758/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10349"]]
+    sources: [["なな徹 設定別スペック", "https://nana-press.com/kaiseki/machine/1015/31758/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10349"], ["P-WORLD 業界ニュース", "https://news.p-world.co.jp/articles/31905/yugitsushin"], ["円谷フィールズHD 発売リリース", "https://www.tsuburaya-fields.co.jp/ir/j/files/press/2025/press_20250715a.pdf"]]
   },
   "super-blackjack-slot": {
     order: 13.6, type: "slot", theme: "crimson", year: "2025年2月", maker: "山佐ネクスト", updated: "2026-11-01",
@@ -3710,6 +3710,21 @@ window.ICHIGEKI_MACHINES = {
         { title: "LEAP上乗せ", detail: "上乗せの次ゲームで再抽選。LEAPまたは日和ってループで獲得を伸ばします", games: 1, continueChance: 0.75, rewards: [[{ kind: "coins", label: "LEAP上乗せ +50枚", payout: 50 }, 0.48], [{ kind: "coins", label: "LEAP上乗せ +100枚", payout: 100 }, 0.30], [{ kind: "coins", label: "日和ってループ +200枚", payout: 200 }, 0.17], [{ kind: "coins", label: "日和ってループ +300枚", payout: 300 }, 0.05]] },
         { title: "黒い衝動・最終抗争", detail: "AT終盤の最終抗争。突破すると上位CZ『リベンジチャンス』へ進みます", games: 10, continueChance: 0.80, rewards: [[{ kind: "coins", label: "最終抗争突破", payout: 250 }, 0.58], [{ kind: "bonus", label: "天上天下唯我独尊", games: 30, payout: 500 }, 0.28], [{ kind: "bonus", label: "リベンジチャンス獲得", games: 10, payout: 700 }, 0.14]] }
       ]
+    },
+    "shin-onimusha3-slot": {
+      maxRounds: 7,
+      upperAfterRounds: 7,
+      upperAfterRoundsAutoSuccess: false,
+      upperOnlyAfterRounds: true,
+      rounds: [
+        { title: "蒼剣RUSH・初回セット", detail: "初回40G＋α・純増約2.5枚/G。レア役からゲーム数上乗せとBONUSを狙います", games: 40, continueChance: 0.62, rewards: [[{ kind: "games", label: "ゲーム数上乗せ", games: [[10, 0.48], [20, 0.28], [30, 0.15], [50, 0.07], [100, 0.02]] }, 0.62], [{ kind: "bonus", label: "鬼BONUS", games: 10, payout: 46 }, 0.18], [{ kind: "bonus", label: "蒼剣BONUS", games: 20, payout: 92 }, 0.15], [{ kind: "bonus", label: "真蒼剣BONUS", games: 30, payout: 138 }, 0.05]] },
+        { title: "幻魔京バトル・1戦目", detail: "6Gの継続バトル。PUSHで勝利と次セットへの継続を判定します", games: 6, continueChance: 0.66, rewards: [[{ kind: "coins", label: "幻魔京バトル勝利", payout: 80 }, 0.68], [{ kind: "bonus", label: "蒼剣BONUSストック", games: 20, payout: 92 }, 0.22], [{ kind: "games", label: "継続ストック", games: 30 }, 0.10]] },
+        { title: "蒼剣RUSH・2セット目", detail: "継続後は30G＋α。バトル高確とBONUS高確から次の契機を狙います", games: 30, continueChance: 0.70, rewards: [[{ kind: "games", label: "蒼剣上乗せ", games: [[10, 0.44], [20, 0.28], [30, 0.17], [50, 0.08], [100, 0.03]] }, 0.54], [{ kind: "bonus", label: "鬼BONUS", games: 10, payout: 46 }, 0.20], [{ kind: "bonus", label: "蒼剣BONUS", games: 20, payout: 92 }, 0.19], [{ kind: "bonus", label: "真蒼剣BONUS", games: 30, payout: 138 }, 0.07]] },
+        { title: "鬼BATTLE", detail: "2Gの上乗せ高確。平均期待度約50%のPUSHで上乗せまたはストックを獲得します", games: 2, continueChance: 0.72, rewards: [[{ kind: "games", label: "鬼BATTLE上乗せ", games: [[10, 0.42], [20, 0.28], [30, 0.18], [50, 0.09], [100, 0.03]] }, 0.72], [{ kind: "bonus", label: "蒼剣BONUSストック", games: 20, payout: 92 }, 0.28]] },
+        { title: "蒼剣RUSH・3セット目", detail: "30G＋αの節目セット。継続時の一部で覚醒チャレンジへの道が開きます", games: 30, continueChance: 0.75, rewards: [[{ kind: "games", label: "セット節目上乗せ", games: [[20, 0.46], [30, 0.29], [50, 0.17], [100, 0.08]] }, 0.55], [{ kind: "bonus", label: "蒼剣BONUS", games: 20, payout: 92 }, 0.30], [{ kind: "bonus", label: "真蒼剣BONUS", games: 30, payout: 138 }, 0.15]] },
+        { title: "鬼斬乱舞", detail: "10Gの上乗せ特化ゾーン。平均約180Gを目安にゲーム数とストックを積み上げます", games: 10, continueChance: 0.80, rewards: [[{ kind: "games", label: "鬼斬乱舞", games: [[100, 0.38], [150, 0.27], [180, 0.20], [200, 0.10], [300, 0.05]] }, 0.82], [{ kind: "bonus", label: "鬼斬乱舞＋赤7BONUS", games: 20, payout: 460 }, 0.18]] },
+        { title: "幻魔京バトル・覚醒ルート", detail: "節目の6Gバトルを突破すると、上位CZ『覚醒チャレンジ』へ進みます", games: 6, continueChance: 0.84, rewards: [[{ kind: "coins", label: "幻魔京バトル勝利", payout: 180 }, 0.58], [{ kind: "games", label: "継続ストック＋1", games: 30 }, 0.27], [{ kind: "bonus", label: "覚醒チャレンジ獲得", games: 10, payout: 350 }, 0.15]] }
+      ]
     }
   };
 
@@ -3736,6 +3751,14 @@ window.ICHIGEKI_MACHINES = {
       sim.upperPureIncrease = 8.0;
       sim.upperPayout = 700;
       sim.upperContinue = 0.80;
+    }
+    if (slug === "shin-onimusha3-slot") {
+      sim.upperChallenge = "覚醒チャレンジ";
+      sim.upperSuccess = 0.36;
+      sim.upperLabel = "真蒼剣RUSH";
+      sim.upperPureIncrease = 5.5;
+      sim.upperPayout = 650;
+      sim.upperContinue = 0.89;
     }
   });
 })();
