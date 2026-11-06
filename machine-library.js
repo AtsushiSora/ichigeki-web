@@ -3584,6 +3584,59 @@ window.ICHIGEKI_MACHINES = {
         { title: "マリア・調＆切歌 共闘", detail: "共闘演出から上乗せ連打またはBONUSを判定します", games: 5, continueChance: 0.78, rewards: [[{ kind: "games", label: "共闘上乗せ", games: [[30, 0.48], [50, 0.34], [100, 0.18]] }, 0.72], [{ kind: "bonus", label: "絶唱BONUS", games: 40, payout: 260 }, 0.28]] },
         { title: "絶唱BATTLE", detail: "最終PUSHを突破するとAXZラッシュ黄金を抽選します", games: 8, continueChance: 0.82, rewards: [[{ kind: "games", label: "絶唱上乗せ", games: [[50, 0.55], [100, 0.35], [200, 0.10]] }, 0.62], [{ kind: "bonus", label: "絶唱BONUS", games: 60, payout: 450 }, 0.38]] }
       ]
+    },
+    "monster-hunter-rise-slot": {
+      maxRounds: 6,
+      upperAfterRounds: 6,
+      upperAfterRoundsAutoSuccess: false,
+      rounds: [
+        { title: "集会所・仲間ハンター参戦", detail: "仲間を集め、狩猟するモンスターとBONUS種別を決めます", games: 5, continueChance: 0.52, rewards: [[{ kind: "bonus", label: "BAR狩猟BONUS", games: 25, payout: 70 }, 0.52], [{ kind: "bonus", label: "赤7狩猟BONUS", games: 40, payout: 110 }, 0.38], [{ kind: "bonus", label: "紫7狩猟BONUS", games: 60, payout: 240 }, 0.10]] },
+        { title: "BAR狩猟・大型モンスター", detail: "25G＋αの保障内に体力を削り切れば剥ぎ取りへ進みます", games: 25, continueChance: 0.52, rewards: [[{ kind: "coins", label: "通常討伐", payout: 70 }, 0.70], [{ kind: "bonus", label: "早期討伐ムービー", games: 20, payout: 120 }, 0.20], [{ kind: "games", label: "百竜刀ストック", games: 25 }, 0.10]] },
+        { title: "赤7狩猟・部位破壊", detail: "40G＋αの狩猟中に部位破壊と早期討伐を狙います", games: 40, continueChance: 0.58, rewards: [[{ kind: "coins", label: "赤7モンスター討伐", payout: 110 }, 0.64], [{ kind: "bonus", label: "部位破壊報酬", games: 25, payout: 180 }, 0.24], [{ kind: "games", label: "百竜刀ストック", games: [[25, 0.70], [50, 0.30]] }, 0.12]] },
+        { title: "紫7狩猟・強敵討伐", detail: "60G＋α・純増約4.0枚/Gの強敵戦から大きな報酬を狙います", games: 60, continueChance: 0.66, rewards: [[{ kind: "bonus", label: "紫7モンスター討伐", games: 60, payout: 240 }, 0.62], [{ kind: "bonus", label: "大連続BONUS", games: 100, payout: 400 }, 0.25], [{ kind: "games", label: "剥ぎ取りGストック", games: [[50, 0.70], [100, 0.30]] }, 0.13]] },
+        { title: "剥ぎ取りチャンス", detail: "銀は約50％、金はストック濃厚の報酬PUSHです", games: 1, continueChance: 0.50, rewards: [[{ kind: "games", label: "剥ぎ取り銀・BONUSストック", games: 25 }, 0.50], [{ kind: "games", label: "剥ぎ取り金・BONUSストック", games: 40 }, 0.35], [{ kind: "games", label: "剥ぎ取りチャンスG", games: 60 }, 0.15]] },
+        { title: "剥ぎ取りチャンスG", detail: "ストック獲得後も約50％で剥ぎ取りを重ね、百竜夜行を抽選します", games: 1, continueChance: 0.70, rewards: [[{ kind: "games", label: "BONUSストック連", games: [[25, 0.45], [40, 0.35], [60, 0.20]] }, 0.78], [{ kind: "bonus", label: "超剥ぎ取りチャンスG", games: 100, payout: 500 }, 0.22]] }
+      ]
+    },
+    "fire-force-slot": {
+      maxRounds: 6,
+      upperAfterRounds: 6,
+      upperAfterRoundsAutoSuccess: false,
+      rounds: [
+        { title: "初当りBONUS", detail: "REGULARか炎炎BONUSをPUSHで決め、炎炎激闘の入口を狙います", games: [[15, 0.50], [40, 0.50]], continueChance: 0.50, rewards: [[{ kind: "bonus", label: "REGULAR BONUS", games: 15, payout: 85 }, 0.50], [{ kind: "bonus", label: "炎炎BONUS", games: 40, payout: 230 }, 0.50]] },
+        { title: "炎炎激闘前兆", detail: "伝導者の影を経由し、BONUS高確率区間への突入を判定します", games: 10, continueChance: 0.56, rewards: [[{ kind: "coins", label: "炎炎激闘ストック", payout: 30 }, 0.72], [{ kind: "bonus", label: "エピソードBONUS", games: 40, payout: 230 }, 0.28]] },
+        { title: "炎炎激闘 1戦目", detail: "小役からBONUSを抽選し、成功後は前兆を挟んでループします", games: 15, continueChance: 0.62, rewards: [[{ kind: "bonus", label: "REGULAR BONUS", games: 15, payout: 85 }, 0.45], [{ kind: "bonus", label: "炎炎BONUS", games: 40, payout: 230 }, 0.45], [{ kind: "bonus", label: "エピソードBONUS", games: 40, payout: 230 }, 0.10]] },
+        { title: "第8特殊消防隊 共闘", detail: "共闘演出でBONUS種別と次回炎炎激闘ストックを開きます", games: 15, continueChance: 0.67, rewards: [[{ kind: "bonus", label: "炎炎BONUS", games: 40, payout: 230 }, 0.58], [{ kind: "bonus", label: "エピソードBONUS", games: 40, payout: 230 }, 0.27], [{ kind: "games", label: "炎炎激闘ストック", games: [[15, 0.70], [30, 0.30]] }, 0.15]] },
+        { title: "炎炎ループ", detail: "BONUSと炎炎激闘を往復しながら連続当選を伸ばします", games: 15, continueChance: 0.72, rewards: [[{ kind: "bonus", label: "REGULAR BONUS連", games: 15, payout: 85 }, 0.36], [{ kind: "bonus", label: "炎炎BONUS連", games: 40, payout: 230 }, 0.49], [{ kind: "bonus", label: "エピソードBONUS連", games: 40, payout: 230 }, 0.15]] },
+        { title: "アドラバーストジャッジ", detail: "炎炎ループ最終PUSHからアドラバーストへの突入を抽選します", games: 8, continueChance: 0.78, rewards: [[{ kind: "bonus", label: "炎炎BONUS", games: 40, payout: 230 }, 0.68], [{ kind: "bonus", label: "アドラリンクBONUS", games: 60, payout: 400 }, 0.32]] }
+      ]
+    },
+    "god-eater-resurrection": {
+      maxRounds: 6,
+      upperAfterRounds: 6,
+      upperAfterRoundsAutoSuccess: false,
+      rounds: [
+        { title: "ストーリーパート", detail: "初回100枚を獲得し、結合崩壊と次のアラガミを準備します", games: 12, continueChance: 0.76, rewards: [[{ kind: "coins", label: "初回ストーリー報酬", payout: 100 }, 0.72], [{ kind: "games", label: "結合崩壊ストック", games: 10 }, 0.28]] },
+        { title: "アラガミ交戦", detail: "25G＋αのSTで弱点役を引き、平均約76％の討伐を狙います", games: 25, continueChance: 0.76, rewards: [[{ kind: "coins", label: "アラガミ討伐・200枚", payout: 200 }, 0.58], [{ kind: "coins", label: "アラガミ討伐・300枚", payout: 300 }, 0.30], [{ kind: "coins", label: "アラガミ討伐・510枚", payout: 510 }, 0.12]] },
+        { title: "捕喰報酬パート", detail: "討伐したアラガミに応じて200枚以上の上乗せをPUSHで開きます", games: 1, continueChance: 0.78, rewards: [[{ kind: "coins", label: "神を喰らえ・200枚", payout: 200 }, 0.55], [{ kind: "coins", label: "神を喰らえ・300枚", payout: 300 }, 0.30], [{ kind: "coins", label: "神機覚醒・510枚", payout: 510 }, 0.15]] },
+        { title: "結合崩壊・再交戦", detail: "結合崩壊で弱点を増やし、次のアラガミ交戦を有利にします", games: 25, continueChance: 0.80, rewards: [[{ kind: "coins", label: "弱点役討伐", payout: 250 }, 0.62], [{ kind: "bonus", label: "OVERKILL・神機覚醒", games: 30, payout: 510 }, 0.38]] },
+        { title: "逆鱗ハンニバル", detail: "50G＋α・勝利期待度約75％の強敵戦でゲートを目指します", games: 50, continueChance: 0.75, rewards: [[{ kind: "coins", label: "逆鱗ハンニバル討伐", payout: 510 }, 0.74], [{ kind: "bonus", label: "OVERKILL報酬", games: 60, payout: 800 }, 0.26]] },
+        { title: "リザレクションゲート", detail: "覚醒するキャラクターにより漆黒の捕喰者または神堕を判定します", games: 50, continueChance: 0.84, rewards: [[{ kind: "bonus", label: "漆黒の捕喰者", games: 50, payout: 510 }, 0.70], [{ kind: "bonus", label: "神堕覚醒", games: 60, payout: 1020 }, 0.30]] }
+      ]
+    },
+    "tokyo-ghoul-slot": {
+      maxRounds: 6,
+      upperAfterRounds: 6,
+      upperAfterRoundsAutoSuccess: false,
+      upperOnlyAfterRounds: true,
+      rounds: [
+        { title: "東京喰種咬・喰種対決", detail: "初期約150枚から4Gの喰種対決へ。勝利でBITESに進みます", games: 4, continueChance: 0.50, rewards: [[{ kind: "coins", label: "初期AT＋喰種対決勝利", payout: 150 }, 0.78], [{ kind: "bonus", label: "エピソードBONUS", games: 25, payout: 250 }, 0.22]] },
+        { title: "BITES 1段階", detail: "小役成立で報酬段階が上昇。止まった段階の差枚を獲得します", games: 1, continueChance: 0.45, rewards: [[{ kind: "coins", label: "BITES 50枚", payout: 50 }, 0.58], [{ kind: "coins", label: "BITES 100枚", payout: 100 }, 0.32], [{ kind: "coins", label: "BITES 200枚", payout: 200 }, 0.10]] },
+        { title: "BITES 2段階", detail: "小役成立で次段階へ。リスタート時は同じ段階から再抽選します", games: 1, continueChance: 0.45, rewards: [[{ kind: "coins", label: "BITES 100枚", payout: 100 }, 0.52], [{ kind: "coins", label: "BITES 200枚", payout: 200 }, 0.34], [{ kind: "coins", label: "超BITES 500枚", payout: 500 }, 0.14]] },
+        { title: "BITES 3段階", detail: "中盤から500枚報酬の比率が上がる報酬昇格区間です", games: 1, continueChance: 0.45, rewards: [[{ kind: "coins", label: "BITES 200枚", payout: 200 }, 0.42], [{ kind: "coins", label: "BITES 500枚", payout: 500 }, 0.48], [{ kind: "coins", label: "超BITES 1000枚", payout: 1000 }, 0.10]] },
+        { title: "BITES 4段階", detail: "高報酬テーブルなら1000枚以上が見える最終手前のPUSHです", games: 1, continueChance: 0.45, rewards: [[{ kind: "coins", label: "BITES 300枚", payout: 300 }, 0.36], [{ kind: "coins", label: "BITES 500枚", payout: 500 }, 0.40], [{ kind: "coins", label: "BITES 1000枚", payout: 1000 }, 0.24]] },
+        { title: "BITES MAX", detail: "5段階到達。報酬テーブルに応じて500〜2000枚を獲得します", games: 1, continueChance: 0.80, rewards: [[{ kind: "coins", label: "BITES MAX 500枚", payout: 500 }, 0.45], [{ kind: "coins", label: "BITES MAX 1000枚", payout: 1000 }, 0.38], [{ kind: "coins", label: "BITES MAX 2000枚", payout: 2000 }, 0.17]] }
+      ]
     }
   };
 
@@ -3593,6 +3646,7 @@ window.ICHIGEKI_MACHINES = {
     if (!cycle) return;
     Object.assign(cycle, stageModel);
     if (slug === "kinnikuman-7-slot") sim.upperSuccess = 1;
+    if (slug === "god-eater-resurrection") sim.upperChallenge = "リザレクションゲート";
   });
 })();
 
