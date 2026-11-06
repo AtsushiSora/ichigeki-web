@@ -1246,18 +1246,30 @@
 
   async function animatePachinkoRushRunout(data, result, runId) {
     const totalGames = Math.max(10, Math.round(Number(data.rushGameLimit) || 100));
-    const checkpoints = data.upper ? [.07, .15, .24, .34, .45, .56, .67, .77, .86, .93, .97, 1] : [.12, .28, .45, .62, .76, .88, .96, 1];
+    const checkpoints = data.upper ? [.07, .15, .24, .34, .45, .56, .67, .77, .86, .93] : [.12, .28, .45, .62, .76, .88];
     const stepDelay = data.upper ? 115 : 68;
     setExperienceStage(3, data.upper ? "UPPER RUSH LAST" : "RUSH LAST", `${data.upper ? data.upperLabel : data.mainLabel} 最終区間`, `0 / ${yen.format(totalGames)}回転`, "RUSH終了まで残り回転を消化します", data.upper ? "hyper" : "normal", data.upper ? data.upperContinueChance : data.continueChance, "RUSH終了までの回転");
+    let previousCurrent = 0;
     for (const progress of checkpoints) {
       if (runId !== experienceRunId || experienceSkipped) return false;
-      const current = Math.max(1, Math.round(totalGames * progress));
+      const current = Math.max(1, Math.min(totalGames - 4, Math.round(totalGames * progress)));
+      if (current <= previousCurrent) continue;
+      previousCurrent = current;
       const remaining = Math.max(0, totalGames - current);
       document.getElementById("machineExperienceValue").textContent = `${yen.format(current)} / ${yen.format(totalGames)}回転`;
-      document.getElementById("machineExperienceTitle").textContent = remaining > 0 ? `残り${yen.format(remaining)}回転` : "LAST 0";
-      document.getElementById("machineExperienceMessage").textContent = remaining > 0 ? "数字が進む…残り回転を消化中" : "最終回転まで駆け抜けました";
+      document.getElementById("machineExperienceTitle").textContent = `残り${yen.format(remaining)}回転`;
+      document.getElementById("machineExperienceMessage").textContent = "数字が進む…残り回転を消化中";
       setExperienceHud(`${yen.format(current)}回転`, `${yen.format(result.investment)}円`, `${yen.format(data.payout)}${data.payoutUnit}`);
       await waitForExperience(stepDelay);
+    }
+    for (const remaining of [3, 2, 1, 0]) {
+      if (runId !== experienceRunId || experienceSkipped) return false;
+      const current = totalGames - remaining;
+      document.getElementById("machineExperienceValue").textContent = `${yen.format(current)} / ${yen.format(totalGames)}回転`;
+      document.getElementById("machineExperienceTitle").textContent = remaining ? `残り${remaining}回転` : "LAST 0";
+      document.getElementById("machineExperienceMessage").textContent = remaining ? `最終${remaining}回転・消化中` : "最終回転まで駆け抜けました";
+      setExperienceHud(`${yen.format(current)}回転`, `${yen.format(result.investment)}円`, `${yen.format(data.payout)}${data.payoutUnit}`);
+      await waitForExperience(500);
     }
     if (runId !== experienceRunId) return false;
     setExperienceStage(3, "RUSH END", "RUSH終了", `${yen.format(totalGames)}回転 消化`, `大当りなし・${data.hits}回当たりで終了`, "end", 0, "駆け抜け結果");
