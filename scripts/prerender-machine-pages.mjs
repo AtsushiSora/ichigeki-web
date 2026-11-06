@@ -163,10 +163,11 @@ function calculationSection(machine) {
   const settingModelDescription = sim.settingRates
     ? `${settingLabel}で公開されている初当り値を個別に使います。公開されていない特化ゾーン・上位到達率の設定差は加えません。`
     : `設定別の数値が揃わない機種は、設定${baselineSetting}相当の掲載値へサイト共通の固定補正を加える体験用モデルです。非公表の実機値を推測したものではありません。`;
+  const initialHitLabel = sim.mainRateLabel || (machine.initialHitLabel ? "ボーナス" : sim.mainLabel);
   return `
       <section class="machine-article-section">
         <h3>平均Gと投資目安の計算</h3>
-        <p>掲載する${escapeHtml(sim.mainLabel)}初当り約1/${escapeHtml(sim.mainRate)}は設定${baselineSetting}基準です。当サイトでは50枚あたり${escapeHtml(sim.base50)}G、1,000円46枚貸しの固定条件から、設定${baselineSetting}基準の平均投資目安を約${formatNumber(averageInvestment, 0)}円と計算します。</p>
+        <p>掲載する${escapeHtml(initialHitLabel)}初当り約1/${escapeHtml(sim.mainRate)}は設定${baselineSetting}基準です。当サイトでは50枚あたり${escapeHtml(sim.base50)}G、1,000円46枚貸しの固定条件から、設定${baselineSetting}基準の平均投資目安を約${formatNumber(averageInvestment, 0)}円と計算します。</p>
         <p>シミュレーターでは${escapeHtml(settingLabel)}を均等抽選します。${escapeHtml(settingModelDescription)} 換金は5.2枚交換で固定し、結果とランキングに設定を表示します。</p>
       </section>`;
 }
@@ -237,13 +238,14 @@ function snapshotMarkup(machine) {
     const gamesPerThousand = sim.base50 * 46 / 50;
     const averageInvestment = Math.round((sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
     const risk = sim.coinUnit >= 4 ? "超高波" : sim.coinUnit >= 3.5 ? "高波" : sim.coinUnit >= 3 ? "中波" : "比較的穏やか";
+    const initialHitLabel = sim.mainRateLabel || machine.initialHitLabel || sim.mainLabel;
     items = [
-      ["初当り", `約1/${sim.mainRate}`, sim.mainLabel],
+      ["初当り", `約1/${sim.mainRate}`, initialHitLabel],
       ["平均投資", `約${formatNumber(averageInvestment, 0)}円`, `設定${settingPool[0]}基準`],
       ["コイン単価", `${sim.coinUnit}円`, risk],
       ["設定抽選", `設定${settingPool.join("・")}`, "開始時に均等抽選"]
     ];
-    note = `${sim.triggerLabel}から${sim.mainLabel}${sim.upperLabel ? `、${sim.upperLabel}` : ""}までの流れと、設定ごとの結果差を固定レートで比較できます。`;
+    note = `${sim.triggerLabel}から${initialHitLabel}${initialHitLabel !== sim.mainLabel ? `、${sim.mainLabel}` : ""}${sim.upperLabel ? `、${sim.upperLabel}` : ""}までの流れと、設定ごとの結果差を固定レートで比較できます。`;
   }
   return `
         <section class="machine-snapshot" aria-labelledby="machine-snapshot-title">
@@ -287,10 +289,11 @@ function faqItems(slug, machine) {
   const gamesPerThousand = sim.base50 * 46 / 50;
   const averageInvestment = Math.round((sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
   const settingPool = Array.isArray(sim.settingPool) && sim.settingPool.length ? sim.settingPool : [1, 2, 3, 4, 5, 6];
+  const initialHitLabel = sim.mainRateLabel || machine.initialHitLabel || sim.mainLabel;
   return [
     { question: `${machine.shortName}はどんな台？`, answer: `${releaseSummary}${machine.points?.[0] ? ` ${machine.points[0]}が主な確認ポイントです。` : ""}` },
-    { question: `${machine.shortName}の平均投資目安は？`, answer: `設定${settingPool[0]}基準の${sim.mainLabel}初当り約1/${sim.mainRate}と、50枚あたり${sim.base50}G・46枚貸しの固定条件から、平均${formatNumber(averageInvestment, 0)}円を目安として表示します。実際の設定や遊技状況で結果は変わります。` },
-    { question: `設定とゲームの流れはどう抽選する？`, answer: sim.kind === "juggler" ? `開始時に設定${settingPool.join("・")}から1つを均等抽選し、最大${formatNumber(sim.games, 0)}GまでBIG・REGを抽選します。設定は終了時の結果とランキングに表示します。` : `開始時に設定${settingPool.join("・")}から1つを均等抽選し、${sim.triggerLabel}、${sim.mainLabel}、${sim.upperChallenge}、${sim.upperLabel}の順で到達を判定します。設定は最終結果とランキングに表示します。` },
+    { question: `${machine.shortName}の平均投資目安は？`, answer: `設定${settingPool[0]}基準の${initialHitLabel}初当り約1/${sim.mainRate}と、50枚あたり${sim.base50}G・46枚貸しの固定条件から、平均${formatNumber(averageInvestment, 0)}円を目安として表示します。実際の設定や遊技状況で結果は変わります。` },
+    { question: `設定とゲームの流れはどう抽選する？`, answer: sim.kind === "juggler" ? `開始時に設定${settingPool.join("・")}から1つを均等抽選し、最大${formatNumber(sim.games, 0)}GまでBIG・REGを抽選します。設定は終了時の結果とランキングに表示します。` : `開始時に設定${settingPool.join("・")}から1つを均等抽選し、${sim.triggerLabel}、${initialHitLabel}${initialHitLabel !== sim.mainLabel ? `、${sim.mainLabel}` : ""}、${sim.upperChallenge}、${sim.upperLabel}の順で到達を判定します。設定は最終結果とランキングに表示します。` },
     { question: `収支はどう計算する？`, answer: "1,000円46枚貸し・5.2枚交換の固定条件で投資、換金、収支目安を計算します。実店舗の再プレイ、持ちメダル、端数処理は含みません。" }
   ];
 }
@@ -410,7 +413,7 @@ function schemaMarkup(slug, machine) {
 function newMachinePage(slug, machine) {
   const title = `${escapeHtml(machine.name)} | 記事・シミュレーター | ICHIGEKI`;
   const description = escapeHtml(machine.intro);
-  return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#05232d"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml"><meta name="description" content="${description}"><title>${title}</title><link rel="canonical" href="https://ichigeki-pachislot.com/${slug}.html"><link rel="stylesheet" href="style.css?v=180"></head><body class="machine-library-page" data-machine="${escapeHtml(slug)}"><header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">MACHINE</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#simulator">シミュレーター</a><a href="community.html?machine=${escapeHtml(slug)}">投稿</a></nav></div></header><main class="page machine-detail-shell" id="machineApp"></main><footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="community.html">コミュニティ</a><a href="disclaimer.html">免責事項</a></div></div></footer><script src="machine-library.js?v=152"></script><script src="achievements.js?v=1"></script><script src="site-insights.js?v=1"></script><script src="machine-detail.js?v=176"></script><script src="app-shell.js?v=10"></script><script src="adsense-loader.js?v=2"></script></body></html>`;
+  return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#05232d"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml"><meta name="description" content="${description}"><title>${title}</title><link rel="canonical" href="https://ichigeki-pachislot.com/${slug}.html"><link rel="stylesheet" href="style.css?v=180"></head><body class="machine-library-page" data-machine="${escapeHtml(slug)}"><header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">MACHINE</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#simulator">シミュレーター</a><a href="community.html?machine=${escapeHtml(slug)}">投稿</a></nav></div></header><main class="page machine-detail-shell" id="machineApp"></main><footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="community.html">コミュニティ</a><a href="disclaimer.html">免責事項</a></div></div></footer><script src="machine-library.js?v=153"></script><script src="achievements.js?v=1"></script><script src="site-insights.js?v=1"></script><script src="machine-detail.js?v=177"></script><script src="app-shell.js?v=10"></script><script src="adsense-loader.js?v=2"></script></body></html>`;
 }
 
 function updateRobotsMeta(html, isIndexable) {
@@ -477,8 +480,8 @@ for (const [slug, machine] of Object.entries(machines)) {
   } else {
     html = html.replace("</head>", '<link rel="stylesheet" href="style.css?v=180"></head>');
   }
-  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=176");
-  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=152");
+  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=177");
+  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=153");
   html = html.replace(/app-shell\.js\?v=\d+/, "app-shell.js?v=10");
   html = html.replace(/adsense-loader\.js\?v=\d+/, "adsense-loader.js?v=2");
   if (!html.includes("site-insights.js")) html = html.replace(/(<script src="machine-detail\.js\?v=129"><\/script>)/, '<script src="site-insights.js?v=1"></script>\n  $1');

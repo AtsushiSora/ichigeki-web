@@ -129,6 +129,15 @@
   const experienceProfile = experienceProfiles[slug] || { key: machine.type === "slot" ? "slot" : "pachinko", system: machine.type === "slot" ? "AT LINK SYSTEM" : "FEVER LINK SYSTEM", cue: machine.shortName };
 
   function randomInt(min, max) { return Math.round((min + Math.random() * (max - min)) / 10) * 10; }
+  function slotAwardForGames(games, pureIncrease, variance = 0.16) {
+    const playedGames = Math.max(1, Number(games) || 1);
+    const netPerGame = Math.max(0.1, Number(pureIncrease) || 1);
+    const spread = Math.max(0, Math.min(0.35, Number(variance) || 0));
+    // Pure increase is a long-run average. Two random samples keep most results
+    // near the published value while still allowing natural short-run variance.
+    const centeredRandom = (Math.random() + Math.random()) - 1;
+    return Math.max(0, Math.round(playedGames * netPerGame * (1 + centeredRandom * spread)));
+  }
   function actualPachinkoAward(displayedAward) {
     const displayed = Math.max(0, Math.round(Number(displayedAward) || 0));
     if (!displayed) return 0;
@@ -231,7 +240,8 @@
     const settingModelText = sim.settingRates
       ? `${slotSettingLabel}で公開されている初当り値を個別に使い、公開されていない特化・上位の設定差は加えません。`
       : "設定別の数値が揃わないため、設定1基準値へサイト共通の固定補正を加える体験用モデルです。";
-    return `<section class="machine-article-section"><h3>平均Gと投資目安の計算</h3><p>${sim.mainLabel}初当りの目安は約1/${sim.mainRate}です。50枚あたり${sim.base50}G、1,000円46枚貸しの固定条件から、1,000円で回せるゲーム数を約${gamesPerThousand.toFixed(1)}Gとして計算します。この条件では約${yen.format(averageInvestment)}円が平均投資の目安です。</p><p>${settingModelText} コイン単価${sim.coinUnit}円は出玉の荒さを比べる指標で、現金投資額そのものではありません。換金は5.2枚交換で固定しています。</p></section>`;
+    const initialHitLabel = sim.mainRateLabel || (machine.initialHitLabel ? "ボーナス" : sim.mainLabel);
+    return `<section class="machine-article-section"><h3>平均Gと投資目安の計算</h3><p>${initialHitLabel}初当りの目安は約1/${sim.mainRate}です。50枚あたり${sim.base50}G、1,000円46枚貸しの固定条件から、1,000円で回せるゲーム数を約${gamesPerThousand.toFixed(1)}Gとして計算します。この条件では約${yen.format(averageInvestment)}円が平均投資の目安です。</p><p>${settingModelText} コイン単価${sim.coinUnit}円は出玉の荒さを比べる指標で、現金投資額そのものではありません。換金は5.2枚交換で固定しています。</p></section>`;
   }
 
   function snapshotMarkup() {
@@ -258,13 +268,14 @@
     } else {
       const gamesPerThousand = sim.base50 * RANKING_RATE.slot.lendCoins / 50;
       const averageInvestment = Math.round((sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
+      const initialHitLabel = sim.mainRateLabel || machine.initialHitLabel || sim.mainLabel;
       items = [
-        ["初当り", `約1/${sim.mainRate}`, sim.mainLabel],
+        ["初当り", `約1/${sim.mainRate}`, initialHitLabel],
         ["平均投資", `約${yen.format(averageInvestment)}円`, `設定${slotBaselineSetting}基準`],
         ["コイン単価", `${sim.coinUnit}円`, riskLabel(sim.coinUnit)],
         ["設定抽選", slotSettingLabel, "開始時に均等抽選"]
       ];
-      note = `${sim.triggerLabel}から${sim.mainLabel}${sim.upperLabel ? `、${sim.upperLabel}` : ""}までの流れと、設定ごとの結果差を固定レートで比較できます。`;
+      note = `${sim.triggerLabel}から${initialHitLabel}${initialHitLabel !== sim.mainLabel ? `、${sim.mainLabel}` : ""}${sim.upperLabel ? `、${sim.upperLabel}` : ""}までの流れと、設定ごとの結果差を固定レートで比較できます。`;
     }
     return `<section class="machine-snapshot" aria-labelledby="machine-snapshot-title"><div class="machine-snapshot-head"><span>AT A GLANCE</span><h3 id="machine-snapshot-title">${machine.shortName}を数字で早分かり</h3></div><div class="machine-snapshot-grid">${items.map(([label, value, detail]) => `<div><span>${label}</span><strong>${value}</strong><small>${detail}</small></div>`).join("")}</div><p>${note}</p></section>`;
   }
@@ -443,6 +454,19 @@
         ["ADD-ON", "上乗せ・上位", `激情ジャッジは成功期待度${percent(sim.karakuriJudgeSuccess)}で、成功回数を結果まで保持します。上位AT突入時は極限無双を経由し、${sim.upperLabel}は代表継続率${percent(sim.upperContinue)}として簡易抽選します。`]
       ];
       note = "激情ジャッジの成立役別抽選、内部状態、上乗せ特化ゾーンの全振り分けは簡略化しています。3回・4回成功時の上位ルートとPUSH当落を中心に体験するモデルです。";
+    } else if (sim.setPushFlow) {
+      const pureIncreaseText = machine.specs?.find(([label]) => /純増/.test(label))?.[1] || "";
+      const pureIncrease = Math.max(1, Number(sim.atPureIncrease) || Number.parseFloat(String(pureIncreaseText).match(/[\d.]+/)?.[0] || "") || 4);
+      const initialHitLabel = sim.mainRateLabel || machine.initialHitLabel || sim.mainLabel;
+      const firstSetText = Array.isArray(sim.firstRushSetGames) ? "初回は基本20G、" : "";
+      cards = [
+        ["GAME FLOW", "ゲーム性", `通常時は${sim.triggerLabel}を入口に${initialHitLabel}を経て${sim.mainLabel}を目指します。${sim.mainLabel}はセット継続を重ね、${sim.upperChallenge}から${sim.upperLabel}へ進みます。`],
+        ["DISTRIBUTION", "ゲーム数と獲得枚数", `${firstSetText}継続セットは10G・20G・50G・100Gの簡易振り分けです。獲得枚数は各セットのゲーム数×純増約${pureIncrease.toFixed(1)}枚/Gを中心に、短期的なブレを加えて計算します。`],
+        ["ENTRY RATE", "突破率", `${sim.triggerLabel}から${sim.mainLabel}への簡易突破率は${percent(sim.triggerSuccess)}です。上位ルート選択率は${percent(sim.upperChance)}、${sim.upperChallenge}成功率は${percent(sim.upperSuccess)}として段階ごとに抽選します。`],
+        ["ZONE", "通常時・ゾーン", `${sim.triggerLabel}の基準は約1/${sim.triggerRate}、${initialHitLabel}初当りは設定${slotBaselineSetting}基準で約1/${sim.mainRate}です。50枚あたり${sim.base50}Gを固定ベースにし、内部モード・周期・天井の全状態は個別再現していません。`],
+        ["ADD-ON", "上乗せ・上位", `${sim.specialLabel}を代表的な上乗せ契機として簡易抽選します。${sim.upperLabel}到達後もセットゲーム数×純増約${pureIncrease.toFixed(1)}枚/Gで獲得を計算し、代表継続率${percent(sim.upperContinue)}で継続判定します。`]
+      ];
+      note = "セットのゲーム数と獲得枚数を別々には抽選せず、公表純増を基準に連動させています。実機の全小役・内部状態・有利区間は完全再現していません。";
     } else {
       const upperRouteRate = Math.max(0, Number(sim.upperChance) || 0);
       const upperSuccessRate = Math.max(0, Number(sim.upperSuccess) || 0);
@@ -465,7 +489,7 @@
       ? [["当るまで", `${sim.hitLabel}までの回転数と投資目安`], ["RUSH", `${sim.rushLabel}への突入と連チャン回数`], ["出玉", "表記出玉と、打ち出しを反映した実獲得出玉"], ["最終収支", "実獲得出玉を28玉交換で換算した収支目安"]]
       : sim.kind === "juggler"
         ? [["ボーナス", "何GでBIG・REGに当ったか"], ["続行判断", "ボーナスごとに続ける・やめるを選択"], ["実戦データ", "総G数、BIG・REG回数、合算"], ["最終収支", "差枚と5.2枚交換の収支目安"]]
-        : [["当るまで", `${sim.triggerLabel}・${sim.mainLabel}までのゲーム数`], ["設定", `${slotSettingLabel}から抽選された今回の設定`], ["上位到達", sim.karakuriJudgeFlow ? `激情3回の${sim.upperChallenge}・4回目の運命連鎖と${sim.upperLabel}への到達` : `${sim.upperChallenge || "上位CZ"}と${sim.upperLabel || "上位AT"}への到達`], ["最終収支", "差枚と5.2枚交換の収支目安"]];
+        : [["当るまで", `${sim.triggerLabel}・${machine.initialHitLabel || sim.mainLabel}までのゲーム数`], ["設定", `${slotSettingLabel}から抽選された今回の設定`], ["上位到達", sim.karakuriJudgeFlow ? `激情3回の${sim.upperChallenge}・4回目の運命連鎖と${sim.upperLabel}への到達` : `${sim.upperChallenge || "上位CZ"}と${sim.upperLabel || "上位AT"}への到達`], ["最終収支", "差枚と5.2枚交換の収支目安"]];
     return `<section class="machine-article-section machine-result-guide"><h3>シミュレーション結果の見方</h3><div>${items.map(([label, detail]) => `<p><strong>${label}</strong><span>${detail}</span></p>`).join("")}</div><p class="machine-result-guide-note">結果は自動で「マイ記録」に保存され、同じ機種を何回試したか、最高収支、勝率をあとから確認できます。</p></section>`;
   }
 
@@ -487,10 +511,11 @@
     } else {
       const gamesPerThousand = sim.base50 * RANKING_RATE.slot.lendCoins / 50;
       const averageInvestment = Math.round((sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
+      const initialHitLabel = machine.initialHitLabel || sim.mainLabel;
       items = [
         [`${machine.shortName}はどんな台？`, `${releaseSummary}${machine.points?.[0] ? ` ${machine.points[0]}が主な確認ポイントです。` : ""}`],
-        [`${machine.shortName}の平均投資目安は？`, `設定${slotBaselineSetting}基準の${sim.mainLabel}初当り約1/${sim.mainRate}と、50枚あたり${sim.base50}G・46枚貸しの固定条件から、平均${yen.format(averageInvestment)}円を目安として表示します。実際の設定や遊技状況で結果は変わります。`],
-        ["設定とゲームの流れはどう抽選する？", sim.kind === "juggler" ? `開始時に${slotSettingLabel}から1つを均等抽選し、最大${yen.format(sim.games)}GまでBIG・REGを抽選します。設定は終了時の結果とランキングに表示します。` : `開始時に${slotSettingLabel}から1つを均等抽選し、${sim.triggerLabel}、${sim.mainLabel}、${sim.upperChallenge}、${sim.upperLabel}の順で到達を判定します。設定は最終結果とランキングに表示します。`],
+        [`${machine.shortName}の平均投資目安は？`, `設定${slotBaselineSetting}基準の${initialHitLabel}初当り約1/${sim.mainRate}と、50枚あたり${sim.base50}G・46枚貸しの固定条件から、平均${yen.format(averageInvestment)}円を目安として表示します。実際の設定や遊技状況で結果は変わります。`],
+        ["設定とゲームの流れはどう抽選する？", sim.kind === "juggler" ? `開始時に${slotSettingLabel}から1つを均等抽選し、最大${yen.format(sim.games)}GまでBIG・REGを抽選します。設定は終了時の結果とランキングに表示します。` : `開始時に${slotSettingLabel}から1つを均等抽選し、${sim.triggerLabel}、${initialHitLabel}${initialHitLabel !== sim.mainLabel ? `、${sim.mainLabel}` : ""}、${sim.upperChallenge}、${sim.upperLabel}の順で到達を判定します。設定は最終結果とランキングに表示します。`],
         ["収支はどう計算する？", "1,000円46枚貸し・5.2枚交換の固定条件で投資、換金、収支目安を計算します。実店舗の再プレイ、持ちメダル、端数処理は含みません。"]
       ];
     }
@@ -660,7 +685,8 @@
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
       const settingModelLabel = machine.sim.settingRates ? "公開設定別値" : "共通固定補正";
-      grid.innerHTML = `<div><span>設定抽選</span><strong>${slotSettingNumberLabel}均等</strong></div><div><span>設定差モデル</span><strong>${settingModelLabel}</strong></div><div><span>設定${slotBaselineSetting}基準の平均${machine.sim.mainLabel}まで</span><strong>${machine.sim.mainRate.toFixed(1)}G</strong></div><div><span>設定${slotBaselineSetting}基準の平均投資</span><strong>${yen.format(averageInvestment)}円</strong></div><div><span>交換単価</span><strong>${(100 / exchangeCoins).toFixed(2)}円/枚</strong></div><div><span>コイン単価</span><strong>${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}</strong></div><div><span>単価換算の台売上指標</span><strong>${yen.format(salesIndex)}円</strong></div>`;
+      const initialHitLabel = machine.initialHitLabel ? "ボーナス初当り" : machine.sim.mainLabel;
+      grid.innerHTML = `<div><span>設定抽選</span><strong>${slotSettingNumberLabel}均等</strong></div><div><span>設定差モデル</span><strong>${settingModelLabel}</strong></div><div><span>設定${slotBaselineSetting}基準の平均${initialHitLabel}まで</span><strong>${machine.sim.mainRate.toFixed(1)}G</strong></div><div><span>設定${slotBaselineSetting}基準の平均投資</span><strong>${yen.format(averageInvestment)}円</strong></div><div><span>交換単価</span><strong>${(100 / exchangeCoins).toFixed(2)}円/枚</strong></div><div><span>コイン単価</span><strong>${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}</strong></div><div><span>単価換算の台売上指標</span><strong>${yen.format(salesIndex)}円</strong></div>`;
     }
   }
 
@@ -782,7 +808,7 @@
     if (!entered) {
       flow.push(`${sim.mainLabel}非突入`);
     } else {
-      const basePayout = randomInt(sim.normalMin, sim.normalMax);
+      let basePayout = randomInt(sim.normalMin, sim.normalMax);
       const pureIncreaseText = machine.specs?.find(([label]) => /純増/.test(label))?.[1] || "";
       const publishedPureIncrease = Number.parseFloat(String(pureIncreaseText).match(/[\d.]+/)?.[0] || "");
       const atPureIncrease = Math.max(1, Number(sim.atPureIncrease) || publishedPureIncrease || 4);
@@ -792,16 +818,23 @@
       let rushSetCount = 1;
       if (sim.setPushFlow) {
         while (rushSetCount < 3 && Math.random() < (sim.mainSetContinue || 0.75)) rushSetCount += 1;
-        const setGames = Array.from({ length: rushSetCount }, () => weighted(sim.rushSetGames || [[10, 1]]));
-        const totalSetGames = setGames.reduce((sum, games) => sum + games, 0);
+        const setGames = Array.from({ length: rushSetCount }, (_, index) => weighted(
+          index === 0 && Array.isArray(sim.firstRushSetGames)
+            ? sim.firstRushSetGames
+            : sim.rushSetGames || [[10, 1]]
+        ));
         let distributedPayout = 0;
         setGames.forEach((games, index) => {
-          const remainingPayout = Math.max(0, basePayout - distributedPayout);
-          const award = index === setGames.length - 1 ? remainingPayout : Math.min(remainingPayout, Math.max(0, Math.round(basePayout * games / totalSetGames / 10) * 10));
+          const award = Math.max(0, Math.min(
+            slotAwardForGames(games, atPureIncrease, sim.atPayoutVariance),
+            SLOT_COMPLETE_LIMIT - distributedPayout
+          ));
           distributedPayout += award;
           atGamesTotal += games;
           atEvents.push({ kind: "rush-set", label: sim.mainLabel, games, award, cumulative: distributedPayout, set: index + 1, setCount: rushSetCount });
         });
+        basePayout = distributedPayout;
+        payout = distributedPayout;
         flow.push(`${sim.mainLabel} ${rushSetCount}セット`);
       } else {
         atGamesTotal += baseAtGames;
@@ -854,7 +887,7 @@
         }
       } else {
         // Keep the published overall special-zone chance while allowing rare multi-hit runs.
-        const specialChecks = Math.max(1, Math.min(3, Math.ceil(basePayout / 500)));
+        const specialChecks = Math.max(1, Math.min(3, Math.ceil(payout / 500)));
         const perCheckChance = 1 - Math.pow(1 - specialChance, 1 / specialChecks);
         for (let check = 0; check < specialChecks && payout < SLOT_COMPLETE_LIMIT; check += 1) {
           if (Math.random() >= perCheckChance) continue;
@@ -876,10 +909,13 @@
           upper = Math.random() < sim.upperSuccess;
           if (upper) {
             do {
-              const award = Math.max(0, Math.min(sim.upperPayout, SLOT_COMPLETE_LIMIT - payout));
+              const upperGames = Array.isArray(sim.upperSetGames) ? weighted(sim.upperSetGames) : randomInt(24, 72);
+              const requestedAward = sim.setPushFlow
+                ? slotAwardForGames(upperGames, atPureIncrease, sim.atPayoutVariance)
+                : sim.upperPayout;
+              const award = Math.max(0, Math.min(requestedAward, SLOT_COMPLETE_LIMIT - payout));
               if (!award) break;
               upperLoops += 1;
-              const upperGames = Array.isArray(sim.upperSetGames) ? weighted(sim.upperSetGames) : randomInt(24, 72);
               payout += award;
               upperPayoutTotal += award;
               atGamesTotal += upperGames;
@@ -907,7 +943,8 @@
     const atGameTimeline = atEvents.map(event => Math.max(1, Number(event.games) || 1));
     const settingRateStats = [[`設定${setting}の${sim.triggerLabel}`, `約1/${triggerRate.toFixed(1)}`]];
     if (sim.mainLabel !== sim.triggerLabel || Math.abs(mainRate - triggerRate) >= 0.05) {
-      settingRateStats.push([`設定${setting}の${sim.mainLabel}`, `約1/${mainRate.toFixed(1)}`]);
+      const mainRateLabel = sim.mainRateLabel || (machine.initialHitLabel ? "ボーナス初当り" : sim.mainLabel);
+      settingRateStats.push([`設定${setting}の${mainRateLabel}`, `約1/${mainRate.toFixed(1)}`]);
     }
     const karakuriStats = sim.karakuriJudgeFlow ? [["激情ジャッジ", `${karakuriJudgeAttempts}回中 ${karakuriJudgeSuccesses}回成功`], ["上位ジャッジ", karakuriUpperRoute || "権利未獲得"]] : [];
     const atStats = entered ? [["AT消化モデル", `${yen.format(atGamesTotal)}G相当`], ...karakuriStats, ["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnTotal)}枚` : "上乗せなし"], ["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : "非当選"], ["上位AT", upper ? `${sim.upperLabel} ${upperLoops}セット` : "非到達"]] : [];
