@@ -536,25 +536,26 @@ window.ICHIGEKI_MACHINES = {
     sources: [["SANKYO 公式スペック", "https://www.sankyo-fever.jp/products/machine_list/sqe/spec/"], ["SANKYO オンライン博物館", "https://www.sankyo-fever.jp/collection/962/"]]
   },
   "garo-yami-slot": {
-    order: 0.12, type: "slot", theme: "gold", year: "2026年11月", maker: "サンセイR&D", updated: "2026-11-04",
+    order: 0.12, type: "slot", theme: "gold", year: "2026年11月", maker: "サンセイR&D", updated: "2026-11-07",
     published: "2026-11-02",
-    name: "L牙狼 闇を照らす者", shortName: "スマスロ 牙狼",
+    name: "L牙狼 闇を照らす者", shortName: "スマスロ 牙狼", initialHitLabel: "初当りBONUS",
     image: "assets/machines/garo-yami-slot-key-visual.jpg",
     imageAlt: "L牙狼 闇を照らす者のキービジュアル",
     imageCredit: "ちょんぼりすた 機種情報",
     imageSource: "https://chonborista.com/slot/sansei-slot/270768/",
     catchcopy: "金色になれ！を突破し、究極魔戒RUSHへ。",
-    intro: "2026年11月2日から順次導入が始まったスマスロ。設定別CZ・BONUS確率を使い、疑似ボーナス、SUPER GARO BONUS、金色になれ！、究極魔戒RUSHまでを簡易体験できます。",
-    points: ["CZは設定1約1/156.6〜設定6約1/141.1", "BONUSは設定1約1/291.1〜設定6約1/256.5", "純増約9.1枚/G・究極魔戒RUSH継続約82.6%"],
-    specs: [["CZ（設定1）", "約1/156.6"], ["CZ（設定6）", "約1/141.1"], ["BONUS（設定1）", "約1/291.1"], ["BONUS（設定6）", "約1/256.5"], ["ベース", "約33G/50枚"], ["BONUS純増", "約9.1枚/G"], ["究極魔戒RUSH", "継続約82.6%"]],
-    sim: { kind: "slot", triggerLabel: "牙狼モード", triggerRate: 156.6, triggerSuccess: 0.51, mainLabel: "GARO BONUS", mainRate: 291.1, base50: 33.0, coinUnit: 3.6, normalMin: 180, normalMax: 950, atPureIncrease: 9.1, specialLabel: "SUPER GARO BONUS", specialChance: 0.32, specialMin: 800, specialMax: 1300, specialDisplay: "bonus", cycleFlow: { phase: "GARO BONUS", label: "BONUSジャッジ", statLabel: "GARO BONUS連", games: [[20, 0.80], [110, 0.20]], continueChance: 0.50, maxRounds: 6, rewards: [[{ label: "GARO BONUS", payout: 180 }, 0.70], [{ label: "BIG BONUS", payout: 360 }, 0.20], [{ label: "SUPER GARO BONUS", payout: 1000 }, 0.10]], endLabel: "BONUS終了" }, upperChallenge: "金色になれ！", upperChance: 0.22, upperSuccess: 0.50, upperLabel: "究極魔戒RUSH", upperContinue: 0.826, upperPayout: 740, settingRates: { 1: { trigger: 156.6, main: 291.1, payout: 0.975 }, 2: { trigger: 154.6, main: 283.7, payout: 0.988 }, 3: { trigger: 151.4, main: 276.1, payout: 1.012 }, 4: { trigger: 148.7, main: 265.8, payout: 1.046 }, 5: { trigger: 144.2, main: 259.4, payout: 1.105 }, 6: { trigger: 141.1, main: 256.5, payout: 1.149 } } },
+    intro: "2026年11月2日から順次導入が始まったスマスロ。設定別CZ・BONUS確率を使い、20Gの初当りBONUS、SUPER GARO BONUS、3戦突破型CZ『金色になれ！』、究極魔戒RUSHまでを専用演出で体験できます。",
+    points: ["CZは設定1約1/156.6〜設定6約1/141.1", "BONUSは20G・純増約9.1枚/G、BIG:BONUS＝6:4", "究極魔戒RUSHは継続約82.6%・平均約740枚"],
+    specs: [["CZ（設定1）", "約1/156.6"], ["CZ（設定6）", "約1/141.1"], ["BONUS（設定1）", "約1/291.1"], ["BONUS（設定6）", "約1/256.5"], ["ベース", "約33G/50枚"], ["初当りBONUS", "20G・純増約9.1枚/G"], ["BIG：BONUS", "6：4"], ["BIGからSGB", "約40%"], ["究極魔戒RUSH", "継続約82.6%・平均約740枚"]],
+    sim: { kind: "slot", rankingVersion: "v6", triggerLabel: "CZ（牙狼モード／魔界）", triggerRate: 156.6, triggerSuccess: 0.51, mainLabel: "SUPER GARO BONUS", mainRate: 291.1, base50: 33.0, coinUnit: 3.6, normalMin: 180, normalMax: 950, atPureIncrease: 9.1, specialLabel: "金色になれ！", specialChance: 0.50, specialMin: 0, specialMax: 0, specialDisplay: "bonus", entryBonusAwards: [[{ label: "BIG BONUS", games: 20, payout: 182, atChance: 0.40 }, 0.60], [{ label: "BONUS", games: 20, payout: 182, atChance: 0 }, 0.40]], entryBonusAwardsNote: "初当りBONUSは公式比率6:4、BIG BONUS時の約40%でSUPER GARO BONUSへ進む代表ルート", cycleFlow: { phase: "金色になれ！", label: "金色になれ！", statLabel: "ホラー撃破", maxRounds: 5, upperAfterRounds: 5, upperOnlyAfterRounds: true, upperAfterRoundsAutoSuccess: true, rounds: [{ title: "SUPER GARO BONUS", detail: "約1000枚を獲得し、3戦突破型CZ『金色になれ！』へ進みます", games: 110, continueChance: 1, rewards: [[{ kind: "coins", label: "SUPER GARO BONUS", payout: 1000 }, 1]] }, { title: "金色になれ！ 1戦目", detail: "PUSHでホラーとの1戦目を決着。勝利でエピソードへ", games: 5, continueChance: 0.50, awardOnContinueOnly: true, failureGames: 50, failureLabel: "50G引き戻しZONE", rewards: [[{ kind: "bonus", label: "1戦目勝利・エピソード", games: 10, payout: 91 }, 1]] }, { title: "金色になれ！ 2戦目", detail: "2体目のホラーを撃破すれば最終戦へ進みます", games: 5, continueChance: 0.50, awardOnContinueOnly: true, failureGames: 50, failureLabel: "50G引き戻しZONE", rewards: [[{ kind: "bonus", label: "2戦目勝利・エピソード", games: 10, payout: 91 }, 1]] }, { title: "金色になれ！ 3戦目", detail: "最終PUSH。3戦突破で究極魔戒RUSHが確定します", games: 5, continueChance: 0.50, awardOnContinueOnly: true, failureGames: 50, failureLabel: "50G引き戻しZONE", rewards: [[{ kind: "bonus", label: "3戦目勝利・エピソード", games: 10, payout: 91 }, 1]] }, { title: "三騎士共闘", detail: "3戦突破。究極魔戒RUSHへの扉が開きます", games: 1, continueChance: 1, rewards: [[{ kind: "coins", label: "究極魔戒RUSH確定", payout: 0 }, 1]] }], endLabel: "金色になれ！終了" }, upperChallenge: "金色になれ！3戦突破", upperChance: 0, upperSuccess: 1, upperLabel: "究極魔戒RUSH", upperContinue: 0.826, upperPayout: 740, upperPureIncrease: 9.1, upperReturnGames: 32, garoBattleFlow: true, upperAwards: [[{ label: "青パネル・陰我消滅ノ刻", games: 51, payout: 461 }, 0.40], [{ label: "緑パネル・陰我消滅ノ刻", games: 73, payout: 664 }, 0.23], [{ label: "緑パネル・陰我消滅ノ刻", games: 82, payout: 747 }, 0.16], [{ label: "赤パネル・陰我消滅ノ刻", games: 122, payout: 1114 }, 0.10], [{ label: "赤パネル・陰我消滅ノ刻", games: 135, payout: 1227 }, 0.07], [{ label: "プレミアムパネル・陰我消滅ノ刻", games: 225, payout: 2046 }, 0.03], [{ label: "プレミアムパネル・陰我消滅ノ刻", games: 226, payout: 2060 }, 0.005], [{ label: "ゴラドバトル勝利", games: 330, payout: 3000 }, 0.005]], settingRates: { 1: { trigger: 156.6, main: 291.1, payout: 0.975 }, 2: { trigger: 154.6, main: 283.7, payout: 0.988 }, 3: { trigger: 151.4, main: 276.1, payout: 1.012 }, 4: { trigger: 148.7, main: 265.8, payout: 1.046 }, 5: { trigger: 144.2, main: 259.4, payout: 1.105 }, 6: { trigger: 141.1, main: 256.5, payout: 1.149 } } },
     articleSections: [
       { heading: "設定別CZ・BONUS確率を反映", paragraphs: ["CZは設定1約1/156.6から設定6約1/141.1、BONUSは設定1約1/291.1から設定6約1/256.5です。", "START時に設定1〜6を均等抽選し、選ばれた設定のCZ・BONUS確率・出玉率を使用します。結果と機種別ランキングにも設定を表示します。"] },
-      { heading: "2種類のCZと疑似ボーナス", paragraphs: ["CZは牙狼モードと魔界の2種類。BONUSは20G、純増約9.1枚/Gで、BIG BONUS中はSUPER GARO BONUSを抽選します。", "サイトではCZを牙狼モードへまとめ、魔界やBIGの細かな振り分けは個別再現しません。"] },
-      { heading: "金色になれ！から究極魔戒RUSHへ", paragraphs: ["SUPER GARO BONUSは約1000枚獲得後、3戦突破を目指すCZ『金色になれ！』へ進みます。", "究極魔戒RUSHは平均約740枚のボーナスが約82.6%でループする最上位状態です。未公表の到達率はサイト共通の固定抽選で簡易化します。"] },
+      { heading: "2種類のCZと20Gの初当りBONUS", paragraphs: ["CZは期待度約51%の牙狼モードと、期待度約82%の魔界の2種類です。設定1のCZ合算は約1/156.6です。", "初当りはBIG BONUSとBONUSを6:4で振り分け。どちらも20G・純増約9.1枚/Gで、BIG BONUSの約40%からSUPER GARO BONUSへ進む流れを専用抽選へ反映しました。"] },
+      { heading: "SUPER GARO BONUSと金色になれ！", paragraphs: ["SUPER GARO BONUSは平均約1000枚を獲得。消化中は『金色になれ！』の勝利ストックを抽選し、最大3個まで保持します。", "金色になれ！は3戦突破型で、ストックやリトライ込みの勝利期待度は1戦あたり平均約50%。敗北後は50Gの引き戻し区間へ進み、同じ対戦相手から再開する実機の特徴があります。シミュレーターでは各戦の代表抽選と50G区間を表示します。"] },
+      { heading: "究極魔戒RUSHのバトルと報酬", paragraphs: ["3戦突破後は純増約9.1枚/G、継続約82.6%、平均約740枚の究極魔戒RUSHへ。金色バトル勝利後に陰我消滅ノ刻のパネル報酬を決める流れをPUSH演出にしています。", "青・緑・赤・プレミアムの代表獲得枚数に加え、ゴラドバトル勝利時の約3000枚契機を反映。RUSH終了後は32Gの引き戻し区間まで表示します。細かな小役・ホラー別の勝率・ストック個数は完全再現ではありません。"] },
       { heading: "固定レートと収支の条件", bullets: ["約33G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均BONUS投資目安は約9,600円", "コイン単価は設定1の参考値約3.6円として表示", "19,000枚到達時はコンプリート表示"] }
     ],
-    sources: [["サンセイR&D 公式製品情報", "https://www.sansei-rd.com/products23/l_garo/index.html"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/vpage/2817/1"], ["天井・設定差まとめ", "https://tennabi.jp/garo-yami-wo-terasu-mono/"]]
+    sources: [["サンセイR&D 公式製品情報", "https://www.sansei-rd.com/products23/l_garo/index.html"], ["サンセイR&D 公式スペック資料", "https://www.sansei-rd.com/products23/l_garo/assets/pdf/l_garo.pdf"], ["一撃 機種解析", "https://1geki.jp/slot/l_garo/"]]
   },
   "ragnador-slot": {
     order: 0.14, type: "slot", theme: "violet", year: "2026年11月", maker: "ミズホ", updated: "2026-11-04",
@@ -3494,6 +3495,23 @@ window.ICHIGEKI_MACHINES = {
     [{ kind: "bonus", label: "SUPER BIG", games: 70, payout: 315 }, 0.15]
   ];
   const models = {
+    "garo-yami-slot": {
+      phase: "金色になれ！",
+      label: "金色になれ！",
+      statLabel: "ホラー撃破",
+      maxRounds: 5,
+      upperAfterRounds: 5,
+      upperOnlyAfterRounds: true,
+      upperAfterRoundsAutoSuccess: true,
+      endLabel: "金色になれ！終了",
+      rounds: [
+        { title: "SUPER GARO BONUS", detail: "約1000枚を獲得し、3戦突破型CZ『金色になれ！』へ進みます", games: 110, continueChance: 1, rewards: [[{ kind: "coins", label: "SUPER GARO BONUS", payout: 1000 }, 1]] },
+        { title: "金色になれ！ 1戦目", detail: "PUSHでホラーとの1戦目を決着。勝利でエピソードへ", games: 5, continueChance: 0.50, awardOnContinueOnly: true, failureGames: 50, failureLabel: "50G引き戻しZONE", rewards: [[{ kind: "bonus", label: "1戦目勝利・エピソード", games: 10, payout: 91 }, 1]] },
+        { title: "金色になれ！ 2戦目", detail: "2体目のホラーを撃破すれば最終戦へ進みます", games: 5, continueChance: 0.50, awardOnContinueOnly: true, failureGames: 50, failureLabel: "50G引き戻しZONE", rewards: [[{ kind: "bonus", label: "2戦目勝利・エピソード", games: 10, payout: 91 }, 1]] },
+        { title: "金色になれ！ 3戦目", detail: "最終PUSH。3戦突破で究極魔戒RUSHが確定します", games: 5, continueChance: 0.50, awardOnContinueOnly: true, failureGames: 50, failureLabel: "50G引き戻しZONE", rewards: [[{ kind: "bonus", label: "3戦目勝利・エピソード", games: 10, payout: 91 }, 1]] },
+        { title: "三騎士共闘", detail: "3戦突破。究極魔戒RUSHへの扉が開きます", games: 1, continueChance: 1, rewards: [[{ kind: "coins", label: "究極魔戒RUSH確定", payout: 0 }, 1]] }
+      ]
+    },
     "goblin-slayer-slot": {
       maxRounds: 5,
       upperAfterRounds: 5,
@@ -3817,6 +3835,7 @@ window.ICHIGEKI_MACHINES = {
     const cycle = sim?.cycleFlow;
     if (!cycle) return;
     Object.assign(cycle, stageModel);
+    if (slug === "garo-yami-slot") sim.mainRateLabel = "初当りBONUS";
     if (slug === "kinnikuman-7-slot") sim.upperSuccess = 1;
     if (slug === "god-eater-resurrection") sim.upperChallenge = "リザレクションゲート";
     if (slug === "hokuto-tensei2") {
@@ -3948,9 +3967,9 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
       compare: [["kamen-rider-black-light", "ライダーBLACK Light", "初当りの軽さとデカヘソを比較"], ["fever-yokai-watch", "eF妖怪ウォッチ", "ミドル帯の約80%継続と比較"]]
     },
     "garo-yami-slot": {
-      verdict: "設定別CZ・BONUSからSUPER GARO BONUSを経由し、究極魔戒RUSHを目指す高純増タイプです。BONUSまでの投資と、上位到達後の約82.6%ループを分けて確認できます。",
-      bestFor: ["純増約9.1枚/Gの速い出玉展開を試したい", "設定ごとのCZ・BONUS初当り差を見たい", "究極魔戒RUSH到達前後の差枚を比べたい"],
-      check: ["設定1〜6は開始時に均等抽選し結果で発表", "魔界やBIGの細かな振り分けは代表ルートへ集約", "上位到達率の未公表部分は体験用固定値"],
+      verdict: "初当りBONUSの6:4振り分け、BIGから約40%のSUPER GARO BONUS、金色になれ！3戦、究極魔戒RUSHを順に体験する高純増タイプです。上位では金色バトルと陰我消滅ノ刻のパネル報酬を分けて確認できます。",
+      bestFor: ["3戦突破型の金色になれ！をPUSHで試したい", "純増約9.1枚/Gとパネル別出玉の速さを見たい", "究極魔戒RUSH約82.6%ループの振れ幅を比べたい"],
+      check: ["設定1〜6は開始時に均等抽選し結果で発表", "50Gリトライは回転表示までを簡易再現", "上位報酬の代表振り分けは平均約740枚になる比較用モデル"],
       compare: [["seiya-ougon-slot", "スマスロ 聖闘士星矢", "継続バトル型の上位ATと比較"], ["godzilla-eva2-slot", "スマスロ ゴジエヴァ2", "純増約5.2枚/GのATと比較"]]
     },
     "seiya-ougon-slot": {
