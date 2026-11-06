@@ -1046,20 +1046,20 @@ window.ICHIGEKI_MACHINES = {
     sources: [["L 東京喰種 公式サイト", "https://www.slot-l-tokyoghoul.jp/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10207"], ["パチンコビレッジ 機種概要", "https://cs62.cs-plaza.com/g/pachi/pla/s_conq/nanashow_slot/16/kh01.php"]]
   },
   "valvrave2": {
-    order: 14, type: "slot", theme: "magenta", year: "2025年11月", maker: "SANKYO",
+    order: 14, type: "slot", theme: "magenta", year: "2025年11月", maker: "SANKYO", updated: "2026-11-06",
     name: "Lパチスロ 革命機ヴァルヴレイヴ2", shortName: "スマスロ ヴヴヴ2",
     image: "assets/machines/valvrave2-key-visual.jpg",
     imageAlt: "Lパチスロ 革命機ヴァルヴレイヴ2のキービジュアル",
     imageCredit: "P-WORLD 設定別スペック",
     imageSource: "https://www.p-world.co.jp/machine/database/10352",
-    catchcopy: "ハラキリチャレンジを3連し、超革命RUSHへ。",
-    intro: "高純増ATと高継続の上位ATを搭載した大型ホールの主力機。CZ・ボーナスから革命RUSHへ進み、3セット継続で超革命RUSHを目指します。",
-    points: ["CZは全設定約1/324、初当り合算は約1/476〜1/456", "実機設定は1・2・4・5・6の5段階", "革命RUSH約75%、超革命RUSH最大約90%継続"],
-    specs: [["CZ（全設定）", "約1/324"], ["初当り合算", "約1/476〜1/456"], ["ベース", "約32.7G/50枚"], ["コイン単価", "約4.2円"], ["AT純増", "約9.0枚/G"], ["RUSH 1セット", "10〜100G以上"], ["超革命RUSH", "最大約90%継続"]],
-    sim: { kind: "slot", triggerLabel: "共闘Vチャレンジ", triggerRate: 324, triggerSuccess: 0.681, mainLabel: "革命RUSH", mainRate: 476, base50: 32.7, coinUnit: 4.2, normalMin: 300, normalMax: 1350, specialLabel: "革命の剣", specialChance: 0.31, specialMin: 180, specialMax: 1000, upperChallenge: "ハラキリチャレンジ3連", upperChance: 0.42, upperSuccess: 1, upperLabel: "超革命RUSH", upperContinue: 0.90, upperPayout: 650, setPushFlow: true, atPureIncrease: 9.0, atPayoutVariance: 0.16, mainSetContinue: 0.75, rushSetGames: [[10, 0.50], [20, 0.25], [50, 0.10], [100, 0.15]], upperSetGames: [[10, 0.50], [20, 0.25], [50, 0.10], [100, 0.15]], settingPool: [1, 2, 4, 5, 6], settingRates: { 1: { trigger: 324, main: 476, payout: 0.977 }, 2: { trigger: 324, main: 473, payout: 0.993 }, 4: { trigger: 324, main: 464, payout: 1.047 }, 5: { trigger: 324, main: 459, payout: 1.108 }, 6: { trigger: 324, main: 456, payout: 1.149 } } },
+    catchcopy: "3つの初当りルートから、3セット継続で超革命RUSHへ。",
+    intro: "高純増ATと高継続の上位ATを搭載した大型ホールの主力機。革命RUSH直撃・革命BONUS・決戦BONUSからRUSHを目指し、3セット継続で超革命RUSHへ昇格します。",
+    points: ["初当り合算は約1/476〜1/456", "革命RUSH直撃・革命BONUS・決戦BONUSの代表3ルート", "革命RUSH約75%、超革命RUSH最大約90%継続"],
+    specs: [["初当り合算", "約1/476〜1/456"], ["初当りルート", "代表比率1:1:1"], ["決戦BONUS AT期待度", "約46%"], ["ベース", "約32.7G/50枚"], ["コイン単価", "約4.2円"], ["AT純増", "約9.0枚/G"], ["超革命RUSH", "最大約90%継続"]],
+    sim: { kind: "slot", rankingVersion: "v5", triggerLabel: "初当り", triggerRate: 476, triggerSuccess: 1, mainLabel: "革命RUSH", mainRate: 476, mainRateLabel: "初当り合算", base50: 32.7, coinUnit: 4.2, normalMin: 300, normalMax: 1350, entryBonusAwards: [[{ label: "革命RUSH直撃", payout: 0, games: 1, atChance: 1, directEntry: true }, 0.3334], [{ label: "革命BONUS", payout: 470, payoutOnMiss: [250, 450], payoutOnEntry: [666, 720], atChance: 0.50 }, 0.3333], [{ label: "決戦BONUS", payout: 110, games: 15, atChance: 0.46 }, 0.3333]], entryBonusAwardsNote: "初当り3ルートは代表比率1:1:1。革命BONUSは払い出し666枚到達時にRUSH、決戦BONUSは公式AT期待度約46%で判定し、非公表の革命BONUS成功率と成功・失敗別出玉は比較用モデル", specialLabel: "革命の剣", specialChance: 0.31, specialMin: 180, specialMax: 1000, upperChallenge: "ハラキリチャレンジ3回成功", upperChance: 0, upperSuccess: 1, upperAfterSuccesses: 3, upperLabel: "超革命RUSH", upperContinue: 0.90, upperPayout: 650, setPushFlow: true, atPureIncrease: 9.0, atPayoutVariance: 0.16, mainSetContinue: 0.75, rushSetGames: [[10, 0.58], [20, 0.27], [50, 0.10], [100, 0.05]], upperSetGames: [[10, 0.50], [20, 0.25], [50, 0.15], [100, 0.10]], settingPool: [1, 2, 4, 5, 6], settingRates: { 1: { trigger: 476, main: 476, entry: 1, payout: 0.977 }, 2: { trigger: 473, main: 473, entry: 1, payout: 0.993 }, 4: { trigger: 464, main: 464, entry: 1, payout: 1.047 }, 5: { trigger: 459, main: 459, entry: 1, payout: 1.108 }, 6: { trigger: 456, main: 456, entry: 1, payout: 1.149 } } },
     articleSections: [
       { heading: "実機どおり設定1・2・4・5・6を抽選", paragraphs: ["設定3を除く5段階から均等抽選します。CZは全設定約1/324、初当り合算は設定1約1/476、設定2約1/473、設定4約1/464、設定5約1/459、設定6約1/456です。", "設定別の初当り差は小さい一方、出玉率は97.7%〜114.9%と大きく異なります。結果とランキングには抽選設定を表示します。"] },
-      { heading: "CZから超革命RUSHまで", paragraphs: ["共闘Vチャレンジを入口に、革命RUSH、革命の剣、ハラキリチャレンジ3連、超革命RUSHの流れへ簡略化しています。シミュレーターは各セットでPUSHし、10G・20G・50G・100Gの簡易振り分け結果を表示します。", "公開されていない上位到達率の設定差は加えず、32.7G/50枚・46枚貸し・5.2枚交換の固定条件で投資と収支を計算します。"] },
+      { heading: "3つの初当りから超革命RUSHまで", paragraphs: ["初当りは革命RUSH直撃・革命BONUS・決戦BONUSの代表3ルートに分け、ボーナス後のRUSH当落と獲得枚数を別々に表示します。シミュレーターは各セットでPUSHし、3セット継続で4セット目から超革命RUSHへ移行します。", "革命BONUSの非公表成功率・成功失敗別出玉は比較用モデルです。決戦BONUSは公式AT期待度約46%、32.7G/50枚・46枚貸し・5.2枚交換の固定条件で投資と収支を計算します。"] },
       { heading: "遊び方のポイント", bullets: ["設定別の初当りGと収支を比較する", "革命の剣の上乗せ幅を見る", "3連突破から超革命RUSHを狙う", "実機と同じ5段階設定だけがランキングに残る"] }
     ],
     sources: [["SANKYO 公式スペック", "https://www.sankyo-fever.jp/products/machine_list/ssp/spec/"], ["P-WORLD 設定別スペック", "https://www.p-world.co.jp/machine/database/10352"], ["なな徹 機種解析", "https://nana-press.com/kaiseki/machine/1040/31856/"]]
@@ -1126,7 +1126,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10305"], ["牙狼公式アーカイブ", "https://www.sansei-rd.com/p_garo_archive/archive/p_garo12_ok.html"]]
   },
   "karakuri-circus": {
-    order: 19, type: "slot", theme: "crimson", year: "2023年7月", maker: "SANKYO",
+    order: 19, type: "slot", theme: "crimson", year: "2023年7月", maker: "SANKYO", updated: "2026-11-06",
     name: "パチスロ からくりサーカス", shortName: "からくりサーカス",
     image: "assets/machines/karakuri-circus-key-visual.jpg",
     imageAlt: "パチスロ からくりサーカスのキービジュアル",
@@ -1136,7 +1136,7 @@ window.ICHIGEKI_MACHINES = {
     intro: "CZから基本ATへ進み、激情ジャッジと運命の一劇を経て上位ATを目指す人気スマスロ。段階ごとの突破と獲得枚数の振れ幅を簡易体験できます。",
     points: ["激情ジャッジ成功期待度約50%・成功で100〜300枚上乗せ", "3回成功後の『運命の一劇』期待度約50%", "4回目以降の『運命連鎖』期待度約56%"],
     specs: [["CZ初当り（設定1）", "約1/333"], ["AT初当り（設定1）", "約1/564"], ["ベース", "約32.9G/50枚"], ["通常AT純増", "約2.8枚/G"], ["激情ジャッジ", "成功期待度約50%"], ["運命の一劇", "成功期待度約50%"], ["運命連鎖", "成功期待度約56%"], ["上位AT純増", "約7.6枚/G"]],
-    sim: { kind: "slot", triggerLabel: "機械仕掛けの神", triggerRate: 333, triggerSuccess: 0.55, mainLabel: "からくりサーカス", mainRate: 564, base50: 32.9, coinUnit: 4.1, normalMin: 150, normalMax: 150, atPureIncrease: 2.8, specialLabel: "激情ジャッジ", specialChance: 0.50, specialMin: 100, specialMax: 300, upperChallenge: "運命の一劇", upperChance: 0.28, upperSuccess: 0.50, upperLabel: "超からくりサーカス", upperContinue: 0.74, upperPayout: 850, upperPureIncrease: 7.6, upperSetGames: [[112, 1]], karakuriJudgeFlow: true, karakuriJudgeAttempts: [[3, 0.25], [4, 0.45], [5, 0.30]], karakuriJudgeSuccess: 0.50, karakuriJudgeAwards: [[100, 0.60], [200, 0.30], [300, 0.10]], fateSuccess: 0.50, chainSuccess: 0.56, settingPool: [1, 2, 4, 5, 6], settingRates: { 1: { trigger: 333, main: 564, payout: 0.975 }, 2: { trigger: 320, main: 543, payout: 0.987 }, 4: { trigger: 292, main: 469, payout: 1.030 }, 5: { trigger: 277, main: 451, payout: 1.081 }, 6: { trigger: 275, main: 447, payout: 1.149 } } },
+    sim: { kind: "slot", rankingVersion: "v4", triggerLabel: "機械仕掛けの神", triggerRate: 333, triggerSuccess: 0.55, mainLabel: "からくりサーカス", mainRate: 564, base50: 32.9, coinUnit: 4.1, normalMin: 150, normalMax: 150, atPureIncrease: 2.8, specialLabel: "激情ジャッジ", specialChance: 0.50, specialMin: 100, specialMax: 300, upperChallenge: "運命の一劇", upperChance: 0.28, upperSuccess: 0.50, upperLabel: "超からくりサーカス", upperContinue: 0.50, upperPayout: 850, upperPureIncrease: 7.6, upperSetGames: [[112, 1]], karakuriJudgeFlow: true, karakuriJudgeAttempts: [[3, 0.25], [4, 0.45], [5, 0.30]], karakuriJudgeSuccess: 0.50, karakuriJudgeAwards: [[100, 0.60], [200, 0.30], [300, 0.10]], fateSuccess: 0.50, chainSuccess: 0.56, settingPool: [1, 2, 4, 5, 6], settingRates: { 1: { trigger: 333, main: 564, payout: 0.975 }, 2: { trigger: 320, main: 543, payout: 0.987 }, 4: { trigger: 292, main: 469, payout: 1.030 }, 5: { trigger: 277, main: 451, payout: 1.081 }, 6: { trigger: 275, main: 447, payout: 1.149 } } },
     articleSections: [
       { heading: "基本ATから上位ATまでの流れ", paragraphs: ["通常時はレア役や規定ゲーム数などからCZ・ATを目指し、基本AT『からくりサーカス』では4Gの激情ジャッジ成功を重ねて上位ルートへ進みます。シミュレーターでは激情ジャッジごとにPUSHで成功・失敗を表示し、成功時は100・200・300枚の簡易振り分けを開きます。", "激情ジャッジを3回以上成功した状態でATが終了すると『運命の一劇』へ進み、PUSHで約50%の当落を表示します。4回目の成功時は『運命連鎖』へ進み、約56%の上位AT抽選を別のPUSHで表示します。"] },
       { heading: "実機の設定1・2・4・5・6で抽選", paragraphs: ["実機に搭載される通常設定は1・2・4・5・6です。シミュレーターもこの5段階から均等抽選し、設定3は抽選しません。公開されているCZ・AT初当りを設定ごとに使用します。", "設定1はCZ約1/333・AT約1/564、設定6はCZ約1/275・AT約1/447です。50枚ベース32.9Gから投資目安を計算します。"] },
@@ -1145,7 +1145,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["P-WORLD 設定別スペック", "https://www.p-world.co.jp/machine/database/9843"], ["SANKYOオンライン博物館", "https://www.sankyo-fever.jp/collection/946/"], ["SANKYO 基本情報PDF", "https://www.sankyo-fever.jp/products/assets/pdf/spx/spx_mp.pdf"], ["DMMぱちタウン 機種情報", "https://p-town.dmm.com/machines/4360"]]
   },
   "monkey-turn-v": {
-    order: 20, type: "slot", theme: "aqua", year: "2023", maker: "山佐",
+    order: 20, type: "slot", theme: "aqua", year: "2023", maker: "山佐", updated: "2026-11-06",
     name: "スマスロ モンキーターンV", shortName: "モンキーターンV",
     image: "assets/machines/monkey-turn-v-key-visual.jpg",
     imageAlt: "スマスロ モンキーターンVのキービジュアル",
@@ -1155,7 +1155,7 @@ window.ICHIGEKI_MACHINES = {
     intro: "周期・CZ・シナリオ管理ATを組み合わせたロングヒット機。比較的マイルドなコイン単価と、上位到達時の伸びを両方体験できます。",
     points: ["設定1のAT初当りは約1/299.8", "CZ『超抜チャレンジ』を搭載", "上位AT『青島SG』はループ率約83%（Vストック込み）"],
     specs: [["AT初当り（設定1）", "約1/299.8"], ["ベース", "約32.0G/50枚"], ["コイン単価", "約3.1円"], ["SG RUSH純増", "約2.5枚/G"], ["青島SG純増", "約4.0枚/G"], ["青島SGループ", "約83%"]],
-    sim: { kind: "slot", triggerLabel: "SG RUSH", triggerRate: 299.8, triggerSuccess: 1, mainLabel: "SG RUSH", mainRate: 299.8, base50: 32, coinUnit: 3.1, normalMin: 280, normalMax: 1050, specialLabel: "全速モード", specialChance: 0.36, specialMin: 150, specialMax: 700, upperChallenge: "青島VS波多野", upperChance: 0.19, upperSuccess: 0.50, upperLabel: "青島SG", upperContinue: 0.83, upperPayout: 520, settingPool: [1, 2, 4, 5, 6], settingRates: { 1: { trigger: 299.8, main: 299.8, payout: 0.979 }, 2: { trigger: 295.5, main: 295.5, payout: 0.989 }, 4: { trigger: 258.8, main: 258.8, payout: 1.045 }, 5: { trigger: 235.7, main: 235.7, payout: 1.102 }, 6: { trigger: 222.9, main: 222.9, payout: 1.149 } } },
+    sim: { kind: "slot", rankingVersion: "v4", triggerLabel: "SG RUSH", triggerRate: 299.8, triggerSuccess: 1, mainLabel: "SG RUSH", mainRate: 299.8, base50: 32, coinUnit: 3.1, normalMin: 280, normalMax: 1050, atPureIncrease: 2.5, specialLabel: "全速モード", specialChance: 0.20, specialMin: 25, specialMax: 75, upperChallenge: "青島VS波多野", upperChance: 0, upperSuccess: 0.83, upperLabel: "青島SG", upperContinue: 0.83, upperPayout: 160, upperPureIncrease: 4.0, sgRaceFlow: true, sgSetGames: 40, sgScenarios: [[{ label: "波多野・バランス", rates: [0.62, 0.68, 0.72, 0.76, 0.68, 0.76, 0.84] }, 0.55], [{ label: "ライバル・後半型", rates: [0.52, 0.58, 0.64, 0.72, 0.78, 0.86, 0.92] }, 0.30], [{ label: "艇王・高継続型", rates: [0.78, 0.82, 0.86, 0.88, 0.90, 0.92, 0.95] }, 0.15]], settingPool: [1, 2, 4, 5, 6], settingRates: { 1: { trigger: 299.8, main: 299.8, entry: 1, payout: 0.979 }, 2: { trigger: 295.5, main: 295.5, entry: 1, payout: 0.989 }, 4: { trigger: 258.8, main: 258.8, entry: 1, payout: 1.045 }, 5: { trigger: 235.7, main: 235.7, entry: 1, payout: 1.102 }, 6: { trigger: 222.9, main: 222.9, entry: 1, payout: 1.149 } } },
     articleSections: [
       { heading: "実機の設定1・2・4・5・6を使用", paragraphs: ["モンキーターンVの通常設定は1・2・4・5・6です。START時はこの5段階から均等抽選し、公開されているAT初当りをそのまま使います。設定3と設定Lは抽選対象にしません。", "AT初当りは設定1約1/299.8、設定2約1/295.5、設定4約1/258.8、設定5約1/235.7、設定6約1/222.9です。"] },
       { heading: "SG RUSHから青島SGまで", paragraphs: ["通常時の周期・CZを一つのAT初当り抽選へまとめ、SG RUSH、全速モード、青島VS波多野、青島SGの流れを体験用に簡略化しています。", "上位到達率や特化ゾーンは設定別の非公表値を推測せず、全設定で同じ固定条件を使います。"] }
@@ -1214,7 +1214,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["DMMぱちタウン 機種情報", "https://p-town.dmm.com/machines/4160"], ["パチナビ 設定別初当り", "https://pachinavi.net/machines/rev-kabaneri/"], ["セガサミー決算資料", "https://www.segasammy.co.jp/cms/wp-content/uploads/pdf/ja/ir/20242029_q3_presentation_j-1.pdf"]]
   },
   "smart-hokuto": {
-    order: 24, type: "slot", theme: "gold", year: "2023", maker: "サミー",
+    order: 24, type: "slot", theme: "gold", year: "2023", maker: "サミー", updated: "2026-11-06",
     name: "スマスロ北斗の拳", shortName: "スマスロ北斗の拳",
     image: "assets/machines/smart-hokuto-key-visual.jpg",
     imageAlt: "スマスロ北斗の拳のキービジュアル",
@@ -1224,7 +1224,7 @@ window.ICHIGEKI_MACHINES = {
     intro: "初代のゲーム性をスマスロで再構築した定番機。ATまでの平均ゲーム数と投資、無想転生チャンス突破を体験できます。",
     points: ["AT初当り（設定1）約1/383.4", "バトルボーナスは継続率管理", "無想転生バトルは継続率約94%"],
     specs: [["AT初当り（設定1）", "約1/383.4"], ["ベース", "約34.7G/50枚"], ["コイン単価", "約3.3円"], ["AT純増", "約4.1枚/G"], ["通常AT", "継続率管理"], ["無想転生", "継続約94%"]],
-    sim: { kind: "slot", triggerLabel: "バトルボーナス", triggerRate: 383.4, triggerSuccess: 1, mainLabel: "バトルボーナス", mainRate: 383.4, base50: 34.7, coinUnit: 3.3, normalMin: 220, normalMax: 1100, specialLabel: "トキ共闘", specialChance: 0.28, specialMin: 180, specialMax: 700, upperChallenge: "無想転生チャンス", upperChance: 0.14, upperSuccess: 0.46, upperLabel: "無想転生バトル", upperContinue: 0.94, upperPayout: 310, settingPool: [1, 2, 4, 5, 6], settingRates: { 1: { trigger: 383.4, main: 383.4, payout: 0.980 }, 2: { trigger: 370.5, main: 370.5, payout: 0.989 }, 4: { trigger: 297.8, main: 297.8, payout: 1.057 }, 5: { trigger: 258.7, main: 258.7, payout: 1.100 }, 6: { trigger: 235.1, main: 235.1, payout: 1.130 } } },
+    sim: { kind: "slot", rankingVersion: "v4", triggerLabel: "バトルボーナス", triggerRate: 383.4, triggerSuccess: 1, mainLabel: "バトルボーナス", mainRate: 383.4, base50: 34.7, coinUnit: 3.3, normalMin: 220, normalMax: 1100, atPureIncrease: 4.1, specialLabel: "トキ共闘", specialChance: 0.28, specialMin: 180, specialMax: 700, upperChallenge: "無想転生チャンス", upperChance: 0.14, upperSuccess: 0.46, upperLabel: "無想転生バトル", upperContinue: 0.94, upperPayout: 125, upperPureIncrease: 4.1, battleBonusFlow: true, battleSetGames: 38, battleAwardGames: 30, battleUpperChancePerSet: 0.035, battleContinueRates: [[0.66, 0.60], [0.79, 0.25], [0.84, 0.10], [0.89, 0.05]], settingPool: [1, 2, 4, 5, 6], settingRates: { 1: { trigger: 383.4, main: 383.4, entry: 1, payout: 0.980 }, 2: { trigger: 370.5, main: 370.5, entry: 1, payout: 0.989 }, 4: { trigger: 297.8, main: 297.8, entry: 1, payout: 1.057 }, 5: { trigger: 258.7, main: 258.7, entry: 1, payout: 1.100 }, 6: { trigger: 235.1, main: 235.1, entry: 1, payout: 1.130 } } },
     articleSections: [
       { heading: "バトルボーナスを軸にしたゲーム性", paragraphs: ["設定1のAT初当りは約1/383.4。初代北斗を意識した継続率管理のバトルボーナスを重ね、無想転生チャンスから上位状態を目指します。", "ICHIGEKIでは通常時の全モード、天井、内部状態、レア役抽選を省略し、初当りG、通常ATの獲得枚数、無想転生チャンス、上位継続を一つの結果にまとめます。"] },
       { heading: "設定1・2・4・5・6の公開値", paragraphs: ["実機に搭載される通常設定は1・2・4・5・6です。設定3と設定Lは抽選対象にせず、この5段階から均等に選びます。BB初当りは設定1約1/383.4から設定6約1/235.1まで、公開設定別値を使います。", "50枚ベース34.7Gから投資目安を計算します。コイン単価3.3円は投資計算に使わず、結果の荒さを見る補助指標として表示します。"] },
@@ -3459,13 +3459,13 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
       { heading: "結果画面で確認するポイント", bullets: ["抽選設定とCZ・AT初当りGの関係", "BITESの上乗せが差枚へ与える影響", "有馬貴将JUDGEMENT成功前後の収支差", "19,000枚到達時のコンプリート表示"] }
     ],
     "valvrave2": [
-      { heading: "実機どおり設定1・2・4・5・6を抽選", paragraphs: ["通常設定は1・2・4・5・6の5段階で、設定3と設定Lは抽選しません。CZは全設定約1/324、初当り合算は設定1約1/476から設定6約1/456までの公開値を使います。", "初当り差は比較的小さい一方、出玉率は設定1の97.7%から設定6の114.9%まで差があります。シミュレーターは選ばれた設定を結果とランキングへ表示します。"] },
-      { heading: "革命RUSHから超革命RUSHまで", paragraphs: ["共闘Vチャレンジ、革命RUSH、革命の剣、ハラキリチャレンジ3連、超革命RUSHを一連の演出へ整理しています。上位へ届く前の終了と、最大約90%継続の上位結果を比べられます。", "内部モード、全役、引き戻しや有利区間の詳細は再現していません。公開されていない上位到達率の設定差も加えず、全設定で共通条件です。"] },
+      { heading: "実機どおり設定1・2・4・5・6を抽選", paragraphs: ["通常設定は1・2・4・5・6の5段階で、設定3と設定Lは抽選しません。初当り合算は設定1約1/476から設定6約1/456までの公開値を使います。", "初当り差は比較的小さい一方、出玉率は設定1の97.7%から設定6の114.9%まで差があります。シミュレーターは選ばれた設定を結果とランキングへ表示します。"] },
+      { heading: "3ルートから超革命RUSHまで", paragraphs: ["初当りを革命RUSH直撃・革命BONUS・決戦BONUSの代表比率1:1:1へ分けます。決戦BONUSは公式AT期待度約46%、革命BONUSは払い出し666枚到達でRUSHとして判定します。", "革命RUSHは各セットでPUSHし、ハラキリチャレンジを3回成功させると4セット目から超革命RUSHへ昇格します。途中終了と最大約90%継続の上位結果を比べられます。"] },
       { heading: "平均476Gと高コイン単価", paragraphs: ["設定1の初当り476Gと32.7G/50枚を基準にした平均投資目安は約15,800円です。46枚貸し・5.2枚交換で統一し、コイン単価4.2円は高い振れ幅を示す補助指標として表示します。", "平均より早く当たっても上位へ届かない結果と、深い投資から超革命RUSHで伸びる結果があります。初当りの早さだけでなく最終差枚と収支を合わせて確認してください。"] },
       { heading: "結果画面で確認するポイント", bullets: ["5段階設定ごとの初当りGを比較する", "革命の剣による獲得枚数の増加", "ハラキリチャレンジ3連から上位へ進めたか", "超革命RUSH終了までの差枚と収支"] }
     ],
     "smart-hokuto": [
-      { heading: "バトルボーナスを中心に簡略化", paragraphs: ["通常時からバトルボーナスへ当選し、継続を重ねて無想転生チャンスと無想転生バトルを目指す流れです。結果画面では初当りG、通常AT、上位挑戦、最終獲得枚数を順番に確認できます。", "天井、モード、内部状態、全小役、継続率示唆などは省略しています。初当りと継続率による結果の幅を短時間で比べるための娯楽用モデルです。"] },
+      { heading: "30G＋αと8Gバトルをセットで再現", paragraphs: ["バトルボーナスは30G＋αの小役パートと8Gの継続バトルを1セットとして進みます。66%・79%・84%・89%の継続率モードを開始時に抽選し、各バトルのPUSHで継続または敗北を表示します。", "トキ共闘などから無想転生チャンスへ進んだ場合は別のPUSHで成功を判定し、成功後は継続約94%の無想転生バトルとして連数を積み上げます。"] },
       { heading: "設定1・2・4・5・6の公開値", paragraphs: ["通常設定1・2・4・5・6から均等抽選し、設定3と設定Lは対象外です。BB初当りは設定1約1/383.4、設定2約1/370.5、設定4約1/297.8、設定5約1/258.7、設定6約1/235.1を使用します。", "抽選設定は最終結果まで伏せ、マイ記録とランキングへ保存します。無想転生チャンス以降の非公表設定差は推測せず、全設定で共通条件です。"] },
       { heading: "平均383.4Gと無想転生の振れ幅", paragraphs: ["設定1のBB初当り383.4Gと34.7G/50枚を基準にした平均投資目安は約12,000円です。46枚貸し・5.2枚交換で収支を固定し、コイン単価3.3円は荒さの比較に使います。", "無想転生は継続約94%でも毎回終了する可能性があります。短く終わる結果も想定内で、上位到達だけでなく何連続いたかと最終差枚を見ることが重要です。"] },
       { heading: "結果画面で確認するポイント", bullets: ["抽選設定とBB初当りGの差", "通常バトルボーナスの継続回数", "無想転生チャンス突破前後の差枚", "コンプリート到達時は19,000枚で打ち切る"] }
@@ -3484,7 +3484,7 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
     ],
     "monkey-turn-v": [
       { heading: "実機の設定1・2・4・5・6を使用", paragraphs: ["通常設定1・2・4・5・6から均等抽選し、設定3と設定Lは対象外です。AT初当りは設定1約1/299.8、設定2約1/295.5、設定4約1/258.8、設定5約1/235.7、設定6約1/222.9を使用します。", "通常時の周期と超抜チャレンジはAT初当りへまとめています。設定差が公表されていない全速モードや青島SGへの到達率は全設定共通です。"] },
-      { heading: "SG RUSHから青島SGまで", paragraphs: ["SG RUSH、全速モード、青島VS波多野、青島SGの順に進む流れを短い演出へ整理しています。通常AT終了と、上位到達後の約83%ループを同じ固定条件で比べられます。", "シナリオ、艇王、Vストック、エンディング、引き戻しの全抽選は再現していません。上位到達前後の獲得枚数差を理解する体験用モデルです。"] },
+      { heading: "8セットのグランドスラムから青島SGへ", paragraphs: ["SG RUSHは1セット40G＋αで、31G＋αの周回パートと9GのSGバトルに分けています。代表シナリオに応じてセットごとの継続期待度が変わり、各レースをPUSHで判定します。", "8セット完走でグランドスラムとなり、青島VS波多野をVストック込み約83%で判定します。勝利後は青島SGの継続レースをセットごとに表示します。"] },
       { heading: "平均299.8Gと比較的穏やかな単価", paragraphs: ["設定1のAT初当り299.8Gと32.0G/50枚を基準にした平均投資目安は約10,200円です。46枚貸し・5.2枚交換で固定し、差枚と現金収支を分けて表示します。", "コイン単価3.1円は高単価機との比較では穏やかな指標ですが、1回ごとの結果は大きく上下します。平均投資や単価だけで勝敗が決まるものではありません。"] },
       { heading: "結果画面で確認するポイント", bullets: ["5段階設定ごとのAT初当りG", "全速モード獲得時の差枚上乗せ", "青島VS波多野の突破当落", "青島SG到達後の継続回数と最終収支"] }
     ]
@@ -3493,7 +3493,7 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   Object.entries(editorial).forEach(([slug, articleSections]) => {
     const machine = window.ICHIGEKI_MACHINES[slug];
     if (!machine) return;
-    machine.updated = updated;
+    machine.updated = machine.updated && machine.updated > updated ? machine.updated : updated;
     machine.articleSections = articleSections;
   });
 })();
