@@ -1196,7 +1196,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["DMMぱちタウン 機種情報", "https://p-town.dmm.com/machines/4046"], ["アタリ7 スペック", "https://www.atari7.com/pachinko/onirezero.php"]]
   },
   "kabaneri": {
-    order: 23, type: "slot", theme: "ember", year: "2022", maker: "サミー",
+    order: 23, type: "slot", theme: "ember", year: "2022", maker: "サミー", updated: "2026-11-06",
     name: "パチスロ甲鉄城のカバネリ", shortName: "甲鉄城のカバネリ",
     image: "assets/machines/kabaneri-key-visual.jpg",
     imageAlt: "パチスロ甲鉄城のカバネリのキービジュアル",
@@ -1204,12 +1204,15 @@ window.ICHIGEKI_MACHINES = {
     imageSource: "https://pachinavi.net/machines/rev-kabaneri/",
     catchcopy: "3つのチャンス目からCZ、そしてカバネリオブジアイアンフォートレスへ。",
     intro: "6.5号機を代表するSTタイプ。ボーナスからST、無名回想を経由した上位STまでの流れを簡易抽選します。",
-    points: ["3種類のチャンス目対応CZ", "ST初当り（設定1）約1/407.9", "上位ST『（裏）美馬ST』を搭載"],
-    specs: [["ボーナス合算（設定1）", "約1/157.1"], ["ST初当り（設定1）", "約1/407.9"], ["ベース", "約33.0G/50枚"], ["コイン単価", "約2.8円"], ["ST純増", "約2.8枚/G"], ["ST中ボーナス純増", "約6.0枚/G"], ["上位ST継続", "80%超"]],
-    sim: { kind: "slot", triggerLabel: "初当りボーナス", triggerRate: 237.0, triggerSuccess: 0.581, mainLabel: "カバネリST", mainRate: 407.9, base50: 33, coinUnit: 2.8, normalMin: 200, normalMax: 1000, atPureIncrease: 6.0, specialLabel: "無名回想", specialChance: 0.24, specialMin: 150, specialMax: 550, upperChallenge: "美馬決戦", upperChance: 0.18, upperSuccess: 0.46, upperLabel: "裏美馬ST", upperContinue: 0.82, upperPayout: 430, upperPureIncrease: 6.0, settingRates: { 1: { trigger: 237.0, main: 407.9, payout: 0.978 }, 2: { trigger: 230.7, main: 393.2, payout: 0.988 }, 3: { trigger: 214.0, main: 372.4, payout: 1.007 }, 4: { trigger: 186.5, main: 327.2, payout: 1.059 }, 5: { trigger: 171.3, main: 307.3, payout: 1.084 }, 6: { trigger: 151.3, main: 290.6, payout: 1.100 } } },
+    points: ["通常STは25G＋α・継続期待度約75%", "ST初当り（設定1）約1/407.9", "美馬STは30G＋α・約80%、裏美馬STは約95%"],
+    specs: [["ボーナス初当り（設定1）", "約1/237.0"], ["ST初当り（設定1）", "約1/407.9"], ["ベース", "約33.0G/50枚"], ["コイン単価", "約2.8円"], ["通常ST", "25G＋α・継続約75%"], ["美馬ST", "30G＋α・継続約80%"], ["裏美馬ST", "30G＋α・継続約95%"], ["ST中ボーナス", "200〜1000枚の払出"]],
+    initialHitLabel: "駿城BONUS／EPISODE BONUS",
+    sim: { kind: "slot", rankingVersion: "v4", triggerLabel: "初当りボーナス", triggerRate: 237.0, triggerSuccess: 1, mainLabel: "カバネリST", mainRate: 407.9, mainRateLabel: "ST初当り", base50: 33, coinUnit: 2.8, normalMin: 0, normalMax: 0, entryBonusAwards: [[{ label: "駿城BONUS", payout: 56, games: 20, atChance: 0.162 }, 0.50], [{ label: "EPISODE BONUS", payout: 150, games: 25, atChance: 1 }, 0.50]], entryBonusAwardsNote: "通常時ボーナス比率は代表値1:1。EPISODE BONUSはST突入、駿城BONUSは設定1のボーナス・ST初当り比率から算出した代表突破率約16.2%で判定", atPureIncrease: 2.8, specialLabel: "無名回想", specialChance: 0.10, specialMin: 0, specialMax: 0, upperChallenge: "無名回想", upperChance: 0, upperSuccess: 1, upperLabel: "美馬ST／裏美馬ST", upperContinue: 0.80, upperPayout: 0, upperPureIncrease: 6.0, kabaneriStFlow: true, kabaneriStGames: 25, kabaneriStContinue: 0.75, kabaneriBonusAwards: [[{ label: "カバネリBONUS", payout: 200 }, 0.42], [{ label: "カバネリBONUS", payout: 300 }, 0.28], [{ label: "カバネリBONUS", payout: 400 }, 0.12], [{ label: "カバネリBONUS", payout: 500 }, 0.08], [{ label: "カバネリBONUS", payout: 1000 }, 0.02], [{ label: "EPISODE BONUS", payout: 210, episode: true }, 0.08]], kabaneriMumeiChance: 0.10, kabaneriUraChance: 0.20, settingRates: { 1: { trigger: 237.0, main: 407.9, entry: 1, payout: 0.978 }, 2: { trigger: 230.7, main: 393.2, entry: 1, payout: 0.988 }, 3: { trigger: 214.0, main: 372.4, entry: 1, payout: 1.007 }, 4: { trigger: 186.5, main: 327.2, entry: 1, payout: 1.059 }, 5: { trigger: 171.3, main: 307.3, entry: 1, payout: 1.084 }, 6: { trigger: 151.3, main: 290.6, entry: 1, payout: 1.100 } } },
     articleSections: [
       { heading: "ボーナス初当りとST初当りを分けて見る", paragraphs: ["ボーナス合算約1/157.1は複数の当選を含む合算値です。シミュレーターの最初の契機には、設定1のボーナス初当り約1/237.0を使用し、ST初当り約1/407.9とは分けて抽選します。", "設定1〜6で公開されているボーナス初当り・ST初当りを個別に登録し、START時にランダム抽選された設定の数値を使います。"] },
-      { heading: "固定レートと結果の見方", paragraphs: ["50枚あたり33.0G、1,000円46枚貸し、5.2枚交換を固定条件として投資・収支目安を計算します。", "無名回想、美馬決戦、裏美馬STは体験用に簡略化した固定抽選です。公開されていない設定差を推測して上乗せすることはありません。"] }
+      { heading: "25GのSTとボーナス再セット", paragraphs: ["STは25G＋αを1区間として、ボーナス当選なら25Gへ再セット、非当選なら終了します。継続期待度約75%を1区間ごとの代表抽選として使い、PUSHでボーナス当選・駆け抜けを確認できます。", "ST中のボーナスはカバネリBONUSの200〜1000枚とEPISODE BONUSを代表振り分けで抽選し、獲得枚数をその都度合算します。"] },
+      { heading: "美馬STと裏美馬ST", paragraphs: ["ST中のEPISODE BONUSの一部から無名回想へ進み、美馬STまたは裏美馬STを判定します。美馬STは30G＋α・継続期待度約80%、裏美馬STは30G＋α・継続期待度約95%として別々に進行します。", "無名回想の発生率と裏美馬への振り分けは全条件が公表されていないため、サイト内で明示する比較用の代表値です。"] },
+      { heading: "固定レートと結果の見方", paragraphs: ["50枚あたり33.0G、1,000円46枚貸し、5.2枚交換を固定条件として投資・収支目安を計算します。", "結果には通常STのボーナス回数、上位STの種類と連数、総獲得枚数を分けて表示します。チャンス目・高確ランプ・六根魂など全内部抽選は簡略化しています。"] }
     ],
     sources: [["DMMぱちタウン 機種情報", "https://p-town.dmm.com/machines/4160"], ["パチナビ 設定別初当り", "https://pachinavi.net/machines/rev-kabaneri/"], ["セガサミー決算資料", "https://www.segasammy.co.jp/cms/wp-content/uploads/pdf/ja/ir/20242029_q3_presentation_j-1.pdf"]]
   },
@@ -1252,7 +1255,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9725"], ["SANKYOオンライン博物館", "https://www.sankyo-fever.jp/collection/936/"], ["でちゃう！解析特集", "https://www.dechau.com/news/single.php?id=9442"], ["SANKYO IR資料", "https://www.sankyo-fever.co.jp/corporate/modify/IR/Library_Briefing/files/explanation_20240807_ja.pdf"]]
   },
   "sengoku-otome4": {
-    order: 26, type: "slot", theme: "sakura", year: "2023", maker: "オリンピアエステート",
+    order: 26, type: "slot", theme: "sakura", year: "2023", maker: "オリンピアエステート", updated: "2026-11-06",
     name: "L戦国乙女4 戦乱に閃く炯眼の軍師", shortName: "戦国乙女4",
     image: "assets/machines/sengoku-otome4-key-visual.jpg",
     imageAlt: "L戦国乙女4 戦乱に閃く炯眼の軍師のキービジュアル",
@@ -1262,10 +1265,11 @@ window.ICHIGEKI_MACHINES = {
     intro: "ボーナス・CZ・AT・上位ATの段階が分かりやすい人気スマスロ。乙女アタックとオウガイバトルを簡易抽選します。",
     points: ["ボーナス＋直撃AT初当り（設定1）約1/272.7", "AT初当り（設定1）約1/429.2", "上位AT『真強カワRUSH』は純増約5.0枚/G"],
     specs: [["初当り（設定1）", "約1/272.7"], ["AT初当り（設定1）", "約1/429.2"], ["ベース", "約31.7G/50枚"], ["コイン単価", "約3.4円"], ["AT純増", "約2.5枚/G"], ["上位AT純増", "約5.0枚/G"]],
-    sim: { kind: "slot", triggerLabel: "ボーナス／直撃AT", triggerRate: 272.7, triggerSuccess: 0.635, mainLabel: "強カワRUSH", mainRate: 429.2, base50: 31.7, coinUnit: 3.4, normalMin: 260, normalMax: 1050, specialLabel: "神謀覚醒", specialChance: 0.25, specialMin: 180, specialMax: 1000, upperChallenge: "オウガイバトル", upperChance: 0.24, upperSuccess: 0.45, upperLabel: "真強カワRUSH", upperContinue: 0.70, upperPayout: 650, settingRates: { 1: { trigger: 272.7, main: 429.2, payout: 0.982 }, 2: { trigger: 267.3, main: 417.8, payout: 0.990 }, 3: { trigger: 255.3, main: 393.6, payout: 1.012 }, 4: { trigger: 238.2, main: 361.3, payout: 1.052 }, 5: { trigger: 223.2, main: 334.1, payout: 1.102 }, 6: { trigger: 217.1, main: 319.2, payout: 1.130 } } },
+    sim: { kind: "slot", rankingVersion: "v4", triggerLabel: "ボーナス／直撃AT", triggerRate: 272.7, triggerSuccess: 0.635, mainLabel: "強カワRUSH", mainRate: 429.2, base50: 31.7, coinUnit: 3.4, normalMin: 0, normalMax: 0, atPureIncrease: 2.5, specialLabel: "神謀覚醒", specialChance: 0.08, specialMin: 0, specialMax: 0, upperChallenge: "ヨシテル出陣", upperChance: 0.08, upperSuccess: 1, upperLabel: "真強カワRUSH", upperContinue: 1, upperPayout: 0, upperPureIncrease: 5.0, otomeRushFlow: true, otomeBaseGames: 50, otomeAddOnChance: 0.42, otomeAddOnGames: [[10, 0.45], [20, 0.25], [30, 0.15], [50, 0.10], [100, 0.04], [200, 0.01]], otomeBonusChance: 0.28, otomeBonusGames: [[10, 0.50], [20, 0.25], [30, 0.15], [50, 0.10]], otomeAwakeningGames: 220, otomeBattleChanceBySetting: { 1: 0.249, 2: 0.263, 3: 0.276, 4: 0.291, 5: 0.305, 6: 0.317 }, settingRates: { 1: { trigger: 272.7, main: 429.2, payout: 0.982 }, 2: { trigger: 267.3, main: 417.8, payout: 0.990 }, 3: { trigger: 255.3, main: 393.6, payout: 1.012 }, 4: { trigger: 238.2, main: 361.3, payout: 1.052 }, 5: { trigger: 223.2, main: 334.1, payout: 1.102 }, 6: { trigger: 217.1, main: 319.2, payout: 1.130 } } },
     articleSections: [
       { heading: "設定1〜6の公開初当りを反映", paragraphs: ["START時に設定1〜6を均等抽選し、選ばれた設定のボーナス＋直撃AT合算とAT初当りを使用します。設定1は初当り約1/272.7・AT約1/429.2、設定6は初当り約1/217.1・AT約1/319.2です。", "初当りからATへ進む割合も設定ごとの2つの公開値から計算します。公開されていない神謀覚醒や上位到達率の設定差は加えません。"] },
-      { heading: "強カワRUSHと上位ATの流れ", paragraphs: ["通常時は巫女カウンターや規定ゲーム数からボーナス・CZ・直撃ATを目指し、AT中は出陣ボーナスやゲーム数上乗せで継続を狙います。", "シミュレーターでは複雑な内部状態を、ボーナス／直撃AT、強カワRUSH、神謀覚醒、オウガイバトル、真強カワRUSHの順へ簡略化しています。"] },
+      { heading: "強カワRUSHのゲーム数上乗せ", paragraphs: ["強カワRUSHは初期50G＋α・純増約2.5枚/G。AT中はレア役のゲーム数上乗せ、出陣ボーナス、神謀覚醒を時系列で抽選し、+10Gから+200Gまでの代表振り分けを獲得枚数へ連動させます。", "神謀覚醒は10Gの特化ゾーンで平均約220G上乗せを代表値として表示します。発生率は全条件が公表されていないため比較用モデルです。"] },
+      { heading: "オウガイバトルと真強カワRUSH", paragraphs: ["AT残りゲーム数消化後は5Gのオウガイバトルへ進みます。初戦突破目安は設定1約24.9%〜設定6約31.7%を使用し、勝利時は30G以上の上乗せとしてATへ復帰します。", "ヨシテル出陣などの上位契機に当選した場合は、初期50G＋α・純増約5.0枚/Gの真強カワRUSHへ移行します。上位契機の全振り分けは代表抽選へ簡略化しています。"] },
       { heading: "固定レートと平均投資", paragraphs: ["50枚あたり31.7G、1,000円46枚貸し、5.2枚交換で投資・換金・収支目安を計算します。コイン単価3.4円は荒さを見る指標として分けて表示します。", "獲得19,000枚へ達した結果はコンプリートとして打ち切り、マイ記録とランキングにも到達状態を残します。"] }
     ],
     sources: [["P-WORLD 設定別スペック", "https://www.p-world.co.jp/machine/database/9868"], ["一撃 機種解析", "https://1geki.jp/slot/l_otome_keigan/"], ["HEIWA 機種情報", "https://www.heiwanet.co.jp/products/pachislot/l-sg5/"]]
