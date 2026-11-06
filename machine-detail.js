@@ -571,6 +571,23 @@
         ["ADD-ON", "上乗せ・上位", `${sim.specialLabel}を代表的な上乗せ契機として簡易抽選します。${sim.upperLabel}到達後もセットゲーム数×純増約${pureIncrease.toFixed(1)}枚/Gで獲得を計算し、代表継続率${percent(sim.upperContinue)}で継続判定します。`]
       ];
       note = `${sim.entryBonusAwardsNote ? `${sim.entryBonusAwardsNote}。` : ""}セットのゲーム数と獲得枚数を別々には抽選せず、公表純増を基準に連動させています。実機の全小役・内部状態・有利区間は完全再現していません。`;
+    } else if (sim.cycleFlow) {
+      const cycle = sim.cycleFlow;
+      const gameOptions = Array.isArray(cycle.games)
+        ? cycle.games.map(([games]) => `${yen.format(games)}G`).join("・")
+        : `${yen.format(cycle.games || 20)}G`;
+      const rewards = (cycle.rewards || []).map(([reward, weight]) => `${reward.label} 約${yen.format(reward.payout)}枚 ${percent(weight)}`).join(" / ");
+      const upperCondition = Number(cycle.upperAfterRounds) > 0
+        ? `${yen.format(cycle.upperAfterRounds)}回到達で${sim.upperChallenge}へ進み${cycle.upperAfterRoundsAutoSuccess === false ? `、成功率${percent(sim.upperSuccess)}で${sim.upperLabel}を判定します。` : `、${sim.upperLabel}へ移行します。`}`
+        : `${sim.upperChallenge}への移行抽選後、成功率${percent(sim.upperSuccess)}で${sim.upperLabel}へ進みます。`;
+      cards = [
+        ["GAME FLOW", "ゲーム性", `${sim.triggerLabel}を経て${sim.mainLabel}へ突入すると、${cycle.label || sim.mainLabel}を1区間ずつ進めます。各区間の最後にPUSHで報酬と継続結果を開き、終了まで獲得枚数を積み上げます。`],
+        ["LOOP UNIT", "区間・セットの構成", `1区間は${gameOptions}の代表振り分けです。継続期待度は約${percent(cycle.continueChance)}、最大${yen.format(cycle.maxRounds || 10)}回まで抽選します。`],
+        ["REWARD", "報酬振り分け", rewards || `${cycle.rewardLabel || "報酬獲得"}を区間ごとに抽選します。`],
+        ["ENTRY / ZONE", "初当り・突破率", `${sim.triggerLabel}の基準は約1/${sim.triggerRate}、${sim.mainLabel}初当りは設定${slotBaselineSetting}基準で約1/${sim.mainRate}です。通常時の全モード・規定ゲーム数・天井は初当り確率へまとめています。`],
+        ["UPPER", "上位ルート", `${upperCondition}${sim.upperLabel}は代表継続率${percent(sim.upperContinue)}でセットを重ね、通常ループと分けて結果へ記録します。`]
+      ];
+      note = `${cycle.label || sim.mainLabel}の区間順序、代表報酬、継続判定を個別表示する体験モデルです。成立役別抽選、内部状態、全報酬振り分けは短時間で比較できる形へ簡略化しています。`;
     } else {
       const upperRouteRate = Math.max(0, Number(sim.upperChance) || 0);
       const upperSuccessRate = Math.max(0, Number(sim.upperSuccess) || 0);
@@ -998,10 +1015,13 @@
         }
         basePayout = payout - entryPayout;
         const cycleUpperReached = Number(cycle.upperAfterRounds) > 0 && cycleRounds >= Number(cycle.upperAfterRounds);
-        if (payout < SLOT_COMPLETE_LIMIT && (cycleUpperReached || Math.random() < upperChance)) {
+        const randomUpperRoute = cycle.upperOnlyAfterRounds ? false : Math.random() < upperChance;
+        if (payout < SLOT_COMPLETE_LIMIT && (cycleUpperReached || randomUpperRoute)) {
           atEvents.push({ kind: "upper-challenge", label: sim.upperChallenge, games: randomInt(8, 18), award: 0, cumulative: payout });
           flow.push(sim.upperChallenge);
-          upper = cycleUpperReached || Math.random() < sim.upperSuccess;
+          upper = cycleUpperReached && cycle.upperAfterRoundsAutoSuccess !== false
+            ? true
+            : Math.random() < sim.upperSuccess;
           if (upper) {
             do {
               const upperGames = Array.isArray(sim.upperSetGames)
