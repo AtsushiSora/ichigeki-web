@@ -556,7 +556,7 @@
       note = "激情ジャッジの成立役別抽選、内部状態、上乗せ特化ゾーンの全振り分けは簡略化しています。3回・4回成功時の上位ルートとPUSH当落を中心に体験するモデルです。";
     } else if (sim.setPushFlow) {
       const pureIncreaseText = machine.specs?.find(([label]) => /純増/.test(label))?.[1] || "";
-      const pureIncrease = Math.max(1, Number(sim.atPureIncrease) || Number.parseFloat(String(pureIncreaseText).match(/[\d.]+/)?.[0] || "") || 4);
+      const pureIncrease = Math.max(0.1, Number(sim.atPureIncrease) || Number.parseFloat(String(pureIncreaseText).match(/[\d.]+/)?.[0] || "") || 4);
       const initialHitLabel = sim.mainRateLabel || machine.initialHitLabel || sim.mainLabel;
       const initialHitText = initialHitName(initialHitLabel);
       const firstSetText = Array.isArray(sim.firstRushSetGames) ? "初回は基本20G、" : "";
@@ -959,8 +959,8 @@
         : Math.max(0, Number(entryBonusTemplate.payout) || 0);
       const usesOutcomePayout = Array.isArray(entryBonusTemplate.payoutOnEntry) || Array.isArray(entryBonusTemplate.payoutOnMiss);
       const bonusGames = Math.max(1, usesOutcomePayout
-        ? Math.round(bonusPayout / Math.max(1, Number(sim.atPureIncrease) || 4))
-        : Number(entryBonusTemplate.games) || Math.round(bonusPayout / Math.max(1, Number(sim.atPureIncrease) || 4)));
+        ? Math.round(bonusPayout / Math.max(0.1, Number(sim.atPureIncrease) || 4))
+        : Number(entryBonusTemplate.games) || Math.round(bonusPayout / Math.max(0.1, Number(sim.atPureIncrease) || 4)));
       entryBonus = { ...entryBonusTemplate, payout: bonusPayout, games: bonusGames, averagePayout: Number(entryBonusTemplate.payout) || bonusPayout, outcome: entered ? "RUSH突破" : "RUSH非突破" };
       payout = Math.min(bonusPayout, SLOT_COMPLETE_LIMIT);
       atGamesTotal += bonusGames;
@@ -986,8 +986,8 @@
       const upperPureIncreaseText = pureIncreaseRows.find(([label]) => /上位|青島|真強|千日|EXTRA|特化/.test(label))?.[1] || "";
       const publishedPureIncrease = Number.parseFloat(String(normalPureIncreaseText).match(/[\d.]+/)?.[0] || "");
       const publishedUpperPureIncrease = Number.parseFloat(String(upperPureIncreaseText).match(/[\d.]+/)?.[0] || "");
-      const atPureIncrease = Math.max(1, Number(sim.atPureIncrease) || publishedPureIncrease || 4);
-      const upperPureIncrease = Math.max(1, Number(sim.upperPureIncrease) || publishedUpperPureIncrease || atPureIncrease);
+      const atPureIncrease = Math.max(0.1, Number(sim.atPureIncrease) || publishedPureIncrease || 4);
+      const upperPureIncrease = Math.max(0.1, Number(sim.upperPureIncrease) || publishedUpperPureIncrease || atPureIncrease);
       const baseAtGames = Math.max(1, Math.min(1000, Number(normalAward?.games) || Math.round(basePayout / atPureIncrease)));
       const baseEventLabel = normalAward?.label || sim.mainLabel;
       payout = Math.min(SLOT_COMPLETE_LIMIT, entryPayout + basePayout);
