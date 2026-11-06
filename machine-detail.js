@@ -1024,9 +1024,11 @@
           const cycleBaseAward = rewardKind === "games" || rewardKind === "bonus"
             ? slotAwardForGames(cycleGames, atPureIncrease, sim.atPayoutVariance)
             : 0;
-          const requestedAward = gameAdd
-            ? cycleBaseAward + slotAwardForGames(gameAdd, atPureIncrease, sim.atPayoutVariance)
-            : cycleBaseAward + Math.max(0, Number(rewardTemplate.payout) || 0);
+          const requestedAward = rewardKind === "bonus"
+            ? Math.max(0, Number(rewardTemplate.payout) || slotAwardForGames(bonusGames, atPureIncrease, sim.atPayoutVariance))
+            : gameAdd
+              ? cycleBaseAward + slotAwardForGames(gameAdd, atPureIncrease, sim.atPayoutVariance)
+              : cycleBaseAward + Math.max(0, Number(rewardTemplate.payout) || 0);
           const award = Math.max(0, Math.min(requestedAward, SLOT_COMPLETE_LIMIT - payout));
           payout += award;
           atGamesTotal += cycleGames + gameAdd + bonusGames;
