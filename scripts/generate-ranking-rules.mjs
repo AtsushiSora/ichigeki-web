@@ -18,7 +18,7 @@ for (const [slug, machine] of Object.entries(machines)) {
   if (!type || !sim.kind) continue;
   const scoreKind = type === "slot" ? "coins" : "balls";
   const version = type === "slot"
-    ? (sim.kind !== "juggler" && sim.settingRates ? "v3" : "v2")
+    ? (sim.rankingVersion || (sim.kind !== "juggler" && sim.settingRates ? "v3" : "v2"))
     : "v2-actual-payout";
   const machineSlug = type === "slot"
     ? `${slug}--random-setting-${version}`

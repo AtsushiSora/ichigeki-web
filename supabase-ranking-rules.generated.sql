@@ -65,7 +65,7 @@ values
 ('rezero-onigakari--fixed-rate-v2-actual-payout', 'balls', 'pachinko', 17.000000, 1000000, 2000000, ARRAY[ ]::integer[], now()),
 ('kabaneri--random-setting-v3', 'coins', 'slot', 30.360000, 1000000, 19000, ARRAY[1,2,3,4,5,6 ]::integer[], now()),
 ('smart-hokuto--random-setting-v3', 'coins', 'slot', 31.924000, 1000000, 19000, ARRAY[1,2,4,5,6 ]::integer[], now()),
-('valvrave--random-setting-v3', 'coins', 'slot', 28.520000, 1000000, 19000, ARRAY[1,2,3,4,5,6 ]::integer[], now()),
+('valvrave--random-setting-v4', 'coins', 'slot', 28.520000, 1000000, 19000, ARRAY[1,2,3,4,5,6 ]::integer[], now()),
 ('sengoku-otome4--random-setting-v3', 'coins', 'slot', 29.164000, 1000000, 19000, ARRAY[1,2,3,4,5,6 ]::integer[], now()),
 ('oumi5--fixed-rate-v2-actual-payout', 'balls', 'pachinko', 16.700000, 1000000, 2000000, ARRAY[ ]::integer[], now()),
 ('sengoku-otome5--random-setting-v3', 'coins', 'slot', 28.520000, 1000000, 19000, ARRAY[1,2,3,4,5,6 ]::integer[], now()),

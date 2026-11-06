@@ -67,7 +67,7 @@
   const slotSettingNumberLabel = usesAllSlotSettings ? "1〜6" : slotSettingPool.join("・");
   const slotSettingLabel = `設定${slotSettingNumberLabel}`;
   const slotBaselineSetting = slotSettingPool[0] || 1;
-  const slotRankingVersion = machine.sim.kind !== "juggler" && machine.sim.settingRates ? "v3" : "v2";
+  const slotRankingVersion = machine.sim.rankingVersion || (machine.sim.kind !== "juggler" && machine.sim.settingRates ? "v3" : "v2");
   const rankingMachineSlug = machine.type === "slot" ? `${slug}--random-setting-${slotRankingVersion}` : `${slug}--fixed-rate-v2-actual-payout`;
   const RANKING_COOLDOWN_MS = 8000;
   const SLOT_COMPLETE_LIMIT = 19000;
