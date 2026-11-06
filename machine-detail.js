@@ -471,9 +471,12 @@
       const upperRouteRate = Math.max(0, Number(sim.upperChance) || 0);
       const upperSuccessRate = Math.max(0, Number(sim.upperSuccess) || 0);
       const totalUpperRate = upperRouteRate * upperSuccessRate;
+      const normalAwardText = Array.isArray(sim.normalAwards) && sim.normalAwards.length
+        ? `${sim.normalAwards.map(([award, weight]) => `${award.label || sim.mainLabel} 約${yen.format(award.payout)}枚 ${percent(weight)}`).join(" / ")}${sim.normalAwardsNote ? `。${sim.normalAwardsNote}` : ""}`
+        : `通常ATの代表獲得は${yen.format(sim.normalMin)}〜${yen.format(sim.normalMax)}枚`;
       cards = [
         ["GAME FLOW", "ゲーム性", `通常時は${sim.triggerLabel}を入口に${sim.mainLabel}を目指します。AT中は${sim.specialLabel}などの出玉契機を抽選し、${sim.upperChallenge}を突破すると${sim.upperLabel}へ進みます。`],
-        ["DISTRIBUTION", "獲得枚数の振り分け", `通常ATの代表獲得は${yen.format(sim.normalMin)}〜${yen.format(sim.normalMax)}枚、${sim.specialLabel}当選時は${yen.format(sim.specialMin)}〜${yen.format(sim.specialMax)}枚を抽選します。${sim.upperLabel}到達時は${yen.format(sim.upperPayout)}枚を加算する代表モデルです。`],
+        ["DISTRIBUTION", "獲得枚数の振り分け", `${normalAwardText}。${sim.specialLabel}当選時は${yen.format(sim.specialMin)}〜${yen.format(sim.specialMax)}枚を抽選します。ゲーム数表示と獲得枚数は公開純増を基準に連動させます。`],
         ["ENTRY RATE", "突破率", `${sim.triggerLabel}から${sim.mainLabel}への突破率は${percent(sim.triggerSuccess)}です。上位ルート選択率は${percent(upperRouteRate)}、${sim.upperChallenge}成功率は${percent(upperSuccessRate)}で、単純計算の上位到達目安は約${percent(totalUpperRate)}です。`],
         ["ZONE", "通常時・ゾーン", `${sim.triggerLabel}の基準は約1/${sim.triggerRate}、${sim.mainLabel}初当りは設定${slotBaselineSetting}基準で約1/${sim.mainRate}です。50枚あたり${sim.base50}Gを固定ベースにし、ゲーム数ゾーン・周期・天井の全状態は個別再現していません。`],
         ["ADD-ON", "上乗せ・特化ゾーン", `${sim.specialLabel}はAT中の代表的な上乗せ契機で、発生目安は${percent(sim.specialChance)}です。${sim.upperLabel}は代表継続率${percent(sim.upperContinue)}として抽選し、上乗せ枚数と上位到達の差を結果で比較できます。`]
@@ -808,11 +811,23 @@
     if (!entered) {
       flow.push(`${sim.mainLabel}非突入`);
     } else {
-      let basePayout = randomInt(sim.normalMin, sim.normalMax);
-      const pureIncreaseText = machine.specs?.find(([label]) => /純増/.test(label))?.[1] || "";
-      const publishedPureIncrease = Number.parseFloat(String(pureIncreaseText).match(/[\d.]+/)?.[0] || "");
+      const normalAward = Array.isArray(sim.normalAwards) && sim.normalAwards.length
+        ? weighted(sim.normalAwards)
+        : null;
+      let basePayout = normalAward
+        ? Math.max(0, Number(normalAward.payout) || 0)
+        : randomInt(sim.normalMin, sim.normalMax);
+      const pureIncreaseRows = (machine.specs || []).filter(([label]) => /純増/.test(label));
+      const normalPureIncreaseText = pureIncreaseRows.find(([label]) => !/上位|青島|真強|千日|EXTRA|特化/.test(label))?.[1]
+        || pureIncreaseRows[0]?.[1]
+        || "";
+      const upperPureIncreaseText = pureIncreaseRows.find(([label]) => /上位|青島|真強|千日|EXTRA|特化/.test(label))?.[1] || "";
+      const publishedPureIncrease = Number.parseFloat(String(normalPureIncreaseText).match(/[\d.]+/)?.[0] || "");
+      const publishedUpperPureIncrease = Number.parseFloat(String(upperPureIncreaseText).match(/[\d.]+/)?.[0] || "");
       const atPureIncrease = Math.max(1, Number(sim.atPureIncrease) || publishedPureIncrease || 4);
-      const baseAtGames = Math.max(20, Math.min(300, Math.round(basePayout / atPureIncrease)));
+      const upperPureIncrease = Math.max(1, Number(sim.upperPureIncrease) || publishedUpperPureIncrease || atPureIncrease);
+      const baseAtGames = Math.max(1, Math.min(1000, Number(normalAward?.games) || Math.round(basePayout / atPureIncrease)));
+      const baseEventLabel = normalAward?.label || sim.mainLabel;
       payout = basePayout;
       flow.push(`${sim.mainLabel}突入`);
       let rushSetCount = 1;
@@ -838,7 +853,8 @@
         flow.push(`${sim.mainLabel} ${rushSetCount}セット`);
       } else {
         atGamesTotal += baseAtGames;
-        atEvents.push({ kind: "at-start", label: sim.mainLabel, games: baseAtGames, award: basePayout, cumulative: payout });
+        atEvents.push({ kind: "at-start", label: baseEventLabel, games: baseAtGames, award: basePayout, cumulative: payout });
+        if (normalAward?.label) flow.push(`${normalAward.label} 約${yen.format(basePayout)}枚`);
       }
 
       if (sim.karakuriJudgeFlow) {
@@ -874,10 +890,16 @@
         }
         if (upper) {
           do {
-            const award = Math.max(0, Math.min(sim.upperPayout, SLOT_COMPLETE_LIMIT - payout));
+            const upperGames = Array.isArray(sim.upperSetGames)
+              ? weighted(sim.upperSetGames)
+              : Math.max(1, Math.round((Number(sim.upperPayout) || 0) / upperPureIncrease));
+            const derivesUpperAward = Boolean(Number(sim.upperPureIncrease) || publishedUpperPureIncrease || Array.isArray(sim.upperSetGames));
+            const requestedAward = derivesUpperAward
+              ? slotAwardForGames(upperGames, upperPureIncrease, sim.atPayoutVariance)
+              : sim.upperPayout;
+            const award = Math.max(0, Math.min(requestedAward, SLOT_COMPLETE_LIMIT - payout));
             if (!award) break;
             upperLoops += 1;
-            const upperGames = randomInt(24, 72);
             payout += award;
             upperPayoutTotal += award;
             atGamesTotal += upperGames;
@@ -894,7 +916,7 @@
           const requestedAdd = randomInt(sim.specialMin, sim.specialMax);
           const add = Math.max(0, Math.min(requestedAdd, SLOT_COMPLETE_LIMIT - payout));
           if (!add) break;
-          const gameAdd = Math.max(10, Math.min(200, Math.round(add / 100) * 10));
+          const gameAdd = Math.max(1, Math.min(500, Math.round(add / atPureIncrease)));
           const eventGames = randomInt(8, 38);
           payout += add;
           addOnCount += 1;
@@ -909,9 +931,12 @@
           upper = Math.random() < sim.upperSuccess;
           if (upper) {
             do {
-              const upperGames = Array.isArray(sim.upperSetGames) ? weighted(sim.upperSetGames) : randomInt(24, 72);
-              const requestedAward = sim.setPushFlow
-                ? slotAwardForGames(upperGames, atPureIncrease, sim.atPayoutVariance)
+              const derivesUpperAward = sim.setPushFlow || Number(sim.upperPureIncrease) || publishedUpperPureIncrease || Array.isArray(sim.upperSetGames);
+              const upperGames = Array.isArray(sim.upperSetGames)
+                ? weighted(sim.upperSetGames)
+                : Math.max(1, Math.round((Number(sim.upperPayout) || 0) / upperPureIncrease));
+              const requestedAward = derivesUpperAward
+                ? slotAwardForGames(upperGames, upperPureIncrease, sim.atPayoutVariance)
                 : sim.upperPayout;
               const award = Math.max(0, Math.min(requestedAward, SLOT_COMPLETE_LIMIT - payout));
               if (!award) break;

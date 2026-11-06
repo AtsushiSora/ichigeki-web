@@ -73,7 +73,7 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "3種類のCZを突破し、約100枚＋純増約2.7枚/GのATへ。",
     intro: "ミッション・チャンス・バトルの3種類のCZを経由してATを目指すスマスロです。設定1のAT初当り約1/547.9、上位ループ約82%までを設定別の固定モデルで簡易体験できます。",
     points: ["設定1 AT初当り約1/547.9", "3種類のCZを搭載", "上位ATループ率約82%"],
-    specs: [["CZ合算（設定1）", "約1/226"], ["AT（設定1）", "約1/547.9"], ["AT（設定6）", "約1/435.7"], ["ベース", "約31.6G/50枚"], ["上位ループ", "約82%"], ["設定", "1〜6"]],
+    specs: [["CZ合算（設定1）", "約1/226"], ["AT（設定1）", "約1/547.9"], ["AT（設定6）", "約1/435.7"], ["ベース", "約31.6G/50枚"], ["AT純増", "約2.7枚/G"], ["上位AT純増", "約5.0枚/G"], ["上位ループ", "約82%"], ["設定", "1〜6"]],
     sim: { kind: "slot", triggerLabel: "CZ合算", triggerRate: 226, triggerSuccess: 0.412, mainLabel: "ゴブリンスレイヤーRUSH", mainRate: 547.9, base50: 31.6, coinUnit: 4.0, normalMin: 300, normalMax: 1400, specialLabel: "ゴブリンスレイヤーBONUS", specialChance: 0.34, specialMin: 250, specialMax: 1250, upperChallenge: "GOBLIN'S CROWN", upperChance: 0.14, upperSuccess: 0.50, upperLabel: "PREMIUM RUSH", upperContinue: 0.82, upperPayout: 850, settingRates: { 1: { trigger: 226, main: 547.9, payout: 0.978 }, 2: { trigger: 223, main: 538.4, payout: 0.989 }, 3: { trigger: 215, main: 517.7, payout: 1.012 }, 4: { trigger: 204, main: 492.3, payout: 1.054 }, 5: { trigger: 196, main: 470.5, payout: 1.100 }, 6: { trigger: 184, main: 435.7, payout: 1.149 } } },
     readerGuide: { verdict: "CZの種類を見分け、重い初当りから高ループの上位ATを狙う流れを体験したい人向けです。", bestFor: ["段階式CZのゲーム性が好き", "高い出玉性能の上位ATを狙いたい"], check: ["設定1のAT初当りは約1/547.9", "サイトの上位到達率は比較用モデル"], compare: [["valvrave", "スマスロ ヴァルヴレイヴ", "高出玉ATと比較"], ["kinnikuman-7-slot", "スマスロ キン肉マン", "上位AT型と比較"]] },
     articleSections: [
@@ -94,7 +94,7 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "正義超人チャレンジでパワーを集め、7セット突破から上位ATへ。",
     intro: "規定超人パワーからATへ進み、7セット継続で上位ATを目指すスマスロです。設定1のAT初当り約1/404.1、上位AT期待獲得約3500枚の流れを設定別に簡易体験できます。",
     points: ["設定1 AT初当り約1/404.1", "7セット継続で上位AT", "上位AT期待獲得約3500枚"],
-    specs: [["正義超人CZ（設定1）", "約1/99.8"], ["AT（設定1）", "約1/404.1"], ["AT（設定6）", "約1/336.5"], ["上位到達", "通常AT7セット継続"], ["上位期待獲得", "約3500枚"], ["設定", "1・2・4・5・6"]],
+    specs: [["正義超人CZ（設定1）", "約1/99.8"], ["AT（設定1）", "約1/404.1"], ["AT（設定6）", "約1/336.5"], ["AT純増", "約6.1枚/G"], ["上位到達", "通常AT7セット継続"], ["上位期待獲得", "約3500枚"], ["設定", "1・2・4・5・6"]],
     sim: { kind: "slot", settingPool: [1, 2, 4, 5, 6], triggerLabel: "正義超人チャレンジ", triggerRate: 99.8, triggerSuccess: 0.247, mainLabel: "7人の悪魔超人", mainRate: 404.1, base50: 31.0, coinUnit: 3.8, normalMin: 250, normalMax: 1250, specialLabel: "悪魔超人バトル", specialChance: 0.36, specialMin: 250, specialMax: 1200, upperChallenge: "7戦突破", upperChance: 0.20, upperSuccess: 0.50, upperLabel: "悪魔将軍バトル", upperContinue: 0.85, upperPayout: 1000, settingRates: { 1: { trigger: 99.8, main: 404.1, payout: 0.979 }, 2: { trigger: 98.6, main: 400.6, payout: 0.991 }, 4: { trigger: 96.3, main: 362.1, payout: 1.060 }, 5: { trigger: 94.2, main: 350.7, payout: 1.106 }, 6: { trigger: 91.7, main: 336.5, payout: 1.149 } } },
     readerGuide: { verdict: "セット継続のバトルを重ね、7戦突破で大きな上位ATを狙いたい人向けです。", bestFor: ["継続バトル型ATが好き", "設定差も結果で比較したい"], check: ["実機に設定3は非搭載", "上位到達の詳細は比較用モデル"], compare: [["fever-kinnikuman", "eキン肉マン", "パチンコ版と比較"], ["goblin-slayer-slot", "スマスロ ゴブスレ", "高出玉型ATと比較"]] },
     articleSections: [
@@ -191,7 +191,7 @@ window.ICHIGEKI_MACHINES = {
     points: ["図柄揃い約1/437・チャージ込み約1/349.9", "図柄揃いの50%で真魔戒RUSH", "RUSH中は1500個または6000個以上"],
     specs: [["合算大当り", "約1/349.9"], ["図柄揃い", "約1/437"], ["ガロチャージ", "約1/1745"], ["RUSH突入", "図柄揃い時50%"], ["RUSH", "ST130回・継続約75%"], ["CZ", "40回・期待度約18%"]],
     sim: { kind: "pachinko", hitRate: 349.9, hitLabel: "合算大当り", startType: "通常ヘソ", spinsPer1k: 17.0, minSpins: 10, maxSpins: 30, rushLabel: "真魔戒RUSH", rushEntry: 0.40, rushContinue: 0.75, firstPayoutIn: 1000, firstPayoutOut: 1000, rushPayouts: [[1500, 0.55], [6000, 0.38], [7500, 0.07]] },
-    readerGuide: { verdict: "重い図柄揃いを越え、6000個以上の比率が高いRUSHを狙いたい人向けです。", bestFor: ["大きな出玉振り分けを重視したい", "RUSH終了後のCZも含めて流れを知りたい"], check: ["RUSH突入50%は図柄揃い時", "合算初当り全体では代表値40%を使用"], compare: [["garo12-golden", "牙狼12 黄金騎士極限", "前作と比較"], ["milliongod-raigeki", "eミリオンゴッド", "3000個型LTと比較"]] },
+    readerGuide: { verdict: "重い図柄揃いを越え、6000個以上の比率が高いRUSHを狙いたい人向けです。", bestFor: ["大きな出玉振り分けを重視したい", "RUSH終了後のCZも含めて流れを知りたい"], check: ["RUSH突入50%は図柄揃い時", "合算初当り全体では代表値40%を使用"], compare: [["garo12-gokugen", "牙狼12 黄金騎士極限", "前作と比較"], ["milliongod-raigeki", "eミリオンゴッド", "3000個型LTと比較"]] },
     articleSections: [
       { heading: "図柄揃いとガロチャージ", paragraphs: ["通常時は図柄揃い約1/437とガロチャージ約1/1745を合わせ、合算約1/349.9です。図柄揃い時の50%が真魔戒RUSHへ進みます。", "チャージを含む初当り全体ではRUSH突入が約40%となるため、シミュレーターは合算大当り約1/349.9・突入約40%の代表モデルを使用します。"] },
       { heading: "玖千ノ宴モード", paragraphs: ["ガロチャージ後、通常大当りの一部、RUSH終了後などは左打ち40回のCZへ。実質約1/199で、40回の大当り期待度は約18%です。", "CZ中は9000個振り分けもありますが、通常時フラグと大当りの全ループは独立再現せず、記事でゲーム性を説明します。"] },
@@ -470,7 +470,7 @@ window.ICHIGEKI_MACHINES = {
     intro: "設定別BONUS初当りを使い、告らせたいチャレンジ、1G連、チカブレイク、EXTRA BONUSまでを簡易体験できます。",
     points: ["BONUS設定1約1/362〜設定6約1/335", "CZ成功期待度約58%", "BONUSループ最大約80%"],
     specs: [["BONUS（設定1）", "約1/362"], ["BONUS（設定6）", "約1/335"], ["CZ期待度", "約58%"], ["BONUS純増", "約9.0枚/G"], ["ベース", "約31G/50枚"], ["ループ率", "最大約80%"]],
-    sim: { kind: "slot", triggerLabel: "告らせたいチャレンジ", triggerRate: 210, triggerSuccess: 0.58, mainLabel: "KAGUYA BONUS", mainRate: 362, base50: 31.0, coinUnit: 4.2, normalMin: 180, normalMax: 1000, specialLabel: "チカブレイク", specialChance: 0.35, specialMin: 250, specialMax: 1200, upperChallenge: "奇跡的相性MODE", upperChance: 0.20, upperSuccess: 0.55, upperLabel: "EXTRA BONUS", upperContinue: 0.80, upperPayout: 700, settingRates: { 1: { trigger: 210, main: 362, payout: 0.977 }, 2: { trigger: 208, main: 360, payout: 0.988 }, 3: { trigger: 205, main: 357, payout: 1.012 }, 4: { trigger: 200, main: 349, payout: 1.058 }, 5: { trigger: 196, main: 343, payout: 1.108 }, 6: { trigger: 192, main: 335, payout: 1.149 } } },
+    sim: { kind: "slot", triggerLabel: "告らせたいチャレンジ", triggerRate: 210, triggerSuccess: 0.58, mainLabel: "KAGUYA BONUS", mainRate: 362, base50: 31.0, coinUnit: 4.2, normalMin: 83, normalMax: 490, normalAwards: [[{ label: "SUPER BIG", payout: 490, games: 54 }, 0.01], [{ label: "BIG", payout: 270, games: 30 }, 0.50], [{ label: "REG", payout: 83, games: 10 }, 0.49]], atPureIncrease: 9.0, specialLabel: "チカブレイク", specialChance: 0.35, specialMin: 250, specialMax: 1200, upperChallenge: "奇跡的相性MODE", upperChance: 0.20, upperSuccess: 0.55, upperLabel: "EXTRA BONUS", upperContinue: 0.80, upperPayout: 700, upperPureIncrease: 9.0, upperSetGames: [[50, 0.50], [100, 0.50]], settingRates: { 1: { trigger: 210, main: 362, payout: 0.977 }, 2: { trigger: 208, main: 360, payout: 0.988 }, 3: { trigger: 205, main: 357, payout: 1.012 }, 4: { trigger: 200, main: 349, payout: 1.058 }, 5: { trigger: 196, main: 343, payout: 1.108 }, 6: { trigger: 192, main: 335, payout: 1.149 } } },
     articleSections: [
       { heading: "設定別BONUS初当りを反映", paragraphs: ["BONUS初当りは設定1約1/362から設定6約1/335。START時に設定1〜6を均等抽選し、結果とランキングに設定を表示します。", "CZ確率の詳細は公開値が限られるため、代表値で簡易化します。"] },
       { heading: "1G連と引き戻しでループ", paragraphs: ["CZ告らせたいチャレンジの成功期待度は約58%。BONUSは純増約9.0枚/Gで、1G連と引き戻しを合わせたループ率は最大約80%です。", "チカブレイクとEXTRA BONUSは特化・上位演出としてまとめます。"] },
@@ -488,8 +488,8 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "作戦STを突破し、オップファータイプ殲滅作戦へ。",
     intro: "設定別初当りを使い、疑似ボーナス、作戦ST、三機殲滅、上位ATまでを簡易体験できます。",
     points: ["初当り設定1約1/291.1〜設定6約1/212.5", "STと疑似BONUSのループ", "上位CZから上位ATへ"],
-    specs: [["初当り（設定1）", "約1/291.1"], ["初当り（設定6）", "約1/212.5"], ["タイプ", "ST＋疑似BONUS"], ["上位CZ", "マリ獣化チャレンジ"], ["上位AT", "オップファータイプ殲滅作戦"], ["設定", "1〜6"]],
-    sim: { kind: "slot", triggerLabel: "作戦ST", triggerRate: 291.1, triggerSuccess: 0.55, mainLabel: "シン・エヴァBONUS", mainRate: 291.1, base50: 32.0, coinUnit: 3.3, normalMin: 200, normalMax: 1000, specialLabel: "三機殲滅", specialChance: 0.34, specialMin: 200, specialMax: 950, upperChallenge: "マリ獣化チャレンジ", upperChance: 0.18, upperSuccess: 0.55, upperLabel: "オップファータイプ殲滅作戦", upperContinue: 0.78, upperPayout: 620, settingRates: { 1: { trigger: 291.1, main: 291.1, payout: 0.977 }, 2: { trigger: 283.5, main: 283.5, payout: 0.988 }, 3: { trigger: 264.5, main: 264.5, payout: 1.012 }, 4: { trigger: 236.6, main: 236.6, payout: 1.057 }, 5: { trigger: 224.8, main: 224.8, payout: 1.103 }, 6: { trigger: 212.5, main: 212.5, payout: 1.149 } } },
+    specs: [["初当り（設定1）", "約1/291.1"], ["初当り（設定6）", "約1/212.5"], ["タイプ", "ST＋疑似BONUS"], ["ST純増", "約0.1枚/G"], ["BONUS純増", "約5.0枚/G"], ["上位CZ", "マリ獣化チャレンジ"], ["上位AT", "オップファータイプ殲滅作戦"], ["設定", "1〜6"]],
+    sim: { kind: "slot", triggerLabel: "作戦ST", triggerRate: 291.1, triggerSuccess: 0.55, mainLabel: "シン・エヴァBONUS", mainRate: 291.1, base50: 32.0, coinUnit: 3.3, normalMin: 200, normalMax: 1000, atPureIncrease: 5.0, specialLabel: "三機殲滅", specialChance: 0.34, specialMin: 200, specialMax: 950, upperChallenge: "マリ獣化チャレンジ", upperChance: 0.18, upperSuccess: 0.55, upperLabel: "オップファータイプ殲滅作戦", upperContinue: 0.78, upperPayout: 620, upperPureIncrease: 5.0, settingRates: { 1: { trigger: 291.1, main: 291.1, payout: 0.977 }, 2: { trigger: 283.5, main: 283.5, payout: 0.988 }, 3: { trigger: 264.5, main: 264.5, payout: 1.012 }, 4: { trigger: 236.6, main: 236.6, payout: 1.057 }, 5: { trigger: 224.8, main: 224.8, payout: 1.103 }, 6: { trigger: 212.5, main: 212.5, payout: 1.149 } } },
     articleSections: [
       { heading: "初当りは設定1約1/291.1から", paragraphs: ["初当りは設定1約1/291.1から設定6約1/212.5。開始時に設定1〜6を均等抽選し、選ばれた初当り確率を使用します。", "設定は最終結果と機種別ランキングへ表示します。"] },
       { heading: "作戦STと上位AT", paragraphs: ["通常時はボーナスやSTを目指し、作戦中の進行ストックでBONUSループを伸ばします。", "上位CZマリ獣化チャレンジと上位ATはサイト共通の簡易抽選で表現します。"] },
@@ -546,7 +546,7 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "金色になれ！を突破し、究極魔戒RUSHへ。",
     intro: "2026年11月2日から順次導入が始まったスマスロ。設定別CZ・BONUS確率を使い、疑似ボーナス、SUPER GARO BONUS、金色になれ！、究極魔戒RUSHまでを簡易体験できます。",
     points: ["CZは設定1約1/156.6〜設定6約1/141.1", "BONUSは設定1約1/291.1〜設定6約1/256.5", "純増約9.1枚/G・究極魔戒RUSH継続約82.6%"],
-    specs: [["CZ（設定1）", "約1/156.6"], ["CZ（設定6）", "約1/141.1"], ["BONUS（設定1）", "約1/291.1"], ["BONUS（設定6）", "約1/256.5"], ["ベース", "約33G/50枚"], ["究極魔戒RUSH", "継続約82.6%"]],
+    specs: [["CZ（設定1）", "約1/156.6"], ["CZ（設定6）", "約1/141.1"], ["BONUS（設定1）", "約1/291.1"], ["BONUS（設定6）", "約1/256.5"], ["ベース", "約33G/50枚"], ["BONUS純増", "約9.1枚/G"], ["究極魔戒RUSH", "継続約82.6%"]],
     sim: { kind: "slot", triggerLabel: "牙狼モード", triggerRate: 156.6, triggerSuccess: 0.51, mainLabel: "GARO BONUS", mainRate: 291.1, base50: 33.0, coinUnit: 3.6, normalMin: 180, normalMax: 950, specialLabel: "SUPER GARO BONUS", specialChance: 0.32, specialMin: 800, specialMax: 1300, upperChallenge: "金色になれ！", upperChance: 0.22, upperSuccess: 0.50, upperLabel: "究極魔戒RUSH", upperContinue: 0.826, upperPayout: 740, settingRates: { 1: { trigger: 156.6, main: 291.1, payout: 0.975 }, 2: { trigger: 154.6, main: 283.7, payout: 0.988 }, 3: { trigger: 151.4, main: 276.1, payout: 1.012 }, 4: { trigger: 148.7, main: 265.8, payout: 1.046 }, 5: { trigger: 144.2, main: 259.4, payout: 1.105 }, 6: { trigger: 141.1, main: 256.5, payout: 1.149 } } },
     articleSections: [
       { heading: "設定別CZ・BONUS確率を反映", paragraphs: ["CZは設定1約1/156.6から設定6約1/141.1、BONUSは設定1約1/291.1から設定6約1/256.5です。", "START時に設定1〜6を均等抽選し、選ばれた設定のCZ・BONUS確率・出玉率を使用します。結果と機種別ランキングにも設定を表示します。"] },
@@ -567,7 +567,7 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "爽怪Chainをつなぎ、真ラグナドールRUSHへ。",
     intro: "2026年11月2日から導入が始まったスマスロ。公開されたデジタルガイドと設定別CZ・AT初当りをもとに、ラグナドールバトル、チェインアタック、スペシャルジャッジ、上位ATまでを簡易体験できます。",
     points: ["CZは設定1約1/172.8〜設定6約1/142.4", "ATは設定1約1/326.4〜設定6約1/258.3", "通常AT純増約2.5枚/G・上位AT約4.5枚/G"],
-    specs: [["CZ（設定1）", "約1/172.8"], ["CZ（設定6）", "約1/142.4"], ["AT（設定1）", "約1/326.4"], ["AT（設定6）", "約1/258.3"], ["CZ間天井", "500G＋α"], ["AT間天井", "999G＋α"]],
+    specs: [["CZ（設定1）", "約1/172.8"], ["CZ（設定6）", "約1/142.4"], ["AT（設定1）", "約1/326.4"], ["AT（設定6）", "約1/258.3"], ["通常AT純増", "約2.5枚/G"], ["上位AT純増", "約4.5枚/G"], ["CZ間天井", "500G＋α"], ["AT間天井", "999G＋α"]],
     sim: { kind: "slot", triggerLabel: "ラグナドールバトル", triggerRate: 172.8, triggerSuccess: 0.50, mainLabel: "ラグナドールRUSH", mainRate: 326.4, base50: 31.0, coinUnit: 3.6, normalMin: 250, normalMax: 1050, specialLabel: "チェインアタック", specialChance: 0.34, specialMin: 180, specialMax: 950, upperChallenge: "スペシャルジャッジ", upperChance: 0.20, upperSuccess: 0.70, upperLabel: "真ラグナドールRUSH", upperContinue: 0.75, upperPayout: 600, settingRates: { 1: { trigger: 172.8, main: 326.4, payout: 0.976 }, 2: { trigger: 167.2, main: 317.2, payout: 0.988 }, 3: { trigger: 161.8, main: 307.7, payout: 1.003 }, 4: { trigger: 145.0, main: 271.2, payout: 1.057 }, 5: { trigger: 143.0, main: 260.8, payout: 1.105 }, 6: { trigger: 142.4, main: 258.3, payout: 1.145 } } },
     articleSections: [
       { heading: "設定別CZ・AT初当りを反映", paragraphs: ["CZは設定1約1/172.8から設定6約1/142.4、AT初当りは設定1約1/326.4から設定6約1/258.3です。", "START時に設定1〜6を均等抽選し、選ばれた設定のCZ・AT初当り・出玉率を使用します。結果とランキングにも設定を表示します。"] },
@@ -589,7 +589,7 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "十二宮を突破し、SAGA BATTLEと千日戦争へ。",
     intro: "2026年11月2日から順次導入が始まったスマスロ。設定別CZ・AT初当りを使い、Battle of ZODIACの継続バトルから上位AT『千日戦争』までを簡易体験できます。",
     points: ["CZは設定1約1/214.4〜設定6約1/200.3", "ATは設定1約1/364.2〜設定6約1/310.5", "通常AT純増約4.0枚/G・千日戦争約6.6枚/G"],
-    specs: [["CZ（設定1）", "約1/214.4"], ["CZ（設定6）", "約1/200.3"], ["AT（設定1）", "約1/364.2"], ["AT（設定6）", "約1/310.5"], ["ベース", "約31.3G/50枚"], ["千日戦争", "継続期待度約88%"]],
+    specs: [["CZ（設定1）", "約1/214.4"], ["CZ（設定6）", "約1/200.3"], ["AT（設定1）", "約1/364.2"], ["AT（設定6）", "約1/310.5"], ["ベース", "約31.3G/50枚"], ["通常AT純増", "約4.0枚/G"], ["千日戦争純増", "約6.6枚/G"], ["千日戦争", "継続期待度約88%"]],
     sim: { kind: "slot", triggerLabel: "WHO ARE YOU？", triggerRate: 214.4, triggerSuccess: 0.50, mainLabel: "Battle of ZODIAC", mainRate: 364.2, base50: 31.3, coinUnit: 3.8, normalMin: 250, normalMax: 1100, specialLabel: "金牛激震", specialChance: 0.34, specialMin: 200, specialMax: 900, upperChallenge: "SAGA BATTLE", upperChance: 0.18, upperSuccess: 0.50, upperLabel: "千日戦争", upperContinue: 0.88, upperPayout: 660, settingRates: { 1: { trigger: 214.4, main: 364.2, payout: 0.975 }, 2: { trigger: 214.1, main: 356.1, payout: 0.985 }, 3: { trigger: 211.7, main: 345.6, payout: 1.005 }, 4: { trigger: 202.5, main: 322.3, payout: 1.052 }, 5: { trigger: 197.2, main: 313.7, payout: 1.100 }, 6: { trigger: 200.3, main: 310.5, payout: 1.149 } } },
     articleSections: [
       { heading: "CZ・AT初当りを設定別に反映", paragraphs: ["CZ合算は設定1約1/214.4から設定6約1/200.3、AT初当りは設定1約1/364.2から設定6約1/310.5です。設定6のCZが設定5よりわずかに重い点も公開値どおり反映します。", "START時に設定1〜6を均等抽選し、結果とランキングに今回の設定を表示します。"] },
@@ -611,8 +611,8 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "BONUSを重ね、SQUAD JAMと上位STへ。",
     intro: "2026年11月2日から順次導入が始まったスマスロ。設定別の初当り・SQUAD JAM確率を使い、BONUS、ST、GGOストーム、上位ST『イカれたレン』までを簡易体験できます。",
     points: ["初当りは設定1約1/192.0〜設定6約1/153.9", "SQUAD JAMは設定1約1/521.7〜設定6約1/392.6", "BONUS純増約3.4枚/G・上乗せBONUS約7.1枚/G"],
-    specs: [["初当り（設定1）", "約1/192.0"], ["初当り（設定6）", "約1/153.9"], ["SJ（設定1）", "約1/521.7"], ["SJ（設定6）", "約1/392.6"], ["ベース", "約31G/50枚"], ["コイン単価", "約3.5円"]],
-    sim: { kind: "slot", triggerLabel: "初当りBONUS", triggerRate: 192.0, triggerSuccess: 0.50, mainLabel: "SQUAD JAM", mainRate: 521.7, base50: 31.0, coinUnit: 3.5, normalMin: 180, normalMax: 1100, specialLabel: "GGO BONUS", specialChance: 0.36, specialMin: 180, specialMax: 900, upperChallenge: "GGOストーム", upperChance: 0.20, upperSuccess: 0.55, upperLabel: "イカれたレン", upperContinue: 0.80, upperPayout: 600, settingRates: { 1: { trigger: 192.0, main: 521.7, payout: 0.979 }, 2: { trigger: 189.2, main: 510.4, payout: 0.988 }, 3: { trigger: 180.9, main: 486.6, payout: 1.009 }, 4: { trigger: 168.6, main: 445.3, payout: 1.044 }, 5: { trigger: 155.4, main: 405.0, payout: 1.097 }, 6: { trigger: 153.9, main: 392.6, payout: 1.145 } } },
+    specs: [["初当り（設定1）", "約1/192.0"], ["初当り（設定6）", "約1/153.9"], ["SJ（設定1）", "約1/521.7"], ["SJ（設定6）", "約1/392.6"], ["ベース", "約31G/50枚"], ["コイン単価", "約3.5円"], ["BONUS純増", "約3.4枚/G"], ["上乗せBONUS純増", "約7.1枚/G"]],
+    sim: { kind: "slot", triggerLabel: "初当りBONUS", triggerRate: 192.0, triggerSuccess: 0.50, mainLabel: "SQUAD JAM", mainRate: 521.7, base50: 31.0, coinUnit: 3.5, normalMin: 180, normalMax: 1100, atPureIncrease: 3.4, specialLabel: "GGO BONUS", specialChance: 0.36, specialMin: 180, specialMax: 900, upperChallenge: "GGOストーム", upperChance: 0.20, upperSuccess: 0.55, upperLabel: "イカれたレン", upperContinue: 0.80, upperPayout: 600, upperPureIncrease: 7.1, settingRates: { 1: { trigger: 192.0, main: 521.7, payout: 0.979 }, 2: { trigger: 189.2, main: 510.4, payout: 0.988 }, 3: { trigger: 180.9, main: 486.6, payout: 1.009 }, 4: { trigger: 168.6, main: 445.3, payout: 1.044 }, 5: { trigger: 155.4, main: 405.0, payout: 1.097 }, 6: { trigger: 153.9, main: 392.6, payout: 1.145 } } },
     articleSections: [
       { heading: "初当りとSQUAD JAMの設定差", paragraphs: ["初当り合算は設定1約1/192.0から設定6約1/153.9、ST『SQUAD JAM』は設定1約1/521.7から設定6約1/392.6です。", "START時に設定1〜6を均等抽選し、選ばれた設定の初当り・SQUAD JAM・出玉率を使用します。結果と機種別ランキングにも設定を表示します。"] },
       { heading: "CZイエスマムとBONUS", paragraphs: ["CZ『イエスマム』は10G＋αで、成功期待度は約50%です。BONUSはREGが20G・約70枚、BIGが40G・約130枚で、純増は約3.4枚/Gです。", "サイトでは通常時の直撃やCZを初当りBONUSへまとめます。CZの特訓回数、モード、スルー回数は個別再現しません。"] },
@@ -654,7 +654,7 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "3種類のCZを突破し、超あこがれver.へ。",
     intro: "2026年10月19日導入の疑似ボーナス＋AT機。全設定共通約1/249.6のBONUS、設定差のあるCZ・AT初当り、上乗せ特化ゾーンから上位ATまでを簡易体験できます。",
     points: ["CZは設定1約1/357.0〜設定6約1/235.4", "BONUSは全設定共通約1/249.6", "通常AT約2.5枚/G・上位AT約5.0枚/G"],
-    specs: [["CZ（設定1）", "約1/357.0"], ["CZ（設定6）", "約1/235.4"], ["BONUS", "約1/249.6（全設定共通）"], ["AT（設定1）", "約1/436.3"], ["AT（設定6）", "約1/305.7"], ["ベース", "約31.4G/50枚"]],
+    specs: [["CZ（設定1）", "約1/357.0"], ["CZ（設定6）", "約1/235.4"], ["BONUS", "約1/249.6（全設定共通）"], ["AT（設定1）", "約1/436.3"], ["AT（設定6）", "約1/305.7"], ["ベース", "約31.4G/50枚"], ["通常AT純増", "約2.5枚/G"], ["上位AT純増", "約5.0枚/G"]],
     sim: { kind: "slot", triggerLabel: "トランスマジア", triggerRate: 357.0, triggerSuccess: 0.42, mainLabel: "まほあこラッシュ", mainRate: 436.3, base50: 31.4, coinUnit: 3.2, normalMin: 200, normalMax: 1050, specialLabel: "あこがれATTACK", specialChance: 0.34, specialMin: 180, specialMax: 900, upperChallenge: "VSロードエノルメ", upperChance: 0.18, upperSuccess: 0.50, upperLabel: "まほあこラッシュ 超あこがれver.", upperContinue: 0.60, upperPayout: 520, settingRates: { 1: { trigger: 357.0, main: 436.3, payout: 0.976 }, 2: { trigger: 333.8, main: 422.7, payout: 0.988 }, 3: { trigger: 310.7, main: 401.4, payout: 1.005 }, 4: { trigger: 273.3, main: 352.4, payout: 1.050 }, 5: { trigger: 243.0, main: 316.1, payout: 1.102 }, 6: { trigger: 235.4, main: 305.7, payout: 1.120 } } },
     articleSections: [
       { heading: "BONUSと設定差の見方", paragraphs: ["BONUS確率は全設定共通で約1/249.6です。一方、CZとAT初当りには設定差があり、設定1のAT約1/436.3から設定6の約1/305.7まで段階的に軽くなります。", "シミュレーターはSTART時に設定1〜6を均等抽選し、選ばれた設定のCZ・AT初当り・出玉率を使用します。結果と機種別ランキングにも今回の設定を表示します。"] },
@@ -675,8 +675,8 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "フルーツ連を重ね、10連の先のIREGUIへ。",
     intro: "2026年10月19日導入のスマスロ。Aタイプの分かりやすさとAT機の連チャン性を組み合わせ、フルーツ連状態からボーナスを重ねてIREGUIを目指す流れを簡易体験できます。",
     points: ["設定は1・2・4・5・6（設定3非搭載）", "初当りは設定1約1/247.7〜設定6約1/207.6", "ボーナス10連後のIREGUIは平均22連OVER"],
-    specs: [["初当り（設定1）", "約1/247.7"], ["初当り（設定6）", "約1/207.6"], ["BIG平均", "約202枚"], ["REG平均", "約53枚"], ["ベース", "約29.9G/50枚"], ["IREGUI", "平均22連OVER"]],
-    sim: { kind: "slot", triggerLabel: "フルーツ連状態", triggerRate: 247.7, triggerSuccess: 0.55, mainLabel: "海人BONUS", mainRate: 247.7, base50: 29.9, coinUnit: 4.0, normalMin: 180, normalMax: 900, specialLabel: "ボーナスストック", specialChance: 0.38, specialMin: 100, specialMax: 700, upperChallenge: "ボーナス10連チャレンジ", upperChance: 0.16, upperSuccess: 0.45, upperLabel: "IREGUI", upperContinue: 0.82, upperPayout: 450, settingPool: [1, 2, 4, 5, 6], settingRates: { 1: { trigger: 247.7, main: 247.7, payout: 0.977 }, 2: { trigger: 243.3, main: 243.3, payout: 0.986 }, 4: { trigger: 219.8, main: 219.8, payout: 1.033 }, 5: { trigger: 211.0, main: 211.0, payout: 1.062 }, 6: { trigger: 207.6, main: 207.6, payout: 1.120 } } },
+    specs: [["初当り（設定1）", "約1/247.7"], ["初当り（設定6）", "約1/207.6"], ["BIG平均", "約202枚"], ["REG平均", "約53枚"], ["BIG純増", "約3.8枚/G"], ["REG純増", "約4.5枚/G"], ["ベース", "約29.9G/50枚"], ["IREGUI", "平均22連OVER"]],
+    sim: { kind: "slot", triggerLabel: "フルーツ連状態", triggerRate: 247.7, triggerSuccess: 0.55, mainLabel: "海人BONUS", mainRate: 247.7, base50: 29.9, coinUnit: 4.0, normalMin: 53, normalMax: 202, normalAwards: [[{ label: "BIG BONUS", payout: 202, games: 53 }, 0.79], [{ label: "REG BONUS", payout: 53, games: 12 }, 0.21]], normalAwardsNote: "設定1の公表確率から算出した目安です", atPureIncrease: 3.8, specialLabel: "ボーナスストック", specialChance: 0.38, specialMin: 53, specialMax: 202, upperChallenge: "ボーナス10連チャレンジ", upperChance: 0.16, upperSuccess: 0.45, upperLabel: "IREGUI", upperContinue: 0.82, upperPayout: 450, upperPureIncrease: 3.8, settingPool: [1, 2, 4, 5, 6], settingRates: { 1: { trigger: 247.7, main: 247.7, payout: 0.977 }, 2: { trigger: 243.3, main: 243.3, payout: 0.986 }, 4: { trigger: 219.8, main: 219.8, payout: 1.033 }, 5: { trigger: 211.0, main: 211.0, payout: 1.062 }, 6: { trigger: 207.6, main: 207.6, payout: 1.120 } } },
     articleSections: [
       { heading: "設定3を含めない実機どおりの抽選", paragraphs: ["通常遊技に使う設定は1・2・4・5・6の5段階です。設定3は搭載されておらず、設定Lも遊技用ではないため、シミュレーターのランダム設定から除外します。", "START時に5段階から均等抽選し、選ばれた設定の初当り確率と出玉率を使用します。設定は最終結果と機種別ランキングに表示します。"] },
       { heading: "フルーツ連からボーナスを目指す", paragraphs: ["フルーツ連状態ではフルーツが揃うたびにボーナスを抽選します。ボーナス中はストック抽選が行われ、終了後もフルーツ連状態へ移行して次の当りを狙います。", "サイトでは複数の内部状態を『フルーツ連状態』へまとめ、ボーナスストックを追加枚数抽選として表現します。実機の全モードやゾロ目抽選は個別再現しません。"] },
@@ -1037,7 +1037,7 @@ window.ICHIGEKI_MACHINES = {
     intro: "全国の大型ホールで主力設置される人気スマスロ。CZからAT『東京喰種咬』、BITESや特化ゾーンを経て上位CZを目指す流れを簡易体験できます。",
     points: ["設定1のCZ約1/262.6、AT初当り約1/394.4", "約31G/50枚・コイン単価約4.1円", "上位CZ『有馬貴将JUDGEMENT』成功期待度約61%"],
     specs: [["CZ（設定1）", "約1/262.6"], ["AT初当り（設定1）", "約1/394.4"], ["ベース", "約31G/50枚"], ["コイン単価", "約4.1円"], ["AT純増", "約4.0枚/G"], ["上位CZ期待度", "約61%"]],
-    sim: { kind: "slot", triggerLabel: "レミニセンス", triggerRate: 262.6, triggerSuccess: 0.666, mainLabel: "東京喰種咬", mainRate: 394.4, base50: 31, coinUnit: 4.1, normalMin: 180, normalMax: 1000, specialLabel: "BITES", specialChance: 0.36, specialMin: 200, specialMax: 1200, upperChallenge: "有馬貴将JUDGEMENT", upperChance: 0.22, upperSuccess: 0.61, upperLabel: "CCGの死神", upperContinue: 0.76, upperPayout: 520, settingRates: { 1: { trigger: 262.6, main: 394.4, payout: 0.975 }, 2: { trigger: 255.6, main: 380.5, payout: 0.990 }, 3: { trigger: 246.5, main: 357.0, payout: 1.016 }, 4: { trigger: 233.1, main: 325.9, payout: 1.056 }, 5: { trigger: 216.4, main: 291.2, payout: 1.103 }, 6: { trigger: 203.7, main: 261.3, payout: 1.149 } } },
+    sim: { kind: "slot", triggerLabel: "レミニセンス", triggerRate: 262.6, triggerSuccess: 0.666, mainLabel: "東京喰種咬", mainRate: 394.4, base50: 31, coinUnit: 4.1, normalMin: 150, normalMax: 150, atPureIncrease: 4.0, specialLabel: "BITES", specialChance: 0.36, specialMin: 200, specialMax: 1200, upperChallenge: "有馬貴将JUDGEMENT", upperChance: 0.22, upperSuccess: 0.61, upperLabel: "CCGの死神", upperContinue: 0.76, upperPayout: 520, upperPureIncrease: 4.0, settingRates: { 1: { trigger: 262.6, main: 394.4, payout: 0.975 }, 2: { trigger: 255.6, main: 380.5, payout: 0.990 }, 3: { trigger: 246.5, main: 357.0, payout: 1.016 }, 4: { trigger: 233.1, main: 325.9, payout: 1.056 }, 5: { trigger: 216.4, main: 291.2, payout: 1.103 }, 6: { trigger: 203.7, main: 261.3, payout: 1.149 } } },
     articleSections: [
       { heading: "CZ・AT・上位CZを段階で見る", paragraphs: ["通常時からCZ、AT『東京喰種咬』、特化ゾーン、上位CZへ進む段階型のゲームフローです。ICHIGEKIでは、その中からレミニセンス、BITES、有馬貴将JUDGEMENT、CCGの死神を一つの結果にまとめています。", "公式サイトが示す全ての内部状態や演出を再現するものではなく、上位到達までの難しさと獲得枚数の振れ幅を体験する簡易モデルです。"] },
       { heading: "設定1〜6の公開値と平均G", paragraphs: ["設定1〜6で公開されているCZ・AT初当りを個別に登録しています。START時に抽選された設定の数値を使い、設定1ならCZ約1/262.6・AT約1/394.4、設定6ならCZ約1/203.7・AT約1/261.3として計算します。", "機種別固定値31G/50枚から平均投資を計算します。コイン単価4.1円は現金投資額そのものではなく、吸い込みと出玉の振れやすさを見る別の指標です。"] },
@@ -1135,8 +1135,8 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "運命の一劇を越え、超からくりサーカスへ。",
     intro: "CZから基本ATへ進み、激情ジャッジと運命の一劇を経て上位ATを目指す人気スマスロ。段階ごとの突破と獲得枚数の振れ幅を簡易体験できます。",
     points: ["激情ジャッジ成功期待度約50%・成功で100〜300枚上乗せ", "3回成功後の『運命の一劇』期待度約50%", "4回目以降の『運命連鎖』期待度約56%"],
-    specs: [["CZ初当り（設定1）", "約1/333"], ["AT初当り（設定1）", "約1/564"], ["ベース", "約32.9G/50枚"], ["激情ジャッジ", "成功期待度約50%"], ["運命の一劇", "成功期待度約50%"], ["運命連鎖", "成功期待度約56%"], ["上位AT純増", "約7.6枚/G"]],
-    sim: { kind: "slot", triggerLabel: "機械仕掛けの神", triggerRate: 333, triggerSuccess: 0.55, mainLabel: "からくりサーカス", mainRate: 564, base50: 32.9, coinUnit: 4.1, normalMin: 300, normalMax: 1200, specialLabel: "激情ジャッジ", specialChance: 0.50, specialMin: 100, specialMax: 300, upperChallenge: "運命の一劇", upperChance: 0.28, upperSuccess: 0.50, upperLabel: "超からくりサーカス", upperContinue: 0.74, upperPayout: 900, karakuriJudgeFlow: true, karakuriJudgeAttempts: [[3, 0.25], [4, 0.45], [5, 0.30]], karakuriJudgeSuccess: 0.50, karakuriJudgeAwards: [[100, 0.60], [200, 0.30], [300, 0.10]], fateSuccess: 0.50, chainSuccess: 0.56, settingPool: [1, 2, 4, 5, 6], settingRates: { 1: { trigger: 333, main: 564, payout: 0.975 }, 2: { trigger: 320, main: 543, payout: 0.987 }, 4: { trigger: 292, main: 469, payout: 1.030 }, 5: { trigger: 277, main: 451, payout: 1.081 }, 6: { trigger: 275, main: 447, payout: 1.149 } } },
+    specs: [["CZ初当り（設定1）", "約1/333"], ["AT初当り（設定1）", "約1/564"], ["ベース", "約32.9G/50枚"], ["通常AT純増", "約2.8枚/G"], ["激情ジャッジ", "成功期待度約50%"], ["運命の一劇", "成功期待度約50%"], ["運命連鎖", "成功期待度約56%"], ["上位AT純増", "約7.6枚/G"]],
+    sim: { kind: "slot", triggerLabel: "機械仕掛けの神", triggerRate: 333, triggerSuccess: 0.55, mainLabel: "からくりサーカス", mainRate: 564, base50: 32.9, coinUnit: 4.1, normalMin: 150, normalMax: 150, atPureIncrease: 2.8, specialLabel: "激情ジャッジ", specialChance: 0.50, specialMin: 100, specialMax: 300, upperChallenge: "運命の一劇", upperChance: 0.28, upperSuccess: 0.50, upperLabel: "超からくりサーカス", upperContinue: 0.74, upperPayout: 850, upperPureIncrease: 7.6, upperSetGames: [[112, 1]], karakuriJudgeFlow: true, karakuriJudgeAttempts: [[3, 0.25], [4, 0.45], [5, 0.30]], karakuriJudgeSuccess: 0.50, karakuriJudgeAwards: [[100, 0.60], [200, 0.30], [300, 0.10]], fateSuccess: 0.50, chainSuccess: 0.56, settingPool: [1, 2, 4, 5, 6], settingRates: { 1: { trigger: 333, main: 564, payout: 0.975 }, 2: { trigger: 320, main: 543, payout: 0.987 }, 4: { trigger: 292, main: 469, payout: 1.030 }, 5: { trigger: 277, main: 451, payout: 1.081 }, 6: { trigger: 275, main: 447, payout: 1.149 } } },
     articleSections: [
       { heading: "基本ATから上位ATまでの流れ", paragraphs: ["通常時はレア役や規定ゲーム数などからCZ・ATを目指し、基本AT『からくりサーカス』では4Gの激情ジャッジ成功を重ねて上位ルートへ進みます。シミュレーターでは激情ジャッジごとにPUSHで成功・失敗を表示し、成功時は100・200・300枚の簡易振り分けを開きます。", "激情ジャッジを3回以上成功した状態でATが終了すると『運命の一劇』へ進み、PUSHで約50%の当落を表示します。4回目の成功時は『運命連鎖』へ進み、約56%の上位AT抽選を別のPUSHで表示します。"] },
       { heading: "実機の設定1・2・4・5・6で抽選", paragraphs: ["実機に搭載される通常設定は1・2・4・5・6です。シミュレーターもこの5段階から均等抽選し、設定3は抽選しません。公開されているCZ・AT初当りを設定ごとに使用します。", "設定1はCZ約1/333・AT約1/564、設定6はCZ約1/275・AT約1/447です。50枚ベース32.9Gから投資目安を計算します。"] },
@@ -1192,7 +1192,7 @@ window.ICHIGEKI_MACHINES = {
     intro: "3000発スタートと高速STで支持された人気機。通常回転率に応じた平均投資と、144回転RUSHの結果を試せます。",
     points: ["通常時大当り約1/319.6", "RUSH突入約55%", "ST144回、継続約77%"],
     specs: [["大当り確率", "約1/319.6"], ["RUSH中", "約1/99.9"], ["ST回数", "144回"], ["RUSH突入", "約55%"], ["RUSH継続", "約77%"], ["スタート", "通常ヘソ"]],
-    sim: { kind: "pachinko", hitRate: 319.6, hitLabel: "初当り", startType: "通常ヘソ", spinsPer1k: 17.0, minSpins: 10, maxSpins: 30, rushLabel: "鬼がかりRUSH", rushEntry: 0.55, rushContinue: 0.77, firstPayoutIn: 3000, firstPayoutOut: 1500, rushPayouts: [[1500, 0.75], [3000, 0.25]] },
+    sim: { kind: "pachinko", hitRate: 319.6, hitLabel: "初当り", startType: "通常ヘソ", spinsPer1k: 17.0, minSpins: 10, maxSpins: 30, rushLabel: "鬼がかりRUSH", rushEntry: 0.55, rushContinue: 0.77, firstPayoutIn: 3000, firstPayoutOut: 1500, rushPayouts: [[300, 0.20], [1500, 0.55], [3000, 0.25]] },
     sources: [["DMMぱちタウン 機種情報", "https://p-town.dmm.com/machines/4046"], ["アタリ7 スペック", "https://www.atari7.com/pachinko/onirezero.php"]]
   },
   "kabaneri": {
@@ -1205,8 +1205,8 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "3つのチャンス目からCZ、そしてカバネリオブジアイアンフォートレスへ。",
     intro: "6.5号機を代表するSTタイプ。ボーナスからST、無名回想を経由した上位STまでの流れを簡易抽選します。",
     points: ["3種類のチャンス目対応CZ", "ST初当り（設定1）約1/407.9", "上位ST『（裏）美馬ST』を搭載"],
-    specs: [["ボーナス合算（設定1）", "約1/157.1"], ["ST初当り（設定1）", "約1/407.9"], ["ベース", "約33.0G/50枚"], ["コイン単価", "約2.8円"], ["ST純増", "約2.8枚/G"], ["上位ST継続", "80%超"]],
-    sim: { kind: "slot", triggerLabel: "初当りボーナス", triggerRate: 237.0, triggerSuccess: 0.581, mainLabel: "カバネリST", mainRate: 407.9, base50: 33, coinUnit: 2.8, normalMin: 250, normalMax: 900, specialLabel: "無名回想", specialChance: 0.24, specialMin: 150, specialMax: 550, upperChallenge: "美馬決戦", upperChance: 0.18, upperSuccess: 0.46, upperLabel: "裏美馬ST", upperContinue: 0.82, upperPayout: 430, settingRates: { 1: { trigger: 237.0, main: 407.9, payout: 0.978 }, 2: { trigger: 230.7, main: 393.2, payout: 0.988 }, 3: { trigger: 214.0, main: 372.4, payout: 1.007 }, 4: { trigger: 186.5, main: 327.2, payout: 1.059 }, 5: { trigger: 171.3, main: 307.3, payout: 1.084 }, 6: { trigger: 151.3, main: 290.6, payout: 1.100 } } },
+    specs: [["ボーナス合算（設定1）", "約1/157.1"], ["ST初当り（設定1）", "約1/407.9"], ["ベース", "約33.0G/50枚"], ["コイン単価", "約2.8円"], ["ST純増", "約2.8枚/G"], ["ST中ボーナス純増", "約6.0枚/G"], ["上位ST継続", "80%超"]],
+    sim: { kind: "slot", triggerLabel: "初当りボーナス", triggerRate: 237.0, triggerSuccess: 0.581, mainLabel: "カバネリST", mainRate: 407.9, base50: 33, coinUnit: 2.8, normalMin: 200, normalMax: 1000, atPureIncrease: 6.0, specialLabel: "無名回想", specialChance: 0.24, specialMin: 150, specialMax: 550, upperChallenge: "美馬決戦", upperChance: 0.18, upperSuccess: 0.46, upperLabel: "裏美馬ST", upperContinue: 0.82, upperPayout: 430, upperPureIncrease: 6.0, settingRates: { 1: { trigger: 237.0, main: 407.9, payout: 0.978 }, 2: { trigger: 230.7, main: 393.2, payout: 0.988 }, 3: { trigger: 214.0, main: 372.4, payout: 1.007 }, 4: { trigger: 186.5, main: 327.2, payout: 1.059 }, 5: { trigger: 171.3, main: 307.3, payout: 1.084 }, 6: { trigger: 151.3, main: 290.6, payout: 1.100 } } },
     articleSections: [
       { heading: "ボーナス初当りとST初当りを分けて見る", paragraphs: ["ボーナス合算約1/157.1は複数の当選を含む合算値です。シミュレーターの最初の契機には、設定1のボーナス初当り約1/237.0を使用し、ST初当り約1/407.9とは分けて抽選します。", "設定1〜6で公開されているボーナス初当り・ST初当りを個別に登録し、START時にランダム抽選された設定の数値を使います。"] },
       { heading: "固定レートと結果の見方", paragraphs: ["50枚あたり33.0G、1,000円46枚貸し、5.2枚交換を固定条件として投資・収支目安を計算します。", "無名回想、美馬決戦、裏美馬STは体験用に簡略化した固定抽選です。公開されていない設定差を推測して上乗せすることはありません。"] }
@@ -1406,7 +1406,7 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "CZを突破し、盟勇クエストとサンブレイクRUSH Gへ。",
     intro: "2026年10月5日導入のゲーム数上乗せ型スマスロ。BREAK ZONEとアイルー福引からATへ進み、盟勇クエスト、剥ぎ取りRUSH、上位ATを目指す流れを簡易化しています。",
     points: ["AT初当りは設定1約1/349.9〜設定6約1/242.3", "約31.9G/50枚・コイン単価約3.2円", "ATは40G＋α・純増約2.7枚/G、CZ期待度は約37%または約60%"],
-    specs: [["AT初当り（設定1）", "約1/349.9"], ["AT初当り（設定6）", "約1/242.3"], ["設定1出玉率", "97.5%"], ["設定6出玉率", "112.4%"], ["BREAK ZONE", "期待度約37%"], ["アイルー福引", "期待度約60%"]],
+    specs: [["AT初当り（設定1）", "約1/349.9"], ["AT初当り（設定6）", "約1/242.3"], ["AT純増", "約2.7枚/G"], ["設定1出玉率", "97.5%"], ["設定6出玉率", "112.4%"], ["BREAK ZONE", "期待度約37%"], ["アイルー福引", "期待度約60%"]],
     sim: { kind: "slot", triggerLabel: "CZ（BREAK ZONE／アイルー福引）", triggerRate: 170, triggerSuccess: 0.486, mainLabel: "サンブレイクRUSH", mainRate: 349.9, base50: 31.9, coinUnit: 3.2, normalMin: 260, normalMax: 1050, specialLabel: "剥ぎ取りRUSH", specialChance: 0.30, specialMin: 180, specialMax: 950, upperChallenge: "キュリアチャンス", upperChance: 0.16, upperSuccess: 0.45, upperLabel: "サンブレイクRUSH G", upperContinue: 0.70, upperPayout: 600, settingRates: { 1: { main: 349.9, payout: 0.975 }, 2: { main: 337.0, payout: 0.988 }, 3: { main: 319.8, payout: 1.008 }, 4: { main: 283.6, payout: 1.052 }, 5: { main: 264.0, payout: 1.084 }, 6: { main: 242.3, payout: 1.124 } } },
     articleSections: [
       { heading: "2種類のCZからATを目指す", paragraphs: ["BREAK ZONEは1セット5Gで成功期待度約37%、アイルー福引は10G＋αで成功期待度約60%です。実機はレア小役や規定リプレイ回数からCZを抽選します。", "シミュレーターでは2種類のCZを一つの入口にまとめ、公開期待度の中間を参考にAT当落を抽選します。CZ出現率や内部状態は体験用の簡易条件です。"] },
@@ -1502,7 +1502,7 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "士気高揚ゾーンからParty Time、兵法書と上位STへ。",
     intro: "2026年10月5日導入のボーナス＋STタイプ。CZからボーナス、継続約73%のParty Time、兵法書獲得特化ゾーン、上位STまでを一つの流れに整理しました。",
     points: ["ボーナス初当りは設定1約1/309.9〜設定6約1/228.8", "CZは設定1約1/213.6〜設定6約1/171.7", "Party Time継続約73%、超Party Timeは約81%"],
-    specs: [["初当り（設定1）", "約1/309.9"], ["初当り（設定6）", "約1/228.8"], ["CZ（設定1）", "約1/213.6"], ["CZ（設定6）", "約1/171.7"], ["ST継続", "約73%"], ["上位ST継続", "約81%"]],
+    specs: [["初当り（設定1）", "約1/309.9"], ["初当り（設定6）", "約1/228.8"], ["CZ（設定1）", "約1/213.6"], ["CZ（設定6）", "約1/171.7"], ["BONUS純増", "約4.2枚/G"], ["ST継続", "約73%"], ["上位ST継続", "約81%"]],
     sim: { kind: "slot", triggerLabel: "士気高揚ゾーン", triggerRate: 213.6, triggerSuccess: 0.69, mainLabel: "Party Time", mainRate: 309.9, base50: 31.0, coinUnit: 3.3, normalMin: 180, normalMax: 980, specialLabel: "兵法書獲得特化ゾーン", specialChance: 0.35, specialMin: 120, specialMax: 720, upperChallenge: "臥龍転生", upperChance: 0.14, upperSuccess: 0.50, upperLabel: "超Party Time", upperContinue: 0.81, upperPayout: 420, settingRates: { 1: { trigger: 213.6, main: 309.9, payout: 0.976 }, 2: { trigger: 207.3, main: 299.6, payout: 0.989 }, 3: { trigger: 199.2, main: 280.0, payout: 1.014 }, 4: { trigger: 188.8, main: 262.0, payout: 1.045 }, 5: { trigger: 179.4, main: 243.9, payout: 1.090 }, 6: { trigger: 171.7, main: 228.8, payout: 1.136 } } },
     articleSections: [
       { heading: "CZからボーナス＋STへ", paragraphs: ["設定1のCZは約1/213.6、ボーナス初当りは約1/309.9。ボーナス当選後は15G＋αのST『Party Time』へ進み、継続率は約73%です。", "シミュレーターではCZと直撃を一つの入口へ整理し、CZ発生後のST突入率を公開されている初当り確率から求めた約69%の簡易値で抽選します。"] },
@@ -2090,7 +2090,7 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "彗星決戦から覚醒HYPER、Over The Rainbowと覚醒DRIVEへ。",
     intro: "設定1のAT約1/471.9から設定6の約1/392.3までを反映。CZ、AT、上位AT、1000枚上乗せループの覚醒DRIVEを簡易体験できます。",
     points: ["設定1 AT約1/471.9", "覚醒HYPERから上位ATへ", "覚醒DRIVEは1000枚上乗せ×約50%ループ"],
-    specs: [["AT（設定1）", "約1/471.9"], ["AT（設定6）", "約1/392.3"], ["上位AT", "Over The Rainbow"], ["最強特化", "覚醒DRIVE"], ["設定", "1〜6ランダム"], ["コンプリート", "19,000枚"]],
+    specs: [["AT（設定1）", "約1/471.9"], ["AT（設定6）", "約1/392.3"], ["通常AT純増", "約2.0枚/G"], ["上位AT純増", "約6.0枚/G"], ["上位AT", "Over The Rainbow"], ["最強特化", "覚醒DRIVE"], ["設定", "1〜6ランダム"], ["コンプリート", "19,000枚"]],
     sim: { kind: "slot", triggerLabel: "彗星決戦", triggerRate: 260.0, triggerSuccess: 0.55, mainLabel: "覚醒HYPER", mainRate: 471.9, base50: 31.5, coinUnit: 4.1, normalMin: 300, normalMax: 1200, specialLabel: "エピソードボーナス", specialChance: 0.36, specialMin: 200, specialMax: 900, upperChallenge: "覚醒の光", upperChance: 0.18, upperSuccess: 0.50, upperLabel: "覚醒DRIVE", upperContinue: 0.50, upperPayout: 1000, settingRates: { 1: { main: 471.9, payout: 0.978 }, 2: { main: 456.6, payout: 0.988 }, 3: { main: 427.8, payout: 1.010 }, 4: { main: 403.9, payout: 1.054 }, 5: { main: 398.3, payout: 1.102 }, 6: { main: 392.3, payout: 1.145 } } },
     articleSections: [
       { heading: "公式AT確率とCZ簡易換算", paragraphs: ["設定別AT確率は公式公表値を使用し、CZ発生率はAT確率との比率から簡易換算します。", "設定は開始時に1〜6から均等抽選し、最終結果とランキングで発表します。"] },
@@ -2252,7 +2252,7 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "機械仕掛けの女神から激情ジャッジ、超からくりサーカスへ。",
     intro: "2026年導入の人気スマスロ。CZ、AT、激情ジャッジ、運命の一劇を経て純増約8枚の上位ATへ進む流れを簡易体験できます。",
     points: ["設定1 CZ約1/342・AT約1/519", "約31.8G/50枚", "通常AT約2.8枚・上位約8.0枚/G"],
-    specs: [["CZ（設定1）", "約1/342"], ["AT（設定1）", "約1/519"], ["AT（設定6）", "約1/410"], ["ベース", "約31.8G/50枚"], ["コイン単価", "約4.1円"], ["設定", "1〜6"]],
+    specs: [["CZ（設定1）", "約1/342"], ["AT（設定1）", "約1/519"], ["AT（設定6）", "約1/410"], ["ベース", "約31.8G/50枚"], ["コイン単価", "約4.1円"], ["通常AT純増", "約2.8枚/G"], ["上位AT純増", "約8.0枚/G"], ["設定", "1〜6"]],
     sim: { kind: "slot", triggerLabel: "機械仕掛けの女神", triggerRate: 342.0, triggerSuccess: 0.55, mainLabel: "からくりサーカス", mainRate: 519.0, base50: 31.8, coinUnit: 4.1, normalMin: 300, normalMax: 1300, specialLabel: "激情ジャッジ", specialChance: 0.38, specialMin: 200, specialMax: 1100, upperChallenge: "運命の一劇", upperChance: 0.18, upperSuccess: 0.50, upperLabel: "超からくりサーカス", upperContinue: 0.82, upperPayout: 650, settingRates: { 1: { trigger: 342, main: 519, payout: 0.977 }, 2: { trigger: 341, main: 504, payout: 0.988 }, 3: { trigger: 339, main: 474, payout: 1.012 }, 4: { trigger: 339, main: 458, payout: 1.043 }, 5: { trigger: 327, main: 430, payout: 1.105 }, 6: { trigger: 318, main: 410, payout: 1.149 } } },
     articleSections: [
       { heading: "設定別CZ・AT初当りを反映", paragraphs: ["設定1〜6を均等抽選し、CZ約1/342〜1/318、AT約1/519〜1/410を個別に使用します。", "上位契機の非公表設定差は加えず、全設定共通の簡易抽選です。"] },
@@ -2288,7 +2288,7 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "スコードロンバトルからBoB、純増約7.2枚の上位ATへ。",
     intro: "2026年導入のスマスロ。CZスコードロンバトル、ATバレット・オブ・バレッツ、上位ATと絶剣の流れを簡易体験できます。",
     points: ["設定1 CZ約1/238.4・AT約1/386.2", "約31G/50枚・コイン単価約4.1円", "通常約3.6枚・上位約7.2枚/G"],
-    specs: [["CZ（設定1）", "約1/238.4"], ["AT（設定1）", "約1/386.2"], ["AT（設定6）", "約1/269.6"], ["ベース", "約31G/50枚"], ["コイン単価", "約4.1円"], ["設定", "1〜6"]],
+    specs: [["CZ（設定1）", "約1/238.4"], ["AT（設定1）", "約1/386.2"], ["AT（設定6）", "約1/269.6"], ["ベース", "約31G/50枚"], ["コイン単価", "約4.1円"], ["通常AT純増", "約3.6枚/G"], ["上位AT純増", "約7.2枚/G"], ["設定", "1〜6"]],
     sim: { kind: "slot", triggerLabel: "スコードロンバトル", triggerRate: 238.4, triggerSuccess: 0.55, mainLabel: "バレット・オブ・バレッツ", mainRate: 386.2, base50: 31.0, coinUnit: 4.1, normalMin: 260, normalMax: 1100, specialLabel: "スナイパーチャンス", specialChance: 0.36, specialMin: 180, specialMax: 900, upperChallenge: "BoB FINALS", upperChance: 0.18, upperSuccess: 0.50, upperLabel: "絶剣", upperContinue: 0.82, upperPayout: 580, settingRates: { 1: { trigger: 238.4, main: 386.2, payout: 0.976 }, 2: { trigger: 232.3, main: 364.3, payout: 0.988 }, 3: { trigger: 232.7, main: 368.1, payout: 1.002 }, 4: { trigger: 218.9, main: 326.8, payout: 1.053 }, 5: { trigger: 225.2, main: 340.6, payout: 1.104 }, 6: { trigger: 191.7, main: 269.6, payout: 1.149 } } },
     articleSections: [
       { heading: "設定別CZ・AT初当りをそのまま使用", paragraphs: ["設定4が設定5より軽いなど単純な順番にならない公開値も、そのまま反映しています。", "START時に設定1〜6を均等抽選し、最終結果とランキングで設定を発表します。"] },
@@ -2383,7 +2383,7 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "刺客ゾーンを突破し、頂ZBASHから青頂ZBASHへ。",
     intro: "番長シリーズの人気スマスロ。奇数・偶数設定で特徴が変わる初当りを使い、CZ、AT、絶頂決戦から上位ATへ進む流れを簡易体験できます。",
     points: ["設定1初当り約1/386.9", "設定6初当り約1/312.1", "設定1〜6を均等ランダム"],
-    specs: [["初当り（設定1）", "約1/386.9"], ["初当り（設定6）", "約1/312.1"], ["ベース", "約32G/50枚"], ["AT", "頂ZBASH"], ["上位AT", "青頂ZBASH"], ["設定", "1〜6"]],
+    specs: [["初当り（設定1）", "約1/386.9"], ["初当り（設定6）", "約1/312.1"], ["ベース", "約32G/50枚"], ["通常AT純増", "約2.8枚/G"], ["上位AT純増", "約5.0枚/G"], ["AT", "頂ZBASH"], ["上位AT", "青頂ZBASH"], ["設定", "1〜6"]],
     sim: { kind: "slot", triggerLabel: "刺客ゾーン", triggerRate: 240, triggerSuccess: 0.45, mainLabel: "頂ZBASH", mainRate: 386.9, base50: 32.0, coinUnit: 4.0, normalMin: 260, normalMax: 1100, specialLabel: "絶頂決戦～巌流島～", specialChance: 0.32, specialMin: 250, specialMax: 1000, upperChallenge: "絶頂決戦", upperChance: 0.17, upperSuccess: 0.55, upperLabel: "青頂ZBASH", upperContinue: 0.80, upperPayout: 600, settingRates: { 1: { trigger: 240, main: 386.9, payout: 0.976 }, 2: { trigger: 236, main: 368.5, payout: 0.989 }, 3: { trigger: 238, main: 375.8, payout: 1.013 }, 4: { trigger: 226, main: 332.4, payout: 1.060 }, 5: { trigger: 231, main: 351.6, payout: 1.121 }, 6: { trigger: 218, main: 312.1, payout: 1.149 } } },
     articleSections: [
       { heading: "奇数・偶数で変わる初当り", paragraphs: ["AT初当りは設定1約1/386.9から設定6約1/312.1。設定3が設定2より重いなど、公開値をそのまま使用します。", "開始時に設定1〜6を均等抽選し、設定は最終結果とランキングで発表します。"] },
@@ -2401,8 +2401,8 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "CZから楽園計画へ。ハーレムモードで大きな一撃を狙う。",
     intro: "人気スマスロ。チャンス目からCZ、楽園計画、上位STハーレムモードへ進む流れを、実機の設定2〜6からランダム抽選して体験できます。",
     points: ["設定2 AT初当り約1/352.0", "約30G/50枚・高純増AT", "実機どおり設定2〜6から抽選"],
-    specs: [["AT（設定2）", "約1/352.0"], ["AT（設定6）", "約1/311.1"], ["CZ合成", "設定2約1/177.6"], ["ベース", "約30G/50枚"], ["メインST", "楽園計画"], ["上位ST", "ハーレムモード"]],
-    sim: { kind: "slot", triggerLabel: "とらぶるCZ", triggerRate: 177.6, triggerSuccess: 0.50, mainLabel: "楽園計画", mainRate: 352.0, base50: 30.0, coinUnit: 4.2, normalMin: 250, normalMax: 1100, specialLabel: "ダークネス計画", specialChance: 0.35, specialMin: 250, specialMax: 1100, upperChallenge: "ハーレム目", upperChance: 0.18, upperSuccess: 0.55, upperLabel: "ハーレムモード", upperContinue: 0.80, upperPayout: 650, settingPool: [2, 3, 4, 5, 6], settingRates: { 2: { trigger: 177.6, main: 352.0, payout: 0.980 }, 3: { trigger: 174.0, main: 345.7, payout: 1.010 }, 4: { trigger: 168.0, main: 328.4, payout: 1.055 }, 5: { trigger: 162.0, main: 311.3, payout: 1.100 }, 6: { trigger: 158.0, main: 311.1, payout: 1.140 } } },
+    specs: [["AT（設定2）", "約1/352.0"], ["AT（設定6）", "約1/311.1"], ["CZ合成", "設定2約1/177.6"], ["ベース", "約30G/50枚"], ["ボーナス純増", "約6.6枚/G"], ["ボーナス枚数", "100〜1600枚"], ["メインST", "楽園計画"], ["上位ST", "ハーレムモード"]],
+    sim: { kind: "slot", triggerLabel: "とらぶるCZ", triggerRate: 177.6, triggerSuccess: 0.50, mainLabel: "楽園計画", mainRate: 352.0, base50: 30.0, coinUnit: 4.2, normalMin: 100, normalMax: 1600, atPureIncrease: 6.6, specialLabel: "ダークネス計画", specialChance: 0.35, specialMin: 100, specialMax: 1600, upperChallenge: "ハーレム目", upperChance: 0.18, upperSuccess: 0.55, upperLabel: "ハーレムモード", upperContinue: 0.80, upperPayout: 650, upperPureIncrease: 6.6, settingPool: [2, 3, 4, 5, 6], settingRates: { 2: { trigger: 177.6, main: 352.0, payout: 0.980 }, 3: { trigger: 174.0, main: 345.7, payout: 1.010 }, 4: { trigger: 168.0, main: 328.4, payout: 1.055 }, 5: { trigger: 162.0, main: 311.3, payout: 1.100 }, 6: { trigger: 158.0, main: 311.1, payout: 1.140 } } },
     articleSections: [
       { heading: "実機の設定構成を優先", paragraphs: ["本機は設定2・3・4・5・6と設定Lの構成です。サイトでは通常遊技向けの設定2〜6から均等抽選し、設定Lは除外します。", "選ばれた設定は最終結果、マイ記録、機種別ランキングへ残ります。"] },
       { heading: "楽園計画からハーレムモードへ", paragraphs: ["CZ、メインST楽園計画、ダークネス計画、上位STハーレムモードを段階抽選で表現します。", "全チャンス目、ポイント、STキャラ、内部状態は簡易モデルの対象外です。"] }
@@ -2437,13 +2437,13 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "711枚BIGと1G連。裏鷹狩りで一撃を狙う。",
     intro: "初代のゲーム性を受け継ぐ人気スマスロ。高確率、711枚BIG、1G連、裏鷹狩りまでを設定1〜6ランダムで簡易体験できます。",
     points: ["設定1初当り約1/378.9", "設定6初当り約1/292.4", "BIG約711枚・純増約7.11枚/G"],
-    specs: [["初当り（設定1）", "約1/378.9"], ["初当り（設定6）", "約1/292.4"], ["ベース", "約33G/50枚"], ["BIG", "約711枚"], ["純増", "約7.11枚/G"], ["設定", "1〜6"]],
-    sim: { kind: "slot", triggerLabel: "高確率", triggerRate: 230, triggerSuccess: 0.48, mainLabel: "吉宗BIG", mainRate: 378.9, base50: 33.0, coinUnit: 4.0, normalMin: 300, normalMax: 900, specialLabel: "1G連", specialChance: 0.35, specialMin: 711, specialMax: 1422, upperChallenge: "鷹狩り", upperChance: 0.18, upperSuccess: 0.55, upperLabel: "裏鷹狩り", upperContinue: 0.80, upperPayout: 711, settingRates: { 1: { trigger: 230, main: 378.9, payout: 0.978 }, 2: { trigger: 225, main: 369.6, payout: 0.991 }, 3: { trigger: 219, main: 358.8, payout: 1.006 }, 4: { trigger: 205, main: 335.1, payout: 1.041 }, 5: { trigger: 195, main: 318.5, payout: 1.071 }, 6: { trigger: 180, main: 292.4, payout: 1.120 } } },
+    specs: [["初当り（設定1）", "約1/378.9"], ["初当り（設定6）", "約1/292.4"], ["ベース", "約33G/50枚"], ["BIG", "約711枚"], ["REG", "約72枚"], ["BIG：REG", "約6：4"], ["純増", "約7.11枚/G"], ["設定", "1〜6"]],
+    sim: { kind: "slot", triggerLabel: "高確率", triggerRate: 230, triggerSuccess: 0.48, mainLabel: "吉宗BONUS", mainRate: 378.9, base50: 33.0, coinUnit: 4.0, normalMin: 72, normalMax: 711, normalAwards: [[{ label: "BIG BONUS", payout: 711, games: 100 }, 0.60], [{ label: "REG BONUS", payout: 72, games: 10 }, 0.40]], atPureIncrease: 7.11, specialLabel: "1G連", specialChance: 0.35, specialMin: 72, specialMax: 711, upperChallenge: "鷹狩り", upperChance: 0.18, upperSuccess: 0.55, upperLabel: "裏鷹狩り", upperContinue: 0.80, upperPayout: 711, upperPureIncrease: 7.11, upperSetGames: [[10, 0.40], [100, 0.60]], settingRates: { 1: { trigger: 230, main: 378.9, payout: 0.978 }, 2: { trigger: 225, main: 369.6, payout: 0.991 }, 3: { trigger: 219, main: 358.8, payout: 1.006 }, 4: { trigger: 205, main: 335.1, payout: 1.041 }, 5: { trigger: 195, main: 318.5, payout: 1.071 }, 6: { trigger: 180, main: 292.4, payout: 1.120 } } },
     articleSections: [
-      { heading: "711枚BIGと設定別初当り", paragraphs: ["初当りは設定1約1/378.9から設定6約1/292.4。設定1〜6を均等抽選し、選ばれた設定の初当りを使用します。", "BIGは約711枚の代表値で、REGや細かなボーナス振り分けは簡易化しています。"] },
+      { heading: "711枚BIGと設定別初当り", paragraphs: ["初当りは設定1約1/378.9から設定6約1/292.4。設定1〜6を均等抽選し、選ばれた設定の初当りを使用します。", "通常時のボーナスはBIG約711枚・REG約72枚。公開されているBIG：REG約6：4を簡易抽選へ反映しています。"] },
       { heading: "1G連から裏鷹狩りへ", paragraphs: ["BIG中の7揃いなどによる1G連と、複数の1G連から到達する裏鷹狩りを特化・上位段階として表現します。", "モード移行、松解除、天井、全小役は再現せず、46枚貸し・5.2枚交換で比較します。"] }
     ],
-    sources: [["大都技研 公式製品情報", "https://www.daitogiken.com/products/slot/"], ["一撃 解析情報", "https://1geki.jp/slot/l_yoshimune/"]]
+    sources: [["大都技研 公式製品情報", "https://www.daitogiken.com/contents/product/slot/yoshimunes/"], ["一撃 解析情報", "https://1geki.jp/slot/l_yoshimune/"]]
   },
   "oumi4-black-plus": {
     order: 11.3, type: "pachinko", theme: "ocean", year: "2026年12月導入予定", maker: "三洋物産", updated: "2026-11-01",
@@ -2706,8 +2706,8 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "ハイビスカス告知から約360枚BIG。32G天国と1G連を狙う。",
     intro: "2026年11月16日導入予定。BIG約360枚・REG約120枚と、32G以内の天国連を組み合わせた完全告知タイプです。",
     points: ["設定1合算約1/193.3", "設定6合算約1/150.3", "BIG約360枚・純増約9枚/G"],
-    specs: [["合算（設定1）", "約1/193.3"], ["合算（設定6）", "約1/150.3"], ["BIG", "約360枚"], ["REG", "約120枚"], ["天国", "32G以内"], ["設定", "1・2・4・5・6"]],
-    sim: { kind: "slot", settingPool: [1, 2, 4, 5, 6], triggerLabel: "ハイビスカス告知", triggerRate: 193.3, triggerSuccess: 0.72, mainLabel: "BIG BONUS", mainRate: 193.3, base50: 32.0, coinUnit: 3.9, normalMin: 120, normalMax: 480, specialLabel: "BIG 1G連", specialChance: 0.24, specialMin: 360, specialMax: 720, upperChallenge: "天国32G", upperChance: 0.50, upperSuccess: 0.55, upperLabel: "ハイシオ天国", upperContinue: 0.82, upperPayout: 360, settingRates: { 1: { trigger: 193.3, main: 193.3, payout: 0.974 }, 2: { trigger: 188.4, main: 188.4, payout: 0.987 }, 4: { trigger: 168.0, main: 168.0, payout: 1.045 }, 5: { trigger: 161.9, main: 161.9, payout: 1.069 }, 6: { trigger: 150.3, main: 150.3, payout: 1.114 } } },
+    specs: [["合算（設定1）", "約1/193.3"], ["合算（設定6）", "約1/150.3"], ["BIG", "約360枚"], ["REG", "約120枚"], ["BONUS純増", "約9.0枚/G"], ["天国", "32G以内"], ["設定", "1・2・4・5・6"]],
+    sim: { kind: "slot", settingPool: [1, 2, 4, 5, 6], triggerLabel: "ハイビスカス告知", triggerRate: 193.3, triggerSuccess: 0.72, mainLabel: "BONUS", mainRate: 193.3, base50: 32.0, coinUnit: 3.9, normalMin: 120, normalMax: 360, normalAwards: [[{ label: "BIG BONUS", payout: 360, games: 40 }, 0.72], [{ label: "REG BONUS", payout: 120, games: 13 }, 0.28]], normalAwardsNote: "設定1の公表確率から算出した目安です", atPureIncrease: 9.0, specialLabel: "BIG 1G連", specialChance: 0.24, specialMin: 360, specialMax: 720, upperChallenge: "天国32G", upperChance: 0.50, upperSuccess: 0.55, upperLabel: "ハイシオ天国", upperContinue: 0.82, upperPayout: 360, upperPureIncrease: 9.0, settingRates: { 1: { trigger: 193.3, main: 193.3, payout: 0.974 }, 2: { trigger: 188.4, main: 188.4, payout: 0.987 }, 4: { trigger: 168.0, main: 168.0, payout: 1.045 }, 5: { trigger: 161.9, main: 161.9, payout: 1.069 }, 6: { trigger: 150.3, main: 150.3, payout: 1.114 } } },
     articleSections: [
       { heading: "実機搭載の5段階設定", paragraphs: ["設定は1・2・4・5・6から均等抽選し、設定3は抽選しません。ボーナス合算は設定1約1/193.3から設定6約1/150.3です。", "結果とランキングには抽選設定を表示します。"] },
       { heading: "BIG約360枚と32G天国", paragraphs: ["BIGは約360枚、REGは約120枚。BIG当選時の約50%で天国へ進み、32G以内の連チャンを狙います。", "ハイシオ天国の平均連数は簡易ループへまとめ、全ボーナス比率は完全再現しません。"] }
@@ -2744,7 +2744,7 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "CZ突破から7GのSTへ。純増約9枚、上位BEAST MODEは約80%。",
     intro: "2026年12月21日導入予定。レゾナンスチャンスを突破し、ボーナスと7G STを重ねて上位BEAST MODEを目指します。",
     points: ["設定2 AT約1/383.2", "通常ST継続約70%", "上位ST継続約80%"],
-    specs: [["CZ（設定2）", "約1/229.2"], ["AT（設定2）", "約1/383.2"], ["AT（設定6）", "約1/353.3"], ["ベース", "約30G/50枚"], ["コイン単価", "約4.7円"], ["設定", "2〜6"]],
+    specs: [["CZ（設定2）", "約1/229.2"], ["AT（設定2）", "約1/383.2"], ["AT（設定6）", "約1/353.3"], ["ベース", "約30G/50枚"], ["コイン単価", "約4.7円"], ["BONUS純増", "約9.0枚/G"], ["BONUS枚数", "300〜3000枚"], ["設定", "2〜6"]],
     sim: { kind: "slot", settingPool: [2, 3, 4, 5, 6], triggerLabel: "レゾナンスチャンス", triggerRate: 229.2, triggerSuccess: 0.53, mainLabel: "Witch and the Beast", mainRate: 383.2, base50: 30.0, coinUnit: 4.7, normalMin: 250, normalMax: 1200, specialLabel: "チャレンジボーナス", specialChance: 0.34, specialMin: 250, specialMax: 1200, upperChallenge: "永遠なる魔女", upperChance: 0.20, upperSuccess: 0.70, upperLabel: "BEAST MODE", upperContinue: 0.80, upperPayout: 650, settingRates: { 2: { trigger: 229.2, main: 383.2, payout: 0.979 }, 3: { trigger: 226.5, main: 381.6, payout: 0.991 }, 4: { trigger: 216.0, main: 372.2, payout: 1.041 }, 5: { trigger: 206.5, main: 360.7, payout: 1.092 }, 6: { trigger: 197.1, main: 353.3, payout: 1.137 } } },
     articleSections: [
       { heading: "設定2〜6の公開値", paragraphs: ["実機の設定2・3・4・5・6から均等抽選し、CZ約1/229.2〜約1/197.1、AT約1/383.2〜約1/353.3を個別に使います。", "設定1は抽選せず、結果とランキングには実際に選ばれた設定を表示します。"] },
@@ -3140,8 +3140,8 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "灰焔騎士団から純増約5.7枚のボーナスと炎炎ループへ。",
     intro: "初当り、ボーナス、炎炎激闘を重ねてアドラバーストを目指すスマスロです。",
     points: ["設定1初当り約1/197", "設定6初当り約1/169", "ボーナス純増約5.7枚/G"],
-    specs: [["初当り（設定1）", "約1/197"], ["初当り（設定6）", "約1/169"], ["ボーナス（設定1）", "約1/291"], ["炎炎ループ（設定1）", "約1/790"], ["ベース", "約33.8G/50枚"], ["設定", "1・2・4・5・6"]],
-    sim: { kind: "slot", settingPool: [1, 2, 4, 5, 6], triggerLabel: "灰焔騎士団", triggerRate: 197, triggerSuccess: 0.50, mainLabel: "炎炎BONUS", mainRate: 291, base50: 33.8, coinUnit: 3.1, normalMin: 180, normalMax: 850, specialLabel: "炎炎激闘", specialChance: 0.36, specialMin: 220, specialMax: 950, upperChallenge: "炎炎ループ", upperChance: 0.18, upperSuccess: 0.55, upperLabel: "アドラバースト", upperContinue: 0.80, upperPayout: 600, settingRates: { 1: { trigger: 197, main: 291, payout: 0.977 }, 2: { trigger: 194, main: 282, payout: 0.992 }, 4: { trigger: 182, main: 257, payout: 1.044 }, 5: { trigger: 173, main: 239, payout: 1.101 }, 6: { trigger: 169, main: 230, payout: 1.149 } } },
+    specs: [["初当り（設定1）", "約1/197"], ["初当り（設定6）", "約1/169"], ["ボーナス（設定1）", "約1/291"], ["炎炎ループ（設定1）", "約1/790"], ["ベース", "約33.8G/50枚"], ["ボーナス純増", "約5.7枚/G"], ["ボーナス出玉", "約230枚／約85枚"], ["設定", "1・2・4・5・6"]],
+    sim: { kind: "slot", settingPool: [1, 2, 4, 5, 6], triggerLabel: "灰焔騎士団", triggerRate: 197, triggerSuccess: 0.50, mainLabel: "炎炎BONUS", mainRate: 291, base50: 33.8, coinUnit: 3.1, normalMin: 85, normalMax: 230, normalAwards: [[{ label: "炎炎BONUS", payout: 230, games: 40 }, 0.50], [{ label: "REGULAR BONUS", payout: 85, games: 15 }, 0.50]], normalAwardsNote: "ボーナス種類の公開比率がないため、種類比率は比較用の1:1です", atPureIncrease: 5.7, specialLabel: "炎炎激闘", specialChance: 0.36, specialMin: 85, specialMax: 230, upperChallenge: "炎炎ループ", upperChance: 0.18, upperSuccess: 0.55, upperLabel: "アドラバースト", upperContinue: 0.80, upperPayout: 600, upperPureIncrease: 5.7, settingRates: { 1: { trigger: 197, main: 291, payout: 0.977 }, 2: { trigger: 194, main: 282, payout: 0.992 }, 4: { trigger: 182, main: 257, payout: 1.044 }, 5: { trigger: 173, main: 239, payout: 1.101 }, 6: { trigger: 169, main: 230, payout: 1.149 } } },
     articleSections: [
       { heading: "実機搭載の5段階設定", paragraphs: ["設定1・2・4・5・6から均等抽選し、設定3は対象外です。初当り合算は約1/197〜約1/169です。", "ボーナス初当り約1/291〜約1/230も設定ごとに使用します。"] },
       { heading: "炎炎激闘とアドラバースト", paragraphs: ["初当りボーナスは純増約5.7枚/G。炎炎激闘と炎炎ループでボーナスの連続を狙います。", "上位到達率などの未公表部分は全設定共通の比較用抽選です。"] }
@@ -3284,7 +3284,7 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "ICPOチャレンジからSUPER HEROへ。デカ目で上乗せを狙う。",
     intro: "ボーナス・ATのダブルセブンと上位AT『盗り放題RUSH』を備えたスマスロです。",
     points: ["設定1 AT約1/421.5", "設定6 AT約1/327.5", "ベース約31.1G/50枚"],
-    specs: [["初当り（設定1）", "約1/289.1"], ["AT（設定1）", "約1/421.5"], ["AT（設定6）", "約1/327.5"], ["ベース", "約31.1G/50枚"], ["出玉率（設定6）", "約114.3%"], ["設定", "1〜6"]],
+    specs: [["初当り（設定1）", "約1/289.1"], ["AT（設定1）", "約1/421.5"], ["AT（設定6）", "約1/327.5"], ["ベース", "約31.1G/50枚"], ["通常AT純増", "約2.7枚/G"], ["上位AT純増", "約4.7枚/G"], ["出玉率（設定6）", "約114.3%"], ["設定", "1〜6"]],
     sim: { kind: "slot", triggerLabel: "ICPOチャレンジ", triggerRate: 289.1, triggerSuccess: 0.55, mainLabel: "SUPER HERO", mainRate: 421.5, base50: 31.1, coinUnit: 3.3, normalMin: 220, normalMax: 1050, specialLabel: "デカ目高確", specialChance: 0.36, specialMin: 250, specialMax: 1100, upperChallenge: "ダブルセブン", upperChance: 0.18, upperSuccess: 0.55, upperLabel: "盗り放題RUSH", upperContinue: 0.82, upperPayout: 650, settingRates: { 1: { trigger: 289.1, main: 421.5, payout: 0.977 }, 2: { trigger: 275.6, main: 401.4, payout: 0.991 }, 3: { trigger: 262.6, main: 383.9, payout: 1.014 }, 4: { trigger: 233.9, main: 355.1, payout: 1.061 }, 5: { trigger: 223.6, main: 345.6, payout: 1.101 }, 6: { trigger: 216.3, main: 327.5, payout: 1.143 } } },
     articleSections: [
       { heading: "初当り・ATとも設定差あり", paragraphs: ["初当りは設定1約1/289.1〜設定6約1/216.3、ATは約1/421.5〜約1/327.5です。", "設定1〜6を均等抽選し、公開出玉率97.7%〜114.3%を結果へ反映します。"] },
@@ -3320,11 +3320,11 @@ window.ICHIGEKI_MACHINES = {
     catchcopy: "チェリー回数とモードから花笠点灯へ。天国・パトランプを目指す。",
     intro: "擬似チェリーと規定ゲーム数でボーナスを抽選し、32G連と高継続モードを狙うスマスロです。",
     points: ["設定1初当り約1/328.0", "設定6初当り約1/224.8", "純増約3.0・4.5枚/G"],
-    specs: [["初当り（設定1）", "約1/328.0"], ["初当り（設定6）", "約1/224.8"], ["ベース（設定1）", "約27.9G/50枚"], ["BIG", "約210枚"], ["SBIG", "約350枚"], ["設定", "1・2・4・5・6"]],
-    sim: { kind: "slot", settingPool: [1, 2, 4, 5, 6], triggerLabel: "チェリー前兆", triggerRate: 165, triggerSuccess: 0.50, mainLabel: "花笠ボーナス", mainRate: 328.0, base50: 27.9, coinUnit: 4.5, normalMin: 180, normalMax: 900, specialLabel: "天国モード", specialChance: 0.38, specialMin: 280, specialMax: 1200, upperChallenge: "パトランプ点灯", upperChance: 0.18, upperSuccess: 0.55, upperLabel: "リミットレス", upperContinue: 0.88, upperPayout: 650, settingRates: { 1: { main: 328.0, payout: 0.973 }, 2: { main: 314.4, payout: 0.993 }, 4: { main: 281.1, payout: 1.047 }, 5: { main: 263.3, payout: 1.096 }, 6: { main: 224.8, payout: 1.149 } } },
+    specs: [["初当り（設定1）", "約1/328.0"], ["初当り（設定6）", "約1/224.8"], ["ベース（設定1）", "約27.9G/50枚"], ["BIG", "約210枚"], ["REG", "約90枚"], ["SBIG", "約315枚"], ["通常BONUS純増", "約3.0枚/G"], ["SBIG純増", "約4.5枚/G"], ["設定", "1・2・4・5・6"]],
+    sim: { kind: "slot", settingPool: [1, 2, 4, 5, 6], triggerLabel: "チェリー前兆", triggerRate: 165, triggerSuccess: 0.50, mainLabel: "花笠ボーナス", mainRate: 328.0, base50: 27.9, coinUnit: 4.5, normalMin: 90, normalMax: 315, atPureIncrease: 3.0, specialLabel: "天国モード", specialChance: 0.38, specialMin: 90, specialMax: 315, upperChallenge: "パトランプ点灯", upperChance: 0.18, upperSuccess: 0.55, upperLabel: "リミットレス", upperContinue: 0.88, upperPayout: 650, upperPureIncrease: 4.5, settingRates: { 1: { main: 328.0, payout: 0.973 }, 2: { main: 314.4, payout: 0.993 }, 4: { main: 281.1, payout: 1.047 }, 5: { main: 263.3, payout: 1.096 }, 6: { main: 224.8, payout: 1.149 } } },
     articleSections: [
       { heading: "実機搭載の5段階設定", paragraphs: ["設定1・2・4・5・6から均等抽選し、設定3は対象外です。初当りは約1/328.0〜約1/224.8です。", "設定1のベース約27.9G/50枚と公開出玉率97.3%〜114.9%を使用します。"] },
-      { heading: "天国とパトランプ", paragraphs: ["REG約90枚、BIG約210枚、SBIG約350枚から32G以内の連チャンを狙います。", "チェリー天井や全モード移行は再現せず、天国・パトランプ・リミットレスを段階式の比較用抽選へまとめています。"] }
+      { heading: "天国とパトランプ", paragraphs: ["REG約90枚、BIG約210枚、SBIG約315枚から32G以内の連チャンを狙います。", "ボーナス種類の比率はモードで変わるため固定せず、出玉範囲を90〜315枚に限定しています。チェリー天井や全モード移行は再現せず、天国・パトランプ・リミットレスを段階式の比較用抽選へまとめています。"] }
     ],
     sources: [["P-WORLD 基本情報", "https://www.p-world.co.jp/machine/database/10014"], ["なな徹 設定別スペック", "https://nana-press.com/kaiseki/machine/722/19929/"]]
   }
