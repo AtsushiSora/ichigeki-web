@@ -17795,3 +17795,29 @@ textarea { min-height: 132px; line-height: 1.65; }
   background: radial-gradient(ellipse at 50% 8%, #fffbd7, #ffd849 34%, #ff344f 66%, #760015 100%);
   box-shadow: inset 0 6px 0 rgba(255,255,255,.55), inset 0 -8px 0 rgba(90,0,15,.35), 0 0 0 7px rgba(255, 55, 82, .2), 0 0 50px rgba(255, 207, 65, .7), 0 15px 24px rgba(0,0,0,.5);
 }
+
+/* Karakuri Circus: crimson battle judges and a gold upper-AT decision button. */
+.machine-experience[data-ui="arcade"][data-profile="fate"][data-tone="hyper"] {
+  --arcade-main: #e11331;
+  --arcade-dark: #3e020b;
+  --arcade-soft: #ffd65a;
+  --arcade-hot: #fff2ad;
+  --arcade-line: rgba(255, 55, 79, .78);
+}
+
+.machine-experience[data-ui="arcade"][data-profile="fate"][data-tone="hyper"] .machine-experience-screen,
+.machine-experience[data-ui="arcade"][data-profile="fate"][data-push-variant="upper"] .machine-experience-screen {
+  border-color: #ffd65a;
+  background:
+    repeating-linear-gradient(115deg, rgba(255, 213, 81, .08) 0 2px, transparent 2px 18px),
+    radial-gradient(circle at 50% 45%, rgba(222, 20, 49, .46), transparent 38%),
+    linear-gradient(145deg, #350108, #030101 76%);
+  box-shadow: inset 0 0 62px rgba(217, 19, 48, .3), 0 0 36px rgba(255, 203, 66, .32);
+}
+
+.machine-experience[data-ui="arcade"][data-profile="fate"][data-push-variant="upper"] .machine-experience-push {
+  border-color: #fff9cf;
+  color: #2d0b00;
+  background: radial-gradient(ellipse at 50% 8%, #fffbd7, #ffd85a 38%, #e02336 68%, #63000f 100%);
+  box-shadow: inset 0 6px 0 rgba(255,255,255,.58), inset 0 -8px 0 rgba(78,0,13,.36), 0 0 0 7px rgba(255, 207, 67, .18), 0 0 52px rgba(255, 189, 43, .7), 0 15px 24px rgba(0,0,0,.5);
+}
