@@ -821,14 +821,22 @@
     let karakuriJudgeSuccesses = 0;
     let karakuriUpperRoute = "";
     if (triggerSucceeded && Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length) {
-      entryBonus = weighted(sim.entryBonusAwards);
-      const bonusPayout = Math.max(0, Number(entryBonus.payout) || 0);
-      const bonusGames = Math.max(1, Number(entryBonus.games) || Math.round(bonusPayout / Math.max(1, Number(sim.atPureIncrease) || 4)));
+      const entryBonusTemplate = weighted(sim.entryBonusAwards);
+      const entryChance = Math.max(0, Math.min(1, Number(entryBonusTemplate.atChance) || 0));
+      entered = Math.random() < entryChance;
+      const payoutRange = entered ? entryBonusTemplate.payoutOnEntry : entryBonusTemplate.payoutOnMiss;
+      const bonusPayout = Array.isArray(payoutRange) && payoutRange.length >= 2
+        ? randomInt(Math.min(...payoutRange), Math.max(...payoutRange))
+        : Math.max(0, Number(entryBonusTemplate.payout) || 0);
+      const usesOutcomePayout = Array.isArray(entryBonusTemplate.payoutOnEntry) || Array.isArray(entryBonusTemplate.payoutOnMiss);
+      const bonusGames = Math.max(1, usesOutcomePayout
+        ? Math.round(bonusPayout / Math.max(1, Number(sim.atPureIncrease) || 4))
+        : Number(entryBonusTemplate.games) || Math.round(bonusPayout / Math.max(1, Number(sim.atPureIncrease) || 4)));
+      entryBonus = { ...entryBonusTemplate, payout: bonusPayout, games: bonusGames, averagePayout: Number(entryBonusTemplate.payout) || bonusPayout, outcome: entered ? "RUSH突破" : "RUSH非突破" };
       payout = Math.min(bonusPayout, SLOT_COMPLETE_LIMIT);
       atGamesTotal += bonusGames;
-      atEvents.push({ kind: "entry-bonus", label: entryBonus.label || "初当りBONUS", games: bonusGames, award: payout, cumulative: payout, atChance: Number(entryBonus.atChance) || 0 });
+      atEvents.push({ kind: "entry-bonus", label: entryBonus.label || "初当りBONUS", games: bonusGames, award: payout, cumulative: payout, atChance: entryChance, outcome: entryBonus.outcome });
       flow.push(`${entryBonus.label || "初当りBONUS"} 約${yen.format(payout)}枚`);
-      entered = Math.random() < Math.max(0, Math.min(1, Number(entryBonus.atChance) || 0));
     }
     if (!triggerSucceeded) {
       flow.push(`${machine.initialHitLabel || sim.mainLabel}非当選`);
@@ -997,7 +1005,7 @@
       settingRateStats.push([`設定${setting}の${mainRateLabel}`, `約1/${mainRate.toFixed(1)}`]);
     }
     const karakuriStats = sim.karakuriJudgeFlow ? [["激情ジャッジ", `${karakuriJudgeAttempts}回中 ${karakuriJudgeSuccesses}回成功`], ["上位ジャッジ", karakuriUpperRoute || "権利未獲得"]] : [];
-    const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
+    const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
     const rushGamesTotal = Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
     const atStats = entered ? [["RUSH消化モデル", `${yen.format(rushGamesTotal)}G相当`], ...karakuriStats, ["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnTotal)}枚` : "上乗せなし"], ["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : "非当選"], ["上位AT", upper ? `${sim.upperLabel} ${upperLoops}セット` : "非到達"]] : [];
     const stats = [["今回の設定", `設定${setting}`], ["設定差モデル", settingModelLabel], ["今回のゲーム数", `${yen.format(games)}G`], ...settingRateStats, ["現金投資目安", `${yen.format(investment)}円`], ...entryBonusStats, ...atStats, ["獲得枚数", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]];
