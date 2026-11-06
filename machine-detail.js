@@ -582,21 +582,21 @@
         : Array.isArray(cycle.games)
           ? cycle.games.map(([games]) => `${yen.format(games)}G`).join("・")
           : `${yen.format(cycle.games || 20)}G`;
-      const roundRoute = configuredRounds.length
+      const roundRoute = cycle.routeSummary || (configuredRounds.length
         ? configuredRounds.map(round => round.title).filter(Boolean).join(" → ")
         : Array.isArray(cycle.roundLabels) && cycle.roundLabels.length
           ? cycle.roundLabels.join(" → ")
-          : "";
+          : "");
       const rewardText = ([reward, weight]) => {
         const rewardKind = String(reward.kind || "coins").toLowerCase();
         const rewardValue = rewardKind === "games"
           ? `${Array.isArray(reward.games) ? reward.games.map(([games]) => yen.format(games)).join("・") : yen.format(reward.games || 0)}G`
-          : `約${yen.format(reward.payout)}枚`;
+          : Number(reward.payout) > 0 ? `約${yen.format(reward.payout)}枚` : "セット継続";
         return `${reward.label} ${rewardValue} ${percent(weight)}`;
       };
-      const rewards = configuredRounds.length
+      const rewards = cycle.rewardSummary || (configuredRounds.length
         ? configuredRounds.map(round => `${round.title}: ${(round.rewards || cycle.rewards || []).map(rewardText).join("・")}`).join(" / ")
-        : (cycle.rewards || []).map(rewardText).join(" / ");
+        : (cycle.rewards || []).map(rewardText).join(" / "));
       const roundChances = configuredRounds.map(round => Number(round.continueChance)).filter(Number.isFinite);
       const continueText = roundChances.length
         ? `${percent(Math.min(...roundChances))}〜${percent(Math.max(...roundChances))}`
@@ -1101,6 +1101,13 @@
               atEvents.push({ kind: "upper", label: sim.upperLabel, games: upperGames, award, cumulative: payout, set: upperLoops });
             } while (payout < SLOT_COMPLETE_LIMIT && upperLoops < 100 && Math.random() < sim.upperContinue);
             flow.push(`${sim.upperLabel} ${upperLoops}セット・+${yen.format(upperPayoutTotal)}枚`);
+          } else if (sim.upperFailureLabel) {
+            const fallbackGames = Math.max(1, Number(sim.upperFailureGames) || 40);
+            const fallbackAward = Math.max(0, Math.min(slotAwardForGames(fallbackGames, atPureIncrease, sim.atPayoutVariance), SLOT_COMPLETE_LIMIT - payout));
+            payout += fallbackAward;
+            atGamesTotal += fallbackGames;
+            atEvents.push({ kind: "cycle-round", label: sim.upperFailureLabel, roundTitle: sim.upperFailureLabel, roundDetail: `${sim.upperChallenge}失敗でもBTへ。通常シナリオで1セットを消化します`, phase: "BASILISK TIME", rewardLabel: "通常BT確定", rewardKind: "coins", games: fallbackGames, gameAdd: 0, bonusGames: 0, award: fallbackAward, cumulative: payout, round: cycleRounds + 1, continued: false, continueChance: 100, endLabel: `${sim.upperFailureLabel}終了` });
+            flow.push(`${sim.upperChallenge}失敗 → ${sim.upperFailureLabel}確定・+${yen.format(fallbackAward)}枚`);
           }
         }
       } else if (sim.kabaneriStFlow) {
@@ -2506,7 +2513,7 @@
           setExperienceStage(3, "UPPER JUDGE", `${data.upperLabel} 突入ジャッジ`, "PUSH", `${data.upperChallenge}の当落を開きます`, "judge", data.upperSuccessChance, `${data.upperLabel}突破率`);
           await waitForExperienceAction("上位PUSH");
           if (runId !== experienceRunId) return;
-          setExperienceStage(3, "UPPER JUDGE", data.upper ? `${data.upperLabel} 突入` : `${data.upperChallenge} 失敗`, data.upper ? "突破成功" : "通常AT終了", data.upper ? "上位ATへ進みます" : "最終結果へ進みます", data.upper ? "hyper" : "end", data.upper ? 100 : 0, "上位AT判定結果");
+          setExperienceStage(3, "UPPER JUDGE", data.upper ? `${data.upperLabel} 突入` : `${data.upperChallenge} 失敗`, data.upper ? "突破成功" : machine.sim.upperFailureLabel ? `${machine.sim.upperFailureLabel} 確定` : "通常AT終了", data.upper ? "上位ATへ進みます" : machine.sim.upperFailureLabel ? "失敗でも通常BTへ進みます" : "最終結果へ進みます", data.upper ? "hyper" : machine.sim.upperFailureLabel ? "rush" : "end", data.upper || machine.sim.upperFailureLabel ? 100 : 0, "上位AT判定結果");
           await waitForExperience(820);
           if (data.upper) {
             const upperPhase = setPushFlow ? "SUPER REVOLUTION RUSH" : battleBonusFlow ? "無想転生バトル" : sgRaceFlow ? "青島SG" : "UPPER AT";

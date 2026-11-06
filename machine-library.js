@@ -3297,7 +3297,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["P-WORLD 設定別スペック", "https://www.p-world.co.jp/machine/database/10157"]]
   },
   "basilisk-tenzen-slot": {
-    order: 15.9, type: "slot", theme: "violet", year: "2023年12月", maker: "ミズホ", updated: "2026-11-01",
+    order: 15.9, type: "slot", theme: "violet", year: "2023年12月", maker: "ミズホ", updated: "2026-11-07",
     name: "スマスロ バジリスク絆2 天膳 BLACK EDITION", shortName: "バジリスク天膳",
     image: "assets/machines/basilisk-tenzen-slot-key-visual.jpg",
     imageAlt: "スマスロ バジリスク絆2 天膳 BLACK EDITIONのキービジュアル",
@@ -3312,7 +3312,7 @@ window.ICHIGEKI_MACHINES = {
       { heading: "BCとBTの設定別確率", paragraphs: ["BCは設定1約1/124.7〜設定6約1/105.0、BTは約1/418.1〜約1/247.3です。", "抽選された設定の公開初当りと出玉率を使用し、結果とランキングへ設定を表示します。"] },
       { heading: "絆高確から宿怨へ", paragraphs: ["BTは純増約2.9枚/Gで、絆高確とシナリオにより継続を狙います。", "宿怨チャレンジ以降の細かな内部抽選は、上位挑戦と継続ループへ簡略化しています。"] }
     ],
-    sources: [["P-WORLD 設定別スペック", "https://www.p-world.co.jp/machine/database/9944"]]
+    sources: [["ユニバーサル 公式機種サイト", "https://www.universal-777.com/product/slot/bk2t/"], ["P-WORLD 設定別スペック", "https://www.p-world.co.jp/machine/database/9944"], ["一撃 BT・宿怨チャレンジ解析", "https://1geki.jp/slot/l_b_kizuna2_tnzn/"]]
   },
   "chibariyo2-slot": {
     order: 16.0, type: "slot", theme: "flame", year: "2024年3月", maker: "ネット", updated: "2026-11-01",
@@ -3480,6 +3480,13 @@ window.ICHIGEKI_MACHINES = {
 // continuation expectation and reward table by the current machine phase
 // instead of repeating one shared draw under different titles.
 (() => {
+  const tenzenBtRewards = () => [
+    [{ kind: "coins", label: "甲賀勝利・次セット継続", payout: 0 }, 0.49],
+    [{ kind: "bonus", label: "異色バジリスクチャンス", games: 16, payout: 46 }, 0.28],
+    [{ kind: "bonus", label: "同色バジリスクチャンス", games: 16, payout: 46 }, 0.16],
+    [{ kind: "bonus", label: "エピソードBC", games: 30, payout: 87 }, 0.06],
+    [{ kind: "bonus", label: "プレミアムBC", games: 30, payout: 87 }, 0.01]
+  ];
   const models = {
     "goblin-slayer-slot": {
       maxRounds: 5,
@@ -3725,6 +3732,28 @@ window.ICHIGEKI_MACHINES = {
         { title: "鬼斬乱舞", detail: "10Gの上乗せ特化ゾーン。平均約180Gを目安にゲーム数とストックを積み上げます", games: 10, continueChance: 0.80, rewards: [[{ kind: "games", label: "鬼斬乱舞", games: [[100, 0.38], [150, 0.27], [180, 0.20], [200, 0.10], [300, 0.05]] }, 0.82], [{ kind: "bonus", label: "鬼斬乱舞＋赤7BONUS", games: 20, payout: 460 }, 0.18]] },
         { title: "幻魔京バトル・覚醒ルート", detail: "節目の6Gバトルを突破すると、上位CZ『覚醒チャレンジ』へ進みます", games: 6, continueChance: 0.84, rewards: [[{ kind: "coins", label: "幻魔京バトル勝利", payout: 180 }, 0.58], [{ kind: "games", label: "継続ストック＋1", games: 30 }, 0.27], [{ kind: "bonus", label: "覚醒チャレンジ獲得", games: 10, payout: 350 }, 0.15]] }
       ]
+    },
+    "basilisk-tenzen-slot": {
+      maxRounds: 12,
+      upperAfterRounds: 12,
+      upperAfterRoundsAutoSuccess: false,
+      upperOnlyAfterRounds: true,
+      routeSummary: "追想の刻10G＋α → 争忍の刻平均30Gを1セットとして最大12セット。絆高確・朧チャンス・夜・駿府城で継続期待度が変化します",
+      rewardSummary: "各セットは甲賀勝利またはBC当選で継続。BCは16Gの異色・同色、30GのエピソードBC・プレミアムBCを別表示し、12セット完走時はエンディング後の宿怨チャレンジへ進みます。",
+      rounds: [
+        { title: "追想の刻 → 争忍の刻・1セット目", detail: "追想10G＋争忍平均30G。初回は絆高確が発動し、甲賀勝利で次セットへ進みます", games: 40, continueChance: 0.64, rewards: tenzenBtRewards() },
+        { title: "追想の刻 → 争忍の刻・2セット目", detail: "追想中に絆玉とBCを抽選。争忍では対戦人数とステージから継続を判定します", games: 40, continueChance: 0.60, rewards: tenzenBtRewards() },
+        { title: "追想の刻 → 争忍の刻・3セット目", detail: "絆玉を獲得すると争忍開始時に絆高確が点灯。対応役でBCを狙います", games: 40, continueChance: 0.63, rewards: tenzenBtRewards() },
+        { title: "絆高確・4セット目", detail: "縁・想・恋の対応役がBC当選を後押し。BC当選ならセット継続が確定します", games: 40, continueChance: 0.66, rewards: tenzenBtRewards() },
+        { title: "朧チャンス・5セット目", detail: "追想の刻の上位状態。絆玉を集め、複数の絆高確点灯を狙います", games: 40, continueChance: 0.68, rewards: tenzenBtRewards() },
+        { title: "争忍の刻・6セット目", detail: "対戦人数決定からメインパート、天膳バトルへ。PUSHで甲賀勝利を開きます", games: 40, continueChance: 0.62, rewards: tenzenBtRewards() },
+        { title: "争忍の刻・夜・7セット目", detail: "夜ステージは高継続に期待。BCまたは甲賀勝利で次の追想へ戻ります", games: 40, continueChance: 0.72, rewards: tenzenBtRewards() },
+        { title: "絆高確・8セット目", detail: "絆玉の数に応じて点灯数が増加。絆モードなら全役でBCのチャンスです", games: 40, continueChance: 0.74, rewards: tenzenBtRewards() },
+        { title: "争忍の刻・9セット目", detail: "シナリオ後半。ステージと対戦人数を見ながら継続ジャッジへ進みます", games: 40, continueChance: 0.76, rewards: tenzenBtRewards() },
+        { title: "天膳バトル・10セット目", detail: "争忍終盤の天膳バトル。弦之介を含む甲賀勝利で11セット目へ進みます", games: 40, continueChance: 0.78, rewards: tenzenBtRewards() },
+        { title: "争忍の刻・駿府城・11セット目", detail: "高期待度ステージから完走目前の継続をPUSHで判定します", games: 40, continueChance: 0.82, rewards: tenzenBtRewards() },
+        { title: "12セット目・シナリオ完走", detail: "12セット目を突破してエンディングへ。終了後は宿怨チャレンジへ進みます", games: 40, continueChance: 0.98, rewards: [[{ kind: "coins", label: "12セット完走・エンディング", payout: 300 }, 0.84], [{ kind: "bonus", label: "月下閃滅", games: 20, payout: 360 }, 0.16]] }
+      ]
     }
   };
 
@@ -3759,6 +3788,17 @@ window.ICHIGEKI_MACHINES = {
       sim.upperPureIncrease = 5.5;
       sim.upperPayout = 650;
       sim.upperContinue = 0.89;
+    }
+    if (slug === "basilisk-tenzen-slot") {
+      sim.upperChallenge = "宿怨チャレンジ";
+      sim.upperSuccess = 0.50;
+      sim.upperLabel = "天膳BT";
+      sim.upperPureIncrease = 2.9;
+      sim.upperPayout = 120;
+      sim.upperSetGames = [[40, 1]];
+      sim.upperContinue = 0.80;
+      sim.upperFailureLabel = "通常バジリスクタイム";
+      sim.upperFailureGames = 40;
     }
   });
 })();
