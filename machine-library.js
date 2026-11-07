@@ -5282,6 +5282,43 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.titleFlow;
 })();
 
+(function applyInuyasha2DedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["inuyasha2-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "20G＋αのブッた斬りスラッシュで、当てるたび次回ボーナスが＋1。奈落決戦までを専用進行で体験。",
+    intro: "妖勝負・魍魎丸バトルからATへ入り、初期報酬、20G＋αのブッた斬りスラッシュ、青7／白7BIG・ブーストチャンス、5Gの奈落チャレンジ、約82%でループする奈落決戦までを機種専用画面で再現します。",
+    points: ["下位ATは20G＋α・純増約1.8枚/G", "当選するたび次回ボーナス個数＋1・最大8個", "青7約200枚／白7約100枚／ブースト約50枚", "奈落決戦は約82%ループ"],
+    specs: [["CZ（設定1）", "約1/248.8"], ["AT（設定1）", "約1/435.4"], ["AT（設定6）", "約1/312.7"], ["ベース", "約33.3G/50枚"], ["ブッた斬りスラッシュ", "20G＋α・純増約1.8枚/G"], ["報酬アップZONE", "2G・初期報酬2〜8個"], ["青7BIG", "約200枚"], ["白7BIG", "約100枚"], ["ブーストチャンス", "約50枚"], ["ボーナス中純増", "約5.0枚/G"], ["奈落チャレンジ", "5G"], ["奈落決戦", "約82%ループ"]],
+    articleSections: [
+      { heading: "妖勝負・魍魎丸バトルからATへ", paragraphs: ["通常時は主に妖勝負を経由してATを目指し、魍魎丸バトル勝利やブッた斬り役では報酬アップZONEへ進みます。CZは設定1約1/248.8〜設定6約1/209.6、ATは約1/435.4〜約1/312.7です。", "AT直撃に見える挙動も、内部では規定CZスルー後のAT当選として扱われます。シミュレーターは通常回転後に入口を表示し、最後のPUSHでAT当落を開きます。"] },
+      { heading: "初期報酬とボーナス＋1", paragraphs: ["ATはボーナス1個から始まり、報酬アップZONEを経由した場合は2〜8個から開始。報酬アップZONEは2Gで、成立役に応じて初期個数を決めます。", "獲得したボーナスを消化した後は20G＋αのブッた斬りスラッシュへ。同色ベル2連やレア役で当選すると、次回にまとめて受け取るボーナス個数が1個増えます。最大8個です。"] },
+      { heading: "3種類のボーナス", paragraphs: ["青7BIGは約200枚、白7BIGは約100枚、ブーストチャンスは約50枚で、いずれも純増約5.0枚/Gです。下位ATのBIG比率は約55%で、報酬が4個以上ならALL BIG抽選も行われます。", "青7・白7BIG中はATゲーム数上乗せを抽選。ブーストチャンスの消化ゲーム数は同一AT内で蓄積され、規定ゲーム数到達が奈落チャレンジの契機になります。"] },
+      { heading: "奈落チャレンジと奈落決戦", paragraphs: ["奈落チャレンジは5G。成功すると上位ATの奈落決戦へ進みます。通常時の一部、AT中のブーストチャンス規定ゲーム数、1000枚到達後の奈落覚醒ZONE、エンディング後など複数の入口があります。", "奈落決戦はボーナス上乗せ特化のボーナスゲットZONEと奈落決戦を約82%でループ。専用画面ではボーナス個数をPUSHで開き、ボーナス消化後に継続ジャッジを行います。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約33.3G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6のCZ・AT初当り・出玉率は公開設定別値を使用", "初期報酬、20G＋α、ボーナス＋1、3種類のボーナス、奈落チャレンジ、奈落決戦を専用進行", "CZルート比率、下位ATの各小役当選、青7／白7内訳、奈落チャレンジ到達など非公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["L 犬夜叉2 公式サイト", "https://slot-l-inuyasha2.jp/"], ["開発トリビア 機種紹介", "https://spiky-crossalpha-trivia.jp/inuyasha2/1458/"], ["開発トリビア 報酬アップZONE", "https://spiky-crossalpha-trivia.jp/inuyasha2/1499/"], ["開発トリビア 奈落決戦", "https://spiky-crossalpha-trivia.jp/inuyasha2/1532/"], ["開発トリビア ボーナス比率", "https://spiky-crossalpha-trivia.jp/inuyasha2/2009/"], ["一撃 機種解析", "https://1geki.jp/slot/l_inuyasya2/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10160"]],
+    readerGuide: { verdict: "20G＋αのSTで当てるたび次回ボーナス個数が増える、ボーナス＋1型ATです。", bestFor: ["ボーナス個数が1→2→3と増える緊張感を楽しみたい", "青7・白7・ブーストの種類をPUSHで開きたい", "奈落チャレンジから約82%ループの上位を狙いたい"], check: ["CZ・AT初当り、主要ゲーム数、純増、ボーナス枚数は公開値", "ゲーム数とボーナス獲得枚数を分けて表示", "非公表の細かな振り分けは体験用代表値"], compare: [["golden-kamuy-slot", "スマスロ ゴールデンカムイ", "上乗せ型ATと比較"], ["gundam-seed-slot", "スマスロ ガンダムSEED", "ST型ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v28", dedicatedFlow: true, dedicatedFlowKey: "inuyasha2-slot", dedicatedFlowVersion: 2, inuyasha2Flow: true,
+    triggerLabel: "妖勝負", triggerRate: 248.8, triggerSuccess: 0.571, mainLabel: "ブッた斬りスラッシュ", mainRate: 435.4, base50: 33.3, coinUnit: 4.2,
+    normalMin: 0, normalMax: 0, atPureIncrease: 1.8, upperPureIncrease: 1.8, bonusPureIncrease: 5.0, atPayoutVariance: 0,
+    inuyashaEntryRoutes: [[{ key: "ayakashi", label: "妖勝負", games: 10, chance: 0.52, rewardUp: false }, 0.78], [{ key: "moryomaru", label: "魍魎丸バトル", games: 8, chance: 1, rewardUp: true }, 0.15], [{ key: "slash", label: "ブッた斬り役", games: 1, chance: 1, rewardUp: true }, 0.02], [{ key: "naraku", label: "奈落チャレンジ", games: 5, chance: 0.55, upper: true }, 0.05]],
+    inuyashaRewardUpStocks: [[2, 0.46], [3, 0.27], [4, 0.14], [5, 0.07], [6, 0.035], [7, 0.015], [8, 0.01]],
+    inuyashaStGames: 20, inuyashaStChance: 0.70, inuyashaMaxBonusPlus: 8, inuyashaMaxRounds: 8,
+    inuyashaBonuses: [[{ key: "white", label: "白7 BIG BONUS", games: 20, award: 100 }, 0.44], [{ key: "blue", label: "青7 BIG BONUS", games: 40, award: 200 }, 0.11], [{ key: "boost", label: "ブーストチャンス", games: 10, award: 50, boostGames: 10 }, 0.45]],
+    inuyashaBigRatio: 0.55, inuyashaAllBigChance: 0.25, inuyashaBoostThreshold: 40,
+    inuyashaNarakuGames: 5, inuyashaNarakuSuccess: 0.55,
+    inuyashaUpperContinue: 0.82, inuyashaUpperMaxLoops: 10, inuyashaUpperStocks: [[1, 0.40], [2, 0.28], [3, 0.16], [4, 0.08], [5, 0.04], [6, 0.02], [7, 0.01], [8, 0.01]],
+    specialLabel: "ボーナス＋1", specialChance: 0.70, upperChallenge: "奈落チャレンジ", upperChance: 0.18, upperSuccess: 0.55, upperLabel: "奈落決戦", upperContinue: 0.82, upperPayout: 0,
+    settingRates: { 1: { trigger: 248.8, main: 435.4, payout: 0.976 }, 2: { trigger: 243.5, main: 419.9, payout: 0.989 }, 3: { trigger: 239.6, main: 402.3, payout: 1.0172 }, 4: { trigger: 233.5, main: 366.4, payout: 1.0636 }, 5: { trigger: 216.8, main: 336.1, payout: 1.1129 }, 6: { trigger: 209.6, main: 312.7, payout: 1.1499 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
 (function applyZenigata4DedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["zenigata4-slot"];
   if (!machine) return;
