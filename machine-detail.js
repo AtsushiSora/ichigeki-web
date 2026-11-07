@@ -295,6 +295,14 @@
         ["設定抽選", slotSettingLabel, "設定3は非搭載"]
       ];
       note = "BONUS後32Gを毎回数え、10連後のIREGUIと獲得ストックを結果へ残します。";
+    } else if (sim.symphogearSeigiFlow) {
+      items = [
+        ["CZ突破", "約65%", "AXZバトル"],
+        ["通常AT", "40G以上", "純増約2.8枚/G"],
+        ["絶唱", "平均約100G", "5G＋α"],
+        ["黄金AT", "約5.0枚/G", "絶唱バトル約60%"]
+      ];
+      note = "残りゲーム数、ギアVチャンスの装者獲得、キャラ別ギアVアタック、絶唱、上位ATと絶唱バトルを個別に記録します。";
     } else if (sim.sao2Flow) {
       items = [
         ["CZ突破", "約55%", "スコードロンバトル"],
@@ -397,6 +405,22 @@
         "天国モード滞在時の代表ループ率です。金ドキによる再連は別抽選です。"
       ));
       note = "BONUS内訳は設定1の公表確率から算出し、天国の継続割合とは別に表示しています。モード初回振り分けは非公表のため円グラフには含めていません。";
+    } else if (sim.symphogearSeigiFlow) {
+      charts.push(ratioChartMarkup(
+        "CZ ENTRY",
+        "AXZバトル突破割合",
+        [["突破", 0.65], ["非突破", 0.35]],
+        "約65%",
+        "AXZバトルからAXZラッシュへ進む公表期待度です。"
+      ));
+      charts.push(ratioChartMarkup(
+        "UPPER LOOP",
+        "絶唱バトル勝利割合",
+        [["勝利", 0.60], ["敗北", 0.40]],
+        "約60%",
+        "AXZラッシュ黄金終了後に絶唱を経由して上位へ復帰する公表期待度です。"
+      ));
+      note = "AXZバトル約65%と絶唱バトル約60%は別々の抽選です。ギアVチャンスの装者別獲得率など非公表部分は円グラフに含めていません。";
     } else if (sim.sao2Flow) {
       charts.push(ratioChartMarkup(
         "CZ ENTRY",
@@ -777,6 +801,15 @@
         ["GRUDGE LOOP", "宿怨チャレンジと天膳BT", "カットイン3回まで・成功期待度50%超。成功時は激闘シナリオ相当の天膳BT＋初回10人状態、失敗時も通常BTへ進みます。12セット完走後はエンディングを経て必ず挑戦します。"]
       ];
       note = "BC・BT設定別確率、各ゲーム数、純増、シナリオ表・設定1振り分け、宿怨チャレンジの基本性能は公開値です。継続率A〜D、絆玉・BT中BC・月下閃滅・宿怨ポイントMAXの出現率は体験用の代表値です。";
+    } else if (sim.symphogearSeigiFlow) {
+      cards = [
+        ["AXZ BATTLE", "成功期待度約65%", "通常時はCZのAXZバトルまたは上位CZの最終決戦からATを目指します。最後のPUSHまで勝敗を伏せ、突破時は初期ゲーム数決定へ進みます。"],
+        ["AXZ RUSH", "初期40G以上・純増約2.8枚/G", "『わたしは歌でぶん殴るッ！』で40G・50G・100Gまたは絶唱を決定。残りゲーム数を減らしながら、獲得枚数の節目でギアVチャンスを抽選します。"],
+        ["GEAR V ATTACK", "5装者・平均約30G", "響、翼、クリス、マリア、調＆切歌の獲得結果をPUSHで開き、成功時はキャラ固有のゲーム数上乗せへ。5装者獲得時はEXへ進みます。"],
+        ["ZESSHO", "5G＋α・平均約100G", "絶唱は毎ゲーム10G以上を上乗せし、獲得ゲーム数をPUSHで表示。通常ATの1000・1500・2000・2500枚到達時にも上位移行を判定します。"],
+        ["GOLDEN RUSH", "純増約5.0枚/G・BONUSあり", "AXZラッシュ黄金はゲーム数上乗せとシンフォギアBONUSを別表示。終了後は5G・勝利期待度約60%の絶唱バトルをPUSHで決着し、勝利時は絶唱または黄金絶唱へ進みます。"]
+      ];
+      note = "AT初当り、CZ約65%、初期40G以上、純増約2.8枚/G・約5.0枚/G、絶唱平均約100G、絶唱バトル約60%、黄金絶唱平均約360Gは公開値です。装者別獲得率や上位移行率の一部は体験用代表値です。";
     } else if (sim.sao2Flow) {
       cards = [
         ["SQUADRON BATTLE", "CZ成功期待度約55%", "液晶ゲーム数、バレットカウンター、強チェリーなどからCZへ。最終PUSHでBullet of Bulletsの当落を開きます。"],
@@ -1067,7 +1100,7 @@
       const averageInvestment = Math.round((machine.sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
-      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow;
+      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow;
       const settingModelLabel = machine.sim.settingRates
         ? hasDedicatedFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
         : hasDedicatedFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
@@ -1153,7 +1186,7 @@
         ? Math.max(1, mainRate * sim.triggerRate / sim.mainRate)
         : Math.max(1, sim.triggerRate * profile.rate);
     const publishedEntry = Number(publishedSetting?.entry);
-    const triggerSuccess = sim.sao2Flow
+    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow
       ? Math.max(0, Math.min(1, Number(sim.triggerSuccess) || 0.55))
       : sim.godzillaEva2Flow || sim.mahoakoFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.shinEvaFlow
       ? 1
@@ -1303,6 +1336,18 @@
     let sao2UpperSections = 0;
     let sao2ZekkenAward = 0;
     let sao2Ultima = false;
+    let symphogearInitialRoute = null;
+    let symphogearGearVChances = 0;
+    let symphogearGearVWins = 0;
+    let symphogearGearVAttacks = 0;
+    let symphogearTotalAddGames = 0;
+    let symphogearExCount = 0;
+    let symphogearZesshoCount = 0;
+    let symphogearUpperSections = 0;
+    let symphogearBonusCount = 0;
+    let symphogearZesshoBattleAttempts = 0;
+    let symphogearZesshoBattleWins = 0;
+    let symphogearGoldenZesshoGames = 0;
     if (sim.basiliskTenzenFlow) {
       basiliskBc = weighted(sim.basiliskBcTypes || [[{ key: "hetero", label: "異色BC", games: 16, award: 30 }, 1]]);
       triggerSucceeded = true;
@@ -2263,6 +2308,166 @@
           }
         }
         basePayout = payout - entryPayout;
+      } else if (sim.symphogearSeigiFlow) {
+        payout = entryPayout;
+        basePayout = 0;
+        symphogearInitialRoute = weighted(sim.symphogearInitialRoutes || [[{ key: "normal", label: "響・通常開始", games: 40 }, 1]]);
+        const initialGames = Math.max(0, Number(symphogearInitialRoute.games) || 0);
+        let normalRemainingGames = initialGames;
+        let normalEarnedCoins = 0;
+        let nextGearVCoins = Math.max(1, Number(sim.symphogearGearVIntervalCoins?.[0]) || 50);
+        let thresholdIndex = 0;
+        let upperTriggered = Boolean(symphogearInitialRoute.upper);
+        const acquiredCharacters = new Set();
+        const resolvedUpperThresholds = new Set();
+        atEvents.push({ kind: "symphogear-initial", label: "わたしは歌でぶん殴るッ！", route: symphogearInitialRoute.label, games: 1, initialGames, upper: upperTriggered, cumulative: payout });
+        flow.push(`${symphogearInitialRoute.label}・${upperTriggered ? "絶唱" : `初期${initialGames}G`}`);
+
+        const appendNormalRun = segmentGames => {
+          const award = Math.max(0, Math.min(slotAwardForGames(segmentGames, Number(sim.atPureIncrease) || 2.8, 0), SLOT_COMPLETE_LIMIT - payout));
+          payout += award;
+          normalEarnedCoins += award;
+          atGamesTotal += segmentGames;
+          normalRemainingGames = Math.max(0, normalRemainingGames - segmentGames);
+          atEvents.push({ kind: "symphogear-at-run", label: sim.mainLabel, games: segmentGames, award, cumulative: payout, remainingGames: normalRemainingGames, earnedCoins: normalEarnedCoins, section: symphogearGearVChances + 1 });
+        };
+
+        while (!upperTriggered && normalRemainingGames > 0 && symphogearGearVChances < Math.max(1, Number(sim.symphogearGearVMaxChances) || 8) && payout < SLOT_COMPLETE_LIMIT) {
+          const coinsNeeded = Math.max(1, nextGearVCoins - normalEarnedCoins);
+          const gamesToThreshold = Math.max(1, Math.ceil(coinsNeeded / Math.max(0.1, Number(sim.atPureIncrease) || 2.8)));
+          const segmentGames = Math.min(normalRemainingGames, gamesToThreshold);
+          appendNormalRun(segmentGames);
+          if (normalEarnedCoins < nextGearVCoins || normalRemainingGames <= 0) break;
+
+          symphogearGearVChances += 1;
+          const availableCharacters = (sim.symphogearGearCharacters || []).filter(([character]) => !acquiredCharacters.has(character.key));
+          const character = weighted(availableCharacters.length ? availableCharacters : sim.symphogearGearCharacters || [[{ key: "hibiki", label: "響", chance: 0.58, rewards: [[30, 1]] }, 1]]);
+          const won = Math.random() < Math.max(0, Math.min(1, Number(character.chance) || 0.55));
+          if (won) {
+            symphogearGearVWins += 1;
+            acquiredCharacters.add(character.key);
+          }
+          atGamesTotal += 5;
+          atEvents.push({ kind: "symphogear-gear-v-chance", label: "ギアVチャンス", character: character.label, characterKey: character.key, games: 5, chance: Number(character.chance) * 100, won, attempt: symphogearGearVChances, wins: symphogearGearVWins, acquired: acquiredCharacters.size, cumulative: payout, remainingGames: normalRemainingGames });
+          flow.push(`ギアVチャンス ${symphogearGearVChances}回目・${character.label} ${won ? "獲得" : "非獲得"}`);
+          if (won) {
+            const addGames = Math.max(1, Number(weighted(character.rewards || [[30, 1]])) || 30);
+            normalRemainingGames += addGames;
+            symphogearGearVAttacks += 1;
+            symphogearTotalAddGames += addGames;
+            addOnCount += 1;
+            addOnGamesTotal += addGames;
+            atEvents.push({ kind: "symphogear-gear-v-attack", label: `${character.label} ギアVアタック`, character: character.label, characterKey: character.key, games: 1, addGames, attack: symphogearGearVAttacks, cumulative: payout, remainingGames: normalRemainingGames });
+            flow.push(`${character.label} ギアVアタック +${addGames}G`);
+          }
+
+          if (acquiredCharacters.size >= 5 && payout < SLOT_COMPLETE_LIMIT) {
+            const exGames = Math.max(1, Number(weighted(sim.symphogearExRewards || [[50, 1]])) || 50);
+            normalRemainingGames += exGames;
+            symphogearExCount += 1;
+            symphogearTotalAddGames += exGames;
+            addOnCount += 1;
+            addOnGamesTotal += exGames;
+            acquiredCharacters.clear();
+            atEvents.push({ kind: "symphogear-ex", label: "ギアVアタック EX", games: 10, addGames: exGames, cumulative: payout, remainingGames: normalRemainingGames, number: symphogearExCount });
+            flow.push(`ギアVアタック EX +${exGames}G`);
+          }
+
+          const crossedThreshold = (sim.symphogearUpperThresholds || []).find(threshold => normalEarnedCoins >= Number(threshold.coins) && !resolvedUpperThresholds.has(Number(threshold.coins)));
+          if (crossedThreshold) {
+            resolvedUpperThresholds.add(Number(crossedThreshold.coins));
+            const promoted = Math.random() < Math.max(0, Math.min(1, Number(crossedThreshold.chance) || 0));
+            atEvents.push({ kind: "symphogear-upper-promote", label: "上位移行抽選", games: 1, coins: Number(crossedThreshold.coins), chance: Number(crossedThreshold.chance) * 100, success: promoted, cumulative: payout });
+            flow.push(`${crossedThreshold.coins}枚到達・上位移行${promoted ? "成功" : "非当選"}`);
+            upperTriggered = promoted;
+          }
+          if (!upperTriggered && Math.random() < 0.02) {
+            upperTriggered = true;
+            atEvents.push({ kind: "symphogear-upper-promote", label: "ギアフラグ", games: 1, coins: normalEarnedCoins, chance: 2, success: true, cumulative: payout });
+            flow.push("ギアフラグ成立・絶唱");
+          }
+          thresholdIndex += 1;
+          nextGearVCoins = thresholdIndex === 1 ? 100 : thresholdIndex * 100;
+        }
+        if (!upperTriggered && normalRemainingGames > 0 && payout < SLOT_COMPLETE_LIMIT) appendNormalRun(normalRemainingGames);
+
+        const appendZessho = ({ golden = false, source = "絶唱" } = {}) => {
+          const rewardTable = golden ? sim.symphogearGoldenZesshoRewards : sim.symphogearZesshoRewards;
+          const addGames = Math.max(1, Number(weighted(rewardTable || [[100, 1]])) || (golden ? 360 : 100));
+          symphogearTotalAddGames += addGames;
+          addOnCount += 1;
+          addOnGamesTotal += addGames;
+          if (golden) symphogearGoldenZesshoGames += addGames;
+          else symphogearZesshoCount += 1;
+          atGamesTotal += golden ? 10 : 5;
+          atEvents.push({ kind: golden ? "symphogear-golden-zessho" : "symphogear-zessho", label: golden ? "黄金絶唱" : "絶唱", games: golden ? 10 : 5, addGames, source, cumulative: payout, number: golden ? symphogearGoldenZesshoGames : symphogearZesshoCount });
+          flow.push(`${golden ? "黄金絶唱" : "絶唱"} +${addGames}G`);
+          return addGames;
+        };
+
+        if (upperTriggered && payout < SLOT_COMPLETE_LIMIT) {
+          upper = true;
+          let upperGames = appendZessho({ source: symphogearInitialRoute.upper ? "初期ギアフラグ" : "上位移行" });
+          let upperActive = true;
+          while (upperActive && symphogearUpperSections < 5 && payout < SLOT_COMPLETE_LIMIT) {
+            symphogearUpperSections += 1;
+            upperLoops = symphogearUpperSections;
+            let sectionRemaining = upperGames;
+            let sectionEvents = 0;
+            while (sectionRemaining > 0 && sectionEvents < 8 && payout < SLOT_COMPLETE_LIMIT) {
+              const segmentGames = Math.min(sectionRemaining, 30);
+              const segmentAward = Math.max(0, Math.min(slotAwardForGames(segmentGames, Number(sim.upperPureIncrease) || 5, 0), SLOT_COMPLETE_LIMIT - payout));
+              payout += segmentAward;
+              upperPayoutTotal += segmentAward;
+              atGamesTotal += segmentGames;
+              sectionRemaining -= segmentGames;
+              sectionEvents += 1;
+              atEvents.push({ kind: "symphogear-upper-run", label: sim.upperLabel, games: segmentGames, award: segmentAward, cumulative: payout, remainingGames: sectionRemaining, section: symphogearUpperSections });
+              if (payout >= SLOT_COMPLETE_LIMIT) break;
+              if (Math.random() < (Number(sim.symphogearUpperBonusChance) || 0.18)) {
+                const bonusGames = Math.max(1, Number(weighted(sim.symphogearUpperBonusGames || [[20, 1]])) || 20);
+                const bonusAward = Math.max(0, Math.min(slotAwardForGames(bonusGames, Number(sim.upperPureIncrease) || 5, 0), SLOT_COMPLETE_LIMIT - payout));
+                payout += bonusAward;
+                upperPayoutTotal += bonusAward;
+                atGamesTotal += bonusGames;
+                bonusCount += 1;
+                bonusPayoutTotal += bonusAward;
+                symphogearBonusCount += 1;
+                atEvents.push({ kind: "symphogear-bonus", label: "シンフォギアBONUS", games: bonusGames, award: bonusAward, cumulative: payout, section: symphogearUpperSections, number: symphogearBonusCount });
+              } else if (Math.random() < 0.30) {
+                const addGames = Math.max(1, Number(weighted(sim.symphogearUpperAdditions || [[10, 1]])) || 10);
+                sectionRemaining += addGames;
+                symphogearTotalAddGames += addGames;
+                addOnCount += 1;
+                addOnGamesTotal += addGames;
+                atEvents.push({ kind: "symphogear-upper-add", label: "AXZ目上乗せ", games: 1, addGames, cumulative: payout, remainingGames: sectionRemaining, section: symphogearUpperSections });
+              }
+            }
+            if (sectionRemaining > 0 && payout < SLOT_COMPLETE_LIMIT) {
+              const finalAward = Math.max(0, Math.min(slotAwardForGames(sectionRemaining, Number(sim.upperPureIncrease) || 5, 0), SLOT_COMPLETE_LIMIT - payout));
+              payout += finalAward;
+              upperPayoutTotal += finalAward;
+              atGamesTotal += sectionRemaining;
+              atEvents.push({ kind: "symphogear-upper-run", label: sim.upperLabel, games: sectionRemaining, award: finalAward, cumulative: payout, remainingGames: 0, section: symphogearUpperSections, summary: true });
+            }
+            if (payout >= SLOT_COMPLETE_LIMIT) break;
+            symphogearZesshoBattleAttempts += 1;
+            const won = Math.random() < (Number(sim.upperSuccess) || 0.60);
+            if (won) symphogearZesshoBattleWins += 1;
+            atGamesTotal += 5;
+            atEvents.push({ kind: "symphogear-zessho-battle", label: sim.upperChallenge, games: 5, chance: (Number(sim.upperSuccess) || 0.60) * 100, success: won, attempt: symphogearZesshoBattleAttempts, wins: symphogearZesshoBattleWins, cumulative: payout, section: symphogearUpperSections });
+            flow.push(`${sim.upperChallenge} ${symphogearUpperSections}回目・${won ? "勝利" : "敗北"}`);
+            if (!won) {
+              upperActive = false;
+              break;
+            }
+            const golden = Math.random() < (Number(sim.symphogearGoldenZesshoChance) || 0.04);
+            upperGames = appendZessho({ golden, source: sim.upperChallenge });
+          }
+        }
+        cycleRounds = symphogearGearVChances;
+        cycleContinues = symphogearGearVWins;
+        basePayout = payout - entryPayout;
       } else if (sim.sao2Flow) {
         payout = entryPayout;
         basePayout = 0;
@@ -3080,7 +3285,7 @@
           }
           flow.push(`${karakuriUpperRoute}突破 → ${sim.upperLabel} ${upperLoops}セット・+${yen.format(upperPayoutTotal)}枚`);
         }
-      } else if (!sim.battleBonusFlow && !sim.sgRaceFlow && !sim.kabaneriStFlow && !sim.otomeRushFlow && !sim.cycleFlow && !sim.godzillaEva2Flow && !sim.mahoakoFlow && !sim.okidokiGoldFlow && !sim.uminchuFlow && !sim.tentenFlow && !sim.goblinSlayerFlow && !sim.assaultLilyFlow && !sim.kaguyaFlow && !sim.dumbbellFlow && !sim.shinEvaFlow && !sim.sao2Flow) {
+      } else if (!sim.battleBonusFlow && !sim.sgRaceFlow && !sim.kabaneriStFlow && !sim.otomeRushFlow && !sim.cycleFlow && !sim.godzillaEva2Flow && !sim.mahoakoFlow && !sim.okidokiGoldFlow && !sim.uminchuFlow && !sim.tentenFlow && !sim.goblinSlayerFlow && !sim.assaultLilyFlow && !sim.kaguyaFlow && !sim.dumbbellFlow && !sim.shinEvaFlow && !sim.sao2Flow && !sim.symphogearSeigiFlow) {
         // Keep the published overall special-zone chance while allowing rare multi-hit runs.
         const specialChecks = Math.max(1, Math.min(3, Math.ceil(payout / 500)));
         const perCheckChance = 1 - Math.pow(1 - specialChance, 1 / specialChecks);
@@ -3200,10 +3405,11 @@
     const tokyoGhoulStats = sim.tokyoGhoulFlow ? [["今回のCZ", tokyoGhoulCz?.label || sim.triggerLabel], ["喰種対決", `${tokyoGhoulBattles}戦・勝利${tokyoGhoulWins}回`], ["BITES", `${tokyoGhoulBitesCount}回`], ["特化ゾーン", tokyoGhoulSpecialCount ? `${tokyoGhoulSpecialCount}回` : "非当選"], ["有馬貴将", tokyoGhoulArimaBattle ? `${tokyoGhoulArimaBattle}戦目・${tokyoGhoulArimaWon ? "勝利" : "敗北または未到達"}` : "未到達"], ["CCGの死神", tokyoGhoulCcgAward ? `+${yen.format(tokyoGhoulCcgAward)}枚` : "非到達"], ["裏AT", tokyoGhoulUpperAt ? "到達・100G＋α" : "非到達"]] : [];
     const basiliskStats = sim.basiliskTenzenFlow ? [["初当りBC", basiliskBc?.label || sim.triggerLabel], ["BTシナリオ", basiliskScenario?.name || "BT非突入"], ["通常BT", `${basiliskSets}セット`], ["BT中BC", `${basiliskBtBcCount}回`], ["絆高確", `${basiliskHighCount}セット`], ["月下閃滅", basiliskMoonCount ? `${basiliskMoonCount}回` : "非当選"], [sim.upperChallenge, basiliskGrudgeAttempts ? `${basiliskGrudgeAttempts}回・成功${basiliskGrudgeSuccesses}回` : "未到達"], [sim.upperLabel, basiliskTenzenSets ? `${basiliskTenzenSets}セット` : "非到達"]] : [];
     const sao2Stats = sim.sao2Flow ? [["スナイパーチャンス", `${sao2SniperAttempts}回・勝利${sao2SniperWins}回`], ["ラストアタック", sao2LastAttackAttempts ? `${sao2LastAttackAttempts}回・成功${sao2LastAttackSuccesses}回` : "未到達"], [sim.upperChallenge, sao2DeathGunAttempts ? `${sao2DeathGunAttempts}回・勝利${sao2DeathGunWins}回` : "未到達"], [sim.upperLabel, sao2UpperSections ? `${sao2UpperSections}区間` : "非到達"], ["絶剣", sao2ZekkenAward ? `+${yen.format(sao2ZekkenAward)}枚` : "非当選"], ["アルティマ状態", sao2Ultima ? "移行" : "非移行"]] : [];
+    const symphogearStats = sim.symphogearSeigiFlow ? [["初期ゲーム", symphogearInitialRoute?.upper ? "ギアフラグ・絶唱" : `${symphogearInitialRoute?.label || "通常"}・${symphogearInitialRoute?.games || 0}G`], ["ギアVチャンス", `${symphogearGearVChances}回・装者獲得${symphogearGearVWins}回`], ["ギアVアタック", `${symphogearGearVAttacks}回`], ["ゲーム数上乗せ", `+${yen.format(symphogearTotalAddGames)}G`], ["ギアVアタック EX", symphogearExCount ? `${symphogearExCount}回` : "非到達"], ["絶唱", symphogearZesshoCount ? `${symphogearZesshoCount}回` : "非到達"], [sim.upperLabel, symphogearUpperSections ? `${symphogearUpperSections}区間・BONUS ${symphogearBonusCount}回` : "非到達"], [sim.upperChallenge, symphogearZesshoBattleAttempts ? `${symphogearZesshoBattleAttempts}回・勝利${symphogearZesshoBattleWins}回` : "未到達"], ["黄金絶唱", symphogearGoldenZesshoGames ? `+${yen.format(symphogearGoldenZesshoGames)}G` : "非当選"]] : [];
     const cycleStats = sim.cycleFlow ? [[sim.cycleFlow.statLabel || (sim.titleFlow ? "機種専用進行" : "専用ループ"), `${cycleRounds}回・継続${cycleContinues}回`]] : [];
     const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
     const rushGamesTotal = Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
-    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
+    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
     const gameAddOnStats = sim.karakuriJudgeFlow || coinAddOnCount
       ? [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(coinAddOnTotal || addOnTotal)}枚` : "上乗せなし"]]
       : [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnGamesTotal || otomeAddedGames)}G` : "上乗せなし"]];
@@ -3230,6 +3436,8 @@
         ? [["BC・BT消化", `${yen.format(rushGamesTotal)}G相当`], ...basiliskStats]
       : sim.sao2Flow
         ? [["BoB・上位消化", `${yen.format(rushGamesTotal)}G相当`], ...sao2Stats]
+      : sim.symphogearSeigiFlow
+        ? [["AT・上位消化", `${yen.format(rushGamesTotal)}G相当`], ...symphogearStats]
       : [["RUSH消化モデル", `${yen.format(rushGamesTotal)}G相当`], ...karakuriStats, ...battleStats, ...sgStats, ...kabaneriStats, ...otomeStats, ...cycleStats, ...gameAddOnStats, ...bonusStats, ...genericSpecialStats, ["上位AT", upper ? (kabaneriUpperMode || `${sim.upperLabel} ${upperLoops}セット`) : "非到達"]]) : [];
     const stats = [["今回の設定", `設定${setting}`], ["設定差モデル", settingModelLabel], ["今回のゲーム数", `${yen.format(games)}G`], ...settingRateStats, ["現金投資目安", `${yen.format(investment)}円`], ...entryBonusStats, ...atStats, ["獲得枚数", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]];
     if (complete) stats.unshift(["到達状態", "コンプリート"]);
@@ -3258,6 +3466,8 @@
           ? `今回の設定は設定${setting}。${games}Gで${basiliskBc?.label || sim.triggerLabel}、${entered ? `${basiliskScenario?.name || "通常"}シナリオのBTを${basiliskSets}セット消化し、${yen.format(payout)}枚を獲得しました。${basiliskTenzenSets ? `宿怨チャレンジ成功から天膳BTを${basiliskTenzenSets}セット消化しました。` : basiliskGrudgeAttempts ? "宿怨チャレンジ失敗後は通常BTへ進みました。" : "宿怨チャレンジには届きませんでした。"}` : `BCを${basiliskBc?.games || 16}G消化し、BTには入りませんでした。`}`
         : sim.sao2Flow
           ? `今回の設定は設定${setting}。${games}Gでスコードロンバトル、${entered ? `スナイパーチャンス${sao2SniperAttempts}回・勝利${sao2SniperWins}回で${yen.format(payout)}枚を獲得しました。${sao2ZekkenAward ? `絶剣で${yen.format(sao2ZekkenAward)}枚を獲得し、アルティマ状態へ移行しました。` : sao2UpperSections ? `デス・ガンバトルを突破し、FULL DIVEを${sao2UpperSections}区間消化しました。` : sao2DeathGunAttempts ? "デス・ガンバトルで終了しました。" : "上位CZの権利には届きませんでした。"}` : "CZは突破できませんでした。"}`
+        : sim.symphogearSeigiFlow
+          ? `今回の設定は設定${setting}。${games}GでAXZバトル、${entered ? `ギアVチャンス${symphogearGearVChances}回・ギアVアタック${symphogearGearVAttacks}回、上乗せ合計${symphogearTotalAddGames}Gで${yen.format(payout)}枚を獲得しました。${symphogearGoldenZesshoGames ? `黄金絶唱で${symphogearGoldenZesshoGames}Gを獲得しました。` : symphogearUpperSections ? `AXZラッシュ黄金を${symphogearUpperSections}区間消化しました。` : "絶唱・上位ATには届きませんでした。"}` : "AXZバトルは突破できませんでした。"}`
         : `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}。${entered ? `${payout}枚を獲得しました。${sim.kabaneriStFlow ? `ST中ボーナス${kabaneriStBonuses}回・${upper ? `${upperResultLabel} ${upperLoops}回当選。` : "上位ST非到達。"}` : `上乗せ${addOnCount}回・${upper ? `${upperResultLabel} ${upperLoops}セット。` : "上位AT非到達。"}`}` : entryBonus ? `${entryBonus.label}で約${yen.format(payout)}枚を獲得し、${sim.mainLabel}には届きませんでした。` : `${machine.initialHitLabel || sim.mainLabel}には届きませんでした。`}`;
     const kabaneriRareUpperLabel = sim.kabaneriUpperRareLabel || "裏美馬ST";
     const kabaneriUpperContinueChance = kabaneriUpperMode
@@ -3903,6 +4113,7 @@
     const tokyoGhoulFlow = Boolean(data.tokyoGhoulFlow);
     const basiliskTenzenFlow = Boolean(data.basiliskTenzenFlow);
     const sao2Flow = Boolean(data.sao2Flow);
+    const symphogearSeigiFlow = Boolean(machine.sim.symphogearSeigiFlow);
     setSlotAtStatus({ visible: false });
     setExperienceHud("0G", "0円", "0枚");
     setExperienceStage(0, experienceProfile.system, "通常ゲーム中", "0G", `${data.hitLabel}を目指して抽選中`, "normal", data.hitChance, "1Gごとの契機当選率");
@@ -3914,7 +4125,7 @@
       await waitForExperience(115);
     }
     if (runId !== experienceRunId) return;
-    setExperienceStage(1, okidokiGoldFlow ? "HIBISCUS LIGHT" : uminchuFlow ? "BONUS HIT" : basiliskTenzenFlow ? "BASILISK CHANCE" : sao2Flow ? "SQUADRON BATTLE" : tentenFlow ? "EPISODE BATTLE" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "DIRECT AT" : "CHANCE ZONE") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "DIRECT AT" : data.assaultEntry?.key === "bouquet" ? "BOUQUET BONUS" : "LILY CHALLENGE") : kaguyaFlow ? "LOVE BRAIN BATTLE" : dumbbellFlow ? "MUSCLE ZONE" : shinEvaFlow ? "INITIAL HIT" : tokyoGhoulFlow ? "CHANCE ZONE" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", basiliskTenzenFlow ? (data.basiliskBc?.label || data.hitLabel) : tokyoGhoulFlow ? (data.tokyoGhoulCz?.label || data.hitLabel) : goblinSlayerFlow ? (data.goblinCz?.label || data.hitLabel) : assaultLilyFlow ? (data.assaultEntry?.label || data.hitLabel) : data.hitLabel, `${yen.format(data.attempts)}G`, okidokiGoldFlow ? "ハイビスカス点灯・初当りBONUS確定" : basiliskTenzenFlow ? `${data.basiliskBc?.games || 16}GのBCでバジリスクタイムを抽選` : sao2Flow ? "スコードロンバトルの最後にPUSHでBoB突入を判定" : tokyoGhoulFlow ? "8GのCZを進め、最後のPUSHで東京喰種咬を判定" : uminchuFlow ? "告知音とともに初当りBONUSへ" : tentenFlow ? "10GのレベルUPパートと4Gのバトルへ" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "規定ゲーム数からAT直撃" : "CZの専用ゲーム数を進めて最後にPUSH") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "規定ゲーム数・レア役などからRUSH直撃" : data.assaultEntry?.key === "bouquet" ? "25GのBONUS後にRUSHを判定" : "10Gの専用CZを進めて最後にPUSH") : kaguyaFlow ? "恋愛頭脳戦を経て15G＋αのCZへ" : dumbbellFlow ? "10Gの前半パートから後半発展を目指します" : shinEvaFlow ? "3GのEVANGELION IMPACTで作戦を決定します" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
+    setExperienceStage(1, okidokiGoldFlow ? "HIBISCUS LIGHT" : uminchuFlow ? "BONUS HIT" : basiliskTenzenFlow ? "BASILISK CHANCE" : sao2Flow ? "SQUADRON BATTLE" : symphogearSeigiFlow ? "AXZ BATTLE" : tentenFlow ? "EPISODE BATTLE" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "DIRECT AT" : "CHANCE ZONE") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "DIRECT AT" : data.assaultEntry?.key === "bouquet" ? "BOUQUET BONUS" : "LILY CHALLENGE") : kaguyaFlow ? "LOVE BRAIN BATTLE" : dumbbellFlow ? "MUSCLE ZONE" : shinEvaFlow ? "INITIAL HIT" : tokyoGhoulFlow ? "CHANCE ZONE" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", basiliskTenzenFlow ? (data.basiliskBc?.label || data.hitLabel) : tokyoGhoulFlow ? (data.tokyoGhoulCz?.label || data.hitLabel) : goblinSlayerFlow ? (data.goblinCz?.label || data.hitLabel) : assaultLilyFlow ? (data.assaultEntry?.label || data.hitLabel) : data.hitLabel, `${yen.format(data.attempts)}G`, okidokiGoldFlow ? "ハイビスカス点灯・初当りBONUS確定" : basiliskTenzenFlow ? `${data.basiliskBc?.games || 16}GのBCでバジリスクタイムを抽選` : sao2Flow ? "スコードロンバトルの最後にPUSHでBoB突入を判定" : symphogearSeigiFlow ? "AXZバトルを進め、最後のPUSHでAXZラッシュを判定" : tokyoGhoulFlow ? "8GのCZを進め、最後のPUSHで東京喰種咬を判定" : uminchuFlow ? "告知音とともに初当りBONUSへ" : tentenFlow ? "10GのレベルUPパートと4Gのバトルへ" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "規定ゲーム数からAT直撃" : "CZの専用ゲーム数を進めて最後にPUSH") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "規定ゲーム数・レア役などからRUSH直撃" : data.assaultEntry?.key === "bouquet" ? "25GのBONUS後にRUSHを判定" : "10Gの専用CZを進めて最後にPUSH") : kaguyaFlow ? "恋愛頭脳戦を経て15G＋αのCZへ" : dumbbellFlow ? "10Gの前半パートから後半発展を目指します" : shinEvaFlow ? "3GのEVANGELION IMPACTで作戦を決定します" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
     await waitForExperience(780);
     if (basiliskTenzenFlow) {
       const bc = { ...(data.basiliskBc || {}), ...(data.entryBonus || {}) };
@@ -3958,6 +4169,16 @@
       await waitForExperienceAction("スコードロンバトル PUSH", 5000, data.entered ? "gold" : "normal");
       if (runId !== experienceRunId) return;
       setExperienceStage(2, "CZ RESULT", data.entered ? "SQUADRON WIN" : "SQUADRON LOSE", data.entered ? "BoB突入" : "通常へ", data.entered ? "初期150枚＋αの差枚数ATを開始します" : "今回の一撃はここで終了", data.entered ? "rush" : "end", data.entered ? 100 : 0, "スコードロンバトル結果");
+      await waitForExperience(950);
+      if (!data.entered) return;
+    }
+    if (symphogearSeigiFlow) {
+      const battleComplete = await animateExperienceCounter(10, "G", "AXZ BATTLE", "装者とともに突破を目指せ", "対応役・レア役で勝利を抽選し、最後のPUSHで決着します", data.triggerSuccessChance, "成功期待度 約65%", runId);
+      if (!battleComplete) return;
+      setExperienceStage(2, "AXZ FINAL JUDGE", "AXZバトル 最終決戦", "PUSH", "AXZラッシュの当落を開きます", "judge", data.triggerSuccessChance, "CZ最終結果");
+      await waitForExperienceAction("AXZバトル PUSH", 5000, data.entered ? "gold" : "normal");
+      if (runId !== experienceRunId) return;
+      setExperienceStage(2, "AXZ BATTLE RESULT", data.entered ? "AXZバトル突破" : "AXZバトル敗北", data.entered ? "AXZラッシュ" : "通常へ", data.entered ? "初期ゲーム数決定ゾーンへ進みます" : "今回の一撃はここで終了", data.entered ? "rush" : "end", data.entered ? 100 : 0, "AXZバトル結果");
       await waitForExperience(950);
       if (!data.entered) return;
     }
@@ -4065,7 +4286,7 @@
       await waitForExperience(900);
       if (!data.entered) return;
     }
-    if (!okidokiGoldFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !basiliskTenzenFlow && !sao2Flow) {
+    if (!okidokiGoldFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !basiliskTenzenFlow && !sao2Flow && !symphogearSeigiFlow) {
     const dedicatedEntryFlow = godzillaEva2Flow || mahoakoFlow;
     const entryJudgeLabel = dedicatedEntryFlow && data.entryBonus?.judgeLabel ? data.entryBonus.judgeLabel : `${data.mainLabel}突入ジャッジ`;
     const entryJudgeGames = dedicatedEntryFlow ? Math.max(1, Number(data.entryBonus?.judgeGames) || 3) : 3;
@@ -4109,7 +4330,7 @@
       const normalSetCount = rushEvents.filter(event => event.kind === "rush-set").length;
       const hadUpperChallenge = rushEvents.some(event => event.kind === "upper-challenge");
       let route = [...rushEvents];
-      if (!setPushFlow && !karakuriJudgeFlow && !battleBonusFlow && !godzillaEva2Flow && !mahoakoFlow && !okidokiGoldFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !basiliskTenzenFlow && !sgRaceFlow && !kabaneriStFlow && !otomeRushFlow && !cycleFlow && route.length > 10) {
+      if (!setPushFlow && !karakuriJudgeFlow && !battleBonusFlow && !godzillaEva2Flow && !mahoakoFlow && !okidokiGoldFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !basiliskTenzenFlow && !symphogearSeigiFlow && !sgRaceFlow && !kabaneriStFlow && !otomeRushFlow && !cycleFlow && route.length > 10) {
         const visibleEvents = route.slice(0, 7);
         const remainingEvents = route.slice(7);
         const previousTotal = Number(visibleEvents[visibleEvents.length - 1]?.cumulative) || 0;
@@ -4882,6 +5103,132 @@
           setExperienceStage(3, "BASILISK TIME END", event.label, `+${yen.format(event.award)}枚`, `累計 ${yen.format(event.cumulative)}枚・最終結果へ`, "rush", 100, "通常BT獲得結果");
           setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
           await waitForExperience(1000);
+          continue;
+        }
+
+        if (event.kind === "symphogear-initial") {
+          setExperienceStage(3, "INITIAL GAME JUDGE", event.label, "PUSH", event.upper ? "ギアフラグと絶唱を開きます" : "初期ゲーム数を開きます", "judge", 100, "1G 初期ゲーム数決定");
+          await waitForExperienceAction("初期ゲーム数 PUSH", 5000, event.upper || event.initialGames >= 100 ? "upper" : "gold");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.upper ? "GEAR FLAG" : "AXZ RUSH START", event.route, event.upper ? "絶唱" : `${yen.format(event.initialGames)}G`, event.upper ? "5G＋αの絶唱へ進みます" : "純増約2.8枚/GのAXZラッシュ開始", event.upper ? "hyper" : "rush", 100, "わたしは歌でぶん殴るッ！結果");
+          setSlotAtStatus({ visible: true, remaining: event.initialGames, remainingUnit: "G", addOnGames: runningAddOnGames, total: event.cumulative });
+          await waitForExperience(event.upper ? 1250 : 950);
+          continue;
+        }
+
+        if (event.kind === "symphogear-at-run") {
+          const runComplete = await animateExperienceCounter(eventGames, "G", "AXZ RUSH", `${event.section}区間目・残り${yen.format(event.remainingGames + eventGames)}G`, "残りゲーム数を減らし、規定獲得枚数のギアVチャンスを狙います", 100, `獲得 ${yen.format(event.earnedCoins)}枚`, runId);
+          if (!runComplete) return;
+          consumedGames += eventGames;
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: event.remainingGames, remainingUnit: "G", addOnGames: runningAddOnGames, total: event.cumulative });
+          continue;
+        }
+
+        if (event.kind === "symphogear-gear-v-chance") {
+          const chanceComplete = await animateExperienceCounter(eventGames, "G", "GEAR V CHANCE", `${event.character}を獲得せよ`, "5Gの装者獲得ゾーンを進め、最後のPUSHで結果を開きます", event.chance, `${event.attempt}回目・獲得${event.acquired}/5`, runId);
+          if (!chanceComplete) return;
+          consumedGames += eventGames;
+          setSlotAtStatus({ visible: true, remaining: event.remainingGames, remainingUnit: "G", addOnGames: runningAddOnGames, total: event.cumulative });
+          setExperienceStage(3, "GEAR V FINAL JUDGE", `${event.character} ジャッジ`, "PUSH", "装者獲得の当落を開きます", "judge", event.chance, `ギアVチャンス ${event.attempt}回目`);
+          await waitForExperienceAction(`ギアVチャンス ${event.attempt} PUSH`, 5000, event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.won ? "GEAR GET" : "GEAR MISS", event.won ? `${event.character} 獲得` : `${event.character} 非獲得`, event.won ? "ギアVアタック" : "AXZラッシュへ", event.won ? "キャラ固有の上乗せ結果を次のPUSHで開きます" : `獲得装者 ${event.acquired}/5`, event.won ? "hit" : "end", event.won ? 100 : 0, "装者獲得結果");
+          await waitForExperience(900);
+          continue;
+        }
+
+        if (event.kind === "symphogear-gear-v-attack") {
+          setExperienceStage(3, "GEAR V ATTACK", event.label, "PUSH", "キャラ固有のゲーム数上乗せを開きます", "judge", 100, `ギアVアタック ${event.attack}回目`);
+          await waitForExperienceAction(`${event.label} PUSH`, 5000, event.addGames >= 100 ? "upper" : "gold");
+          if (runId !== experienceRunId) return;
+          runningAddOnGames += Number(event.addGames) || 0;
+          setExperienceStage(3, "GEAR V ATTACK RESULT", event.character, `+${yen.format(event.addGames)}G`, `残り${yen.format(event.remainingGames)}G・上乗せ累計${yen.format(runningAddOnGames)}G`, event.addGames >= 100 ? "hyper" : "hit", 100, "上乗せゲーム数結果");
+          setSlotAtStatus({ visible: true, remaining: event.remainingGames, remainingUnit: "G", addOnGames: runningAddOnGames, total: event.cumulative });
+          await waitForExperience(event.addGames >= 100 ? 1300 : 1000);
+          continue;
+        }
+
+        if (event.kind === "symphogear-ex") {
+          const exComplete = await animateExperienceCounter(eventGames, "G", "GEAR V ATTACK EX", "5装者集結・激唱ギアVチャンス", "10GのEX区間を進め、最後のPUSHで上乗せを開きます", 100, "全5装者獲得報酬", runId);
+          if (!exComplete) return;
+          consumedGames += eventGames;
+          setExperienceStage(3, "EX FINAL JUDGE", event.label, "PUSH", "EX上乗せゲーム数を開きます", "judge", 100, "ギアVアタック EX");
+          await waitForExperienceAction("ギアVアタック EX PUSH", 5000, "upper");
+          if (runId !== experienceRunId) return;
+          runningAddOnGames += Number(event.addGames) || 0;
+          setExperienceStage(3, "EXTRA GEAR RESULT", "激唱ギアVチャンス", `+${yen.format(event.addGames)}G`, `残り${yen.format(event.remainingGames)}G・上乗せ累計${yen.format(runningAddOnGames)}G`, "hyper", 100, "EX上乗せ結果");
+          setSlotAtStatus({ visible: true, remaining: event.remainingGames, remainingUnit: "G", addOnGames: runningAddOnGames, total: event.cumulative });
+          await waitForExperience(1350);
+          continue;
+        }
+
+        if (event.kind === "symphogear-upper-promote") {
+          setExperienceStage(3, "UPPER ROUTE JUDGE", event.label, "PUSH", event.coins >= 2500 ? "2500枚到達・上位移行を確定します" : "絶唱・上位ATへの移行結果を開きます", "judge", event.chance, event.label === "ギアフラグ" ? "ギアフラグ成立" : `${yen.format(event.coins)}枚到達時抽選`);
+          await waitForExperienceAction(`${event.label} PUSH`, 5000, event.success ? "upper" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.success ? "UPPER ROUTE HIT" : "UPPER ROUTE MISS", event.success ? "絶唱突入" : "上位移行非当選", event.success ? "AXZラッシュ 黄金へ" : "AXZラッシュ継続", event.success ? "5G＋αの絶唱で初期ゲーム数を決めます" : "通常ATの残りゲーム数へ戻ります", event.success ? "hyper" : "end", event.success ? 100 : 0, "上位移行抽選結果");
+          await waitForExperience(event.success ? 1200 : 850);
+          continue;
+        }
+
+        if (event.kind === "symphogear-zessho" || event.kind === "symphogear-golden-zessho") {
+          const golden = event.kind === "symphogear-golden-zessho";
+          const zesshoComplete = await animateExperienceCounter(eventGames, "G", golden ? "GOLDEN ZESSHO" : "ZESSHO", event.label, golden ? "平均約360Gの黄金絶唱を進めます" : "毎ゲーム10G以上・平均約100Gの上乗せを進めます", 100, event.source, runId);
+          if (!zesshoComplete) return;
+          consumedGames += eventGames;
+          setExperienceStage(3, golden ? "GOLDEN ZESSHO RESULT" : "ZESSHO RESULT", event.label, "PUSH", "上乗せゲーム数を開きます", "judge", 100, golden ? "平均約360G" : "平均約100G");
+          await waitForExperienceAction(`${event.label} PUSH`, 5000, "upper");
+          if (runId !== experienceRunId) return;
+          runningAddOnGames += Number(event.addGames) || 0;
+          setExperienceStage(3, golden ? "GOLDEN ZESSHO" : "ZESSHO", event.label, `+${yen.format(event.addGames)}G`, "AXZラッシュ黄金を開始します", "hyper", 100, `${event.label} 上乗せ結果`);
+          setSlotAtStatus({ visible: true, remaining: event.addGames, remainingUnit: "G", addOnGames: runningAddOnGames, total: event.cumulative });
+          await waitForExperience(golden ? 1450 : 1250);
+          continue;
+        }
+
+        if (event.kind === "symphogear-upper-run") {
+          const upperComplete = await animateExperienceCounter(eventGames, "G", "AXZ RUSH GOLDEN", `黄金AT ${event.section}区間目`, "純増約5.0枚/G・AXZ目から上乗せとBONUSを狙います", 100, `残り${yen.format(event.remainingGames)}G`, runId);
+          if (!upperComplete) return;
+          consumedGames += eventGames;
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: event.remainingGames, remainingUnit: "G", addOnGames: runningAddOnGames, total: event.cumulative });
+          continue;
+        }
+
+        if (event.kind === "symphogear-upper-add") {
+          setExperienceStage(3, "AXZ MARK", event.label, "PUSH", "黄金ATのゲーム数上乗せを開きます", "judge", 100, `黄金AT ${event.section}区間目`);
+          await waitForExperienceAction("AXZ目 上乗せPUSH", 5000, event.addGames >= 100 ? "upper" : "gold");
+          if (runId !== experienceRunId) return;
+          runningAddOnGames += Number(event.addGames) || 0;
+          setExperienceStage(3, "GOLDEN ADD ON", event.label, `+${yen.format(event.addGames)}G`, `黄金AT残り${yen.format(event.remainingGames)}G`, event.addGames >= 100 ? "hyper" : "hit", 100, "黄金AT上乗せ結果");
+          setSlotAtStatus({ visible: true, remaining: event.remainingGames, remainingUnit: "G", addOnGames: runningAddOnGames, total: event.cumulative });
+          await waitForExperience(event.addGames >= 100 ? 1250 : 950);
+          continue;
+        }
+
+        if (event.kind === "symphogear-bonus") {
+          setExperienceStage(3, "SYMPHOGEAR BONUS", `${event.number}回目 BONUS`, "PUSH", "BONUSゲーム数と獲得枚数を開きます", "judge", 100, `黄金AT ${event.section}区間目`);
+          await waitForExperienceAction(`シンフォギアBONUS ${event.number} PUSH`, 5000, "gold");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, "BONUS RESULT", event.label, `${yen.format(event.games)}G / +${yen.format(event.award)}枚`, "消化後はAXZラッシュ黄金へ戻ります", "hit", 100, "シンフォギアBONUS結果");
+          await waitForExperience(950);
+          const bonusComplete = await animateExperienceCounter(eventGames, "G", "SYMPHOGEAR BONUS", `${event.number}回目 BONUS消化`, "純増約5.0枚/GでBONUSを消化します", 100, `獲得 ${yen.format(event.award)}枚`, runId);
+          if (!bonusComplete) return;
+          consumedGames += eventGames;
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          continue;
+        }
+
+        if (event.kind === "symphogear-zessho-battle") {
+          const battleComplete = await animateExperienceCounter(eventGames, "G", "ZESSHO BATTLE", `${event.attempt}回目 絶唱バトル`, "5Gのバトルを最後まで進め、PUSHで勝敗を開きます", event.chance, "勝利期待度 約60%", runId);
+          if (!battleComplete) return;
+          consumedGames += eventGames;
+          setExperienceStage(3, "ZESSHO FINAL JUDGE", `${event.attempt}回目 最終決戦`, "PUSH", "絶唱・黄金AT復帰の当落を開きます", "judge", event.chance, `現在${event.wins}勝`);
+          await waitForExperienceAction(`絶唱バトル ${event.attempt} PUSH`, 5000, event.success ? "upper" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.success ? "ZESSHO BATTLE WIN" : "GOLDEN RUSH END", event.success ? "絶唱バトル勝利" : "絶唱バトル敗北", event.success ? "絶唱へ" : "RUSH終了", event.success ? "絶唱または黄金絶唱で上位ATへ復帰します" : `累計 ${yen.format(event.cumulative)}枚・最終結果へ`, event.success ? "hyper" : "end", event.success ? 100 : 0, "絶唱バトル結果");
+          await waitForExperience(event.success ? 1200 : 1100);
           continue;
         }
 

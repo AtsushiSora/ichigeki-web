@@ -4537,7 +4537,7 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
       roundDetail: "対戦区間を最後まで進め、PUSHで勝敗と報酬を開きます"
     },
     st: {
-      slugs: ["symphogear-seigi-slot", "lycoris-recoil-slot", "kanokari-slot", "aobuta-slot", "bofuri-slot", "azur-lane-slot", "magia-record-slot", "toaru-index2-slot", "darling-in-the-franxx-slot", "dmc5-st-slot", "initial-d-2nd-slot"],
+      slugs: ["lycoris-recoil-slot", "kanokari-slot", "aobuta-slot", "bofuri-slot", "azur-lane-slot", "magia-record-slot", "toaru-index2-slot", "darling-in-the-franxx-slot", "dmc5-st-slot", "initial-d-2nd-slot"],
       phaseLabel: "ST FLOW",
       resultContinue: "ST CONTINUE",
       resultEnd: "ST END",
@@ -4702,6 +4702,74 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
     upperPayout: 0,
     upperPureIncrease: 7.2,
     settingRates: { 1: { trigger: 238.4, main: 386.2, payout: 0.976 }, 2: { trigger: 232.3, main: 364.3, payout: 0.988 }, 3: { trigger: 232.7, main: 368.1, payout: 1.002 }, 4: { trigger: 218.9, main: 326.8, payout: 1.053 }, 5: { trigger: 225.2, main: 340.6, payout: 1.104 }, 6: { trigger: 191.7, main: 269.6, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
+(function applySymphogearSeigiDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["symphogear-seigi-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "AXZバトルからギアVアタックを重ね、絶唱とAXZラッシュ黄金へ。",
+    intro: "約65%のAXZバトルから純増約2.8枚/GのAXZラッシュへ。初期ゲーム数決定、規定獲得枚数ごとのギアVチャンス、キャラ別ギアVアタック、絶唱、純増約5.0枚/GのAXZラッシュ黄金、絶唱バトルまでを実機順に体験できます。",
+    points: ["AXZバトル成功期待度約65%", "AXZラッシュは初期40G以上・純増約2.8枚/G", "絶唱バトル約60%・上位純増約5.0枚/G"],
+    specs: [["AT（設定1）", "約1/295.2"], ["AT（設定6）", "約1/199.4"], ["AXZバトル", "成功期待度約65%"], ["最終決戦", "AT＋ギアVチャンス濃厚"], ["AXZラッシュ", "初期40G以上"], ["通常AT純増", "約2.8枚/G"], ["ギアVアタック", "平均約30G"], ["絶唱", "5G＋α・平均約100G"], ["AXZラッシュ 黄金", "純増約5.0枚/G"], ["絶唱バトル", "勝利期待度約60%"], ["黄金絶唱", "平均約360G"], ["ベース", "約31.7G/50枚"], ["設定", "1・2・4・5・6"]],
+    articleSections: [
+      { heading: "AXZバトルと最終決戦", paragraphs: ["通常時はAXZバトルや最終決戦からATを目指します。AXZバトルの成功期待度は約65%。最終決戦は5戦のバトルでVストックを狙い、ATとギアVチャンスが濃厚となる上位CZです。", "設定別AT初当りは公開値を使用し、CZ発生率はAT初当りと約65%の突破率から逆算した比較用の簡易値です。通常時のモード・天井・小役別抽選は初当りへまとめています。"] },
+      { heading: "AXZラッシュとギアVチャンス", paragraphs: ["AXZラッシュは純増約2.8枚/Gのゲーム数管理ATです。開始時の『わたしは歌でぶん殴るッ！』で40G以上の初期ゲーム数を決めます。", "獲得50枚・100枚、その後は100枚ごとの節目でギアVチャンスを抽選。響、翼、クリス、マリア、調＆切歌の装者を獲得すると、キャラごとのギアVアタックでゲーム数を上乗せします。5人獲得時はEXルートへ進みます。"] },
+      { heading: "絶唱とAXZラッシュ黄金", paragraphs: ["絶唱は5G＋α、毎ゲーム10G以上を上乗せし、平均約100Gを獲得してAXZラッシュ黄金へ進みます。通常ATの1000・1500・2000・2500枚到達時にも上位移行を抽選し、2500枚到達時は上位濃厚です。", "AXZラッシュ黄金は純増約5.0枚/G。AXZ目停止からゲーム数上乗せまたはシンフォギアBONUSを抽選します。終了後は勝利期待度約60%の絶唱バトルへ進み、勝利すると絶唱を経由して上位ATへ復帰します。"] },
+      { heading: "黄金絶唱と簡略化する範囲", paragraphs: ["上位ループ中の一部は黄金絶唱へ進み、平均約360Gの上乗せを獲得します。サイトでは通常の絶唱と分け、PUSHで結果を開きます。", "ギアVチャンスの装者別獲得率、通常AT中の契機出現率、1000・1500・2000枚到達時の上位移行率など非公表部分は、公開されているゲーム性と平均値を崩さない体験用代表値です。"] },
+      { heading: "固定条件と収支", bullets: ["約31.7G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1・2・4・5・6から均等抽選し、設定3は選択しない", "上乗せゲーム数と獲得枚数を別表示", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["SANKYO オンライン博物館", "https://www.sankyo-fever.jp/collection/962/"], ["SANKYO 公式製品資料", "https://www.sankyo-fever.jp/products/assets/pdf/sqe/sqe_mp.pdf"], ["なな徹 AXZラッシュ解析", "https://nana-press.com/kaiseki/machine/760/22591/"], ["なな徹 ギアVアタック解析", "https://nana-press.com/kaiseki/machine/760/22594/"], ["なな徹 AXZラッシュ黄金解析", "https://nana-press.com/kaiseki/machine/760/22596/"], ["なな徹 絶唱・黄金絶唱解析", "https://nana-press.com/kaiseki/machine/760/22595/"]],
+    readerGuide: {
+      verdict: "初期40G以上のAXZラッシュで規定獲得枚数ごとのギアVチャンスを重ね、絶唱から純増約5.0枚/Gの黄金ATループを目指す台です。",
+      bestFor: ["残りゲーム数を減らしながら装者獲得を狙いたい", "5種類のギアVアタックをPUSHで見たい", "絶唱バトルから上位AT復帰を狙いたい"],
+      check: ["AT初当り・純増・主要ゲーム数と平均値は公開値", "装者別獲得率など非公表部分は代表値", "旧6区間の汎用STフローは廃止"],
+      compare: [["sao2-slot", "スマスロ SAO II", "差枚ATの対戦・上位ルートと比較"], ["valvrave", "革命機ヴァルヴレイヴ", "セット型上位ATと比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v9",
+    dedicatedFlow: true,
+    dedicatedFlowKey: "symphogear-seigi-slot",
+    dedicatedFlowVersion: 2,
+    symphogearSeigiFlow: true,
+    triggerLabel: "AXZバトル",
+    triggerRate: 191.9,
+    triggerSuccess: 0.65,
+    mainLabel: "AXZラッシュ",
+    mainRate: 295.2,
+    base50: 31.7,
+    normalMin: 0,
+    normalMax: 0,
+    atPureIncrease: 2.8,
+    atPayoutVariance: 0,
+    symphogearInitialRoutes: [[{ key: "normal", label: "響・通常開始", games: 40 }, 0.90], [{ key: "bell", label: "ベル成立", games: 50 }, 0.065], [{ key: "rare", label: "レア役成立", games: 100 }, 0.03], [{ key: "zessho", label: "ギアフラグ・絶唱", games: 0, upper: true }, 0.005]],
+    symphogearGearCharacters: [[{ key: "hibiki", label: "響", chance: 0.58, rewards: [[20, 0.30], [30, 0.30], [40, 0.20], [50, 0.14], [100, 0.06]] }, 0.24], [{ key: "tsubasa", label: "翼", chance: 0.54, rewards: [[10, 0.42], [20, 0.30], [30, 0.17], [50, 0.08], [100, 0.03]] }, 0.21], [{ key: "chris", label: "クリス", chance: 0.56, rewards: [[20, 0.38], [30, 0.31], [50, 0.20], [100, 0.11]] }, 0.20], [{ key: "maria", label: "マリア", chance: 0.52, rewards: [[10, 0.36], [20, 0.29], [30, 0.20], [50, 0.11], [100, 0.04]] }, 0.19], [{ key: "shirabe-kirika", label: "調＆切歌", chance: 0.50, rewards: [[5, 0.70], [10, 0.18], [100, 0.10], [200, 0.02]] }, 0.16]],
+    symphogearGearVIntervalCoins: [50, 100],
+    symphogearGearVMaxChances: 8,
+    symphogearExRewards: [[50, 0.46], [100, 0.34], [200, 0.15], [300, 0.05]],
+    symphogearUpperThresholds: [{ coins: 1000, chance: 0.12 }, { coins: 1500, chance: 0.22 }, { coins: 2000, chance: 0.42 }, { coins: 2500, chance: 1 }],
+    symphogearZesshoRewards: [[50, 0.18], [70, 0.22], [100, 0.35], [150, 0.17], [200, 0.08]],
+    symphogearUpperAdditions: [[10, 0.79], [20, 0.07], [30, 0.07], [50, 0.05], [100, 0.02]],
+    symphogearUpperBonusChance: 0.18,
+    symphogearUpperBonusGames: [[20, 0.70], [30, 0.24], [50, 0.06]],
+    symphogearGoldenZesshoChance: 0.04,
+    symphogearGoldenZesshoRewards: [[200, 0.20], [300, 0.34], [360, 0.26], [500, 0.15], [700, 0.05]],
+    specialLabel: "ギアVアタック",
+    specialChance: 0.55,
+    upperChallenge: "絶唱バトル",
+    upperChance: 0,
+    upperSuccess: 0.60,
+    upperLabel: "AXZラッシュ 黄金",
+    upperContinue: 0.60,
+    upperPayout: 0,
+    upperPureIncrease: 5.0,
+    settingPool: [1, 2, 4, 5, 6],
+    settingRates: { 1: { main: 295.2, payout: 0.982 }, 2: { main: 285.9, payout: 0.994 }, 4: { main: 250.1, payout: 1.044 }, 5: { main: 227.1, payout: 1.083 }, 6: { main: 199.4, payout: 1.149 } }
   });
   delete machine.sim.cycleFlow;
   delete machine.sim.titleFlow;

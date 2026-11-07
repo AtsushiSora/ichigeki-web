@@ -9,8 +9,8 @@ vm.runInContext(source, sandbox);
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
 const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
-const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow);
-const expectedProfiles = { battle: 8, st: 11, heaven: 4, bonus: 8, addon: 12 };
+const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow);
+const expectedProfiles = { battle: 8, st: 10, heaven: 4, bonus: 8, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -49,14 +49,14 @@ for (const [slug, machine] of declarativeFlows) {
 }
 
 if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
-if (declarativeFlows.length !== 43) errors.push(`expected 43 declarative dedicated flows, found ${declarativeFlows.length}`);
+if (declarativeFlows.length !== 42) errors.push(`expected 42 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(specializedFlows);
-if (specializedFlows.length !== 4 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"]) {
-  errors.push(`expected specialized Tokyo Ghoul, Basilisk Tenzen, Okidoki GOLD and SAO II flows, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (specializedFlows.length !== 5 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"]) {
+  errors.push(`expected specialized Tokyo Ghoul, Basilisk Tenzen, Okidoki GOLD, SAO II and Symphogear flows, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
   const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
@@ -88,6 +88,14 @@ if (specializedFlows.length !== 4 || !dedicatedMap["tokyo-ghoul-slot"] || !dedic
   if (Number(sao2Sim.sao2LastAttackGames) !== 5 || Number(sao2Sim.sao2LastAttackChance) !== 0.35) errors.push("sao2-slot: Last Attack model is incorrect");
   if (Number(sao2Sim.sao2DeathGunGames) !== 5 || Number(sao2Sim.sao2DeathGunChance) !== 0.50) errors.push("sao2-slot: Death Gun Battle model is incorrect");
   if (Number(sao2Sim.atPureIncrease) !== 3.6 || Number(sao2Sim.upperPureIncrease) !== 7.2) errors.push("sao2-slot: AT pure increase is incorrect");
+  const symphogear = dedicatedMap["symphogear-seigi-slot"];
+  const symphogearSim = symphogear.sim;
+  if (symphogearSim.cycleFlow || symphogearSim.titleFlow) errors.push("symphogear-seigi-slot: legacy reusable flow still exists");
+  if (!Array.isArray(symphogearSim.settingPool) || symphogearSim.settingPool.join(",") !== "1,2,4,5,6") errors.push("symphogear-seigi-slot: setting pool is incorrect");
+  if (!Array.isArray(symphogearSim.symphogearGearCharacters) || symphogearSim.symphogearGearCharacters.length !== 5) errors.push("symphogear-seigi-slot: Gear V characters are incomplete");
+  if (!Array.isArray(symphogearSim.symphogearUpperThresholds) || symphogearSim.symphogearUpperThresholds.length !== 4) errors.push("symphogear-seigi-slot: upper thresholds are incomplete");
+  if (Number(symphogearSim.triggerSuccess) !== 0.65 || Number(symphogearSim.upperSuccess) !== 0.60) errors.push("symphogear-seigi-slot: battle probabilities are incorrect");
+  if (Number(symphogearSim.atPureIncrease) !== 2.8 || Number(symphogearSim.upperPureIncrease) !== 5.0) errors.push("symphogear-seigi-slot: AT pure increase is incorrect");
 }
 
 if (process.argv.includes("--verbose")) console.table(rows);

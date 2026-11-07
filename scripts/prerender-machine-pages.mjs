@@ -246,6 +246,14 @@ function snapshotMarkup(machine) {
       ["設定抽選", `設定${settingPool.join("・")}`, "設定4は非搭載"]
     ];
     note = "BONUSごとに32Gを数え、天国・ドキドキ・超ドキドキ・保証・金ドキの内部ルートを結果へ残します。";
+  } else if (sim.symphogearSeigiFlow) {
+    items = [
+      ["CZ突破", "約65%", "AXZバトル"],
+      ["通常AT", "40G以上", "純増約2.8枚/G"],
+      ["絶唱", "平均約100G", "5G＋α"],
+      ["黄金AT", "約5.0枚/G", "絶唱バトル約60%"]
+    ];
+    note = "残りゲーム数、ギアVチャンスの装者獲得、キャラ別ギアVアタック、絶唱、上位ATと絶唱バトルを個別に記録します。";
   } else if (sim.sao2Flow) {
     items = [
       ["CZ突破", "約55%", "スコードロンバトル"],
