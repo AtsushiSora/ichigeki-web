@@ -9,8 +9,8 @@ vm.runInContext(source, sandbox);
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
 const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
-const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow || machine.sim?.godEaterFlow || machine.sim?.millionGodFlow || machine.sim?.juohFlow || machine.sim?.sunbreakFlow || machine.sim?.paripiFlow || machine.sim?.fireForceFlow || machine.sim?.fireForce2Flow);
-const expectedProfiles = { battle: 6, st: 2, heaven: 3, bonus: 3, addon: 12 };
+const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow || machine.sim?.godEaterFlow || machine.sim?.millionGodFlow || machine.sim?.juohFlow || machine.sim?.sunbreakFlow || machine.sim?.paripiFlow || machine.sim?.gundamSeedFlow || machine.sim?.fireForceFlow || machine.sim?.fireForce2Flow);
+const expectedProfiles = { battle: 6, st: 2, heaven: 3, bonus: 2, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -49,14 +49,14 @@ for (const [slug, machine] of declarativeFlows) {
 }
 
 if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
-if (declarativeFlows.length !== 26) errors.push(`expected 26 declarative dedicated flows, found ${declarativeFlows.length}`);
+if (declarativeFlows.length !== 25) errors.push(`expected 25 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(specializedFlows);
-if (specializedFlows.length !== 21 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["okidoki-black"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"] || !dedicatedMap["million-god-kiseki"] || !dedicatedMap["juoh-slot"] || !dedicatedMap["monster-hunter-sunbreak"] || !dedicatedMap["paripi-koumei-slot"] || !dedicatedMap["fire-force-slot"] || !dedicatedMap["fire-force2-slot"]) {
-  errors.push(`expected twenty-one specialized flows including both Fire Force titles, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (specializedFlows.length !== 22 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["okidoki-black"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"] || !dedicatedMap["million-god-kiseki"] || !dedicatedMap["juoh-slot"] || !dedicatedMap["monster-hunter-sunbreak"] || !dedicatedMap["paripi-koumei-slot"] || !dedicatedMap["gundam-seed-slot"] || !dedicatedMap["fire-force-slot"] || !dedicatedMap["fire-force2-slot"]) {
+  errors.push(`expected twenty-two specialized flows including Gundam SEED and both Fire Force titles, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
   const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
@@ -220,6 +220,15 @@ if (specializedFlows.length !== 21 || !dedicatedMap["tokyo-ghoul-slot"] || !dedi
   if (Number(blackSim.atPureIncrease) !== 3.5 || Number(blackSim.base50) !== 32) errors.push("okidoki-black: pure increase or base is incorrect");
   if (Number(blackSim.okidokiModeRates?.heaven) !== 0.75 || Number(blackSim.okidokiModeRates?.doki) !== 0.80 || Number(blackSim.okidokiModeRates?.super) !== 0.90) errors.push("okidoki-black: mode loop rates are incorrect");
   if (Number(blackSim.okidokiOneGameChance) !== 0.125 || Number(blackSim.okidokiGuaranteeOneGameChance) !== 0.06 || !blackSim.settingRates || Object.keys(blackSim.settingRates).length !== 5) errors.push("okidoki-black: 1G chain or setting rates are incomplete");
+  const gundamSeed = dedicatedMap["gundam-seed-slot"];
+  const gundamSeedSim = gundamSeed.sim;
+  if (gundamSeedSim.cycleFlow || gundamSeedSim.titleFlow) errors.push("gundam-seed-slot: legacy reusable flow still exists");
+  if (!Array.isArray(gundamSeedSim.gundamSeedEntryRoutes) || gundamSeedSim.gundamSeedEntryRoutes.length !== 3) errors.push("gundam-seed-slot: entry routes are incomplete");
+  if (!Array.isArray(gundamSeedSim.gundamSeedBonuses) || gundamSeedSim.gundamSeedBonuses.length !== 3) errors.push("gundam-seed-slot: three BONUS types are incomplete");
+  if (Number(gundamSeedSim.gundamSeedStGames) !== 20 || Number(gundamSeedSim.gundamSeedBattleGames) !== 3 || Number(gundamSeedSim.gundamSeedDestinyZoneGames) !== 5) errors.push("gundam-seed-slot: ST, battle, or Destiny Zone games are incorrect");
+  if (Number(gundamSeedSim.gundamSeedBurstFrontGames) !== 5 || Number(gundamSeedSim.gundamSeedBurstBackGames) !== 5 || Number(gundamSeedSim.gundamSeedUpperGames) !== 10) errors.push("gundam-seed-slot: upper route game structure is incorrect");
+  if (Number(gundamSeedSim.gundamSeedStContinue) !== 0.70 || Number(gundamSeedSim.gundamSeedUpperContinue) !== 0.96 || Number(gundamSeedSim.atPureIncrease) !== 6.5) errors.push("gundam-seed-slot: continuation probabilities or pure increase are incorrect");
+  if (Number(gundamSeedSim.base50) !== 31.5 || !gundamSeedSim.settingRates || Object.keys(gundamSeedSim.settingRates).length !== 6) errors.push("gundam-seed-slot: base or setting rates are incomplete");
   const fireForce = dedicatedMap["fire-force-slot"];
   const fireForceSim = fireForce.sim;
   if (fireForceSim.cycleFlow || fireForceSim.titleFlow) errors.push("fire-force-slot: legacy reusable flow still exists");

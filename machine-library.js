@@ -5246,6 +5246,43 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
 })();
 
 
+(function applyGundamSeedDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["gundam-seed-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "18Gのストライクアタックから3種類のBONUSへ。20G＋αのSTをつなぎ、フリーダムハイパーを目指す。",
+    intro: "小役でHITマスをつなぐ18GのCZ、約100・200・300枚のBONUS、20G＋αのストライクライド、3Gの瞬間決着バトル、5Gの宿命ZONE、前半5G＋後半5Gのストライクバースト、1セット10Gのフリーダムハイパーまでを専用画面で体験できます。",
+    points: ["ストライクアタックは18G・成功期待度約62%", "BONUSは約100／200／300枚・純増約6.5枚/G", "ストライクライドは20G＋α・継続約70%", "上位ATは1セット10G・継続約96%"],
+    specs: [["CZ（設定1）", "約1/362.2"], ["AT初当り（設定1）", "約1/460.1"], ["AT初当り（設定6）", "約1/318.4"], ["ベース", "約31.5G/50枚"], ["CZ", "18G・成功期待度約62%"], ["SEED BONUS", "約100枚"], ["赤7 BIG BONUS", "約200枚"], ["黒BAR BIG BONUS", "約300枚"], ["BONUS純増", "約6.5枚/G"], ["ストライクライド", "20G＋α・継続約70%"], ["瞬間決着バトル", "3G・成功期待度約50%"], ["宿命ZONE", "5G"], ["ストライクバースト", "前半5G＋後半5G"], ["フリーダムハイパー", "1セット10G・継続約96%"]],
+    articleSections: [
+      { heading: "ストライクアタックからBONUSへ", paragraphs: ["通常時はレア役や3GのラクスチャンスなどからCZを目指します。ストライクアタックは18G継続し、小役でHITマスを獲得。HITが縦または横に並ぶと白BAR狙えへ進みます。", "CZ成功後も残りゲームを消化し、白BAR揃いを重ねるほどSEED BONUS、赤7 BIG、黒BAR BIGへ昇格します。専用画面では18Gを進め、最後のPUSHでBONUSと昇格結果を開きます。"] },
+      { heading: "3種類のBONUSと宿命ポイント", paragraphs: ["BONUSは純増約6.5枚/G。SEED BONUSは約100枚、赤7 BIGは約200枚、黒BAR BIGは約300枚です。消化中は宿命ポイントを抽選し、100pt到達で5Gの宿命ZONEへ進みます。", "シミュレーターでは獲得枚数と宿命ポイントをBONUSごとに表示し、100pt到達時だけ宿命ZONEのPUSH判定へ進みます。"] },
+      { heading: "ストライクライドと瞬間決着バトル", paragraphs: ["BONUS後は20G＋αのST『ストライクライド』へ。リプレイ・ベルでゲーム数をHOLDし、HOLD中の小役などから3Gの瞬間決着バトルへ発展します。", "瞬間決着バトルは成功期待度約50%。勝利すればBONUSとST再セット、ST終了後は3Gのラストチャンスで引き戻しを抽選します。専用画面ではST20G、3Gバトル、ラストチャンスを順に表示します。"] },
+      { heading: "宿命ZONEとストライクバースト", paragraphs: ["宿命ポイントMAXで5Gの宿命ZONEへ入り、SEED目停止で上位CZ『ストライクバースト』へ。ストライクバーストは前半5G＋後半5Gの2部構成です。", "前半非突破でもSEED BONUS、後半まで進んで上位非当選なら赤7 BIGが最低保証。前半・後半の最後にPUSHを置き、結果と保証BONUSを分けて表示します。"] },
+      { heading: "フリーダムハイパー", paragraphs: ["上位ATは1セット10G・純増約6.5枚/G・継続率約96%。Vストックを使いながらメインゾーン、ピンチゾーン、3Gのファイナルジャッジを行き来します。", "1000連撃到達時のフルバーストチャレンジは100〜1000枚を決定。専用画面では10Gセット、Vストック、ファイナルジャッジ、フルバーストを個別に記録します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約31.5G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6のCZ・AT初当りと出玉率は公開値", "CZ、3種類BONUS、ST、瞬間決着バトル、宿命ZONE、上位CZ、上位ATを専用進行", "BONUS振り分け、宿命ポイント獲得量、上位ルートの未公表抽選は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["SANKYO 公式機種情報", "https://www.sankyo-fever.jp/collection/981/"], ["Bisty 開発こぼれ話・全体フロー", "https://blog-bisty.jp/l_gundam_seed_tutorial/502/"], ["一撃 機種解析", "https://1geki.jp/slot/l_gundamseed/"], ["なな徹 機種解析", "https://nana-press.com/kaiseki/machine/930/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10255"]],
+    readerGuide: { verdict: "18GのCZから3種類のBONUSを獲得し、20G＋αのSTでBONUSを重ねながら宿命ポイントMAXと上位ATを狙うBONUS＋ST型です。", bestFor: ["HITマス型CZの最終PUSHを体験したい", "BONUSと20G STのループを見たい", "宿命ZONEから上位ATまで挑戦したい"], check: ["CZ・AT初当り、主要ゲーム数、純増、BONUS枚数は公開値", "STと瞬間決着バトル、ラストチャンスを分けて表示", "未公表の細かな振り分けは体験用代表値"], compare: [["paripi-koumei-slot", "スマスロ パリピ孔明", "BONUS＋ST型と比較"], ["fire-force-slot", "Lパチスロ 炎炎ノ消防隊", "BONUSループ型と比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v22", dedicatedFlow: true, dedicatedFlowKey: "gundam-seed-slot", dedicatedFlowVersion: 2, gundamSeedFlow: true,
+    triggerLabel: "ストライクアタック", triggerRate: 362.2, triggerSuccess: 0.62, mainLabel: "ストライクライド", mainRate: 460.1, base50: 31.5, coinUnit: 4.0, normalMin: 0, normalMax: 0, atPureIncrease: 6.5, upperPureIncrease: 6.5, atPayoutVariance: 0,
+    gundamSeedEntryRoutes: [[{ key: "cz", label: "ストライクアタック", games: 18, chance: 0.62 }, 0.88], [{ key: "direct", label: "黒BAR BIG BONUS直撃", games: 1, chance: 1, bonusKey: "black" }, 0.10], [{ key: "upper", label: "フリーダムハイパー直撃", games: 1, chance: 1, upper: true }, 0.02]],
+    gundamSeedBonuses: [[{ key: "seed", label: "SEED BONUS", games: 16, award: 100, destiny: 26 }, 0.58], [{ key: "red", label: "赤7 BIG BONUS", games: 31, award: 200, destiny: 42 }, 0.30], [{ key: "black", label: "黒BAR BIG BONUS", games: 46, award: 300, destiny: 62 }, 0.12]],
+    gundamSeedStGames: 20, gundamSeedStContinue: 0.70, gundamSeedBattleGames: 3, gundamSeedBattleChance: 0.50, gundamSeedLastChanceGames: 3, gundamSeedLastChance: 0.12, gundamSeedMaxLoops: 12,
+    gundamSeedDestinyZoneGames: 5, gundamSeedDestinyZoneChance: 0.606,
+    gundamSeedBurstFrontGames: 5, gundamSeedBurstFrontChance: 0.56, gundamSeedBurstBackGames: 5, gundamSeedBurstBackChance: 0.50,
+    gundamSeedUpperGames: 10, gundamSeedUpperContinue: 0.96, gundamSeedUpperMaxSets: 60, gundamSeedFullBurstChance: 0.06, gundamSeedFullBurstAwards: [[100, 0.45], [200, 0.25], [300, 0.14], [500, 0.10], [700, 0.04], [1000, 0.02]],
+    specialLabel: "宿命ZONE", specialChance: 0.606, upperChallenge: "ストライクバースト", upperChance: 0.56, upperSuccess: 0.50, upperLabel: "フリーダムハイパー", upperContinue: 0.96, upperPayout: 0,
+    settingRates: { 1: { trigger: 362.2, main: 460.1, payout: 0.977 }, 2: { trigger: 377.3, main: 446.9, payout: 0.988 }, 3: { trigger: 349.1, main: 411.8, payout: 1.012 }, 4: { trigger: 309.7, main: 364.5, payout: 1.054 }, 5: { trigger: 301.6, main: 355.6, payout: 1.107 }, 6: { trigger: 266.9, main: 318.4, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
+
 (function applyFireForceDedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["fire-force-slot"];
   if (!machine) return;

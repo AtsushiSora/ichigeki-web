@@ -363,6 +363,14 @@
         ["黄金AT", "約5.0枚/G", "絶唱バトル約60%"]
       ];
       note = "残りゲーム数、ギアVチャンスの装者獲得、キャラ別ギアVアタック、絶唱、上位ATと絶唱バトルを個別に記録します。";
+    } else if (sim.gundamSeedFlow) {
+      items = [
+        ["CZ", "18G・約62%", "HITマスを縦横につなぐ"],
+        ["3種BONUS", "約100／200／300枚", "純増約6.5枚/G"],
+        ["ストライクライド", "20G＋α・約70%", "瞬間決着バトルは3G"],
+        ["上位AT", "10Gセット・約96%", "フルバースト100〜1000枚"]
+      ];
+      note = "18Gのストライクアタック、3種類のBONUS、20G＋αのST、瞬間決着バトル、宿命ZONE、ストライクバースト、フリーダムハイパーを機種専用で記録します。";
     } else if (sim.fireForceFlow) {
       items = [
         ["初当り", `約1/${sim.triggerRate}`, "灰焔騎士団・BONUS合算"],
@@ -1151,6 +1159,15 @@
         cards.splice(4, 0, ["BALANCE MODEL", "専用フローの抽選目安", `${profileNames[titleFlow.profile] || "機種専用型"}として、AT突入後は平均約${Number(titleFlow.balance.averageRounds).toFixed(1)}区間進行します。通常フローから${sim.upperLabel}へ到達する代表目安は約${percent(titleFlow.balance.upperRoute)}です。公開値と機種別の代表値から計算した比較用の目安で、実戦結果を保証するものではありません。`]);
       }
       note = `${cycle.label || sim.mainLabel}の区間順序、代表報酬、継続判定を${titleFlow ? "機種専用フローで" : "個別に"}表示する体験モデルです。成立役別抽選、内部状態、全報酬振り分けは短時間で比較できる形へ簡略化しています。`;
+    } else if (sim.gundamSeedFlow) {
+      cards = [
+        ["STRIKE ATTACK", "18GのHITマスCZ", "小役でHITマスを獲得し、縦または横に並べて白BAR揃いを狙います。成功後も残りゲームでBONUS昇格を抽選します。"],
+        ["BONUS", "約100／200／300枚", "SEED BONUS、赤7 BIG、黒BAR BIGをPUSHで開きます。消化中は宿命ポイントを獲得します。"],
+        ["STRIKE RIDE", "20G＋αのBONUS高確", "小役でHOLDと瞬間決着バトルを抽選。3Gのバトル勝利でBONUSとST再セットです。"],
+        ["DESTINY ROUTE", "宿命ZONE／ストライクバースト", "宿命ポイント100ptで5Gの宿命ZONEへ。成功後は前半5G＋後半5Gの上位CZをPUSHで進めます。"],
+        ["FREEDOM HYPER", "10Gセット・継続約96%", "Vストック、ピンチゾーン、3Gのファイナルジャッジ、100〜1000枚のフルバーストを個別表示します。"]
+      ];
+      note = "CZ・AT初当り、主要ゲーム数、純増、BONUS枚数、公開期待度を優先しています。BONUS振り分けや宿命ポイントなど未公表の細部は体験用代表値です。";
     } else if (sim.fireForceFlow) {
       cards = [
         ["TWO ENTRY ROUTES", "灰焔騎士団／初当りBONUS", "通常時は15G＋α・BONUS期待度約50%の灰焔騎士団、またはREG／炎炎BONUSから始まります。"],
@@ -1436,7 +1453,7 @@
       const averageInvestment = Math.round((machine.sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
-      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow || machine.sim.millionGodFlow || machine.sim.juohFlow || machine.sim.sunbreakFlow || machine.sim.paripiFlow || machine.sim.fireForceFlow || machine.sim.fireForce2Flow;
+      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow || machine.sim.millionGodFlow || machine.sim.juohFlow || machine.sim.sunbreakFlow || machine.sim.paripiFlow || machine.sim.gundamSeedFlow || machine.sim.fireForceFlow || machine.sim.fireForce2Flow;
       const settingModelLabel = machine.sim.settingRates
         ? hasDedicatedFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
         : hasDedicatedFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
@@ -1522,7 +1539,7 @@
         ? Math.max(1, mainRate * sim.triggerRate / sim.mainRate)
         : Math.max(1, sim.triggerRate * profile.rate);
     const publishedEntry = Number(publishedSetting?.entry);
-    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.fireForceFlow || sim.fireForce2Flow
+    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.gundamSeedFlow || sim.fireForceFlow || sim.fireForce2Flow
       ? Math.max(0, Math.min(1, Number(sim.triggerSuccess) || 0.55))
       : sim.godzillaEva2Flow || sim.mahoakoFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.shinEvaFlow
       ? 1
@@ -1538,7 +1555,7 @@
       ? Math.min(0.98, Number(publishedSetting.upper))
       : hasPublishedSettingRates ? sim.upperChance : Math.min(0.98, sim.upperChance + profile.upper);
     const settingModelLabel = hasPublishedTriggerRate && hasPublishedMainRate
-      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.darlingFranxxFlow ? "公開設定別値（CZ・BONUS・高確初当り）" : sim.godEaterFlow ? "公開設定別値（AT初当り・機種専用進行）" : sim.millionGodFlow ? "公開設定別値（GG初当り・機種専用進行）" : sim.juohFlow ? "公開設定別値（SC初当り・機種専用進行）" : sim.sunbreakFlow ? "公開設定別値（CZ・AT初当り・機種専用進行）" : sim.paripiFlow ? "公開設定別値（CZ3種・BONUS初当り・ST進行）" : sim.fireForceFlow ? "公開設定別値（初当り・BONUS・炎炎ループ）" : sim.fireForce2Flow ? "公開設定別値（BONUS・炎炎ループ初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
+      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.darlingFranxxFlow ? "公開設定別値（CZ・BONUS・高確初当り）" : sim.godEaterFlow ? "公開設定別値（AT初当り・機種専用進行）" : sim.millionGodFlow ? "公開設定別値（GG初当り・機種専用進行）" : sim.juohFlow ? "公開設定別値（SC初当り・機種専用進行）" : sim.sunbreakFlow ? "公開設定別値（CZ・AT初当り・機種専用進行）" : sim.paripiFlow ? "公開設定別値（CZ3種・BONUS初当り・ST進行）" : sim.gundamSeedFlow ? "公開設定別値（CZ・BONUS・ST・上位AT）" : sim.fireForceFlow ? "公開設定別値（初当り・BONUS・炎炎ループ）" : sim.fireForce2Flow ? "公開設定別値（BONUS・炎炎ループ初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
       : hasPublishedMainRate
         ? sim.bofuriFlow ? "公開設定別値（BONUS初当り）＋機種専用進行" : "公開設定別値（初当り）＋CZ簡易換算"
         : "サイト共通補正モデル";
@@ -1806,6 +1823,18 @@
     let paripiUpperLoops = 0;
     let paripiUltimateAttempts = 0;
     let paripiUltimateLoops = 0;
+    let gundamSeedEntry = null;
+    let gundamSeedInitialBonus = null;
+    let gundamSeedStRounds = 0;
+    let gundamSeedBattleWins = 0;
+    let gundamSeedBonusCount = 0;
+    let gundamSeedDestinyPoints = 0;
+    let gundamSeedDestinyAttempts = 0;
+    let gundamSeedDestinyWins = 0;
+    let gundamSeedBurstAttempts = 0;
+    let gundamSeedBurstBacks = 0;
+    let gundamSeedUpperSets = 0;
+    let gundamSeedFullBursts = 0;
     let fireForceEntry = null;
     let fireForceInitialBonus = null;
     let fireForceGrayAttempts = 0;
@@ -1851,6 +1880,34 @@
     let sunbreakPurificationAttempts = 0;
     let sunbreakPurificationWins = 0;
     let sunbreakMaxMonster = "未遭遇";
+    if (sim.gundamSeedFlow) {
+      gundamSeedEntry = weighted(sim.gundamSeedEntryRoutes || [[{ key: "cz", label: "ストライクアタック", games: 18, chance: 0.62 }, 1]]);
+      const entryChance = Math.max(0, Math.min(1, Number(gundamSeedEntry.chance) || 0.62));
+      triggerSucceeded = Math.random() < entryChance;
+      entered = triggerSucceeded;
+      flow[0] = `${games}Gで${gundamSeedEntry.label}`;
+      atEvents.push({ kind: "gundam-seed-entry", ...gundamSeedEntry, chance: entryChance * 100, won: triggerSucceeded, cumulative: 0 });
+      if (triggerSucceeded && gundamSeedEntry.upper) {
+        upper = true;
+        flow.push("フリーダムハイパー直撃");
+      } else if (triggerSucceeded) {
+        const forcedKey = gundamSeedEntry.bonusKey;
+        const bonuses = sim.gundamSeedBonuses || [[{ key: "seed", label: "SEED BONUS", games: 16, award: 100, destiny: 26 }, 1]];
+        gundamSeedInitialBonus = forcedKey ? bonuses.map(([bonus]) => bonus).find(bonus => bonus.key === forcedKey) || bonuses[0][0] : weighted(bonuses);
+        const initialAward = Math.max(0, Math.min(Number(gundamSeedInitialBonus.award) || 100, SLOT_COMPLETE_LIMIT));
+        payout = initialAward;
+        bonusCount += 1;
+        gundamSeedBonusCount += 1;
+        bonusPayoutTotal += initialAward;
+        atGamesTotal += Math.max(1, Number(gundamSeedInitialBonus.games) || 16);
+        gundamSeedDestinyPoints = Math.min(100, Number(gundamSeedInitialBonus.destiny) || 26);
+        entryBonus = { ...gundamSeedInitialBonus, payout: initialAward, atChance: 1, outcome: "ストライクライド突入" };
+        atEvents.push({ kind: "gundam-seed-bonus", ...gundamSeedInitialBonus, initial: true, award: initialAward, destinyPoints: gundamSeedDestinyPoints, cumulative: payout });
+        flow.push(`${gundamSeedInitialBonus.label} +${yen.format(initialAward)}枚 → ストライクライド`);
+      } else {
+        flow.push("ストライクアタック失敗");
+      }
+    }
     if (sim.fireForceFlow) {
       fireForceEntry = weighted(sim.fireForceEntries || [[{ key: "bonus", label: "初当りBONUS", games: 1, chance: 1 }, 1]]);
       let entryWon = true;
@@ -3018,6 +3075,111 @@
             atGamesTotal += 40;
             atEvents.push({ kind: "basilisk-fallback", label: "通常バジリスクタイム", games: 40, award: fallbackAward, cumulative: payout });
             flow.push(`通常バジリスクタイム 1セット・+${yen.format(fallbackAward)}枚`);
+          }
+        }
+        basePayout = payout - entryPayout;
+      } else if (sim.gundamSeedFlow) {
+        payout = entryPayout;
+        basePayout = 0;
+        const awardGundamSeedCoins = amount => {
+          const award = Math.max(0, Math.min(Math.round(Number(amount) || 0), SLOT_COMPLETE_LIMIT - payout));
+          payout += award;
+          return award;
+        };
+        const addGundamSeedBonus = (bonus, source, initial = false) => {
+          const award = awardGundamSeedCoins(bonus.award);
+          const destinyAdd = Math.max(0, Number(bonus.destiny) || 0);
+          gundamSeedDestinyPoints = Math.min(100, gundamSeedDestinyPoints + destinyAdd);
+          gundamSeedBonusCount += 1;
+          if (!initial) bonusCount += 1;
+          bonusPayoutTotal += initial ? 0 : award;
+          atGamesTotal += Math.max(1, Number(bonus.games) || 16);
+          atEvents.push({ kind: "gundam-seed-bonus", ...bonus, source, initial, award, destinyAdd, destinyPoints: gundamSeedDestinyPoints, cumulative: payout });
+          flow.push(`${bonus.label} +${yen.format(award)}枚・宿命${gundamSeedDestinyPoints}pt`);
+          return award;
+        };
+        const bonuses = sim.gundamSeedBonuses || [[{ key: "seed", label: "SEED BONUS", games: 16, award: 100, destiny: 26 }, 1]];
+
+        if (!upper) {
+          const maxLoops = Math.max(1, Math.min(24, Number(sim.gundamSeedMaxLoops) || 12));
+          while (gundamSeedStRounds < maxLoops && payout < SLOT_COMPLETE_LIMIT && !upper) {
+            gundamSeedStRounds += 1;
+            cycleRounds += 1;
+            const stChance = Math.max(0, Math.min(1, Number(sim.gundamSeedStContinue) || 0.70));
+            const battleReached = Math.random() < Math.min(0.94, stChance + 0.16);
+            const battleWon = battleReached && Math.random() < Math.max(0, Math.min(1, Number(sim.gundamSeedBattleChance) || 0.50));
+            const lastChanceWon = !battleWon && Math.random() < Math.max(0, Math.min(1, Number(sim.gundamSeedLastChance) || 0.12));
+            const won = battleWon || lastChanceWon;
+            if (won) {
+              gundamSeedBattleWins += 1;
+              cycleContinues += 1;
+            }
+            atGamesTotal += Math.max(1, Number(sim.gundamSeedStGames) || 20) + (battleReached ? Math.max(1, Number(sim.gundamSeedBattleGames) || 3) : 0) + (!battleWon ? Math.max(1, Number(sim.gundamSeedLastChanceGames) || 3) : 0);
+            atEvents.push({ kind: "gundam-seed-st", label: "ストライクライド", games: Number(sim.gundamSeedStGames) || 20, round: gundamSeedStRounds, chance: stChance * 100, battleReached, battleGames: Number(sim.gundamSeedBattleGames) || 3, battleChance: (Number(sim.gundamSeedBattleChance) || 0.50) * 100, battleWon, lastChanceGames: Number(sim.gundamSeedLastChanceGames) || 3, lastChanceWon, won, cumulative: payout });
+            flow.push(`ストライクライド ${gundamSeedStRounds}・${battleWon ? "瞬間決着バトル勝利" : lastChanceWon ? "ラストチャンス成功" : "終了"}`);
+            if (!won) break;
+
+            const bonus = weighted(bonuses);
+            addGundamSeedBonus(bonus, battleWon ? "瞬間決着バトル" : "ラストチャンス");
+
+            if (gundamSeedDestinyPoints >= 100 && payout < SLOT_COMPLETE_LIMIT) {
+              gundamSeedDestinyAttempts += 1;
+              const destinyChance = Math.max(0, Math.min(1, Number(sim.gundamSeedDestinyZoneChance) || 0.606));
+              const destinyWon = Math.random() < destinyChance;
+              if (destinyWon) gundamSeedDestinyWins += 1;
+              atGamesTotal += Math.max(1, Number(sim.gundamSeedDestinyZoneGames) || 5);
+              atEvents.push({ kind: "gundam-seed-destiny", label: "宿命ZONE", games: Number(sim.gundamSeedDestinyZoneGames) || 5, chance: destinyChance * 100, won: destinyWon, cumulative: payout, attempt: gundamSeedDestinyAttempts });
+              flow.push(`宿命ZONE ${destinyWon ? "成功" : "失敗"}`);
+              gundamSeedDestinyPoints = 0;
+
+              if (destinyWon) {
+                gundamSeedBurstAttempts += 1;
+                const frontChance = Math.max(0, Math.min(1, Number(sim.gundamSeedBurstFrontChance) || 0.56));
+                const backChance = Math.max(0, Math.min(1, Number(sim.gundamSeedBurstBackChance) || 0.50));
+                const frontWon = Math.random() < frontChance;
+                const backWon = frontWon && Math.random() < backChance;
+                if (frontWon) gundamSeedBurstBacks += 1;
+                upper = backWon;
+                atGamesTotal += Math.max(1, Number(sim.gundamSeedBurstFrontGames) || 5) + (frontWon ? Math.max(1, Number(sim.gundamSeedBurstBackGames) || 5) : 0);
+                atEvents.push({ kind: "gundam-seed-burst", label: "ストライクバースト", frontGames: Number(sim.gundamSeedBurstFrontGames) || 5, backGames: Number(sim.gundamSeedBurstBackGames) || 5, frontChance: frontChance * 100, backChance: backChance * 100, frontWon, backWon, cumulative: payout, attempt: gundamSeedBurstAttempts });
+                flow.push(`ストライクバースト ${backWon ? "成功・フリーダムハイパー" : frontWon ? "後半失敗・赤7 BIG保証" : "前半失敗・SEED BONUS保証"}`);
+                if (!backWon) {
+                  const guaranteeKey = frontWon ? "red" : "seed";
+                  const guarantee = bonuses.map(([candidate]) => candidate).find(candidate => candidate.key === guaranteeKey) || bonuses[0][0];
+                  addGundamSeedBonus(guarantee, "ストライクバースト保証");
+                }
+              }
+            }
+          }
+        }
+
+        if (upper && payout < SLOT_COMPLETE_LIMIT) {
+          const maxSets = Math.max(1, Math.min(80, Number(sim.gundamSeedUpperMaxSets) || 60));
+          let vStocks = 1;
+          while (gundamSeedUpperSets < maxSets && payout < SLOT_COMPLETE_LIMIT) {
+            gundamSeedUpperSets += 1;
+            upperLoops = gundamSeedUpperSets;
+            const setGames = Math.max(1, Number(sim.gundamSeedUpperGames) || 10);
+            const setAward = awardGundamSeedCoins(slotAwardForGames(setGames, Number(sim.upperPureIncrease) || 6.5, 0));
+            atGamesTotal += setGames;
+            upperPayoutTotal += setAward;
+            const fullBurst = Math.random() < Math.max(0, Math.min(1, Number(sim.gundamSeedFullBurstChance) || 0.06));
+            let fullBurstAward = 0;
+            if (fullBurst && payout < SLOT_COMPLETE_LIMIT) {
+              fullBurstAward = awardGundamSeedCoins(weighted(sim.gundamSeedFullBurstAwards || [[100, 1]]));
+              gundamSeedFullBursts += 1;
+              upperPayoutTotal += fullBurstAward;
+              bonusCount += 1;
+              bonusPayoutTotal += fullBurstAward;
+            }
+            const usedStock = vStocks > 0;
+            if (usedStock) vStocks -= 1;
+            const continueChance = Math.max(0, Math.min(1, Number(sim.gundamSeedUpperContinue) || 0.96));
+            const continued = gundamSeedUpperSets < maxSets && (usedStock || Math.random() < continueChance);
+            if (continued && Math.random() < 0.13) vStocks += 1;
+            atEvents.push({ kind: "gundam-seed-upper", label: sim.upperLabel, games: setGames, set: gundamSeedUpperSets, award: setAward, cumulative: payout, vStocks, usedStock, continued, chance: continueChance * 100, fullBurst, fullBurstAward });
+            flow.push(`${sim.upperLabel} SET ${gundamSeedUpperSets}・${fullBurst ? `フルバースト +${yen.format(fullBurstAward)}枚・` : ""}${continued ? "継続" : "終了"}`);
+            if (!continued) break;
           }
         }
         basePayout = payout - entryPayout;
@@ -5845,12 +6007,13 @@
     const juohStats = sim.juohFlow ? [["サバンナチャンス", `${juohScSets}セット`], ["潜伏からのSC放出", `${juohSabaReturns}回`], ["最大ベルナビ", `${juohMaxNavi}回`], ["BONUS", `BIG ${juohBigCount}回・REG ${juohRegCount}回`], ["獲得SCストック", `${juohStocksWon}個`], ["超サバ", juohSuperSabaCount || upper ? "到達" : "非到達"], ["4大トリガー", juohTriggerCount ? `${juohTriggerCount}回` : "非当選"], ["KSCループ", `${juohKscLoops}回`], ["EX 30ナビ", `${juohExLoops}回`]] : [];
     const sunbreakStats = sim.sunbreakFlow ? [["今回の入口", sunbreakEntry?.label || sim.triggerLabel], ["盟勇クエスト", `${sunbreakQuestCount}回・討伐${sunbreakHunts}体`], ["討伐ゲーム数上乗せ", `+${sunbreakQuestAdds}G`], ["剥ぎ取りRUSH", `${sunbreakCarveEntries}回・+${sunbreakCarveAdds}G`], ["キュリアチャンス", `${sunbreakQuriaEntries}回・+${sunbreakQuriaAdds}G`], ["サンブレイクBONUS", `${sunbreakBonusCount}回`], ["最終モンスター", sunbreakMaxMonster], ["勇気の証明", sunbreakCourageAttempts ? `${sunbreakCourageAttempts}回・成功${sunbreakCourageWins}回` : "未到達"], [sim.upperLabel, sunbreakUpperLoops ? `${sunbreakUpperLoops}区間` : "非到達"], ["滅浄の裁き", sunbreakPurificationAttempts ? `${sunbreakPurificationAttempts}回・成功${sunbreakPurificationWins}回` : "未到達"]] : [];
     const paripiStats = sim.paripiFlow ? [["今回のCZ", paripiCz?.label || sim.triggerLabel], ["LIVE BONUS", `赤7 ${paripiRedCount}回・白7 ${paripiWhiteCount}回`], ["Party Time", `${paripiStLoops}セット`], ["パリピミッション", `${paripiMissionCount}回・成功${paripiMissionWins}回`], ["獲得兵法書", `${paripiScrollCount}個・${paripiScrollNames.length}/9種類`], ["兵法書一覧", paripiScrollNames.length ? paripiScrollNames.join("・") : "未獲得"], ["HEYHO ZONE", `${paripiHeyhoCount}回`], ["渋谷決戦BONUS", `${paripiShibuyaBonusCount}回`], ["渋谷決戦", paripiShibuyaAttempts ? `${paripiShibuyaAttempts}回・勝利${paripiShibuyaWins}回` : "未到達"], [sim.upperLabel, paripiUpperLoops ? `${paripiUpperLoops}セット` : "非到達"], ["究極孔明", paripiUltimateAttempts ? (paripiUltimateLoops ? `${paripiUltimateLoops}セット` : "抽選非当選") : "未到達"]] : [];
+    const gundamSeedStats = sim.gundamSeedFlow ? [["今回の入口", gundamSeedEntry?.label || sim.triggerLabel], ["初当りBONUS", gundamSeedInitialBonus?.label || (gundamSeedEntry?.upper ? "上位AT直撃" : "非当選")], ["ストライクライド", `${gundamSeedStRounds}セット・BONUS当選${gundamSeedBattleWins}回`], ["BONUS合計", `${gundamSeedBonusCount}回`], ["最終宿命ポイント", `${gundamSeedDestinyPoints}pt`], ["宿命ZONE", gundamSeedDestinyAttempts ? `${gundamSeedDestinyAttempts}回・成功${gundamSeedDestinyWins}回` : "未到達"], ["ストライクバースト", gundamSeedBurstAttempts ? `${gundamSeedBurstAttempts}回・後半${gundamSeedBurstBacks}回` : "未到達"], [sim.upperLabel, gundamSeedUpperSets ? `${gundamSeedUpperSets}セット・フルバースト${gundamSeedFullBursts}回` : "非到達"]] : [];
     const fireForceStats = sim.fireForceFlow ? [["今回の入口", fireForceEntry?.label || sim.triggerLabel], ["灰焔騎士団", fireForceGrayAttempts ? `${fireForceGrayAttempts}回・成功${fireForceGrayWins}回` : "非経由"], ["初当りBONUS", fireForceInitialBonus?.label || "非当選"], ["伝導者の影", fireForceShadowAttempts ? `${fireForceShadowAttempts}回・成功${fireForceShadowWins}回` : fireForceInitialBonus?.key === "episode" ? "エピソードBONUSから直行" : "非経由"], ["炎炎激闘", `${fireForceBattleRounds}セット・BONUS当選${fireForceBattleWins}回`], ["炎炎ループBONUS", `${fireForceBonusCount}回`], ["紅丸炎舞", fireForceBenimaruCount ? `${fireForceBenimaruCount}回` : "非当選"], ["森羅万象", fireForceShinraAttempts ? `${fireForceShinraAttempts}回・成功${fireForceShinraWins}回` : "未到達"], [sim.upperLabel, fireForceAdoraBursts ? `${fireForceAdoraBursts}回・JAC ${fireForceAdoraJacs}回` : "非到達"]] : [];
     const fireForce2Stats = sim.fireForce2Flow ? [["初当りBONUS", fireForce2InitialBonus?.label || sim.triggerLabel], ["BONUS内訳", `REG ${fireForce2RegularCount}回・エピソード ${fireForce2EpisodeCount}回・ループ中 ${fireForce2BonusCount}回`], ["伝導者の罠", fireForce2TrapAttempts ? `${fireForce2TrapAttempts}回・成功${fireForce2TrapWins}回` : "SPエピソードから直行"], ["炎炎ループ", `${fireForce2LoopRounds}セット・BONUS当選${fireForce2LoopWins}回`], ["最終ループ", fireForce2LoopMode?.label || "非突入"], ["炎炎BOOST", fireForce2BoostCount ? `${fireForce2BoostCount}回` : "非当選"], ["森羅万象", fireForce2ShinraAttempts ? `${fireForce2ShinraAttempts}回・成功${fireForce2ShinraWins}回` : "未到達"], [sim.upperLabel, fireForce2AdoraBursts ? `${fireForce2AdoraBursts}回・JAC ${fireForce2AdoraJacs}回` : "非到達"]] : [];
     const cycleStats = sim.cycleFlow ? [[sim.cycleFlow.statLabel || (sim.titleFlow ? "機種専用進行" : "専用ループ"), `${cycleRounds}回・継続${cycleContinues}回`]] : [];
     const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
     const rushGamesTotal = Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
-    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.fireForceFlow || sim.fireForce2Flow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
+    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.gundamSeedFlow || sim.fireForceFlow || sim.fireForce2Flow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
     const gameAddOnStats = sim.karakuriJudgeFlow || coinAddOnCount
       ? [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(coinAddOnTotal || addOnTotal)}枚` : "上乗せなし"]]
       : [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnGamesTotal || otomeAddedGames)}G` : "上乗せなし"]];
@@ -5905,6 +6068,8 @@
         ? [["RUSH・クエスト消化", `${yen.format(rushGamesTotal)}G相当`], ...sunbreakStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : sim.paripiFlow
         ? [["BONUS・ST消化", `${yen.format(rushGamesTotal)}G相当`], ...paripiStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
+      : sim.gundamSeedFlow
+        ? [["BONUS・ST・上位消化", `${yen.format(rushGamesTotal)}G相当`], ...gundamSeedStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : sim.fireForceFlow
         ? [["BONUS・炎炎ループ消化", `${yen.format(rushGamesTotal)}G相当`], ...fireForceStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : sim.fireForce2Flow
@@ -5933,6 +6098,8 @@
         ? `今回の設定は設定${setting}。${games}Gで${sunbreakEntry?.label || sim.triggerLabel}、${entered ? `盟勇クエスト${sunbreakQuestCount}回・討伐${sunbreakHunts}体、ゲーム数上乗せ合計+${sunbreakQuestAdds + sunbreakCarveAdds + sunbreakQuriaAdds}Gで${yen.format(payout)}枚を獲得しました。${sunbreakUpperLoops ? `${sim.upperLabel}を${sunbreakUpperLoops}区間消化しました。` : sunbreakCourageAttempts ? "勇気の証明で終了しました。" : "サンブレイクRUSHは残り0Gで終了しました。"}` : `${sunbreakEntry?.label || sim.triggerLabel}は突破できませんでした。`}`
       : sim.paripiFlow
         ? `今回の設定は設定${setting}。${games}Gで${paripiCz?.label || sim.triggerLabel}、${entered ? `赤7 ${paripiRedCount}回・白7 ${paripiWhiteCount}回、Party Time ${paripiStLoops}セットで${yen.format(payout)}枚を獲得しました。${paripiUltimateLoops ? `究極孔明を${paripiUltimateLoops}セット消化しました。` : paripiUpperLoops ? `超Party Timeを${paripiUpperLoops}セット消化しました。` : paripiShibuyaAttempts ? "渋谷決戦を経て終了しました。" : "Party Timeは15G＋αで終了しました。"}` : `${paripiCz?.label || sim.triggerLabel}は突破できませんでした。`}`
+      : sim.gundamSeedFlow
+        ? `今回の設定は設定${setting}。${games}Gで${gundamSeedEntry?.label || sim.triggerLabel}、${entered ? `${gundamSeedBonusCount}回のBONUSとストライクライド${gundamSeedStRounds}セットで${yen.format(payout)}枚を獲得しました。${gundamSeedUpperSets ? `ストライクバーストを突破し、フリーダムハイパーを${gundamSeedUpperSets}セット消化しました。` : gundamSeedBurstAttempts ? "ストライクバーストを経て通常STへ戻りました。" : "宿命ポイントMAXには届かずST終了となりました。"}` : "ストライクアタックは突破できませんでした。"}`
       : sim.fireForceFlow
         ? `今回の設定は設定${setting}。${games}Gで${fireForceEntry?.label || sim.triggerLabel}、${entered ? `${fireForceBattleRounds}セットの炎炎激闘でBONUSを${fireForceBonusCount}回獲得し、${yen.format(payout)}枚となりました。${fireForceAdoraBursts ? `森羅万象を突破し、アドラバーストを${fireForceAdoraBursts}回・JACを${fireForceAdoraJacs}回消化しました。` : fireForceShinraAttempts ? "森羅万象の当落を経て終了しました。" : "炎炎激闘ストックがなくなり通常へ戻りました。"}` : fireForceGrayAttempts && !fireForceGrayWins ? "灰焔騎士団でBONUS非当選となりました。" : `${fireForceInitialBonus?.label || "初当り"}後、炎炎激闘には届きませんでした。`}`
       : sim.fireForce2Flow
@@ -6642,6 +6809,7 @@
     const juohFlow = Boolean(machine.sim.juohFlow);
     const sunbreakFlow = Boolean(data.sunbreakFlow || machine.sim.sunbreakFlow);
     const paripiFlow = Boolean(data.paripiFlow || machine.sim.paripiFlow);
+    const gundamSeedFlow = Boolean(machine.sim.gundamSeedFlow);
     const fireForceFlow = Boolean(machine.sim.fireForceFlow);
     const fireForce2Flow = Boolean(machine.sim.fireForce2Flow);
     setSlotAtStatus({ visible: false });
@@ -6666,12 +6834,105 @@
       setExperienceStage(1, "QUEST ENTRY", data.sunbreakEntry?.label || data.hitLabel, `${yen.format(data.attempts)}G`, "専用CZを消化し、最後のPUSHでサンブレイクRUSHを判定", "hit", data.triggerSuccessChance, "CZ・AT直撃の機種専用ルート");
     } else if (paripiFlow) {
       setExperienceStage(1, "PARIPI CHANCE", data.paripiCz?.label || data.hitLabel, `${yen.format(data.attempts)}G`, "3種類の専用CZを消化し、最後のPUSHでLIVE BONUSを判定", "hit", data.triggerSuccessChance, "CZ別の公開成功期待度");
+    } else if (gundamSeedFlow) {
+      const entry = (Array.isArray(data.atEvents) ? data.atEvents : []).find(event => event.kind === "gundam-seed-entry");
+      setExperienceStage(1, entry?.upper ? "FREEDOM DIRECT" : entry?.key === "direct" ? "BLACK BAR DIRECT" : "STRIKE ATTACK", entry?.label || data.hitLabel, `${yen.format(data.attempts)}G`, entry?.key === "cz" ? "18GのHITマスCZを進め、最後のPUSHで白BAR揃いを判定" : "直撃ルートの結果を開きます", "hit", Number(entry?.chance) || 62, "CZ／BONUS直撃／上位直撃");
     } else if (fireForceFlow) {
       setExperienceStage(1, "INITIAL ROUTE", data.fireForceEntry?.label || data.hitLabel, `${yen.format(data.attempts)}G`, data.fireForceEntry?.key === "gray" ? "15G＋αの灰焔騎士団へ。最後のPUSHでBONUSを判定" : "PUSHでREG／炎炎BONUSを開きます", "hit", data.fireForceEntry?.key === "gray" ? 50 : 100, "灰焔騎士団／初当りBONUS");
     } else if (fireForce2Flow) {
       setExperienceStage(1, "INITIAL BONUS", data.entryBonus?.label || data.hitLabel, `${yen.format(data.attempts)}G`, "PUSHで初当りBONUSを開きます", "hit", 100, "REG／SPエピソードBONUS");
     }
     await waitForExperience(780);
+    if (gundamSeedFlow) {
+      const events = Array.isArray(data.atEvents) ? data.atEvents : [];
+      for (const event of events) {
+        if (runId !== experienceRunId) return;
+        setSlotAtStatus({ visible: true, remaining: Math.max(0, Number(event.games) || Number(event.frontGames) || 0), remainingUnit: "G", addOn: Math.max(0, Number(event.destinyPoints) || Number(event.vStocks) || 0), addOnUnit: event.kind === "gundam-seed-upper" ? "V" : "pt", total: Number(event.cumulative) || 0 });
+        if (event.kind === "gundam-seed-entry") {
+          if (event.key === "cz") {
+            const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 18), "G", "STRIKE ATTACK", "ストライクアタック", "小役でHITマスをつなぎ、白BAR揃いを目指します", Number(event.chance) || 62, "18G・成功期待度約62%", runId);
+            if (!complete) return;
+            setExperienceStage(2, "BAR ALIGNMENT", "ストライクアタック 最終ゲーム", "PUSH", "白BAR揃いとBONUS獲得を開きます", "judge", Number(event.chance) || 62, "成功後はBONUS昇格も抽選");
+            await waitForExperienceAction("ストライクアタック PUSH", 5000, event.won ? "gold" : "normal");
+            if (runId !== experienceRunId) return;
+            setExperienceStage(2, event.won ? "BONUS GET" : "STRIKE FAILED", event.won ? "白BAR揃い" : "CZ終了", event.won ? "BONUS" : "通常へ", event.won ? "次のPUSHでBONUS種類を開きます" : "今回の一撃はここで終了", event.won ? "hit" : "end", event.won ? 100 : 0, "ストライクアタック結果");
+            await waitForExperience(850);
+            if (!event.won) return;
+          } else {
+            setExperienceStage(2, event.upper ? "FREEDOM HYPER" : "BLACK BAR BONUS", event.label, event.upper ? machine.sim.upperLabel : "黒BAR BIG", event.upper ? "上位ATへ直行" : "約300枚BONUSへ直行", event.upper ? "hyper" : "hit", 100, "直撃ルート");
+            await waitForExperience(850);
+          }
+        } else if (event.kind === "gundam-seed-bonus") {
+          setExperienceStage(2, "BONUS TYPE JUDGE", event.source || "CZ成功", "PUSH", "BONUS種類と獲得枚数を開きます", "judge", event.key === "black" ? 100 : event.key === "red" ? 66 : 33, "SEED／赤7／黒BAR");
+          await waitForExperienceAction("ガンダムSEED BONUS PUSH", 5000, event.key === "black" ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 16), "G", event.key === "black" ? "BLACK BAR BIG" : event.key === "red" ? "RED 7 BIG" : "SEED BONUS", event.label, `+${yen.format(event.award)}枚`, 100, `宿命ポイント ${yen.format(event.destinyPoints)}pt・累計${yen.format(event.cumulative)}枚`, runId);
+          if (!complete) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          await waitForExperience(700);
+        } else if (event.kind === "gundam-seed-st") {
+          const stComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 20), "G", "STRIKE RIDE", `ストライクライド ${event.round}`, "小役でHOLDし、瞬間決着バトルを目指します", Number(event.chance) || 70, "20G＋α・トータル継続約70%", runId);
+          if (!stComplete) return;
+          if (event.battleReached) {
+            const battleComplete = await animateExperienceCounter(Math.max(1, Number(event.battleGames) || 3), "G", "INSTANT BATTLE", "瞬間決着バトル", "3G以内の小役でBONUS当選", Number(event.battleChance) || 50, "成功期待度約50%", runId);
+            if (!battleComplete) return;
+            setExperienceStage(3, "BATTLE FINAL", "瞬間決着バトル 最終ゲーム", "PUSH", "BONUSの当落を開きます", "judge", Number(event.battleChance) || 50, "勝利でST再セット");
+            await waitForExperienceAction(`瞬間決着バトル ${event.round} PUSH`, 5000, event.battleWon ? "gold" : "normal");
+            if (runId !== experienceRunId) return;
+          }
+          if (!event.battleWon) {
+            const lastComplete = await animateExperienceCounter(Math.max(1, Number(event.lastChanceGames) || 3), "G", "LAST CHANCE", "ラストチャンス", "小役以上でBONUS引き戻しを目指します", event.lastChanceWon ? 100 : 12, "3Gの引き戻しゾーン", runId);
+            if (!lastComplete) return;
+            setExperienceStage(3, "LAST FINAL", "ラストチャンス 最終ゲーム", "PUSH", "引き戻しの当落を開きます", "judge", event.lastChanceWon ? 100 : 12, "成功でBONUS＋ST再セット");
+            await waitForExperienceAction(`ラストチャンス ${event.round} PUSH`, 5000, event.lastChanceWon ? "gold" : "normal");
+            if (runId !== experienceRunId) return;
+          }
+          setExperienceStage(3, event.won ? "BONUS HIT" : "STRIKE RIDE END", event.won ? (event.battleWon ? "瞬間決着バトル 勝利" : "ラストチャンス成功") : "ストライクライド終了", event.won ? "BONUS" : "0G", event.won ? "次のBONUSへ" : "通常へ戻ります", event.won ? "hit" : "end", event.won ? 100 : 0, `ST ${event.round}結果`);
+          await waitForExperience(800);
+          if (!event.won) return;
+        } else if (event.kind === "gundam-seed-destiny") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 5), "G", "DESTINY ZONE", "宿命ZONE", "SEED目停止でストライクバーストへ", Number(event.chance) || 61, "宿命ポイント100pt", runId);
+          if (!complete) return;
+          setExperienceStage(4, "DESTINY FINAL", "宿命ZONE 最終ゲーム", "PUSH", "SEED目停止の当落を開きます", "judge", Number(event.chance) || 61, "成功で上位CZ");
+          await waitForExperienceAction("宿命ZONE PUSH", 5000, event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(4, event.won ? "STRIKE BURST" : "DESTINY END", event.won ? "SEED目停止" : "宿命ZONE終了", event.won ? "上位CZ" : "STへ", event.won ? "前半5Gへ進みます" : "ストライクライドを継続", event.won ? "hyper" : "rush", event.won ? 100 : 0, "宿命ZONE結果");
+          await waitForExperience(800);
+        } else if (event.kind === "gundam-seed-burst") {
+          const frontComplete = await animateExperienceCounter(Math.max(1, Number(event.frontGames) || 5), "G", "STRIKE BURST FRONT", "ストライクバースト 前半", "小役成立で後半パート発展を目指します", Number(event.frontChance) || 56, "前半非突破でもSEED BONUS保証", runId);
+          if (!frontComplete) return;
+          setExperienceStage(4, "FRONT FINAL", "ストライクバースト 前半", "PUSH", "後半パート発展を開きます", "judge", Number(event.frontChance) || 56, "5G決着");
+          await waitForExperienceAction("ストライクバースト前半 PUSH", 5000, event.frontWon ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          if (event.frontWon) {
+            const backComplete = await animateExperienceCounter(Math.max(1, Number(event.backGames) || 5), "G", "STRIKE BURST BACK", "ストライクバースト 後半", "小役成立でフリーダムハイパーを目指します", Number(event.backChance) || 50, "非当選でも赤7 BIG保証", runId);
+            if (!backComplete) return;
+            setExperienceStage(4, "FREEDOM FINAL", "ストライクバースト 後半", "PUSH", "フリーダムハイパー当選を開きます", "judge", Number(event.backChance) || 50, "5G決着");
+            await waitForExperienceAction("ストライクバースト後半 PUSH", 5000, event.backWon ? "gold" : "normal");
+            if (runId !== experienceRunId) return;
+          }
+          setExperienceStage(4, event.backWon ? "FREEDOM HYPER" : "GUARANTEE BONUS", event.backWon ? "ストライクバースト成功" : "ストライクバースト終了", event.backWon ? machine.sim.upperLabel : event.frontWon ? "赤7 BIG" : "SEED BONUS", event.backWon ? "1セット10Gの上位ATへ" : "保証BONUS後はSTへ", event.backWon ? "hyper" : "hit", event.backWon ? 100 : 0, "ストライクバースト結果");
+          await waitForExperience(900);
+        } else if (event.kind === "gundam-seed-upper") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 10), "G", "FREEDOM HYPER", `SET ${event.set}`, `Vストック ${yen.format(event.vStocks)}個・連撃を獲得`, Number(event.chance) || 96, `純増約6.5枚/G・累計${yen.format(event.cumulative)}枚`, runId);
+          if (!complete) return;
+          if (event.fullBurst) {
+            setExperienceStage(4, "FULL BURST", "フルバーストチャレンジ", "PUSH", "エピソードBONUS枚数を開きます", "judge", 100, "100〜1000枚");
+            await waitForExperienceAction(`フルバースト ${event.set} PUSH`, 5000, Number(event.fullBurstAward) >= 500 ? "gold" : "normal");
+            if (runId !== experienceRunId) return;
+            setExperienceStage(4, "FULL BURST RESULT", "フルバーストチャレンジ", `+${yen.format(event.fullBurstAward)}枚`, `累計 ${yen.format(event.cumulative)}枚`, "hyper", 100, "エピソードBONUS");
+            await waitForExperience(800);
+          }
+          setExperienceStage(4, "FINAL JUDGE", `${machine.sim.upperLabel} SET ${event.set}`, "PUSH", "Vストック／小役／ファイナルジャッジの継続結果を開きます", "judge", Number(event.chance) || 96, event.usedStock ? "Vストック使用" : "継続率約96%");
+          await waitForExperienceAction(`フリーダムハイパー ${event.set} PUSH`, 5000, event.continued ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(4, event.continued ? "HYPER CONTINUE" : "HYPER END", event.continued ? "メインゾーン復帰" : "ファイナルジャッジ終了", event.continued ? `SET ${event.set + 1}` : "通常STへ", event.continued ? "次の10Gセットへ" : "フリーダムハイパー終了", event.continued ? "hyper" : "end", event.continued ? 100 : 0, `累計${yen.format(event.cumulative)}枚`);
+          await waitForExperience(800);
+        }
+      }
+      setSlotAtStatus({ visible: true, remaining: 0, remainingUnit: "G", addOn: 0, addOnUnit: "pt", total: Number(data.payout) || 0 });
+      return;
+    }
     if (fireForceFlow) {
       const events = Array.isArray(data.atEvents) ? data.atEvents : [];
       for (const event of events) {
