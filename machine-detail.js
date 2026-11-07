@@ -687,6 +687,15 @@
         ["RETURN", "50G引き戻し", `通常AT・上位AT終了後は50Gの引き戻し区間をカウントします。設定1のAT引き戻し目安約${percent(sim.upperReturnChance)}を代表値として、成功時は再びG覚醒アタックからATへ戻ります。`]
       ];
       note = "公開されているBONUS出玉・AT期待度・初期ゲーム数・純増・各上乗せ契機の期待度を優先した体験モデルです。成立役別抽選、内部状態、全振り分け、設定差が未公表の抽選は代表値へ簡略化しています。";
+    } else if (sim.tokyoGhoulFlow) {
+      cards = [
+        ["CHANCE ZONE", "8GのCZからATへ", "レミニセンスは8G・成功期待度約50%、大喰いの利世は8G・約75%。成功後は初期約150枚・純増約4.0枚/Gの東京喰種咬へ進みます。"],
+        ["GHOUL BATTLE", "4Gの喰種対決", "ATの差枚を消化しながら喰種対決へ発展。対戦相手ごとの勝利期待度は鯱40%、霧嶋絢都47%、ヤモリ53%、特等ら76%、亜門鋼太朗86%、有馬貴将67%で、有馬は10戦目までに出現します。"],
+        ["BITES", "勝利報酬をPUSHで開く", "喰種対決勝利後はBITESへ。通常BITESは小役で報酬を上げ、ハズレ時も約20%で継続します。超BITESは300〜3000枚、極BITESは2000枚または完走が濃厚です。"],
+        ["SPECIAL", "百足覚醒・隻眼の梟", "特化ゾーンは通常のBITESと分けて表示します。百足覚醒は期待約300枚、隻眼の梟は期待約500枚として差枚へ加算し、東京喰種咬へ戻ります。"],
+        ["UPPER ROUTE", "有馬貴将JUDGEMENTから裏ATへ", `有馬貴将に勝利するとAT終了後に5G・成功期待度約61%のJUDGEMENTへ。成功後のCCGの死神は300・500・1000・2000枚を抽選し、その一部で100G＋α・純増約${Number(sim.upperPureIncrease).toFixed(1)}枚/Gの裏ATへ進みます。`]
+      ];
+      note = "CZ・AT確率、CZゲーム数と期待度、AT初期差枚・純増、喰種対決の対戦相手別期待度、有馬の出現戦数、上位CZ約61%など公開値を優先しています。対戦相手選択率、BITES種別率、裏AT移行率など未公表部分は体験用の代表値です。";
     } else if (sim.cycleFlow) {
       const cycle = sim.cycleFlow;
       const titleFlow = sim.titleFlow || null;
@@ -956,9 +965,10 @@
       const averageInvestment = Math.round((machine.sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
+      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow;
       const settingModelLabel = machine.sim.settingRates
-        ? machine.sim.titleFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
-        : machine.sim.titleFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
+        ? hasDedicatedFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
+        : hasDedicatedFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
       const initialHitLabel = machine.initialHitLabel ? "ボーナス初当り" : machine.sim.mainLabel;
       grid.innerHTML = `<div><span>設定抽選</span><strong>${slotSettingNumberLabel}均等</strong></div><div><span>設定差モデル</span><strong>${settingModelLabel}</strong></div><div><span>設定${slotBaselineSetting}基準の平均${initialHitLabel}まで</span><strong>${machine.sim.mainRate.toFixed(1)}G</strong></div><div><span>設定${slotBaselineSetting}基準の平均投資</span><strong>${yen.format(averageInvestment)}円</strong></div><div><span>交換単価</span><strong>${(100 / exchangeCoins).toFixed(2)}円/枚</strong></div><div><span>コイン単価</span><strong>${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}</strong></div><div><span>単価換算の台売上指標</span><strong>${yen.format(salesIndex)}円</strong></div>`;
     }
@@ -1055,7 +1065,7 @@
       ? Math.min(0.98, Number(publishedSetting.upper))
       : hasPublishedSettingRates ? sim.upperChance : Math.min(0.98, sim.upperChance + profile.upper);
     const settingModelLabel = hasPublishedTriggerRate && hasPublishedMainRate
-      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
+      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
       : hasPublishedMainRate
         ? "公開設定別値（初当り）＋CZ簡易換算"
         : "サイト共通補正モデル";
@@ -1154,6 +1164,15 @@
     let shinEvaMariAttempts = 0;
     let shinEvaMariSuccesses = 0;
     let shinEvaUpperLoops = 0;
+    let tokyoGhoulCz = null;
+    let tokyoGhoulBattles = 0;
+    let tokyoGhoulWins = 0;
+    let tokyoGhoulBitesCount = 0;
+    let tokyoGhoulSpecialCount = 0;
+    let tokyoGhoulArimaBattle = 0;
+    let tokyoGhoulArimaWon = false;
+    let tokyoGhoulUpperAt = false;
+    let tokyoGhoulCcgAward = 0;
     if (sim.goblinSlayerFlow) {
       goblinCz = weighted(sim.goblinCzRoutes || [[{ key: "mission", label: "ゴブリンスレイヤーミッション", games: 12, chance: 0.33 }, 1]]);
       triggerSucceeded = Math.random() < Math.max(0, Math.min(1, Number(goblinCz.chance) || 0));
@@ -1894,6 +1913,106 @@
         cycleRounds = shinEvaOperationRounds;
         cycleContinues = bonusCount;
         basePayout = payout - entryPayout;
+      } else if (sim.tokyoGhoulFlow) {
+        payout = entryPayout;
+        basePayout = 0;
+        tokyoGhoulCz = weighted(sim.tokyoGhoulCzRoutes || [[{ key: "reminiscence", label: "レミニセンス", games: 8, chance: 0.50 }, 1]]);
+        flow[0] = `${games}Gで${tokyoGhoulCz.label}`;
+        const initialCoins = Math.max(1, Number(sim.tokyoGhoulInitialCoins) || 150);
+        const initialAward = Math.max(0, Math.min(initialCoins, SLOT_COMPLETE_LIMIT - payout));
+        let remainingCoins = initialAward;
+        payout += initialAward;
+        atEvents.push({ kind: "tokyo-ghoul-start", label: sim.mainLabel, games: 1, award: initialAward, cumulative: payout, remainingCoins, cz: tokyoGhoulCz.label });
+        flow.push(`${sim.mainLabel} 初期約${initialAward}枚`);
+        tokyoGhoulArimaBattle = Number(weighted(sim.tokyoGhoulArimaBattles || [[10, 1]])) || 10;
+
+        const normalBitesRewards = [[50, 0.32], [100, 0.30], [200, 0.22], [300, 0.11], [500, 0.05]];
+        const superBitesRewards = [[300, 0.34], [500, 0.30], [1000, 0.22], [2000, 0.10], [3000, 0.04]];
+        const extremeBitesRewards = [[2000, 0.72], [5000, 0.28]];
+        while (remainingCoins > 0 && tokyoGhoulBattles < 10 && payout < SLOT_COMPLETE_LIMIT) {
+          const segmentGames = Math.max(1, Math.min(Math.floor(remainingCoins / 4) || 1, Number(weighted([[10, 0.42], [15, 0.33], [20, 0.18], [25, 0.07]])) || 10));
+          const spentCoins = Math.min(remainingCoins, segmentGames * 4);
+          remainingCoins -= spentCoins;
+          atGamesTotal += segmentGames;
+          atEvents.push({ kind: "tokyo-ghoul-segment", label: sim.mainLabel, games: segmentGames, spentCoins, remainingCoins, cumulative: payout, section: tokyoGhoulBattles + 1 });
+          if (remainingCoins <= 0) {
+            flow.push(`${sim.mainLabel} 残り差枚0枚・終了`);
+            break;
+          }
+
+          tokyoGhoulBattles += 1;
+          const isArima = tokyoGhoulBattles === tokyoGhoulArimaBattle;
+          const opponent = isArima ? { label: "有馬貴将", chance: 0.67 } : weighted(sim.tokyoGhoulOpponents || [[{ label: "鯱", chance: 0.40 }, 1]]);
+          const won = Math.random() < Math.max(0, Math.min(1, Number(opponent.chance) || 0.50));
+          if (won) tokyoGhoulWins += 1;
+          if (isArima && won) tokyoGhoulArimaWon = true;
+          atGamesTotal += 4;
+          atEvents.push({ kind: "tokyo-ghoul-battle", label: "喰種対決", opponent: opponent.label, games: 4, chance: Number(opponent.chance) * 100, won, arima: isArima, battle: tokyoGhoulBattles, remainingCoins, cumulative: payout });
+          flow.push(`喰種対決 ${tokyoGhoulBattles}戦目 VS ${opponent.label}・${won ? "勝利" : "敗北"}`);
+          if (!won) continue;
+
+          const bitesMode = weighted(sim.tokyoGhoulBitesModes || [[{ key: "normal", label: "BITES" }, 1]]);
+          const bitesReward = Number(weighted(bitesMode.key === "extreme" ? extremeBitesRewards : bitesMode.key === "super" ? superBitesRewards : normalBitesRewards)) || 50;
+          const bitesAward = Math.max(0, Math.min(bitesReward, SLOT_COMPLETE_LIMIT - payout));
+          const bitesGames = bitesMode.key === "extreme" ? 3 : bitesMode.key === "super" ? randomInt(2, 6) : randomInt(1, 5);
+          payout += bitesAward;
+          remainingCoins += bitesAward;
+          atGamesTotal += bitesGames;
+          tokyoGhoulBitesCount += 1;
+          addOnCount += 1;
+          addOnTotal += bitesAward;
+          coinAddOnCount += 1;
+          coinAddOnTotal += bitesAward;
+          atEvents.push({ kind: "tokyo-ghoul-bites", label: bitesMode.label, mode: bitesMode.key, games: bitesGames, award: bitesAward, cumulative: payout, remainingCoins, battle: tokyoGhoulBattles });
+          flow.push(`${bitesMode.label} +${yen.format(bitesAward)}枚`);
+
+          if (payout < SLOT_COMPLETE_LIMIT && Math.random() < (Number(sim.specialChance) || 0.08)) {
+            const special = weighted([[{ label: "百足覚醒", award: 300, games: 5 }, 0.65], [{ label: "隻眼の梟", award: Number(weighted([[300, 0.55], [500, 0.30], [1000, 0.12], [2000, 0.03]])) || 300, games: 1 }, 0.35]]);
+            const specialAward = Math.max(0, Math.min(Number(special.award) || 300, SLOT_COMPLETE_LIMIT - payout));
+            payout += specialAward;
+            remainingCoins += specialAward;
+            atGamesTotal += Number(special.games) || 1;
+            tokyoGhoulSpecialCount += 1;
+            addOnCount += 1;
+            addOnTotal += specialAward;
+            coinAddOnCount += 1;
+            coinAddOnTotal += specialAward;
+            atEvents.push({ kind: "tokyo-ghoul-special", label: special.label, games: Number(special.games) || 1, award: specialAward, cumulative: payout, remainingCoins, number: tokyoGhoulSpecialCount });
+            flow.push(`${special.label} +${yen.format(specialAward)}枚`);
+          }
+        }
+
+        if (tokyoGhoulArimaWon && payout < SLOT_COMPLETE_LIMIT) {
+          const judgeSuccess = Math.random() < (Number(sim.upperSuccess) || 0.61);
+          atGamesTotal += 5;
+          atEvents.push({ kind: "tokyo-ghoul-upper-judge", label: sim.upperChallenge, games: 5, chance: (Number(sim.upperSuccess) || 0.61) * 100, success: judgeSuccess, cumulative: payout });
+          flow.push(`${sim.upperChallenge} ${judgeSuccess ? "成功" : "失敗"}`);
+          if (judgeSuccess) {
+            upper = true;
+            tokyoGhoulCcgAward = Math.max(0, Math.min(Number(weighted(sim.tokyoGhoulCcgRewards || [[300, 1]])) || 300, SLOT_COMPLETE_LIMIT - payout));
+            payout += tokyoGhoulCcgAward;
+            upperPayoutTotal += tokyoGhoulCcgAward;
+            addOnCount += 1;
+            addOnTotal += tokyoGhoulCcgAward;
+            coinAddOnCount += 1;
+            coinAddOnTotal += tokyoGhoulCcgAward;
+            atEvents.push({ kind: "tokyo-ghoul-ccg", label: "CCGの死神", games: 1, award: tokyoGhoulCcgAward, cumulative: payout });
+            flow.push(`CCGの死神 +${yen.format(tokyoGhoulCcgAward)}枚`);
+            tokyoGhoulUpperAt = Math.random() < (Number(sim.tokyoGhoulUpperAtChance) || 0.55);
+            if (tokyoGhoulUpperAt && payout < SLOT_COMPLETE_LIMIT) {
+              const upperAward = Math.max(0, Math.min(slotAwardForGames(100, Number(sim.upperPureIncrease) || 5, 0), SLOT_COMPLETE_LIMIT - payout));
+              payout += upperAward;
+              upperPayoutTotal += upperAward;
+              upperLoops = 1;
+              atGamesTotal += 100;
+              atEvents.push({ kind: "tokyo-ghoul-upper", label: "東京喰種咬 裏AT", games: 100, award: upperAward, cumulative: payout, chance: (Number(sim.tokyoGhoulUpperAtChance) || 0.55) * 100 });
+              flow.push(`東京喰種咬 裏AT 100G＋α・+${yen.format(upperAward)}枚`);
+            }
+          }
+        }
+        cycleRounds = tokyoGhoulBattles;
+        cycleContinues = tokyoGhoulWins;
+        basePayout = payout - entryPayout;
       } else if (sim.cycleFlow) {
         payout = entryPayout;
         basePayout = 0;
@@ -2610,7 +2729,9 @@
     const rankInvestment = rankInvestmentUnits * 1000;
     const rankScore = Math.round(payout - rankInvestmentUnits * RANKING_RATE.slot.lendCoins);
     const salesIndex = Math.round(usedCoins * coinUnit);
-    const upperResultLabel = kabaneriUpperMode || sim.upperLabel;
+    const upperResultLabel = sim.tokyoGhoulFlow
+      ? (tokyoGhoulUpperAt ? "東京喰種咬 裏AT" : "CCGの死神")
+      : kabaneriUpperMode || sim.upperLabel;
     const resultLabel = complete ? "コンプリート" : upper ? upperResultLabel : entered ? sim.mainLabel : entryBonus ? `${entryBonus.label}終了` : `${sim.triggerLabel}失敗`;
     const atGameTimeline = atEvents.map(event => Math.max(1, Number(event.games) || 1));
     const settingRateStats = [[`設定${setting}の${sim.triggerLabel}`, `約1/${triggerRate.toFixed(1)}`]];
@@ -2630,10 +2751,11 @@
     const kaguyaStats = sim.kaguyaFlow ? [["BONUS内訳", `REG ${kaguyaRegCount}回・BIG ${kaguyaBigCount}回・SUPER BIG ${kaguyaSuperCount}回`], ["BONUS連", `${cycleRounds}連`], ["1G連", `${kaguyaOneGameCount}回`], ["引き戻し", `${kaguyaReturnCount}回`], ["特化ゾーン", kaguyaSpecialCount ? `${kaguyaSpecialCount}回・ストック${kaguyaStockCount}個` : "非当選"], [sim.upperChallenge, kaguyaMarriageCount ? `${kaguyaMarriageCount}回` : "非到達"], [sim.upperLabel, kaguyaExtraGames ? `${upperLoops}セット・${kaguyaExtraGames}G` : "非到達"]] : [];
     const dumbbellStats = sim.dumbbellFlow ? [["CZ発展先", dumbbellCz?.label || sim.triggerLabel], ["通常AT", `${dumbbellNormalGames}G`], ["ゲーム数上乗せ", dumbbellGameAddCount ? `${dumbbellGameAddCount}回・+${dumbbellGameAddTotal}G` : "上乗せなし"], [sim.upperChallenge, dumbbellGoldenChallenges ? `${dumbbellGoldenChallenges}回・成功${dumbbellGoldenSuccesses ? "あり" : "なし"}` : "未獲得"], ["Vストック", `${dumbbellVStockTotal}個`], [sim.upperLabel, upper ? `${upperLoops}回` : "非到達"], ["差枚数上乗せ", dumbbellCoinAddTotal ? `+${yen.format(dumbbellCoinAddTotal)}枚` : "上乗せなし"], ["引き戻しCZ", dumbbellRisingChallenges ? `${dumbbellRisingChallenges}回` : "未到達"]] : [];
     const shinEvaStats = sim.shinEvaFlow ? [["作戦ST", `${shinEvaOperationRounds}回・進行${shinEvaPhaseAdvances}段階`], ["BONUS内訳", `BIG ${shinEvaBigCount}回・SUPER BIG ${shinEvaSuperCount}回・SPECIAL ${shinEvaSpecialCount}回`], ["作戦進行ストック", `${shinEvaProgressStocks}個`], ["Vストック", `${shinEvaVStocks}個`], [sim.specialLabel, shinEvaSankiCount ? `${shinEvaSankiCount}回` : "非到達"], [sim.upperChallenge, shinEvaMariAttempts ? `${shinEvaMariAttempts}回・成功${shinEvaMariSuccesses}回` : "未到達"], [sim.upperLabel, upper ? `${shinEvaUpperLoops}セット` : "非到達"]] : [];
+    const tokyoGhoulStats = sim.tokyoGhoulFlow ? [["今回のCZ", tokyoGhoulCz?.label || sim.triggerLabel], ["喰種対決", `${tokyoGhoulBattles}戦・勝利${tokyoGhoulWins}回`], ["BITES", `${tokyoGhoulBitesCount}回`], ["特化ゾーン", tokyoGhoulSpecialCount ? `${tokyoGhoulSpecialCount}回` : "非当選"], ["有馬貴将", tokyoGhoulArimaBattle ? `${tokyoGhoulArimaBattle}戦目・${tokyoGhoulArimaWon ? "勝利" : "敗北または未到達"}` : "未到達"], ["CCGの死神", tokyoGhoulCcgAward ? `+${yen.format(tokyoGhoulCcgAward)}枚` : "非到達"], ["裏AT", tokyoGhoulUpperAt ? "到達・100G＋α" : "非到達"]] : [];
     const cycleStats = sim.cycleFlow ? [[sim.cycleFlow.statLabel || (sim.titleFlow ? "機種専用進行" : "専用ループ"), `${cycleRounds}回・継続${cycleContinues}回`]] : [];
     const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
     const rushGamesTotal = Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
-    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
+    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
     const gameAddOnStats = sim.karakuriJudgeFlow || coinAddOnCount
       ? [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(coinAddOnTotal || addOnTotal)}枚` : "上乗せなし"]]
       : [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnGamesTotal || otomeAddedGames)}G` : "上乗せなし"]];
@@ -2652,6 +2774,8 @@
         ? [["AT・上位消化", `${yen.format(rushGamesTotal)}G相当`], ...dumbbellStats]
       : sim.shinEvaFlow
         ? [["ST・BONUS消化", `${yen.format(rushGamesTotal)}G相当`], ...shinEvaStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
+      : sim.tokyoGhoulFlow
+        ? [["AT・BITES消化", `${yen.format(rushGamesTotal)}G相当`], ...tokyoGhoulStats]
       : [["RUSH消化モデル", `${yen.format(rushGamesTotal)}G相当`], ...karakuriStats, ...battleStats, ...sgStats, ...kabaneriStats, ...otomeStats, ...cycleStats, ...gameAddOnStats, ...bonusStats, ...genericSpecialStats, ["上位AT", upper ? (kabaneriUpperMode || `${sim.upperLabel} ${upperLoops}セット`) : "非到達"]]) : [];
     const stats = [["今回の設定", `設定${setting}`], ["設定差モデル", settingModelLabel], ["今回のゲーム数", `${yen.format(games)}G`], ...settingRateStats, ["現金投資目安", `${yen.format(investment)}円`], ...entryBonusStats, ...atStats, ["獲得枚数", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]];
     if (complete) stats.unshift(["到達状態", "コンプリート"]);
@@ -2672,6 +2796,8 @@
           ? `今回の設定は設定${setting}。${games}GでMUSCLE ZONE・${dumbbellCz?.label || "前半パート"}、${entered ? `通常AT ${dumbbellNormalGames}Gで${yen.format(payout)}枚を獲得しました。${upper ? `Vストック${dumbbellVStockTotal}個、金肉BONUS ${upperLoops}回です。` : "ゴールデンタイムには届きませんでした。"}` : "ATは非当選でした。"}`
         : sim.shinEvaFlow
           ? `今回の設定は設定${setting}。${games}Gで初当り、作戦ST ${shinEvaOperationRounds}回・BONUS ${bonusCount}回で${yen.format(payout)}枚を獲得しました。${upper ? `${sim.upperLabel}は${shinEvaUpperLoops}セットです。` : shinEvaSankiCount ? `${sim.specialLabel}は${shinEvaSankiCount}回です。` : "上位STには届きませんでした。"}`
+        : sim.tokyoGhoulFlow
+          ? `今回の設定は設定${setting}。${games}Gで${tokyoGhoulCz?.label || sim.triggerLabel}、喰種対決${tokyoGhoulBattles}戦・BITES ${tokyoGhoulBitesCount}回で${yen.format(payout)}枚を獲得しました。${tokyoGhoulUpperAt ? "有馬貴将JUDGEMENTを突破し、裏ATへ到達しました。" : tokyoGhoulCcgAward ? `CCGの死神で${yen.format(tokyoGhoulCcgAward)}枚を獲得しました。` : "上位ルートには届きませんでした。"}`
         : `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}。${entered ? `${payout}枚を獲得しました。${sim.kabaneriStFlow ? `ST中ボーナス${kabaneriStBonuses}回・${upper ? `${upperResultLabel} ${upperLoops}回当選。` : "上位ST非到達。"}` : `上乗せ${addOnCount}回・${upper ? `${upperResultLabel} ${upperLoops}セット。` : "上位AT非到達。"}`}` : entryBonus ? `${entryBonus.label}で約${yen.format(payout)}枚を獲得し、${sim.mainLabel}には届きませんでした。` : `${machine.initialHitLabel || sim.mainLabel}には届きませんでした。`}`;
     const kabaneriRareUpperLabel = sim.kabaneriUpperRareLabel || "裏美馬ST";
     const kabaneriUpperContinueChance = kabaneriUpperMode
@@ -2679,7 +2805,7 @@
         ? (Number(sim.kabaneriUpperRareContinue) || 0.95)
         : (Number(sim.kabaneriUpperNormalContinue) || 0.80)) * 100
       : sim.upperContinue * 100;
-    return { title: `設定${setting}｜${resultTitle}`, summary: resultSummary, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, triggerSucceeded, triggerSuccessChance: sim.goblinSlayerFlow ? (Number(goblinCz?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : triggerSuccess * 100, entryBonusModel: Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0, entryBonus, entered, entryChance: entryBonus ? (Number(entryBonus.atChance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, setPushFlow: Boolean(sim.setPushFlow), karakuriJudgeFlow: Boolean(sim.karakuriJudgeFlow), battleBonusFlow: Boolean(sim.battleBonusFlow), garoBattleFlow: Boolean(sim.garoBattleFlow), ragnadorUpperFlow: Boolean(sim.ragnadorUpperFlow), seiyaTempleFlow: Boolean(sim.seiyaTempleFlow), ggoStFlow: Boolean(sim.ggoStFlow), godzillaEva2Flow: Boolean(sim.godzillaEva2Flow), mahoakoFlow: Boolean(sim.mahoakoFlow), tentenFlow: Boolean(sim.tentenFlow), goblinSlayerFlow: Boolean(sim.goblinSlayerFlow), goblinCz, goblinLoopMode: goblinLoopMode * 100, goblinAtSets, goblinBonusCount, goblinMaxContinueRate, assaultLilyFlow: Boolean(sim.assaultLilyFlow), assaultEntry, assaultBossBattles, assaultBossWins, assaultRewardCount, assaultUpperCz, assaultUpperCzAttempts, assaultUpperCzSuccesses, assaultMaxAddOn, kaguyaFlow: Boolean(sim.kaguyaFlow), kaguyaRegCount, kaguyaBigCount, kaguyaSuperCount, kaguyaOneGameCount, kaguyaReturnCount, kaguyaSpecialCount, kaguyaStockCount, kaguyaMarriageCount, kaguyaExtraGames, dumbbellFlow: Boolean(sim.dumbbellFlow), dumbbellCz, dumbbellNormalGames, dumbbellGameAddCount, dumbbellGameAddTotal, dumbbellGoldenChallenges, dumbbellGoldenSuccesses, dumbbellVStockTotal, dumbbellCoinAddTotal, dumbbellRisingChallenges, sgRaceFlow: Boolean(sim.sgRaceFlow), kabaneriStFlow: Boolean(sim.kabaneriStFlow), otomeRushFlow: Boolean(sim.otomeRushFlow), cycleFlow: Boolean(sim.cycleFlow), cycleRounds, cycleContinues, kabaneriStBonuses, kabaneriUpperMode, otomeAddedGames, otomeBonusCount, otomeAwakeningCount, otomeBattleWon, otomeAddOnChance: (Number(sim.otomeAddOnChance) || 0) * 100, battleBonusSets, battleContinuationRate: battleContinuationRate * 100, sgRushSets, sgScenarioName, karakuriJudgeAttempts, karakuriJudgeSuccesses, karakuriUpperRoute, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, addOnGamesTotal, coinAddOnCount, coinAddOnTotal, bonusCount, bonusPayoutTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: kabaneriUpperContinueChance, upperChallenge: sim.upperChallenge || "", upper, upperLabel: kabaneriUpperMode || sim.upperLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
+    return { title: `設定${setting}｜${resultTitle}`, summary: resultSummary, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, triggerSucceeded, triggerSuccessChance: sim.goblinSlayerFlow ? (Number(goblinCz?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : triggerSuccess * 100, entryBonusModel: Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0, entryBonus, entered, entryChance: entryBonus ? (Number(entryBonus.atChance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, setPushFlow: Boolean(sim.setPushFlow), karakuriJudgeFlow: Boolean(sim.karakuriJudgeFlow), battleBonusFlow: Boolean(sim.battleBonusFlow), garoBattleFlow: Boolean(sim.garoBattleFlow), ragnadorUpperFlow: Boolean(sim.ragnadorUpperFlow), seiyaTempleFlow: Boolean(sim.seiyaTempleFlow), ggoStFlow: Boolean(sim.ggoStFlow), godzillaEva2Flow: Boolean(sim.godzillaEva2Flow), mahoakoFlow: Boolean(sim.mahoakoFlow), tokyoGhoulFlow: Boolean(sim.tokyoGhoulFlow), tokyoGhoulCz, tokyoGhoulBattles, tokyoGhoulWins, tokyoGhoulBitesCount, tokyoGhoulSpecialCount, tokyoGhoulArimaBattle, tokyoGhoulArimaWon, tokyoGhoulUpperAt, tokyoGhoulCcgAward, tentenFlow: Boolean(sim.tentenFlow), goblinSlayerFlow: Boolean(sim.goblinSlayerFlow), goblinCz, goblinLoopMode: goblinLoopMode * 100, goblinAtSets, goblinBonusCount, goblinMaxContinueRate, assaultLilyFlow: Boolean(sim.assaultLilyFlow), assaultEntry, assaultBossBattles, assaultBossWins, assaultRewardCount, assaultUpperCz, assaultUpperCzAttempts, assaultUpperCzSuccesses, assaultMaxAddOn, kaguyaFlow: Boolean(sim.kaguyaFlow), kaguyaRegCount, kaguyaBigCount, kaguyaSuperCount, kaguyaOneGameCount, kaguyaReturnCount, kaguyaSpecialCount, kaguyaStockCount, kaguyaMarriageCount, kaguyaExtraGames, dumbbellFlow: Boolean(sim.dumbbellFlow), dumbbellCz, dumbbellNormalGames, dumbbellGameAddCount, dumbbellGameAddTotal, dumbbellGoldenChallenges, dumbbellGoldenSuccesses, dumbbellVStockTotal, dumbbellCoinAddTotal, dumbbellRisingChallenges, sgRaceFlow: Boolean(sim.sgRaceFlow), kabaneriStFlow: Boolean(sim.kabaneriStFlow), otomeRushFlow: Boolean(sim.otomeRushFlow), cycleFlow: Boolean(sim.cycleFlow), cycleRounds, cycleContinues, kabaneriStBonuses, kabaneriUpperMode, otomeAddedGames, otomeBonusCount, otomeAwakeningCount, otomeBattleWon, otomeAddOnChance: (Number(sim.otomeAddOnChance) || 0) * 100, battleBonusSets, battleContinuationRate: battleContinuationRate * 100, sgRushSets, sgScenarioName, karakuriJudgeAttempts, karakuriJudgeSuccesses, karakuriUpperRoute, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, addOnGamesTotal, coinAddOnCount, coinAddOnTotal, bonusCount, bonusPayoutTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: kabaneriUpperContinueChance, upperChallenge: sim.upperChallenge || "", upper, upperLabel: upperResultLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
   }
 
   function createATypeSession(setting) {
@@ -3313,6 +3439,7 @@
     const kaguyaFlow = Boolean(data.kaguyaFlow);
     const dumbbellFlow = Boolean(data.dumbbellFlow);
     const shinEvaFlow = Boolean(machine.sim.shinEvaFlow);
+    const tokyoGhoulFlow = Boolean(data.tokyoGhoulFlow);
     setSlotAtStatus({ visible: false });
     setExperienceHud("0G", "0円", "0枚");
     setExperienceStage(0, experienceProfile.system, "通常ゲーム中", "0G", `${data.hitLabel}を目指して抽選中`, "normal", data.hitChance, "1Gごとの契機当選率");
@@ -3324,7 +3451,7 @@
       await waitForExperience(115);
     }
     if (runId !== experienceRunId) return;
-    setExperienceStage(1, uminchuFlow ? "BONUS HIT" : tentenFlow ? "EPISODE BATTLE" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "DIRECT AT" : "CHANCE ZONE") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "DIRECT AT" : data.assaultEntry?.key === "bouquet" ? "BOUQUET BONUS" : "LILY CHALLENGE") : kaguyaFlow ? "LOVE BRAIN BATTLE" : dumbbellFlow ? "MUSCLE ZONE" : shinEvaFlow ? "INITIAL HIT" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", goblinSlayerFlow ? (data.goblinCz?.label || data.hitLabel) : assaultLilyFlow ? (data.assaultEntry?.label || data.hitLabel) : data.hitLabel, `${yen.format(data.attempts)}G`, uminchuFlow ? "告知音とともに初当りBONUSへ" : tentenFlow ? "10GのレベルUPパートと4Gのバトルへ" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "規定ゲーム数からAT直撃" : "CZの専用ゲーム数を進めて最後にPUSH") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "規定ゲーム数・レア役などからRUSH直撃" : data.assaultEntry?.key === "bouquet" ? "25GのBONUS後にRUSHを判定" : "10Gの専用CZを進めて最後にPUSH") : kaguyaFlow ? "恋愛頭脳戦を経て15G＋αのCZへ" : dumbbellFlow ? "10Gの前半パートから後半発展を目指します" : shinEvaFlow ? "3GのEVANGELION IMPACTで作戦を決定します" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
+    setExperienceStage(1, uminchuFlow ? "BONUS HIT" : tentenFlow ? "EPISODE BATTLE" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "DIRECT AT" : "CHANCE ZONE") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "DIRECT AT" : data.assaultEntry?.key === "bouquet" ? "BOUQUET BONUS" : "LILY CHALLENGE") : kaguyaFlow ? "LOVE BRAIN BATTLE" : dumbbellFlow ? "MUSCLE ZONE" : shinEvaFlow ? "INITIAL HIT" : tokyoGhoulFlow ? "CHANCE ZONE" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", tokyoGhoulFlow ? (data.tokyoGhoulCz?.label || data.hitLabel) : goblinSlayerFlow ? (data.goblinCz?.label || data.hitLabel) : assaultLilyFlow ? (data.assaultEntry?.label || data.hitLabel) : data.hitLabel, `${yen.format(data.attempts)}G`, tokyoGhoulFlow ? "8GのCZを進め、最後のPUSHで東京喰種咬を判定" : uminchuFlow ? "告知音とともに初当りBONUSへ" : tentenFlow ? "10GのレベルUPパートと4Gのバトルへ" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "規定ゲーム数からAT直撃" : "CZの専用ゲーム数を進めて最後にPUSH") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "規定ゲーム数・レア役などからRUSH直撃" : data.assaultEntry?.key === "bouquet" ? "25GのBONUS後にRUSHを判定" : "10Gの専用CZを進めて最後にPUSH") : kaguyaFlow ? "恋愛頭脳戦を経て15G＋αのCZへ" : dumbbellFlow ? "10Gの前半パートから後半発展を目指します" : shinEvaFlow ? "3GのEVANGELION IMPACTで作戦を決定します" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
     await waitForExperience(780);
     if (data.entryBonusModel) {
       setExperienceStage(2, mahoakoFlow ? "CZ / BONUS ROUTE" : "BONUS JUDGE", mahoakoFlow ? "初当りルートジャッジ" : "初当りBONUSジャッジ", "PUSH", mahoakoFlow ? "3種類CZ・4種類BONUSから今回の入口を開きます" : "BONUSの当落を開きます", "judge", data.triggerSuccessChance, mahoakoFlow ? "CZ・BONUS合算契機" : "CZ突破期待度");
@@ -3440,7 +3567,18 @@
       await waitForExperience(950);
       if (!data.entered) return;
     }
-    if (!uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow) {
+    if (tokyoGhoulFlow) {
+      const cz = data.tokyoGhoulCz || { label: "レミニセンス", games: 8, chance: 0.50 };
+      const czComplete = await animateExperienceCounter(Math.max(1, Number(cz.games) || 8), "G", "CHANCE ZONE", cz.label, "小役・レア役で東京喰種咬を抽選します", data.triggerSuccessChance, `成功期待度 約${Math.round(data.triggerSuccessChance)}%`, runId);
+      if (!czComplete) return;
+      setExperienceStage(2, "CZ FINAL JUDGE", cz.label, "PUSH", "東京喰種咬の当落を開きます", "judge", data.triggerSuccessChance, "8G CZ最終結果");
+      await waitForExperienceAction(`${cz.label} PUSH`, 5000, data.entered ? "gold" : "normal");
+      if (runId !== experienceRunId) return;
+      setExperienceStage(2, "CZ RESULT", data.entered ? "CZ突破" : "CZ失敗", data.entered ? "東京喰種咬" : "通常へ", data.entered ? "初期約150枚の差枚ATを開始します" : "今回の一撃はここで終了", data.entered ? "rush" : "end", data.entered ? 100 : 0, `${cz.label}結果`);
+      await waitForExperience(900);
+      if (!data.entered) return;
+    }
+    if (!uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow) {
     const dedicatedEntryFlow = godzillaEva2Flow || mahoakoFlow;
     const entryJudgeLabel = dedicatedEntryFlow && data.entryBonus?.judgeLabel ? data.entryBonus.judgeLabel : `${data.mainLabel}突入ジャッジ`;
     const entryJudgeGames = dedicatedEntryFlow ? Math.max(1, Number(data.entryBonus?.judgeGames) || 3) : 3;
@@ -3484,7 +3622,7 @@
       const normalSetCount = rushEvents.filter(event => event.kind === "rush-set").length;
       const hadUpperChallenge = rushEvents.some(event => event.kind === "upper-challenge");
       let route = [...rushEvents];
-      if (!setPushFlow && !karakuriJudgeFlow && !battleBonusFlow && !godzillaEva2Flow && !mahoakoFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !sgRaceFlow && !kabaneriStFlow && !otomeRushFlow && !cycleFlow && route.length > 10) {
+      if (!setPushFlow && !karakuriJudgeFlow && !battleBonusFlow && !godzillaEva2Flow && !mahoakoFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !sgRaceFlow && !kabaneriStFlow && !otomeRushFlow && !cycleFlow && route.length > 10) {
         const visibleEvents = route.slice(0, 7);
         const remainingEvents = route.slice(7);
         const previousTotal = Number(visibleEvents[visibleEvents.length - 1]?.cumulative) || 0;
@@ -4150,6 +4288,100 @@
           }
           setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
           setSlotAtStatus({ visible: true, remaining: 0, addOnGames: runningAddOnGames, total: event.cumulative });
+          continue;
+        }
+
+        if (event.kind === "tokyo-ghoul-start") {
+          setExperienceStage(3, "TOKYO GHOUL KOU", event.label, `初期 ${yen.format(event.award)}枚`, `${event.cz}突破・差枚数AT開始`, "rush", 100, "純増約4.0枚/G");
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: event.remainingCoins, remainingUnit: "枚", total: event.cumulative });
+          await waitForExperience(900);
+          continue;
+        }
+
+        if (event.kind === "tokyo-ghoul-segment") {
+          const segmentComplete = await animateExperienceCounter(eventGames, "G", "TOKYO GHOUL KOU", `${event.section}区間目・差枚AT消化`, "喰種対決の発展契機を待ちます", 50, `残り差枚 ${yen.format(event.remainingCoins)}枚`, runId);
+          if (!segmentComplete) return;
+          consumedGames += eventGames;
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: event.remainingCoins, remainingUnit: "枚", total: event.cumulative });
+          continue;
+        }
+
+        if (event.kind === "tokyo-ghoul-battle") {
+          const battleComplete = await animateExperienceCounter(4, "G", event.arima ? "ARIMA BATTLE" : "GHOUL BATTLE", `VS ${event.opponent}・${event.battle}戦目`, "4Gの対決を最後まで進めます", event.chance, `勝利期待度 約${Math.round(event.chance)}%`, runId);
+          if (!battleComplete) return;
+          consumedGames += 4;
+          setExperienceStage(3, event.arima ? "ARIMA FINAL JUDGE" : "BATTLE FINAL JUDGE", `VS ${event.opponent}`, "PUSH", "喰種対決の勝敗を開きます", "judge", event.chance, `${event.battle}戦目 最終結果`);
+          await waitForExperienceAction(`喰種対決 ${event.battle}戦目 PUSH`, 5000, event.arima ? "upper" : event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.won ? "GHOUL BATTLE WIN" : "GHOUL BATTLE LOSE", event.won ? `${event.opponent}撃破` : `${event.opponent}に敗北`, event.won ? "BITESへ" : "ATへ戻る", event.won ? "勝利報酬の段階アップを抽選します" : `残り差枚 ${yen.format(event.remainingCoins)}枚`, event.won ? "hit" : "end", event.won ? 100 : 0, "喰種対決結果");
+          setSlotAtStatus({ visible: true, remaining: event.remainingCoins, remainingUnit: "枚", total: event.cumulative });
+          await waitForExperience(850);
+          continue;
+        }
+
+        if (event.kind === "tokyo-ghoul-bites") {
+          const bitesComplete = await animateExperienceCounter(eventGames, "G", event.mode === "extreme" ? "EXTREME BITES" : event.mode === "super" ? "SUPER BITES" : "BITES", event.label, "小役成立で報酬ランクアップを狙います", 100, `${event.battle}戦目 勝利報酬`, runId);
+          if (!bitesComplete) return;
+          consumedGames += eventGames;
+          setExperienceStage(3, "BITES REWARD", event.label, "PUSH", "今回の上乗せ差枚を開きます", "judge", 100, "BITES最終報酬");
+          await waitForExperienceAction(`${event.label} PUSH`, 5000, event.mode === "extreme" ? "upper" : event.mode === "super" ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          runningAddOn += Number(event.award) || 0;
+          setExperienceStage(3, event.mode === "extreme" ? "EXTREME BITES" : event.mode === "super" ? "SUPER BITES" : "BITES", event.label, `+${yen.format(event.award)}枚`, `累計 ${yen.format(event.cumulative)}枚・残り差枚 ${yen.format(event.remainingCoins)}枚`, event.mode === "extreme" ? "hyper" : "hit", 100, "BITES獲得結果");
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: event.remainingCoins, remainingUnit: "枚", addOn: runningAddOn, total: event.cumulative });
+          await waitForExperience(event.mode === "extreme" ? 1300 : 1000);
+          continue;
+        }
+
+        if (event.kind === "tokyo-ghoul-special") {
+          setExperienceStage(3, "SPECIAL JUDGE", `${event.label} 突入`, "PUSH", "特化ゾーンの獲得差枚を開きます", "judge", 100, `${event.number}回目 特化ゾーン`);
+          await waitForExperienceAction(`${event.label} PUSH`, 5000, "upper");
+          if (runId !== experienceRunId) return;
+          runningAddOn += Number(event.award) || 0;
+          setExperienceStage(3, "SPECIAL ADD ON", event.label, `+${yen.format(event.award)}枚`, `累計 ${yen.format(event.cumulative)}枚・東京喰種咬へ戻ります`, "hyper", 100, "特化ゾーン獲得結果");
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: event.remainingCoins, remainingUnit: "枚", addOn: runningAddOn, total: event.cumulative });
+          await waitForExperience(1200);
+          continue;
+        }
+
+        if (event.kind === "tokyo-ghoul-upper-judge") {
+          const judgeComplete = await animateExperienceCounter(5, "G", "ARIMA JUDGEMENT", event.label, "全役でCCGの死神突入を抽選します", event.chance, `成功期待度 約${Math.round(event.chance)}%`, runId);
+          if (!judgeComplete) return;
+          consumedGames += 5;
+          setExperienceStage(3, "ARIMA FINAL JUDGE", event.label, "PUSH", "CCGの死神の当落を開きます", "judge", event.chance, "5G 最終結果");
+          await waitForExperienceAction("有馬貴将JUDGEMENT PUSH", 5000, event.success ? "upper" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.success ? "JUDGEMENT SUCCESS" : "JUDGEMENT FAILED", event.success ? "有馬貴将撃破" : "JUDGEMENT失敗", event.success ? "CCGの死神へ" : "通常へ", event.success ? "1G完結の報酬ジャッジへ進みます" : "最終結果へ進みます", event.success ? "hyper" : "end", event.success ? 100 : 0, "有馬貴将JUDGEMENT結果");
+          await waitForExperience(1000);
+          continue;
+        }
+
+        if (event.kind === "tokyo-ghoul-ccg") {
+          setExperienceStage(3, "CCG NO SHINIGAMI", event.label, "PUSH", "300・500・1000・2000枚から報酬を開きます", "judge", 100, "1G完結・平均約500枚");
+          await waitForExperienceAction("CCGの死神 PUSH", 5000, "upper");
+          if (runId !== experienceRunId) return;
+          runningAddOn += Number(event.award) || 0;
+          setExperienceStage(3, "CCG REWARD", event.label, `+${yen.format(event.award)}枚`, `累計 ${yen.format(event.cumulative)}枚`, "hyper", 100, "CCGの死神獲得結果");
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: 0, remainingUnit: "枚", addOn: runningAddOn, total: event.cumulative });
+          await waitForExperience(1200);
+          continue;
+        }
+
+        if (event.kind === "tokyo-ghoul-upper") {
+          setExperienceStage(3, "URA AT", event.label, "100G＋α", "純増約5.0枚/Gの上位ATを開始します", "hyper", 100, "東京喰種咬 裏AT");
+          await waitForExperience(900);
+          const upperComplete = await animateExperienceCounter(eventGames, "G", "URA TOKYO GHOUL KOU", `${event.label} 消化中`, "100Gの上位区間を最後まで消化します", 100, "純増約5.0枚/G", runId);
+          if (!upperComplete) return;
+          consumedGames += eventGames;
+          setExperienceStage(3, "URA AT RESULT", event.label, `+${yen.format(event.award)}枚`, `累計 ${yen.format(event.cumulative)}枚・最終結果へ`, "hyper", 100, "裏AT獲得結果");
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: 0, remainingUnit: "枚", addOn: runningAddOn, total: event.cumulative });
+          await waitForExperience(1200);
           continue;
         }
 

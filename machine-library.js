@@ -4644,6 +4644,62 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   });
 })();
 
+(function applyTokyoGhoulDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["tokyo-ghoul-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "初期約150枚の東京喰種咬から、喰種対決・BITES・有馬貴将JUDGEMENTへ。",
+    intro: "8GのCZから純増約4.0枚/G・初期約150枚の差枚ATへ進み、4Gの喰種対決、BITES、特化ゾーン、5Gの有馬貴将JUDGEMENT、CCGの死神と裏ATまでを実機順に体験できます。",
+    points: ["レミニセンス8G・成功期待度約50%", "東京喰種咬は初期約150枚・純増約4.0枚/G", "有馬貴将JUDGEMENTは5G・成功期待度約61%"],
+    specs: [["CZ合算（設定1）", "約1/262.6"], ["AT初当り（設定1）", "約1/394.4"], ["レミニセンス", "8G・約50%"], ["大喰いの利世", "8G・約75%"], ["東京喰種咬", "初期約150枚"], ["AT純増", "約4.0枚/G"], ["喰種対決", "4G・平均約50%"], ["有馬貴将JUDGEMENT", "5G・約61%"], ["CCGの死神", "平均約500枚"], ["裏AT", "100G＋α・約5.0枚/G"]],
+    articleSections: [
+      { heading: "8GのCZから東京喰種咬へ", paragraphs: ["レミニセンスは8G・成功期待度約50%、大喰いの利世は8G・約75%。エピソードボーナスは約100枚を獲得してATへ進みます。", "設定別のCZ合算とAT初当りを使用し、通常時の全モード・規定ゲーム数は初当り確率へまとめます。"] },
+      { heading: "差枚ATと4Gの喰種対決", paragraphs: ["東京喰種咬は初期約150枚・純増約4.0枚/G。導入エピソード後、レア役や規定ゲーム数から4Gの喰種対決へ進みます。", "対戦相手別の勝利期待度は鯱40%、霧嶋絢都47%、ヤモリ53%、特等ら76%、亜門86%、有馬貴将67%。勝利時はBITESへ進みます。"] },
+      { heading: "BITESと2種類の特化ゾーン", paragraphs: ["BITESは小役成立で報酬を1段階以上上げ、ハズレ時は約20%で継続。終了時の報酬を差枚へ加算してATへ戻ります。", "超BITESは300〜3000枚、極BITESは2000枚または完走が濃厚。百足覚醒は期待約300枚、隻眼の梟は期待約500枚として別イベントで表示します。"] },
+      { heading: "有馬貴将JUDGEMENTから裏ATへ", paragraphs: ["有馬貴将は10戦目までに出現。勝利するとAT終了後に5G・成功期待度約61%の有馬貴将JUDGEMENTへ進みます。", "成功後のCCGの死神は1G完結で300・500・1000・2000枚のいずれかを上乗せ。続くATの一部は100G＋α・純増約5.0枚/Gの裏ATです。"] },
+      { heading: "固定条件と簡易化する範囲", bullets: ["約31G/50枚・1,000円46枚貸し・5.2枚交換で固定", "有馬の出現戦数は設定1の公開比率を使用", "対戦相手選択率、BITES種別率、裏AT移行率など未公表部分は代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["L 東京喰種 公式サイト", "https://www.slot-l-tokyoghoul.jp/"], ["P-WORLD 機種情報・解析", "https://www.p-world.co.jp/machine/database/10207"], ["円谷フィールズHD 発売発表", "https://www.tsuburaya-fields.co.jp/ir/j/files/press/2024/press_20241114f.pdf"]],
+    readerGuide: {
+      verdict: "初期約150枚の差枚ATで4Gの喰種対決を重ね、BITESで残り差枚を増やしながら有馬戦と上位CZを目指す台です。",
+      bestFor: ["対戦相手ごとの勝率をPUSHで見たい", "BITES・超BITES・極BITESの報酬差を比べたい", "有馬戦からCCGの死神と裏ATを目指したい"],
+      check: ["CZ・AT初当り、純増、各ゲーム数は公開値", "有馬出現戦数は設定1の公開比率", "未公表の選択率は体験用代表値"],
+      compare: [["basilisk-tenzen-slot", "バジリスク天膳", "継続バトル型ATと比較"], ["god-eater-resurrection", "スマスロ ゴッドイーター", "討伐型ATと比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v8",
+    tokyoGhoulFlow: true,
+    triggerLabel: "CZ合算",
+    triggerRate: 262.6,
+    mainLabel: "東京喰種咬",
+    mainRate: 394.4,
+    normalMin: 0,
+    normalMax: 0,
+    atPureIncrease: 4.0,
+    atPayoutVariance: 0,
+    tokyoGhoulInitialCoins: 150,
+    tokyoGhoulCzRoutes: [[{ key: "reminiscence", label: "レミニセンス", games: 8, chance: 0.50 }, 0.874], [{ key: "rize", label: "大喰いの利世", games: 8, chance: 0.75 }, 0.126]],
+    tokyoGhoulOpponents: [[{ label: "鯱", chance: 0.40 }, 0.24], [{ label: "霧嶋絢都", chance: 0.47 }, 0.23], [{ label: "ヤモリ", chance: 0.53 }, 0.22], [{ label: "特等ら", chance: 0.76 }, 0.17], [{ label: "亜門鋼太朗", chance: 0.86 }, 0.14]],
+    tokyoGhoulArimaBattles: [[1, 0.048], [3, 0.066], [5, 0.099], [7, 0.157], [10, 0.63]],
+    tokyoGhoulBitesModes: [[{ key: "normal", label: "BITES" }, 0.90], [{ key: "super", label: "超BITES" }, 0.08], [{ key: "extreme", label: "極BITES" }, 0.02]],
+    tokyoGhoulCcgRewards: [[300, 0.55], [500, 0.30], [1000, 0.12], [2000, 0.03]],
+    specialLabel: "百足覚醒／隻眼の梟",
+    specialChance: 0.08,
+    upperChallenge: "有馬貴将JUDGEMENT",
+    upperChance: 0,
+    upperSuccess: 0.61,
+    upperLabel: "CCGの死神／裏AT",
+    upperContinue: 0,
+    upperPayout: 0,
+    upperPureIncrease: 5.0,
+    tokyoGhoulUpperAtChance: 0.55
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
 // Dedicated implementations take precedence over the older reusable cycle map.
 // Keep this final cleanup after every enrichment pass so page copy and gameplay
 // both use the same title-specific model.

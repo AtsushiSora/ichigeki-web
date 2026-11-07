@@ -8,7 +8,8 @@ vm.runInContext(source, sandbox);
 
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const titleFlows = machines.filter(([, machine]) => machine.sim?.titleFlow);
-const expectedProfiles = { battle: 10, st: 12, heaven: 5, bonus: 8, addon: 12 };
+const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.tokyoGhoulFlow);
+const expectedProfiles = { battle: 9, st: 12, heaven: 5, bonus: 8, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -35,14 +36,26 @@ for (const [slug, machine] of titleFlows) {
   });
 }
 
-if (titleFlows.length !== 47) errors.push(`expected 47 title flows, found ${titleFlows.length}`);
+if (titleFlows.length !== 46) errors.push(`expected 46 reusable title flows, found ${titleFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = titleFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
+if (dedicatedFlows.length !== 1 || dedicatedFlows[0]?.[0] !== "tokyo-ghoul-slot") {
+  errors.push(`expected dedicated Tokyo Ghoul flow, found ${dedicatedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+} else {
+  const [, tokyoGhoul] = dedicatedFlows[0];
+  const sim = tokyoGhoul.sim;
+  if (sim.cycleFlow || sim.titleFlow) errors.push("tokyo-ghoul-slot: legacy reusable flow still exists");
+  if (!Array.isArray(sim.tokyoGhoulCzRoutes) || sim.tokyoGhoulCzRoutes.length !== 2) errors.push("tokyo-ghoul-slot: CZ routes are incomplete");
+  if (!Array.isArray(sim.tokyoGhoulOpponents) || sim.tokyoGhoulOpponents.length < 5) errors.push("tokyo-ghoul-slot: battle opponents are incomplete");
+  if (!Array.isArray(sim.tokyoGhoulArimaBattles) || sim.tokyoGhoulArimaBattles.length !== 5) errors.push("tokyo-ghoul-slot: Arima battle distribution is incomplete");
+  if (!Array.isArray(sim.tokyoGhoulBitesModes) || sim.tokyoGhoulBitesModes.length !== 3) errors.push("tokyo-ghoul-slot: BITES modes are incomplete");
+  if (!Array.isArray(sim.tokyoGhoulCcgRewards) || sim.tokyoGhoulCcgRewards.length !== 4) errors.push("tokyo-ghoul-slot: CCG rewards are incomplete");
+}
 
 if (process.argv.includes("--verbose")) console.table(rows);
-console.log(`Title-flow audit: ${titleFlows.length} machines / ${rows.reduce((sum, row) => sum + row.rounds, 0)} explicit rounds / ${errors.length} errors`);
+console.log(`Title-flow audit: ${titleFlows.length + dedicatedFlows.length} machines (${titleFlows.length} reusable + ${dedicatedFlows.length} dedicated) / ${rows.reduce((sum, row) => sum + row.rounds, 0)} reusable explicit rounds / ${errors.length} errors`);
 if (errors.length) {
   errors.forEach(error => console.error(`- ${error}`));
   process.exit(1);
