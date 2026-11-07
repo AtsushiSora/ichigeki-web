@@ -5359,6 +5359,47 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.titleFlow;
 })();
 
+(function applyInitialD2DedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["initial-d-2nd-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "30G＋αから始まるLEGEND RUSHで上乗せとBONUSを重ね、対戦相手別のレジェンドバトルをPUSHで勝ち抜く。",
+    intro: "通常時のレジェンドバトル、15Gのドリフトゾーン／インフィニティドリーム、初回30G＋α・以降20G＋αのLEGEND RUSH、BIG、限界領域、ナイトメアマシン、3Gの覚醒ZONEまでを機種専用画面で再現します。",
+    points: ["LEGEND RUSHは初回30G＋α・以降20G＋α", "AT中BONUSは約1/199・30G・純増約4.0枚/G", "レジェンドバトルは相手別に約35〜100%", "ナイトメアマシンは100G以上・純増約4.0枚/G"],
+    specs: [["LB（設定1）", "約1/216.6"], ["AT（設定1）", "約1/405.5"], ["AT（設定6）", "約1/296.7"], ["ベース", "約31.0G/50枚"], ["ドリフトゾーン", "15G・成功約75%"], ["インフィニティドリーム", "15G・成功約75%"], ["LEGEND RUSH", "初回30G＋α・以降20G＋α"], ["AT純増", "約2.4枚/G"], ["AT中BONUS", "約1/199・30G・純増約4.0枚/G"], ["限界領域", "ゲーム数上乗せ特化"], ["ナイトメアマシン", "100G以上・純増約4.0枚/G"], ["覚醒ZONE", "3G・成功60%超"], ["設定", "1〜6"]],
+    articleSections: [
+      { heading: "通常時の4つのAT入口", paragraphs: ["通常時のメインはレジェンドバトル。高橋啓介、中里毅、岩城清次、高橋涼介のいずれかと対戦し、勝利でLEGEND RUSHへ進みます。ドリフトゾーンは15G・成功期待度約75%で、失敗時の10.2%はインフィニティドリームへ移行します。", "インフィニティドリームも15G・成功期待度約75%。成功すればロングフリーズ、失敗でもAT濃厚です。通常時のレジェンドボーナスは1/16384で、AT・セットストック・ATレベル3以上が濃厚。専用画面では入口を消化して最終PUSHで結果を開きます。"] },
+      { heading: "LEGEND RUSHとゲーム数上乗せ", paragraphs: ["LEGEND RUSHはゲーム数上乗せ＋セット継続型。初回は30G＋α、2セット目以降は20G＋α、純増は約2.4枚/Gです。秋名山ステージ中のレア役は、ゲーム数直乗せ、満月ステージ、BONUSをトリプル抽選します。", "AT中BONUSは約1/199。BIG／レジェンドボーナスはいずれも30G・純増約4.0枚/Gで、終了時に10G以上を上乗せします。専用画面では残りゲーム数を減らし、直乗せとBONUSを別々のPUSHで表示します。"] },
+      { heading: "対戦相手別レジェンドバトル", paragraphs: ["ATの規定ゲーム数消化後はレジェンドバトルへ。勝利期待度は高橋啓介35%、中里毅60%、庄司慎吾65%、小柏カイ75%、岩城清次80%、真子＆沙雪90%、須藤京一95%、高橋涼介100%です。", "勝利すれば次セットへ継続。岩城清次勝利は次回満月ステージ、高橋啓介勝利時の一部と高橋涼介完全勝利はフルブーストの契機です。専用画面では対戦相手を先に表示し、PUSHで勝敗を開きます。"] },
+      { heading: "限界領域とナイトメアマシン", paragraphs: ["限界領域はセット継続型のゲーム数上乗せ特化ゾーン。拓海先行なら継続濃厚、弱点役なら50G以上、さらに1/2で11000回転フリーズから3桁上乗せのチャンスです。", "ナイトメアマシンは100G以上・純増約4.0枚/Gで、レア役のゲーム数上乗せも優遇。当該セットのレジェンドバトルは継続濃厚です。文太バトル勝利、ロングフリーズ、AT初当りの一部などが入口です。"] },
+      { heading: "覚醒ZONEとロングフリーズ", paragraphs: ["エンディング後などは3Gの覚醒ZONEへ。ブラックアウト発生でAT継続となり、成功期待度は60%超。成功時の次回レジェンドバトルは高橋涼介が濃厚です。", "ロングフリーズは限界領域レベルMAXとナイトメアマシンを獲得し、平均獲得は約3600枚。専用画面ではインフィニティドリーム成功や通常時レジェンドボーナスの一部からこのルートへ進みます。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約31G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6のLB・AT初当り・出玉率は公開設定別値", "通常時入口、ゲーム数上乗せ、BONUS、相手別LB、限界領域、ナイトメアマシン、覚醒ZONEを専用進行", "通常時の入口比率、AT中イベント出現率、特化ゾーン当選率など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["一撃 機種概要・解析", "https://1geki.jp/slot/ini_d2nd/"], ["一撃 LEGEND RUSH解析", "https://1geki.jp/slot/ini_d2nd/82/"], ["一撃 インフィニティドリーム", "https://1geki.jp/slot/ini_d2nd/49/"], ["一撃 限界領域", "https://1geki.jp/slot/ini_d2nd/84/"], ["一撃 ナイトメアマシン", "https://1geki.jp/slot/ini_d2nd/86/"], ["一撃 覚醒ZONE", "https://1geki.jp/slot/ini_d2nd/89/"], ["必勝本 レジェンドバトル", "https://p.hisshobon.jp/machine/4365/1/104906"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10097"]],
+    readerGuide: { verdict: "初回30G＋α・以降20G＋αのATで上乗せとBONUSを重ね、相手別のレジェンドバトルを勝ち抜くゲーム数上乗せ＋セット継続型です。", bestFor: ["残りゲーム数を見ながら直乗せとBONUSを待ちたい", "8人の対戦相手を確認して最終PUSHを押したい", "限界領域・ナイトメアマシン・覚醒ZONEを狙いたい"], check: ["LB・AT初当り、主要ゲーム数、純増、相手別期待度は公開値", "ゲーム数上乗せとBONUS獲得枚数を分けて表示", "未公表の入口比率とイベント出現率は体験用代表値"], compare: [["bancho4-slot", "スマスロ 押忍！番長4", "対決＋ゲーム数上乗せ型と比較"], ["golden-kamuy-slot", "スマスロ ゴールデンカムイ", "上乗せ＋バトル型ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v31", dedicatedFlow: true, dedicatedFlowKey: "initial-d-2nd-slot", dedicatedFlowVersion: 2, initialD2Flow: true,
+    triggerLabel: "レジェンドバトル", triggerRate: 216.6, triggerSuccess: 0.534, mainLabel: "LEGEND RUSH", mainRate: 405.5, base50: 31.0, coinUnit: 3.2,
+    normalMin: 0, normalMax: 0, atPureIncrease: 2.4, bonusPureIncrease: 4.0, upperPureIncrease: 4.0, atPayoutVariance: 0,
+    initialDEntryRoutes: [[{ key: "legend-battle", label: "レジェンドバトル", games: 12 }, 0.82], [{ key: "drift", label: "ドリフトゾーン", games: 15, chance: 0.75 }, 0.14], [{ key: "legend-bonus", label: "レジェンドボーナス", games: 30, chance: 1, bonus: true }, 0.03], [{ key: "infinity", label: "インフィニティドリーム", games: 15, chance: 1, infinity: true }, 0.01]],
+    initialDNormalOpponents: [[{ key: "keisuke", label: "高橋啓介", chance: 0.35 }, 0.54], [{ key: "takeshi", label: "中里毅", chance: 0.60 }, 0.27], [{ key: "seiji", label: "岩城清次", chance: 0.80 }, 0.14], [{ key: "ryosuke", label: "高橋涼介", chance: 1.00 }, 0.05]],
+    initialDAtOpponents: [[{ key: "keisuke", label: "高橋啓介", chance: 0.35 }, 0.24], [{ key: "takeshi", label: "中里毅", chance: 0.60 }, 0.18], [{ key: "shingo", label: "庄司慎吾", chance: 0.65 }, 0.17], [{ key: "kai", label: "小柏カイ", chance: 0.75 }, 0.14], [{ key: "seiji", label: "岩城清次", chance: 0.80 }, 0.11], [{ key: "mako", label: "真子＆沙雪", chance: 0.90 }, 0.08], [{ key: "kyoichi", label: "須藤京一", chance: 0.95 }, 0.05], [{ key: "ryosuke", label: "高橋涼介", chance: 1.00 }, 0.03]],
+    initialDAtFirstGames: 30, initialDAtSetGames: 20, initialDMaxSets: 12, initialDBonusRate: 199,
+    initialDDirectAdds: [[10, 0.54], [20, 0.24], [30, 0.13], [50, 0.06], [100, 0.03]],
+    initialDBonusTypes: [[{ key: "big", label: "BIG BONUS", games: 30, award: 120, stock: 0 }, 0.82], [{ key: "legend", label: "レジェンドボーナス", games: 30, award: 120, stock: 1 }, 0.18]],
+    initialDBonusEndAdds: [[10, 0.94], [20, 0.05], [30, 0.01]],
+    initialDSpecialBattles: [[{ key: "sudo", label: "怒りの咆哮・須藤バトル", chance: 0.42, reward: "limit" }, 0.60], [{ key: "bunta", label: "悪夢のマシン・文太バトル", chance: 0.25, reward: "nightmare" }, 0.40]],
+    initialDLimitAdds: [[30, 0.48], [50, 0.32], [100, 0.16], [200, 0.04]], initialDLimitContinue: 0.62, initialDLimitMax: 5,
+    initialDNightmareGames: 100, initialDAwakeningGames: 3, initialDAwakeningSuccess: 0.60, initialDAwakeningThreshold: 2200,
+    specialLabel: "限界領域", specialChance: 0.10, upperChallenge: "覚醒ZONE", upperChance: 0.08, upperSuccess: 0.60, upperLabel: "ナイトメアマシン", upperContinue: 1, upperPayout: 0,
+    settingRates: { 1: { trigger: 216.6, main: 405.5, payout: 0.979 }, 2: { trigger: 212.3, main: 396.8, payout: 0.989 }, 3: { trigger: 205.0, main: 379.1, payout: 1.008 }, 4: { trigger: 188.9, main: 338.9, payout: 1.063 }, 5: { trigger: 178.4, main: 314.6, payout: 1.110 }, 6: { trigger: 169.7, main: 296.7, payout: 1.143 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
 (function applyInuyasha2DedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["inuyasha2-slot"];
   if (!machine) return;
