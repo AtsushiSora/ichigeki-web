@@ -280,13 +280,14 @@
       ];
       note = `ボーナスごとに続行を選び、終了時に設定・BIG回数・REG回数・差枚・収支をまとめて確認できます。`;
     } else if (sim.okidokiGoldFlow) {
+      const isBlack = Boolean(sim.okidokiBlackFlow);
       items = [
         ["初当り", `約1/${sim.mainRate}`, "設定1のBONUS初当り"],
-        ["BIG／REG", "約210／90枚", "70G／30G・純増約3.0枚/G"],
+        ["BIG／REG", `約${yen.format(sim.okidokiBigAward || 210)}／${yen.format(sim.okidokiRegAward || 90)}枚`, `${sim.okidokiBigGames || 70}G／${sim.okidokiRegGames || 30}G・純増約${Number(sim.atPureIncrease).toFixed(1)}枚/G`],
         ["天国ループ", "約75%", "BONUS後32G以内"],
         ["設定抽選", slotSettingLabel, "設定4は非搭載"]
       ];
-      note = "BONUSごとに32Gを数え、天国・ドキドキ・超ドキドキ・保証・金ドキの内部ルートを結果へ残します。";
+      note = `BONUSごとに32Gを数え、天国・ドキドキ・超ドキドキ・保証・${isBlack ? "黒ドキ・裏ドキ" : "金ドキ"}の内部ルートを結果へ残します。`;
     } else if (sim.uminchuFlow) {
       items = [
         ["初当り", `約1/${sim.mainRate}`, "設定1のBONUS初当り"],
@@ -449,19 +450,20 @@
       ));
       note = `設定1のBIG約1/${sim.bigRate}・REG約1/${sim.regRate}から算出した当選内訳です。設定が変わると構成比も変わります。`;
     } else if (sim.okidokiGoldFlow) {
+      const settingOne = sim.settingRates?.[1] || {};
       charts.push(ratioChartMarkup(
         "BONUS MIX",
         "設定1基準のBONUS内訳",
-        [["BIG", 1 / 175.3], ["REG", 1 / 368.7]],
+        [["BIG", 1 / Math.max(1, Number(settingOne.big) || 175.3)], ["REG", 1 / Math.max(1, Number(settingOne.reg) || 368.7)]],
         "BIG / REG",
-        "設定1の公表BIG約1/175.3・REG約1/368.7から算出した全BONUSの構成比です。"
+        `設定1の公表BIG約1/${settingOne.big || 175.3}・REG約1/${settingOne.reg || 368.7}から算出した全BONUSの構成比です。`
       ));
       charts.push(ratioChartMarkup(
         "HEAVEN LOOP",
         "天国モードの32G連",
         [["継続", sim.okidokiModeRates?.heaven], ["終了", 1 - sim.okidokiModeRates?.heaven]],
         "約75%",
-        "天国モード滞在時の代表ループ率です。金ドキによる再連は別抽選です。"
+        `天国モード滞在時の代表ループ率です。${sim.okidokiBlackFlow ? "黒ドキ" : "金ドキ"}による再連は別抽選です。`
       ));
       note = "BONUS内訳は設定1の公表確率から算出し、天国の継続割合とは別に表示しています。モード初回振り分けは非公表のため円グラフには含めていません。";
     } else if (sim.darlingFranxxFlow) {
@@ -701,8 +703,9 @@
     const successRate = Math.max(0, Math.min(1, Number(sim.triggerSuccess) || 0));
     const hasEntryBonuses = Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0;
     const entryLabel = sim.mainRateLabel || machine.initialHitLabel || "初当りBONUS";
+    const okidokiSpecialLabel = sim.okidokiBlackFlow ? "黒ドキ" : "金ドキ";
     const upperRoute = isOkidokiBonus
-      ? `BONUS後32G以内の連チャンを天国約75%、ドキドキ約80%、超ドキドキ約90%で判定します。ドキドキ系転落後は保証、天国・保証終了後の一部は金ドキからBIG＋次回天国以上へ進みます。`
+      ? `BONUS後32G以内の連チャンを天国約75%、ドキドキ約80%、超ドキドキ約90%で判定します。ドキドキ系転落後は保証、天国・保証終了後の一部は${okidokiSpecialLabel}から次回天国以上へ進みます。${sim.okidokiBlackFlow ? "裏ドキ当選時はロングフリーズを表示します。" : ""}`
       : sim.uminchuFlow
       ? `BONUS後32G以内の連チャンを10回重ねると${sim.upperLabel}へ進み、ストック獲得後は約${percent(sim.uminchuPostIreguiContinue)}のループで連チャンを伸ばします。`
       : sim.tentenFlow
@@ -734,7 +737,7 @@
         : `${sim.triggerLabel}を初当りとして扱い、独立したCZ突破抽選は行いません。`
       : `${sim.triggerLabel}到達後、代表突破率${percent(successRate)}で${hasEntryBonuses ? entryLabel : sim.mainLabel}への当落を判定します。`;
     const missText = isOkidokiBonus
-      ? `BIGは70G・約210枚、REGは30G・約90枚。32G以内に再点灯しなければ今回の連チャンを終了します。`
+      ? `BIGは${sim.okidokiBigGames || 70}G・約${yen.format(sim.okidokiBigAward || 210)}枚、REGは${sim.okidokiRegGames || 30}G・約${yen.format(sim.okidokiRegAward || 90)}枚。32G以内に再点灯しなければ今回の連チャンを終了します。`
       : isBasiliskBc
       ? `BT当選時は追想の刻10G＋争忍の刻平均30Gへ進み、非当選時はBCの獲得枚数を記録して通常時へ戻ります。`
       : isDirectEntry
@@ -749,7 +752,7 @@
           ["01", "通常時", "ハイビスカス点灯を待つ"],
           ["02", "BONUS", `約1/${triggerRate}`],
           ["03", "32G連", "天国・ドキドキを判定"],
-          ["04", "金ドキ", "BIG＋次回天国以上"]
+          ["04", okidokiSpecialLabel, sim.okidokiBlackFlow ? "次回天国以上" : "BIG＋次回天国以上"]
         ]
       : isBasiliskBc
       ? [
@@ -779,11 +782,11 @@
           ["04", hasEntryBonuses ? "初当りBONUS" : "AT・ST", hasEntryBonuses ? entryLabel : sim.mainLabel]
         ];
     const upperStep = sim.upperLabel
-      ? `<div class="machine-cz-upper"><span>その先</span><strong>${sim.karakuriJudgeFlow ? "激情3回→運命の一劇 / 4回→運命連鎖" : isOkidokiBonus ? "天国・金ドキ・ドキドキ" : sim.uminchuFlow ? "BONUS 10連" : sim.goblinSlayerFlow ? "3・5・最大8セット目" : sim.assaultLilyFlow ? "上乗せ特化の報酬" : sim.kaguyaFlow ? "1G連・約100G引き戻し" : sim.dumbbellFlow ? "通常AT中の権利獲得" : sim.shinEvaFlow ? "BONUS後の一部" : sim.upperChallenge}</strong><i aria-hidden="true">→</i><strong>${sim.upperLabel}</strong><small>${sim.karakuriJudgeFlow ? "激情ジャッジ成功回数で上位ルートが変化" : isOkidokiBonus ? "32G以内のBONUS連を約75%・80%・90%で個別判定" : sim.uminchuFlow ? "10連到達で8Gのストック特化ゾーンへ突入" : sim.tentenFlow ? "王宮舞踏会終了後に10G・成功期待度約50%" : sim.goblinSlayerFlow ? "ゴブリンロード撃破または最大8セット継続" : sim.assaultLilyFlow ? "4種類のラストバレットジャッジメント成功で上位AT" : sim.kaguyaFlow ? "5連目以降はBONUSループ期待度約80%" : sim.dumbbellFlow ? "3G・約56%突破後、平均Vストック約4個" : sim.shinEvaFlow ? "マリ獣化チャレンジ10G・成功期待度約38%" : "上位ルートはCZ突破後の別抽選"}</small></div>`
+      ? `<div class="machine-cz-upper"><span>その先</span><strong>${sim.karakuriJudgeFlow ? "激情3回→運命の一劇 / 4回→運命連鎖" : isOkidokiBonus ? `天国・${okidokiSpecialLabel}・ドキドキ` : sim.uminchuFlow ? "BONUS 10連" : sim.goblinSlayerFlow ? "3・5・最大8セット目" : sim.assaultLilyFlow ? "上乗せ特化の報酬" : sim.kaguyaFlow ? "1G連・約100G引き戻し" : sim.dumbbellFlow ? "通常AT中の権利獲得" : sim.shinEvaFlow ? "BONUS後の一部" : sim.upperChallenge}</strong><i aria-hidden="true">→</i><strong>${sim.upperLabel}</strong><small>${sim.karakuriJudgeFlow ? "激情ジャッジ成功回数で上位ルートが変化" : isOkidokiBonus ? "32G以内のBONUS連を約75%・80%・90%で個別判定" : sim.uminchuFlow ? "10連到達で8Gのストック特化ゾーンへ突入" : sim.tentenFlow ? "王宮舞踏会終了後に10G・成功期待度約50%" : sim.goblinSlayerFlow ? "ゴブリンロード撃破または最大8セット継続" : sim.assaultLilyFlow ? "4種類のラストバレットジャッジメント成功で上位AT" : sim.kaguyaFlow ? "5連目以降はBONUSループ期待度約80%" : sim.dumbbellFlow ? "3G・約56%突破後、平均Vストック約4個" : sim.shinEvaFlow ? "マリ獣化チャレンジ10G・成功期待度約38%" : "上位ルートはCZ突破後の別抽選"}</small></div>`
       : "";
     const guideKicker = isOkidokiBonus ? "BONUS LOOP GUIDE" : isBasiliskBc ? "BONUS ENTRY GUIDE" : isDirectEntry ? "DIRECT ENTRY FLOW" : "CHANCE ZONE GUIDE";
     const guideTitle = isOkidokiBonus ? "BONUS連のゲーム性" : isBasiliskBc ? "BCのゲーム性" : isDirectEntry ? "初当りゲーム性" : "CZのゲーム性";
-    const guideLead = isOkidokiBonus ? "ハイビスカス点灯、BIG・REG、BONUS後32G、金ドキまでの流れを整理します。" : isBasiliskBc ? `${sim.triggerLabel}の種類、BT当選後の追想・争忍、宿怨チャレンジまでの流れを整理します。` : isDirectEntry ? "CZを経由しない初当りから、出玉を伸ばす流れを整理します。" : `${sim.triggerLabel}の役割、突破後の行き先、上位までの流れを整理します。`;
+    const guideLead = isOkidokiBonus ? `ハイビスカス点灯、BIG・REG、BONUS後32G、${okidokiSpecialLabel}${sim.okidokiBlackFlow ? "・裏ドキ" : ""}までの流れを整理します。` : isBasiliskBc ? `${sim.triggerLabel}の種類、BT当選後の追想・争忍、宿怨チャレンジまでの流れを整理します。` : isDirectEntry ? "CZを経由しない初当りから、出玉を伸ばす流れを整理します。" : `${sim.triggerLabel}の役割、突破後の行き先、上位までの流れを整理します。`;
     const roleTitle = isOkidokiBonus ? "BONUSの役割" : isBasiliskBc ? "BCの役割" : isDirectEntry ? "初当りの役割" : "CZの役割";
     const judgeTitle = isOkidokiBonus ? "32G中の当落" : isBasiliskBc ? "BC中の当落" : isDirectEntry ? "直結タイプ" : "CZ中の当落";
     const rateKind = isOkidokiBonus ? "BONUS" : isBasiliskBc ? "BC" : "CZ";
@@ -1025,14 +1028,15 @@
       ];
       note = "初当り、STゲーム数、通常・上位継続、上位CZ、純増、ヒロイン別平均枚数は公開値を優先しています。V当選率や翔子選択率など未公表部分は体験用代表値です。";
     } else if (sim.okidokiGoldFlow) {
+      const isBlack = Boolean(sim.okidokiBlackFlow);
       cards = [
         ["HIBISCUS", "点灯でBONUS確定", "通常時は毎ゲームBONUSを抽選。ハイビスカス点灯後のPUSHでBIGまたはREGを開き、設定別初当り確率と今回の投資を結果へ反映します。"],
-        ["BIG / REG", "70G約210枚・30G約90枚", `BIG・REGとも純増約${Number(sim.atPureIncrease).toFixed(1)}枚/G。BONUSのゲーム数を最後まで進め、獲得枚数を1回ずつ収支へ加算します。`],
+        ["BIG / REG", `${sim.okidokiBigGames || 70}G約${yen.format(sim.okidokiBigAward || 210)}枚・${sim.okidokiRegGames || 30}G約${yen.format(sim.okidokiRegAward || 90)}枚`, `BIG・REGとも純増約${Number(sim.atPureIncrease).toFixed(1)}枚/G。BONUSのゲーム数を最後まで進め、獲得枚数を1回ずつ収支へ加算します。`],
         ["32G LOOP", "BONUS後は毎回32G", "天国は約75%、ドキドキは約80%、超ドキドキは約90%で次回BONUSを判定。連チャン中のBIGでは1G連が告知される場合があります。"],
-        ["GUARANTEE", "ドキドキ系転落後の保証", "ドキドキ・超ドキドキのループに漏れた場合も保証モードで32G以内のBONUSを1回追加し、その後に連チャン終了または金ドキを判定します。"],
-        ["GOLD MODE", "BIG＋次回天国以上", "天国や保証終了後の一部で金ドキへ移行。32G以内のBIGを消化し、天国・ドキドキ・超ドキドキのいずれかへ再突入するシームレスな連チャンを表示します。"]
+        ["GUARANTEE", "ドキドキ系転落後の保証", `ドキドキ・超ドキドキのループに漏れた場合も保証モードで32G以内のBONUSを1回追加し、その後に連チャン終了または${isBlack ? "黒ドキ" : "金ドキ"}を判定します。`],
+        [isBlack ? "BLACK / URA" : "GOLD MODE", isBlack ? "次回天国以上／ロングフリーズ" : "BIG＋次回天国以上", isBlack ? "有利区間リセット後の一部で黒ドキへ移行。裏ドキ滞在時はBONUS当選でロングフリーズが発生し、BIG＋1G連＋超ドキドキへ進みます。" : "天国や保証終了後の一部で金ドキへ移行。32G以内のBIGを消化し、天国・ドキドキ・超ドキドキのいずれかへ再突入するシームレスな連チャンを表示します。"]
       ];
-      note = "設定別初当り・BIG・REG・出玉率、BONUSゲーム数・平均獲得、天国・ドキドキ・超ドキドキのループ率、金ドキの基本性能は公開値です。初回モード、金ドキ移行率、1G連率など非公表部分は体験用の代表値です。";
+      note = `設定別初当り・BIG・REG・出玉率、BONUSゲーム数・平均獲得、天国・ドキドキ・超ドキドキのループ率、${isBlack ? "黒ドキ・裏ドキ" : "金ドキ"}の基本性能は公開値です。初回モード、${isBlack ? "黒ドキ・裏ドキ" : "金ドキ"}移行率など非公表部分は体験用の代表値です。`;
     } else if (sim.basiliskTenzenFlow) {
       cards = [
         ["BASILISK CHANCE", "16GのBCからBTへ", "異色BC・同色BCは16G。BC当選時と消化中にBTを抽選し、同色BCはBT期待度50%以上です。EPBC・PBCは30GかつBT濃厚として別表示します。"],
@@ -1210,7 +1214,7 @@
       : sim.kind === "juggler"
         ? [["ボーナス", "何GでBIG・REGに当ったか"], ["続行判断", "ボーナスごとに続ける・やめるを選択"], ["実戦データ", "総G数、BIG・REG回数、合算"], ["最終収支", "差枚と5.2枚交換の収支目安"]]
         : sim.okidokiGoldFlow
-          ? [["初当り", "ハイビスカス点灯までのゲーム数"], ["BONUS", "BIG・REGの回数と最大32G連"], ["内部モード", "天国・保証・金ドキ・ドキドキへの到達"], ["最終収支", "差枚と5.2枚交換の収支目安"]]
+          ? [["初当り", "ハイビスカス点灯までのゲーム数"], ["BONUS", "BIG・REGの回数と最大32G連"], ["内部モード", `天国・保証・${sim.okidokiBlackFlow ? "黒ドキ・裏ドキ" : "金ドキ"}・ドキドキへの到達`], ["最終収支", "差枚と5.2枚交換の収支目安"]]
         : [["当るまで", `${sim.triggerLabel}・${machine.initialHitLabel || sim.mainLabel}までのゲーム数`], ["設定", `${slotSettingLabel}から抽選された今回の設定`], ["上位到達", sim.karakuriJudgeFlow ? `激情3回の${sim.upperChallenge}・4回目の運命連鎖と${sim.upperLabel}への到達` : `${sim.upperChallenge || "上位CZ"}と${sim.upperLabel || "上位AT"}への到達`], ["最終収支", "差枚と5.2枚交換の収支目安"]];
     return `<section class="machine-article-section machine-result-guide"><h3>シミュレーション結果の見方</h3><div>${items.map(([label, detail]) => `<p><strong>${label}</strong><span>${detail}</span></p>`).join("")}</div><p class="machine-result-guide-note">結果は自動で「マイ記録」に保存され、同じ機種を何回試したか、最高収支、勝率をあとから確認できます。</p></section>`;
   }
@@ -1237,7 +1241,7 @@
       items = [
         [`${machine.shortName}はどんな台？`, `${releaseSummary}${machine.points?.[0] ? ` ${machine.points[0]}が主な確認ポイントです。` : ""}`],
         [`${machine.shortName}の平均投資目安は？`, `設定${slotBaselineSetting}基準の${initialHitName(initialHitLabel)}約1/${sim.mainRate}と、50枚あたり${sim.base50}G・46枚貸しの固定条件から、平均${yen.format(averageInvestment)}円を目安として表示します。実際の設定や遊技状況で結果は変わります。`],
-        ["設定とゲームの流れはどう抽選する？", sim.kind === "juggler" ? `開始時に${slotSettingLabel}から1つを均等抽選し、最大${yen.format(sim.games)}GまでBIG・REGを抽選します。設定は終了時の結果とランキングに表示します。` : sim.okidokiGoldFlow ? `開始時に${slotSettingLabel}から1つを均等抽選し、BONUS初当り後はBIG・REG、32G連、天国・ドキドキ・超ドキドキ・保証・金ドキを順番に判定します。設定と最高内部モードは最終結果に表示します。` : `開始時に${slotSettingLabel}から1つを均等抽選し、${sim.triggerLabel}、${initialHitLabel}${initialHitLabel !== sim.mainLabel ? `、${sim.mainLabel}` : ""}、${sim.upperChallenge}、${sim.upperLabel}の順で到達を判定します。設定は最終結果とランキングに表示します。`],
+        ["設定とゲームの流れはどう抽選する？", sim.kind === "juggler" ? `開始時に${slotSettingLabel}から1つを均等抽選し、最大${yen.format(sim.games)}GまでBIG・REGを抽選します。設定は終了時の結果とランキングに表示します。` : sim.okidokiGoldFlow ? `開始時に${slotSettingLabel}から1つを均等抽選し、BONUS初当り後はBIG・REG、32G連、天国・ドキドキ・超ドキドキ・保証・${sim.okidokiBlackFlow ? "黒ドキ・裏ドキ" : "金ドキ"}を順番に判定します。設定と最高内部モードは最終結果に表示します。` : `開始時に${slotSettingLabel}から1つを均等抽選し、${sim.triggerLabel}、${initialHitLabel}${initialHitLabel !== sim.mainLabel ? `、${sim.mainLabel}` : ""}、${sim.upperChallenge}、${sim.upperLabel}の順で到達を判定します。設定は最終結果とランキングに表示します。`],
         ["収支はどう計算する？", "1,000円46枚貸し・5.2枚交換の固定条件で投資、換金、収支目安を計算します。実店舗の再プレイ、持ちメダル、端数処理は含みません。"]
       ];
     }
@@ -1328,7 +1332,7 @@
     <section class="machine-simulator" id="simulator">
       <div class="machine-sim-head"><div><span class="machine-section-label">SIMULATOR</span><h2>${machine.shortName} 簡易シミュレーター</h2></div><span class="machine-sim-badge${machineReady ? "" : " is-preparing"}">${machineReady ? machine.sim.dedicatedFlow ? "機種専用" : "娯楽用" : "準備中"}</span></div>
       ${machineReady ? "" : `<div class="machine-preparing-notice" role="status"><span>COMING SOON</span><strong>導入前のため、まだ遊べません</strong><p>${availabilityLabel}です。導入日を迎えると自動でスタートできるようになります。</p></div>`}
-      <p class="machine-sim-note">投資・換金・収支は固定レートで計算します。パチンコは250玉貸し・28玉交換、スロットは46枚貸し・5.2枚交換です。${machine.sim.kind === "pachinko" ? "表記出玉と、打ち出し・オーバー入賞を簡易反映した実獲得出玉を分けて表示します。" : machine.sim.kind === "juggler" ? `Aタイプは開始時に${slotSettingLabel}を均等抽選し、BIG・REGを重ねて終了時に設定を発表します。` : machine.sim.okidokiGoldFlow ? `開始時に${slotSettingLabel}を抽選し、ハイビスカス点灯、BIG・REG、BONUS後32G、天国・保証・金ドキを時系列表示します。設定と内部モードは最終結果で発表します。` : machine.sim.uminchuFlow ? `開始時に${slotSettingLabel}を抽選し、BIG・REG、BONUS後32G、10連後のIREGUIを時系列表示します。設定は最終結果で発表します。` : machine.sim.tentenFlow ? `開始時に${slotSettingLabel}を抽選し、14G CZ、初回BONUS、40G高確、王宮BONUS、輪廻転天を時系列表示します。設定は最終結果で発表します。` : machine.sim.goblinSlayerFlow ? `開始時に${slotSettingLabel}を抽選し、3種類CZ、100G AT、5G JUDGEMENT、BONUS、ULTIMATE LOOPを時系列表示します。設定は最終結果で発表します。` : machine.sim.assaultLilyFlow ? `開始時に${slotSettingLabel}を抽選し、直撃・3種類CZ・BONUS、差枚数AT、ボスヒュージ襲来、特化ゾーン、RUSH SUPERを時系列表示します。設定は最終結果で発表します。` : machine.sim.kaguyaFlow ? `開始時に${slotSettingLabel}を抽選し、15G＋αCZ、3種類BONUS、1G連、約100G引き戻し、EXTRA BONUSを時系列表示します。設定は最終結果で発表します。` : machine.sim.dumbbellFlow ? `開始時に${slotSettingLabel}を抽選し、10G＋αCZ、通常ATのゲーム数上乗せ、Vストック、金肉BONUSの差枚数ループを時系列表示します。設定は最終結果で発表します。` : machine.sim.shinEvaFlow ? `開始時に${slotSettingLabel}を抽選し、3Gの作戦決定、10G＋αの作戦ST、3種類BONUS、三機殲滅、マリ獣化、上位STを時系列表示します。設定は最終結果で発表します。` : `開始時に${slotSettingLabel}を均等抽選し、AT中のレア役、上乗せ、特化ゾーン、上位ATを機種別の代表値で時系列表示します。設定は最終結果で発表します。`}</p>
+            <p class="machine-sim-note">投資・換金・収支は固定レートで計算します。パチンコは250玉貸し・28玉交換、スロットは46枚貸し・5.2枚交換です。${machine.sim.kind === "pachinko" ? "表記出玉と、打ち出し・オーバー入賞を簡易反映した実獲得出玉を分けて表示します。" : machine.sim.kind === "juggler" ? `Aタイプは開始時に${slotSettingLabel}を均等抽選し、BIG・REGを重ねて終了時に設定を発表します。` : machine.sim.okidokiGoldFlow ? `開始時に${slotSettingLabel}を抽選し、ハイビスカス点灯、BIG・REG、BONUS後32G、天国・保証・${machine.sim.okidokiBlackFlow ? "黒ドキ・裏ドキ" : "金ドキ"}を時系列表示します。設定と内部モードは最終結果で発表します。` : machine.sim.uminchuFlow ? `開始時に${slotSettingLabel}を抽選し、BIG・REG、BONUS後32G、10連後のIREGUIを時系列表示します。設定は最終結果で発表します。` : machine.sim.tentenFlow ? `開始時に${slotSettingLabel}を抽選し、14G CZ、初回BONUS、40G高確、王宮BONUS、輪廻転天を時系列表示します。設定は最終結果で発表します。` : machine.sim.goblinSlayerFlow ? `開始時に${slotSettingLabel}を抽選し、3種類CZ、100G AT、5G JUDGEMENT、BONUS、ULTIMATE LOOPを時系列表示します。設定は最終結果で発表します。` : machine.sim.assaultLilyFlow ? `開始時に${slotSettingLabel}を抽選し、直撃・3種類CZ・BONUS、差枚数AT、ボスヒュージ襲来、特化ゾーン、RUSH SUPERを時系列表示します。設定は最終結果で発表します。` : machine.sim.kaguyaFlow ? `開始時に${slotSettingLabel}を抽選し、15G＋αCZ、3種類BONUS、1G連、約100G引き戻し、EXTRA BONUSを時系列表示します。設定は最終結果で発表します。` : machine.sim.dumbbellFlow ? `開始時に${slotSettingLabel}を抽選し、10G＋αCZ、通常ATのゲーム数上乗せ、Vストック、金肉BONUSの差枚数ループを時系列表示します。設定は最終結果で発表します。` : machine.sim.shinEvaFlow ? `開始時に${slotSettingLabel}を抽選し、3Gの作戦決定、10G＋αの作戦ST、3種類BONUS、三機殲滅、マリ獣化、上位STを時系列表示します。設定は最終結果で発表します。` : `開始時に${slotSettingLabel}を均等抽選し、AT中のレア役、上乗せ、特化ゾーン、上位ATを機種別の代表値で時系列表示します。設定は最終結果で発表します。`}</p>
       <div class="machine-sim-layout">
         <div class="machine-sim-controls">${controlMarkup()}<div class="machine-average-grid" id="averageGrid"></div><div class="machine-start-anchor" id="machineStartAnchor"></div><button class="machine-start-button${machineReady ? "" : " is-preparing"}" id="machineStart" type="button"${machineReady ? "" : " disabled"}><span>${machineReady ? startLabel : "準備中"}</span><small>${machineReady ? labels.join(" → ") : availabilityLabel}</small></button><button class="machine-sticky-back" id="machineStickyBack" type="button" aria-label="前のページに戻る" hidden><span aria-hidden="true">←</span><strong>戻る</strong></button></div>
         <div class="machine-result" id="machineResult" aria-live="polite"><span>${machineReady ? "RESULT" : "COMING SOON"}</span><strong id="resultTitle">${machineReady ? "開始ボタンを押してください" : "導入後に遊べます"}</strong><p id="resultSummary">${machineReady ? "平均値と今回の結果を比較できます。" : `${availabilityLabel}です。現在は記事とスペックをご覧ください。`}</p><div class="machine-result-stats" id="resultStats"></div><div class="machine-flow" id="resultFlow"></div><p class="machine-auto-save-status" id="machineAutoSaveStatus">${machineReady ? "結果は自動でマイ記録へ保存されます。" : "シミュレーターは導入日に自動で有効になります。"}</p><div class="achievement-unlock-toast" id="machineAchievementUnlock" hidden><span>TITLE UNLOCKED</span><strong></strong><small>新しい称号を獲得しました</small></div><div class="machine-result-actions"><a class="button" href="ranking.html#achievements">称号・記録を見る</a><a class="button" id="shareMachineResult" href="community.html?machine=${slug}&compose=simulation#simulationComposer">結果を投稿</a></div><div class="machine-ranking-entry"><label class="machine-ranking-name"><span>ランキングに登録する名前</span><input id="rankingNickname" type="text" maxlength="16" autocomplete="nickname" placeholder="ニックネーム"></label><button class="button primary" id="rankMachineResult" type="button" disabled>ランキングに登録</button></div></div>
@@ -2022,10 +2026,14 @@
       if (sim.okidokiGoldFlow) {
         payout = entryPayout;
         basePayout = 0;
+        const isOkidokiBlack = Boolean(sim.okidokiBlackFlow);
+        const specialMode = isOkidokiBlack ? "black" : "gold";
+        const specialModeLabel = isOkidokiBlack ? "黒ドキモード" : "金ドキモード";
+        const specialModeChance = Math.max(0, Math.min(1, Number(isOkidokiBlack ? sim.okidokiBlackChance : sim.okidokiGoldChance) || 0.15));
         let chainCount = 0;
         let lastWasBig = false;
-        const modeLabels = { normal: "通常モード", heaven: "天国モード", doki: "ドキドキモード", super: "超ドキドキモード", guarantee: "保証モード", gold: "金ドキモード", god: "GODモード" };
-        const modeRanks = { normal: 0, heaven: 1, guarantee: 2, gold: 3, doki: 4, super: 5, god: 6 };
+        const modeLabels = { normal: "通常モード", heaven: "天国モード", doki: "ドキドキモード", super: "超ドキドキモード", guarantee: "保証モード", gold: "金ドキモード", black: "黒ドキモード", god: "GODモード", ura: "裏ドキモード" };
+        const modeRanks = { normal: 0, heaven: 1, guarantee: 2, gold: 3, black: 3, doki: 4, super: 5, god: 6, ura: 6 };
         let highestRank = 0;
         const recordMode = mode => {
           const rank = modeRanks[mode] || 0;
@@ -2033,12 +2041,14 @@
             highestRank = rank;
             okidokiHighestMode = modeLabels[mode] || "通常";
           }
-          if (mode === "gold" || rank >= modeRanks.doki) upper = true;
+          if (mode === "gold" || mode === "black" || rank >= modeRanks.doki) upper = true;
         };
-        const appendBonus = (source, { forceBig = false, oneGame = false, mode = "normal", initial = false } = {}) => {
-          const isBig = forceBig || Math.random() < (initial ? Number(sim.okidokiInitialBigChance) || 0.55 : Number(sim.okidokiChainBigChance) || 0.72);
-          const bonusGames = isBig ? 70 : 30;
-          const requestedAward = isBig ? 210 : 90;
+        const appendBonus = (source, { forceBig = false, oneGame = false, mode = "normal", initial = false, bigChance = null } = {}) => {
+          const settingBigChance = Number(sim.okidokiBigChanceBySetting?.[setting]);
+          const defaultBigChance = initial ? (Number.isFinite(settingBigChance) ? settingBigChance : Number(sim.okidokiInitialBigChance) || 0.55) : Number(sim.okidokiChainBigChance) || 0.72;
+          const isBig = forceBig || Math.random() < (Number.isFinite(Number(bigChance)) ? Number(bigChance) : defaultBigChance);
+          const bonusGames = isBig ? Number(sim.okidokiBigGames) || 70 : Number(sim.okidokiRegGames) || 30;
+          const requestedAward = isBig ? Number(sim.okidokiBigAward) || 210 : Number(sim.okidokiRegAward) || 90;
           const award = Math.max(0, Math.min(requestedAward, SLOT_COMPLETE_LIMIT - payout));
           chainCount += 1;
           payout += award;
@@ -2051,29 +2061,29 @@
           okidokiMaxChain = Math.max(okidokiMaxChain, chainCount);
           lastWasBig = isBig;
           recordMode(mode);
-          atEvents.push({ kind: "okidoki-bonus", label: isBig ? "BIG BONUS" : "REG BONUS", bonusType: isBig ? "BIG" : "REG", games: bonusGames, award, cumulative: payout, chain: chainCount, source, oneGame, mode: modeLabels[mode] || source });
+          atEvents.push({ kind: "okidoki-bonus", label: isBig ? "BIG BONUS" : "REG BONUS", bonusType: isBig ? "BIG" : "REG", games: bonusGames, award, cumulative: payout, chain: chainCount, source, oneGame, mode: modeLabels[mode] || source, pureIncrease: Number(sim.atPureIncrease) || 3.0 });
           flow.push(`${chainCount}連目 ${isBig ? "BIG" : "REG"} +${award}枚・${source}${oneGame ? "・1G連" : ""}`);
         };
         const appendZone = ({ mode, continued, source, chance, gold = false, guarantee = false, oneGame = false }) => {
           const zoneGames = oneGame ? 1 : continued ? randomInt(1, 32) : 32;
           atGamesTotal += zoneGames;
-          atEvents.push({ kind: "okidoki-zone", label: "BONUS後32G", games: zoneGames, cumulative: payout, chain: chainCount, mode: modeLabels[mode] || mode, continued, source, chance: chance * 100, gold, guarantee, oneGame });
+          atEvents.push({ kind: "okidoki-zone", label: "BONUS後32G", games: zoneGames, cumulative: payout, chain: chainCount, mode: modeLabels[mode] || mode, continued, source, chance: chance * 100, gold, guarantee, oneGame, specialModeLabel });
           if (!continued) flow.push(`${chainCount}連後 32G終了`);
           return zoneGames;
         };
 
-        okidokiGodMode = Math.random() < (Number(sim.okidokiGodChance) || 0);
-        let mode = okidokiGodMode ? "god" : weighted(sim.okidokiEntryModes || [["normal", 1]]);
+        okidokiGodMode = Math.random() < (Number(isOkidokiBlack ? sim.okidokiUraChance : sim.okidokiGodChance) || 0);
+        let mode = okidokiGodMode ? (isOkidokiBlack ? "ura" : "god") : weighted(sim.okidokiEntryModes || [["normal", 1]]);
         appendBonus("初当り", { forceBig: okidokiGodMode, mode, initial: true });
         if (okidokiGodMode && payout < SLOT_COMPLETE_LIMIT) {
-          recordMode("god");
-          atEvents.push({ kind: "okidoki-god", label: "GODモード", games: 1, stocks: 4, cumulative: payout });
-          flow.push("GODモード・BIG5連以上濃厚");
+          recordMode(isOkidokiBlack ? "ura" : "god");
+          atEvents.push({ kind: "okidoki-god", label: isOkidokiBlack ? "裏ドキモード" : "GODモード", games: 1, stocks: 4, cumulative: payout, black: isOkidokiBlack });
+          flow.push(isOkidokiBlack ? "裏ドキ・ロングフリーズ・BIG1G連＋超ドキドキ" : "GODモード・BIG5連以上濃厚");
           for (let stock = 0; stock < 4 && payout < SLOT_COMPLETE_LIMIT; stock += 1) {
-            appendZone({ mode: "god", continued: true, source: "GODストック", chance: 1, oneGame: true });
-            appendBonus("GODストック", { forceBig: true, oneGame: true, mode: "god" });
+            appendZone({ mode: isOkidokiBlack ? "ura" : "god", continued: true, source: isOkidokiBlack ? "ロングフリーズ1G連" : "GODストック", chance: 1, oneGame: true });
+            appendBonus(isOkidokiBlack ? "ロングフリーズ1G連" : "GODストック", { forceBig: true, oneGame: true, mode: isOkidokiBlack ? "ura" : "god" });
           }
-          mode = weighted([["heaven", 0.50], ["doki", 0.30], ["super", 0.20]]);
+          mode = isOkidokiBlack ? "super" : weighted([["heaven", 0.50], ["doki", 0.30], ["super", 0.20]]);
         }
 
         while (chainCount < 50 && payout < SLOT_COMPLETE_LIMIT) {
@@ -2082,11 +2092,11 @@
             break;
           }
           if (mode === "guarantee") {
-            if (Math.random() < (Number(sim.okidokiGoldChance) || 0.15)) {
+            if (Math.random() < specialModeChance) {
               okidokiGoldCount += 1;
-              recordMode("gold");
-              appendZone({ mode: "gold", continued: true, source: "金ドキ移行", chance: Number(sim.okidokiGoldChance) || 0.15, gold: true });
-              appendBonus("金ドキ・次回天国以上", { forceBig: true, mode: "gold" });
+              recordMode(specialMode);
+              appendZone({ mode: specialMode, continued: true, source: `${specialModeLabel}移行`, chance: specialModeChance, gold: true });
+              appendBonus(`${specialModeLabel}・次回天国以上`, { forceBig: !isOkidokiBlack, bigChance: isOkidokiBlack ? Number(sim.okidokiBlackBigChance) || 0.857 : null, mode: specialMode });
               mode = weighted([["heaven", 0.78], ["doki", 0.18], ["super", 0.04]]);
               continue;
             }
@@ -2097,28 +2107,30 @@
           const continueChance = Math.max(0, Math.min(1, Number(sim.okidokiModeRates?.[mode]) || 0));
           const continued = Math.random() < continueChance;
           if (continued) {
-            const oneGame = lastWasBig && Math.random() < (Number(sim.okidokiOneGameChance) || 0.10);
+            const oneGameChance = mode === "guarantee" && isOkidokiBlack ? Number(sim.okidokiGuaranteeOneGameChance) || 0.06 : Number(sim.okidokiOneGameChance) || 0.10;
+            const oneGame = (isOkidokiBlack || lastWasBig) && Math.random() < oneGameChance;
             appendZone({ mode, continued: true, source: oneGame ? "BONUS中1G連告知" : modeLabels[mode], chance: continueChance, oneGame });
             cycleContinues += 1;
-            appendBonus(oneGame ? "1G連" : modeLabels[mode], { oneGame, mode });
+            appendBonus(oneGame ? "1G連" : modeLabels[mode], { forceBig: oneGame, oneGame, mode });
             continue;
           }
 
           if (mode === "doki" || mode === "super") {
             okidokiGuaranteeCount += 1;
-            appendZone({ mode: "guarantee", continued: true, source: `${modeLabels[mode]}転落→保証`, chance: 1, guarantee: true });
+            const guaranteeOneGame = isOkidokiBlack && Math.random() < (Number(sim.okidokiGuaranteeOneGameChance) || 0.06);
+            appendZone({ mode: "guarantee", continued: true, source: guaranteeOneGame ? "保証モード1G連" : `${modeLabels[mode]}転落→保証`, chance: 1, guarantee: true, oneGame: guaranteeOneGame });
             cycleContinues += 1;
-            appendBonus("保証モード", { mode: "guarantee" });
+            appendBonus(guaranteeOneGame ? "保証モード1G連" : "保証モード", { forceBig: guaranteeOneGame, oneGame: guaranteeOneGame, mode: "guarantee" });
             mode = "guarantee";
             continue;
           }
 
-          if (Math.random() < (Number(sim.okidokiGoldChance) || 0.15)) {
+          if (Math.random() < specialModeChance) {
             okidokiGoldCount += 1;
-            recordMode("gold");
-            appendZone({ mode: "gold", continued: true, source: "非有利区間→金ドキ", chance: Number(sim.okidokiGoldChance) || 0.15, gold: true });
+            recordMode(specialMode);
+            appendZone({ mode: specialMode, continued: true, source: `非有利区間→${specialModeLabel}`, chance: specialModeChance, gold: true });
             cycleContinues += 1;
-            appendBonus("金ドキ・次回天国以上", { forceBig: true, mode: "gold" });
+            appendBonus(`${specialModeLabel}・次回天国以上`, { forceBig: !isOkidokiBlack, bigChance: isOkidokiBlack ? Number(sim.okidokiBlackBigChance) || 0.857 : null, mode: specialMode });
             mode = weighted([["heaven", 0.78], ["doki", 0.18], ["super", 0.04]]);
             continue;
           }
@@ -5491,7 +5503,7 @@
     const sgStats = sim.sgRaceFlow ? [["SGシナリオ", sgScenarioName], ["SG RUSH", `${sgRushSets}セット`], ["グランドスラム", sgRushSets === 8 ? "達成" : "未達"]] : [];
     const kabaneriStats = sim.kabaneriStFlow ? [["ST中ボーナス", `${kabaneriStBonuses}回`], ["上位ST", kabaneriUpperMode ? `${kabaneriUpperMode}・${upperLoops}回当選` : "非到達"]] : [];
     const otomeStats = sim.otomeRushFlow ? [["ゲーム数上乗せ", `+${yen.format(otomeAddedGames)}G`], [sim.otomeBonusLabel || "出陣ボーナス", `${otomeBonusCount}回`], [sim.specialLabel || "特化ゾーン", otomeAwakeningCount ? `${otomeAwakeningCount}回` : "非当選"], [sim.otomeBattleLabel || "オウガイバトル", otomeBattleWon ? "勝利" : "敗北"]] : [];
-    const okidokiStats = sim.okidokiGoldFlow ? [["BONUS内訳", `BIG ${okidokiBigCount}回・REG ${okidokiRegCount}回`], ["最大32G連", `${okidokiMaxChain}連`], ["最高内部モード", okidokiHighestMode], ["1G連", `${okidokiOneGameCount}回`], ["保証BONUS", `${okidokiGuaranteeCount}回`], ["金ドキ", okidokiGoldCount ? `${okidokiGoldCount}回` : "非到達"], ["GODモード", okidokiGodMode ? "到達" : "非到達"]] : [];
+    const okidokiStats = sim.okidokiGoldFlow ? [["BONUS内訳", `BIG ${okidokiBigCount}回・REG ${okidokiRegCount}回`], ["最大32G連", `${okidokiMaxChain}連`], ["最高内部モード", okidokiHighestMode], ["1G連", `${okidokiOneGameCount}回`], ["保証BONUS", `${okidokiGuaranteeCount}回`], [sim.okidokiBlackFlow ? "黒ドキ" : "金ドキ", okidokiGoldCount ? `${okidokiGoldCount}回` : "非到達"], [sim.okidokiBlackFlow ? "裏ドキ・ロングフリーズ" : "GODモード", okidokiGodMode ? "到達" : "非到達"]] : [];
     const uminchuStats = sim.uminchuFlow ? [["BONUS内訳", `BIG ${uminchuBigCount}回・REG ${uminchuRegCount}回`], ["最大32G連", `${uminchuMaxChain}連`], ["IREGUI", uminchuIreguiCount ? `${uminchuIreguiCount}回` : "非到達"], ["獲得ストック", `${uminchuStockCount}個`]] : [];
     const tentenStats = sim.tentenFlow ? [["初回BONUS", entered ? "約100枚" : "非当選"], ["王宮BONUS", `${tentenPalaceBonusCount}回`], ["デュエットBIG", `${tentenDuetCount}回`], ["転天STOCK", tentenStockChallengeCount ? `${tentenStockChallengeCount}回・${tentenStockCount}個` : "非当選"], ["輪廻転天", upper ? `到達・上位BONUS ${tentenUpperBonusCount}回` : "非到達"]] : [];
     const goblinStats = sim.goblinSlayerFlow ? [["今回の入口", goblinCz?.label || sim.triggerLabel], ["ループモード", `${Math.round(goblinLoopMode * 100)}%モード`], ["通常AT", `${goblinAtSets}セット`], ["最大継続率", `${goblinMaxContinueRate}%`], ["ゴブリンロード", goblinLordBattles ? `${goblinLordBattles}回` : "未遭遇"], ["GS BONUS", `${goblinBonusCount}回`], ["ULTIMATE LOOP", upper ? `${upperLoops}セット` : "非到達"]] : [];
@@ -5637,7 +5649,7 @@
         ? (Number(sim.kabaneriUpperRareContinue) || 0.95)
         : (Number(sim.kabaneriUpperNormalContinue) || 0.80)) * 100
       : sim.upperContinue * 100;
-    return { title: `設定${setting}｜${resultTitle}`, summary: resultSummary, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, triggerSucceeded, triggerSuccessChance: sim.basiliskTenzenFlow ? 100 : sim.paripiFlow ? (Number(paripiCz?.chance) || 0) * 100 : sim.sunbreakFlow ? (Number(sunbreakEntry?.chance) || 0) * 100 : sim.goblinSlayerFlow ? (Number(goblinCz?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : sim.lycorisFlow ? (Number(lycorisCz?.chance) || 0) * 100 : triggerSuccess * 100, entryBonusModel: Boolean(sim.basiliskTenzenFlow) || Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0, entryBonus, entered, entryChance: entryBonus ? (Number(entryBonus.atChance) || 0) * 100 : sim.paripiFlow ? (Number(paripiCz?.chance) || 0) * 100 : sim.sunbreakFlow ? (Number(sunbreakEntry?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : sim.lycorisFlow ? (Number(lycorisCz?.chance) || 0) * 100 : triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, paripiFlow: Boolean(sim.paripiFlow), paripiCz, sunbreakFlow: Boolean(sim.sunbreakFlow), sunbreakEntry, setPushFlow: Boolean(sim.setPushFlow), karakuriJudgeFlow: Boolean(sim.karakuriJudgeFlow), battleBonusFlow: Boolean(sim.battleBonusFlow), garoBattleFlow: Boolean(sim.garoBattleFlow), ragnadorUpperFlow: Boolean(sim.ragnadorUpperFlow), seiyaTempleFlow: Boolean(sim.seiyaTempleFlow), ggoStFlow: Boolean(sim.ggoStFlow), godzillaEva2Flow: Boolean(sim.godzillaEva2Flow), mahoakoFlow: Boolean(sim.mahoakoFlow), okidokiGoldFlow: Boolean(sim.okidokiGoldFlow), okidokiBigCount, okidokiRegCount, okidokiMaxChain, okidokiGoldCount, okidokiOneGameCount, okidokiGuaranteeCount, okidokiGodMode, okidokiHighestMode, tokyoGhoulFlow: Boolean(sim.tokyoGhoulFlow), tokyoGhoulCz, tokyoGhoulBattles, tokyoGhoulWins, tokyoGhoulBitesCount, tokyoGhoulSpecialCount, tokyoGhoulArimaBattle, tokyoGhoulArimaWon, tokyoGhoulUpperAt, tokyoGhoulCcgAward, basiliskTenzenFlow: Boolean(sim.basiliskTenzenFlow), basiliskBc, basiliskScenario, basiliskSets, basiliskBtBcCount, basiliskHighCount, basiliskMoonCount, basiliskGrudgeAttempts, basiliskGrudgeSuccesses, basiliskTenzenSets, sao2Flow: Boolean(sim.sao2Flow), sao2SniperAttempts, sao2SniperWins, sao2LastAttackAttempts, sao2LastAttackSuccesses, sao2DeathGunAttempts, sao2DeathGunWins, sao2UpperSections, sao2ZekkenAward, sao2Ultima, lycorisFlow: Boolean(sim.lycorisFlow), lycorisCz, lycorisRushRoute, lycorisRush20Won, lycorisNormalBonusCount, lycorisPoints, lycorisStResets, lycorisUpperCzAttempts, lycorisUpperCzWins, lycorisUpperSections, lycorisUpperBonusCount, lycorisLegendaryAward, tentenFlow: Boolean(sim.tentenFlow), goblinSlayerFlow: Boolean(sim.goblinSlayerFlow), goblinCz, goblinLoopMode: goblinLoopMode * 100, goblinAtSets, goblinBonusCount, goblinMaxContinueRate, assaultLilyFlow: Boolean(sim.assaultLilyFlow), assaultEntry, assaultBossBattles, assaultBossWins, assaultRewardCount, assaultUpperCz, assaultUpperCzAttempts, assaultUpperCzSuccesses, assaultMaxAddOn, kaguyaFlow: Boolean(sim.kaguyaFlow), kaguyaRegCount, kaguyaBigCount, kaguyaSuperCount, kaguyaOneGameCount, kaguyaReturnCount, kaguyaSpecialCount, kaguyaStockCount, kaguyaMarriageCount, kaguyaExtraGames, dumbbellFlow: Boolean(sim.dumbbellFlow), dumbbellCz, dumbbellNormalGames, dumbbellGameAddCount, dumbbellGameAddTotal, dumbbellGoldenChallenges, dumbbellGoldenSuccesses, dumbbellVStockTotal, dumbbellCoinAddTotal, dumbbellRisingChallenges, sgRaceFlow: Boolean(sim.sgRaceFlow), kabaneriStFlow: Boolean(sim.kabaneriStFlow), otomeRushFlow: Boolean(sim.otomeRushFlow), cycleFlow: Boolean(sim.cycleFlow), cycleRounds, cycleContinues, kabaneriStBonuses, kabaneriUpperMode, otomeAddedGames, otomeBonusCount, otomeAwakeningCount, otomeBattleWon, otomeAddOnChance: (Number(sim.otomeAddOnChance) || 0) * 100, battleBonusSets, battleContinuationRate: battleContinuationRate * 100, sgRushSets, sgScenarioName, karakuriJudgeAttempts, karakuriJudgeSuccesses, karakuriUpperRoute, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, addOnGamesTotal, coinAddOnCount, coinAddOnTotal, bonusCount, bonusPayoutTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: kabaneriUpperContinueChance, upperChallenge: sim.upperChallenge || "", upper, upperLabel: upperResultLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
+    return { title: `設定${setting}｜${resultTitle}`, summary: resultSummary, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, triggerSucceeded, triggerSuccessChance: sim.basiliskTenzenFlow ? 100 : sim.paripiFlow ? (Number(paripiCz?.chance) || 0) * 100 : sim.sunbreakFlow ? (Number(sunbreakEntry?.chance) || 0) * 100 : sim.goblinSlayerFlow ? (Number(goblinCz?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : sim.lycorisFlow ? (Number(lycorisCz?.chance) || 0) * 100 : triggerSuccess * 100, entryBonusModel: Boolean(sim.basiliskTenzenFlow) || Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0, entryBonus, entered, entryChance: entryBonus ? (Number(entryBonus.atChance) || 0) * 100 : sim.paripiFlow ? (Number(paripiCz?.chance) || 0) * 100 : sim.sunbreakFlow ? (Number(sunbreakEntry?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : sim.lycorisFlow ? (Number(lycorisCz?.chance) || 0) * 100 : triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, paripiFlow: Boolean(sim.paripiFlow), paripiCz, sunbreakFlow: Boolean(sim.sunbreakFlow), sunbreakEntry, setPushFlow: Boolean(sim.setPushFlow), karakuriJudgeFlow: Boolean(sim.karakuriJudgeFlow), battleBonusFlow: Boolean(sim.battleBonusFlow), garoBattleFlow: Boolean(sim.garoBattleFlow), ragnadorUpperFlow: Boolean(sim.ragnadorUpperFlow), seiyaTempleFlow: Boolean(sim.seiyaTempleFlow), ggoStFlow: Boolean(sim.ggoStFlow), godzillaEva2Flow: Boolean(sim.godzillaEva2Flow), mahoakoFlow: Boolean(sim.mahoakoFlow), okidokiGoldFlow: Boolean(sim.okidokiGoldFlow), okidokiBlackFlow: Boolean(sim.okidokiBlackFlow), okidokiPureIncrease: Number(sim.atPureIncrease) || 3.0, okidokiBigCount, okidokiRegCount, okidokiMaxChain, okidokiGoldCount, okidokiOneGameCount, okidokiGuaranteeCount, okidokiGodMode, okidokiHighestMode, tokyoGhoulFlow: Boolean(sim.tokyoGhoulFlow), tokyoGhoulCz, tokyoGhoulBattles, tokyoGhoulWins, tokyoGhoulBitesCount, tokyoGhoulSpecialCount, tokyoGhoulArimaBattle, tokyoGhoulArimaWon, tokyoGhoulUpperAt, tokyoGhoulCcgAward, basiliskTenzenFlow: Boolean(sim.basiliskTenzenFlow), basiliskBc, basiliskScenario, basiliskSets, basiliskBtBcCount, basiliskHighCount, basiliskMoonCount, basiliskGrudgeAttempts, basiliskGrudgeSuccesses, basiliskTenzenSets, sao2Flow: Boolean(sim.sao2Flow), sao2SniperAttempts, sao2SniperWins, sao2LastAttackAttempts, sao2LastAttackSuccesses, sao2DeathGunAttempts, sao2DeathGunWins, sao2UpperSections, sao2ZekkenAward, sao2Ultima, lycorisFlow: Boolean(sim.lycorisFlow), lycorisCz, lycorisRushRoute, lycorisRush20Won, lycorisNormalBonusCount, lycorisPoints, lycorisStResets, lycorisUpperCzAttempts, lycorisUpperCzWins, lycorisUpperSections, lycorisUpperBonusCount, lycorisLegendaryAward, tentenFlow: Boolean(sim.tentenFlow), goblinSlayerFlow: Boolean(sim.goblinSlayerFlow), goblinCz, goblinLoopMode: goblinLoopMode * 100, goblinAtSets, goblinBonusCount, goblinMaxContinueRate, assaultLilyFlow: Boolean(sim.assaultLilyFlow), assaultEntry, assaultBossBattles, assaultBossWins, assaultRewardCount, assaultUpperCz, assaultUpperCzAttempts, assaultUpperCzSuccesses, assaultMaxAddOn, kaguyaFlow: Boolean(sim.kaguyaFlow), kaguyaRegCount, kaguyaBigCount, kaguyaSuperCount, kaguyaOneGameCount, kaguyaReturnCount, kaguyaSpecialCount, kaguyaStockCount, kaguyaMarriageCount, kaguyaExtraGames, dumbbellFlow: Boolean(sim.dumbbellFlow), dumbbellCz, dumbbellNormalGames, dumbbellGameAddCount, dumbbellGameAddTotal, dumbbellGoldenChallenges, dumbbellGoldenSuccesses, dumbbellVStockTotal, dumbbellCoinAddTotal, dumbbellRisingChallenges, sgRaceFlow: Boolean(sim.sgRaceFlow), kabaneriStFlow: Boolean(sim.kabaneriStFlow), otomeRushFlow: Boolean(sim.otomeRushFlow), cycleFlow: Boolean(sim.cycleFlow), cycleRounds, cycleContinues, kabaneriStBonuses, kabaneriUpperMode, otomeAddedGames, otomeBonusCount, otomeAwakeningCount, otomeBattleWon, otomeAddOnChance: (Number(sim.otomeAddOnChance) || 0) * 100, battleBonusSets, battleContinuationRate: battleContinuationRate * 100, sgRushSets, sgScenarioName, karakuriJudgeAttempts, karakuriJudgeSuccesses, karakuriUpperRoute, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, addOnGamesTotal, coinAddOnCount, coinAddOnTotal, bonusCount, bonusPayoutTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: kabaneriUpperContinueChance, upperChallenge: sim.upperChallenge || "", upper, upperLabel: upperResultLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
   }
 
   function createATypeSession(setting) {
@@ -7465,7 +7477,7 @@
           setExperienceStage(3, event.chain === 1 ? "FIRST BONUS" : `BONUS CHAIN ${event.chain}`, event.oneGame ? "1G連告知" : event.source, "PUSH", "BIGかREGか、今回のBONUSを開きます", "judge", 100, `${event.chain}連目・${event.mode}`);
           await waitForExperienceAction(`${event.chain}連目 BONUS PUSH`, 5000, event.bonusType === "BIG" ? "gold" : "normal");
           if (runId !== experienceRunId) return;
-          setExperienceStage(3, event.bonusType === "BIG" ? "BIG BONUS" : "REG BONUS", `${event.label} ${event.chain}連目`, `+${yen.format(event.award)}枚`, `${event.games}G・純増約3.0枚/G${event.oneGame ? "・1G連" : ""}`, event.bonusType === "BIG" ? "hit" : "rush", 100, `${event.source}・${event.mode}`);
+          setExperienceStage(3, event.bonusType === "BIG" ? "BIG BONUS" : "REG BONUS", `${event.label} ${event.chain}連目`, `+${yen.format(event.award)}枚`, `${event.games}G・純増約${Number(event.pureIncrease || data.okidokiPureIncrease || 3).toFixed(1)}枚/G${event.oneGame ? "・1G連" : ""}`, event.bonusType === "BIG" ? "hit" : "rush", 100, `${event.source}・${event.mode}`);
           await waitForExperience(900);
           const bonusComplete = await animateExperienceCounter(eventGames, "G", event.bonusType === "BIG" ? "BIG BONUS" : "REG BONUS", `${event.chain}連目 BONUS消化`, "ハイビスカスと1G連告知に注目", 100, `獲得 ${yen.format(event.award)}枚`, runId);
           if (!bonusComplete) return;
@@ -7476,20 +7488,21 @@
         }
 
         if (event.kind === "okidoki-zone") {
-          const zoneComplete = await animateExperienceCounter(eventGames, "G", event.oneGame ? "1G REN" : "32G CHANCE", `${event.chain}連目 BONUS後`, event.gold ? "金色のハイビスカス点灯を待ちます" : event.guarantee ? "保証モードのハイビスカス点灯を待ちます" : "32G以内の再点灯を待ちます", event.chance, event.mode, runId);
+          const specialLabel = event.specialModeLabel || (data.okidokiBlackFlow ? "黒ドキモード" : "金ドキモード");
+          const zoneComplete = await animateExperienceCounter(eventGames, "G", event.oneGame ? "1G REN" : "32G CHANCE", `${event.chain}連目 BONUS後`, event.gold ? `${specialLabel}のハイビスカス点灯を待ちます` : event.guarantee ? "保証モードのハイビスカス点灯を待ちます" : "32G以内の再点灯を待ちます", event.chance, event.mode, runId);
           if (!zoneComplete) return;
           consumedGames += eventGames;
-          setExperienceStage(3, "32G FINAL JUDGE", event.mode, "PUSH", event.gold ? "金ドキBIGと次回天国以上を開きます" : event.guarantee ? "保証BONUSを開きます" : "ハイビスカス再点灯または連チャン終了を開きます", "judge", event.chance, event.source);
+          setExperienceStage(3, "32G FINAL JUDGE", event.mode, "PUSH", event.gold ? `${specialLabel}と次回天国以上を開きます` : event.guarantee ? "保証BONUSを開きます" : "ハイビスカス再点灯または連チャン終了を開きます", "judge", event.chance, event.source);
           await waitForExperienceAction(`${event.chain}連後 32G PUSH`, 5000, event.gold ? "upper" : event.continued ? "gold" : "normal");
           if (runId !== experienceRunId) return;
-          setExperienceStage(3, event.gold ? "GOLD MODE" : event.continued ? "HIBISCUS LIGHT" : "HEAVEN END", event.gold ? "金ドキモード" : event.continued ? "32G以内BONUS" : "32G終了", event.continued ? (event.oneGame ? "1G連" : `${eventGames}G`) : "通常へ", event.gold ? "BIG＋次回天国以上" : event.continued ? event.source : `今回の連チャンは${event.chain}連で終了`, event.gold ? "hyper" : event.continued ? "hit" : "end", event.continued ? 100 : 0, event.mode);
+          setExperienceStage(3, event.gold ? (data.okidokiBlackFlow ? "BLACK MODE" : "GOLD MODE") : event.continued ? "HIBISCUS LIGHT" : "HEAVEN END", event.gold ? specialLabel : event.continued ? "32G以内BONUS" : "32G終了", event.continued ? (event.oneGame ? "1G連" : `${eventGames}G`) : "通常へ", event.gold ? "次回天国以上" : event.continued ? event.source : `今回の連チャンは${event.chain}連で終了`, event.gold ? "hyper" : event.continued ? "hit" : "end", event.continued ? 100 : 0, event.mode);
           setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
           await waitForExperience(event.gold ? 1150 : 900);
           continue;
         }
 
         if (event.kind === "okidoki-god") {
-          setExperienceStage(3, "GOD MODE", event.label, "BIG × 5", "BIG5連以上＋終了後の32G連へ", "hyper", 100, "GODテンパイ音");
+          setExperienceStage(3, event.black ? "URA DOKI" : "GOD MODE", event.label, event.black ? "LONG FREEZE" : "BIG × 5", event.black ? "BIG＋1G連＋超ドキドキへ" : "BIG5連以上＋終了後の32G連へ", "hyper", 100, event.black ? "裏ドキBONUS当選" : "GODテンパイ音");
           await waitForExperience(1250);
           continue;
         }

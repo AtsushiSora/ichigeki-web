@@ -10,7 +10,7 @@ const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
 const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
 const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow || machine.sim?.godEaterFlow || machine.sim?.millionGodFlow || machine.sim?.juohFlow || machine.sim?.sunbreakFlow || machine.sim?.paripiFlow);
-const expectedProfiles = { battle: 6, st: 2, heaven: 4, bonus: 5, addon: 12 };
+const expectedProfiles = { battle: 6, st: 2, heaven: 3, bonus: 5, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -49,14 +49,14 @@ for (const [slug, machine] of declarativeFlows) {
 }
 
 if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
-if (declarativeFlows.length !== 29) errors.push(`expected 29 declarative dedicated flows, found ${declarativeFlows.length}`);
+if (declarativeFlows.length !== 28) errors.push(`expected 28 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(specializedFlows);
-if (specializedFlows.length !== 18 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"] || !dedicatedMap["million-god-kiseki"] || !dedicatedMap["juoh-slot"] || !dedicatedMap["monster-hunter-sunbreak"] || !dedicatedMap["paripi-koumei-slot"]) {
-  errors.push(`expected eighteen specialized flows including Paripi Koumei, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (specializedFlows.length !== 19 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["okidoki-black"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"] || !dedicatedMap["million-god-kiseki"] || !dedicatedMap["juoh-slot"] || !dedicatedMap["monster-hunter-sunbreak"] || !dedicatedMap["paripi-koumei-slot"]) {
+  errors.push(`expected nineteen specialized flows including Okidoki Black, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
   const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
@@ -212,6 +212,14 @@ if (specializedFlows.length !== 18 || !dedicatedMap["tokyo-ghoul-slot"] || !dedi
   if (Number(paripiSim.paripiStGames) !== 15 || Number(paripiSim.paripiMissionGames) !== 4 || Number(paripiSim.paripiShibuyaGames) !== 4 || Number(paripiSim.paripiEpilogueGames) !== 30) errors.push("paripi-koumei-slot: ST, mission, battle, or epilogue games are incorrect");
   if (Number(paripiSim.paripiStContinue) !== 0.73 || Number(paripiSim.paripiShibuyaSuccess) !== 0.84 || Number(paripiSim.paripiUpperContinue) !== 0.81 || Number(paripiSim.paripiUltimateContinue) !== 0.91) errors.push("paripi-koumei-slot: ST continuation probabilities are incorrect");
   if (Number(paripiSim.base50) !== 31 || Number(paripiSim.atPureIncrease) !== 4.2 || !paripiSim.settingRates || Object.keys(paripiSim.settingRates).length !== 6) errors.push("paripi-koumei-slot: base, pure increase, or setting rates are incomplete");
+  const okidokiBlack = dedicatedMap["okidoki-black"];
+  const blackSim = okidokiBlack.sim;
+  if (blackSim.cycleFlow || blackSim.titleFlow) errors.push("okidoki-black: legacy reusable flow still exists");
+  if (!blackSim.okidokiBlackFlow || !blackSim.okidokiGoldFlow) errors.push("okidoki-black: dedicated BLACK flow flags are incomplete");
+  if (Number(blackSim.okidokiBigGames) !== 60 || Number(blackSim.okidokiRegGames) !== 25 || Number(blackSim.okidokiBigAward) !== 210 || Number(blackSim.okidokiRegAward) !== 90) errors.push("okidoki-black: BONUS games or awards are incorrect");
+  if (Number(blackSim.atPureIncrease) !== 3.5 || Number(blackSim.base50) !== 32) errors.push("okidoki-black: pure increase or base is incorrect");
+  if (Number(blackSim.okidokiModeRates?.heaven) !== 0.75 || Number(blackSim.okidokiModeRates?.doki) !== 0.80 || Number(blackSim.okidokiModeRates?.super) !== 0.90) errors.push("okidoki-black: mode loop rates are incorrect");
+  if (Number(blackSim.okidokiOneGameChance) !== 0.125 || Number(blackSim.okidokiGuaranteeOneGameChance) !== 0.06 || !blackSim.settingRates || Object.keys(blackSim.settingRates).length !== 5) errors.push("okidoki-black: 1G chain or setting rates are incomplete");
 }
 
 if (process.argv.includes("--verbose")) console.table(rows);

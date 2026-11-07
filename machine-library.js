@@ -5592,6 +5592,46 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.titleFlow;
 })();
 
+(function applyOkidokiBlackDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["okidoki-black"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "60G BIGと25G REGから、32Gの天国・黒ドキ・裏ドキへ。",
+    intro: "ハイビスカス点灯でBIGまたはREGへ進み、BONUS後は32Gを毎回カウント。天国・ドキドキ・超ドキドキ・保証に加え、BLACK固有の黒ドキと裏ドキ、1G連、ロングフリーズまでを専用フローで体験できます。",
+    points: ["BIG60G約210枚・REG25G約90枚・純増約3.5枚/G", "天国約75%・ドキドキ約80%・超ドキドキ約90%", "黒ドキは次回天国以上、裏ドキはBONUS当選でロングフリーズ"],
+    specs: [["初当り（設定1）", "約1/288.7"], ["初当り（設定6）", "約1/243.1"], ["BIG（設定1）", "約1/214.1"], ["REG（設定1）", "約1/292.5"], ["ベース", "約32G/50枚"], ["コイン単価", "約3.3円"], ["純増", "約3.5枚/G"], ["BIG", "60G・平均約210枚"], ["REG", "25G・平均約90枚"], ["天国", "32G・約75%ループ"], ["ドキドキ", "約80%＋保証"], ["超ドキドキ", "約90%＋保証"], ["黒ドキ", "次回天国以上"], ["裏ドキ", "BONUS当選でロングフリーズ"]],
+    articleSections: [
+      { heading: "ハイビスカス点灯でBONUS", paragraphs: ["通常時は毎ゲームBONUSを抽選し、ハイビスカス点灯で当選を告知します。BIGは60G・平均約210枚、REGは25G・平均約90枚で、どちらも純増約3.5枚/Gです。", "設定は実機どおり1・2・3・5・6から抽選。設定別の初当り、BIG、REG、出玉率とBONUS振り分けを結果へ反映します。"] },
+      { heading: "BONUS後32Gと1G連", paragraphs: ["BONUS終了後は32Gをカウントし、天国以上なら32G以内の次回BONUSを判定します。天国・ドキドキ・超ドキドキでは12.5%、保証では6.0%で規定ゲーム数0G短縮を抽選し、当選時はBIGの1G連です。", "専用画面では32Gを進めたあと、PUSHで再点灯・モード終了・黒ドキを開き、次のBIG・REGも別のPUSHで表示します。"] },
+      { heading: "天国・ドキドキ・超ドキドキ", paragraphs: ["天国モードは約75%でループし、期待獲得枚数は約1310枚。ドキドキモードは約80%、超ドキドキモードは約90%でループします。", "ドキドキ・超ドキドキ転落時は保証モードへ進み、32G以内のBONUSを1回追加してから終了または黒ドキを判定します。"] },
+      { heading: "BLACK固有の黒ドキと裏ドキ", paragraphs: ["有利区間リセット後の一部で黒ドキへ移行すると、次回BONUS後の天国以上が濃厚です。見た目で判別できないため、専用結果で内部ルートを表示します。", "裏ドキ滞在中はBONUS当選でロングフリーズが発生し、BIG＋BIG1G連＋超ドキドキへ。裏ドキ移行率は非公表のため、サイトでは低確率の体験用代表値です。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約32G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定別初当り・BIG・REG・出玉率、BONUSゲーム数と純増は公開値", "天国約75%・ドキドキ約80%・超ドキドキ約90%、1G連短縮率を個別判定", "モード初回振り分け、黒ドキ・裏ドキ移行率は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["ユニバーサル 公式機種サイト", "https://www.universal-777.com/product/slot/okidoki_black/"], ["なな徹 モード解析", "https://nana-press.com/kaiseki/machine/778/22176/"], ["FLICK7 BONUS・設定解析", "https://flick7.net/slot/oki_doki_black.php"]],
+    readerGuide: {
+      verdict: "ハイビスカス点灯でBIG・REGを獲得し、BONUS後32Gの連チャンを天国・ドキドキ・黒ドキ・裏ドキで伸ばす告知型AT機です。",
+      bestFor: ["32Gを最後まで数えてPUSHで連チャンを見たい", "60G BIG・25G REGと1G連を個別に確認したい", "黒ドキや裏ドキの内部ルートを結果で知りたい"],
+      check: ["設定4は非搭載で1・2・3・5・6を抽選", "BIG60G約210枚・REG25G約90枚", "非公表のモード移行率は体験用代表値"],
+      compare: [["okidoki-gold", "沖ドキ！GOLD", "70G BIGの前作と比較"], ["chibariyo2-slot", "チバリヨ2", "天国連タイプと比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v9", dedicatedFlow: true, dedicatedFlowKey: "okidoki-black", dedicatedFlowVersion: 2,
+    okidokiGoldFlow: true, okidokiBlackFlow: true,
+    mainLabel: "BONUS連", mainRateLabel: "BONUS初当り", atPureIncrease: 3.5, atPayoutVariance: 0,
+    okidokiBigGames: 60, okidokiRegGames: 25, okidokiBigAward: 210, okidokiRegAward: 90,
+    okidokiInitialBigChance: 0.577, okidokiBigChanceBySetting: { 1: 0.577, 2: 0.580, 3: 0.586, 5: 0.592, 6: 0.598 }, okidokiChainBigChance: 0.70,
+    okidokiEntryModes: [["normal", 0.60], ["heaven", 0.30], ["doki", 0.08], ["super", 0.02]],
+    okidokiModeRates: { heaven: 0.75, doki: 0.80, super: 0.90 },
+    okidokiBlackChance: 0.15, okidokiBlackBigChance: 0.857, okidokiOneGameChance: 0.125, okidokiGuaranteeOneGameChance: 0.06, okidokiUraChance: 1 / 32768,
+    settingRates: { 1: { trigger: 288.7, main: 288.7, big: 214.1, reg: 292.5, payout: 0.972 }, 2: { trigger: 277.9, main: 277.9, big: 205.6, reg: 283.8, payout: 0.987 }, 3: { trigger: 265.8, main: 265.8, big: 188.5, reg: 267.0, payout: 1.019 }, 5: { trigger: 254.1, main: 254.1, big: 173.3, reg: 251.7, payout: 1.048 }, 6: { trigger: 243.1, main: 243.1, big: 160.8, reg: 239.0, payout: 1.086 } },
+    specialLabel: "黒ドキモード", specialChance: 0.15, upperChallenge: "ドキドキモード", upperChance: 0, upperSuccess: 1, upperLabel: "超ドキドキモード", upperContinue: 0.90, upperPayout: 0, upperPureIncrease: 3.5
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
 (function applyOkidokiGoldDedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["okidoki-gold"];
   if (!machine) return;
