@@ -9,8 +9,8 @@ vm.runInContext(source, sandbox);
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
 const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
-const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow);
-const expectedProfiles = { battle: 8, st: 6, heaven: 4, bonus: 8, addon: 12 };
+const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow);
+const expectedProfiles = { battle: 8, st: 5, heaven: 4, bonus: 8, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -49,14 +49,14 @@ for (const [slug, machine] of declarativeFlows) {
 }
 
 if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
-if (declarativeFlows.length !== 38) errors.push(`expected 38 declarative dedicated flows, found ${declarativeFlows.length}`);
+if (declarativeFlows.length !== 37) errors.push(`expected 37 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(specializedFlows);
-if (specializedFlows.length !== 9 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"]) {
-  errors.push(`expected nine specialized flows including Bofuri, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (specializedFlows.length !== 10 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"]) {
+  errors.push(`expected ten specialized flows including Azur Lane, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
   const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
@@ -130,6 +130,14 @@ if (specializedFlows.length !== 9 || !dedicatedMap["tokyo-ghoul-slot"] || !dedic
   if (Number(bofuriSim.bofuriFirstDefenseChance) !== 0.88 || Number(bofuriSim.bofuriCzAppearance) !== 11.9) errors.push("bofuri-slot: defense state model is incorrect");
   if (Number(bofuriSim.bofuriAngelGames) !== 30 || Number(bofuriSim.bofuriViolenceGames) !== 50) errors.push("bofuri-slot: special zones are incorrect");
   if (Number(bofuriSim.base50) !== 33 || Number(bofuriSim.atPureIncrease) !== 5.5) errors.push("bofuri-slot: base or bonus pure increase is incorrect");
+  const azur = dedicatedMap["azur-lane-slot"];
+  const azurSim = azur.sim;
+  if (azurSim.cycleFlow || azurSim.titleFlow) errors.push("azur-lane-slot: legacy reusable flow still exists");
+  if (!Array.isArray(azurSim.azurBonusTypes) || azurSim.azurBonusTypes.length !== 2) errors.push("azur-lane-slot: bonus types are incomplete");
+  if (!Array.isArray(azurSim.azurAttackLoops) || azurSim.azurAttackLoops.length !== 4) errors.push("azur-lane-slot: Sea Battle Attack loop rates are incomplete");
+  if (!Array.isArray(azurSim.azurEnemies) || azurSim.azurEnemies.length !== 3) errors.push("azur-lane-slot: Siren Battle enemies are incomplete");
+  if (Number(azurSim.azurAmagiGames) !== 7 || Number(azurSim.azurAmagiChance) !== 0.54) errors.push("azur-lane-slot: Amagi Battle model is incorrect");
+  if (Number(azurSim.base50) !== 25.8 || Number(azurSim.atPureIncrease) !== 2.5 || Number(azurSim.upperPureIncrease) !== 5.1) errors.push("azur-lane-slot: base or AT pure increase is incorrect");
 }
 
 if (process.argv.includes("--verbose")) console.table(rows);

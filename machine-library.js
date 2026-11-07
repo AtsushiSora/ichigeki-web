@@ -5049,6 +5049,71 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
 })();
 
 
+(function applyAzurLaneDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["azur-lane-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "海戦BONUSを突破し、海戦ATTACK・セイレーンバトルから4陣営集結へ。",
+    intro: "ベルナビ10回＋告知10Gの海戦BONUSからATを目指し、海戦ATTACKで初期ゲーム数を決定。セイレーンバトル、集結BONUS、天城BATTLE、異次元性能SS RUSHまでを実機の順番に沿って体験できます。",
+    points: ["海戦BONUSは平均約100枚・青7はAT期待度約62.4%", "海戦ATTACKは最低50G・平均約100G", "4陣営集結後の天城BATTLEは7G・成功期待度約54%"],
+    specs: [["海戦BONUS（設定1）", "約1/167.4"], ["AT初当り（設定1）", "約1/598.9"], ["海戦BONUS", "ベルナビ10回＋告知10G・平均約100枚"], ["青7BONUS AT期待度", "約62.4%"], ["海戦ATTACK", "保障3G・最低50G・平均約100G"], ["通常AT純増", "約2.5枚/G"], ["セイレーンバトル", "5〜8G"], ["天城BATTLE", "7G・成功期待度約54%"], ["上位AT純増", "約5.1枚/G"], ["上位AT期待枚数", "3500枚以上"], ["ベース", "約25.8G/50枚"]],
+    articleSections: [
+      { heading: "海戦BONUSからATを目指す", paragraphs: ["海戦BONUSはベルナビ10回と10Gの告知パートで構成され、平均約100枚。白7が中心で、青7は規定回数込みのAT期待度約62.4%です。", "シミュレーターではBONUSを最後まで進め、最終PUSHでアズールレーンRUSH当落を表示します。"] },
+      { heading: "海戦ATTACKで初期ゲーム数を決定", paragraphs: ["AT当選後は3G保障の海戦ATTACKへ。毎ゲーム10G以上を上乗せし、最低50G・平均約100Gを獲得します。", "ボーナス経由のループ率は0%・25%・60%・90%。PUSHまで合計初期ゲーム数を伏せて表示します。"] },
+      { heading: "セイレーンバトルと陣営参戦", paragraphs: ["AT中のセイレーンバトルは5〜8G。参戦陣営が1つ増えるごとに1G追加され、ピュリファイアー・テスター・オブザーバーで勝利期待度が変わります。", "勝利時はゲーム数上乗せ、集結BONUS、覚醒エンタープライズなどを獲得。集結BONUSでは1回につき最大1陣営が参戦します。"] },
+      { heading: "4陣営集結から上位ATへ", paragraphs: ["ユニオン・ロイヤル・重桜・鉄血の4陣営集結後は、AT終了時などに7Gの天城BATTLEへ。成功期待度約54%で上位ATを目指します。", "異次元性能SS RUSHは純増約5.1枚/G、常に4陣営参戦。終了後は再び天城BATTLEへ進む異次元ループを体験できます。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約25.8G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6を均等抽選", "BONUS・AT初当り、純増、CZゲーム数、主要期待度は公開値を優先", "陣営参戦率・報酬配分など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["なな徹 機種解析", "https://nana-press.com/kaiseki/machine/993/"], ["なな徹 海戦BONUS解析", "https://nana-press.com/kaiseki/machine/993/31202/"], ["なな徹 海戦ATTACK解析", "https://nana-press.com/kaiseki/machine/993/31203/"], ["なな徹 セイレーンバトル解析", "https://nana-press.com/kaiseki/machine/993/31214/"], ["なな徹 上位AT解析", "https://nana-press.com/kaiseki/machine/993/31211/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10312"]],
+    readerGuide: {
+      verdict: "平均約100枚の海戦BONUSからATを狙い、ゲーム数上乗せとセイレーンバトルで4陣営を集めて上位ATを目指すゲーム数管理型です。",
+      bestFor: ["BONUS最終PUSHでAT当落を決めたい", "セイレーンバトルの敵・報酬を開きたい", "4陣営集結から天城BATTLEと上位ATを狙いたい"],
+      check: ["BONUS・AT初当り、純増、主要ゲーム数は公開値", "青7・天城BATTLEなどの期待度を反映", "未公表の報酬配分は体験用代表値"],
+      compare: [["symphogear-seigi-slot", "スマスロ シンフォギア", "ゲーム数上乗せATと比較"], ["tokyo-ghoul-slot", "スマスロ 東京喰種", "バトル報酬型ATと比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v12",
+    dedicatedFlow: true,
+    dedicatedFlowKey: "azur-lane-slot",
+    dedicatedFlowVersion: 2,
+    azurLaneFlow: true,
+    triggerLabel: "海戦BONUS",
+    triggerRate: 167.4,
+    triggerSuccess: 1,
+    mainLabel: "アズールレーンRUSH",
+    mainRate: 598.9,
+    base50: 25.8,
+    normalMin: 0,
+    normalMax: 0,
+    atPureIncrease: 2.5,
+    atPayoutVariance: 0,
+    azurBonusTypes: [[{ key: "white", label: "白7 海戦BONUS", games: 20, payout: 100, atChance: 0.263 }, 0.954], [{ key: "blue", label: "青7 海戦BONUS", games: 20, payout: 100, atChance: 0.624 }, 0.046]],
+    azurAttackLoops: [[0, 0.668], [0.25, 0.316], [0.60, 0.012], [0.90, 0.004]],
+    azurAttackGames: [[50, 0.31], [70, 0.24], [100, 0.25], [150, 0.14], [200, 0.05], [300, 0.01]],
+    azurEnemies: [[{ key: "purifier", label: "ピュリファイアー", chance: 0.401 }, 0.50], [{ key: "tester", label: "テスター", chance: 0.524 }, 0.387], [{ key: "observer", label: "オブザーバー", chance: 0.813 }, 0.113]],
+    azurAmagiGames: 7,
+    azurAmagiChance: 0.54,
+    azurUpperPureIncrease: 5.1,
+    azurUpperExpected: 3500,
+    azurMaxBattles: 10,
+    specialLabel: "集結BONUS",
+    specialChance: 0.34,
+    upperChallenge: "天城BATTLE",
+    upperChance: 0.28,
+    upperSuccess: 0.54,
+    upperLabel: "異次元性能SS RUSH",
+    upperContinue: 0.54,
+    upperPayout: 720,
+    upperPureIncrease: 5.1,
+    settingRates: { 1: { trigger: 167.4, main: 598.9, payout: 0.979 }, 2: { trigger: 166.5, main: 589.5, payout: 0.986 }, 3: { trigger: 164.3, main: 564.2, payout: 1.007 }, 4: { trigger: 161.3, main: 527.1, payout: 1.053 }, 5: { trigger: 158.9, main: 496.4, payout: 1.106 }, 6: { trigger: 156.0, main: 467.5, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
+
 (function applyTokyoGhoulDedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["tokyo-ghoul-slot"];
   if (!machine) return;
