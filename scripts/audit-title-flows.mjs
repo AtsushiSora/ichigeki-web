@@ -9,8 +9,8 @@ vm.runInContext(source, sandbox);
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
 const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
-const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow);
-const expectedProfiles = { battle: 8, st: 5, heaven: 4, bonus: 8, addon: 12 };
+const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow);
+const expectedProfiles = { battle: 8, st: 4, heaven: 4, bonus: 8, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -49,14 +49,14 @@ for (const [slug, machine] of declarativeFlows) {
 }
 
 if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
-if (declarativeFlows.length !== 37) errors.push(`expected 37 declarative dedicated flows, found ${declarativeFlows.length}`);
+if (declarativeFlows.length !== 36) errors.push(`expected 36 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(specializedFlows);
-if (specializedFlows.length !== 10 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"]) {
-  errors.push(`expected ten specialized flows including Azur Lane, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (specializedFlows.length !== 11 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"]) {
+  errors.push(`expected eleven specialized flows including Magia Record, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
   const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
@@ -138,6 +138,15 @@ if (specializedFlows.length !== 10 || !dedicatedMap["tokyo-ghoul-slot"] || !dedi
   if (!Array.isArray(azurSim.azurEnemies) || azurSim.azurEnemies.length !== 3) errors.push("azur-lane-slot: Siren Battle enemies are incomplete");
   if (Number(azurSim.azurAmagiGames) !== 7 || Number(azurSim.azurAmagiChance) !== 0.54) errors.push("azur-lane-slot: Amagi Battle model is incorrect");
   if (Number(azurSim.base50) !== 25.8 || Number(azurSim.atPureIncrease) !== 2.5 || Number(azurSim.upperPureIncrease) !== 5.1) errors.push("azur-lane-slot: base or AT pure increase is incorrect");
+  const magia = dedicatedMap["magia-record-slot"];
+  const magiaSim = magia.sim;
+  if (magiaSim.cycleFlow || magiaSim.titleFlow) errors.push("magia-record-slot: legacy reusable flow still exists");
+  if (!Array.isArray(magiaSim.magiaBonusTypes) || magiaSim.magiaBonusTypes.length !== 4) errors.push("magia-record-slot: bonus types are incomplete");
+  if (!Array.isArray(magiaSim.magiaAttackGames) || magiaSim.magiaAttackGames.length < 6) errors.push("magia-record-slot: Magia Attack distribution is incomplete");
+  if (!Array.isArray(magiaSim.magiaRewardTypes) || magiaSim.magiaRewardTypes.length !== 3) errors.push("magia-record-slot: AT reward types are incomplete");
+  if (!Array.isArray(magiaSim.magiaConnectCharacters) || magiaSim.magiaConnectCharacters.length !== 7) errors.push("magia-record-slot: Connect characters are incomplete");
+  if (Number(magiaSim.magiaStoryTarget) !== 8 || Number(magiaSim.magiaUpperPrepareGames) !== 32 || Number(magiaSim.magiaUpperAttackGames) !== 10) errors.push("magia-record-slot: upper route is incorrect");
+  if (Number(magiaSim.base50) !== 32.6 || Number(magiaSim.atPureIncrease) !== 2.6) errors.push("magia-record-slot: base or AT pure increase is incorrect");
 }
 
 if (process.argv.includes("--verbose")) console.table(rows);

@@ -5114,6 +5114,73 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
 })();
 
 
+(function applyMagiaRecordDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["magia-record-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "4種類のBONUSからマギアラッシュへ。8つのストーリーを集めてエンブリオ・イブ覚醒を目指す。",
+    intro: "BIG・みたま・エピソード・アリナミュージアムからATを目指し、10Gのマギアアタックで初期ゲーム数を決定。ストーリー、コネクトチャンス、キャラ別コネクト、全8話コンプリート後のエンブリオ・イブ覚醒までを専用画面で体験できます。",
+    points: ["BIG BONUSは30G＋α・AT期待度40%", "マギアアタックは前半5G＋後半5Gで初期G数決定", "ストーリー全8種類コンプリートでエンブリオ・イブ覚醒濃厚"],
+    specs: [["BONUS（設定1）", "約1/240.6"], ["AT（設定1）", "約1/654.6"], ["BIG BONUS", "30G＋α・AT期待度40%"], ["みたまBONUS", "ベルナビ8回＋ジャッジ1G"], ["エピソードBONUS", "50G・AT濃厚"], ["アリナミュージアム", "30G・毎ゲーム上乗せ"], ["マギアアタック", "前半5G＋後半5G"], ["マギアラッシュ純増", "約2.6枚/G"], ["ストーリー", "20G・全8種類"], ["コネクトチャンス", "3G"], ["覚醒準備", "32G"], ["イブアタック", "10G＋α"], ["ベース", "約32.6G/50枚"]],
+    articleSections: [
+      { heading: "4種類のBONUSからATを目指す", paragraphs: ["BIG BONUSは30G＋α・純増約2.6枚/Gで、消化中に高確ゲーム数とATを抽選。AT期待度は40%です。みたまBONUSはベルナビ8回＋最終ジャッジ1Gで報酬を決定します。", "エピソードBONUSは50GでAT濃厚、アリナミュージアムは30G間毎ゲームATゲーム数を上乗せします。シミュレーターでは最後のPUSHまでAT当落を伏せます。"] },
+      { heading: "マギアアタックで初期ゲーム数を決定", paragraphs: ["AT開始時は10Gのマギアアタックへ。前半5Gのガチャパートでカードを集め、後半5Gはカードと成立役を参照して毎ゲーム上乗せします。", "カードのキャラ・属性・レアリティごとの全振り分けは簡略化し、合計初期ゲーム数をPUSHで開く専用演出にまとめています。"] },
+      { heading: "ストーリーとコネクト", paragraphs: ["AT中はゲーム数消化やレア役から報酬を獲得。ストーリーは20Gでカウント＋1、スペシャルストーリーは30Gでカウント＋2です。全8種類のコンプリートが上位ATへの主要ルートです。", "ストーリー後は3Gのコネクトチャンスを経て、やちよ10G以上・鶴乃20G以上・さな30G以上・フェリシア／黒江50G以上・ほむら／まどか100G以上のキャラ別上乗せを表示します。"] },
+      { heading: "エンブリオ・イブ覚醒", paragraphs: ["ストーリーコンプリート後はエンディングを経て、32Gの覚醒準備と10G＋αのエンブリオ・イブアタックへ進み、上位ATの初期ゲーム数を決定します。", "エンブリオ・イブ覚醒は通常ATと同じゲーム数管理型ですが、ストーリー当選時に必ずコネクトチャンスが発生する強化状態です。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約32.6G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6を均等抽選し、BONUS・AT初当りは公開設定別値を使用", "BONUS性能、主要ゲーム数、純増、ストーリー・コネクト性能は公開値を優先", "BONUS種類、AT報酬、キャラ選択など非公開配分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["ユニバーサル公式製品情報", "https://www.universal-777.com/product/slot/magireco/"], ["なな徹 機種解析", "https://nana-press.com/kaiseki/machine/914/"], ["なな徹 マギアアタック解析", "https://nana-press.com/kaiseki/machine/914/28446/"], ["なな徹 マギアラッシュ解析", "https://nana-press.com/kaiseki/machine/914/28447/"], ["なな徹 ストーリー解析", "https://nana-press.com/kaiseki/machine/914/28450/"], ["なな徹 コネクト解析", "https://nana-press.com/kaiseki/machine/914/28451/"], ["なな徹 エンブリオ・イブ覚醒解析", "https://nana-press.com/kaiseki/machine/914/28456/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10211"]],
+    readerGuide: {
+      verdict: "BONUSでATを勝ち取り、ゲーム数上乗せとストーリーを重ねて全8話コンプリート・エンブリオ・イブ覚醒を目指すゲーム数管理型です。",
+      bestFor: ["BONUS最終PUSHでAT当落を決めたい", "マギアアタックの初期ゲーム数を開きたい", "ストーリーとキャラ別コネクトを積み重ねたい"],
+      check: ["BONUS・AT初当り、純増、主要ゲーム数は公開値", "ストーリー回数とキャラ別の最低上乗せを反映", "非公開のBONUS・報酬配分は体験用代表値"],
+      compare: [["azur-lane-slot", "スマスロ アズールレーン", "初期G数決定＋上乗せATと比較"], ["symphogear-seigi-slot", "スマスロ シンフォギア", "ゲーム数上乗せATと比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v13",
+    dedicatedFlow: true,
+    dedicatedFlowKey: "magia-record-slot",
+    dedicatedFlowVersion: 2,
+    magiaRecordFlow: true,
+    triggerLabel: "初当りBONUS",
+    triggerRate: 240.6,
+    triggerSuccess: 1,
+    mainLabel: "マギアラッシュ",
+    mainRate: 654.6,
+    base50: 32.6,
+    normalMin: 0,
+    normalMax: 0,
+    atPureIncrease: 2.6,
+    atPayoutVariance: 0,
+    magiaBonusTypes: [[{ key: "big", label: "BIG BONUS", games: 30, payout: 78, atChance: 0.40 }, 0.68], [{ key: "mitama", label: "みたまBONUS", games: 9, payout: 30, atChance: 0.15 }, 0.26], [{ key: "episode", label: "エピソードBONUS", games: 50, payout: 130, atChance: 1 }, 0.05], [{ key: "alina", label: "アリナミュージアム", games: 30, payout: 78, atChance: 1, extraGames: 60 }, 0.01]],
+    magiaAttackGames: [[40, 0.45], [50, 0.25], [60, 0.14], [80, 0.08], [100, 0.05], [150, 0.02], [200, 0.01]],
+    magiaRewardTypes: [[{ key: "story", label: "ストーリー", games: 20 }, 0.63], [{ key: "battle", label: "決戦神浜聖女", games: 12 }, 0.25], [{ key: "bonus", label: "マギアBONUS", games: 30, payout: 78 }, 0.12]],
+    magiaConnectCharacters: [[{ label: "やちよ", games: [[10, 0.72], [20, 0.22], [30, 0.06]] }, 0.30], [{ label: "鶴乃", games: [[20, 0.64], [30, 0.28], [50, 0.08]] }, 0.24], [{ label: "さな", games: [[30, 0.62], [50, 0.30], [100, 0.08]] }, 0.18], [{ label: "フェリシア", games: [[50, 0.72], [100, 0.24], [200, 0.04]] }, 0.11], [{ label: "黒江", games: [[50, 0.67], [100, 0.28], [200, 0.05]] }, 0.08], [{ label: "ほむら", games: [[100, 0.72], [200, 0.23], [300, 0.05]] }, 0.05], [{ label: "まどか", games: [[100, 0.60], [200, 0.30], [300, 0.10]] }, 0.04]],
+    magiaStoryTarget: 8,
+    magiaRewardChance: 0.34,
+    magiaSetContinueChance: 0.18,
+    magiaUpperPrepareGames: 32,
+    magiaUpperAttackGames: 10,
+    magiaUpperInitialGames: [[100, 0.45], [150, 0.32], [200, 0.18], [300, 0.05]],
+    magiaMaxEvents: 14,
+    specialLabel: "コネクト",
+    specialChance: 0.34,
+    upperChallenge: "エンブリオ・イブ覚醒準備",
+    upperChance: 0,
+    upperSuccess: 1,
+    upperLabel: "エンブリオ・イブ覚醒",
+    upperContinue: 0,
+    upperPayout: 0,
+    upperPureIncrease: 2.6,
+    settingRates: { 1: { trigger: 240.6, main: 654.6, payout: 0.976 }, 2: { trigger: 236.1, main: 633.4, payout: 0.989 }, 3: { trigger: 222.8, main: 571.8, payout: 1.020 }, 4: { trigger: 208.5, main: 516.6, payout: 1.060 }, 5: { trigger: 195.1, main: 456.5, payout: 1.104 }, 6: { trigger: 184.3, main: 416.7, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
+
 (function applyTokyoGhoulDedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["tokyo-ghoul-slot"];
   if (!machine) return;
