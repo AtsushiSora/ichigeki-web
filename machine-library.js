@@ -5246,6 +5246,41 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
 })();
 
 
+(function applyDarlingFranxxDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["darling-in-the-franxx-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "2種類のCZから疑似BONUSへ。10G＋αのボーナス高確と比翼BEATSをループする。",
+    intro: "5Gのコネクトチャンス／10Gのココロチャンスから初当りBONUSを目指し、ボーナス高確『ダーリン・イン・ザ・フランキス』へ。3種類の高確中BONUS、比翼BEATS、連れ出しまでを専用画面で体験できます。",
+    points: ["コネクトチャンスは5G・成功期待度約46%", "ボーナス高確は10G＋α・ボーナス約1/10.4", "比翼BEATSは2〜4G・継続約75〜94%"],
+    specs: [["CZ（設定1）", "約1/127"], ["BONUS（設定1）", "約1/229.8"], ["ボーナス高確（設定1）", "約1/343.0"], ["コネクトチャンス", "5G・成功期待度約46%"], ["ココロチャンス", "10G・成功期待度約69%"], ["初当りREG", "約40枚・昇格率約22%"], ["ダーリン・イン・ザ・BONUS", "約100枚"], ["エピソードBONUS", "約200枚"], ["ボーナス高確", "10G＋α・BONUS約1/10.4"], ["比翼BEATS", "2〜4G・継続約75〜94%"], ["AT純増", "約5.0枚/G"], ["ベース", "約30.8G/50枚"]],
+    articleSections: [
+      { heading: "2種類のCZから初当りBONUSへ", paragraphs: ["コネクトチャンスは5GのST型CZで、成功期待度約46%。小役成立でレベルアップとゲーム数再セットを行います。ココロチャンスは10G・成功期待度約69%で、成功後はボーナス高確ゲーム数を上乗せしてBONUSへ進みます。", "通常時のBONUS直撃も含め、専用画面ではCZを最後まで進めて最終PUSHでBONUS当落を開きます。"] },
+      { heading: "初当りBONUSは3種類", paragraphs: ["レギュラーボーナスは約40枚で、約22%でダーリン・イン・ザ・ボーナスへ昇格。ダーリン・イン・ザ・ボーナスは約100枚で、消化後にボーナス高確へ進みます。", "エピソードボーナスは約200枚で、消化後は比翼BEATSのレベルMAXXからボーナス高確へ進む強力な入口です。"] },
+      { heading: "10G＋αのボーナス高確", paragraphs: ["ダーリン・イン・ザ・フランキスは10G＋αのボーナス高確率で、ボーナス確率は約1/10.4。小役成立時に即ジャッジし、レア役ならBONUS濃厚です。", "高確中はフランクスボーナス約60枚＋α、ダーリン・イン・ザ・ボーナス約100枚、EX約200〜3000枚、エピソード約200枚を個別に表示します。"] },
+      { heading: "比翼BEATSと連れ出し", paragraphs: ["比翼BEATSはボーナス高確ゲーム数を上乗せするST型特化ゾーン。レベル1は2G・約75%、レベル2は3G・約88%、MAXXは4G・約94%で、上乗せまたはBONUS当選時にSTを再セットします。", "フランクスボーナス中の連れ出しは、BONUS枚数がなくなるまでSTゲーム数をホールド。フランクス図柄停止で上乗せと60枚再セットを行う専用イベントとして記録します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約30.8G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6を均等抽選し、CZ・BONUS・ボーナス高確初当りは公開設定別値を使用", "CZ期待度、BONUS獲得目安、ボーナス高確率、比翼BEATS性能は公開値を優先", "CZ選択率、BONUS種別、連れ出し発生率など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["L ダーリン・イン・ザ・フランキス 公式サイト", "https://www.l-darli-fra.jp/"], ["円谷フィールズHD 発売発表", "https://www.tsuburaya-fields.co.jp/ir/j/files/press/2025/press_20250530a.pdf"], ["なな徹 機種解析", "https://nana-press.com/kaiseki/machine/989/"], ["なな徹 コネクトチャンス", "https://nana-press.com/kaiseki/machine/989/30978/"], ["なな徹 ココロチャンス", "https://nana-press.com/kaiseki/machine/989/30980/"], ["なな徹 比翼BEATS・連れ出し", "https://nana-press.com/kaiseki/machine/989/30990/"], ["なな徹 ダーリン・イン・ザ・ボーナス", "https://nana-press.com/kaiseki/machine/989/30988/"]],
+    readerGuide: { verdict: "CZから疑似BONUSを取り、10G＋αのボーナス高確と比翼BEATSでゲーム数とBONUSをつなぐボーナス連タイプです。", bestFor: ["CZ最終PUSHでBONUS当落を決めたい", "高確中のBONUS種類を開きたい", "比翼BEATSのレベルと上乗せを重ねたい"], check: ["CZ・BONUS初当り、純増、主要ゲーム数は公開値", "比翼BEATSのレベル別継続率を反映", "未公表の選択率は体験用代表値"], compare: [["kanokari-slot", "スマスロ かのかり", "疑似BONUS連タイプと比較"], ["aobuta-slot", "スマスロ 青ブタ", "ST型BONUSループと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v15", dedicatedFlow: true, dedicatedFlowKey: "darling-in-the-franxx-slot", dedicatedFlowVersion: 2, darlingFranxxFlow: true,
+    triggerLabel: "CZ・BONUS直撃", triggerRate: 127.0, triggerSuccess: 1, mainLabel: "ダーリン・イン・ザ・フランキス", mainRate: 343.0, base50: 30.8, normalMin: 0, normalMax: 0, atPureIncrease: 5.0, atPayoutVariance: 0,
+    darlingEntryRoutes: [[{ key: "connect", label: "コネクトチャンス", games: 5, chance: 0.46 }, 0.78], [{ key: "kokoro", label: "ココロチャンス", games: 10, chance: 0.69 }, 0.08], [{ key: "direct", label: "BONUS直撃", games: 1, chance: 1 }, 0.14]],
+    darlingInitialBonuses: [[{ key: "reg", label: "レギュラーボーナス", games: 8, payout: 40, highChance: 0.22 }, 0.62], [{ key: "darling", label: "ダーリン・イン・ザ・ボーナス", games: 20, payout: 100, highChance: 1 }, 0.36], [{ key: "episode", label: "エピソードボーナス", games: 40, payout: 200, highChance: 1, beatLevel: 3 }, 0.02]],
+    darlingHighBonuses: [[{ key: "franxx", label: "フランクスボーナス", games: 12, payout: 60 }, 0.38], [{ key: "darling", label: "ダーリン・イン・ザ・ボーナス", games: 20, payout: 100, beat: true }, 0.48], [{ key: "ex", label: "ダーリン・イン・ザ・ボーナスEX", games: 40, payouts: [[200, 0.52], [300, 0.24], [500, 0.14], [1000, 0.07], [2000, 0.02], [3000, 0.01]], beat: true }, 0.135], [{ key: "episode", label: "エピソードボーナス", games: 40, payout: 200, beat: true, beatLevel: 3 }, 0.005]],
+    darlingBeatLevels: [[{ level: 1, label: "Beat Lv.1", stGames: 2, continue: 0.75 }, 0.784], [{ level: 2, label: "Beat Lv.2", stGames: 3, continue: 0.88 }, 0.215], [{ level: 3, label: "Beat Lv.MAXX", stGames: 4, continue: 0.94 }, 0.001]],
+    darlingHighBaseGames: 10, darlingHighBonusRate: 10.4, darlingHighMaxGames: 30, darlingTakeoutChance: 0.16, darlingMaxBonuses: 12,
+    specialLabel: "比翼BEATS", specialChance: 0.50, upperChallenge: "Beat Lv.MAXX", upperChance: 0.08, upperSuccess: 0.94, upperLabel: "CLIMAXX", upperContinue: 0, upperPayout: 0,
+    settingRates: { 1: { trigger: 127.0, main: 343.0, bonus: 229.8, payout: 0.978 }, 2: { trigger: 127.0, main: 334.1, bonus: 224.1, payout: 0.989 }, 3: { trigger: 126.0, main: 320.1, bonus: 214.9, payout: 1.006 }, 4: { trigger: 127.0, main: 298.9, bonus: 207.3, payout: 1.054 }, 5: { trigger: 121.0, main: 270.3, bonus: 190.3, payout: 1.105 }, 6: { trigger: 119.0, main: 252.3, bonus: 180.3, payout: 1.145 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
+
 (function applyTokyoGhoulDedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["tokyo-ghoul-slot"];
   if (!machine) return;

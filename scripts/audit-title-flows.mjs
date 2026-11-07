@@ -9,8 +9,8 @@ vm.runInContext(source, sandbox);
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
 const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
-const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow);
-const expectedProfiles = { battle: 8, st: 3, heaven: 4, bonus: 8, addon: 12 };
+const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow);
+const expectedProfiles = { battle: 8, st: 2, heaven: 4, bonus: 8, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -49,14 +49,14 @@ for (const [slug, machine] of declarativeFlows) {
 }
 
 if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
-if (declarativeFlows.length !== 35) errors.push(`expected 35 declarative dedicated flows, found ${declarativeFlows.length}`);
+if (declarativeFlows.length !== 34) errors.push(`expected 34 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(specializedFlows);
-if (specializedFlows.length !== 12 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"]) {
-  errors.push(`expected twelve specialized flows including Toaru Index 2, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (specializedFlows.length !== 13 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"]) {
+  errors.push(`expected thirteen specialized flows including Darling in the Franxx, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
   const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
@@ -156,6 +156,15 @@ if (specializedFlows.length !== 12 || !dedicatedMap["tokyo-ghoul-slot"] || !dedi
   if (!Array.isArray(toaruSim.toaruPlusActions) || toaruSim.toaruPlusActions.length !== 3) errors.push("toaru-index2-slot: Plus Action routes are incomplete");
   if (Number(toaruSim.toaruInitialGames) !== 40 || Number(toaruSim.atPureIncrease) !== 4.0) errors.push("toaru-index2-slot: AT initial games or pure increase is incorrect");
   if (Number(toaruSim.base50) !== 30.8 || !toaruSim.settingRates || Object.keys(toaruSim.settingRates).length !== 6) errors.push("toaru-index2-slot: base or setting rates are incomplete");
+  const darling = dedicatedMap["darling-in-the-franxx-slot"];
+  const darlingSim = darling.sim;
+  if (darlingSim.cycleFlow || darlingSim.titleFlow) errors.push("darling-in-the-franxx-slot: legacy reusable flow still exists");
+  if (!Array.isArray(darlingSim.darlingEntryRoutes) || darlingSim.darlingEntryRoutes.length !== 3) errors.push("darling-in-the-franxx-slot: CZ and direct routes are incomplete");
+  if (!Array.isArray(darlingSim.darlingInitialBonuses) || darlingSim.darlingInitialBonuses.length !== 3) errors.push("darling-in-the-franxx-slot: initial bonuses are incomplete");
+  if (!Array.isArray(darlingSim.darlingHighBonuses) || darlingSim.darlingHighBonuses.length !== 4) errors.push("darling-in-the-franxx-slot: high-probability bonuses are incomplete");
+  if (!Array.isArray(darlingSim.darlingBeatLevels) || darlingSim.darlingBeatLevels.length !== 3) errors.push("darling-in-the-franxx-slot: Hiyoku BEATS levels are incomplete");
+  if (Number(darlingSim.darlingHighBaseGames) !== 10 || Number(darlingSim.darlingHighBonusRate) !== 10.4 || Number(darlingSim.darlingHighMaxGames) !== 30) errors.push("darling-in-the-franxx-slot: bonus high-probability model is incorrect");
+  if (Number(darlingSim.base50) !== 30.8 || Number(darlingSim.atPureIncrease) !== 5 || !darlingSim.settingRates || Object.keys(darlingSim.settingRates).length !== 6) errors.push("darling-in-the-franxx-slot: base, pure increase, or setting rates are incomplete");
 }
 
 if (process.argv.includes("--verbose")) console.table(rows);

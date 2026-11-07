@@ -295,6 +295,9 @@
         ["設定抽選", slotSettingLabel, "設定3は非搭載"]
       ];
       note = "BONUS後32Gを毎回数え、10連後のIREGUIと獲得ストックを結果へ残します。";
+    } else if (sim.darlingFranxxFlow) {
+      items = [["CZ", `約1/${sim.triggerRate}`, "設定1のコネクトチャンス"], ["BONUS高確", "10G＋α", "BONUS約1/10.4"], ["比翼BEATS", "2〜4G", "継続約75〜94%"], ["高確中BONUS", "約60〜3000枚", "4種類を個別表示"]];
+      note = "CZ、初当りBONUS、ボーナス高確、比翼BEATS、連れ出しを機種専用で記録します。";
     } else if (sim.toaruIndex2Flow) {
       items = [
         ["CZ", `約1/${sim.triggerRate}`, "設定1のCZ合算"],
@@ -461,6 +464,10 @@
         "天国モード滞在時の代表ループ率です。金ドキによる再連は別抽選です。"
       ));
       note = "BONUS内訳は設定1の公表確率から算出し、天国の継続割合とは別に表示しています。モード初回振り分けは非公表のため円グラフには含めていません。";
+    } else if (sim.darlingFranxxFlow) {
+      charts.push(ratioChartMarkup("CONNECT CHANCE", "コネクトチャンスの成功期待度", [["BONUS当選", 0.46], ["非当選", 0.54]], "約46%", "5GのST型CZからBONUSへ進む設定1の公表期待度です。"));
+      charts.push(ratioChartMarkup("BEAT LEVEL", "比翼BEATS初回レベル", [["Lv.1", 0.784], ["Lv.2", 0.215], ["Lv.MAXX", 0.001]], "3段階", "初回比翼BEATSの公表レベル振り分けです。継続率は約75・88・94%です。"));
+      note = "CZ期待度と比翼BEATSの初回レベルは別抽選です。BONUS種別など未公表部分は円グラフに含めていません。";
     } else if (sim.toaruIndex2Flow) {
       charts.push(ratioChartMarkup(
         "RAILGUN CHANCE",
@@ -668,6 +675,9 @@
   function czGameMarkup() {
     const sim = machine.sim;
     if (sim.kind !== "slot") return "";
+    if (sim.darlingFranxxFlow) {
+      return `<section class="machine-cz-guide" id="cz-game" aria-labelledby="machine-cz-title"><div class="machine-cz-head"><span>CZ TO BONUS HIGH</span><h3 id="machine-cz-title">${machine.shortName}のゲーム性</h3><p>CZから疑似BONUSを取り、10G＋αのボーナス高確と比翼BEATSで連チャンを伸ばします。</p></div><div class="machine-cz-flow" aria-label="${escapeHtml(`${machine.shortName}のゲームフロー`)}"><div><span>01</span><strong>2種類のCZ</strong><small>5G約46%／10G約69%</small></div><i aria-hidden="true">›</i><div><span>02</span><strong>初当りBONUS</strong><small>REG・DIF・EP</small></div><i aria-hidden="true">›</i><div><span>03</span><strong>BONUS高確</strong><small>10G＋α・約1/10.4</small></div><i aria-hidden="true">›</i><div><span>04</span><strong>比翼BEATS</strong><small>2〜4G・約75〜94%</small></div></div><div class="machine-cz-upper"><span>強化ルート</span><strong>Beat Lv.MAXX</strong><i aria-hidden="true">→</i><strong>CLIMAXX</strong><small>高確G数30Gで上乗せをBONUSへ変換</small></div><div class="machine-cz-detail-grid"><article><span>CHANCE ZONE</span><h4>コネクト／ココロ</h4><p>5G約46%と10G約69%。最後のPUSHでBONUS当落を開きます。</p></article><article><span>INITIAL BONUS</span><h4>3種類の初当り</h4><p>REG約40枚、ダーリンBONUS約100枚、エピソード約200枚。REGは約22%で昇格します。</p></article><article><span>BONUS HIGH</span><h4>10G＋α・約1/10.4</h4><p>残りゲーム数を減らし、小役成立時に即PUSHでBONUS種類を開きます。</p></article><article><span>HIYOKU BEATS</span><h4>レベル別ST</h4><p>Lv.1は2G約75%、Lv.2は3G約88%、MAXXは4G約94%。上乗せでSTを再セットします。</p></article></div><p class="machine-cz-note">CZ選択率、BONUS種別、連れ出し発生率など未公表部分は、公開性能を崩さない体験用代表値です。</p></section>`;
+    }
     if (sim.toaruIndex2Flow) {
       return `<section class="machine-cz-guide" id="cz-game" aria-labelledby="machine-cz-title"><div class="machine-cz-head"><span>CZ TO IMAGINE BREAKER RUSH</span><h3 id="machine-cz-title">${machine.shortName}のゲーム性</h3><p>2種類の10G CZからATへ進み、バトル勝利で7段階の上乗せ報酬を開きます。</p></div><div class="machine-cz-flow" aria-label="${escapeHtml(`${machine.shortName}のゲームフロー`)}"><div><span>01</span><strong>通常時</strong><small>幻想リプレイ約1/99</small></div><i aria-hidden="true">›</i><div><span>02</span><strong>2種類のCZ</strong><small>10G・約52%／約80%</small></div><i aria-hidden="true">›</i><div><span>03</span><strong>幻想殺しRUSH</strong><small>初期40G以上</small></div><i aria-hidden="true">›</i><div><span>04</span><strong>上乗せ遊技</strong><small>7段階のゲーム数報酬</small></div></div><div class="machine-cz-upper"><span>引き戻しルート</span><strong>フィアンマBATTLE</strong><i aria-hidden="true">→</i><strong>幻想殺しRUSH再突入</strong><small>成功後は上乗せ遊技を経由</small></div><div class="machine-cz-detail-grid"><article><span>CHANCE ZONE</span><h4>レールガン／アクセラレータ</h4><p>どちらも10G。AT期待度はレールガン約52%、アクセラレータ約80%。最後のPUSHで当落を開きます。</p></article><article><span>IMAGINE BREAKER RUSH</span><h4>初期40G以上・純増約4.0枚/G</h4><p>残りゲーム数を減らしながら、直乗せ、赤7ストック、指定ゲーム数のバトルを抽選します。</p></article><article><span>CHARGE GAME</span><h4>とある運命の上乗遊技</h4><p>＋20Gから五和、神裂、御坂、一方通行、竜王の顎、自動書記まで、PUSHで報酬を開きます。</p></article><article><span>PLUS ACTION</span><h4>3種類のゲーム数上乗せ</h4><p>サポーター平均約30G、ヒロインズ約60G、イマジンブレイカー約310Gを通常上乗せと分けて表示します。</p></article></div><p class="machine-cz-note">CZ選択率、バトル出現率・勝率、報酬振り分けなど未公表部分は、公開性能を崩さない体験用代表値です。</p></section>`;
     }
@@ -966,6 +976,9 @@
         ["RETURN", "50G引き戻し", `通常AT・上位AT終了後は50Gの引き戻し区間をカウントします。設定1のAT引き戻し目安約${percent(sim.upperReturnChance)}を代表値として、成功時は再びG覚醒アタックからATへ戻ります。`]
       ];
       note = "公開されているBONUS出玉・AT期待度・初期ゲーム数・純増・各上乗せ契機の期待度を優先した体験モデルです。成立役別抽選、内部状態、全振り分け、設定差が未公表の抽選は代表値へ簡略化しています。";
+    } else if (sim.darlingFranxxFlow) {
+      cards = [["TWO CHANCE ZONES", "5G約46%／10G約69%", "コネクトチャンスとココロチャンスを別表示し、最後のPUSHで初当りBONUSを開きます。"], ["INITIAL BONUS", "約40・100・200枚", "REGは約22%で昇格。ダーリンBONUSとエピソード後はボーナス高確へ進みます。"], ["BONUS HIGH", "10G＋α・BONUS約1/10.4", "残りゲーム数を0まで進め、当選時は4種類のBONUSをPUSHまで伏せます。"], ["HIYOKU BEATS", "2〜4G・継続約75〜94%", "レベル別STで高確ゲーム数を上乗せし、最大30GのCLIMAXXを目指します。"], ["TAKEOUT", "STゲーム数ホールド", "フランクスBONUS中の連れ出しは、60枚消化までST減算を止める専用イベントです。"]];
+      note = "CZ・BONUS・ボーナス高確初当り、純増、主要ゲーム数、比翼BEATS性能は公開値です。未公表の選択率は体験用代表値です。";
     } else if (sim.toaruIndex2Flow) {
       cards = [
         ["TWO CHANCE ZONES", "10G・約52%／約80%", "レールガンチャンスとアクセラレータチャンスを別々に抽選し、最後のPUSHで幻想殺しRUSH当落を開きます。"],
@@ -1348,7 +1361,7 @@
       const averageInvestment = Math.round((machine.sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
-      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow;
+      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow;
       const settingModelLabel = machine.sim.settingRates
         ? hasDedicatedFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
         : hasDedicatedFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
@@ -1434,7 +1447,7 @@
         ? Math.max(1, mainRate * sim.triggerRate / sim.mainRate)
         : Math.max(1, sim.triggerRate * profile.rate);
     const publishedEntry = Number(publishedSetting?.entry);
-    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow
+    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow
       ? Math.max(0, Math.min(1, Number(sim.triggerSuccess) || 0.55))
       : sim.godzillaEva2Flow || sim.mahoakoFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.shinEvaFlow
       ? 1
@@ -1450,7 +1463,7 @@
       ? Math.min(0.98, Number(publishedSetting.upper))
       : hasPublishedSettingRates ? sim.upperChance : Math.min(0.98, sim.upperChance + profile.upper);
     const settingModelLabel = hasPublishedTriggerRate && hasPublishedMainRate
-      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
+      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.darlingFranxxFlow ? "公開設定別値（CZ・BONUS・高確初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
       : hasPublishedMainRate
         ? sim.bofuriFlow ? "公開設定別値（BONUS初当り）＋機種専用進行" : "公開設定別値（初当り）＋CZ簡易換算"
         : "サイト共通補正モデル";
@@ -1665,6 +1678,16 @@
     let toaruPlusActionGames = 0;
     let toaruFiammaAttempts = 0;
     let toaruFiammaWins = 0;
+    let darlingEntry = null;
+    let darlingInitialBonus = null;
+    let darlingHighBonuses = 0;
+    let darlingFranxxBonuses = 0;
+    let darlingBonusAwards = 0;
+    let darlingBeatEntries = 0;
+    let darlingBeatAdds = 0;
+    let darlingMaxBeatLevel = 0;
+    let darlingTakeouts = 0;
+    let darlingClimaxx = false;
     if (sim.basiliskTenzenFlow) {
       basiliskBc = weighted(sim.basiliskBcTypes || [[{ key: "hetero", label: "異色BC", games: 16, award: 30 }, 1]]);
       triggerSucceeded = true;
@@ -1728,6 +1751,30 @@
       triggerSucceeded = true;
       entered = true;
       flow[0] = `${games}Gで青春BONUS`;
+    }
+    if (sim.darlingFranxxFlow) {
+      darlingEntry = weighted(sim.darlingEntryRoutes || [[{ key: "connect", label: "コネクトチャンス", games: 5, chance: 0.46 }, 1]]);
+      triggerSucceeded = Math.random() < Math.max(0, Math.min(1, Number(darlingEntry.chance) || 0.46));
+      entered = false;
+      flow[0] = `${games}Gで${darlingEntry.label}`;
+      atEvents.push({ kind: "darling-cz", label: darlingEntry.label, entryType: darlingEntry.key, games: Number(darlingEntry.games) || 5, chance: (Number(darlingEntry.chance) || 0.46) * 100, success: triggerSucceeded, cumulative: 0 });
+      if (triggerSucceeded) {
+        darlingInitialBonus = weighted(sim.darlingInitialBonuses || [[{ key: "reg", label: "レギュラーボーナス", games: 8, payout: 40, highChance: 0.22 }, 1]]);
+        entered = Math.random() < Math.max(0, Math.min(1, Number(darlingInitialBonus.highChance) || 0));
+        const regUpgraded = darlingInitialBonus.key === "reg" && entered;
+        const initialAward = regUpgraded ? 100 : Math.max(0, Number(darlingInitialBonus.payout) || 40);
+        const initialLabel = regUpgraded ? "レギュラー→ダーリン・イン・ザ・ボーナス" : darlingInitialBonus.label;
+        payout = Math.min(initialAward, SLOT_COMPLETE_LIMIT);
+        atGamesTotal += Number(darlingInitialBonus.games) || 8;
+        bonusCount += 1;
+        bonusPayoutTotal += initialAward;
+        darlingBonusAwards += initialAward;
+        entryBonus = { ...darlingInitialBonus, label: initialLabel, payout: initialAward, outcome: entered ? "BONUS高確突入" : "BONUS終了" };
+        atEvents.push({ kind: "darling-initial-bonus", label: initialLabel, bonusType: darlingInitialBonus.key, games: regUpgraded ? 20 : Number(darlingInitialBonus.games) || 8, award: initialAward, cumulative: payout, highChance: (Number(darlingInitialBonus.highChance) || 0) * 100, entered, upgraded: regUpgraded });
+        flow.push(`${initialLabel} +${initialAward}枚・${entered ? "BONUS高確へ" : "終了"}`);
+      } else {
+        flow.push(`${darlingEntry.label}失敗`);
+      }
     }
     if (sim.toaruIndex2Flow) {
       toaruEntry = weighted(sim.toaruEntryRoutes || [[{ key: "railgun", label: "レールガンチャンス", games: 10, chance: 0.52 }, 1]]);
@@ -2684,6 +2731,75 @@
             flow.push(`通常バジリスクタイム 1セット・+${yen.format(fallbackAward)}枚`);
           }
         }
+        basePayout = payout - entryPayout;
+      } else if (sim.darlingFranxxFlow) {
+        basePayout = 0;
+        let highGames = Math.max(10, Number(sim.darlingHighBaseGames) || 10);
+        if (darlingInitialBonus?.beatLevel) {
+          const initialAdd = 8;
+          highGames = Math.min(Number(sim.darlingHighMaxGames) || 30, highGames + initialAdd);
+          darlingBeatEntries += 1;
+          darlingBeatAdds += initialAdd;
+          darlingMaxBeatLevel = Math.max(darlingMaxBeatLevel, Number(darlingInitialBonus.beatLevel) || 3);
+          atEvents.push({ kind: "darling-beats", label: "比翼BEATS", level: 3, levelLabel: "Beat Lv.MAXX", games: 4, chance: 94, resets: 2, addGames: initialAdd, highGames, cumulative: payout });
+        }
+        while (highGames > 0 && darlingHighBonuses < (Number(sim.darlingMaxBonuses) || 12) && payout < SLOT_COMPLETE_LIMIT) {
+          const untilBonus = geometric(Number(sim.darlingHighBonusRate) || 10.4);
+          const consumed = Math.min(highGames, untilBonus);
+          highGames -= consumed;
+          atGamesTotal += consumed;
+          const hit = untilBonus <= consumed;
+          atEvents.push({ kind: "darling-high", label: sim.mainLabel, games: consumed, remaining: highGames, hit, cumulative: payout });
+          if (!hit) break;
+
+          const bonus = weighted(sim.darlingHighBonuses || [[{ key: "franxx", label: "フランクスボーナス", games: 12, payout: 60 }, 1]]);
+          const bonusAward = Array.isArray(bonus.payouts) ? Math.max(0, Number(weighted(bonus.payouts)) || 200) : Math.max(0, Number(bonus.payout) || 60);
+          const actualAward = Math.max(0, Math.min(bonusAward, SLOT_COMPLETE_LIMIT - payout));
+          payout += actualAward;
+          atGamesTotal += Number(bonus.games) || Math.max(1, Math.round(actualAward / 5));
+          darlingHighBonuses += 1;
+          if (bonus.key === "franxx") darlingFranxxBonuses += 1;
+          darlingBonusAwards += actualAward;
+          bonusCount += 1;
+          bonusPayoutTotal += actualAward;
+          atEvents.push({ kind: "darling-high-bonus", label: bonus.label, bonusType: bonus.key, games: Number(bonus.games) || 12, award: actualAward, cumulative: payout });
+          flow.push(`${bonus.label} +${actualAward}枚`);
+
+          const takeout = bonus.key === "franxx" && Math.random() < (Number(sim.darlingTakeoutChance) || 0.16);
+          if (takeout) {
+            darlingTakeouts += 1;
+            const addGames = Number(weighted([[3, 0.50], [5, 0.35], [10, 0.15]])) || 3;
+            highGames = Math.min(Number(sim.darlingHighMaxGames) || 30, highGames + addGames);
+            darlingBeatAdds += addGames;
+            atEvents.push({ kind: "darling-takeout", label: "連れ出し", games: Number(bonus.games) || 12, addGames, highGames, cumulative: payout });
+            flow.push(`連れ出し +${addGames}G・STホールド`);
+          }
+
+          if (bonus.beat || takeout) {
+            const beat = bonus.beatLevel === 3 ? { level: 3, label: "Beat Lv.MAXX", stGames: 4, continue: 0.94 } : weighted(sim.darlingBeatLevels || [[{ level: 1, label: "Beat Lv.1", stGames: 2, continue: 0.75 }, 1]]);
+            let resets = 0;
+            let addGames = 0;
+            while (resets < 6 && Math.random() < (Number(beat.continue) || 0.75)) {
+              resets += 1;
+              addGames += Number(weighted([[1, 0.62], [2, 0.25], [3, 0.09], [5, 0.035], [10, 0.005]])) || 1;
+            }
+            highGames = Math.min(Number(sim.darlingHighMaxGames) || 30, highGames + addGames);
+            darlingBeatEntries += 1;
+            darlingBeatAdds += addGames;
+            darlingMaxBeatLevel = Math.max(darlingMaxBeatLevel, Number(beat.level) || 1);
+            if (highGames >= (Number(sim.darlingHighMaxGames) || 30)) {
+              darlingClimaxx = true;
+              upper = true;
+              upperLoops = 1;
+            }
+            atGamesTotal += Number(beat.stGames) || 2;
+            atEvents.push({ kind: "darling-beats", label: "比翼BEATS", level: Number(beat.level) || 1, levelLabel: beat.label, games: Number(beat.stGames) || 2, chance: (Number(beat.continue) || 0.75) * 100, resets, addGames, highGames, cumulative: payout, climaxx: darlingClimaxx });
+            flow.push(`${beat.label} +${addGames}G・高確残り${highGames}G`);
+          }
+        }
+        atEvents.push({ kind: "darling-end", label: "ボーナス高確終了", games: 3, bonuses: darlingHighBonuses, cumulative: payout });
+        cycleRounds = darlingHighBonuses;
+        cycleContinues = darlingBeatEntries;
         basePayout = payout - entryPayout;
       } else if (sim.toaruIndex2Flow) {
         basePayout = 0;
@@ -4585,10 +4701,11 @@
     const azurStats = sim.azurLaneFlow ? [["海戦BONUS", azurBonus?.label || sim.triggerLabel], ["海戦ATTACK・上乗せ", `+${yen.format(azurGameAddTotal)}G`], ["セイレーンバトル", `${azurBattles}戦・勝利${azurWins}回`], ["集結BONUS", `${azurGatherBonuses}回・${azurFactions}/4陣営`], [sim.upperChallenge, azurAmagiAttempts ? `${azurAmagiAttempts}回・成功${azurAmagiWins}回` : "未到達"], [sim.upperLabel, azurUpperLoops ? `${azurUpperLoops}区間` : "非到達"]] : [];
     const magiaStats = sim.magiaRecordFlow ? [["初当りBONUS", magiaBonus?.label || sim.triggerLabel], ["マギアアタック", `+${yen.format(magiaAttackTotal)}G`], ["ストーリー", `${magiaStoryCount}/8話（SP ${magiaSpecialStories}回）`], ["コネクトチャンス", `${magiaConnectAttempts}回・成功${magiaConnectWins}回`], ["コネクト上乗せ", `+${yen.format(magiaConnectGames)}G`], ["決戦神浜聖女", `${magiaBattleRewards}回`], ["マギアBONUS", `${magiaBonusRewards}回`], [sim.upperLabel, magiaUpperSections ? "到達" : "非到達"]] : [];
     const toaruStats = sim.toaruIndex2Flow ? [["今回の入口", toaruEntry?.label || sim.triggerLabel], ["バトル", `${toaruBattles}戦・勝利${toaruBattleWins}回`], ["とある運命の上乗遊技", `${toaruChargeCount}回・+${yen.format(toaruChargeGames)}G`], ["PLUS ACTION", `${toaruPlusActionCount}回・+${yen.format(toaruPlusActionGames)}G`], [sim.upperChallenge, toaruFiammaAttempts ? `${toaruFiammaAttempts}回・成功${toaruFiammaWins}回` : "未到達"], [sim.upperLabel, toaruFiammaWins ? "到達" : "非到達"]] : [];
+    const darlingStats = sim.darlingFranxxFlow ? [["今回の入口", darlingEntry?.label || sim.triggerLabel], ["初当りBONUS", darlingInitialBonus?.label || "非当選"], ["高確中BONUS", `${darlingHighBonuses}回（フランクス${darlingFranxxBonuses}回）`], ["BONUS獲得", `+${yen.format(darlingBonusAwards)}枚`], ["比翼BEATS", `${darlingBeatEntries}回・+${yen.format(darlingBeatAdds)}G`], ["最高Beatレベル", darlingMaxBeatLevel ? `Lv.${darlingMaxBeatLevel === 3 ? "MAXX" : darlingMaxBeatLevel}` : "非到達"], ["連れ出し", darlingTakeouts ? `${darlingTakeouts}回` : "非当選"], ["CLIMAXX", darlingClimaxx ? "到達" : "非到達"]] : [];
     const cycleStats = sim.cycleFlow ? [[sim.cycleFlow.statLabel || (sim.titleFlow ? "機種専用進行" : "専用ループ"), `${cycleRounds}回・継続${cycleContinues}回`]] : [];
     const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
     const rushGamesTotal = Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
-    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
+    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
     const gameAddOnStats = sim.karakuriJudgeFlow || coinAddOnCount
       ? [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(coinAddOnTotal || addOnTotal)}枚` : "上乗せなし"]]
       : [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnGamesTotal || otomeAddedGames)}G` : "上乗せなし"]];
@@ -4631,6 +4748,8 @@
         ? [["BONUS・AT・上位消化", `${yen.format(rushGamesTotal)}G相当`], ...magiaStats]
       : sim.toaruIndex2Flow
         ? [["CZ・AT・引き戻し消化", `${yen.format(rushGamesTotal)}G相当`], ...toaruStats]
+      : sim.darlingFranxxFlow
+        ? [["CZ・BONUS高確消化", `${yen.format(rushGamesTotal)}G相当`], ...darlingStats]
       : [["RUSH消化モデル", `${yen.format(rushGamesTotal)}G相当`], ...karakuriStats, ...battleStats, ...sgStats, ...kabaneriStats, ...otomeStats, ...cycleStats, ...gameAddOnStats, ...bonusStats, ...genericSpecialStats, ["上位AT", upper ? (kabaneriUpperMode || `${sim.upperLabel} ${upperLoops}セット`) : "非到達"]]) : [];
     const stats = [["今回の設定", `設定${setting}`], ["設定差モデル", settingModelLabel], ["今回のゲーム数", `${yen.format(games)}G`], ...settingRateStats, ["現金投資目安", `${yen.format(investment)}円`], ...entryBonusStats, ...atStats, ["獲得枚数", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]];
     if (complete) stats.unshift(["到達状態", "コンプリート"]);
@@ -4643,6 +4762,8 @@
         ? `今回の設定は設定${setting}。${games}Gで${magiaBonus?.label || sim.triggerLabel}、${entered ? `マギアアタック+${magiaAttackTotal}Gからストーリー${magiaStoryCount}/8話・コネクト${magiaConnectWins}回成功で${yen.format(payout)}枚を獲得しました。${magiaUpperSections ? "全8話をコンプリートし、エンブリオ・イブ覚醒へ到達しました。" : `マギアラッシュは残り0Gで終了しました。`}` : `${magiaBonus?.label || "初当りBONUS"}で${yen.format(payout)}枚を獲得し、マギアラッシュには届きませんでした。`}`
       : sim.toaruIndex2Flow
         ? `今回の設定は設定${setting}。${games}Gで${toaruEntry?.label || sim.triggerLabel}、${entered ? `バトル${toaruBattles}戦・勝利${toaruBattleWins}回、とある運命の上乗遊技${toaruChargeCount}回・PLUS ACTION ${toaruPlusActionCount}回で${yen.format(payout)}枚を獲得しました。${toaruFiammaWins ? "フィアンマBATTLEを突破し、幻想殺しRUSHへ再突入しました。" : "幻想殺しRUSHは残り0Gで終了しました。"}` : "CZは突破できませんでした。"}`
+      : sim.darlingFranxxFlow
+        ? `今回の設定は設定${setting}。${games}Gで${darlingEntry?.label || sim.triggerLabel}、${triggerSucceeded ? `${darlingInitialBonus?.label || "初当りBONUS"}から高確中BONUS ${darlingHighBonuses}回・比翼BEATS ${darlingBeatEntries}回で${yen.format(payout)}枚を獲得しました。${darlingClimaxx ? "高確ゲーム数30GのCLIMAXXへ到達しました。" : entered ? "ボーナス高確は残り0Gで終了しました。" : "初当りBONUSで終了しました。"}` : "CZは突破できませんでした。"}`
       : sim.okidokiGoldFlow
         ? `今回の設定は設定${setting}。${games}Gでハイビスカス点灯、最大${okidokiMaxChain}連・BIG ${okidokiBigCount}回・REG ${okidokiRegCount}回で${yen.format(payout)}枚を獲得しました。最高内部モードは${okidokiHighestMode}です。`
       : sim.uminchuFlow
@@ -5329,6 +5450,7 @@
     const azurLaneFlow = Boolean(machine.sim.azurLaneFlow);
     const magiaRecordFlow = Boolean(machine.sim.magiaRecordFlow);
     const toaruIndex2Flow = Boolean(machine.sim.toaruIndex2Flow);
+    const darlingFranxxFlow = Boolean(machine.sim.darlingFranxxFlow);
     setSlotAtStatus({ visible: false });
     setExperienceHud("0G", "0円", "0枚");
     setExperienceStage(0, experienceProfile.system, "通常ゲーム中", "0G", `${data.hitLabel}を目指して抽選中`, "normal", data.hitChance, "1Gごとの契機当選率");
@@ -5342,6 +5464,71 @@
     if (runId !== experienceRunId) return;
     setExperienceStage(1, magiaRecordFlow ? "BONUS HIT" : bofuriFlow ? "HIGH PROBABILITY ZONE" : okidokiGoldFlow ? "HIBISCUS LIGHT" : uminchuFlow ? "BONUS HIT" : basiliskTenzenFlow ? "BASILISK CHANCE" : sao2Flow ? "SQUADRON BATTLE" : symphogearSeigiFlow ? "AXZ BATTLE" : lycorisFlow ? (data.lycorisCz?.key === "direct" ? "DIRECT RUSH" : "CHANCE ZONE") : aobutaFlow ? "SEISHUN BONUS" : tentenFlow ? "EPISODE BATTLE" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "DIRECT AT" : "CHANCE ZONE") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "DIRECT AT" : data.assaultEntry?.key === "bouquet" ? "BOUQUET BONUS" : "LILY CHALLENGE") : kaguyaFlow ? "LOVE BRAIN BATTLE" : dumbbellFlow ? "MUSCLE ZONE" : shinEvaFlow ? "INITIAL HIT" : tokyoGhoulFlow ? "CHANCE ZONE" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", basiliskTenzenFlow ? (data.basiliskBc?.label || data.hitLabel) : tokyoGhoulFlow ? (data.tokyoGhoulCz?.label || data.hitLabel) : lycorisFlow ? (data.lycorisCz?.label || data.hitLabel) : goblinSlayerFlow ? (data.goblinCz?.label || data.hitLabel) : assaultLilyFlow ? (data.assaultEntry?.label || data.hitLabel) : data.hitLabel, `${yen.format(data.attempts)}G`, magiaRecordFlow ? "初当りBONUSを消化し、最後のPUSHでマギアラッシュを判定" : bofuriFlow ? "高確率ZONEを進め、最後のPUSHでBONUSを判定" : okidokiGoldFlow ? "ハイビスカス点灯・初当りBONUS確定" : basiliskTenzenFlow ? `${data.basiliskBc?.games || 16}GのBCでバジリスクタイムを抽選` : sao2Flow ? "スコードロンバトルの最後にPUSHでBoB突入を判定" : symphogearSeigiFlow ? "AXZバトルを進め、最後のPUSHでAXZラッシュを判定" : lycorisFlow ? (data.lycorisCz?.key === "direct" ? "アフターエピソードからRUSHへ直行" : `${data.lycorisCz?.games || 10}GのCZを進め、最後のPUSHでRUSHを判定`) : aobutaFlow ? "青春BONUS後は必ず4セット＋αの完走型STへ" : tokyoGhoulFlow ? "8GのCZを進め、最後のPUSHで東京喰種咬を判定" : uminchuFlow ? "告知音とともに初当りBONUSへ" : tentenFlow ? "10GのレベルUPパートと4Gのバトルへ" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "規定ゲーム数からAT直撃" : "CZの専用ゲーム数を進めて最後にPUSH") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "規定ゲーム数・レア役などからRUSH直撃" : data.assaultEntry?.key === "bouquet" ? "25GのBONUS後にRUSHを判定" : "10Gの専用CZを進めて最後にPUSH") : kaguyaFlow ? "恋愛頭脳戦を経て15G＋αのCZへ" : dumbbellFlow ? "10Gの前半パートから後半発展を目指します" : shinEvaFlow ? "3GのEVANGELION IMPACTで作戦を決定します" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
     await waitForExperience(780);
+    if (darlingFranxxFlow) {
+      const events = Array.isArray(data.atEvents) ? data.atEvents : [];
+      for (const event of events) {
+        if (runId !== experienceRunId) return;
+        if (event.kind === "darling-cz") {
+          const czComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 5), "G", event.entryType === "direct" ? "DIRECT BONUS" : "CHANCE ZONE", event.label, event.entryType === "direct" ? "初当りBONUSへ直行します" : "小役成立でBONUSを抽選します", Number(event.chance) || 46, event.entryType === "direct" ? "BONUS直撃" : `成功期待度 約${Math.round(Number(event.chance) || 46)}%`, runId);
+          if (!czComplete) return;
+          setExperienceStage(2, "CZ FINAL JUDGE", event.label, "PUSH", "初当りBONUSの当落を開きます", "judge", Number(event.chance) || 46, "CZ最終結果");
+          await waitForExperienceAction(`${event.label} PUSH`, 5000, event.success ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(2, "CZ RESULT", event.success ? "CZ成功" : "CZ失敗", event.success ? "BONUS確定" : "通常へ", event.success ? "次のPUSHでBONUS種類を開きます" : "今回の一撃はここで終了", event.success ? "hit" : "end", event.success ? 100 : 0, `${event.label}結果`);
+          await waitForExperience(850);
+          if (!event.success) return;
+        } else if (event.kind === "darling-initial-bonus") {
+          setExperienceStage(2, "INITIAL BONUS", "初当りBONUS", "PUSH", "BONUS種類を開きます", "judge", Number(event.highChance) || 22, "BONUS高確突入を抽選");
+          await waitForExperienceAction("初当りBONUS PUSH", 5000, event.entered ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          const bonusComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 8), "G", "BONUS", event.label, "純増約5.0枚/GでBONUSを消化します", event.entered ? 100 : Number(event.highChance) || 22, event.entered ? "BONUS高確へ" : "高確突入を抽選", runId);
+          if (!bonusComplete) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setExperienceStage(2, "BONUS RESULT", event.label, `+${yen.format(event.award)}枚`, event.entered ? "ボーナス高確へ進みます" : "BONUS終了・最終結果へ", event.entered ? "rush" : "end", event.entered ? 100 : 0, event.entered ? "高確突入" : "高確非突入");
+          await waitForExperience(1000);
+          if (!event.entered) return;
+        } else if (event.kind === "darling-high") {
+          const highComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 1), "G", "BONUS HIGH PROBABILITY", "ダーリン・イン・ザ・フランキス", "残りゲーム数を減らしながらBONUSを抽選", Math.min(100, 100 / 10.4), `残り ${yen.format(event.remaining)}G`, runId);
+          if (!highComplete) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          if (!event.hit) {
+            setExperienceStage(3, "HIGH PROBABILITY END", "BONUS高確終了", "0G", "最終ゲームまでBONUS非当選", "end", 0, "高確終了");
+            await waitForExperience(700);
+          }
+        } else if (event.kind === "darling-high-bonus") {
+          setExperienceStage(3, "BONUS JUDGE", "BONUS当選", "PUSH", "BONUS種類と獲得枚数を開きます", "judge", 100, "BONUS約1/10.4");
+          await waitForExperienceAction("BONUS PUSH", 5000, ["ex", "episode"].includes(event.bonusType) ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          const bonusComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 12), "G", "BONUS", event.label, "純増約5.0枚/GでBONUSを消化します", 100, `獲得 +${yen.format(event.award)}枚`, runId);
+          if (!bonusComplete) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setExperienceStage(3, "BONUS RESULT", event.label, `+${yen.format(event.award)}枚`, `累計 ${yen.format(event.cumulative)}枚`, ["ex", "episode"].includes(event.bonusType) ? "hyper" : "hit", 100, "BONUS獲得");
+          await waitForExperience(1000);
+        } else if (event.kind === "darling-takeout") {
+          const takeoutComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 12), "G", "TAKE OUT", "連れ出し", "BONUS中はSTゲーム数をホールドします", 100, "フランクス図柄停止で再セット", runId);
+          if (!takeoutComplete) return;
+          setExperienceStage(3, "TAKE OUT RESULT", "連れ出し成功", "PUSH", "高確ゲーム数の上乗せを開きます", "judge", 100, "STホールド");
+          await waitForExperienceAction("連れ出し PUSH", 5000, Number(event.addGames) >= 10 ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, "TAKE OUT", "高確ゲーム数上乗せ", `+${yen.format(event.addGames)}G`, `高確残り ${yen.format(event.highGames)}G`, Number(event.addGames) >= 10 ? "hyper" : "rush", 100, "連れ出し結果");
+          await waitForExperience(900);
+        } else if (event.kind === "darling-beats") {
+          const beatsComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 2), "G", "HIYOKU BEATS", event.levelLabel || "比翼BEATS", "上乗せまたはBONUSでSTを再セット", Number(event.chance) || 75, `継続期待度 約${Math.round(Number(event.chance) || 75)}%`, runId);
+          if (!beatsComplete) return;
+          setExperienceStage(3, "HIYOKU BEATS RESULT", event.levelLabel || "比翼BEATS", "PUSH", "高確ゲーム数の上乗せを開きます", "judge", Number(event.chance) || 75, `${yen.format(event.resets || 0)}回再セット`);
+          await waitForExperienceAction("比翼BEATS PUSH", 5000, event.climaxx || Number(event.addGames) >= 10 ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.climaxx ? "CLIMAXX" : "HIYOKU BEATS", event.climaxx ? "CLIMAXX到達" : event.levelLabel || "比翼BEATS", `+${yen.format(event.addGames)}G`, `高確残り ${yen.format(event.highGames)}G`, event.climaxx ? "hyper" : "rush", 100, "比翼BEATS結果");
+          await waitForExperience(950);
+        } else if (event.kind === "darling-end") {
+          const endComplete = await animateExperienceCounter(3, "G", "LAST 3 GAMES", "ボーナス高確 最終ゲーム", "残りゲーム数を0まで進めます", 0, `BONUS ${yen.format(event.bonuses)}回・累計${yen.format(event.cumulative)}枚`, runId);
+          if (!endComplete) return;
+          setExperienceStage(4, "BONUS HIGH PROBABILITY END", "ダーリン・イン・ザ・フランキス終了", "0G", `BONUS ${yen.format(event.bonuses)}回・累計 ${yen.format(event.cumulative)}枚`, "end", 0, "高確ゲーム数消化完了");
+          await waitForExperience(700);
+        }
+      }
+      return;
+    }
     if (toaruIndex2Flow) {
       const events = Array.isArray(data.atEvents) ? data.atEvents : [];
       for (const event of events) {
