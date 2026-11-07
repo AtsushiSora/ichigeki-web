@@ -4418,6 +4418,57 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   });
 })();
 
+(function applyDumbbellDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["dumbbell-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "MUSCLE ZONEを突破し、ゲーム数上乗せからVストックの上位ループへ。",
+    intro: "設定別CZ・AT初当りを使い、10G＋αのMUSCLE ZONE、30G＋αの通常AT、ゴールデンチャレンジ、Vストック特化、差枚数型の金肉BONUSを実機順に体験できます。",
+    points: ["CZは10G＋α・成功期待度約40%", "通常ATは30G＋α・純増約8.5枚/G", "上位引き戻しは3G・成功期待度約56%"],
+    specs: [["CZ（設定1）", "約1/247"], ["CZ（設定6）", "約1/239"], ["AT（設定1）", "約1/591"], ["AT（設定6）", "約1/504"], ["MUSCLE ZONE", "10G＋α・約40%"], ["通常AT", "30G＋α・約8.5枚/G"], ["ゴールデンチャレンジ", "3G・約56%"], ["ゴールデンタイム", "5G・平均Vストック約4個"], ["金肉BONUS", "平均約1070枚"], ["ベース", "約32.5G/50枚"]],
+    articleSections: [
+      { heading: "摂取カロリーとMUSCLE ZONE", paragraphs: ["通常時は摂取カロリー、100Gごとの神社ステージ、強レア役などからMUSCLE ZONEを目指します。CZは10G＋αの前半・後半構成で、トータル成功期待度は約40%です。", "後半はアームレスリング約42%、筋肉道約55%、マッスルプッシュ約85%。シミュレーターでも発展先を表示し、最後のPUSHでAT当落を開きます。"] },
+      { heading: "30G＋αのダンベルBONUS", paragraphs: ["通常ATは純増約8.5枚/Gのゲーム数上乗せ型。初期30Gから、レア役や2択のレア役チャンスで＋20G以上の上乗せを狙います。", "上乗せゲーム数はPUSHまで伏せ、残りゲーム数を減らしながら表示します。120G継続時はゴールデンチャレンジの権利獲得濃厚として扱います。"] },
+      { heading: "ゴールデンチャレンジとVストック", paragraphs: ["通常AT終了後に権利を持っていれば、3G・成功期待度約56%のゴールデンチャレンジへ。成功すると5Gのゴールデンタイムで毎ゲームVストックを抽選します。", "平均Vストックは約4個で、1個につき100枚以上。PUSHでストック個数と各ストックの差枚数を順番に開きます。"] },
+      { heading: "金肉BONUSと上位ループ", paragraphs: ["金肉BONUSは純増約8.5枚/Gの差枚数管理型で、平均獲得枚数は約1070枚。通常ATのゲーム数上乗せとは分け、残り枚数と差枚数上乗せを表示します。", "終了後は3Gのライジングアッパーチャレンジへ。成功期待度約56%でゴールデンタイムへ戻り、Vストックと金肉BONUSをループします。"] },
+      { heading: "固定レートと簡易化する範囲", bullets: ["約32.5G/50枚・1,000円46枚貸し・5.2枚交換で固定", "通常時の全カロリー・天井・内部状態は代表抽選へ簡略化", "ゲーム数・Vストック差枚の非公表振り分けは体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["SANKYO ミニパンフ", "https://www.sankyo-fever.jp/products/assets/pdf/slq/slq_mp.pdf"], ["SANKYO オンライン博物館", "https://www.sankyo-fever.jp/collection/971/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10141"], ["一撃 解析攻略", "https://1geki.jp/slot/l_dumbbell/"]],
+    readerGuide: {
+      verdict: "通常ATはゲーム数、上位ATは差枚数を上乗せする二段階型です。MUSCLE ZONE突破後に120G継続や上位CZを通し、平均約4個のVストックから金肉BONUSを伸ばします。",
+      bestFor: ["CZの発展先ごとの期待度を見たい", "通常ATのゲーム数上乗せをPUSHで体験したい", "上位のVストックと差枚数ループを比べたい"],
+      check: ["通常AT30G＋αと上位の差枚数管理を別表示", "ゴールデンチャレンジ・引き戻しは各約56%", "Vストックの細かな振り分けは代表値"],
+      compare: [["kaguya-sama-slot", "スマスロ かぐや様", "同じ高純増BONUS型と比較"], ["valvrave", "革命機ヴァルヴレイヴ", "セット型上位ATと比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v5",
+    dumbbellFlow: true,
+    triggerLabel: "MUSCLE ZONE",
+    triggerRate: 247,
+    triggerSuccess: 0.40,
+    mainLabel: "ダンベル何キロ持てる？BONUS",
+    mainRate: 591,
+    base50: 32.5,
+    atPureIncrease: 8.5,
+    atPayoutVariance: 0,
+    dumbbellCzRoutes: [[{ key: "front", label: "前半パート終了", games: 10, chance: 0 }, 0.23], [{ key: "arm", label: "アームレスリング", games: 12, chance: 0.42 }, 0.45], [{ key: "road", label: "筋肉道", games: 12, chance: 0.55 }, 0.22], [{ key: "push", label: "マッスルプッシュ", games: 12, chance: 0.85 }, 0.10]],
+    dumbbellBaseGames: 30,
+    dumbbellGoldenChallengeChance: 0.56,
+    dumbbellGoldenTimeGames: 5,
+    dumbbellVStocks: [[2, 0.10], [3, 0.25], [4, 0.35], [5, 0.20], [6, 0.10]],
+    specialLabel: "ゲーム数上乗せ",
+    specialChance: 0.34,
+    upperChallenge: "ゴールデンチャレンジ",
+    upperChance: 0.18,
+    upperSuccess: 0.56,
+    upperLabel: "金肉BONUS",
+    upperContinue: 0.56,
+    upperPureIncrease: 8.5
+  });
+})();
+
 // Dedicated implementations take precedence over the older reusable cycle map.
 // Keep this final cleanup after every enrichment pass so page copy and gameplay
 // both use the same title-specific model.
@@ -4439,4 +4490,6 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   if (assaultLily?.assaultLilyFlow) delete assaultLily.cycleFlow;
   const kaguya = window.ICHIGEKI_MACHINES["kaguya-sama-slot"]?.sim;
   if (kaguya?.kaguyaFlow) delete kaguya.cycleFlow;
+  const dumbbell = window.ICHIGEKI_MACHINES["dumbbell-slot"]?.sim;
+  if (dumbbell?.dumbbellFlow) delete dumbbell.cycleFlow;
 })();
