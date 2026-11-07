@@ -5483,6 +5483,51 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.entryBonusAwardsNote;
 })();
 
+(function applyBiohazard5DedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["biohazard5-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "2種類のCZから50G＋αのHAZARD RUSHへ。増殖・変異上乗せを重ねて上位ATを目指す。",
+    intro: "パニックゾーンとウェスカーゾーン、初期50G＋αのHAZARD RUSH、インフェクション、ウロボロスモード、増殖・変異上乗せ、シューティングバースト、クライマックスウェスカーゾーン、上位ATまでを機種専用画面で体験できます。",
+    points: ["CZ合算は設定1約1/147.3〜設定6約1/122.1", "HAZARD RUSHは初期50G＋α・純増約2.5枚/G", "インフェクションは初当り時約33%・平均上乗せ約130G", "上位CZは19G＋α・成功期待度約60%"],
+    specs: [["CZ合算（設定1）", "約1/147.3"], ["AT（設定1）", "約1/325.8"], ["AT（設定6）", "約1/236.2"], ["ベース", "約33.0G/50枚"], ["パニックゾーン", "10・20G・成功約37%"], ["ウェスカーゾーン", "19G＋α・成功約60%"], ["HAZARD RUSH", "初期50G＋α・純増約2.5枚/G"], ["インフェクション", "5G＋α・平均上乗せ約130G"], ["シューティングバースト", "平均上乗せ約126G"], ["上位CZ", "19G＋α・成功約60%"], ["上位AT", "純増約4.0枚/G・期待枚数約3600枚"], ["設定", "1〜6"]],
+    articleSections: [
+      { heading: "2種類のCZからHAZARD RUSHへ", paragraphs: ["CZはパニックゾーンとウェスカーゾーンの2種類。パニックゾーンは10Gまたは20Gで成功期待度約37%、ウェスカーゾーンは19G＋αでメーターを上げ、成功期待度は約60%です。", "CZ合算は設定1約1/147.3から設定6約1/122.1。AT初当りは約1/325.8から約1/236.2で、開始時に選ばれた設定の公表値を使用します。"] },
+      { heading: "50G＋αのゲーム数上乗せAT", paragraphs: ["HAZARD RUSHは初期50G＋α、純増約2.5枚/Gのゲーム数管理型ATです。小役履歴からゲーム数上乗せ、エピソード、ウロボロスモード、シューティングバーストを抽選します。", "専用画面では残りゲーム数を10G区間ごとに減らし、上乗せが発生したときだけPUSHを表示。獲得枚数と上乗せゲーム数は分けて表示します。"] },
+      { heading: "インフェクションと増殖・変異上乗せ", paragraphs: ["AT初当り時の約33%で5G＋αのインフェクションへ。毎ゲーム上乗せが発生し、通常テーブルの平均上乗せは約130Gです。", "増殖上乗せは元のゲーム数が分裂した回数ぶん増加し、最大30G×27分裂で810G。変異上乗せは発生時点で3桁上乗せが濃厚です。PUSH前は上乗せ内容を伏せて表示します。"] },
+      { heading: "ウロボロスとシューティングバースト", paragraphs: ["ウロボロスモード中はレア小役確率が約1/5.30まで上昇し、上乗せやエピソード進行のチャンスです。", "シューティングバーストは約91〜97%で上乗せが続く特化ゾーンで、平均上乗せは約126G。背景色や武器の細かなテーブルはまとめ、最終上乗せゲーム数をPUSHで開きます。"] },
+      { heading: "上位CZからプレミアムHAZARD RUSHへ", paragraphs: ["エピソード10到達、1回のATで2400枚以上獲得、差枚2100枚到達などが上位CZの主な契機です。クライマックスウェスカーゾーンは19G＋α、成功期待度約60%です。", "成功後のプレミアムHAZARD RUSHは純増約4.0枚/G。ゲーム数の減算が止まり、エピソード終了時に継続を抽選します。ステージ3までは継続保障があります。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約33G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6を均等抽選し、CZ合算・AT初当り・出玉率は公開設定別値を使用", "CZ、AT、インフェクション、増殖・変異、ウロボロス、SB、エピソード、上位CZ・上位ATを専用進行", "AT中イベント出現率や上乗せ内訳など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["エンターライズ 公式製品情報", "https://www.enterrise.co.jp/slot/lbh5/"], ["フィールズ 発表資料", "https://www.tsuburaya-fields.co.jp/ir/j/files/press/2024/press_20241217a.pdf"], ["なな徹 基本スペック", "https://nana-press.com/kaiseki/machine/904/"], ["なな徹 HAZARD RUSH", "https://nana-press.com/kaiseki/machine/904/27849/"], ["なな徹 インフェクション", "https://nana-press.com/kaiseki/machine/904/27850/"], ["なな徹 シューティングバースト", "https://nana-press.com/kaiseki/machine/904/27853/"], ["なな徹 上位CZ", "https://nana-press.com/kaiseki/machine/904/27854/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10217"]],
+    readerGuide: { verdict: "50G＋αのATでゲーム数を減らしながら、増殖・変異上乗せと特化ゾーンを重ねて上位ATを目指すゲーム数管理型です。", bestFor: ["2種類のCZを最後のPUSHまで進めたい", "残りゲーム数と増殖上乗せを見ながら遊びたい", "エピソード10到達や2400枚から上位CZを狙いたい"], check: ["CZ・AT初当り、純増、主要ゲーム数と期待度は公開値", "上乗せゲーム数と獲得枚数を分けて表示", "未公表のAT中イベント配分は体験用代表値"], compare: [["shin-onimusha2-slot", "新鬼武者2", "ゲーム数上乗せATと比較"], ["monster-hunter-sunbreak", "モンハンライズ サンブレイク", "自力型ATと上位ルートを比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v34", dedicatedFlow: true, dedicatedFlowKey: "biohazard5-slot", dedicatedFlowVersion: 2, biohazard5Flow: true,
+    triggerLabel: "CZ", triggerRate: 147.3, triggerSuccess: 0.452, mainLabel: "HAZARD RUSH", mainRate: 325.8, base50: 33.0, coinUnit: 3.1,
+    normalMin: 0, normalMax: 0, atPureIncrease: 2.5, upperPureIncrease: 4.0, atPayoutVariance: 0,
+    bioPanicGames: [[10, 0.863], [20, 0.125], [30, 0.012]], bioPanicSuccess: 0.37,
+    bioWeskerGames: [[19, 0.50], [21, 0.309], [23, 0.098], [25, 0.047], [27, 0.031], [29, 0.015]], bioWeskerSuccess: 0.60, bioWeskerRouteChance: 0.036,
+    bioInitialGames: 50, bioSectionGames: 10, bioMaxSections: 300,
+    bioInfectionRates: { 1: 0.332, 2: 0.332, 3: 0.338, 4: 0.362, 5: 0.373, 6: 0.387 }, bioInfectionGames: 5,
+    bioInfectionAdds: [[50, 0.16], [80, 0.24], [100, 0.24], [130, 0.18], [200, 0.12], [300, 0.05], [555, 0.01]],
+    bioDirectAddChance: 0.18, bioDirectAdds: [[10, 0.50], [20, 0.24], [30, 0.14], [50, 0.08], [100, 0.03], [200, 0.008], [300, 0.002]],
+    bioAddMultipliers: [[1, 0.72], [2, 0.16], [3, 0.07], [4, 0.035], [9, 0.012], [27, 0.003]], bioMutationChance: 0.035,
+    bioUroborosChance: 0.07, bioUroborosGames: 10, bioUroborosAdds: [[10, 0.42], [20, 0.30], [30, 0.17], [50, 0.08], [100, 0.03]],
+    bioEpisodeChance: 0.085, bioEpisodeGames: 10, bioEpisodeTarget: 10,
+    bioBurstChance: 0.035, bioBurstAdds: [[80, 0.18], [100, 0.25], [126, 0.27], [160, 0.16], [200, 0.09], [300, 0.04], [500, 0.01]],
+    bioUpperThreshold: 2400, bioUpperDiffThreshold: 2100, bioUpperCzGames: [[19, 0.50], [21, 0.309], [23, 0.098], [25, 0.047], [27, 0.031], [29, 0.015]], bioUpperCzSuccess: 0.60,
+    bioUpperStageGames: 120, bioUpperGuaranteeStages: 3, bioUpperContinue: 0.70, bioUpperMaxStages: 8,
+    specialLabel: "シューティングバースト", specialChance: 0.035, upperChallenge: "クライマックスウェスカーゾーン", upperChance: 0.60, upperSuccess: 0.60, upperLabel: "プレミアムHAZARD RUSH", upperContinue: 0.70, upperPayout: 0,
+    settingRates: { 1: { trigger: 147.3, main: 325.8, payout: 0.978 }, 2: { trigger: 143.5, main: 314.4, payout: 0.988 }, 3: { trigger: 137.5, main: 298.2, payout: 1.006 }, 4: { trigger: 133.7, main: 271.4, payout: 1.046 }, 5: { trigger: 129.6, main: 249.6, payout: 1.089 }, 6: { trigger: 122.1, main: 236.2, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+  delete machine.sim.entryBonusAwards;
+  delete machine.sim.entryBonusAwardsNote;
+})();
+
 (function applyInuyasha2DedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["inuyasha2-slot"];
   if (!machine) return;

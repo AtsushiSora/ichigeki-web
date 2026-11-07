@@ -427,6 +427,14 @@
         ["ハーレムモード", "10G＋α", "継続期待度約80%"]
       ];
       note = "3種類のCZ、初当りBONUS、楽園計画、プレゼントちゃんす、ヒロイン3人・6人攻略、ハーレムモードを機種専用で記録します。";
+    } else if (sim.biohazard5Flow) {
+      items = [
+        ["2種類のCZ", "約37%／約60%", "10〜29G後にPUSH判定"],
+        ["HAZARD RUSH", "初期50G＋α", "純増約2.5枚/G"],
+        ["増殖・変異上乗せ", "最大810G", "上乗せゲーム数を個別表示"],
+        ["上位AT", "純増約4.0枚/G", "上位CZ成功期待度約60%"]
+      ];
+      note = "2種類のCZ、インフェクション、残りゲーム数、増殖・変異、ウロボロス、エピソード、シューティングバースト、上位CZ・上位ATを機種専用で記録します。";
     } else if (sim.goldenKamuyFlow) {
       items = [
         ["初当り", `約1/${sim.triggerRate}`, "KAMUY／決戦BONUS"],
@@ -730,6 +738,11 @@
       charts.push(ratioChartMarkup("THREE HEROINES", "ヒロイン3人攻略後の上位移行割合", [["ハーレムモード", 0.34], ["楽園計画継続", 0.66]], "約34%", "設定2でヒロイン3人攻略後に上位STへ移行する公表期待度です。"));
       charts.push(ratioChartMarkup("HAREM MODE", "ハーレムモード継続割合", [["BONUS当選", 0.80], ["上位ST終了", 0.20]], "約80%", "10G＋αの上位STでBONUSへ到達する公表期待度です。"));
       note = "通常ST約52%、3人攻略後の上位約34%（設定2）、上位ST約80%は別々の抽選です。プレゼントちゃんすの細かな未公表配分は円グラフに含めていません。";
+    } else if (sim.biohazard5Flow) {
+      charts.push(ratioChartMarkup("PANIC ZONE", "パニックゾーンのAT当選割合", [["AT当選", 0.37], ["CZ失敗", 0.63]], "約37%", "10Gまたは20Gを中心に進むメインCZの公表成功期待度です。"));
+      charts.push(ratioChartMarkup("WESKER ZONE", "ウェスカーゾーンのAT当選割合", [["AT当選", 0.60], ["CZ失敗", 0.40]], "約60%", "19G＋αでメーターを上げる上位CZの公表成功期待度です。"));
+      charts.push(ratioChartMarkup("CLIMAX WESKER", "クライマックスウェスカーゾーン成功割合", [["上位AT", 0.60], ["通常へ", 0.40]], "約60%", "成功するとプレミアムHAZARD RUSHへ進む上位CZの公表期待度です。"));
+      note = "通常CZ約37%・約60%と上位CZ約60%は別々の抽選です。AT中イベントの未公表出現率は円グラフに含めていません。";
     } else if (sim.sao2Flow) {
       charts.push(ratioChartMarkup(
         "CZ ENTRY",
@@ -823,6 +836,9 @@
     }
     if (sim.toloveruDarknessFlow) {
       return `<section class="machine-cz-guide" id="cz-game" aria-labelledby="machine-cz-title"><div class="machine-cz-head"><span>CZ TO HAREM MODE</span><h3 id="machine-cz-title">${machine.shortName}のゲーム性</h3><p>3種類のCZから初当りBONUSを取り、10G＋αの楽園計画でヒロインを攻略して上位STを目指します。</p></div><div class="machine-cz-flow" aria-label="${escapeHtml(`${machine.shortName}のゲームフロー`)}"><div><span>01</span><strong>3種類のCZ</strong><small>期待度約33〜70%</small></div><i aria-hidden="true">›</i><div><span>02</span><strong>初当りBONUS</strong><small>メモリアル／エピソード</small></div><i aria-hidden="true">›</i><div><span>03</span><strong>楽園計画</strong><small>10G＋α・約52%</small></div><i aria-hidden="true">›</i><div><span>04</span><strong>プレゼントちゃんす</strong><small>100〜1600枚</small></div></div><div class="machine-cz-upper"><span>上位ルート</span><strong>ヒロイン3人／6人攻略</strong><i aria-hidden="true">→</i><strong>ハーレムモード</strong><small>10G＋α・継続約80%</small></div><div class="machine-cz-detail-grid"><article><span>CHANCE ZONE</span><h4>バルーン／スイート／ぷっちゅん</h4><p>当選契機となったCZを5〜7G進め、最後のPUSHで初当りBONUSを開きます。</p></article><article><span>RAKUEN KEIKAKU</span><h4>10G＋α・BONUS約52%</h4><p>数字を10Gから進め、最後のPUSHでBONUS当落を表示。Vストックは次回攻略を保証します。</p></article><article><span>PRESENT CHANCE</span><h4>4種類の報酬決定</h4><p>ばいん、ぺろぺろ、愛すぷ、whisperの種類と100〜1600枚の獲得枚数をPUSHで開きます。</p></article><article><span>UPPER ST</span><h4>ハーレムモード</h4><p>3人攻略時は上位抽選、6人攻略なら上位濃厚。10G＋αを約80%でループします。</p></article></div><p class="machine-cz-note">CZ選択率、初当りBONUS種別、上位中報酬の細かな比率など未公表部分は、公開性能を崩さない体験用代表値です。</p></section>`;
+    }
+    if (sim.biohazard5Flow) {
+      return `<section class="machine-cz-guide" id="cz-game" aria-labelledby="machine-cz-title"><div class="machine-cz-head"><span>CZ TO PREMIUM HAZARD</span><h3 id="machine-cz-title">${machine.shortName}のゲーム性</h3><p>2種類のCZから50G＋αのゲーム数管理ATへ入り、増殖・変異上乗せとエピソードを重ねて上位ATを目指します。</p></div><div class="machine-cz-flow" aria-label="${escapeHtml(`${machine.shortName}のゲームフロー`)}"><div><span>01</span><strong>2種類のCZ</strong><small>約37%／約60%</small></div><i aria-hidden="true">›</i><div><span>02</span><strong>HAZARD RUSH</strong><small>初期50G＋α</small></div><i aria-hidden="true">›</i><div><span>03</span><strong>増殖・変異上乗せ</strong><small>最大810G</small></div><i aria-hidden="true">›</i><div><span>04</span><strong>EPISODE</strong><small>全10話を進める</small></div></div><div class="machine-cz-upper"><span>上位ルート</span><strong>CLIMAX WESKER ZONE</strong><i aria-hidden="true">→</i><strong>PREMIUM HAZARD RUSH</strong><small>19G＋α・約60%／純増約4.0枚/G</small></div><div class="machine-cz-detail-grid"><article><span>CHANCE ZONE</span><h4>パニック／ウェスカー</h4><p>10〜29Gを最後まで進め、PUSHでAT当落を開きます。ウェスカーゾーンはメーター型です。</p></article><article><span>INFECTION</span><h4>5G＋α・平均約130G</h4><p>初当り時の約33%で突入。毎ゲーム上乗せし、最後のPUSHで合計ゲーム数を開きます。</p></article><article><span>AT EVENTS</span><h4>増殖・変異／ウロボロス／SB</h4><p>残りゲーム数を10Gずつ減らし、発生したイベントだけをPUSHで個別表示します。</p></article><article><span>UPPER AT</span><h4>プレミアムHAZARD RUSH</h4><p>純増約4.0枚/G。ステージ3まで継続保障があり、終了後も純増を維持した通常ATへ移ります。</p></article></div><p class="machine-cz-note">AT中イベント出現率、増殖回数、上位ATのステージ配分など未公表部分は、公開性能を崩さない体験用代表値です。</p></section>`;
     }
     if (sim.darlingFranxxFlow) {
       return `<section class="machine-cz-guide" id="cz-game" aria-labelledby="machine-cz-title"><div class="machine-cz-head"><span>CZ TO BONUS HIGH</span><h3 id="machine-cz-title">${machine.shortName}のゲーム性</h3><p>CZから疑似BONUSを取り、10G＋αのボーナス高確と比翼BEATSで連チャンを伸ばします。</p></div><div class="machine-cz-flow" aria-label="${escapeHtml(`${machine.shortName}のゲームフロー`)}"><div><span>01</span><strong>2種類のCZ</strong><small>5G約46%／10G約69%</small></div><i aria-hidden="true">›</i><div><span>02</span><strong>初当りBONUS</strong><small>REG・DIF・EP</small></div><i aria-hidden="true">›</i><div><span>03</span><strong>BONUS高確</strong><small>10G＋α・約1/10.4</small></div><i aria-hidden="true">›</i><div><span>04</span><strong>比翼BEATS</strong><small>2〜4G・約75〜94%</small></div></div><div class="machine-cz-upper"><span>強化ルート</span><strong>Beat Lv.MAXX</strong><i aria-hidden="true">→</i><strong>CLIMAXX</strong><small>高確G数30Gで上乗せをBONUSへ変換</small></div><div class="machine-cz-detail-grid"><article><span>CHANCE ZONE</span><h4>コネクト／ココロ</h4><p>5G約46%と10G約69%。最後のPUSHでBONUS当落を開きます。</p></article><article><span>INITIAL BONUS</span><h4>3種類の初当り</h4><p>REG約40枚、ダーリンBONUS約100枚、エピソード約200枚。REGは約22%で昇格します。</p></article><article><span>BONUS HIGH</span><h4>10G＋α・約1/10.4</h4><p>残りゲーム数を減らし、小役成立時に即PUSHでBONUS種類を開きます。</p></article><article><span>HIYOKU BEATS</span><h4>レベル別ST</h4><p>Lv.1は2G約75%、Lv.2は3G約88%、MAXXは4G約94%。上乗せでSTを再セットします。</p></article></div><p class="machine-cz-note">CZ選択率、BONUS種別、連れ出し発生率など未公表部分は、公開性能を崩さない体験用代表値です。</p></section>`;
@@ -1362,6 +1378,15 @@
         ["HAREM MODE", "10G＋α・約80%", "通常STとは画面を切り替え、強化報酬をPUSHで開きます。"]
       ];
       note = "STゲーム数とBONUS獲得枚数を混ぜず、CZ、楽園計画、プレゼントちゃんす、上位STを順番に表示します。未公表配分は体験用代表値です。";
+    } else if (sim.biohazard5Flow) {
+      cards = [
+        ["CHANCE ZONE", "10〜29G・約37／60%", "パニックゾーンまたはウェスカーゾーンを進め、最後のPUSHでAT当落を開きます。"],
+        ["HAZARD RUSH", "初期50G＋α", "残りゲーム数を10Gずつ減らし、純増約2.5枚/Gの獲得枚数を加算します。"],
+        ["ADD-ON", "増殖・変異・ウロボロス", "上乗せ内容を伏せたPUSH後に、獲得枚数とは別に追加ゲーム数を表示します。"],
+        ["SHOOTING BURST", "平均上乗せ約126G", "特化ゾーンの最終上乗せゲーム数をPUSHで開き、AT残りゲーム数へ加算します。"],
+        ["PREMIUM", "上位CZ約60%", "19G＋αを進め、成功時はステージ3保障のプレミアムHAZARD RUSHへ進みます。"]
+      ];
+      note = "上乗せゲーム数と獲得枚数を混ぜず、CZ、AT、増殖・変異、特化ゾーン、上位CZ・上位ATを順番に表示します。未公表配分は体験用代表値です。";
     } else if (sim.goldenKamuyFlow) {
       cards = [
         ["INITIAL BONUS", "11G／30G", "KAMUY BONUS／決戦BONUS"],
@@ -1680,7 +1705,7 @@
       const averageInvestment = Math.round((machine.sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
-      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow || machine.sim.millionGodFlow || machine.sim.juohFlow || machine.sim.sunbreakFlow || machine.sim.paripiFlow || machine.sim.bancho4Flow || machine.sim.zenigata4Flow || machine.sim.inuyasha2Flow || machine.sim.godzillaEvaFlow || machine.sim.dmc5Flow || machine.sim.initialD2Flow || machine.sim.lupinDaikoukaishaFlow || machine.sim.toloveruDarknessFlow || machine.sim.goldenKamuyFlow || machine.sim.superBlackjackFlow || machine.sim.magicalHalloween8Flow || machine.sim.gundamSeedFlow || machine.sim.fireForceFlow || machine.sim.fireForce2Flow;
+      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow || machine.sim.millionGodFlow || machine.sim.juohFlow || machine.sim.sunbreakFlow || machine.sim.paripiFlow || machine.sim.bancho4Flow || machine.sim.zenigata4Flow || machine.sim.inuyasha2Flow || machine.sim.godzillaEvaFlow || machine.sim.dmc5Flow || machine.sim.initialD2Flow || machine.sim.lupinDaikoukaishaFlow || machine.sim.toloveruDarknessFlow || machine.sim.biohazard5Flow || machine.sim.goldenKamuyFlow || machine.sim.superBlackjackFlow || machine.sim.magicalHalloween8Flow || machine.sim.gundamSeedFlow || machine.sim.fireForceFlow || machine.sim.fireForce2Flow;
       const settingModelLabel = machine.sim.settingRates
         ? hasDedicatedFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
         : hasDedicatedFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
@@ -1766,7 +1791,7 @@
         ? Math.max(1, mainRate * sim.triggerRate / sim.mainRate)
         : Math.max(1, sim.triggerRate * profile.rate);
     const publishedEntry = Number(publishedSetting?.entry);
-    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.bancho4Flow || sim.zenigata4Flow || sim.inuyasha2Flow || sim.godzillaEvaFlow || sim.dmc5Flow || sim.initialD2Flow || sim.lupinDaikoukaishaFlow || sim.toloveruDarknessFlow || sim.goldenKamuyFlow || sim.superBlackjackFlow || sim.magicalHalloween8Flow || sim.gundamSeedFlow || sim.fireForceFlow || sim.fireForce2Flow
+    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.bancho4Flow || sim.zenigata4Flow || sim.inuyasha2Flow || sim.godzillaEvaFlow || sim.dmc5Flow || sim.initialD2Flow || sim.lupinDaikoukaishaFlow || sim.toloveruDarknessFlow || sim.biohazard5Flow || sim.goldenKamuyFlow || sim.superBlackjackFlow || sim.magicalHalloween8Flow || sim.gundamSeedFlow || sim.fireForceFlow || sim.fireForce2Flow
       ? Math.max(0, Math.min(1, Number(sim.triggerSuccess) || 0.55))
       : sim.godzillaEva2Flow || sim.mahoakoFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.shinEvaFlow
       ? 1
@@ -1788,6 +1813,7 @@
         : "サイト共通補正モデル";
     if (sim.lupinDaikoukaishaFlow) settingModelLabel = "公開設定別値（初当り・AT初当り・専用進行）";
     if (sim.toloveruDarknessFlow) settingModelLabel = "公開設定別値（初当り・ST・専用進行）";
+    if (sim.biohazard5Flow) settingModelLabel = "公開設定別値（CZ・AT初当り・上乗せ専用進行）";
     const base = Math.max(20, Number(document.getElementById("baseRate").value) || sim.base50);
     const lendCoins = Math.max(40, Number(document.getElementById("lendCoins").value) || RANKING_RATE.slot.lendCoins);
     const exchangeCoins = Math.max(4, Number(document.getElementById("exchangeCoins").value) || RANKING_RATE.slot.exchangeCoins);
@@ -2132,6 +2158,18 @@
     let toloveruUpperJudgeAttempts = 0;
     let toloveruUpperJudgeWins = 0;
     let toloveruUpperLoops = 0;
+    let biohazardCz = null;
+    let biohazardAtSections = 0;
+    let biohazardInfectionGames = 0;
+    let biohazardAddCount = 0;
+    let biohazardAddGames = 0;
+    let biohazardMutationCount = 0;
+    let biohazardUroborosCount = 0;
+    let biohazardEpisodeCount = 0;
+    let biohazardBurstCount = 0;
+    let biohazardUpperCzAttempts = 0;
+    let biohazardUpperCzWins = 0;
+    let biohazardUpperStages = 0;
     let goldenKamuyInitialBonus = null;
     let goldenKamuyAtSections = 0;
     let goldenKamuyAddCount = 0;
@@ -2363,6 +2401,27 @@
       flow[0] = `${games}Gで${toloveruCz.label}成功`;
       flow.push(`${toloveruInitialBonus.label} +${yen.format(initialAward)}枚`);
       flow.push("楽園計画突入");
+    }
+    if (sim.biohazard5Flow) {
+      const targetAtChance = Math.max(0.05, Math.min(0.95, triggerRate / Math.max(triggerRate, mainRate)));
+      const weskerShare = Math.max(0, Math.min(0.25, Number(sim.bioWeskerRouteChance) || 0.036));
+      const regularCzChance = (1 - weskerShare) * (Number(sim.bioPanicSuccess) || 0.37) + weskerShare * (Number(sim.bioWeskerSuccess) || 0.60);
+      const directChance = Math.max(0, Math.min(0.50, (targetAtChance - regularCzChance) / Math.max(0.01, 1 - regularCzChance)));
+      const routeRoll = Math.random();
+      if (routeRoll < directChance) {
+        biohazardCz = { key: "direct", label: "HAZARD RUSH直撃", games: 3, chance: 1, direct: true };
+      } else if (Math.random() < weskerShare) {
+        biohazardCz = { key: "wesker", label: "ウェスカーゾーン", games: Math.max(19, Number(weighted(sim.bioWeskerGames || [[19, 1]])) || 19), chance: Number(sim.bioWeskerSuccess) || 0.60 };
+      } else {
+        biohazardCz = { key: "panic", label: "パニックゾーン", games: Math.max(10, Number(weighted(sim.bioPanicGames || [[10, 1]])) || 10), chance: Number(sim.bioPanicSuccess) || 0.37 };
+      }
+      triggerSucceeded = biohazardCz.direct || Math.random() < biohazardCz.chance;
+      entered = triggerSucceeded;
+      payout = 0;
+      entryBonus = null;
+      atEvents.push({ kind: "biohazard-cz", ...biohazardCz, won: entered, targetAtChance: targetAtChance * 100, cumulative: 0 });
+      flow[0] = `${games}Gで${biohazardCz.label}`;
+      flow.push(entered ? "HAZARD RUSH突入" : `${biohazardCz.label}失敗`);
     }
     if (sim.goldenKamuyFlow) {
       goldenKamuyInitialBonus = weighted(sim.goldenKamuyBonuses || [[{ key: "battle", label: "決戦BONUS", games: 30, award: 135 }, 1]]);
@@ -2753,7 +2812,7 @@
       const baseAtGames = Math.max(1, Math.min(1000, Number(normalAward?.games) || Math.round(basePayout / atPureIncrease)));
       const baseEventLabel = normalAward?.label || sim.mainLabel;
       payout = Math.min(SLOT_COMPLETE_LIMIT, entryPayout + basePayout);
-      if (!sim.okidokiGoldFlow) flow.push(`${sim.mainLabel}突入`);
+      if (!sim.okidokiGoldFlow && !sim.biohazard5Flow) flow.push(`${sim.mainLabel}突入`);
       let rushSetCount = 1;
       if (sim.okidokiGoldFlow) {
         payout = entryPayout;
@@ -6698,6 +6757,117 @@
         }
         cycleRounds = toloveruStAttempts + toloveruUpperLoops;
         basePayout = payout - entryPayout;
+      } else if (sim.biohazard5Flow) {
+        payout = entryPayout;
+        basePayout = 0;
+        let remainingGames = Math.max(1, Number(sim.bioInitialGames) || 50);
+        const awardFor = (eventGames, pureIncrease = Number(sim.atPureIncrease) || 2.5) => {
+          const award = Math.max(0, Math.min(Math.round(Math.max(0, eventGames) * pureIncrease), SLOT_COMPLETE_LIMIT - payout));
+          payout += award;
+          atGamesTotal += Math.max(0, eventGames);
+          return award;
+        };
+        atEvents.push({ kind: "biohazard-at-start", label: "HAZARD RUSH", games: remainingGames, remaining: remainingGames, cumulative: payout });
+        flow.push(`HAZARD RUSH ${remainingGames}G＋α`);
+
+        const infectionChance = Math.max(0, Math.min(1, Number(sim.bioInfectionRates?.[setting]) || 0.332));
+        if (Math.random() < infectionChance) {
+          biohazardInfectionGames = Math.max(10, Number(weighted(sim.bioInfectionAdds || [[130, 1]])) || 130);
+          remainingGames += biohazardInfectionGames;
+          addOnCount += 1;
+          addOnGamesTotal += biohazardInfectionGames;
+          biohazardAddCount += 1;
+          biohazardAddGames += biohazardInfectionGames;
+          atGamesTotal += Math.max(1, Number(sim.bioInfectionGames) || 5);
+          atEvents.push({ kind: "biohazard-infection", label: "インフェクション", games: Number(sim.bioInfectionGames) || 5, chance: infectionChance * 100, addGames: biohazardInfectionGames, remaining: remainingGames, cumulative: payout });
+          flow.push(`インフェクション +${biohazardInfectionGames}G`);
+        }
+
+        const addGames = (amount, label, kind, extra = {}) => {
+          const value = Math.max(1, Math.min(Number(amount) || 10, 810));
+          remainingGames += value;
+          addOnCount += 1;
+          addOnGamesTotal += value;
+          biohazardAddCount += 1;
+          biohazardAddGames += value;
+          atEvents.push({ kind, label, addGames: value, remaining: remainingGames, cumulative: payout, ...extra });
+          flow.push(`${label} +${value}G`);
+          return value;
+        };
+
+        const maxSections = Math.max(1, Number(sim.bioMaxSections) || 80);
+        while (remainingGames > 0 && biohazardAtSections < maxSections && payout < SLOT_COMPLETE_LIMIT) {
+          biohazardAtSections += 1;
+          const before = remainingGames;
+          const sectionGames = Math.min(Math.max(1, Number(sim.bioSectionGames) || 10), remainingGames);
+          remainingGames -= sectionGames;
+          const sectionAward = awardFor(sectionGames);
+          atEvents.push({ kind: "biohazard-at", label: "HAZARD RUSH", section: biohazardAtSections, games: sectionGames, remainingBefore: before, remaining: remainingGames, award: sectionAward, cumulative: payout });
+
+          if (Math.random() < Math.max(0, Math.min(1, Number(sim.bioEpisodeChance) || 0.085))) {
+            biohazardEpisodeCount += 1;
+            const episodeAward = awardFor(Math.max(1, Number(sim.bioEpisodeGames) || 10));
+            atEvents.push({ kind: "biohazard-episode", label: `EPISODE ${String(biohazardEpisodeCount).padStart(2, "0")}`, episode: biohazardEpisodeCount, target: Number(sim.bioEpisodeTarget) || 10, games: Number(sim.bioEpisodeGames) || 10, award: episodeAward, cumulative: payout });
+            flow.push(`EPISODE ${biohazardEpisodeCount}/${Number(sim.bioEpisodeTarget) || 10}`);
+          }
+
+          if (payout < SLOT_COMPLETE_LIMIT && Math.random() < Math.max(0, Math.min(1, Number(sim.bioUroborosChance) || 0.07))) {
+            biohazardUroborosCount += 1;
+            const modeGames = Math.max(1, Number(sim.bioUroborosGames) || 10);
+            const modeAward = awardFor(modeGames);
+            const uroborosAdd = Math.max(10, Number(weighted(sim.bioUroborosAdds || [[10, 1]])) || 10);
+            addGames(uroborosAdd, "ウロボロスモード", "biohazard-uroboros", { games: modeGames, award: modeAward, count: biohazardUroborosCount });
+          }
+
+          if (payout < SLOT_COMPLETE_LIMIT && Math.random() < Math.max(0, Math.min(1, Number(sim.bioBurstChance) || 0.035))) {
+            biohazardBurstCount += 1;
+            const burstAdd = Math.max(10, Number(weighted(sim.bioBurstAdds || [[126, 1]])) || 126);
+            addGames(burstAdd, "シューティングバースト", "biohazard-burst", { count: biohazardBurstCount });
+          } else if (payout < SLOT_COMPLETE_LIMIT && Math.random() < Math.max(0, Math.min(1, Number(sim.bioDirectAddChance) || 0.18))) {
+            const mutation = Math.random() < Math.max(0, Math.min(1, Number(sim.bioMutationChance) || 0.035));
+            if (mutation) {
+              biohazardMutationCount += 1;
+              const mutationGames = weighted([[133, 0.42], [155, 0.30], [333, 0.18], [555, 0.10]]);
+              addGames(mutationGames, "変異上乗せ", "biohazard-add", { mutation: true, baseGames: mutationGames, multiplier: 1 });
+            } else {
+              const baseGames = Math.max(10, Number(weighted(sim.bioDirectAdds || [[10, 1]])) || 10);
+              const multiplier = Math.max(1, Number(weighted(sim.bioAddMultipliers || [[1, 1]])) || 1);
+              const multiplied = Math.min(810, baseGames * multiplier);
+              addGames(multiplied, multiplier > 1 ? `増殖上乗せ ×${multiplier}` : "ゲーム数上乗せ", "biohazard-add", { mutation: false, baseGames, multiplier });
+            }
+          }
+        }
+
+        const upperReady = biohazardEpisodeCount >= Math.max(1, Number(sim.bioEpisodeTarget) || 10) || payout >= Math.max(1, Number(sim.bioUpperThreshold) || 2400);
+        if (upperReady && payout < SLOT_COMPLETE_LIMIT) {
+          biohazardUpperCzAttempts = 1;
+          const upperCzGames = Math.max(19, Number(weighted(sim.bioUpperCzGames || [[19, 1]])) || 19);
+          const upperCzChance = Math.max(0.05, Math.min(0.98, Number(sim.bioUpperCzSuccess) || 0.60));
+          const upperWon = Math.random() < upperCzChance;
+          biohazardUpperCzWins = upperWon ? 1 : 0;
+          atGamesTotal += upperCzGames;
+          atEvents.push({ kind: "biohazard-upper-cz", label: "クライマックスウェスカーゾーン", games: upperCzGames, chance: upperCzChance * 100, won: upperWon, reason: biohazardEpisodeCount >= (Number(sim.bioEpisodeTarget) || 10) ? "EPISODE COMPLETE" : "2400枚到達", cumulative: payout });
+          flow.push(`クライマックスウェスカーゾーン ${upperWon ? "成功" : "失敗"}`);
+          if (upperWon) {
+            upper = true;
+            const guarantee = Math.max(1, Number(sim.bioUpperGuaranteeStages) || 3);
+            const maxStages = Math.max(guarantee, Number(sim.bioUpperMaxStages) || 8);
+            const continueChance = Math.max(0.05, Math.min(0.98, Number(sim.bioUpperContinue) || 0.70));
+            for (let stage = 1; stage <= maxStages && payout < SLOT_COMPLETE_LIMIT; stage += 1) {
+              if (stage > guarantee && Math.random() >= continueChance) break;
+              biohazardUpperStages += 1;
+              upperLoops = biohazardUpperStages;
+              const stageGames = Math.max(1, Number(sim.bioUpperStageGames) || 120);
+              const stageAward = awardFor(stageGames, Number(sim.upperPureIncrease) || 4.0);
+              upperPayoutTotal += stageAward;
+              atEvents.push({ kind: "biohazard-upper", label: "プレミアムHAZARD RUSH", stage, games: stageGames, guaranteed: stage <= guarantee, chance: stage <= guarantee ? 100 : continueChance * 100, award: stageAward, cumulative: payout });
+              flow.push(`プレミアムHAZARD RUSH STAGE ${stage} +${yen.format(stageAward)}枚`);
+            }
+          }
+        }
+        atEvents.push({ kind: "biohazard-end", label: upper ? "プレミアムHAZARD RUSH終了" : "HAZARD RUSH終了", episodes: biohazardEpisodeCount, cumulative: payout });
+        cycleRounds = biohazardAtSections;
+        basePayout = payout - entryPayout;
       } else if (sim.cycleFlow) {
         payout = entryPayout;
         basePayout = 0;
@@ -7367,7 +7537,7 @@
           }
           flow.push(`${karakuriUpperRoute}突破 → ${sim.upperLabel} ${upperLoops}セット・+${yen.format(upperPayoutTotal)}枚`);
         }
-      } else if (!sim.battleBonusFlow && !sim.sgRaceFlow && !sim.kabaneriStFlow && !sim.otomeRushFlow && !sim.cycleFlow && !sim.godzillaEva2Flow && !sim.mahoakoFlow && !sim.okidokiGoldFlow && !sim.uminchuFlow && !sim.tentenFlow && !sim.goblinSlayerFlow && !sim.assaultLilyFlow && !sim.kaguyaFlow && !sim.dumbbellFlow && !sim.shinEvaFlow && !sim.sao2Flow && !sim.symphogearSeigiFlow && !sim.lycorisFlow && !sim.kanokariFlow) {
+      } else if (!sim.battleBonusFlow && !sim.sgRaceFlow && !sim.kabaneriStFlow && !sim.otomeRushFlow && !sim.cycleFlow && !sim.godzillaEva2Flow && !sim.mahoakoFlow && !sim.okidokiGoldFlow && !sim.uminchuFlow && !sim.tentenFlow && !sim.goblinSlayerFlow && !sim.assaultLilyFlow && !sim.kaguyaFlow && !sim.dumbbellFlow && !sim.shinEvaFlow && !sim.sao2Flow && !sim.symphogearSeigiFlow && !sim.lycorisFlow && !sim.kanokariFlow && !sim.biohazard5Flow) {
         // Keep the published overall special-zone chance while allowing rare multi-hit runs.
         const specialChecks = Math.max(1, Math.min(3, Math.ceil(payout / 500)));
         const perCheckChance = 1 - Math.pow(1 - specialChance, 1 / specialChecks);
@@ -7516,6 +7686,7 @@
     const initialDStats = sim.initialD2Flow ? [["今回の入口", initialDEntry?.label || sim.triggerLabel], ["通常時対戦相手", initialDEntryOpponent?.label || "CZ・BONUS経由"], ["LEGEND RUSH", `${initialDAtSets}セット`], ["レジェンドバトル", `${cycleRounds}戦・勝利${initialDBattleWins}回`], ["ゲーム数上乗せ", initialDAddCount ? `${initialDAddCount}回・+${initialDAddGames}G` : "上乗せなし"], ["BONUS", `${initialDBonusCount}回`], ["限界領域", initialDLimitRounds ? `${initialDLimitRounds}セット` : "非当選"], ["ナイトメアマシン", initialDNightmareCount ? `${initialDNightmareCount}回` : "非到達"], ["覚醒ZONE", initialDAwakeningAttempts ? `${initialDAwakeningAttempts}回・成功${initialDAwakeningWins}回` : "未到達"]] : [];
     const lupinStats = sim.lupinDaikoukaishaFlow ? [["7揃い", lupinEntryLine?.label || sim.triggerLabel], ["初期ゲーム", lupinInitialGames ? `${lupinInitialGames}G` : "AT非突入"], ["SUPER HERO", `${lupinAtSections}区間`], ["ゲーム数直乗せ", lupinDirectCount ? `${lupinDirectCount}回・+${lupinDirectGames}G` : "直乗せなし"], ["ルパンゲーム", lupinGameAttempts ? `${lupinGameAttempts}回・成功${lupinGameWins}回` : "非当選"], ["BIG CHANCE", lupinBigChanceCount ? `${lupinBigChanceCount}回（${[...new Set(lupinBigChanceNames)].join("・")}）` : "非当選"], ["怪盗RUSH", lupinKaitoSets ? `${lupinKaitoSets}セット・お宝${lupinKaitoRewards}個` : "非到達"], [sim.upperChallenge, lupinUpperZoneAttempts ? `${lupinUpperZoneAttempts}回・成功${lupinUpperZoneWins}回` : "未到達"], [sim.upperLabel, upper ? `${lupinUpperGames}G` : "非到達"]] : [];
     const toloveruStats = sim.toloveruDarknessFlow ? [["今回のCZ", toloveruCz?.label || "初当り直撃"], ["初当りBONUS", toloveruInitialBonus?.label || sim.triggerLabel], ["楽園計画", `${toloveruStAttempts}回・攻略${toloveruStWins}人`], ["ヒロイン攻略", `${toloveruHeroineCount}/6人`], ["プレゼントちゃんす", `${toloveruPresentCount}回${toloveruPresentNames.length ? `（${[...new Set(toloveruPresentNames)].join("・")}）` : ""}`], ["ダークネス計画", toloveruDarknessPlanGames ? `+${toloveruDarknessPlanGames}G` : "非当選"], [sim.upperChallenge, toloveruUpperJudgeAttempts ? `${toloveruUpperJudgeAttempts}回・成功${toloveruUpperJudgeWins}回` : "未到達"], [sim.upperLabel, toloveruUpperLoops ? `${toloveruUpperLoops}回BONUS当選` : "非到達"]] : [];
+    const biohazardStats = sim.biohazard5Flow ? [["今回のCZ", biohazardCz?.label || "AT直撃"], ["HAZARD RUSH", biohazardAtSections ? `${biohazardAtSections}区間` : "非突入"], ["インフェクション", biohazardInfectionGames ? `+${biohazardInfectionGames}G` : "非当選"], ["ゲーム数上乗せ", biohazardAddCount ? `${biohazardAddCount}回・+${biohazardAddGames}G` : "上乗せなし"], ["変異上乗せ", biohazardMutationCount ? `${biohazardMutationCount}回` : "非当選"], ["ウロボロスモード", biohazardUroborosCount ? `${biohazardUroborosCount}回` : "非当選"], ["EPISODE", `${biohazardEpisodeCount}/${Number(sim.bioEpisodeTarget) || 10}話`], ["シューティングバースト", biohazardBurstCount ? `${biohazardBurstCount}回` : "非当選"], [sim.upperChallenge, biohazardUpperCzAttempts ? `${biohazardUpperCzAttempts}回・成功${biohazardUpperCzWins}回` : "未到達"], [sim.upperLabel, biohazardUpperStages ? `${biohazardUpperStages}ステージ` : "非到達"]] : [];
     const goldenKamuyStats = sim.goldenKamuyFlow ? [["初当りBONUS", goldenKamuyInitialBonus?.label || sim.triggerLabel], ["黄金神威", goldenKamuyAtSections ? `${goldenKamuyAtSections}区間` : "非突入"], ["ゲーム数上乗せ", goldenKamuyAddCount ? `${goldenKamuyAddCount}回・+${goldenKamuyAddGames}G` : "上乗せなし"], ["GOLDEN BONUS", `${Math.max(0, goldenKamuyBonusCount - 1)}回`], ["覚醒／極・覚醒", goldenKamuyAwakeningCount ? `${goldenKamuyAwakeningCount}回` : "非当選"], [sim.upperChallenge, upper ? "2000枚到達・通過" : "未到達"], [sim.upperLabel, goldenKamuyUpperSections ? `${goldenKamuyUpperSections}区間` : "非到達"]] : [];
     const sbjStats = sim.superBlackjackFlow ? [["初当りBONUS", sbjInitialBonus?.label || sim.triggerLabel], ["BONUS合計", `${sbjBonusCount}回`], ["リオチャンス", `${sbjRcCount}回`], ["最高RC報酬", sbjBestReward], ["STOCK TIME", sbjStCount ? `${sbjStCount}回・合計${sbjStGamesTotal}G` : "非当選"], ["RCストック獲得", `${sbjRcStocks}個`], [sim.upperLabel, sbjSstCount ? `${sbjSstCount}回・合計${sbjSstGamesTotal}G` : "非到達"]] : [];
     const magihalloStats = sim.magicalHalloween8Flow ? [["初当りBONUS", magihalloInitialBonus?.label || sim.triggerLabel], ["BONUS合計", `${magihalloBonusCount}回`], ["カボチャンス", `${magihalloSets}セット`], ["詠唱チャレンジ", `${magihalloChantAttempts}回・成功${magihalloChantWins}回`], ["カボチャ揃い", `${magihalloPumpkins}回`], ["まじかるちゃんす", `${magihalloMagicCount}回`], ["最高特殊ART", magihalloSpecialMode?.label || "通常カボチャンス"], [sim.upperLabel, magihalloSuperSets ? `${magihalloSuperSets}セット` : "非到達"]] : [];
@@ -7525,7 +7696,7 @@
     const cycleStats = sim.cycleFlow ? [[sim.cycleFlow.statLabel || (sim.titleFlow ? "機種専用進行" : "専用ループ"), `${cycleRounds}回・継続${cycleContinues}回`]] : [];
     const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
     const rushGamesTotal = Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
-    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.bancho4Flow || sim.zenigata4Flow || sim.inuyasha2Flow || sim.dmc5Flow || sim.initialD2Flow || sim.lupinDaikoukaishaFlow || sim.toloveruDarknessFlow || sim.goldenKamuyFlow || sim.superBlackjackFlow || sim.magicalHalloween8Flow || sim.gundamSeedFlow || sim.fireForceFlow || sim.fireForce2Flow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
+    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.bancho4Flow || sim.zenigata4Flow || sim.inuyasha2Flow || sim.dmc5Flow || sim.initialD2Flow || sim.lupinDaikoukaishaFlow || sim.toloveruDarknessFlow || sim.biohazard5Flow || sim.goldenKamuyFlow || sim.superBlackjackFlow || sim.magicalHalloween8Flow || sim.gundamSeedFlow || sim.fireForceFlow || sim.fireForce2Flow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
     const gameAddOnStats = sim.karakuriJudgeFlow || coinAddOnCount
       ? [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(coinAddOnTotal || addOnTotal)}枚` : "上乗せなし"]]
       : [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnGamesTotal || otomeAddedGames)}G` : "上乗せなし"]];
@@ -7594,6 +7765,8 @@
         ? [["AT・CZ・特化消化", `${yen.format(rushGamesTotal)}G相当`], ...lupinStats, ["初当りBONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : sim.toloveruDarknessFlow
         ? [["ST・BONUS消化", `${yen.format(rushGamesTotal)}G相当`], ...toloveruStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
+      : sim.biohazard5Flow
+        ? [["AT・特化・上位消化", `${yen.format(rushGamesTotal)}G相当`], ...biohazardStats]
       : sim.goldenKamuyFlow
         ? [["BONUS・AT・上位消化", `${yen.format(rushGamesTotal)}G相当`], ...goldenKamuyStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : sim.superBlackjackFlow
@@ -7644,6 +7817,8 @@
         ? `今回の設定は設定${setting}。${games}GでICPO CHALLENGEに成功し、${lupinEntryLine?.label || "7揃い"}。${entered ? `初期${lupinInitialGames}GからSUPER HEROを${lupinAtSections}区間、ルパンゲーム${lupinGameAttempts}回・BIG CHANCE ${lupinBigChanceCount}回を消化して${yen.format(payout)}枚を獲得しました。${upper ? `俺の名はルパン三世ゾーンを突破し、盗り放題 SUPER HERO ${lupinUpperGames}Gへ到達しました。` : lupinUpperZoneAttempts ? "上位ジャッジ失敗後、通常SUPER HEROを100G以上消化しました。" : "SUPER HEROは残り0Gで終了しました。"}` : `キャラBONUSで${yen.format(payout)}枚を獲得し、SUPER HEROには届きませんでした。`}`
       : sim.toloveruDarknessFlow
         ? `今回の設定は設定${setting}。${games}Gで${toloveruCz?.label || "CZ"}に成功し、${toloveruInitialBonus?.label || "初当りBONUS"}から楽園計画へ。ヒロイン${toloveruHeroineCount}/6人を攻略、プレゼントちゃんす${toloveruPresentCount}回で${yen.format(payout)}枚を獲得しました。${toloveruUpperLoops ? `ハーレムモードへ到達し、BONUSを${toloveruUpperLoops}回獲得しました。` : toloveruUpperJudgeAttempts ? "上位ジャッジを経て楽園計画が終了しました。" : "楽園計画は10G＋αで終了しました。"}`
+      : sim.biohazard5Flow
+        ? `今回の設定は設定${setting}。${games}Gで${biohazardCz?.label || "CZ"}、${entered ? `HAZARD RUSHを${biohazardAtSections}区間消化し、上乗せ${biohazardAddCount}回・合計+${biohazardAddGames}Gで${yen.format(payout)}枚を獲得しました。${biohazardUpperStages ? `クライマックスウェスカーゾーンを突破し、プレミアムHAZARD RUSHを${biohazardUpperStages}ステージ消化しました。` : biohazardUpperCzAttempts ? "クライマックスウェスカーゾーンで終了しました。" : `EPISODE ${biohazardEpisodeCount}/${Number(sim.bioEpisodeTarget) || 10}話でATが終了しました。`}` : `${biohazardCz?.label || "CZ"}は突破できませんでした。`}`
       : sim.goldenKamuyFlow
         ? `今回の設定は設定${setting}。${games}Gで${goldenKamuyInitialBonus?.label || sim.triggerLabel}、${entered ? `黄金神威を${goldenKamuyAtSections}区間、ゲーム数上乗せ${goldenKamuyAddCount}回・合計+${goldenKamuyAddGames}Gで${yen.format(payout)}枚を獲得しました。${goldenKamuyUpperSections ? `2000枚到達後にGOLDEN ROADを通過し、真・黄金神威を${goldenKamuyUpperSections}区間消化しました。` : "黄金神威は残り0Gで終了しました。"}` : `${goldenKamuyInitialBonus?.label || "初当りBONUS"}で${yen.format(payout)}枚を獲得し、黄金神威には届きませんでした。`}`
       : sim.superBlackjackFlow
@@ -7695,7 +7870,7 @@
         ? (Number(sim.kabaneriUpperRareContinue) || 0.95)
         : (Number(sim.kabaneriUpperNormalContinue) || 0.80)) * 100
       : sim.upperContinue * 100;
-    return { title: `設定${setting}｜${resultTitle}`, summary: resultSummary, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, triggerSucceeded, triggerSuccessChance: sim.basiliskTenzenFlow ? 100 : sim.paripiFlow ? (Number(paripiCz?.chance) || 0) * 100 : sim.sunbreakFlow ? (Number(sunbreakEntry?.chance) || 0) * 100 : sim.goblinSlayerFlow ? (Number(goblinCz?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : sim.lycorisFlow ? (Number(lycorisCz?.chance) || 0) * 100 : triggerSuccess * 100, entryBonusModel: Boolean(sim.basiliskTenzenFlow) || Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0, entryBonus, fireForceEntry, entered, entryChance: entryBonus ? (Number(entryBonus.atChance) || 0) * 100 : sim.paripiFlow ? (Number(paripiCz?.chance) || 0) * 100 : sim.sunbreakFlow ? (Number(sunbreakEntry?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : sim.lycorisFlow ? (Number(lycorisCz?.chance) || 0) * 100 : triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, paripiFlow: Boolean(sim.paripiFlow), paripiCz, sunbreakFlow: Boolean(sim.sunbreakFlow), sunbreakEntry, setPushFlow: Boolean(sim.setPushFlow), karakuriJudgeFlow: Boolean(sim.karakuriJudgeFlow), battleBonusFlow: Boolean(sim.battleBonusFlow), garoBattleFlow: Boolean(sim.garoBattleFlow), ragnadorUpperFlow: Boolean(sim.ragnadorUpperFlow), seiyaTempleFlow: Boolean(sim.seiyaTempleFlow), ggoStFlow: Boolean(sim.ggoStFlow), godzillaEva2Flow: Boolean(sim.godzillaEva2Flow), mahoakoFlow: Boolean(sim.mahoakoFlow), okidokiGoldFlow: Boolean(sim.okidokiGoldFlow), okidokiBlackFlow: Boolean(sim.okidokiBlackFlow), okidokiPureIncrease: Number(sim.atPureIncrease) || 3.0, okidokiBigCount, okidokiRegCount, okidokiMaxChain, okidokiGoldCount, okidokiOneGameCount, okidokiGuaranteeCount, okidokiGodMode, okidokiHighestMode, tokyoGhoulFlow: Boolean(sim.tokyoGhoulFlow), tokyoGhoulCz, tokyoGhoulBattles, tokyoGhoulWins, tokyoGhoulBitesCount, tokyoGhoulSpecialCount, tokyoGhoulArimaBattle, tokyoGhoulArimaWon, tokyoGhoulUpperAt, basiliskTenzenFlow: Boolean(sim.basiliskTenzenFlow), basiliskBc, basiliskScenario, basiliskSets, basiliskBtBcCount, basiliskHighCount, basiliskMoonCount, basiliskGrudgeAttempts, basiliskGrudgeSuccesses, basiliskTenzenSets, sao2Flow: Boolean(sim.sao2Flow), sao2SniperAttempts, sao2SniperWins, sao2LastAttackAttempts, sao2LastAttackSuccesses, sao2DeathGunAttempts, sao2DeathGunWins, sao2UpperSections, sao2ZekkenAward, sao2Ultima, lycorisFlow: Boolean(sim.lycorisFlow), lycorisCz, lycorisRushRoute, lycorisRush20Won, lycorisNormalBonusCount, lycorisPoints, lycorisStResets, lycorisUpperCzAttempts, lycorisUpperCzWins, lycorisUpperSections, lycorisUpperBonusCount, lycorisLegendaryAward, tentenFlow: Boolean(sim.tentenFlow), goblinSlayerFlow: Boolean(sim.goblinSlayerFlow), goblinCz, goblinLoopMode: goblinLoopMode * 100, goblinAtSets, goblinBonusCount, goblinMaxContinueRate, assaultLilyFlow: Boolean(sim.assaultLilyFlow), assaultEntry, assaultBossBattles, assaultBossWins, assaultRewardCount, assaultUpperCz, assaultUpperCzAttempts, assaultUpperCzSuccesses, assaultMaxAddOn, kaguyaFlow: Boolean(sim.kaguyaFlow), kaguyaRegCount, kaguyaBigCount, kaguyaSuperCount, kaguyaOneGameCount, kaguyaReturnCount, kaguyaSpecialCount, kaguyaStockCount, kaguyaMarriageCount, kaguyaExtraGames, dumbbellFlow: Boolean(sim.dumbbellFlow), dumbbellCz, dumbbellNormalGames, dumbbellGameAddCount, dumbbellGameAddTotal, dumbbellGoldenChallenges, dumbbellGoldenSuccesses, dumbbellVStockTotal, dumbbellCoinAddTotal, dumbbellRisingChallenges, sgRaceFlow: Boolean(sim.sgRaceFlow), kabaneriStFlow: Boolean(sim.kabaneriStFlow), otomeRushFlow: Boolean(sim.otomeRushFlow), cycleFlow: Boolean(sim.cycleFlow), cycleRounds, cycleContinues, kabaneriStBonuses, kabaneriUpperMode, otomeAddedGames, otomeBonusCount, otomeAwakeningCount, otomeBattleWon, otomeAddOnChance: (Number(sim.otomeAddOnChance) || 0) * 100, battleBonusSets, battleContinuationRate: battleContinuationRate * 100, sgRushSets, sgScenarioName, karakuriJudgeAttempts, karakuriJudgeSuccesses, karakuriUpperRoute, toloveruDarknessFlow: Boolean(sim.toloveruDarknessFlow), toloveruCz, toloveruInitialBonus, toloveruHeroineCount, toloveruPresentCount, toloveruUpperLoops, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, addOnGamesTotal, coinAddOnCount, coinAddOnTotal, bonusCount, bonusPayoutTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: kabaneriUpperContinueChance, upperChallenge: sim.upperChallenge || "", upper, upperLabel: upperResultLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
+    return { title: `設定${setting}｜${resultTitle}`, summary: resultSummary, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, triggerSucceeded, triggerSuccessChance: sim.basiliskTenzenFlow ? 100 : sim.biohazard5Flow ? (Number(biohazardCz?.chance) || 0) * 100 : sim.paripiFlow ? (Number(paripiCz?.chance) || 0) * 100 : sim.sunbreakFlow ? (Number(sunbreakEntry?.chance) || 0) * 100 : sim.goblinSlayerFlow ? (Number(goblinCz?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : sim.lycorisFlow ? (Number(lycorisCz?.chance) || 0) * 100 : triggerSuccess * 100, entryBonusModel: Boolean(sim.basiliskTenzenFlow) || Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0, entryBonus, fireForceEntry, entered, entryChance: entryBonus ? (Number(entryBonus.atChance) || 0) * 100 : sim.biohazard5Flow ? (Number(biohazardCz?.chance) || 0) * 100 : sim.paripiFlow ? (Number(paripiCz?.chance) || 0) * 100 : sim.sunbreakFlow ? (Number(sunbreakEntry?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : sim.lycorisFlow ? (Number(lycorisCz?.chance) || 0) * 100 : triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, paripiFlow: Boolean(sim.paripiFlow), paripiCz, sunbreakFlow: Boolean(sim.sunbreakFlow), sunbreakEntry, setPushFlow: Boolean(sim.setPushFlow), karakuriJudgeFlow: Boolean(sim.karakuriJudgeFlow), battleBonusFlow: Boolean(sim.battleBonusFlow), garoBattleFlow: Boolean(sim.garoBattleFlow), ragnadorUpperFlow: Boolean(sim.ragnadorUpperFlow), seiyaTempleFlow: Boolean(sim.seiyaTempleFlow), ggoStFlow: Boolean(sim.ggoStFlow), godzillaEva2Flow: Boolean(sim.godzillaEva2Flow), mahoakoFlow: Boolean(sim.mahoakoFlow), okidokiGoldFlow: Boolean(sim.okidokiGoldFlow), okidokiBlackFlow: Boolean(sim.okidokiBlackFlow), okidokiPureIncrease: Number(sim.atPureIncrease) || 3.0, okidokiBigCount, okidokiRegCount, okidokiMaxChain, okidokiGoldCount, okidokiOneGameCount, okidokiGuaranteeCount, okidokiGodMode, okidokiHighestMode, tokyoGhoulFlow: Boolean(sim.tokyoGhoulFlow), tokyoGhoulCz, tokyoGhoulBattles, tokyoGhoulWins, tokyoGhoulBitesCount, tokyoGhoulSpecialCount, tokyoGhoulArimaBattle, tokyoGhoulArimaWon, tokyoGhoulUpperAt, basiliskTenzenFlow: Boolean(sim.basiliskTenzenFlow), basiliskBc, basiliskScenario, basiliskSets, basiliskBtBcCount, basiliskHighCount, basiliskMoonCount, basiliskGrudgeAttempts, basiliskGrudgeSuccesses, basiliskTenzenSets, sao2Flow: Boolean(sim.sao2Flow), sao2SniperAttempts, sao2SniperWins, sao2LastAttackAttempts, sao2LastAttackSuccesses, sao2DeathGunAttempts, sao2DeathGunWins, sao2UpperSections, sao2ZekkenAward, sao2Ultima, lycorisFlow: Boolean(sim.lycorisFlow), lycorisCz, lycorisRushRoute, lycorisRush20Won, lycorisNormalBonusCount, lycorisPoints, lycorisStResets, lycorisUpperCzAttempts, lycorisUpperCzWins, lycorisUpperSections, lycorisUpperBonusCount, lycorisLegendaryAward, tentenFlow: Boolean(sim.tentenFlow), goblinSlayerFlow: Boolean(sim.goblinSlayerFlow), goblinCz, goblinLoopMode: goblinLoopMode * 100, goblinAtSets, goblinBonusCount, goblinMaxContinueRate, assaultLilyFlow: Boolean(sim.assaultLilyFlow), assaultEntry, assaultBossBattles, assaultBossWins, assaultRewardCount, assaultUpperCz, assaultUpperCzAttempts, assaultUpperCzSuccesses, assaultMaxAddOn, kaguyaFlow: Boolean(sim.kaguyaFlow), kaguyaRegCount, kaguyaBigCount, kaguyaSuperCount, kaguyaOneGameCount, kaguyaReturnCount, kaguyaSpecialCount, kaguyaStockCount, kaguyaMarriageCount, kaguyaExtraGames, dumbbellFlow: Boolean(sim.dumbbellFlow), dumbbellCz, dumbbellNormalGames, dumbbellGameAddCount, dumbbellGameAddTotal, dumbbellGoldenChallenges, dumbbellGoldenSuccesses, dumbbellVStockTotal, dumbbellCoinAddTotal, dumbbellRisingChallenges, sgRaceFlow: Boolean(sim.sgRaceFlow), kabaneriStFlow: Boolean(sim.kabaneriStFlow), otomeRushFlow: Boolean(sim.otomeRushFlow), cycleFlow: Boolean(sim.cycleFlow), cycleRounds, cycleContinues, kabaneriStBonuses, kabaneriUpperMode, otomeAddedGames, otomeBonusCount, otomeAwakeningCount, otomeBattleWon, otomeAddOnChance: (Number(sim.otomeAddOnChance) || 0) * 100, battleBonusSets, battleContinuationRate: battleContinuationRate * 100, sgRushSets, sgScenarioName, karakuriJudgeAttempts, karakuriJudgeSuccesses, karakuriUpperRoute, toloveruDarknessFlow: Boolean(sim.toloveruDarknessFlow), toloveruCz, toloveruInitialBonus, toloveruHeroineCount, toloveruPresentCount, toloveruUpperLoops, biohazard5Flow: Boolean(sim.biohazard5Flow), biohazardCz, biohazardAtSections, biohazardInfectionGames, biohazardAddCount, biohazardAddGames, biohazardMutationCount, biohazardUroborosCount, biohazardEpisodeCount, biohazardBurstCount, biohazardUpperCzAttempts, biohazardUpperCzWins, biohazardUpperStages, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, addOnGamesTotal, coinAddOnCount, coinAddOnTotal, bonusCount, bonusPayoutTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: kabaneriUpperContinueChance, upperChallenge: sim.upperChallenge || "", upper, upperLabel: upperResultLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
   }
 
   function createATypeSession(setting) {
@@ -8369,6 +8544,7 @@
     const initialD2Flow = Boolean(machine.sim.initialD2Flow);
     const lupinDaikoukaishaFlow = Boolean(machine.sim.lupinDaikoukaishaFlow);
     const toloveruDarknessFlow = Boolean(data.toloveruDarknessFlow || machine.sim.toloveruDarknessFlow);
+    const biohazard5Flow = Boolean(data.biohazard5Flow || machine.sim.biohazard5Flow);
     const goldenKamuyFlow = Boolean(machine.sim.goldenKamuyFlow);
     const superBlackjackFlow = Boolean(machine.sim.superBlackjackFlow);
     const magicalHalloween8Flow = Boolean(machine.sim.magicalHalloween8Flow);
@@ -8414,6 +8590,8 @@
       setExperienceStage(1, "ICPO CHALLENGE", "銭形から逃げ切れ", `${yen.format(data.attempts)}G`, "8Gを進め、PUSHで初当り7揃いを開きます", "hit", Number(machine.sim.lupinCzSuccessRates?.[data.setting]) * 100 || 43.3, "機種専用8G CZ");
     } else if (toloveruDarknessFlow) {
       setExperienceStage(1, "CHANCE ZONE", data.toloveruCz?.label || "とらぶるCZ", `${yen.format(data.attempts)}G`, "CZを最後まで進め、PUSHで初当りBONUSを開きます", "hit", Number(data.toloveruCz?.chance) * 100 || 40, "バルーン／スイート／ぷっちゅん");
+    } else if (biohazard5Flow) {
+      setExperienceStage(1, data.biohazardCz?.direct ? "DIRECT AT" : data.biohazardCz?.key === "wesker" ? "WESKER ZONE" : "PANIC ZONE", data.biohazardCz?.label || "CHANCE ZONE", `${yen.format(data.attempts)}G`, "専用ゲーム数を進め、最後のPUSHでHAZARD RUSH当落を開きます", "hit", Number(data.biohazardCz?.chance) * 100 || 37, "パニック／ウェスカー／AT直撃");
     } else if (goldenKamuyFlow) {
       setExperienceStage(1, "INITIAL BONUS", data.entryBonus?.label || data.hitLabel, `${yen.format(data.attempts)}G`, "PUSHでBONUS種類と黄金神威の当落を開きます", "hit", 100, "KAMUY BONUS／決戦BONUS");
     } else if (superBlackjackFlow) {
@@ -8705,6 +8883,76 @@
         }
       }
       setSlotAtStatus({ visible: true, remaining: 0, remainingUnit: "G", addOnGames: 0, total: Number(data.payout) || 0 });
+      return;
+    }
+    if (biohazard5Flow) {
+      const events = Array.isArray(data.atEvents) ? data.atEvents : [];
+      for (const event of events) {
+        if (runId !== experienceRunId) return;
+        setSlotAtStatus({ visible: true, remaining: Math.max(0, Number(event.remaining ?? event.games) || 0), remainingUnit: "G", addOnGames: Math.max(0, Number(event.addGames) || 0), total: Number(event.cumulative) || 0 });
+        setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+        if (event.kind === "biohazard-cz") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 10), "G", event.direct ? "DIRECT HAZARD" : event.key === "wesker" ? "WESKER ZONE" : "PANIC ZONE", event.label, event.direct ? "AT直撃ルート" : "最終ゲームまで当落を伏せます", Number(event.chance) * 100 || 37, "消化後にPUSH", runId);
+          if (!complete) return;
+          setExperienceStage(2, "CZ FINAL", `${event.label} 最終ゲーム`, "PUSH", "HAZARD RUSHの当落を開きます", "judge", Number(event.chance) * 100 || 37, event.key === "wesker" ? "メーター最終ジャッジ" : "フリーズ発生でAT");
+          await waitForExperienceAction(`${event.label} PUSH`, 5000, event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(2, event.won ? "HAZARD RUSH" : "CZ FAILURE", event.won ? "AT当選" : `${event.label}失敗`, event.won ? "50G＋α" : "RESULT", event.won ? "ゲーム数管理ATへ" : "通常へ", event.won ? "rush" : "end", event.won ? 100 : 0, "CZ結果");
+          await waitForExperience(700);
+        } else if (event.kind === "biohazard-at-start") {
+          setExperienceStage(2, "HAZARD RUSH", "AT開始", `${yen.format(event.games)}G`, "純増約2.5枚/G・ゲーム数上乗せ型", "rush", 100, "残りゲーム数を表示");
+          await waitForExperience(750);
+        } else if (event.kind === "biohazard-infection") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 5), "G", "INFECTION", event.label, "毎ゲーム上乗せ・合計を伏せます", Number(event.chance) || 33.2, "5G＋α消化後にPUSH", runId);
+          if (!complete) return;
+          setExperienceStage(3, "INFECTION RESULT", event.label, "PUSH", "初期ゲーム数上乗せを開きます", "judge", 100, "平均上乗せ約130G");
+          await waitForExperienceAction("インフェクション PUSH", 5000, Number(event.addGames) >= 200 ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, "INITIAL ADD", "インフェクション上乗せ", `+${yen.format(event.addGames)}G`, `残り${yen.format(event.remaining)}G`, Number(event.addGames) >= 200 ? "hyper" : "rush", 100, "ゲーム数上乗せ");
+          await waitForExperience(750);
+        } else if (event.kind === "biohazard-at") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 10), "G", "HAZARD RUSH", `残り ${yen.format(event.remainingBefore)}G`, "上乗せ・EPISODE・SBを抽選", 50, `消化後 残り${yen.format(event.remaining)}G`, runId);
+          if (!complete) return;
+        } else if (event.kind === "biohazard-add") {
+          setExperienceStage(3, event.mutation ? "MUTATION" : event.multiplier > 1 ? "MULTIPLICATION" : "GAME ADD", event.mutation ? "変異発生" : event.multiplier > 1 ? `${event.baseGames}Gが増殖` : "ゲーム数上乗せ", "PUSH", "上乗せゲーム数を開きます", "judge", 100, "獲得枚数とは別表示");
+          await waitForExperienceAction(`${event.label} PUSH`, 5000, event.mutation || Number(event.addGames) >= 100 ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.mutation ? "MUTATION ADD" : event.multiplier > 1 ? "MULTIPLY ADD" : "DIRECT ADD", event.label, `+${yen.format(event.addGames)}G`, `残り${yen.format(event.remaining)}G`, event.mutation || Number(event.addGames) >= 100 ? "hyper" : "rush", 100, event.multiplier > 1 ? `${event.baseGames}G × ${event.multiplier}` : "ゲーム数上乗せ");
+          await waitForExperience(700);
+        } else if (event.kind === "biohazard-uroboros") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 10), "G", "UROBOROS MODE", event.label, "レア小役確率 約1/5.30", 100, "終了後にPUSH", runId);
+          if (!complete) return;
+          setExperienceStage(3, "UROBOROS RESULT", event.label, "PUSH", "獲得した上乗せを開きます", "judge", 100, "レア小役高確率状態");
+          await waitForExperienceAction("ウロボロスモード PUSH", 5000, Number(event.addGames) >= 50 ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, "UROBOROS ADD", event.label, `+${yen.format(event.addGames)}G`, `残り${yen.format(event.remaining)}G`, "rush", 100, "ゲーム数上乗せ");
+          await waitForExperience(700);
+        } else if (event.kind === "biohazard-episode") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 10), "G", "EPISODE", event.label, `進行 ${event.episode}/${event.target}話`, 100, "全10話で上位CZ", runId);
+          if (!complete) return;
+        } else if (event.kind === "biohazard-burst") {
+          setExperienceStage(3, "SHOOTING BURST", "BAR揃い・特化ゾーン", "PUSH", "最終上乗せゲーム数を開きます", "judge", 100, "平均上乗せ約126G");
+          await waitForExperienceAction("シューティングバースト PUSH", 5000, Number(event.addGames) >= 200 ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, "BURST RESULT", event.label, `+${yen.format(event.addGames)}G`, `残り${yen.format(event.remaining)}G`, Number(event.addGames) >= 200 ? "hyper" : "rush", 100, "上乗せ特化ゾーン");
+          await waitForExperience(800);
+        } else if (event.kind === "biohazard-upper-cz") {
+          const complete = await animateExperienceCounter(Math.max(19, Number(event.games) || 19), "G", "CLIMAX WESKER ZONE", event.reason, "上位AT期待度を積み上げます", Number(event.chance) || 60, "最終ゲームにPUSH", runId);
+          if (!complete) return;
+          setExperienceStage(4, "CLIMAX FINAL", event.label, "PUSH", "プレミアムHAZARD RUSHの当落を開きます", "judge", Number(event.chance) || 60, "成功期待度約60%");
+          await waitForExperienceAction("クライマックスウェスカーゾーン PUSH", 5000, event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(4, event.won ? "PREMIUM HAZARD" : "CLIMAX FAILURE", event.won ? "上位AT当選" : "上位CZ失敗", event.won ? "PURE 4.0" : "RESULT", event.won ? "ステージ3まで継続保障" : `累計${yen.format(event.cumulative)}枚`, event.won ? "hyper" : "end", event.won ? 100 : 0, "上位CZ結果");
+          await waitForExperience(850);
+        } else if (event.kind === "biohazard-upper") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 120), "G", "PREMIUM HAZARD RUSH", `STAGE ${event.stage}`, `純増約4.0枚/G・+${yen.format(event.award)}枚`, Number(event.chance) || 70, event.guaranteed ? "継続保障ステージ" : "継続抽選ステージ", runId);
+          if (!complete) return;
+        } else if (event.kind === "biohazard-end") {
+          setExperienceStage(4, "RUSH END", event.label, "RESULT", `EPISODE ${event.episodes}/${Number(machine.sim.bioEpisodeTarget) || 10}・累計${yen.format(event.cumulative)}枚`, "end", 0, "最終結果へ");
+          await waitForExperience(850);
+        }
+      }
+      setSlotAtStatus({ visible: true, remaining: 0, remainingUnit: "G", addOnGames: Number(data.addOnGamesTotal) || 0, total: Number(data.payout) || 0 });
       return;
     }
     if (bancho4Flow) {
@@ -12248,7 +12496,7 @@
     if (runId !== experienceRunId) return;
     addMachinePlaySessionResult(result);
     if (result.experience.kind === "slot" && result.experience.entered) {
-      const gameManagedResult = Boolean(machine.sim.bancho4Flow || machine.sim.zenigata4Flow || machine.sim.goldenKamuyFlow || machine.sim.lupinDaikoukaishaFlow || machine.sim.toloveruDarknessFlow);
+      const gameManagedResult = Boolean(machine.sim.bancho4Flow || machine.sim.zenigata4Flow || machine.sim.goldenKamuyFlow || machine.sim.lupinDaikoukaishaFlow || machine.sim.toloveruDarknessFlow || machine.sim.biohazard5Flow);
       setSlotAtStatus({ visible: true, remaining: 0, remainingUnit: result.experience.assaultLilyFlow ? "枚" : "G", addOn: Number(result.experience.coinAddOnTotal) || Number(result.experience.addOnTotal) || 0, addOnGames: gameManagedResult ? Number(result.experience.addOnGamesTotal) || 0 : null, total: result.payout });
     }
     setExperienceStage(4, "FINAL RESULT", result.title, result.experience.finalValue || `${yen.format(result.payout)}${result.scoreKind === "coins" ? "枚" : "玉"}`, `今回の収支 ${result.balanceYen >= 0 ? "+" : ""}${yen.format(result.balanceYen)}円 / 今回の差${result.scoreKind === "coins" ? "枚" : "玉"} ${result.score >= 0 ? "+" : ""}${yen.format(result.score)}`, result.complete ? "complete" : result.experience.kind === "juggler" ? (result.score >= 0 ? "rush" : "end") : result.experience.upper ? "hyper" : result.experience.entered ? "rush" : "end", 100, "今回の最終結果");
