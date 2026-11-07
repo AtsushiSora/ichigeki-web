@@ -15713,6 +15713,8 @@ textarea { min-height: 132px; line-height: 1.65; }
   .machine-atype-button { min-height: 66px; border-radius: 16px; }
   .machine-experience-finish-button { min-height: 60px; border-radius: 15px; }
   .machine-experience-result-stats { grid-template-columns: 1fr 1fr; }
+  .machine-experience.is-fullscreen[data-step="4"] { grid-template-rows: auto auto auto auto auto auto; align-content: start; }
+  .machine-experience.is-fullscreen[data-step="4"] .machine-experience-screen { min-height: 350px; align-content: start; padding-top: 24px; }
   .machine-start-button.is-sticky { left: calc(50% - 47px); bottom: calc(10px + env(safe-area-inset-bottom)); width: calc(100vw - 114px); }
   .machine-start-button.is-sticky.is-solo-sticky {
     right: 12px;

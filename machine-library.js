@@ -4537,7 +4537,7 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
       roundDetail: "対戦区間を最後まで進め、PUSHで勝敗と報酬を開きます"
     },
     st: {
-      slugs: ["kanokari-slot", "aobuta-slot", "bofuri-slot", "azur-lane-slot", "magia-record-slot", "toaru-index2-slot", "darling-in-the-franxx-slot", "dmc5-st-slot", "initial-d-2nd-slot"],
+      slugs: ["aobuta-slot", "bofuri-slot", "azur-lane-slot", "magia-record-slot", "toaru-index2-slot", "darling-in-the-franxx-slot", "dmc5-st-slot", "initial-d-2nd-slot"],
       phaseLabel: "ST FLOW",
       resultContinue: "ST CONTINUE",
       resultEnd: "ST END",
@@ -4838,6 +4838,74 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
     upperPayout: 0,
     upperPureIncrease: 8.4,
     settingRates: { 1: { trigger: 198.7, main: 328.8, payout: 0.979 }, 2: { trigger: 196.9, main: 323.4, payout: 0.989 }, 3: { trigger: 191.3, main: 312.1, payout: 1.013 }, 4: { trigger: 183.3, main: 288.3, payout: 1.061 }, 5: { trigger: 175.9, main: 271.6, payout: 1.104 }, 6: { trigger: 169.4, main: 256.7, payout: 1.146 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
+(function applyKanokariDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["kanokari-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "CZから疑似BONUSへ。2Gの1GレンCHANCEと66G引き戻しでガチ恋ループをつなぐ。",
+    intro: "15G＋α・約56%のレンカノCHALLENGE、10G・約75%の妄想DTチャレンジから純増約5.0枚/Gの疑似BONUSへ。BONUS中のストック、2Gの1GレンCHANCE、4回ごとのエピソード、66G引き戻し、ななかりDREAMとS級出玉トリガーまでを実機順に体験できます。",
+    points: ["レンカノCHALLENGEは15G＋α・成功期待度約56%", "1GレンCHANCEは1セット2G・成功期待度約40%", "BONUS後66Gは通常約25%・ユメカノモード約58%で引き戻し"],
+    specs: [["CZ（設定1）", "約1/172"], ["BONUS初当り（設定1）", "約1/269"], ["BONUS初当り（設定6）", "約1/226"], ["レンカノCHALLENGE", "15G＋α・約56%"], ["妄想DTチャレンジ", "10G・約75%"], ["REGULAR BONUS", "ベルナビ10回・約70枚"], ["かのかりBONUS", "30G・約150枚"], ["BONUS純増", "約5.0枚/G"], ["1GレンCHANCE", "2G・約40%"], ["1G恋", "BONUS濃厚"], ["ななかりDREAM", "平均約80G・期待約550枚"], ["引き戻しゾーン", "66G・約25%"], ["ユメカノモード", "66G・約58%"], ["DREAM TIME", "15G・平均約2.5ストック"], ["S級ななかりDREAM", "平均約280G"], ["S級DREAM TIME", "平均約6ストック"], ["ベース", "約31.0G/50枚"], ["設定", "1〜6"]],
+    articleSections: [
+      { heading: "通常時と2種類のCZ", paragraphs: ["通常時は100G・300Gなど百の位が奇数のゾーン、レア役、小役変換からCZまたはBONUSを目指します。ハートメーターMAX時は小役変換高確へ移行し、チャンス目を強チャンス目・ガチ恋目へ変換する可能性があります。", "レンカノCHALLENGEは15G＋α・約56%で、小役成立時にオーラ色を上げて最終PUSHへ。妄想DTチャレンジは10G・約75%で、小役ごとにBONUSを一発抽選します。"] },
+      { heading: "REG・かのかりBONUS・ななかりDREAM", paragraphs: ["REGはベルナビ10回・約70枚、かのかりBONUSは30G・約150枚。どちらも純増約5.0枚/Gで、消化中は1GレンCHANCEまたは成功濃厚の1G恋ストックを抽選します。初当りBIGはレンCHANCEを1個持って開始します。", "金7揃いのななかりDREAMは平均約80Gのゲーム数上乗せ後にかのかりBONUSへ進む2部構成。平均期待枚数約550枚として、上乗せゲーム数とBONUS出玉を別イベントで表示します。"] },
+      { heading: "1GレンCHANCEとエピソードBONUS", paragraphs: ["1GレンCHANCEは1セット2G・成功期待度約40%。1G目は小役でチャンス、2G目は小役成立でBONUS濃厚です。1G恋ストックは成功濃厚として同じ2Gを進め、レア役成功時はななかりDREAMも抽選します。", "成功4回目はヒロインエピソード、8回目はスペシャルエピソードが濃厚。通常へ戻らずに5回連続で失敗した場合は、6回目の1GレンCHANCEを成功濃厚として扱います。"] },
+      { heading: "66G引き戻しとユメカノモード", paragraphs: ["ストック消化後はBONUS終了から66G以内の引き戻し区間へ。通常は約25%、ユメカノモードは約58%でかのかりBONUS以上への復帰を判定します。", "スペシャルエピソードやDREAM TIME後はユメカノモードへ進み、引き戻し成功時はななかりDREAM・S級出玉トリガーにも期待できる専用イベントとして表示します。"] },
+      { heading: "DREAM TIMEとS級出玉トリガー", paragraphs: ["エンディング後のDREAM TIMEは15G・平均約2.5ストックで、突入時に1G恋を1個獲得。獲得ストックを使った後はユメカノモードへ進みます。", "S級ななかりDREAMは平均約280G、S級DREAM TIMEは平均約6ストック。公開されていない突入率、BONUS振り分け、追加ストック率は、公開平均から大きく外れない体験用代表値です。"] },
+      { heading: "固定条件と収支", bullets: ["約31.0G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6から均等抽選", "BONUS枚数・ストック・1G連成功回数を別表示", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["SANKYO 公式機種情報", "https://www.sankyo-fever.jp/products/machine_list/szf/?r=portal"], ["SANKYO 開発こぼれ話", "https://www.secret-story.sankyo-fever.jp/product/szf"], ["一撃 かのかり解析", "https://1geki.jp/slot/l_kanokari/"], ["一撃 1GレンCHANCE解析", "https://1geki.jp/slot/l_kanokari/81/"]],
+    readerGuide: {
+      verdict: "疑似BONUS中にストックを集め、2G・約40%の1GレンCHANCEと66G引き戻しでBONUSをつなぐガチ恋ループ型です。",
+      bestFor: ["BONUS後の2GジャッジをPUSHで繰り返したい", "通常ストックと成功濃厚の1G恋を比べたい", "4回目エピソードからユメカノ・S級を目指したい"],
+      check: ["CZ・BONUS・1G連・引き戻しの主要値は公開値", "ストック数やBONUS種別比率は代表値", "旧5区間の汎用STフローは廃止"],
+      compare: [["kaguya-sama-slot", "スマスロ かぐや様", "疑似BONUS連と引き戻しを比較"], ["lycoris-recoil-slot", "スマスロ リコリコ", "BONUS連打型RUSHと比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v9",
+    dedicatedFlow: true,
+    dedicatedFlowKey: "kanokari-slot",
+    dedicatedFlowVersion: 2,
+    kanokariFlow: true,
+    triggerLabel: "CZ（レンカノCHALLENGE／妄想DTチャレンジ）",
+    triggerRate: 172,
+    triggerSuccess: 0.56,
+    mainLabel: "かのかりBONUS",
+    mainRate: 269,
+    base50: 31.0,
+    normalMin: 0,
+    normalMax: 0,
+    atPureIncrease: 5.0,
+    atPayoutVariance: 0,
+    kanokariCzRoutes: [[{ key: "rental", label: "レンカノCHALLENGE", games: 15, chance: 0.56 }, 0.84], [{ key: "delusion", label: "妄想DTチャレンジ", games: 10, chance: 0.75 }, 0.13], [{ key: "direct", label: "BONUS直撃", games: 1, chance: 1 }, 0.03]],
+    kanokariInitialBonuses: [[{ key: "reg", label: "REGULAR BONUS", games: 14, payout: 70 }, 0.36], [{ key: "big", label: "かのかりBONUS", games: 30, payout: 150 }, 0.59], [{ key: "dream", label: "ななかりDREAM", games: 80, payout: 400, bonusPayout: 150 }, 0.05]],
+    kanokariRentChance: 0.40,
+    kanokariReturnChance: 0.25,
+    kanokariYumekanoChance: 0.58,
+    kanokariDreamChance: 0.08,
+    kanokariAllLoveChance: 0.07,
+    kanokariDreamTimeThreshold: 1800,
+    kanokariDreamTimeStocks: [[2, 0.40], [3, 0.38], [4, 0.17], [5, 0.05]],
+    kanokariSDreamTimeStocks: [[4, 0.20], [5, 0.25], [6, 0.28], [7, 0.17], [8, 0.10]],
+    kanokariSDreamTimeChance: 0.03,
+    kanokariSDreamChance: 0.04,
+    specialLabel: "ななかりDREAM／ALL1G恋変換",
+    specialChance: 0.18,
+    upperChallenge: "S級出玉トリガー",
+    upperChance: 0,
+    upperSuccess: 0.03,
+    upperLabel: "S級DREAM TIME",
+    upperContinue: 0.92,
+    upperPayout: 0,
+    upperPureIncrease: 5.0,
+    settingRates: { 1: { trigger: 172, main: 269, payout: 0.977 }, 2: { trigger: 169, main: 263, payout: 0.987 }, 3: { trigger: 164, main: 254, payout: 1.010 }, 4: { trigger: 154, main: 235, payout: 1.055 }, 5: { trigger: 151, main: 231, payout: 1.104 }, 6: { trigger: 149, main: 226, payout: 1.149 } }
   });
   delete machine.sim.cycleFlow;
   delete machine.sim.titleFlow;
