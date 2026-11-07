@@ -363,6 +363,14 @@
         ["黄金AT", "約5.0枚/G", "絶唱バトル約60%"]
       ];
       note = "残りゲーム数、ギアVチャンスの装者獲得、キャラ別ギアVアタック、絶唱、上位ATと絶唱バトルを個別に記録します。";
+    } else if (sim.bancho4Flow) {
+      items = [
+        ["初当り", `約1/${sim.triggerRate}`, "REG／赤7／青7番長BONUS"],
+        ["頂RISE", "50G＋α", "純増約2.7枚/G"],
+        ["上乗せ", "対決・轟雷光・絶頂対決", "PUSHで個別表示"],
+        ["上位AT", "超番長BONUS後", "純増約4.5枚/G"]
+      ];
+      note = "特訓・対決、3種類のBONUS、50G＋αの頂RISE、対決報酬、轟雷光、頂RISE UP、絶頂対決、超番長BONUS、エンブレムモードを機種専用で記録します。";
     } else if (sim.goldenKamuyFlow) {
       items = [
         ["初当り", `約1/${sim.triggerRate}`, "KAMUY／決戦BONUS"],
@@ -1183,6 +1191,15 @@
         cards.splice(4, 0, ["BALANCE MODEL", "専用フローの抽選目安", `${profileNames[titleFlow.profile] || "機種専用型"}として、AT突入後は平均約${Number(titleFlow.balance.averageRounds).toFixed(1)}区間進行します。通常フローから${sim.upperLabel}へ到達する代表目安は約${percent(titleFlow.balance.upperRoute)}です。公開値と機種別の代表値から計算した比較用の目安で、実戦結果を保証するものではありません。`]);
       }
       note = `${cycle.label || sim.mainLabel}の区間順序、代表報酬、継続判定を${titleFlow ? "機種専用フローで" : "個別に"}表示する体験モデルです。成立役別抽選、内部状態、全報酬振り分けは短時間で比較できる形へ簡略化しています。`;
+    } else if (sim.bancho4Flow) {
+      cards = [
+        ["NORMAL", "特訓→対決", "通常回転の後、対決最終ゲームのPUSHで3種類の初当りBONUSを開きます。"],
+        ["3 BONUS", "REG 15G／赤7・青7 30G＋α", "赤7はAT期待度約42%、青7は約82%。BONUS獲得枚数とAT当落を分けて表示します。"],
+        ["ITADAKI RISE", "50G＋α・純増約2.7枚/G", "10Gごとに残りゲームを減らし、対決のPUSHで上乗せ・BONUS・特化ゾーンを開きます。"],
+        ["SPECIAL", "轟雷光／絶頂対決／頂RISE UP", "特化ゾーンはセットごと、頂RISE UPは32G消化後にPUSHを表示します。"],
+        ["EMBLEM", "超番長BONUS後", "50Gの超番長BONUS後は純増約4.5枚/Gのエンブレムモードへ進みます。"]
+      ];
+      note = "ゲーム数上乗せとBONUS獲得枚数を同時に見せず、対決結果ごとに別表示します。未公表の細かな振り分けは体験用代表値です。";
     } else if (sim.goldenKamuyFlow) {
       cards = [
         ["INITIAL BONUS", "11G／30G", "KAMUY BONUS／決戦BONUS"],
@@ -1501,7 +1518,7 @@
       const averageInvestment = Math.round((machine.sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
-      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow || machine.sim.millionGodFlow || machine.sim.juohFlow || machine.sim.sunbreakFlow || machine.sim.paripiFlow || machine.sim.goldenKamuyFlow || machine.sim.superBlackjackFlow || machine.sim.magicalHalloween8Flow || machine.sim.gundamSeedFlow || machine.sim.fireForceFlow || machine.sim.fireForce2Flow;
+      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow || machine.sim.millionGodFlow || machine.sim.juohFlow || machine.sim.sunbreakFlow || machine.sim.paripiFlow || machine.sim.bancho4Flow || machine.sim.goldenKamuyFlow || machine.sim.superBlackjackFlow || machine.sim.magicalHalloween8Flow || machine.sim.gundamSeedFlow || machine.sim.fireForceFlow || machine.sim.fireForce2Flow;
       const settingModelLabel = machine.sim.settingRates
         ? hasDedicatedFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
         : hasDedicatedFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
@@ -1587,7 +1604,7 @@
         ? Math.max(1, mainRate * sim.triggerRate / sim.mainRate)
         : Math.max(1, sim.triggerRate * profile.rate);
     const publishedEntry = Number(publishedSetting?.entry);
-    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.goldenKamuyFlow || sim.superBlackjackFlow || sim.magicalHalloween8Flow || sim.gundamSeedFlow || sim.fireForceFlow || sim.fireForce2Flow
+    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.bancho4Flow || sim.goldenKamuyFlow || sim.superBlackjackFlow || sim.magicalHalloween8Flow || sim.gundamSeedFlow || sim.fireForceFlow || sim.fireForce2Flow
       ? Math.max(0, Math.min(1, Number(sim.triggerSuccess) || 0.55))
       : sim.godzillaEva2Flow || sim.mahoakoFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.shinEvaFlow
       ? 1
@@ -1603,7 +1620,7 @@
       ? Math.min(0.98, Number(publishedSetting.upper))
       : hasPublishedSettingRates ? sim.upperChance : Math.min(0.98, sim.upperChance + profile.upper);
     const settingModelLabel = hasPublishedTriggerRate && hasPublishedMainRate
-      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.darlingFranxxFlow ? "公開設定別値（CZ・BONUS・高確初当り）" : sim.godEaterFlow ? "公開設定別値（AT初当り・機種専用進行）" : sim.millionGodFlow ? "公開設定別値（GG初当り・機種専用進行）" : sim.juohFlow ? "公開設定別値（SC初当り・機種専用進行）" : sim.sunbreakFlow ? "公開設定別値（CZ・AT初当り・機種専用進行）" : sim.paripiFlow ? "公開設定別値（CZ3種・BONUS初当り・ST進行）" : sim.goldenKamuyFlow ? "公開設定別値（BONUS・AT初当り・上乗せAT）" : sim.superBlackjackFlow ? "公開設定別値（BONUS・RC高確・ST進行）" : sim.magicalHalloween8Flow ? "公開設定別値（BONUS・ART初当り・ストック進行）" : sim.gundamSeedFlow ? "公開設定別値（CZ・BONUS・ST・上位AT）" : sim.fireForceFlow ? "公開設定別値（初当り・BONUS・炎炎ループ）" : sim.fireForce2Flow ? "公開設定別値（BONUS・炎炎ループ初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
+      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.darlingFranxxFlow ? "公開設定別値（CZ・BONUS・高確初当り）" : sim.godEaterFlow ? "公開設定別値（AT初当り・機種専用進行）" : sim.millionGodFlow ? "公開設定別値（GG初当り・機種専用進行）" : sim.juohFlow ? "公開設定別値（SC初当り・機種専用進行）" : sim.sunbreakFlow ? "公開設定別値（CZ・AT初当り・機種専用進行）" : sim.paripiFlow ? "公開設定別値（CZ3種・BONUS初当り・ST進行）" : sim.bancho4Flow ? "公開設定別値（初当り・機種専用進行）" : sim.goldenKamuyFlow ? "公開設定別値（BONUS・AT初当り・上乗せAT）" : sim.superBlackjackFlow ? "公開設定別値（BONUS・RC高確・ST進行）" : sim.magicalHalloween8Flow ? "公開設定別値（BONUS・ART初当り・ストック進行）" : sim.gundamSeedFlow ? "公開設定別値（CZ・BONUS・ST・上位AT）" : sim.fireForceFlow ? "公開設定別値（初当り・BONUS・炎炎ループ）" : sim.fireForce2Flow ? "公開設定別値（BONUS・炎炎ループ初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
       : hasPublishedMainRate
         ? sim.bofuriFlow ? "公開設定別値（BONUS初当り）＋機種専用進行" : "公開設定別値（初当り）＋CZ簡易換算"
         : "サイト共通補正モデル";
@@ -1871,6 +1888,17 @@
     let paripiUpperLoops = 0;
     let paripiUltimateAttempts = 0;
     let paripiUltimateLoops = 0;
+    let banchoInitialBonus = null;
+    let banchoAtSections = 0;
+    let banchoBattleCount = 0;
+    let banchoBattleWins = 0;
+    let banchoAddCount = 0;
+    let banchoAddGames = 0;
+    let banchoBonusCount = 0;
+    let banchoGoraikoSets = 0;
+    let banchoZetchouWins = 0;
+    let banchoRiseUpCount = 0;
+    let banchoUpperSections = 0;
     let goldenKamuyInitialBonus = null;
     let goldenKamuyAtSections = 0;
     let goldenKamuyAddCount = 0;
@@ -1954,6 +1982,29 @@
     let sunbreakPurificationAttempts = 0;
     let sunbreakPurificationWins = 0;
     let sunbreakMaxMonster = "未遭遇";
+    if (sim.bancho4Flow) {
+      const banchoBonuses = Array.isArray(sim.banchoBonuses) ? sim.banchoBonuses : [{ key: "red", label: "赤7番長BONUS", games: 30, atChance: 0.42 }];
+      const banchoWeights = sim.banchoBonusWeights?.[setting] || [0.50, 0.488, 0.012];
+      const directRate = Number(sim.banchoDirectRates?.[setting]) || 6411;
+      const directChance = Math.max(0, Math.min(0.20, triggerRate / directRate));
+      const directAt = Math.random() < directChance;
+      banchoInitialBonus = directAt
+        ? { key: "direct", label: "頂RISE直撃", games: 1, atChance: 1, direct: true }
+        : weighted(banchoBonuses.map((bonus, index) => [bonus, Number(banchoWeights[index]) || 0]));
+      const bonusGames = Math.max(1, Number(banchoInitialBonus.games) || 30);
+      payout = directAt ? 0 : Math.max(0, slotAwardForGames(bonusGames, Number(sim.atPureIncrease) || 2.7, 0));
+      bonusCount = directAt ? 0 : 1;
+      banchoBonusCount = directAt ? 0 : 1;
+      bonusPayoutTotal = payout;
+      atGamesTotal = directAt ? 0 : bonusGames;
+      triggerSucceeded = directAt || Math.random() < Math.max(0, Math.min(1, Number(banchoInitialBonus.atChance) || 0.42));
+      entered = triggerSucceeded;
+      entryBonus = { ...banchoInitialBonus, payout, atChance: Number(banchoInitialBonus.atChance) || 0.42, outcome: entered ? "頂RISE突入" : "通常へ" };
+      atEvents.push({ kind: "bancho-initial", ...banchoInitialBonus, award: payout, won: entered, cumulative: payout });
+      flow[0] = `${games}Gで特訓・対決勝利`;
+      flow.push(directAt ? "通常時から頂RISE直撃" : `${banchoInitialBonus.label} ${bonusGames}G・+${yen.format(payout)}枚`);
+      flow.push(`頂RISE抽選 ${entered ? "成功" : "失敗"}`);
+    }
     if (sim.goldenKamuyFlow) {
       goldenKamuyInitialBonus = weighted(sim.goldenKamuyBonuses || [[{ key: "battle", label: "決戦BONUS", games: 30, award: 135 }, 1]]);
       payout = Math.max(0, Number(goldenKamuyInitialBonus.award) || 50);
@@ -3213,6 +3264,132 @@
             atGamesTotal += 40;
             atEvents.push({ kind: "basilisk-fallback", label: "通常バジリスクタイム", games: 40, award: fallbackAward, cumulative: payout });
             flow.push(`通常バジリスクタイム 1セット・+${yen.format(fallbackAward)}枚`);
+          }
+        }
+        basePayout = payout - entryPayout;
+      } else if (sim.bancho4Flow) {
+        payout = entryPayout;
+        basePayout = 0;
+        const awardBanchoCoins = amount => {
+          const award = Math.max(0, Math.min(Math.round(Number(amount) || 0), SLOT_COMPLETE_LIMIT - payout));
+          payout += award;
+          return award;
+        };
+        let remainingGames = entered ? Math.max(1, Number(sim.banchoAtGames) || 50) : 0;
+        let section = 0;
+        const sectionGames = Math.max(5, Number(sim.banchoSectionGames) || 10);
+        const maxSections = Math.max(1, Math.min(30, Number(sim.banchoMaxSections) || 24));
+        while (entered && remainingGames > 0 && section < maxSections && payout < SLOT_COMPLETE_LIMIT && !upper) {
+          section += 1;
+          banchoAtSections = section;
+          cycleRounds += 1;
+          const playedGames = Math.min(sectionGames, remainingGames);
+          remainingGames -= playedGames;
+          const atAward = awardBanchoCoins(slotAwardForGames(playedGames, Number(sim.atPureIncrease) || 2.7, 0));
+          atGamesTotal += playedGames;
+          const battle = Math.random() < (Number(sim.banchoBattleChance) || 0.56);
+          let won = false;
+          let reward = null;
+          let addGames = 0;
+          let bonusAward = 0;
+          const followUpEvents = [];
+          if (battle) {
+            banchoBattleCount += 1;
+            won = Math.random() < 0.68;
+            if (won) {
+              banchoBattleWins += 1;
+              reward = weighted(sim.banchoBattleRewards || [[{ key: "add", label: "ゲーム数上乗せ", addGames: 20 }, 1]]);
+              if (reward.key === "add") {
+                addGames = Math.max(0, Number(reward.addGames) || 20);
+                remainingGames += addGames;
+                banchoAddCount += 1;
+                banchoAddGames += addGames;
+                addOnCount += 1;
+                addOnGamesTotal += addGames;
+              } else if (reward.key === "bonus") {
+                const bonusGames = Math.max(1, Number(reward.bonusGames) || 30);
+                bonusAward = awardBanchoCoins(slotAwardForGames(bonusGames, Number(sim.atPureIncrease) || 2.7, 0));
+                atGamesTotal += bonusGames;
+                bonusCount += 1;
+                banchoBonusCount += 1;
+                bonusPayoutTotal += bonusAward;
+              } else if (reward.key === "riseup") {
+                banchoRiseUpCount += 1;
+                const riseGames = Math.max(1, Number(sim.banchoRiseUpGames) || 32);
+                const riseAward = awardBanchoCoins(slotAwardForGames(riseGames, Number(sim.atPureIncrease) || 2.7, 0));
+                atGamesTotal += riseGames;
+                const benefit = Math.random() < (Number(sim.banchoRiseUpBenefitChance) || 0.65);
+                const benefitLabel = benefit ? (Math.random() < 0.5 ? "一撃頂上ジャッジメント" : "愛の教育的指導") : "AT復帰のみ";
+                remainingGames += 50 + (benefit ? 30 : 0);
+                followUpEvents.push({ kind: "bancho-riseup", label: "頂RISE UP", games: riseGames, award: riseAward, benefit, benefitLabel, addGames: benefit ? 30 : 0, remaining: remainingGames, cumulative: payout });
+              } else if (reward.key === "goraiko") {
+                const mode = weighted(sim.banchoGoraikoModes || [[{ label: "継続率50%", chance: 0.5 }, 1]]);
+                const maxSets = Math.max(1, Math.min(12, Number(sim.banchoGoraikoMaxSets) || 10));
+                for (let set = 1; set <= maxSets; set += 1) {
+                  const zoneAdd = Number(weighted(sim.banchoGoraikoAdds || [[10, 1]])) || 10;
+                  remainingGames += zoneAdd;
+                  banchoGoraikoSets += 1;
+                  banchoAddCount += 1;
+                  banchoAddGames += zoneAdd;
+                  addOnCount += 1;
+                  addOnGamesTotal += zoneAdd;
+                  const continued = set < maxSets && Math.random() < Number(mode.chance || 0.5);
+                  followUpEvents.push({ kind: "bancho-goraiko", label: "轟雷光", mode: mode.label, set, games: 5, addGames: zoneAdd, continued, remaining: remainingGames, cumulative: payout });
+                  if (!continued) break;
+                }
+              } else if (reward.key === "zetchou") {
+                const maxWins = Math.max(1, Math.min(8, Number(sim.banchoZetchouMaxWins) || 6));
+                for (let round = 1; round <= maxWins; round += 1) {
+                  const zetchouWon = Math.random() < (Number(sim.banchoZetchouChance) || 0.66);
+                  const zoneAdd = zetchouWon ? Number(weighted(sim.banchoZetchouAdds || [[30, 1]])) || 30 : 0;
+                  if (zetchouWon) {
+                    remainingGames += zoneAdd;
+                    banchoZetchouWins += 1;
+                    banchoAddCount += 1;
+                    banchoAddGames += zoneAdd;
+                    addOnCount += 1;
+                    addOnGamesTotal += zoneAdd;
+                  }
+                  followUpEvents.push({ kind: "bancho-zetchou", label: "絶頂対決", round, games: 1, won: zetchouWon, addGames: zoneAdd, remaining: remainingGames, cumulative: payout });
+                  if (!zetchouWon) break;
+                }
+                const zetchouBonus = awardBanchoCoins(slotAwardForGames(30, Number(sim.atPureIncrease) || 2.7, 0));
+                atGamesTotal += 30;
+                bonusCount += 1;
+                banchoBonusCount += 1;
+                bonusPayoutTotal += zetchouBonus;
+                followUpEvents.push({ kind: "bancho-bonus", label: "番長BONUS", games: 30, award: zetchouBonus, source: "絶頂対決後", cumulative: payout });
+              }
+            }
+          }
+          atEvents.push({ kind: "bancho-at", label: "頂RISE", section, games: playedGames, battle, won, rewardKey: reward?.key || "none", rewardLabel: reward?.label || (battle ? "対決敗北" : "ベルカウンター継続"), addGames, bonusAward, award: atAward + bonusAward, remaining: remainingGames, cumulative: payout });
+          atEvents.push(...followUpEvents);
+          flow.push(`頂RISE ${section}区間・${battle ? won ? `${reward?.label}${addGames ? ` +${addGames}G` : ""}` : "対決敗北" : "通常消化"}・残り${remainingGames}G`);
+          if (Math.random() < (Number(sim.banchoSuperChance) || 0.006)) {
+            const superGames = Math.max(1, Number(sim.banchoSuperGames) || 50);
+            const superAward = awardBanchoCoins(slotAwardForGames(superGames, Number(sim.upperPureIncrease) || 4.5, 0));
+            atGamesTotal += superGames;
+            bonusCount += 1;
+            banchoBonusCount += 1;
+            bonusPayoutTotal += superAward;
+            upper = true;
+            atEvents.push({ kind: "bancho-super", label: "超番長BONUS", games: superGames, award: superAward, cumulative: payout });
+            flow.push(`超番長BONUS ${superGames}G・エンブレムモードへ`);
+          }
+        }
+        if (upper && payout < SLOT_COMPLETE_LIMIT) {
+          const maxUpper = Math.max(1, Math.min(16, Number(sim.banchoUpperMaxSections) || 12));
+          for (let upperSection = 1; upperSection <= maxUpper && payout < SLOT_COMPLETE_LIMIT; upperSection += 1) {
+            const upperGames = Math.max(1, Number(sim.banchoUpperGames) || 50);
+            const upperAward = awardBanchoCoins(slotAwardForGames(upperGames, Number(sim.upperPureIncrease) || 4.5, 0));
+            atGamesTotal += upperGames;
+            upperPayoutTotal += upperAward;
+            banchoUpperSections = upperSection;
+            upperLoops = upperSection;
+            const continued = upperSection < maxUpper && Math.random() < (Number(sim.banchoUpperContinue) || 0.78);
+            atEvents.push({ kind: "bancho-upper", label: sim.upperLabel, section: upperSection, games: upperGames, award: upperAward, continued, cumulative: payout });
+            flow.push(`${sim.upperLabel} ${upperSection}区間・+${yen.format(upperAward)}枚・${continued ? "継続" : "終了"}`);
+            if (!continued) break;
           }
         }
         basePayout = payout - entryPayout;
@@ -6373,6 +6550,7 @@
     const juohStats = sim.juohFlow ? [["サバンナチャンス", `${juohScSets}セット`], ["潜伏からのSC放出", `${juohSabaReturns}回`], ["最大ベルナビ", `${juohMaxNavi}回`], ["BONUS", `BIG ${juohBigCount}回・REG ${juohRegCount}回`], ["獲得SCストック", `${juohStocksWon}個`], ["超サバ", juohSuperSabaCount || upper ? "到達" : "非到達"], ["4大トリガー", juohTriggerCount ? `${juohTriggerCount}回` : "非当選"], ["KSCループ", `${juohKscLoops}回`], ["EX 30ナビ", `${juohExLoops}回`]] : [];
     const sunbreakStats = sim.sunbreakFlow ? [["今回の入口", sunbreakEntry?.label || sim.triggerLabel], ["盟勇クエスト", `${sunbreakQuestCount}回・討伐${sunbreakHunts}体`], ["討伐ゲーム数上乗せ", `+${sunbreakQuestAdds}G`], ["剥ぎ取りRUSH", `${sunbreakCarveEntries}回・+${sunbreakCarveAdds}G`], ["キュリアチャンス", `${sunbreakQuriaEntries}回・+${sunbreakQuriaAdds}G`], ["サンブレイクBONUS", `${sunbreakBonusCount}回`], ["最終モンスター", sunbreakMaxMonster], ["勇気の証明", sunbreakCourageAttempts ? `${sunbreakCourageAttempts}回・成功${sunbreakCourageWins}回` : "未到達"], [sim.upperLabel, sunbreakUpperLoops ? `${sunbreakUpperLoops}区間` : "非到達"], ["滅浄の裁き", sunbreakPurificationAttempts ? `${sunbreakPurificationAttempts}回・成功${sunbreakPurificationWins}回` : "未到達"]] : [];
     const paripiStats = sim.paripiFlow ? [["今回のCZ", paripiCz?.label || sim.triggerLabel], ["LIVE BONUS", `赤7 ${paripiRedCount}回・白7 ${paripiWhiteCount}回`], ["Party Time", `${paripiStLoops}セット`], ["パリピミッション", `${paripiMissionCount}回・成功${paripiMissionWins}回`], ["獲得兵法書", `${paripiScrollCount}個・${paripiScrollNames.length}/9種類`], ["兵法書一覧", paripiScrollNames.length ? paripiScrollNames.join("・") : "未獲得"], ["HEYHO ZONE", `${paripiHeyhoCount}回`], ["渋谷決戦BONUS", `${paripiShibuyaBonusCount}回`], ["渋谷決戦", paripiShibuyaAttempts ? `${paripiShibuyaAttempts}回・勝利${paripiShibuyaWins}回` : "未到達"], [sim.upperLabel, paripiUpperLoops ? `${paripiUpperLoops}セット` : "非到達"], ["究極孔明", paripiUltimateAttempts ? (paripiUltimateLoops ? `${paripiUltimateLoops}セット` : "抽選非当選") : "未到達"]] : [];
+    const banchoStats = sim.bancho4Flow ? [["初当りBONUS", banchoInitialBonus?.label || sim.triggerLabel], ["頂RISE", banchoAtSections ? `${banchoAtSections}区間` : "非突入"], ["対決", `${banchoBattleCount}戦・勝利${banchoBattleWins}回`], ["ゲーム数上乗せ", banchoAddCount ? `${banchoAddCount}回・+${banchoAddGames}G` : "上乗せなし"], ["番長BONUS合計", `${banchoBonusCount}回`], ["轟雷光", banchoGoraikoSets ? `${banchoGoraikoSets}セット` : "非当選"], ["絶頂対決", banchoZetchouWins ? `${banchoZetchouWins}勝` : "非当選"], ["頂RISE UP", banchoRiseUpCount ? `${banchoRiseUpCount}回` : "非当選"], [sim.upperLabel, banchoUpperSections ? `${banchoUpperSections}区間` : "非到達"]] : [];
     const goldenKamuyStats = sim.goldenKamuyFlow ? [["初当りBONUS", goldenKamuyInitialBonus?.label || sim.triggerLabel], ["黄金神威", goldenKamuyAtSections ? `${goldenKamuyAtSections}区間` : "非突入"], ["ゲーム数上乗せ", goldenKamuyAddCount ? `${goldenKamuyAddCount}回・+${goldenKamuyAddGames}G` : "上乗せなし"], ["GOLDEN BONUS", `${Math.max(0, goldenKamuyBonusCount - 1)}回`], ["覚醒／極・覚醒", goldenKamuyAwakeningCount ? `${goldenKamuyAwakeningCount}回` : "非当選"], [sim.upperChallenge, upper ? "2000枚到達・通過" : "未到達"], [sim.upperLabel, goldenKamuyUpperSections ? `${goldenKamuyUpperSections}区間` : "非到達"]] : [];
     const sbjStats = sim.superBlackjackFlow ? [["初当りBONUS", sbjInitialBonus?.label || sim.triggerLabel], ["BONUS合計", `${sbjBonusCount}回`], ["リオチャンス", `${sbjRcCount}回`], ["最高RC報酬", sbjBestReward], ["STOCK TIME", sbjStCount ? `${sbjStCount}回・合計${sbjStGamesTotal}G` : "非当選"], ["RCストック獲得", `${sbjRcStocks}個`], [sim.upperLabel, sbjSstCount ? `${sbjSstCount}回・合計${sbjSstGamesTotal}G` : "非到達"]] : [];
     const magihalloStats = sim.magicalHalloween8Flow ? [["初当りBONUS", magihalloInitialBonus?.label || sim.triggerLabel], ["BONUS合計", `${magihalloBonusCount}回`], ["カボチャンス", `${magihalloSets}セット`], ["詠唱チャレンジ", `${magihalloChantAttempts}回・成功${magihalloChantWins}回`], ["カボチャ揃い", `${magihalloPumpkins}回`], ["まじかるちゃんす", `${magihalloMagicCount}回`], ["最高特殊ART", magihalloSpecialMode?.label || "通常カボチャンス"], [sim.upperLabel, magihalloSuperSets ? `${magihalloSuperSets}セット` : "非到達"]] : [];
@@ -6382,7 +6560,7 @@
     const cycleStats = sim.cycleFlow ? [[sim.cycleFlow.statLabel || (sim.titleFlow ? "機種専用進行" : "専用ループ"), `${cycleRounds}回・継続${cycleContinues}回`]] : [];
     const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
     const rushGamesTotal = Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
-    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.goldenKamuyFlow || sim.superBlackjackFlow || sim.magicalHalloween8Flow || sim.gundamSeedFlow || sim.fireForceFlow || sim.fireForce2Flow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
+    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.bancho4Flow || sim.goldenKamuyFlow || sim.superBlackjackFlow || sim.magicalHalloween8Flow || sim.gundamSeedFlow || sim.fireForceFlow || sim.fireForce2Flow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
     const gameAddOnStats = sim.karakuriJudgeFlow || coinAddOnCount
       ? [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(coinAddOnTotal || addOnTotal)}枚` : "上乗せなし"]]
       : [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnGamesTotal || otomeAddedGames)}G` : "上乗せなし"]];
@@ -6437,6 +6615,10 @@
         ? [["RUSH・クエスト消化", `${yen.format(rushGamesTotal)}G相当`], ...sunbreakStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : sim.paripiFlow
         ? [["BONUS・ST消化", `${yen.format(rushGamesTotal)}G相当`], ...paripiStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
+      : sim.bancho4Flow
+        ? [["BONUS・AT・上位消化", `${yen.format(rushGamesTotal)}G相当`], ...banchoStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
+      : sim.bancho4Flow
+        ? `今回の設定は設定${setting}。${games}Gで特訓・対決を勝ち抜き${banchoInitialBonus?.label || sim.triggerLabel}、${entered ? `頂RISEを${banchoAtSections}区間、対決${banchoBattleCount}戦・勝利${banchoBattleWins}回、ゲーム数上乗せ${banchoAddCount}回・合計+${banchoAddGames}Gで${yen.format(payout)}枚を獲得しました。${banchoUpperSections ? `超番長BONUSからエンブレムモードを${banchoUpperSections}区間消化しました。` : banchoRiseUpCount ? `頂RISE UPを${banchoRiseUpCount}回経由しました。` : "頂RISEは残り0Gで終了しました。"}` : `${banchoInitialBonus?.label || "初当りBONUS"}で${yen.format(payout)}枚を獲得し、頂RISEには届きませんでした。`}`
       : sim.goldenKamuyFlow
         ? [["BONUS・AT・上位消化", `${yen.format(rushGamesTotal)}G相当`], ...goldenKamuyStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : sim.superBlackjackFlow
@@ -7190,6 +7372,7 @@
     const juohFlow = Boolean(machine.sim.juohFlow);
     const sunbreakFlow = Boolean(data.sunbreakFlow || machine.sim.sunbreakFlow);
     const paripiFlow = Boolean(data.paripiFlow || machine.sim.paripiFlow);
+    const bancho4Flow = Boolean(machine.sim.bancho4Flow);
     const goldenKamuyFlow = Boolean(machine.sim.goldenKamuyFlow);
     const superBlackjackFlow = Boolean(machine.sim.superBlackjackFlow);
     const magicalHalloween8Flow = Boolean(machine.sim.magicalHalloween8Flow);
@@ -7218,6 +7401,8 @@
       setExperienceStage(1, "QUEST ENTRY", data.sunbreakEntry?.label || data.hitLabel, `${yen.format(data.attempts)}G`, "専用CZを消化し、最後のPUSHでサンブレイクRUSHを判定", "hit", data.triggerSuccessChance, "CZ・AT直撃の機種専用ルート");
     } else if (paripiFlow) {
       setExperienceStage(1, "PARIPI CHANCE", data.paripiCz?.label || data.hitLabel, `${yen.format(data.attempts)}G`, "3種類の専用CZを消化し、最後のPUSHでLIVE BONUSを判定", "hit", data.triggerSuccessChance, "CZ別の公開成功期待度");
+    } else if (bancho4Flow) {
+      setExperienceStage(1, "TRAINING / BATTLE", "特訓から対決へ", `${yen.format(data.attempts)}G`, "対決最終ゲームのPUSHで初当りBONUSを開きます", "hit", 100, "REG／赤7／青7番長BONUS");
     } else if (goldenKamuyFlow) {
       setExperienceStage(1, "INITIAL BONUS", data.entryBonus?.label || data.hitLabel, `${yen.format(data.attempts)}G`, "PUSHでBONUS種類と黄金神威の当落を開きます", "hit", 100, "KAMUY BONUS／決戦BONUS");
     } else if (superBlackjackFlow) {
@@ -7233,6 +7418,85 @@
       setExperienceStage(1, "INITIAL BONUS", data.entryBonus?.label || data.hitLabel, `${yen.format(data.attempts)}G`, "PUSHで初当りBONUSを開きます", "hit", 100, "REG／SPエピソードBONUS");
     }
     await waitForExperience(780);
+    if (bancho4Flow) {
+      const events = Array.isArray(data.atEvents) ? data.atEvents : [];
+      for (const event of events) {
+        if (runId !== experienceRunId) return;
+        setSlotAtStatus({ visible: true, remaining: event.kind === "bancho-initial" ? 0 : Math.max(0, Number(event.remaining ?? event.games) || 0), remainingUnit: "G", addOnGames: event.kind === "bancho-at" || event.kind === "bancho-initial" ? 0 : Math.max(0, Number(event.addGames) || 0), total: event.kind === "bancho-initial" ? 0 : Number(event.cumulative) || 0 });
+        if (event.kind === "bancho-initial") {
+          setExperienceStage(2, "BATTLE FINAL", "対決 最終ゲーム", "PUSH", "初当りBONUSと頂RISE当落を開きます", "judge", Number(event.atChance || 0.42) * 100, "REG／赤7／青7番長BONUS");
+          await waitForExperienceAction("押忍！番長4 対決PUSH", 5000, event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setSlotAtStatus({ visible: true, remaining: Math.max(0, Number(event.games) || 0), remainingUnit: "G", addOnGames: 0, total: Number(event.cumulative) || 0 });
+          if (event.direct) {
+            setExperienceStage(2, "DIRECT AT", "頂RISE直撃", "50G＋α", "通常時のAT直撃から頂RISEへ", "hyper", 100, "設定別AT直撃抽選");
+            await waitForExperience(750);
+          } else {
+            const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 15), "G", event.key === "reg" ? "REGULAR BONUS" : "BANCHO BONUS", event.label, `+${yen.format(event.award)}枚`, Number(event.atChance || 0.42) * 100, event.won ? "頂RISE当選" : "通常へ", runId);
+            if (!complete) return;
+          }
+          setExperienceStage(2, event.won ? "ITADAKI RISE" : "BONUS END", event.won ? "頂RISE 突入" : "頂RISE 非当選", event.won ? "50G＋α" : "通常へ", event.won ? "純増約2.7枚/G・ゲーム数管理AT" : "今回の一撃はここで終了", event.won ? "rush" : "end", event.won ? 100 : 0, `${event.label}結果`);
+          await waitForExperience(750);
+          if (!event.won) break;
+        } else if (event.kind === "bancho-at") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 10), "G", "ITADAKI RISE", `頂RISE ${event.section}区間`, "ベルカウンター・レア役から対決を抽選", Number(machine.sim.banchoBattleChance || 0.56) * 100, `残り${yen.format(event.remaining)}G・累計${yen.format(event.cumulative)}枚`, runId);
+          if (!complete) return;
+          setSlotAtStatus({ visible: true, remaining: Math.max(0, Number(event.remaining) || 0), remainingUnit: "G", addOnGames: 0, total: Number(event.cumulative) || 0 });
+          if (event.battle) {
+            setExperienceStage(3, "SHOWDOWN", `対決 ${event.section}戦目`, "PUSH", "勝敗と報酬を開きます", "judge", 68, "勝利で上乗せ・BONUS・特化ゾーン");
+            await waitForExperienceAction(`頂RISE 対決${event.section} PUSH`, 5000, event.won ? "gold" : "normal");
+            if (runId !== experienceRunId) return;
+            setSlotAtStatus({ visible: true, remaining: Math.max(0, Number(event.remaining) || 0), remainingUnit: "G", addOnGames: Math.max(0, Number(event.addGames) || 0), total: Number(event.cumulative) || 0 });
+            const resultValue = event.won ? event.rewardKey === "add" ? `+${yen.format(event.addGames)}G` : event.rewardLabel : "敗北";
+            setExperienceStage(3, event.won ? "BATTLE WIN" : "BATTLE LOSE", event.won ? event.rewardLabel : "対決敗北", resultValue, `累計${yen.format(event.cumulative)}枚・残り${yen.format(event.remaining)}G`, event.won ? "rush" : "end", event.won ? 100 : 0, "対決結果");
+            await waitForExperience(750);
+          }
+        } else if (event.kind === "bancho-riseup") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 32), "G", "ITADAKI RISE UP", event.label, "AT復帰濃厚・特典を抽選", Number(machine.sim.banchoRiseUpBenefitChance || 0.65) * 100, "32G消化後にPUSH", runId);
+          if (!complete) return;
+          setSlotAtStatus({ visible: true, remaining: Math.max(0, Number(event.remaining) || 0), remainingUnit: "G", addOnGames: Math.max(0, Number(event.addGames) || 0), total: Number(event.cumulative) || 0 });
+          setExperienceStage(4, "RISE UP FINAL", "頂RISE UP 最終ゲーム", "PUSH", "復帰時の特典を開きます", "judge", Number(machine.sim.banchoRiseUpBenefitChance || 0.65) * 100, "一撃頂上／愛の教育的指導");
+          await waitForExperienceAction("頂RISE UP PUSH", 5000, event.benefit ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(4, event.benefit ? "SPECIAL BENEFIT" : "AT RETURN", event.label, event.benefitLabel, event.benefit ? `+${yen.format(event.addGames)}G・頂RISE復帰` : "50Gの頂RISEへ復帰", event.benefit ? "hyper" : "rush", 100, "頂RISE UP結果");
+          await waitForExperience(750);
+        } else if (event.kind === "bancho-goraiko") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 5), "G", "GORAIRAIKOU", `${event.label} SET ${event.set}`, "毎ゲーム上乗せ・セット継続を抽選", event.mode.includes("85") ? 85.2 : 50, event.mode, runId);
+          if (!complete) return;
+          setSlotAtStatus({ visible: true, remaining: Math.max(0, Number(event.remaining) || 0), remainingUnit: "G", addOnGames: Math.max(0, Number(event.addGames) || 0), total: Number(event.cumulative) || 0 });
+          setExperienceStage(4, "GORAIRAIKOU JUDGE", `${event.label} SET ${event.set}`, "PUSH", "上乗せゲーム数と継続を開きます", "judge", event.mode.includes("85") ? 85.2 : 50, event.mode);
+          await waitForExperienceAction(`轟雷光 SET ${event.set} PUSH`, 5000, event.continued ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(4, event.continued ? "ADD & CONTINUE" : "ADD & END", event.label, `+${yen.format(event.addGames)}G`, event.continued ? "次セットへ継続" : "頂RISEへ復帰", event.continued ? "hyper" : "rush", 100, `累計上乗せ・残り${yen.format(event.remaining)}G`);
+          await waitForExperience(750);
+        } else if (event.kind === "bancho-zetchou") {
+          setExperienceStage(4, "ZECHOU BATTLE", `${event.label} ${event.round}戦目`, "PUSH", "対決の勝敗を開きます", "judge", Number(machine.sim.banchoZetchouChance || 0.66) * 100, "勝利で30G以上を上乗せ");
+          await waitForExperienceAction(`絶頂対決 ${event.round}戦目 PUSH`, 5000, event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(4, event.won ? "ZECHOU WIN" : "ZECHOU END", event.won ? "対決勝利" : "絶頂対決終了", event.won ? `+${yen.format(event.addGames)}G` : "番長BONUSへ", event.won ? "次の対決へ" : "30Gの番長BONUSを消化", event.won ? "hyper" : "rush", event.won ? 100 : 0, `絶頂対決 ${event.round}戦目`);
+          await waitForExperience(750);
+        } else if (event.kind === "bancho-bonus") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 30), "G", "BANCHO BONUS", event.label, `+${yen.format(event.award)}枚`, 100, event.source || "頂RISE中", runId);
+          if (!complete) return;
+        } else if (event.kind === "bancho-super") {
+          setExperienceStage(4, "SUPER BANCHO", event.label, "PUSH", "超番長BONUSと上位ATを開きます", "judge", 100, "終了後はエンブレムモード");
+          await waitForExperienceAction("超番長BONUS PUSH", 5000, "gold");
+          if (runId !== experienceRunId) return;
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 50), "G", "SUPER BANCHO BONUS", event.label, `+${yen.format(event.award)}枚`, 100, "エンブレムモード突入", runId);
+          if (!complete) return;
+        } else if (event.kind === "bancho-upper") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 50), "G", "EMBLEM MODE", `${event.label} ${event.section}区間`, `+${yen.format(event.award)}枚`, Number(machine.sim.banchoUpperContinue || 0.78) * 100, `純増約4.5枚/G・累計${yen.format(event.cumulative)}枚`, runId);
+          if (!complete) return;
+          setExperienceStage(4, "EMBLEM JUDGE", `${event.label} ${event.section}区間`, "PUSH", "上位ATの継続結果を開きます", "judge", Number(machine.sim.banchoUpperContinue || 0.78) * 100, "体験用代表値");
+          await waitForExperienceAction(`エンブレムモード ${event.section} PUSH`, 5000, event.continued ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(4, event.continued ? "EMBLEM CONTINUE" : "EMBLEM END", event.continued ? "エンブレム 継続" : "エンブレム 終了", event.continued ? "NEXT" : "RESULT", `累計${yen.format(event.cumulative)}枚`, event.continued ? "hyper" : "end", event.continued ? 100 : 0, "上位AT結果");
+          await waitForExperience(700);
+        }
+      }
+      setSlotAtStatus({ visible: true, remaining: 0, remainingUnit: "G", addOn: 0, addOnUnit: "G", total: Number(data.payout) || 0 });
+      return;
+    }
     if (goldenKamuyFlow) {
       const events = Array.isArray(data.atEvents) ? data.atEvents : [];
       for (const event of events) {

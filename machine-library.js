@@ -5282,6 +5282,46 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.titleFlow;
 })();
 
+(function applyBancho4DedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["bancho4-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "特訓・対決から3種類のBONUSへ。50G＋αの頂RISEで対決と上乗せを重ね、轟雷光・絶頂対決・エンブレムを狙う。",
+    intro: "通常時の特訓・対決、REG／赤7・青7番長ボーナス、50G＋αの頂RISE、対決報酬、轟雷光、32Gの頂RISE UP、絶頂対決、超番長BONUS、上位ATエンブレムモードまでを専用画面で体験できます。",
+    points: ["初当りは設定1約1/259.5〜設定6約1/221.1", "頂RISEは50G＋α・純増約2.7枚/G", "轟雷光は1セット5G・平均上乗せ約130G", "エンブレムモードは純増約4.5枚/G"],
+    specs: [["初当り（設定1）", "約1/259.5"], ["初当り（設定6）", "約1/221.1"], ["ベース", "約33G/50枚"], ["REG", "15G"], ["赤7／青7番長BONUS", "30G＋α"], ["赤7BONUS AT期待度", "約42%"], ["青7BONUS AT期待度", "約82%"], ["頂RISE", "50G＋α・純増約2.7枚/G"], ["頂RISE UP", "32G・AT復帰濃厚"], ["轟雷光", "1セット5G・平均上乗せ約130G"], ["エンブレムモード", "純増約4.5枚/G"]],
+    articleSections: [
+      { heading: "特訓・対決から初当りへ", paragraphs: ["通常時はレア役、ゲーム数、ベルカウンターなどから特訓を経て対決へ発展。対決勝利でREGまたは番長BONUSを獲得します。天井は最大699G＋αです。", "シミュレーターでは通常回転の後に特訓・対決を表示し、最後のPUSHで初当りBONUSの種類を開きます。通常時の細かなモード・対決相手振り分けは初当り確率へまとめています。"] },
+      { heading: "REGと赤7・青7番長BONUS", paragraphs: ["REGは15Gで、消化中の小役からキャラクターを追加し、漢気ルーレットでATを目指します。赤7・青7番長BONUSは30G＋αで、赤7のAT期待度は約42%、青7は約82%です。", "通常A・B／チャンス滞在時の当選時振り分けは、設定1でREG50.0%・赤7 48.8%・青7 1.2%、設定6でREG43.4%・赤7 48.8%・青7 7.8%。通常時のAT直撃も設定別公開値で抽選します。専用画面ではPUSH後にBONUS種類と頂RISE当落を表示します。"] },
+      { heading: "50G＋αの頂RISEと対決", paragraphs: ["頂RISEは初期50G＋α・純増約2.7枚/Gのゲーム数管理型AT。ベルカウンターやレア役から対決へ発展し、勝利時は+20／+30／+50／+100／+300G、番長BONUS、頂RISE UP、轟雷光などを獲得します。", "専用画面では残りゲーム数を10Gずつ減らし、対決に発展するとPUSHを表示。勝敗と報酬を同時に開き、ゲーム数上乗せとBONUS獲得枚数を分けて表示します。"] },
+      { heading: "轟雷光と絶頂対決", paragraphs: ["轟雷光は1セット5Gの上乗せ特化ゾーン。継続率は50%または約85.2%で、毎セット上乗せと継続を抽選し、平均上乗せは約130Gです。", "絶頂対決は対決勝利のたびに30G以上を上乗せし、ループ終了後は番長BONUSへ。どちらもセットごとのPUSHで継続と上乗せゲーム数を開きます。"] },
+      { heading: "頂RISE UPと豪頂閣", paragraphs: ["頂RISE終了後の一部で32Gの頂RISE UPへ。AT復帰が濃厚で、消化中は一撃頂上ジャッジメントまたは愛の教育的指導を抽選し、いずれかの当選期待度は約65%です。", "一撃頂上ジャッジメント成功後の豪頂閣は初期20G以上。ベルカウンター7回ごとに対決し、勝利時の上乗せ性能が強化されます。専用進行では復帰と特典を別々に表示します。"] },
+      { heading: "超番長BONUSとエンブレムモード", paragraphs: ["超番長BONUSは50G継続し、ゲーム数上乗せと勝利濃厚の対決をストック。終了後は純増約4.5枚/Gのエンブレムモードへ進みます。", "エンブレムモードは基本ゲーム性を継承しつつ、対決発展率と勝率が上昇。シミュレーターでは超番長BONUS当選後だけ上位へ進み、区間ごとのPUSHで継続を表示します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約33G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6の初当り・出玉率は公開設定別値を使用", "3種類BONUS、頂RISE、対決、轟雷光、頂RISE UP、絶頂対決、上位ATを専用進行", "BONUS振り分け、AT中の各契機選択率、上乗せ振り分けなど未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["大都技研 公式機種サイト", "https://www.daitogiken.com/contents/product/slot/bancho4/"], ["一撃 機種解析", "https://1geki.jp/slot/l_osu_bancho4/"], ["一撃 頂RISE UP解析", "https://1geki.jp/slot/l_osu_bancho4/89/"], ["なな徹 BONUS解析", "https://nana-press.com/kaiseki/machine/736/20466/"], ["パチナビ 設定別解析", "https://pachinavi.net/machines/smasloth-banchou-4/settei/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10023"]],
+    readerGuide: { verdict: "3種類のBONUSから50G＋αの頂RISEへ進み、対決勝利で上乗せ・BONUS・特化ゾーンを重ねるゲーム数管理型です。", bestFor: ["特訓・対決からBONUSまでをPUSHで体験したい", "残りゲーム数と対決報酬を見ながらATを進めたい", "轟雷光・絶頂対決・エンブレムを狙いたい"], check: ["初当り、主要ゲーム数、純増、BONUS期待度は公開値", "ゲーム数上乗せとBONUS獲得枚数を分けて表示", "未公表の細かな振り分けは体験用代表値"], compare: [["golden-kamuy-slot", "スマスロ ゴールデンカムイ", "100G上乗せATと比較"], ["zenigata4-slot", "L主役は銭形4", "ゲーム数管理ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v26", dedicatedFlow: true, dedicatedFlowKey: "bancho4-slot", dedicatedFlowVersion: 2, bancho4Flow: true,
+    triggerLabel: "初当りBONUS", triggerRate: 259.5, triggerSuccess: 0.52, mainLabel: "頂RISE", mainRate: 499.0, base50: 33, coinUnit: 3.3, normalMin: 0, normalMax: 0, atPureIncrease: 2.7, upperPureIncrease: 4.5, atPayoutVariance: 0,
+    banchoBonuses: [{ key: "reg", label: "REG", games: 15, atChance: 0.28 }, { key: "red", label: "赤7番長BONUS", games: 30, atChance: 0.42 }, { key: "blue", label: "青7番長BONUS", games: 30, atChance: 0.82 }],
+    banchoBonusWeights: { 1: [0.500, 0.488, 0.012], 2: [0.496, 0.488, 0.016], 3: [0.484, 0.488, 0.028], 4: [0.465, 0.488, 0.047], 5: [0.449, 0.488, 0.063], 6: [0.434, 0.488, 0.078] },
+    banchoDirectRates: { 1: 6411, 2: 5624, 3: 4344, 4: 3053, 5: 2420, 6: 2150 },
+    banchoAtGames: 50, banchoSectionGames: 10, banchoMaxSections: 24, banchoBattleChance: 0.56,
+    banchoBattleRewards: [[{ key: "add", label: "ゲーム数上乗せ", addGames: 20 }, 0.30], [{ key: "add", label: "ゲーム数上乗せ", addGames: 30 }, 0.22], [{ key: "add", label: "ゲーム数上乗せ", addGames: 50 }, 0.13], [{ key: "add", label: "ゲーム数上乗せ", addGames: 100 }, 0.045], [{ key: "add", label: "ゲーム数上乗せ", addGames: 300 }, 0.005], [{ key: "bonus", label: "番長BONUS", bonusGames: 30 }, 0.13], [{ key: "riseup", label: "頂RISE UP", games: 32 }, 0.07], [{ key: "goraiko", label: "轟雷光" }, 0.055], [{ key: "zetchou", label: "絶頂対決" }, 0.025]],
+    banchoGoraikoModes: [[{ label: "継続率50%", chance: 0.50 }, 0.80], [{ label: "継続率85.2%", chance: 0.852 }, 0.20]], banchoGoraikoAdds: [[10, 0.18], [20, 0.25], [30, 0.24], [50, 0.19], [100, 0.11], [300, 0.03]], banchoGoraikoMaxSets: 10,
+    banchoZetchouChance: 0.66, banchoZetchouAdds: [[30, 0.46], [50, 0.30], [100, 0.19], [300, 0.05]], banchoZetchouMaxWins: 6,
+    banchoRiseUpGames: 32, banchoRiseUpBenefitChance: 0.65, banchoSuperChance: 0.006, banchoSuperGames: 50,
+    banchoUpperGames: 50, banchoUpperContinue: 0.78, banchoUpperMaxSections: 12,
+    specialLabel: "轟雷光／絶頂対決", specialChance: 0.08, upperChallenge: "超番長BONUS", upperChance: 0.006, upperSuccess: 1, upperLabel: "エンブレムモード", upperContinue: 0.78, upperPayout: 0,
+    settingRates: { 1: { trigger: 259.5, main: 499.0, payout: 0.978 }, 2: { trigger: 256.3, main: 486.9, payout: 0.989 }, 3: { trigger: 247.6, main: 458.4, payout: 1.015 }, 4: { trigger: 236.0, main: 423.1, payout: 1.060 }, 5: { trigger: 225.3, main: 395.2, payout: 1.100 }, 6: { trigger: 221.1, main: 379.8, payout: 1.131 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
 (function applyGoldenKamuyDedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["golden-kamuy-slot"];
   if (!machine) return;

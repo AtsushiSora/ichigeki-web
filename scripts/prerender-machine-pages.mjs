@@ -319,6 +319,14 @@ function snapshotMarkup(machine) {
       ["黄金AT", "約5.0枚/G", "絶唱バトル約60%"]
     ];
     note = "残りゲーム数、ギアVチャンスの装者獲得、キャラ別ギアVアタック、絶唱、上位ATと絶唱バトルを個別に記録します。";
+  } else if (sim.bancho4Flow) {
+    items = [
+      ["初当り", `約1/${sim.triggerRate}`, "REG／赤7／青7番長BONUS"],
+      ["頂RISE", "50G＋α", "純増約2.7枚/G"],
+      ["上乗せ", "対決・轟雷光・絶頂対決", "PUSHで個別表示"],
+      ["上位AT", "超番長BONUS後", "純増約4.5枚/G"]
+    ];
+    note = "特訓・対決、3種類のBONUS、50G＋αの頂RISE、対決報酬、轟雷光、頂RISE UP、絶頂対決、超番長BONUS、エンブレムモードを機種専用で記録します。";
   } else if (sim.goldenKamuyFlow) {
     items = [
       ["初当り", `約1/${sim.triggerRate}`, "KAMUY／決戦BONUS"],
@@ -549,7 +557,7 @@ function schemaMarkup(slug, machine) {
 function newMachinePage(slug, machine) {
   const title = `${escapeHtml(machine.name)} | 記事・シミュレーター | ICHIGEKI`;
   const description = escapeHtml(machine.intro);
-  return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#05232d"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml"><meta name="description" content="${description}"><title>${title}</title><link rel="canonical" href="https://ichigeki-pachislot.com/${slug}.html"><link rel="stylesheet" href="style.css?v=181"></head><body class="machine-library-page" data-machine="${escapeHtml(slug)}"><header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">MACHINE</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#simulator">シミュレーター</a><a href="community.html?machine=${escapeHtml(slug)}">投稿</a></nav></div></header><main class="page machine-detail-shell" id="machineApp"></main><footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="community.html">コミュニティ</a><a href="disclaimer.html">免責事項</a></div></div></footer><script src="machine-library.js?v=219"></script><script src="achievements.js?v=1"></script><script src="site-insights.js?v=1"></script><script src="machine-detail.js?v=242"></script><script src="app-shell.js?v=10"></script><script src="adsense-loader.js?v=2"></script></body></html>`;
+  return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#05232d"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml"><meta name="description" content="${description}"><title>${title}</title><link rel="canonical" href="https://ichigeki-pachislot.com/${slug}.html"><link rel="stylesheet" href="style.css?v=181"></head><body class="machine-library-page" data-machine="${escapeHtml(slug)}"><header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">MACHINE</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#simulator">シミュレーター</a><a href="community.html?machine=${escapeHtml(slug)}">投稿</a></nav></div></header><main class="page machine-detail-shell" id="machineApp"></main><footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="community.html">コミュニティ</a><a href="disclaimer.html">免責事項</a></div></div></footer><script src="machine-library.js?v=220"></script><script src="achievements.js?v=1"></script><script src="site-insights.js?v=1"></script><script src="machine-detail.js?v=243"></script><script src="app-shell.js?v=10"></script><script src="adsense-loader.js?v=2"></script></body></html>`;
 }
 
 function updateRobotsMeta(html, isIndexable) {
@@ -616,8 +624,8 @@ for (const [slug, machine] of Object.entries(machines)) {
   } else {
     html = html.replace("</head>", '<link rel="stylesheet" href="style.css?v=181"></head>');
   }
-  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=242");
-  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=219");
+  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=243");
+  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=220");
   html = html.replace(/app-shell\.js\?v=\d+/, "app-shell.js?v=10");
   html = html.replace(/adsense-loader\.js\?v=\d+/, "adsense-loader.js?v=2");
   if (!html.includes("site-insights.js")) html = html.replace(/(<script src="machine-detail\.js\?v=129"><\/script>)/, '<script src="site-insights.js?v=1"></script>\n  $1');
