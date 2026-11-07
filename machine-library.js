@@ -4143,6 +4143,63 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   });
 })();
 
+// L海人 uses a title-specific 32G bonus-chain model. Keep this late in the
+// file so older reusable cycle enrichments cannot overwrite the public model.
+(() => {
+  const machine = window.ICHIGEKI_MACHINES["uminchu-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    intro: "2026年10月19日導入の疑似ボーナスループ機。フルーツ連状態、BIGのJAC消化、BONUS後32G、10連で突入する8GのIREGUI、ストック消化後の約80%ループを専用演出で体験できます。",
+    points: ["BIG平均約202枚・REG平均約53枚", "BONUS後は32G以内の自力連とストック放出を抽選", "10連で8GのIREGUI・突入時平均22連OVER"],
+    specs: [["初当り（設定1）", "約1/247.7"], ["初当り（設定6）", "約1/207.6"], ["BONUS合算（設定1）", "約1/113.0"], ["BONUS合算（設定6）", "約1/86.7"], ["BIG平均", "約202枚・純増約3.8枚/G"], ["REG平均", "約53枚・純増約4.5枚/G"], ["ベース", "約29.9G/50枚"], ["32G連", "ストック＋フルーツ連"], ["IREGUI", "8G・最大8個ストック"], ["IREGUI後", "ストックなしでも約80%ループ"], ["IREGUI期待", "平均22連OVER・3000枚OVER"]],
+    articleSections: [
+      { heading: "設定1・2・4・5・6の初当り", paragraphs: ["通常設定は1・2・4・5・6で、設定3は搭載されていません。BONUS初当りは設定1約1/247.7から設定6約1/207.6、BONUS合算は約1/113.0から約1/86.7です。", "シミュレーターは開始時に5段階から均等抽選し、初当り確率と出玉率を設定別に使用します。抽選設定は最終結果と機種別ランキングで発表します。"] },
+      { heading: "通常時・フルーツ連状態・大波チャンス", paragraphs: ["通常時は弱チェリー、オレンジ、強チェリー、プラムなどからフルーツ連状態を目指します。状態A・B・C・D・EXの順にフルーツ出現率と滞在性能が高まり、状態D・EXはBONUS当選まで継続します。", "大波チャンスは5Gのカウントダウン。5G以内にフルーツを引くと再セットや色昇格が発生します。サイトでは通常時の複数契機を公開されている設定別BONUS初当りへまとめています。"] },
+      { heading: "BIG・REGとストック抽選", paragraphs: ["BIGは平均約202枚・純増約3.8枚/G。一般中と最大3回のJACゲームを行き来し、JACはベルナビ8回で終了します。REGは平均約53枚・純増約4.5枚/Gでベルナビ8回です。", "BONUS入賞時と消化中のフルーツでBONUSストックを抽選します。BIGの獲得枚数は固定ではないため、サイトでも平均202枚を中心に毎回少し変動させます。REGも平均53枚を中心に表示します。"] },
+      { heading: "BONUS後32Gと10連までの流れ", paragraphs: ["BONUS終了後は必ず32G区間へ。ストックがあれば1〜32Gで放出し、ストックがなくてもフルーツ連状態と押し順チェリーで自力BONUSを狙います。", "サイトでは32Gを最後までカウントし、PUSHで『ストック放出』『自力当選』『32G終了』を表示します。10連前の自力継続率と連チャン中BIG比率は詳細非公表のため、公開合算値に近づける代表値です。"] },
+      { heading: "8GのIREGUIと約80%ループ", paragraphs: ["32G以内のBONUSが10連すると8GのIREGUIへ突入。毎ゲーム擬似フルーツが成立し、弱チェリー＜オレンジ＜強チェリー・プラムの順でストック期待度が上がり、最大8個を獲得します。", "ストック分を含め再び10連へ到達するとIREGUIを再セット。ストックを使い切った後も32G以内のBONUSが約80%でループし、設定1でも平均22連OVER・期待獲得3000枚OVERとされています。"] },
+      { heading: "固定レートと収支の条件", bullets: ["約29.9G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均初当り投資目安は約9,000円", "コイン単価は設定1の参考値約4.0円として表示", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["パチマガスロマガFREE L海人解析", "https://pachimaga.com/free/mach/maker-s/okazaki/l_uminchu.php"], ["P-WORLD L海人 機種情報", "https://www.p-world.co.jp/machine/database/10579"], ["パチ7 L海人 新台試打", "https://pachiseven.jp/articles/detail/26377"], ["パチ＆スロ必勝本 IREGUI解説", "https://p.hisshobon.jp/vpage/2816/1"]],
+    readerGuide: {
+      verdict: "初当りBONUSから32G以内の連チャンを10回つなぎ、8GのIREGUIとストック後約80%ループを目指す、液晶非搭載の告知・BONUS連タイプです。",
+      bestFor: ["32Gのカウントダウンと告知を楽しみたい", "BIGのJAC消化と枚数変動を見たい", "10連後のIREGUIで大きな連チャンを狙いたい"],
+      check: ["設定3は非搭載で1・2・4・5・6を抽選", "10連前の32G継続率は非公表のため代表値", "IREGUIは8G・最大8ストック、終了後は約80%ループ"],
+      compare: [["haihai-shiosai-re", "ハイハイシオサイ2", "32G告知タイプと比較"], ["chibariyo2-slot", "チバリヨ2", "天国連タイプと比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v7",
+    triggerLabel: "BONUS初当り",
+    triggerRate: 247.7,
+    triggerSuccess: 1,
+    mainLabel: "海人BONUS連",
+    mainRate: 247.7,
+    normalMin: 53,
+    normalMax: 202,
+    atPayoutVariance: 0,
+    uminchuFlow: true,
+    uminchuBigRate: 141.2,
+    uminchuRegRate: 642.5,
+    uminchuInitialBigChanceBySetting: { 1: 0.50, 2: 0.51, 4: 0.535, 5: 0.56, 6: 0.563 },
+    uminchuChainBigChanceBySetting: { 1: 0.80, 2: 0.805, 4: 0.818, 5: 0.832, 6: 0.838 },
+    uminchuPreIreguiContinue: 0.64,
+    uminchuPostIreguiContinue: 0.80,
+    uminchuIreguiStocks: [[2, 0.10], [3, 0.15], [4, 0.25], [5, 0.25], [6, 0.15], [7, 0.07], [8, 0.03]],
+    specialLabel: "BONUSストック",
+    specialChance: 0.28,
+    upperChallenge: "BONUS 10連",
+    upperChance: 0,
+    upperSuccess: 1,
+    upperLabel: "IREGUI",
+    upperContinue: 0.80,
+    upperPayout: 0,
+    upperPureIncrease: 3.8,
+    settingRates: { 1: { trigger: 247.7, main: 247.7, payout: 0.977 }, 2: { trigger: 243.3, main: 243.3, payout: 0.986 }, 4: { trigger: 219.8, main: 219.8, payout: 1.033 }, 5: { trigger: 211.0, main: 211.0, payout: 1.062 }, 6: { trigger: 207.6, main: 207.6, payout: 1.120 } }
+  });
+})();
+
 // Dedicated implementations take precedence over the older reusable cycle map.
 // Keep this final cleanup after every enrichment pass so page copy and gameplay
 // both use the same title-specific model.
@@ -4154,4 +4211,6 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
     delete mahoako.cycleFlow;
     mahoako.rankingVersion = "v6";
   }
+  const uminchu = window.ICHIGEKI_MACHINES["uminchu-slot"]?.sim;
+  if (uminchu?.uminchuFlow) delete uminchu.cycleFlow;
 })();
