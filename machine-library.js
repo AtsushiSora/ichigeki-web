@@ -5246,6 +5246,41 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
 })();
 
 
+(function applyMillionGodKisekiDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["million-god-kiseki"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "50GのGOD GAMEからG-ZONEへ。Z-GAME・SGG・GOD揃いでGGストックを重ねる。",
+    intro: "液晶奇数揃いから純増約7.0枚/G・50GのGOD GAMEへ。5GのG-ZONE、0揃いからのZ-ZONE／Z-GAME、赤7のSGG、GOD揃いのPREMIUM GOD GAMEまでを専用画面で体験できます。",
+    points: ["GOD GAMEは50G・純増約7.0枚/G", "G-ZONEは5Gで次セットを告知", "GOD揃いは1/16384・GG4セット以上＋高ループ"],
+    specs: [["GG初当り（設定1）", "約1/532.8"], ["GG初当り（設定6）", "約1/294.8"], ["ベース", "約30.8G/50枚"], ["GOD GAME", "50G・純増約7.0枚/G"], ["G-ZONE", "5G"], ["Z-ZONE", "5G＋α・黄7約1/1.4"], ["Z-GAME", "黄7揃いごとにGGストック"], ["赤7揃い", "約1/6900・SGG"], ["SGG", "10〜100G・継続約75%"], ["GOD揃い", "1/16384・GG4セット以上"]],
+    articleSections: [
+      { heading: "50GのGOD GAMEと5GのG-ZONE", paragraphs: ["GOD GAMEは1セット50G・純増約7.0枚/G。消化中はレア役や小役履歴でGGストックを抽選し、終了後は5GのG-ZONEで次セットを告知します。", "専用画面ではGGを50Gまで進め、G-ZONEの最後にPUSHで奇数揃いを開きます。ストックまたはループ抽選に当選していれば次のGGへ進み、どちらもなければ終了します。"] },
+      { heading: "0揃いからZ-ZONE・Z-GAMEへ", paragraphs: ["Z-ZONEは5G＋αのフルナビ区間で、黄7は約1/1.4。黄7履歴を5個埋めるとGGストックを獲得し、Z-GAMEへ移行します。", "Z-GAMEでは黄7が成立するたびにGGを1セット上乗せします。シミュレーターは黄7履歴を1Gずつ表示し、5連達成後に獲得ストック数をPUSHで開きます。"] },
+      { heading: "赤7のSGG", paragraphs: ["赤7揃いは約1/6900でSGGへ。SGGは1セット10〜100G、継続率約75%で、セット中の赤7揃いによりGGストックを獲得します。", "専用画面ではSGGのセットゲーム数、継続ジャッジ、獲得したGGストックを分けて表示します。赤7確率やセット振り分けは公表値を優先し、未公表の細部は代表値です。"] },
+      { heading: "GOD揃いはGG4セット以上", paragraphs: ["GOD揃いは1/16384。PREMIUM GOD GAMEへ移行し、GG4セット以上と高継続ループストックが濃厚、期待枚数は3000枚以上とされています。", "GOD揃いは実際の確率に近い低確率で抽選し、当選時は専用PUSHのあと4セットをストックし、ループ率を強化します。毎回発生する演出ではありません。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約30.8G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6を均等抽選し、GG初当りは公開設定別値を使用", "GG50G、G-ZONE5G、Z-ZONE黄7約1/1.4、赤7・GOD確率を反映", "内部モード、全役別抽選、ループストック選択率、特化ゾーン振り分けは代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["ユニバーサル公式機種情報", "https://www.universal-777.com/product/slot/milliongod_kiseki/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10424"], ["一撃 機種解析", "https://1geki.jp/slot/l_milliongod_kiseki/"], ["パチマガスロマガFREE 機種解析", "https://pachimaga.com/free/mach/maker-s/mizuho/064801.php"]],
+    readerGuide: { verdict: "50GのGGを消化し、5GのG-ZONEで次セットを開きながらZ-GAME・SGG・GOD揃いによるストックを狙うセット管理型です。", bestFor: ["G-ZONEのPUSHで次セットを確認したい", "Z-ZONEの黄7履歴からZ-GAMEを狙いたい", "SGGやGOD揃いのストック連鎖を体験したい"], check: ["純増・主要ゲーム数・赤7／GOD確率は公開値", "ストックとループ抽選を個別表示", "未公表の選択率は体験用代表値"], compare: [["okidoki-gold", "沖ドキ！GOLD", "32G天国ループと比較"], ["super-bingo-neo-slot", "スーパービンゴネオ", "セット継続型ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v17", dedicatedFlow: true, dedicatedFlowKey: "million-god-kiseki", dedicatedFlowVersion: 2, millionGodFlow: true,
+    triggerLabel: "GOD GAME", triggerRate: 532.8, triggerSuccess: 1, mainLabel: "GOD GAME", mainRate: 532.8, base50: 30.8, coinUnit: 4.0, normalMin: 0, normalMax: 0, atPureIncrease: 7.0, atPayoutVariance: 0,
+    millionGodGgGames: 50, millionGodGZoneGames: 5, millionGodMaxSets: 15,
+    millionGodLoopRates: [[0.01, 0.50], [0.25, 0.30], [0.50, 0.15], [0.80, 0.05]],
+    millionGodZZoneChance: 0.15, millionGodYellowChance: 1 / 1.4, millionGodZGameStocks: [[1, 0.56], [2, 0.27], [3, 0.11], [4, 0.05], [5, 0.01]],
+    millionGodRed7Rate: 6900, millionGodSggContinue: 0.75, millionGodSggGames: [[10, 0.83], [20, 0.114], [30, 0.034], [50, 0.017], [100, 0.005]],
+    millionGodGodRate: 16384, millionGodGodStocks: 4,
+    specialLabel: "Z-GAME／SGG", specialChance: 0.15, upperChallenge: "GOD揃い", upperChance: 50 / 16384, upperSuccess: 1, upperLabel: "PREMIUM GOD GAME", upperContinue: 0.80, upperPayout: 1400,
+    settingRates: { 1: { trigger: 532.8, main: 532.8, payout: 0.972 }, 2: { trigger: 420.4, main: 420.4, payout: 0.991 }, 3: { trigger: 495.9, main: 495.9, payout: 1.021 }, 4: { trigger: 338.4, main: 338.4, payout: 1.069 }, 5: { trigger: 455.4, main: 455.4, payout: 1.117 }, 6: { trigger: 294.8, main: 294.8, payout: 1.146 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
+
 (function applyGodEaterResurrectionDedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["god-eater-resurrection"];
   if (!machine) return;

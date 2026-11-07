@@ -1139,6 +1139,15 @@
         cards.splice(4, 0, ["BALANCE MODEL", "専用フローの抽選目安", `${profileNames[titleFlow.profile] || "機種専用型"}として、AT突入後は平均約${Number(titleFlow.balance.averageRounds).toFixed(1)}区間進行します。通常フローから${sim.upperLabel}へ到達する代表目安は約${percent(titleFlow.balance.upperRoute)}です。公開値と機種別の代表値から計算した比較用の目安で、実戦結果を保証するものではありません。`]);
       }
       note = `${cycle.label || sim.mainLabel}の区間順序、代表報酬、継続判定を${titleFlow ? "機種専用フローで" : "個別に"}表示する体験モデルです。成立役別抽選、内部状態、全報酬振り分けは短時間で比較できる形へ簡略化しています。`;
+    } else if (sim.millionGodFlow) {
+      cards = [
+        ["GAME FLOW", "ゲーム性", "50GのGOD GAMEを消化し、5GのG-ZONEで次セットを告知します。GGストックまたはループ抽選が残っていれば奇数揃いで復帰し、どちらもなければ終了します。"],
+        ["Z-ZONE", "黄7履歴とZ-GAME", "0揃い後のZ-ZONEは5G＋α。黄7約1/1.4を5連させるとGGストックを獲得し、Z-GAMEでは黄7揃いごとにストックを上乗せします。"],
+        ["SGG", "赤7の上乗せ特化ゾーン", "赤7揃い約1/6900からSGGへ。1セット10〜100G、継続率約75%で、セット継続とGGストックをPUSHで開きます。"],
+        ["PREMIUM", "GOD揃い", "GOD揃いは1/16384。GG4セット以上と高継続ループを獲得し、専用のPREMIUM GOD GAME表示へ移行します。"],
+        ["SETTING", "設定別GG初当り", `GG初当りは設定${slotBaselineSetting}基準で約1/${sim.mainRate}です。偶数設定ほど軽い非単調な設定差を公開値どおり使用し、特化ゾーンは全設定共通で抽選します。`]
+      ];
+      note = "GG50G、G-ZONE5G、Z-ZONE中の黄7確率、赤7・GOD確率など公開値を優先しています。内部モード、全役別抽選、ループストック選択率、特化ゾーンの細かな振り分けは代表値です。";
     } else if (sim.godEaterFlow) {
       cards = [
         ["GAME FLOW", "ゲーム性", "AT初回は100枚のストーリーを消化し、25G＋αのアラガミ交戦へ進みます。討伐成功後は『神を喰らえ』で次セットの規定枚数を決め、交戦敗北までループします。"],
@@ -1370,7 +1379,7 @@
       const averageInvestment = Math.round((machine.sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
-      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow;
+      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow || machine.sim.millionGodFlow;
       const settingModelLabel = machine.sim.settingRates
         ? hasDedicatedFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
         : hasDedicatedFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
@@ -1456,7 +1465,7 @@
         ? Math.max(1, mainRate * sim.triggerRate / sim.mainRate)
         : Math.max(1, sim.triggerRate * profile.rate);
     const publishedEntry = Number(publishedSetting?.entry);
-    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow
+    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow
       ? Math.max(0, Math.min(1, Number(sim.triggerSuccess) || 0.55))
       : sim.godzillaEva2Flow || sim.mahoakoFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.shinEvaFlow
       ? 1
@@ -1472,7 +1481,7 @@
       ? Math.min(0.98, Number(publishedSetting.upper))
       : hasPublishedSettingRates ? sim.upperChance : Math.min(0.98, sim.upperChance + profile.upper);
     const settingModelLabel = hasPublishedTriggerRate && hasPublishedMainRate
-      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.darlingFranxxFlow ? "公開設定別値（CZ・BONUS・高確初当り）" : sim.godEaterFlow ? "公開設定別値（AT初当り・機種専用進行）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
+      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.darlingFranxxFlow ? "公開設定別値（CZ・BONUS・高確初当り）" : sim.godEaterFlow ? "公開設定別値（AT初当り・機種専用進行）" : sim.millionGodFlow ? "公開設定別値（GG初当り・機種専用進行）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
       : hasPublishedMainRate
         ? sim.bofuriFlow ? "公開設定別値（BONUS初当り）＋機種専用進行" : "公開設定別値（初当り）＋CZ簡易換算"
         : "サイト共通補正モデル";
@@ -1707,6 +1716,14 @@
     let godEaterGateGames = 0;
     let godEaterUpperMode = "";
     let godEaterUpperLoops = 0;
+    let millionGodSets = 0;
+    let millionGodGZoneReturns = 0;
+    let millionGodZZoneAttempts = 0;
+    let millionGodZGameStocks = 0;
+    let millionGodSggEntries = 0;
+    let millionGodSggStocks = 0;
+    let millionGodGodCount = 0;
+    let millionGodMaxStocks = 1;
     if (sim.basiliskTenzenFlow) {
       basiliskBc = weighted(sim.basiliskBcTypes || [[{ key: "hetero", label: "異色BC", games: 16, award: 30 }, 1]]);
       triggerSucceeded = true;
@@ -2750,6 +2767,93 @@
             flow.push(`通常バジリスクタイム 1セット・+${yen.format(fallbackAward)}枚`);
           }
         }
+        basePayout = payout - entryPayout;
+      } else if (sim.millionGodFlow) {
+        payout = entryPayout;
+        basePayout = 0;
+        const awardGodCoins = amount => {
+          const award = Math.max(0, Math.min(Math.round(Number(amount) || 0), SLOT_COMPLETE_LIMIT - payout));
+          payout += award;
+          return award;
+        };
+        let ggStocks = 1;
+        let loopRate = Math.max(0.01, Math.min(0.80, Number(weighted(sim.millionGodLoopRates || [[0.25, 1]])) || 0.25));
+        const maxSets = Math.max(1, Math.min(30, Number(sim.millionGodMaxSets) || 15));
+        for (let set = 1; set <= maxSets && ggStocks > 0 && payout < SLOT_COMPLETE_LIMIT; set += 1) {
+          ggStocks = Math.max(0, ggStocks - 1);
+          const ggGames = Math.max(1, Number(sim.millionGodGgGames) || 50);
+          const ggAward = awardGodCoins(slotAwardForGames(ggGames, Number(sim.atPureIncrease) || 7, 0));
+          atGamesTotal += ggGames;
+          millionGodSets = set;
+          atEvents.push({ kind: "million-god-gg", label: sim.mainLabel, games: ggGames, set, award: ggAward, cumulative: payout, stocks: ggStocks, loopRate: loopRate * 100 });
+          flow.push(`GOD GAME SET ${set}・+${ggAward}枚`);
+
+          const godHit = Math.random() < ggGames / Math.max(1, Number(sim.millionGodGodRate) || 16384);
+          if (godHit) {
+            const godStocks = Math.max(4, Number(sim.millionGodGodStocks) || 4);
+            ggStocks += godStocks;
+            loopRate = Math.max(loopRate, 0.80);
+            millionGodGodCount += 1;
+            upper = true;
+            atEvents.push({ kind: "million-god-pgg", label: "PREMIUM GOD GAME", games: 1, stocks: godStocks, totalStocks: ggStocks, cumulative: payout, chance: 100 });
+            flow.push(`GOD揃い・GG${godStocks}セット以上＋80%ループ`);
+          } else {
+            const red7Hit = Math.random() < ggGames / Math.max(1, Number(sim.millionGodRed7Rate) || 6900);
+            if (red7Hit) {
+              millionGodSggEntries += 1;
+              let sggLoop = 0;
+              let sggContinued = true;
+              while (sggContinued && sggLoop < 8 && payout < SLOT_COMPLETE_LIMIT) {
+                sggLoop += 1;
+                const sggGames = Math.max(10, Number(weighted(sim.millionGodSggGames || [[10, 1]])) || 10);
+                ggStocks += 1;
+                millionGodSggStocks += 1;
+                atGamesTotal += sggGames;
+                sggContinued = sggLoop < 8 && Math.random() < (Number(sim.millionGodSggContinue) || 0.75);
+                atEvents.push({ kind: "million-god-sgg", label: "SUPER GOD GAME", games: sggGames, loop: sggLoop, stockAdd: 1, totalStocks: ggStocks, continued: sggContinued, chance: (Number(sim.millionGodSggContinue) || 0.75) * 100, cumulative: payout });
+              }
+              flow.push(`赤7・SGG ${sggLoop}セット・GGストック+${sggLoop}`);
+            }
+          }
+
+          if (Math.random() < (Number(sim.millionGodZZoneChance) || 0.15)) {
+            millionGodZZoneAttempts += 1;
+            const yellowChance = Math.max(0.01, Math.min(0.99, Number(sim.millionGodYellowChance) || (1 / 1.4)));
+            let yellowStreak = 0;
+            for (let game = 1; game <= 5; game += 1) {
+              if (Math.random() < yellowChance) yellowStreak += 1;
+              else break;
+            }
+            const zSuccess = yellowStreak >= 5;
+            atGamesTotal += 5;
+            atEvents.push({ kind: "million-god-z-zone", label: "Z-ZONE", games: 5, yellowStreak, success: zSuccess, chance: Math.pow(yellowChance, 5) * 100, cumulative: payout });
+            if (zSuccess) {
+              const zStocks = Math.max(1, Number(weighted(sim.millionGodZGameStocks || [[1, 1]])) || 1);
+              ggStocks += zStocks;
+              millionGodZGameStocks += zStocks;
+              atEvents.push({ kind: "million-god-z-game", label: "Z-GAME", games: zStocks, stocks: zStocks, totalStocks: ggStocks, cumulative: payout });
+              flow.push(`Z-ZONE成功・Z-GAME GGストック+${zStocks}`);
+            } else {
+              flow.push(`Z-ZONE 黄7 ${yellowStreak}/5・失敗`);
+            }
+          }
+
+          let loopStock = false;
+          if (ggStocks <= 0 && Math.random() < loopRate) {
+            ggStocks = 1;
+            loopStock = true;
+          }
+          const continued = ggStocks > 0;
+          if (continued) millionGodGZoneReturns += 1;
+          millionGodMaxStocks = Math.max(millionGodMaxStocks, ggStocks);
+          atGamesTotal += Math.max(1, Number(sim.millionGodGZoneGames) || 5);
+          atEvents.push({ kind: "million-god-g-zone", label: "G-ZONE", games: Math.max(1, Number(sim.millionGodGZoneGames) || 5), set, stocks: ggStocks, loopStock, continued, cumulative: payout, chance: loopRate * 100 });
+          flow.push(`G-ZONE ${continued ? loopStock ? "ループストック・GG復帰" : `ストック${ggStocks}個・GG復帰` : "終了"}`);
+          if (!continued) break;
+        }
+        cycleRounds = millionGodSets;
+        cycleContinues = millionGodGZoneReturns;
+        upperLoops = millionGodGodCount ? millionGodSets : 0;
         basePayout = payout - entryPayout;
       } else if (sim.godEaterFlow) {
         payout = entryPayout;
@@ -4857,10 +4961,11 @@
     const toaruStats = sim.toaruIndex2Flow ? [["今回の入口", toaruEntry?.label || sim.triggerLabel], ["バトル", `${toaruBattles}戦・勝利${toaruBattleWins}回`], ["とある運命の上乗遊技", `${toaruChargeCount}回・+${yen.format(toaruChargeGames)}G`], ["PLUS ACTION", `${toaruPlusActionCount}回・+${yen.format(toaruPlusActionGames)}G`], [sim.upperChallenge, toaruFiammaAttempts ? `${toaruFiammaAttempts}回・成功${toaruFiammaWins}回` : "未到達"], [sim.upperLabel, toaruFiammaWins ? "到達" : "非到達"]] : [];
     const darlingStats = sim.darlingFranxxFlow ? [["今回の入口", darlingEntry?.label || sim.triggerLabel], ["初当りBONUS", darlingInitialBonus?.label || "非当選"], ["高確中BONUS", `${darlingHighBonuses}回（フランクス${darlingFranxxBonuses}回）`], ["BONUS獲得", `+${yen.format(darlingBonusAwards)}枚`], ["比翼BEATS", `${darlingBeatEntries}回・+${yen.format(darlingBeatAdds)}G`], ["最高Beatレベル", darlingMaxBeatLevel ? `Lv.${darlingMaxBeatLevel === 3 ? "MAXX" : darlingMaxBeatLevel}` : "非到達"], ["連れ出し", darlingTakeouts ? `${darlingTakeouts}回` : "非当選"], ["CLIMAXX", darlingClimaxx ? "到達" : "非到達"]] : [];
     const godEaterStats = sim.godEaterFlow ? [["アラガミ交戦", `${godEaterBattles}戦・討伐${godEaterWins}回`], ["結合崩壊", `${godEaterBondBreaks}回`], ["捕喰報酬", `${godEaterRewards}回`], ["神機覚醒", godEaterOverkills ? `${godEaterOverkills}回` : "非当選"], ["逆鱗ハンニバル", godEaterHannibal ? (godEaterHannibalWon ? "撃破" : "敗北・次回100Gゾーン濃厚") : "未到達"], ["リザレクションゲート", godEaterGateGames ? `${godEaterGateGames}G` : "未到達"], ["上位AT", godEaterUpperMode ? `${godEaterUpperMode}・${godEaterUpperLoops}回` : "非到達"]] : [];
+    const millionGodStats = sim.millionGodFlow ? [["GOD GAME", `${millionGodSets}セット`], ["G-ZONE復帰", `${millionGodGZoneReturns}回`], ["最大GGストック", `${millionGodMaxStocks}個`], ["Z-ZONE", millionGodZZoneAttempts ? `${millionGodZZoneAttempts}回` : "非当選"], ["Z-GAME上乗せ", millionGodZGameStocks ? `+${millionGodZGameStocks}セット` : "非到達"], ["SGG", millionGodSggEntries ? `${millionGodSggEntries}回・+${millionGodSggStocks}セット` : "非当選"], ["GOD揃い", millionGodGodCount ? `${millionGodGodCount}回` : "非当選"]] : [];
     const cycleStats = sim.cycleFlow ? [[sim.cycleFlow.statLabel || (sim.titleFlow ? "機種専用進行" : "専用ループ"), `${cycleRounds}回・継続${cycleContinues}回`]] : [];
     const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
     const rushGamesTotal = Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
-    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
+    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
     const gameAddOnStats = sim.karakuriJudgeFlow || coinAddOnCount
       ? [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(coinAddOnTotal || addOnTotal)}枚` : "上乗せなし"]]
       : [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnGamesTotal || otomeAddedGames)}G` : "上乗せなし"]];
@@ -4907,6 +5012,8 @@
         ? [["CZ・BONUS高確消化", `${yen.format(rushGamesTotal)}G相当`], ...darlingStats]
       : sim.godEaterFlow
         ? [["AT・交戦・上位消化", `${yen.format(rushGamesTotal)}G相当`], ...godEaterStats]
+      : sim.millionGodFlow
+        ? [["GG・G-ZONE消化", `${yen.format(rushGamesTotal)}G`], ...millionGodStats]
       : [["RUSH消化モデル", `${yen.format(rushGamesTotal)}G相当`], ...karakuriStats, ...battleStats, ...sgStats, ...kabaneriStats, ...otomeStats, ...cycleStats, ...gameAddOnStats, ...bonusStats, ...genericSpecialStats, ["上位AT", upper ? (kabaneriUpperMode || `${sim.upperLabel} ${upperLoops}セット`) : "非到達"]]) : [];
     const stats = [["今回の設定", `設定${setting}`], ["設定差モデル", settingModelLabel], ["今回のゲーム数", `${yen.format(games)}G`], ...settingRateStats, ["現金投資目安", `${yen.format(investment)}円`], ...entryBonusStats, ...atStats, ["獲得枚数", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]];
     if (complete) stats.unshift(["到達状態", "コンプリート"]);
@@ -4923,6 +5030,8 @@
         ? `今回の設定は設定${setting}。${games}Gで${darlingEntry?.label || sim.triggerLabel}、${triggerSucceeded ? `${darlingInitialBonus?.label || "初当りBONUS"}から高確中BONUS ${darlingHighBonuses}回・比翼BEATS ${darlingBeatEntries}回で${yen.format(payout)}枚を獲得しました。${darlingClimaxx ? "高確ゲーム数30GのCLIMAXXへ到達しました。" : entered ? "ボーナス高確は残り0Gで終了しました。" : "初当りBONUSで終了しました。"}` : "CZは突破できませんでした。"}`
       : sim.godEaterFlow
         ? `今回の設定は設定${setting}。${games}Gでアラガミバースト、アラガミ交戦${godEaterBattles}戦・討伐${godEaterWins}回、捕喰報酬${godEaterRewards}回で${yen.format(payout)}枚を獲得しました。${godEaterUpperMode ? `${godEaterUpperMode}へ到達し、${godEaterUpperLoops}回消化しました。` : godEaterHannibal ? (godEaterHannibalWon ? "リザレクションゲートで覚醒には届きませんでした。" : "逆鱗ハンニバル敗北で、次回100Gゾーン濃厚です。") : "上位ルートには届きませんでした。"}`
+      : sim.millionGodFlow
+        ? `今回の設定は設定${setting}。${games}GでGOD GAME、GGを${millionGodSets}セット・G-ZONE復帰${millionGodGZoneReturns}回で${yen.format(payout)}枚を獲得しました。${millionGodGodCount ? `GOD揃いを${millionGodGodCount}回獲得しました。` : millionGodSggEntries ? `SGGでGGを${millionGodSggStocks}セット上乗せしました。` : millionGodZGameStocks ? `Z-GAMEでGGを${millionGodZGameStocks}セット上乗せしました。` : "特化ゾーンには入りませんでした。"}`
       : sim.okidokiGoldFlow
         ? `今回の設定は設定${setting}。${games}Gでハイビスカス点灯、最大${okidokiMaxChain}連・BIG ${okidokiBigCount}回・REG ${okidokiRegCount}回で${yen.format(payout)}枚を獲得しました。最高内部モードは${okidokiHighestMode}です。`
       : sim.uminchuFlow
@@ -5624,6 +5733,7 @@
     const toaruIndex2Flow = Boolean(machine.sim.toaruIndex2Flow);
     const darlingFranxxFlow = Boolean(machine.sim.darlingFranxxFlow);
     const godEaterFlow = Boolean(machine.sim.godEaterFlow);
+    const millionGodFlow = Boolean(machine.sim.millionGodFlow);
     setSlotAtStatus({ visible: false });
     setExperienceHud("0G", "0円", "0枚");
     setExperienceStage(0, experienceProfile.system, "通常ゲーム中", "0G", `${data.hitLabel}を目指して抽選中`, "normal", data.hitChance, "1Gごとの契機当選率");
@@ -5638,8 +5748,67 @@
     setExperienceStage(1, magiaRecordFlow ? "BONUS HIT" : bofuriFlow ? "HIGH PROBABILITY ZONE" : okidokiGoldFlow ? "HIBISCUS LIGHT" : uminchuFlow ? "BONUS HIT" : basiliskTenzenFlow ? "BASILISK CHANCE" : sao2Flow ? "SQUADRON BATTLE" : symphogearSeigiFlow ? "AXZ BATTLE" : lycorisFlow ? (data.lycorisCz?.key === "direct" ? "DIRECT RUSH" : "CHANCE ZONE") : aobutaFlow ? "SEISHUN BONUS" : tentenFlow ? "EPISODE BATTLE" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "DIRECT AT" : "CHANCE ZONE") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "DIRECT AT" : data.assaultEntry?.key === "bouquet" ? "BOUQUET BONUS" : "LILY CHALLENGE") : kaguyaFlow ? "LOVE BRAIN BATTLE" : dumbbellFlow ? "MUSCLE ZONE" : shinEvaFlow ? "INITIAL HIT" : tokyoGhoulFlow ? "CHANCE ZONE" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", basiliskTenzenFlow ? (data.basiliskBc?.label || data.hitLabel) : tokyoGhoulFlow ? (data.tokyoGhoulCz?.label || data.hitLabel) : lycorisFlow ? (data.lycorisCz?.label || data.hitLabel) : goblinSlayerFlow ? (data.goblinCz?.label || data.hitLabel) : assaultLilyFlow ? (data.assaultEntry?.label || data.hitLabel) : data.hitLabel, `${yen.format(data.attempts)}G`, magiaRecordFlow ? "初当りBONUSを消化し、最後のPUSHでマギアラッシュを判定" : bofuriFlow ? "高確率ZONEを進め、最後のPUSHでBONUSを判定" : okidokiGoldFlow ? "ハイビスカス点灯・初当りBONUS確定" : basiliskTenzenFlow ? `${data.basiliskBc?.games || 16}GのBCでバジリスクタイムを抽選` : sao2Flow ? "スコードロンバトルの最後にPUSHでBoB突入を判定" : symphogearSeigiFlow ? "AXZバトルを進め、最後のPUSHでAXZラッシュを判定" : lycorisFlow ? (data.lycorisCz?.key === "direct" ? "アフターエピソードからRUSHへ直行" : `${data.lycorisCz?.games || 10}GのCZを進め、最後のPUSHでRUSHを判定`) : aobutaFlow ? "青春BONUS後は必ず4セット＋αの完走型STへ" : tokyoGhoulFlow ? "8GのCZを進め、最後のPUSHで東京喰種咬を判定" : uminchuFlow ? "告知音とともに初当りBONUSへ" : tentenFlow ? "10GのレベルUPパートと4Gのバトルへ" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "規定ゲーム数からAT直撃" : "CZの専用ゲーム数を進めて最後にPUSH") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "規定ゲーム数・レア役などからRUSH直撃" : data.assaultEntry?.key === "bouquet" ? "25GのBONUS後にRUSHを判定" : "10Gの専用CZを進めて最後にPUSH") : kaguyaFlow ? "恋愛頭脳戦を経て15G＋αのCZへ" : dumbbellFlow ? "10Gの前半パートから後半発展を目指します" : shinEvaFlow ? "3GのEVANGELION IMPACTで作戦を決定します" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
     if (godEaterFlow) {
       setExperienceStage(1, "AT HIT", "アラガミバースト", `${yen.format(data.attempts)}G`, "初回ストーリー100枚からアラガミ交戦へ", "hit", 100, "AT初当り");
+    } else if (millionGodFlow) {
+      setExperienceStage(1, "ODD SYMBOLS", "液晶奇数揃い", `${yen.format(data.attempts)}G`, "50GのGOD GAMEへ突入します", "hit", 100, "GG初当り");
     }
     await waitForExperience(780);
+    if (millionGodFlow) {
+      const events = Array.isArray(data.atEvents) ? data.atEvents : [];
+      for (const event of events) {
+        if (runId !== experienceRunId) return;
+        const stockCount = Math.max(0, Number(event.totalStocks ?? event.stocks) || 0);
+        setSlotAtStatus({ visible: true, remaining: stockCount, remainingUnit: "個", addOn: 0, total: Number(event.cumulative) || 0 });
+        if (event.kind === "million-god-gg") {
+          const ggComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 50), "G", "GOD GAME", `GOD GAME SET ${event.set}`, "50G・純増約7.0枚/GでGGを消化します", 100, `GGストック ${yen.format(event.stocks)}個`, runId);
+          if (!ggComplete) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setExperienceStage(3, "GOD GAME RESULT", `GG SET ${event.set} 消化完了`, `+${yen.format(event.award)}枚`, `累計 ${yen.format(event.cumulative)}枚・G-ZONEへ`, "rush", 100, "50G消化完了");
+          await waitForExperience(900);
+        } else if (event.kind === "million-god-pgg") {
+          setExperienceStage(4, "PREMIUM GOD GAME", "GOD揃い", "PUSH", "GG4セット以上と高ループを開きます", "judge", 100, "GOD 1/16384");
+          await waitForExperienceAction("GOD揃い PUSH", 5000, "gold");
+          if (runId !== experienceRunId) return;
+          setSlotAtStatus({ visible: true, remaining: Number(event.totalStocks) || 0, remainingUnit: "個", addOn: 0, total: Number(event.cumulative) || 0 });
+          setExperienceStage(4, "PREMIUM GOD GAME", "GOD揃い成立", `GG +${yen.format(event.stocks)}セット`, "高継続ループストック獲得", "hyper", 100, `保有ストック ${yen.format(event.totalStocks)}個`);
+          await waitForExperience(1200);
+        } else if (event.kind === "million-god-sgg") {
+          const sggComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 10), "G", "SUPER GOD GAME", `SGG SET ${event.loop}`, "赤7でGGストック・セット継続を抽選します", Number(event.chance) || 75, `継続期待度 約${Math.round(Number(event.chance) || 75)}%`, runId);
+          if (!sggComplete) return;
+          setExperienceStage(4, "SGG JUDGE", `SGG SET ${event.loop}`, "PUSH", "GGストックと継続結果を開きます", "judge", Number(event.chance) || 75, `${yen.format(event.games)}G消化`);
+          await waitForExperienceAction(`SGG SET ${event.loop} PUSH`, 5000, event.continued ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setSlotAtStatus({ visible: true, remaining: Number(event.totalStocks) || 0, remainingUnit: "個", addOn: 0, total: Number(event.cumulative) || 0 });
+          setExperienceStage(4, event.continued ? "SGG CONTINUE" : "SGG END", "赤7揃い・GGストック", "+1セット", event.continued ? "次のSGGセットへ" : "GOD GAMEへ戻ります", event.continued ? "hyper" : "rush", 100, `保有ストック ${yen.format(event.totalStocks)}個`);
+          await waitForExperience(950);
+        } else if (event.kind === "million-god-z-zone") {
+          const zComplete = await animateExperienceCounter(5, "G", "Z-ZONE", "黄7履歴チャレンジ", "黄7約1/1.4を5連させます", Number(event.chance) || 18.6, `黄7 ${yen.format(event.yellowStreak)}/5`, runId);
+          if (!zComplete) return;
+          setExperienceStage(3, "Z-ZONE JUDGE", "黄7履歴", "PUSH", "5連達成とZ-GAME突入を開きます", "judge", Number(event.chance) || 18.6, `黄7 ${yen.format(event.yellowStreak)}/5`);
+          await waitForExperienceAction("Z-ZONE PUSH", 5000, event.success ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.success ? "Z-ZONE SUCCESS" : "Z-ZONE FAILED", event.success ? "黄7履歴5連達成" : "黄7履歴途切れ", event.success ? "Z-GAME" : `${yen.format(event.yellowStreak)}/5`, event.success ? "GGストック上乗せへ" : "GOD GAMEへ戻ります", event.success ? "hyper" : "end", event.success ? 100 : 0, "Z-ZONE結果");
+          await waitForExperience(900);
+        } else if (event.kind === "million-god-z-game") {
+          setExperienceStage(4, "Z-GAME", "黄7上乗せ連鎖", "PUSH", "獲得したGGストックを開きます", "judge", 100, "黄7揃いごとにGGストック");
+          await waitForExperienceAction("Z-GAME PUSH", 5000, Number(event.stocks) >= 3 ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setSlotAtStatus({ visible: true, remaining: Number(event.totalStocks) || 0, remainingUnit: "個", addOn: 0, total: Number(event.cumulative) || 0 });
+          setExperienceStage(4, "Z-GAME RESULT", "GGストック獲得", `+${yen.format(event.stocks)}セット`, `保有ストック ${yen.format(event.totalStocks)}個`, Number(event.stocks) >= 3 ? "hyper" : "rush", 100, "Z-GAME結果");
+          await waitForExperience(1000);
+        } else if (event.kind === "million-god-g-zone") {
+          const zoneComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 5), "G", "G-ZONE", `G-ZONE SET ${event.set}`, "液晶奇数揃いで次のGGを告知します", event.continued ? 100 : Number(event.chance) || 1, `GGストック ${yen.format(event.stocks)}個`, runId);
+          if (!zoneComplete) return;
+          setExperienceStage(3, "G-ZONE FINAL", "5G 最終告知", "PUSH", "奇数揃いの有無を開きます", "judge", event.continued ? 100 : Number(event.chance) || 1, event.loopStock ? "ループストック抽選" : `保有ストック ${yen.format(event.stocks)}個`);
+          await waitForExperienceAction(`G-ZONE SET ${event.set} PUSH`, 5000, event.continued ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setSlotAtStatus({ visible: true, remaining: Number(event.stocks) || 0, remainingUnit: "個", addOn: 0, total: Number(event.cumulative) || 0 });
+          setExperienceStage(3, event.continued ? "ODD SYMBOLS" : "G-ZONE END", event.continued ? "液晶奇数揃い" : "G-ZONE終了", event.continued ? "GOD GAME 継続" : "AT終了", event.continued ? (event.loopStock ? "ループストックで復帰" : `残りストック ${yen.format(event.stocks)}個`) : `累計 ${yen.format(event.cumulative)}枚`, event.continued ? "rush" : "end", event.continued ? 100 : 0, `G-ZONE SET ${event.set}結果`);
+          await waitForExperience(event.continued ? 950 : 1100);
+        }
+      }
+      setSlotAtStatus({ visible: true, remaining: 0, remainingUnit: "個", addOn: 0, total: Number(data.payout) || 0 });
+      return;
+    }
     if (godEaterFlow) {
       const events = Array.isArray(data.atEvents) ? data.atEvents : [];
       for (const event of events) {
