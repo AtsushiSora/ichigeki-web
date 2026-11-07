@@ -957,7 +957,7 @@ window.ICHIGEKI_MACHINES = {
     sim: { kind: "slot", triggerLabel: "闘神演舞", triggerRate: 366, triggerSuccess: 1, mainLabel: "闘神演舞", mainRate: 366, base50: 31.5, coinUnit: 3.5, normalMin: 250, normalMax: 1150, atPureIncrease: 4.0, specialLabel: "拳王強襲", specialChance: 0.27, specialMin: 180, specialMax: 900, specialDisplay: "coins", cycleFlow: { phase: "TOUSHIN ENBU", label: "神拳勝舞", statLabel: "勝舞魂バトル", games: 30, continueChance: 0.72, maxRounds: 12, rewards: [[{ label: "勝舞魂獲得", payout: 120 }, 0.55], [{ label: "闘神演舞継続", payout: 240 }, 0.30], [{ label: "拳王強襲", payout: 480 }, 0.15]], endLabel: "神拳勝舞敗北" }, upperChallenge: "神拳勝舞", upperChance: 0.46, upperSuccess: 0.52, upperLabel: "SPバトル", upperContinue: 0.80, upperPayout: 420, settingRates: { 1: { trigger: 366.0, main: 366.0, payout: 0.976 }, 2: { trigger: 357.0, main: 357.0, payout: 0.984 }, 3: { trigger: 336.3, main: 336.3, payout: 1.007 }, 4: { trigger: 298.7, main: 298.7, payout: 1.062 }, 5: { trigger: 283.2, main: 283.2, payout: 1.111 }, 6: { trigger: 273.1, main: 273.1, payout: 1.149 } } },
     articleSections: [
       { heading: "設定1〜6のAT初当りを個別反映", paragraphs: ["START時に設定1〜6を均等抽選し、設定1約1/366.0、設定2約1/357.0、設定3約1/336.3、設定4約1/298.7、設定5約1/283.2、設定6約1/273.1のAT初当りを使用します。", "抽選された設定は結果とランキングに表示します。公開されていない拳王強襲・神拳勝舞・SPバトルの設定差は独自に加えません。"] },
-      { heading: "あべしから神拳勝舞までを簡略化", paragraphs: ["実機は規定あべし到達から闘神演舞へ進み、勝舞魂を使う神拳勝舞でセット継続を目指します。シミュレーターでは初当りG、特化ゾーン、神拳勝舞、SPバトルを一連の演出にまとめています。", "31.5G/50枚、46枚貸し・5.2枚交換を固定し、設定1基準の平均投資と今回の収支を同じ条件で比較できます。"] },
+      { heading: "闘神演舞から神拳勝舞までを再現", paragraphs: ["実機同様、30GのAT『闘神演舞』で勝舞魂を獲得し、終了後は勝舞魂1個につき1Gの『神拳勝舞』へ進みます。PUSHで勝敗を開き、勝利時に残った勝舞魂は次セットへ持ち越します。", "勝舞魂の獲得個数や対戦相手別の勝率詳細には未公表部分があるため、シミュレーターでは公開されているゲーム構造を優先し、魂1個ごとの当落を代表値で抽選します。31.5G/50枚、46枚貸し・5.2枚交換は固定です。"] },
       { heading: "遊び方のポイント", bullets: ["抽選設定ごとの初当りGを比較する", "拳王強襲の上乗せ結果を見る", "神拳勝舞からSPバトル到達を狙う", "19,000枚到達時はコンプリート表示で打ち切る"] }
     ],
     sources: [["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10370"], ["なな徹 機種解析", "https://nana-press.com/kaiseki/machine/1059/"]]
@@ -3714,10 +3714,10 @@ window.ICHIGEKI_MACHINES = {
       upperAfterRoundsAutoSuccess: false,
       upperOnlyAfterRounds: true,
       rounds: [
-        { title: "闘神演舞・闘神レベル決定", detail: "30GのATで勝舞魂を集め、終了後の神拳勝舞へ備えます", games: 30, continueChance: 0.68, rewards: [[{ kind: "coins", label: "勝舞魂獲得", payout: 120 }, 0.70], [{ kind: "bonus", label: "北斗揃い・勝舞魂大量獲得", games: 30, payout: 280 }, 0.30]] },
-        { title: "神拳勝舞・1戦目", detail: "勝舞魂1個につき1Gの勝負。PUSHでAT継続を判定します", games: 1, continueChance: 0.52, rewards: [[{ kind: "coins", label: "神拳勝舞 勝利", payout: 80 }, 0.78], [{ kind: "games", label: "勝舞魂連続獲得", games: [[10, 0.72], [20, 0.22], [30, 0.06]] }, 0.22]] },
-        { title: "闘神演舞・闘神B", detail: "再び30Gを消化し、闘神レベルと勝舞魂の上積みを狙います", games: 30, continueChance: 0.72, rewards: [[{ kind: "coins", label: "勝舞魂追加獲得", payout: 120 }, 0.66], [{ kind: "bonus", label: "北斗揃い", games: 30, payout: 320 }, 0.34]] },
-        { title: "神拳勝舞・2戦目", detail: "勝舞揃いなら約50%の勝負。連続勝利で次の強区間へ進みます", games: 1, continueChance: 0.58, rewards: [[{ kind: "coins", label: "神拳勝舞 連勝", payout: 100 }, 0.72], [{ kind: "games", label: "闘神演舞ゲーム上乗せ", games: [[10, 0.62], [20, 0.28], [30, 0.10]] }, 0.28]] },
+        { title: "闘神演舞・闘神レベル決定", detail: "30GのATで勝舞魂を集め、終了後の神拳勝舞へ備えます", games: 30, continueChance: 1, rewards: [[{ kind: "coins", label: "勝舞魂獲得", payout: 120 }, 0.70], [{ kind: "coins", label: "北斗揃い・勝舞魂大量獲得", payout: 240 }, 0.30]] },
+        { title: "神拳勝舞・1戦目", detail: "勝舞魂1個につき1Gの勝負。PUSHでAT継続を判定します", games: 1, continueChance: 0.52, rewards: [[{ kind: "coins", label: "神拳勝舞 勝利", payout: 0 }, 1]] },
+        { title: "闘神演舞・闘神B", detail: "再び30Gを消化し、闘神レベルと勝舞魂の上積みを狙います", games: 30, continueChance: 1, rewards: [[{ kind: "coins", label: "勝舞魂追加獲得", payout: 120 }, 0.66], [{ kind: "coins", label: "北斗揃い・勝舞魂大量獲得", payout: 240 }, 0.34]] },
+        { title: "神拳勝舞・2戦目", detail: "残った勝舞魂を1個ずつ使い、勝利までの当落をPUSHで開きます", games: 1, continueChance: 0.58, rewards: [[{ kind: "coins", label: "神拳勝舞 連勝", payout: 0 }, 1]] },
         { title: "拳王強襲", detail: "3Gの強襲区間。毎ゲーム勝舞魂の大量獲得を狙います", games: 3, continueChance: 0.72, rewards: [[{ kind: "coins", label: "拳王強襲・勝舞魂大量獲得", payout: 250 }, 0.62], [{ kind: "bonus", label: "拳王強襲ロング", games: 30, payout: 500 }, 0.38]] },
         { title: "天撃ジャッジ", detail: "最終PUSH成功で上位AT『裏闘神演舞』への入口を開きます", games: 8, continueChance: 0.80, rewards: [[{ kind: "coins", label: "天撃到達", payout: 300 }, 0.65], [{ kind: "bonus", label: "SPバトル報酬", games: 50, payout: 650 }, 0.35]] }
       ]

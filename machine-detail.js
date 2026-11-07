@@ -3949,6 +3949,7 @@
         const cycle = sim.cycleFlow;
         const maxRounds = Math.max(1, Math.min(30, Number(cycle.maxRounds) || 10));
         const continueChance = Math.max(0.05, Math.min(0.98, Number(cycle.continueChance) || 0.72));
+        let hokutoWinningSouls = 0;
         for (let round = 1; round <= maxRounds && payout < SLOT_COMPLETE_LIMIT; round += 1) {
           const roundConfig = Array.isArray(cycle.rounds) && cycle.rounds.length
             ? cycle.rounds[Math.min(round - 1, cycle.rounds.length - 1)]
@@ -3976,7 +3977,33 @@
             : gameAdd
               ? cycleBaseAward + slotAwardForGames(gameAdd, atPureIncrease, sim.atPayoutVariance)
               : cycleBaseAward + Math.max(0, Number(rewardTemplate.payout) || 0);
-          const continued = round < maxRounds && payout < SLOT_COMPLETE_LIMIT && Math.random() < roundContinueChance;
+          const isHokutoTensei2 = slug === "hokuto-tensei2";
+          const isHokutoToushinRound = isHokutoTensei2 && /闘神演舞/.test(roundTitle);
+          const isHokutoShinkenRound = isHokutoTensei2 && /神拳勝舞/.test(roundTitle);
+          let effectiveContinueChance = roundContinueChance;
+          let continued = round < maxRounds && payout < SLOT_COMPLETE_LIMIT && Math.random() < effectiveContinueChance;
+          let hokutoSoulGain = 0;
+          let hokutoSoulsBefore = 0;
+          let hokutoSoulsUsed = 0;
+          if (isHokutoToushinRound) {
+            hokutoSoulGain = Number(weighted([[3, 0.30], [5, 0.35], [7, 0.20], [10, 0.11], [15, 0.04]])) || 3;
+            hokutoWinningSouls += hokutoSoulGain;
+            effectiveContinueChance = 1;
+            continued = round < maxRounds;
+          } else if (isHokutoShinkenRound) {
+            hokutoSoulsBefore = Math.max(1, hokutoWinningSouls);
+            const representativeSoulWinChance = 0.18;
+            effectiveContinueChance = 1 - Math.pow(1 - representativeSoulWinChance, hokutoSoulsBefore);
+            continued = false;
+            for (let soul = 1; soul <= hokutoSoulsBefore; soul += 1) {
+              hokutoSoulsUsed = soul;
+              if (Math.random() < representativeSoulWinChance) {
+                continued = true;
+                break;
+              }
+            }
+            hokutoWinningSouls = continued ? Math.max(0, hokutoSoulsBefore - hokutoSoulsUsed) : 0;
+          }
           const awardAllowed = !roundConfig?.awardOnContinueOnly || continued;
           const award = awardAllowed ? Math.max(0, Math.min(requestedAward, SLOT_COMPLETE_LIMIT - payout)) : 0;
           payout += award;
@@ -3998,7 +4025,7 @@
           if (continued) cycleContinues += 1;
           const failureGames = !continued ? Math.max(0, Number(roundConfig?.failureGames) || 0) : 0;
           if (failureGames) atGamesTotal += failureGames;
-          atEvents.push({ kind: "cycle-round", label: cycle.label || sim.mainLabel, roundTitle, roundDetail, phase: cycle.phase || "AT LOOP", rewardLabel: awardAllowed ? rewardTemplate.label || cycle.rewardLabel || "報酬獲得" : roundConfig?.failureResultLabel || `${roundTitle} 敗北`, rewardKind, games: cycleGames, gameAdd: awardAllowed ? gameAdd : 0, bonusGames: awardAllowed ? bonusGames : 0, award, cumulative: payout, round, continued, completed: round === maxRounds && cycle.markFinalRoundComplete !== false, continueChance: roundContinueChance * 100, failureGames, failureLabel: roundConfig?.failureLabel || "引き戻しZONE", endLabel: cycle.endLabel || "AT終了", titleFlow: sim.titleFlow || null });
+          atEvents.push({ kind: "cycle-round", label: cycle.label || sim.mainLabel, roundTitle, roundDetail, phase: cycle.phase || "AT LOOP", rewardLabel: awardAllowed ? rewardTemplate.label || cycle.rewardLabel || "報酬獲得" : roundConfig?.failureResultLabel || `${roundTitle} 敗北`, rewardKind, games: cycleGames, gameAdd: awardAllowed ? gameAdd : 0, bonusGames: awardAllowed ? bonusGames : 0, award, cumulative: payout, round, continued, completed: round === maxRounds && cycle.markFinalRoundComplete !== false, continueChance: effectiveContinueChance * 100, failureGames, failureLabel: roundConfig?.failureLabel || "引き戻しZONE", endLabel: cycle.endLabel || "AT終了", titleFlow: sim.titleFlow || null, hokutoType: isHokutoToushinRound ? "toushin" : isHokutoShinkenRound ? "shinken" : "", hokutoSoulGain, hokutoSoulsBefore, hokutoSoulsUsed, hokutoSoulsRemaining: hokutoWinningSouls });
           const rewardResult = gameAdd && awardAllowed ? `+${gameAdd}G` : award ? `+${award}枚` : "敗北";
           flow.push(`${roundTitle} ${continued ? `${rewardTemplate.label || "報酬獲得"} ${rewardResult}・継続` : `${rewardResult}・終了${failureGames ? ` → ${failureGames}G引き戻し` : ""}`}`);
           if (!continued) break;
@@ -5219,10 +5246,17 @@
   async function animateExperienceCounter(total, unit, phase, title, message, expectancy, cue, runId, options = {}) {
     const countTo = Math.max(1, Math.round(Number(total) || 1));
     const countdown = unit === "G" ? options.countdown !== false : Boolean(options.countdown);
-    setExperienceStage(3, phase, title, `${countdown ? countTo : 0}${unit}`, message, "normal", expectancy, cue);
-    for (const progress of [.08, .2, .36, .55, .73, .88, 1]) {
+    const startValue = Math.max(0, Math.round(Number(options.startValue) || 0));
+    const stageIndex = Math.max(0, Math.min(4, options.stageIndex === undefined ? 3 : Number(options.stageIndex)));
+    const duration = Math.max(300, Number(options.duration) || 1900);
+    const checkpoints = [.04, .10, .18, .28, .40, .53, .66, .78, .88, .95, 1];
+    const stepDelay = Math.max(40, Math.round(duration / checkpoints.length));
+    setExperienceStage(stageIndex, phase, title, `${yen.format(countdown ? countTo : startValue)}${unit}`, message, options.tone || "normal", expectancy, cue);
+    for (const progress of checkpoints) {
       if (runId !== experienceRunId || experienceSkipped) return false;
-      const current = countdown ? Math.max(0, countTo - Math.round(countTo * progress)) : Math.max(1, Math.round(countTo * progress));
+      const current = countdown
+        ? Math.max(0, countTo - Math.round(countTo * progress))
+        : startValue + Math.max(1, Math.round(countTo * progress));
       document.getElementById("machineExperienceValue").textContent = `${yen.format(current)}${unit}`;
       document.getElementById("machineExperienceCurrent").textContent = countdown ? `残り ${yen.format(current)}${unit}` : `${yen.format(current)}${unit}`;
       document.getElementById("machineExperienceMessage").textContent = countdown ? `残り ${yen.format(current)}${unit} / ${message}` : `${yen.format(current)}${unit} / ${message}`;
@@ -5232,7 +5266,7 @@
         const remaining = document.getElementById("machineSlotRemaining");
         if (remaining) remaining.textContent = `残り ${yen.format(current)}G`;
       }
-      await waitForExperience(72);
+      await waitForExperience(stepDelay);
     }
     return runId === experienceRunId;
   }
@@ -7357,6 +7391,36 @@
           const titleFlow = event.titleFlow || null;
           const cycleRoundTitle = event.roundTitle || `${event.label} ${event.round}回目`;
           const cycleRoundDetail = event.roundDetail || "残りゲーム数を消化し、最後のPUSHで継続と報酬を開きます";
+          if (event.hokutoType === "toushin") {
+            const counterComplete = await animateExperienceCounter(eventGames, "G", "TOUSHIN ENBU", cycleRoundTitle, "30Gを消化しながら勝舞魂の上乗せを抽選します", 100, "闘神演舞・勝舞魂抽選", runId);
+            if (!counterComplete) return;
+            consumedGames += eventGames;
+            setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+            setSlotAtStatus({ visible: true, remaining: event.hokutoSoulsRemaining, remainingUnit: "魂", addOn: runningAddOn, total: event.cumulative });
+            setExperienceStage(3, "SHOBU DAMA STOCK", "勝舞魂 上乗せ", "PUSH", "今回獲得した勝舞魂を開きます", "judge", 100, "勝舞魂獲得ジャッジ");
+            await waitForExperienceAction("勝舞魂 上乗せ PUSH", 5000, event.round >= 3 ? "gold" : "normal");
+            if (runId !== experienceRunId) return;
+            runningAddOn += Number(event.award) || 0;
+            setExperienceStage(3, "SHOBU DAMA GET", "勝舞魂獲得", `+${yen.format(event.hokutoSoulGain)}魂`, `所持 ${yen.format(event.hokutoSoulsRemaining)}魂・神拳勝舞へ`, "rush", 100, "実機構造準拠・獲得数は代表抽選");
+            setSlotAtStatus({ visible: true, remaining: event.hokutoSoulsRemaining, remainingUnit: "魂", addOn: runningAddOn, total: event.cumulative });
+            await waitForExperience(900);
+            continue;
+          }
+          if (event.hokutoType === "shinken") {
+            const soulCounterComplete = await animateExperienceCounter(event.hokutoSoulsBefore, "魂", "SHINKEN SHOBU", cycleRoundTitle, "勝舞魂を1個ずつ使い、勝利契機を待ちます", event.continueChance, "勝舞魂1個＝1勝負", runId, { countdown: true });
+            if (!soulCounterComplete) return;
+            consumedGames += eventGames;
+            setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+            setSlotAtStatus({ visible: true, remaining: event.hokutoSoulsRemaining, remainingUnit: "魂", addOn: runningAddOn, total: event.cumulative });
+            setExperienceStage(3, "SHINKEN SHOBU JUDGE", "神拳勝舞 当落", "PUSH", `${yen.format(event.hokutoSoulsUsed)}魂目の勝負結果を開きます`, "judge", event.continueChance, "神拳勝舞・勝敗ジャッジ");
+            await waitForExperienceAction("神拳勝舞 当落 PUSH", 5000, event.continued ? "gold" : "normal");
+            if (runId !== experienceRunId) return;
+            runningAddOn += Number(event.award) || 0;
+            setExperienceStage(3, event.continued ? "SHINKEN SHOBU WIN" : "SHINKEN SHOBU LOSE", event.continued ? "神拳勝舞 勝利" : "神拳勝舞 敗北", event.continued ? "闘神演舞 継続" : "AT終了", event.continued ? `残り ${yen.format(event.hokutoSoulsRemaining)}魂を次セットへ持ち越し` : `${yen.format(event.hokutoSoulsUsed)}魂を使い切って終了`, event.continued ? "rush" : "end", event.continued ? 100 : 0, `${cycleRoundTitle} 結果`);
+            setSlotAtStatus({ visible: true, remaining: event.hokutoSoulsRemaining, remainingUnit: "魂", addOn: runningAddOn, total: event.cumulative });
+            await waitForExperience(event.continued ? 950 : 1100);
+            continue;
+          }
           const counterComplete = await animateExperienceCounter(eventGames, "G", event.phase || "AT LOOP", cycleRoundTitle, cycleRoundDetail, event.continueChance, `${cycleRoundTitle} 継続目安`, runId);
           if (!counterComplete) return;
           consumedGames += eventGames;
@@ -7888,6 +7952,9 @@
     session.minDiff = Math.min(session.minDiff, preBonusDiff);
     session.maxDiff = Math.max(session.maxDiff, preBonusDiff);
 
+    const normalSpinComplete = await animateExperienceCounter(session.lastGap, "G", "NORMAL GAME", "通常ゲーム消化中", "ボーナス成立までリールを回します", 100 / session.combinedRate, "通常時ボーナス抽選", runId, { countdown: false, startValue: startGames, stageIndex: 0, duration: 2000 });
+    if (!normalSpinComplete || runId !== experienceRunId || !aTypeSession) { aTypeBusy = false; return; }
+
     if (startGames + gap <= session.maxGames) {
       session.lastBonus = bigGap <= regGap ? "BIG" : "REG";
       if (session.lastBonus === "BIG") session.big += 1;
@@ -7898,7 +7965,7 @@
       const interim = buildATypeResult(session, false);
       setExperienceHud(`${yen.format(session.games)}G`, `${yen.format(interim.investment)}円`, `${interim.score >= 0 ? "+" : ""}${yen.format(interim.score)}枚`);
       setExperienceStage(1, "BONUS HIT", `${session.lastBonus} BONUS`, `${yen.format(session.lastGap)}Gで当選`, `累計 BIG ${session.big}回・REG ${session.reg}回 / 設定は終了時に発表`, session.lastBonus === "BIG" ? "hyper" : "hit", 100, `${session.lastBonus}当選`);
-      await waitForExperience(420);
+      await waitForExperience(650);
     }
 
     aTypeBusy = false;
