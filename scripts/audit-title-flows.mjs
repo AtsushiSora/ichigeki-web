@@ -9,8 +9,8 @@ vm.runInContext(source, sandbox);
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
 const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
-const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow || machine.sim?.godEaterFlow || machine.sim?.millionGodFlow || machine.sim?.juohFlow || machine.sim?.sunbreakFlow || machine.sim?.paripiFlow);
-const expectedProfiles = { battle: 6, st: 2, heaven: 3, bonus: 5, addon: 12 };
+const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow || machine.sim?.godEaterFlow || machine.sim?.millionGodFlow || machine.sim?.juohFlow || machine.sim?.sunbreakFlow || machine.sim?.paripiFlow || machine.sim?.fireForce2Flow);
+const expectedProfiles = { battle: 6, st: 2, heaven: 3, bonus: 4, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -49,14 +49,14 @@ for (const [slug, machine] of declarativeFlows) {
 }
 
 if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
-if (declarativeFlows.length !== 28) errors.push(`expected 28 declarative dedicated flows, found ${declarativeFlows.length}`);
+if (declarativeFlows.length !== 27) errors.push(`expected 27 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(specializedFlows);
-if (specializedFlows.length !== 19 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["okidoki-black"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"] || !dedicatedMap["million-god-kiseki"] || !dedicatedMap["juoh-slot"] || !dedicatedMap["monster-hunter-sunbreak"] || !dedicatedMap["paripi-koumei-slot"]) {
-  errors.push(`expected nineteen specialized flows including Okidoki Black, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (specializedFlows.length !== 20 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["okidoki-black"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"] || !dedicatedMap["million-god-kiseki"] || !dedicatedMap["juoh-slot"] || !dedicatedMap["monster-hunter-sunbreak"] || !dedicatedMap["paripi-koumei-slot"] || !dedicatedMap["fire-force2-slot"]) {
+  errors.push(`expected twenty specialized flows including Fire Force 2, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
   const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
@@ -220,6 +220,15 @@ if (specializedFlows.length !== 19 || !dedicatedMap["tokyo-ghoul-slot"] || !dedi
   if (Number(blackSim.atPureIncrease) !== 3.5 || Number(blackSim.base50) !== 32) errors.push("okidoki-black: pure increase or base is incorrect");
   if (Number(blackSim.okidokiModeRates?.heaven) !== 0.75 || Number(blackSim.okidokiModeRates?.doki) !== 0.80 || Number(blackSim.okidokiModeRates?.super) !== 0.90) errors.push("okidoki-black: mode loop rates are incorrect");
   if (Number(blackSim.okidokiOneGameChance) !== 0.125 || Number(blackSim.okidokiGuaranteeOneGameChance) !== 0.06 || !blackSim.settingRates || Object.keys(blackSim.settingRates).length !== 5) errors.push("okidoki-black: 1G chain or setting rates are incomplete");
+  const fireForce2 = dedicatedMap["fire-force2-slot"];
+  const fireForce2Sim = fireForce2.sim;
+  if (fireForce2Sim.cycleFlow || fireForce2Sim.titleFlow) errors.push("fire-force2-slot: legacy reusable flow still exists");
+  if (!Array.isArray(fireForce2Sim.fireForce2InitialBonuses) || fireForce2Sim.fireForce2InitialBonuses.length !== 2) errors.push("fire-force2-slot: initial BONUS types are incomplete");
+  if (!Array.isArray(fireForce2Sim.fireForce2LoopModes) || fireForce2Sim.fireForce2LoopModes.length !== 3) errors.push("fire-force2-slot: three Fire Force loop modes are incomplete");
+  if (!Array.isArray(fireForce2Sim.fireForce2Bonuses) || fireForce2Sim.fireForce2Bonuses.length !== 5) errors.push("fire-force2-slot: loop BONUS types are incomplete");
+  if (Number(fireForce2Sim.fireForce2TrapGames) !== 30 || Number(fireForce2Sim.fireForce2LoopGames) !== 15 || Number(fireForce2Sim.fireForce2ShinraGames) !== 8 || Number(fireForce2Sim.fireForce2AdoraBaseGames) !== 20) errors.push("fire-force2-slot: dedicated game counts are incorrect");
+  if (Number(fireForce2Sim.fireForce2ShinraSuccess) !== 0.28 || Number(fireForce2Sim.atPureIncrease) !== 5.8 || Number(fireForce2Sim.base50) !== 33) errors.push("fire-force2-slot: probability, pure increase, or base is incorrect");
+  if (!fireForce2Sim.settingRates || Object.keys(fireForce2Sim.settingRates).length !== 6 || Number(fireForce2Sim.settingRates[1]?.main) !== 684 || Number(fireForce2Sim.settingRates[6]?.main) !== 486) errors.push("fire-force2-slot: setting rates are incomplete");
 }
 
 if (process.argv.includes("--verbose")) console.table(rows);
