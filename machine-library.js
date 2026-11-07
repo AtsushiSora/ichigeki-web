@@ -4310,6 +4310,64 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   });
 })();
 
+// L アサルトリリィ is a difference-coin AT. The initial route, three Lily
+// Challenges, Bouquet Bonus, in-AT boss battles, reward zones and upper CZ
+// are kept separate so the simulator no longer behaves like a generic loop AT.
+(() => {
+  const machine = window.ICHIGEKI_MACHINES["assault-lily-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    intro: "2026年12月7日導入予定。3種類のリリィチャレンジ、25Gのブーケボーナス、初期150枚＋αの差枚数管理AT、ボスヒュージ襲来と上乗せ特化、上位ATまでを専用進行で確認できます。",
+    points: ["CZは梨璃約44%・夢結約43%・シュッツエンゲル約69%", "RUSHは初期150枚＋α・純増約3.5枚/G", "上位RUSH SUPERは初期200枚＋α・特化性能強化"],
+    specs: [["初当り（設定1）", "約1/273.4"], ["初当り（設定6）", "約1/220.6"], ["RUSH（設定1）", "約1/417.7"], ["RUSH（設定6）", "約1/296.8"], ["CZ", "10G・3種類"], ["ブーケボーナス", "25G・約88枚"], ["BONUS中RUSH期待度", "約29%"], ["通常AT", "初期150枚＋α"], ["AT純増", "約3.5枚/G"], ["ボスヒュージ襲来", "4〜5G"], ["ノインヴェルト戦術", "200〜3000枚"], ["上位AT", "初期200枚＋α"], ["ベース", "約31G/50枚"], ["出玉率", "97.5〜112.5%"]],
+    articleSections: [
+      { heading: "設定別初当りとRUSH", paragraphs: ["初当りは設定1約1/273.4〜設定6約1/220.6、アサルトリリィRUSHは設定1約1/417.7〜設定6約1/296.8です。", "通常時は梨璃・夢結ポイント、規定ゲーム数、レア役など複数の契機があります。サイトでは公開された設定別初当りとRUSH確率を使用します。"] },
+      { heading: "3種類のリリィチャレンジ", paragraphs: ["リリィチャレンジは10G。梨璃CZは期待度約44%、夢結CZは約43%、シュッツエンゲルCZは約69%です。", "シュッツエンゲルCZは成功でRUSH濃厚、失敗時はポイント特化ゾーン『天上ノ庭』へ。サイトでは今回のCZ種類と期待度を表示し、最後のPUSHで当落を開きます。"] },
+      { heading: "ブーケボーナスとAT直撃", paragraphs: ["ブーケボーナスは25G・獲得約88枚で、消化中のRUSH期待度は約29%。白7揃いやレア役を契機にRUSHを抽選します。", "通常時の代表ルートをAT直撃・CZ・BONUSへ分け、BONUS出玉はRUSH非突入時も収支へ加算します。"] },
+      { heading: "差枚数管理RUSHとボスヒュージ襲来", paragraphs: ["アサルトリリィRUSHは初期150枚＋α・純増約3.5枚/Gの差枚数管理型。残り枚数を減らしながら、規定ゲーム数から4〜5Gのボスヒュージ襲来を目指します。", "ボス撃破後はヒュージバトル、チャームストライク、ノインヴェルト戦術、ルナティックトランサー、アサルトスパイラルなどの報酬へ進みます。サイトでは残り枚数、バトル、報酬上乗せを順番に表示します。"] },
+      { heading: "ラストバレットジャッジメントと上位AT", paragraphs: ["上位CZはメモリア・討伐・殲滅・Edel Lilieの4種類。失敗後に再獲得すると種類昇格のチャンスがあります。", "成功時は初期200枚＋αのアサルトリリィRUSH SUPERへ。純増は通常ATと同じ約3.5枚/Gですが、特化ゾーン突入率や報酬CZ性能が強化されます。"] },
+      { heading: "導入前の固定条件", bullets: ["2026年12月7日までは準備中表示", "約31G/50枚・46枚貸し・5.2枚交換で固定", "非公表の報酬振り分けと上位CZ当選率は代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["Lアサルトリリィ 公式サイト", "https://www.l-assaultlily.jp/"], ["ちょんぼりすた 機種解析", "https://chonborista.com/slot/nanashow/270416/"], ["パチンコ・パチスロ.com スペック情報", "https://pachinkopachisro.com/archives/60045732.html"]],
+    readerGuide: {
+      verdict: "3種類のCZやBONUSから差枚数ATへ入り、残り枚数を上乗せ特化で増やしながら上位CZを狙う台です。",
+      bestFor: ["残り枚数が減る緊張感を楽しみたい", "PUSHで特化ゾーンの種類を開きたい", "通常ATと上位ATの性能差を比べたい"],
+      check: ["導入日は2026年12月7日予定", "純増は通常・上位とも約3.5枚/G", "報酬振り分けなど未公表部分は代表モデル"],
+      compare: [["assault-lily", "eアサルトリリィ", "パチンコ版と比較"], ["blue-reflection-tie", "Lブルーリフレクション", "同月の差枚ATと比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v4",
+    triggerLabel: "初当りルート",
+    triggerRate: 273.4,
+    triggerSuccess: 0.61,
+    mainLabel: "アサルトリリィRUSH",
+    mainRate: 417.7,
+    normalMin: 0,
+    normalMax: 0,
+    atPureIncrease: 3.5,
+    atPayoutVariance: 0,
+    assaultLilyFlow: true,
+    assaultEntryRoutes: [[{ key: "direct", label: "AT直撃", games: 1, chance: 1 }, 0.30], [{ key: "riri", label: "梨璃リリィチャレンジ", games: 10, chance: 0.44 }, 0.25], [{ key: "yuyu", label: "夢結リリィチャレンジ", games: 10, chance: 0.43 }, 0.25], [{ key: "schutzengel", label: "シュッツエンゲルCZ", games: 10, chance: 0.69 }, 0.05], [{ key: "bouquet", label: "ブーケボーナス", games: 25, chance: 0.29, payout: 88 }, 0.15]],
+    assaultInitialCoins: 150,
+    assaultUpperInitialCoins: 200,
+    assaultBossChance: 0.56,
+    assaultUpperBossChance: 0.72,
+    assaultUpperCzChance: 0.16,
+    specialLabel: "上乗せ特化ゾーン",
+    specialChance: 0.42,
+    upperChallenge: "ラストバレットジャッジメント",
+    upperChance: 0,
+    upperSuccess: 0.45,
+    upperLabel: "アサルトリリィRUSH SUPER",
+    upperContinue: 0,
+    upperPayout: 0,
+    upperPureIncrease: 3.5,
+    settingRates: { 1: { trigger: 273.4, main: 417.7, payout: 0.975 }, 2: { trigger: 266.6, main: 401.0, payout: 0.988 }, 3: { trigger: 257.0, main: 377.4, payout: 1.005 }, 4: { trigger: 243.5, main: 345.9, payout: 1.043 }, 5: { trigger: 232.3, main: 320.4, payout: 1.078 }, 6: { trigger: 220.6, main: 296.8, payout: 1.125 } }
+  });
+})();
+
 // Dedicated implementations take precedence over the older reusable cycle map.
 // Keep this final cleanup after every enrichment pass so page copy and gameplay
 // both use the same title-specific model.
@@ -4327,4 +4385,6 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   if (tenten?.tentenFlow) delete tenten.cycleFlow;
   const goblinSlayer = window.ICHIGEKI_MACHINES["goblin-slayer-slot"]?.sim;
   if (goblinSlayer?.goblinSlayerFlow) delete goblinSlayer.cycleFlow;
+  const assaultLily = window.ICHIGEKI_MACHINES["assault-lily-slot"]?.sim;
+  if (assaultLily?.assaultLilyFlow) delete assaultLily.cycleFlow;
 })();
