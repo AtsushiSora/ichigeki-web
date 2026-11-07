@@ -1139,6 +1139,15 @@
         cards.splice(4, 0, ["BALANCE MODEL", "専用フローの抽選目安", `${profileNames[titleFlow.profile] || "機種専用型"}として、AT突入後は平均約${Number(titleFlow.balance.averageRounds).toFixed(1)}区間進行します。通常フローから${sim.upperLabel}へ到達する代表目安は約${percent(titleFlow.balance.upperRoute)}です。公開値と機種別の代表値から計算した比較用の目安で、実戦結果を保証するものではありません。`]);
       }
       note = `${cycle.label || sim.mainLabel}の区間順序、代表報酬、継続判定を${titleFlow ? "機種専用フローで" : "個別に"}表示する体験モデルです。成立役別抽選、内部状態、全報酬振り分けは短時間で比較できる形へ簡略化しています。`;
+    } else if (sim.juohFlow) {
+      cards = [
+        ["SC HIGH", "SC高確", "チャンス目・レア役・規定ゲーム数などからSC高確へ。高確中は全役でSCを抽選し、当選期待度約50%の最終PUSHを行います。"],
+        ["SAVANNA CHANCE", "ベルナビと潜伏", "SCは純増約8.0枚/G、ベルナビ10・20・30回・EX。終了後は最大29Gの潜伏を進め、ストックがあれば次のSCを放出します。"],
+        ["BONUS", "BIG・REG", "BIGは15GでSCストックを抽選。REGは10Gの上乗せ超高確率で、終了後は超サバへ進みます。"],
+        ["SUPER SABA", "4大トリガー", "超サバ後はKSC・サバチャンEX・100ナビフリーズ・REGをPUSHで開きます。KSCは80%または90%、EXは30ナビ単位でループします。"],
+        ["SETTING", "設定別SC初当り", `SC初当りは設定${slotBaselineSetting}基準で約1/${sim.mainRate}です。設定1・2・4・5・6の公開値を使い、未公表のストック数とトリガー振り分けは代表値で抽選します。`]
+      ];
+      note = "SC純増、ベルナビ回数、最大29G潜伏、BIG／REGゲーム数、KSC継続率など公開値を優先しています。未公表のSCストック数・超サバ当選率・4大トリガー振り分けは体験用代表値です。";
     } else if (sim.millionGodFlow) {
       cards = [
         ["GAME FLOW", "ゲーム性", "50GのGOD GAMEを消化し、5GのG-ZONEで次セットを告知します。GGストックまたはループ抽選が残っていれば奇数揃いで復帰し、どちらもなければ終了します。"],
@@ -1379,7 +1388,7 @@
       const averageInvestment = Math.round((machine.sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
-      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow || machine.sim.millionGodFlow;
+      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow || machine.sim.millionGodFlow || machine.sim.juohFlow;
       const settingModelLabel = machine.sim.settingRates
         ? hasDedicatedFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
         : hasDedicatedFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
@@ -1465,7 +1474,7 @@
         ? Math.max(1, mainRate * sim.triggerRate / sim.mainRate)
         : Math.max(1, sim.triggerRate * profile.rate);
     const publishedEntry = Number(publishedSetting?.entry);
-    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow
+    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow
       ? Math.max(0, Math.min(1, Number(sim.triggerSuccess) || 0.55))
       : sim.godzillaEva2Flow || sim.mahoakoFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.shinEvaFlow
       ? 1
@@ -1481,7 +1490,7 @@
       ? Math.min(0.98, Number(publishedSetting.upper))
       : hasPublishedSettingRates ? sim.upperChance : Math.min(0.98, sim.upperChance + profile.upper);
     const settingModelLabel = hasPublishedTriggerRate && hasPublishedMainRate
-      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.darlingFranxxFlow ? "公開設定別値（CZ・BONUS・高確初当り）" : sim.godEaterFlow ? "公開設定別値（AT初当り・機種専用進行）" : sim.millionGodFlow ? "公開設定別値（GG初当り・機種専用進行）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
+      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.darlingFranxxFlow ? "公開設定別値（CZ・BONUS・高確初当り）" : sim.godEaterFlow ? "公開設定別値（AT初当り・機種専用進行）" : sim.millionGodFlow ? "公開設定別値（GG初当り・機種専用進行）" : sim.juohFlow ? "公開設定別値（SC初当り・機種専用進行）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
       : hasPublishedMainRate
         ? sim.bofuriFlow ? "公開設定別値（BONUS初当り）＋機種専用進行" : "公開設定別値（初当り）＋CZ簡易換算"
         : "サイト共通補正モデル";
@@ -1724,6 +1733,16 @@
     let millionGodSggStocks = 0;
     let millionGodGodCount = 0;
     let millionGodMaxStocks = 1;
+    let juohScSets = 0;
+    let juohSabaReturns = 0;
+    let juohMaxNavi = 0;
+    let juohBigCount = 0;
+    let juohRegCount = 0;
+    let juohStocksWon = 0;
+    let juohSuperSabaCount = 0;
+    let juohTriggerCount = 0;
+    let juohKscLoops = 0;
+    let juohExLoops = 0;
     if (sim.basiliskTenzenFlow) {
       basiliskBc = weighted(sim.basiliskBcTypes || [[{ key: "hetero", label: "異色BC", games: 16, award: 30 }, 1]]);
       triggerSucceeded = true;
@@ -2767,6 +2786,137 @@
             flow.push(`通常バジリスクタイム 1セット・+${yen.format(fallbackAward)}枚`);
           }
         }
+        basePayout = payout - entryPayout;
+      } else if (sim.juohFlow) {
+        payout = entryPayout;
+        basePayout = 0;
+        const awardJuohCoins = amount => {
+          const award = Math.max(0, Math.min(Math.round(Number(amount) || 0), SLOT_COMPLETE_LIMIT - payout));
+          payout += award;
+          return award;
+        };
+        const addJuohStocks = amount => {
+          const stocks = Math.max(0, Math.round(Number(amount) || 0));
+          juohStocksWon += stocks;
+          return stocks;
+        };
+        let scStocks = 1;
+        let superSaba = false;
+        const maxSc = Math.max(1, Math.min(30, Number(sim.juohMaxSc) || 18));
+        for (let set = 1; set <= maxSc && scStocks > 0 && payout < SLOT_COMPLETE_LIMIT; set += 1) {
+          scStocks = Math.max(0, scStocks - 1);
+          const navi = Math.max(10, Number(weighted(sim.juohScNavi || [[10, 1]])) || 10);
+          const scAward = awardJuohCoins(slotAwardForGames(navi, Number(sim.atPureIncrease) || 8, 0));
+          atGamesTotal += navi;
+          juohScSets = set;
+          juohMaxNavi = Math.max(juohMaxNavi, navi);
+          atEvents.push({ kind: "juoh-sc", label: sim.mainLabel, set, games: navi, navi, award: scAward, cumulative: payout, stocks: scStocks, superSaba });
+          flow.push(`サバンナチャンス SET ${set}・${navi}ナビ・+${scAward}枚`);
+
+          const regHit = Math.random() < (Number(sim.juohRegChance) || 0.012) * (superSaba ? 3 : 1);
+          const bigHit = !regHit && Math.random() < (Number(sim.juohBigChance) || 0.10);
+          if (regHit || bigHit) {
+            const bonusGames = regHit ? Number(sim.juohRegGames) || 10 : Number(sim.juohBigGames) || 15;
+            const bonusAward = awardJuohCoins(slotAwardForGames(bonusGames, Number(sim.atPureIncrease) || 8, 0));
+            const stockAdd = regHit
+              ? addJuohStocks(Math.max(2, Number(weighted(sim.juohBonusStockRates || [[1, 1]])) || 2))
+              : Math.random() < 0.55 ? addJuohStocks(Number(weighted(sim.juohBonusStockRates || [[1, 1]])) || 1) : 0;
+            scStocks += stockAdd;
+            atGamesTotal += bonusGames;
+            bonusCount += 1;
+            bonusPayoutTotal += bonusAward;
+            if (regHit) {
+              juohRegCount += 1;
+              superSaba = true;
+              upper = true;
+            } else {
+              juohBigCount += 1;
+            }
+            atEvents.push({ kind: "juoh-bonus", label: regHit ? "REGULAR BONUS" : "BIG BONUS", bonusType: regHit ? "reg" : "big", games: bonusGames, award: bonusAward, stockAdd, totalStocks: scStocks, cumulative: payout, superSaba });
+            flow.push(`${regHit ? "REG" : "BIG"} ${bonusGames}G・+${bonusAward}枚・SCストック+${stockAdd}`);
+          }
+
+          if (set >= 2 && !superSaba) {
+            const superChance = set >= 5 ? Number(sim.juohSuperChanceLate) || 0.18 : Number(sim.juohSuperChanceEarly) || 0.035;
+            if (Math.random() < superChance) {
+              superSaba = true;
+              upper = true;
+              juohSuperSabaCount += 1;
+              atEvents.push({ kind: "juoh-super", label: "超サバ", set, chance: superChance * 100, cumulative: payout, stocks: scStocks });
+              flow.push(`SC SET ${set}・超サバ獲得`);
+            }
+          }
+
+          if (superSaba && Math.random() < 0.42 && payout < SLOT_COMPLETE_LIMIT) {
+            const trigger = weighted(sim.juohTriggerTypes || [[{ key: "ksc", label: "キリンサバチャン" }, 1]]);
+            juohTriggerCount += 1;
+            if (trigger.key === "ksc") {
+              const kscRate = Math.max(0.80, Math.min(0.90, Number(weighted(sim.juohKscRates || [[0.80, 1]])) || 0.80));
+              let loop = 0;
+              let continued = true;
+              while (continued && loop < 8 && payout < SLOT_COMPLETE_LIMIT) {
+                loop += 1;
+                const kscNavi = Math.max(10, Number(weighted(sim.juohScNavi || [[10, 1]])) || 10);
+                const kscAward = awardJuohCoins(slotAwardForGames(kscNavi, Number(sim.atPureIncrease) || 8, 0));
+                atGamesTotal += kscNavi;
+                juohKscLoops += 1;
+                continued = loop < 8 && Math.random() < kscRate;
+                atEvents.push({ kind: "juoh-ksc", label: "キリンサバチャン", loop, games: kscNavi, navi: kscNavi, award: kscAward, cumulative: payout, continued, chance: kscRate * 100 });
+              }
+              flow.push(`キリンサバチャン ${loop}ループ・継続率${Math.round(kscRate * 100)}%`);
+            } else if (trigger.key === "ex") {
+              let loop = 0;
+              let continued = true;
+              while (continued && loop < 6 && payout < SLOT_COMPLETE_LIMIT) {
+                loop += 1;
+                const exAward = awardJuohCoins(slotAwardForGames(30, Number(sim.atPureIncrease) || 8, 0));
+                atGamesTotal += 30;
+                juohExLoops += 1;
+                continued = loop < 6 && Math.random() < (Number(sim.juohExContinue) || 0.72);
+                atEvents.push({ kind: "juoh-ex", label: "サバチャンEX", loop, games: 30, navi: 30, award: exAward, cumulative: payout, continued, chance: (Number(sim.juohExContinue) || 0.72) * 100 });
+              }
+              flow.push(`サバチャンEX 30ナビ×${loop}回`);
+            } else if (trigger.key === "freeze") {
+              const freezeAward = awardJuohCoins(slotAwardForGames(100, Number(sim.atPureIncrease) || 8, 0));
+              const stockAdd = addJuohStocks(Number(weighted([[1, 0.62], [2, 0.28], [3, 0.10]])) || 1);
+              scStocks += stockAdd;
+              atGamesTotal += 100;
+              atEvents.push({ kind: "juoh-freeze", label: "100ナビフリーズ", games: 100, navi: 100, award: freezeAward, stockAdd, totalStocks: scStocks, cumulative: payout });
+              flow.push(`100ナビフリーズ・+${freezeAward}枚・SCストック+${stockAdd}`);
+            } else {
+              const regGames = Number(sim.juohRegGames) || 10;
+              const regAward = awardJuohCoins(slotAwardForGames(regGames, Number(sim.atPureIncrease) || 8, 0));
+              const stockAdd = addJuohStocks(Math.max(2, Number(weighted(sim.juohBonusStockRates || [[2, 1]])) || 2));
+              scStocks += stockAdd;
+              juohRegCount += 1;
+              bonusCount += 1;
+              bonusPayoutTotal += regAward;
+              atGamesTotal += regGames;
+              atEvents.push({ kind: "juoh-bonus", label: "REGULAR BONUS", bonusType: "reg", games: regGames, award: regAward, stockAdd, totalStocks: scStocks, cumulative: payout, superSaba: true, trigger: true });
+              flow.push(`4大トリガー REG・+${regAward}枚・SCストック+${stockAdd}`);
+            }
+          }
+
+          if (scStocks <= 0) {
+            const stockChance = set === 1 ? Number(sim.juohSabaChainChance) || 0.50 : 0.54;
+            if (Math.random() < stockChance) {
+              scStocks += addJuohStocks(1);
+            }
+          }
+          const continued = scStocks > 0;
+          const latentGames = continued ? Math.max(1, Math.ceil(Math.random() * (Number(sim.juohMaxLatentGames) || 29))) : 0;
+          if (continued) {
+            juohSabaReturns += 1;
+            atGamesTotal += latentGames;
+          }
+          atEvents.push({ kind: "juoh-latent", label: "潜伏", set, games: latentGames, continued, stocks: scStocks, cumulative: payout, superSaba });
+          flow.push(continued ? `潜伏${latentGames}G・SCストック放出` : "潜伏終了・サバ連終了");
+          if (!continued) break;
+        }
+        atEvents.push({ kind: "juoh-end", label: "サバ連終了", games: 3, cumulative: payout, sets: juohScSets });
+        cycleRounds = juohScSets;
+        cycleContinues = juohSabaReturns;
+        upperLoops = juohKscLoops + juohExLoops;
         basePayout = payout - entryPayout;
       } else if (sim.millionGodFlow) {
         payout = entryPayout;
@@ -4962,10 +5112,11 @@
     const darlingStats = sim.darlingFranxxFlow ? [["今回の入口", darlingEntry?.label || sim.triggerLabel], ["初当りBONUS", darlingInitialBonus?.label || "非当選"], ["高確中BONUS", `${darlingHighBonuses}回（フランクス${darlingFranxxBonuses}回）`], ["BONUS獲得", `+${yen.format(darlingBonusAwards)}枚`], ["比翼BEATS", `${darlingBeatEntries}回・+${yen.format(darlingBeatAdds)}G`], ["最高Beatレベル", darlingMaxBeatLevel ? `Lv.${darlingMaxBeatLevel === 3 ? "MAXX" : darlingMaxBeatLevel}` : "非到達"], ["連れ出し", darlingTakeouts ? `${darlingTakeouts}回` : "非当選"], ["CLIMAXX", darlingClimaxx ? "到達" : "非到達"]] : [];
     const godEaterStats = sim.godEaterFlow ? [["アラガミ交戦", `${godEaterBattles}戦・討伐${godEaterWins}回`], ["結合崩壊", `${godEaterBondBreaks}回`], ["捕喰報酬", `${godEaterRewards}回`], ["神機覚醒", godEaterOverkills ? `${godEaterOverkills}回` : "非当選"], ["逆鱗ハンニバル", godEaterHannibal ? (godEaterHannibalWon ? "撃破" : "敗北・次回100Gゾーン濃厚") : "未到達"], ["リザレクションゲート", godEaterGateGames ? `${godEaterGateGames}G` : "未到達"], ["上位AT", godEaterUpperMode ? `${godEaterUpperMode}・${godEaterUpperLoops}回` : "非到達"]] : [];
     const millionGodStats = sim.millionGodFlow ? [["GOD GAME", `${millionGodSets}セット`], ["G-ZONE復帰", `${millionGodGZoneReturns}回`], ["最大GGストック", `${millionGodMaxStocks}個`], ["Z-ZONE", millionGodZZoneAttempts ? `${millionGodZZoneAttempts}回` : "非当選"], ["Z-GAME上乗せ", millionGodZGameStocks ? `+${millionGodZGameStocks}セット` : "非到達"], ["SGG", millionGodSggEntries ? `${millionGodSggEntries}回・+${millionGodSggStocks}セット` : "非当選"], ["GOD揃い", millionGodGodCount ? `${millionGodGodCount}回` : "非当選"]] : [];
+    const juohStats = sim.juohFlow ? [["サバンナチャンス", `${juohScSets}セット`], ["潜伏からのSC放出", `${juohSabaReturns}回`], ["最大ベルナビ", `${juohMaxNavi}回`], ["BONUS", `BIG ${juohBigCount}回・REG ${juohRegCount}回`], ["獲得SCストック", `${juohStocksWon}個`], ["超サバ", juohSuperSabaCount || upper ? "到達" : "非到達"], ["4大トリガー", juohTriggerCount ? `${juohTriggerCount}回` : "非当選"], ["KSCループ", `${juohKscLoops}回`], ["EX 30ナビ", `${juohExLoops}回`]] : [];
     const cycleStats = sim.cycleFlow ? [[sim.cycleFlow.statLabel || (sim.titleFlow ? "機種専用進行" : "専用ループ"), `${cycleRounds}回・継続${cycleContinues}回`]] : [];
     const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
     const rushGamesTotal = Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
-    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
+    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
     const gameAddOnStats = sim.karakuriJudgeFlow || coinAddOnCount
       ? [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(coinAddOnTotal || addOnTotal)}枚` : "上乗せなし"]]
       : [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnGamesTotal || otomeAddedGames)}G` : "上乗せなし"]];
@@ -5014,6 +5165,8 @@
         ? [["AT・交戦・上位消化", `${yen.format(rushGamesTotal)}G相当`], ...godEaterStats]
       : sim.millionGodFlow
         ? [["GG・G-ZONE消化", `${yen.format(rushGamesTotal)}G`], ...millionGodStats]
+      : sim.juohFlow
+        ? [["SC・潜伏消化", `${yen.format(rushGamesTotal)}G相当`], ...juohStats]
       : [["RUSH消化モデル", `${yen.format(rushGamesTotal)}G相当`], ...karakuriStats, ...battleStats, ...sgStats, ...kabaneriStats, ...otomeStats, ...cycleStats, ...gameAddOnStats, ...bonusStats, ...genericSpecialStats, ["上位AT", upper ? (kabaneriUpperMode || `${sim.upperLabel} ${upperLoops}セット`) : "非到達"]]) : [];
     const stats = [["今回の設定", `設定${setting}`], ["設定差モデル", settingModelLabel], ["今回のゲーム数", `${yen.format(games)}G`], ...settingRateStats, ["現金投資目安", `${yen.format(investment)}円`], ...entryBonusStats, ...atStats, ["獲得枚数", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]];
     if (complete) stats.unshift(["到達状態", "コンプリート"]);
@@ -5032,6 +5185,8 @@
         ? `今回の設定は設定${setting}。${games}Gでアラガミバースト、アラガミ交戦${godEaterBattles}戦・討伐${godEaterWins}回、捕喰報酬${godEaterRewards}回で${yen.format(payout)}枚を獲得しました。${godEaterUpperMode ? `${godEaterUpperMode}へ到達し、${godEaterUpperLoops}回消化しました。` : godEaterHannibal ? (godEaterHannibalWon ? "リザレクションゲートで覚醒には届きませんでした。" : "逆鱗ハンニバル敗北で、次回100Gゾーン濃厚です。") : "上位ルートには届きませんでした。"}`
       : sim.millionGodFlow
         ? `今回の設定は設定${setting}。${games}GでGOD GAME、GGを${millionGodSets}セット・G-ZONE復帰${millionGodGZoneReturns}回で${yen.format(payout)}枚を獲得しました。${millionGodGodCount ? `GOD揃いを${millionGodGodCount}回獲得しました。` : millionGodSggEntries ? `SGGでGGを${millionGodSggStocks}セット上乗せしました。` : millionGodZGameStocks ? `Z-GAMEでGGを${millionGodZGameStocks}セット上乗せしました。` : "特化ゾーンには入りませんでした。"}`
+      : sim.juohFlow
+        ? `今回の設定は設定${setting}。${games}GでSC高確を突破し、サバンナチャンス${juohScSets}セット・潜伏からの放出${juohSabaReturns}回で${yen.format(payout)}枚を獲得しました。${juohRegCount ? `REG ${juohRegCount}回から超サバへ到達しました。` : juohTriggerCount ? `4大サバンナトリガーを${juohTriggerCount}回獲得しました。` : juohSuperSabaCount ? "超サバへ到達しました。" : "4大トリガーには届きませんでした。"}`
       : sim.okidokiGoldFlow
         ? `今回の設定は設定${setting}。${games}Gでハイビスカス点灯、最大${okidokiMaxChain}連・BIG ${okidokiBigCount}回・REG ${okidokiRegCount}回で${yen.format(payout)}枚を獲得しました。最高内部モードは${okidokiHighestMode}です。`
       : sim.uminchuFlow
@@ -5734,6 +5889,7 @@
     const darlingFranxxFlow = Boolean(machine.sim.darlingFranxxFlow);
     const godEaterFlow = Boolean(machine.sim.godEaterFlow);
     const millionGodFlow = Boolean(machine.sim.millionGodFlow);
+    const juohFlow = Boolean(machine.sim.juohFlow);
     setSlotAtStatus({ visible: false });
     setExperienceHud("0G", "0円", "0枚");
     setExperienceStage(0, experienceProfile.system, "通常ゲーム中", "0G", `${data.hitLabel}を目指して抽選中`, "normal", data.hitChance, "1Gごとの契機当選率");
@@ -5750,8 +5906,100 @@
       setExperienceStage(1, "AT HIT", "アラガミバースト", `${yen.format(data.attempts)}G`, "初回ストーリー100枚からアラガミ交戦へ", "hit", 100, "AT初当り");
     } else if (millionGodFlow) {
       setExperienceStage(1, "ODD SYMBOLS", "液晶奇数揃い", `${yen.format(data.attempts)}G`, "50GのGOD GAMEへ突入します", "hit", 100, "GG初当り");
+    } else if (juohFlow) {
+      setExperienceStage(1, "SC HIGH", "SC高確", `${yen.format(data.attempts)}G`, "2Gの高確演出後、PUSHでサバンナチャンスを判定", "hit", 50, "SC当選期待度 約50%");
     }
     await waitForExperience(780);
+    if (juohFlow) {
+      const highComplete = await animateExperienceCounter(2, "G", "SC HIGH", "SC高確", "全役でサバンナチャンスを抽選します", 50, "SC当選期待度 約50%", runId);
+      if (!highComplete) return;
+      setExperienceStage(2, "SC FINAL JUDGE", "SC高確 最終ゲーム", "PUSH", "サバンナチャンスの当落を開きます", "judge", 50, "SC高確結果");
+      await waitForExperienceAction("SC高確 PUSH", 5000, data.entered ? "gold" : "normal");
+      if (runId !== experienceRunId) return;
+      setExperienceStage(2, "SC RESULT", data.entered ? "サバンナチャンス当選" : "SC高確終了", data.entered ? "SAVANNA CHANCE" : "通常へ", data.entered ? "ベルナビ回数を決定します" : "今回の一撃はここで終了", data.entered ? "rush" : "end", data.entered ? 100 : 0, "SC高確結果");
+      await waitForExperience(900);
+      if (!data.entered) return;
+
+      const events = Array.isArray(data.atEvents) ? data.atEvents : [];
+      for (const event of events) {
+        if (runId !== experienceRunId) return;
+        const stockCount = Math.max(0, Number(event.totalStocks ?? event.stocks) || 0);
+        setSlotAtStatus({ visible: true, remaining: stockCount, remainingUnit: "個", addOn: 0, total: Number(event.cumulative) || 0 });
+        if (event.kind === "juoh-sc") {
+          setExperienceStage(3, "SAVANNA CHANCE", `SC SET ${event.set}`, "PUSH", "ベルナビ回数を開きます", "judge", 100, event.superSaba ? "超サバ状態" : "SCストック放出型AT");
+          await waitForExperienceAction(`SC SET ${event.set} PUSH`, 5000, Number(event.navi) >= 30 ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          const scComplete = await animateExperienceCounter(Math.max(1, Number(event.navi) || 10), "ナビ", "SAVANNA CHANCE", `${event.navi}ナビ`, "純増約8.0枚/GでSCを消化します", 100, `SC SET ${event.set}`, runId);
+          if (!scComplete) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setExperienceStage(3, "SC RESULT", `SC SET ${event.set} 消化完了`, `+${yen.format(event.award)}枚`, `累計 ${yen.format(event.cumulative)}枚・潜伏へ`, "rush", 100, `${event.navi}ナビ完走`);
+          await waitForExperience(900);
+        } else if (event.kind === "juoh-bonus") {
+          setExperienceStage(4, "BONUS JUDGE", "ナビ矛盾", "PUSH", "BONUS種類を開きます", "judge", event.bonusType === "reg" ? 100 : 40, event.trigger ? "4大サバンナトリガー" : "ボーナス高確");
+          await waitForExperienceAction("BONUS PUSH", 5000, event.bonusType === "reg" ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          const bonusComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 10), "G", event.bonusType === "reg" ? "REGULAR BONUS" : "BIG BONUS", event.label, "SCストックを抽選します", 100, `SCストック +${yen.format(event.stockAdd)}個`, runId);
+          if (!bonusComplete) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: Number(event.totalStocks) || 0, remainingUnit: "個", addOn: 0, total: Number(event.cumulative) || 0 });
+          setExperienceStage(4, "BONUS RESULT", event.label, `+${yen.format(event.award)}枚`, event.bonusType === "reg" ? `SCストック+${yen.format(event.stockAdd)}・超サバへ` : `SCストック+${yen.format(event.stockAdd)}`, event.bonusType === "reg" ? "hyper" : "hit", 100, `${yen.format(event.games)}G消化`);
+          await waitForExperience(1000);
+        } else if (event.kind === "juoh-super") {
+          setExperienceStage(4, "SUPER SABA JUDGE", `SC SET ${event.set}`, "PUSH", "超サバ獲得を開きます", "judge", Number(event.chance) || 18, "SC2セット目以降で抽選");
+          await waitForExperienceAction("超サバ PUSH", 5000, "gold");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(4, "SUPER SABA", "超サバ獲得", "4大トリガー高確", "KSC・EX・100ナビ・REGの発生率アップ", "hyper", 100, "超サバ");
+          await waitForExperience(1100);
+        } else if (event.kind === "juoh-ksc") {
+          const kscComplete = await animateExperienceCounter(Math.max(1, Number(event.navi) || 10), "ナビ", "KIRIN SAVANNA CHANCE", `KSC LOOP ${event.loop}`, "SCストックを消費せず継続を抽選", Number(event.chance) || 80, `継続率 約${Math.round(Number(event.chance) || 80)}%`, runId);
+          if (!kscComplete) return;
+          setExperienceStage(4, "KSC CONTINUE JUDGE", `KSC LOOP ${event.loop}`, "PUSH", "KSC継続を開きます", "judge", Number(event.chance) || 80, `${event.navi}ナビ消化`);
+          await waitForExperienceAction("KSC PUSH", 5000, event.continued ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setExperienceStage(4, event.continued ? "KSC CONTINUE" : "KSC END", event.continued ? "K出現" : "KSC終了", event.continued ? "継続" : `+${yen.format(event.award)}枚`, event.continued ? "次のKSCへ" : "サバ連へ戻ります", event.continued ? "hyper" : "rush", event.continued ? 100 : 0, "KSC結果");
+          await waitForExperience(900);
+        } else if (event.kind === "juoh-ex") {
+          const exComplete = await animateExperienceCounter(30, "ナビ", "SAVANNA CHANCE EX", `EX LOOP ${event.loop}`, "30ナビを消化して次ループを抽選", Number(event.chance) || 72, "30ナビループ", runId);
+          if (!exComplete) return;
+          setExperienceStage(4, "EX LOOP JUDGE", `EX LOOP ${event.loop}`, "PUSH", "30ナビ継続を開きます", "judge", Number(event.chance) || 72, "サバチャンEX");
+          await waitForExperienceAction("EX PUSH", 5000, event.continued ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setExperienceStage(4, event.continued ? "EX CONTINUE" : "EX END", event.continued ? "30ナビ継続" : "EX終了", `+${yen.format(event.award)}枚`, event.continued ? "次の30ナビへ" : "サバ連へ戻ります", event.continued ? "hyper" : "rush", event.continued ? 100 : 0, "EX結果");
+          await waitForExperience(900);
+        } else if (event.kind === "juoh-freeze") {
+          setExperienceStage(4, "100 NAVI FREEZE", "SC突入フリーズ", "PUSH", "100ナビとSCストックを開きます", "judge", 100, "4大サバンナトリガー");
+          await waitForExperienceAction("100ナビフリーズ PUSH", 5000, "gold");
+          if (runId !== experienceRunId) return;
+          const freezeComplete = await animateExperienceCounter(100, "ナビ", "100 NAVI", "100ナビフリーズ", "純増約8.0枚/Gで100ナビを消化", 100, `SCストック +${yen.format(event.stockAdd)}個`, runId);
+          if (!freezeComplete) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setExperienceStage(4, "100 NAVI RESULT", "100ナビ完走", `+${yen.format(event.award)}枚`, `SCストック+${yen.format(event.stockAdd)}・累計${yen.format(event.cumulative)}枚`, "hyper", 100, "100ナビフリーズ結果");
+          await waitForExperience(1100);
+        } else if (event.kind === "juoh-latent") {
+          if (event.continued) {
+            const latentComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 1), "G", "LATENT ZONE", "潜伏区間", "最大29GでSCストックを放出します", 100, `SCストック ${yen.format(event.stocks)}個`, runId);
+            if (!latentComplete) return;
+            setExperienceStage(3, "STOCK RELEASE", "サバンナチャンス放出", "PUSH", "次のSCを開始します", "judge", 100, `${event.games}G潜伏`);
+            await waitForExperienceAction("SCストック放出 PUSH", 5000, "gold");
+            if (runId !== experienceRunId) return;
+            setExperienceStage(3, "SABA CHAIN", "サバ連継続", `潜伏 ${yen.format(event.games)}G`, "次のサバンナチャンスへ", "rush", 100, `残りストック ${yen.format(event.stocks)}個`);
+            await waitForExperience(800);
+          } else {
+            setExperienceStage(4, "LATENT ZONE END", "潜伏終了", "SCストックなし", `サバ連${event.set}セットで終了`, "end", 0, "最大29G潜伏確認済み");
+            await waitForExperience(750);
+          }
+        } else if (event.kind === "juoh-end") {
+          const endComplete = await animateExperienceCounter(3, "G", "LAST 3 GAMES", "サバ連 最終ゲーム", "残りゲーム数を0まで進めます", 0, `SC ${yen.format(event.sets)}セット・累計${yen.format(event.cumulative)}枚`, runId);
+          if (!endComplete) return;
+          setExperienceStage(4, "SABA CHAIN END", "サバ連終了", "0G", `SC ${yen.format(event.sets)}セット・累計 ${yen.format(event.cumulative)}枚`, "end", 0, "潜伏確認終了");
+          await waitForExperience(700);
+        }
+      }
+      setSlotAtStatus({ visible: true, remaining: 0, remainingUnit: "個", addOn: 0, total: Number(data.payout) || 0 });
+      return;
+    }
     if (millionGodFlow) {
       const events = Array.isArray(data.atEvents) ? data.atEvents : [];
       for (const event of events) {

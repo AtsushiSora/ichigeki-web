@@ -5246,6 +5246,40 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
 })();
 
 
+(function applyJuohDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["juoh-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "ベルナビ10・20・30回から、最大29Gの潜伏を経てサバ連へ。超サバで4大トリガーを狙う。",
+    intro: "SC高確を突破して純増約8.0枚/Gのサバンナチャンスへ。ベルナビ回数、最大29Gの潜伏、ストック放出、超サバ、キリンサバチャン・サバチャンEX・100ナビフリーズ・REGまでを専用画面で体験できます。",
+    points: ["SCはベルナビ10・20・30回・EX、20ナビ以上は約1/3", "初回SCからサバ連へ進む期待度は約50%", "超サバ後は4大サバンナトリガーが発生しやすい"],
+    specs: [["SC初当り（設定1）", "約1/326.5"], ["SC初当り（設定6）", "約1/279.7"], ["ベース", "約31.8G/50枚"], ["AT純増", "約8.0枚/G"], ["SCベルナビ", "10・20・30回・EX"], ["20ナビ以上", "約1/3"], ["サバ連期待度", "約50%"], ["潜伏", "最大29G"], ["KSC継続率", "約80%／90%"], ["BIG", "15G・純増約8.0枚/G"], ["REG", "10G・超サバ濃厚"]],
+    articleSections: [
+      { heading: "SC高確からサバンナチャンスへ", paragraphs: ["通常時はチャンス目・レア役・規定ゲーム数などからSC高確へ移行し、高確中は全役でサバンナチャンスを抽選します。SC高確中の当選期待度は約50%です。", "専用画面では通常ゲームを進めたあと、SC高確を2秒間消化し、最後のPUSHでサバンナチャンスの当落を開きます。"] },
+      { heading: "ベルナビ回数と最大29Gの潜伏", paragraphs: ["サバンナチャンスは純増約8.0枚/G。ベルナビ回数は10・20・30回・EXで、20ナビ以上の選択率は約1/3です。", "SC終了後は必ず潜伏へ移り、ストックがあれば最大29Gを経て次のSCを放出します。専用画面ではSCごとのナビ回数・獲得枚数と、潜伏後のストック放出を別々に表示します。"] },
+      { heading: "BIG・REGとSCストック", paragraphs: ["BIGは15G・純増約8.0枚/Gで、レア役やダチョウ揃いなどからSCストックを抽選します。160枚以上獲得時もSCストック濃厚です。", "REGは10Gの上乗せ超高確率。押し順ベルの約66%でSCストック、レア役はストック濃厚となり、終了後は超サバへ移行します。"] },
+      { heading: "超サバと4大サバンナトリガー", paragraphs: ["SC2セット目以降は超サバを抽選し、5セット目以降はチャンスが高まります。超サバ獲得後は4大トリガーの発生率が上がります。", "4大トリガーは、継続率約80%または90%のキリンサバチャン、30ナビがループするサバチャンEX、100ナビフリーズ、REGです。専用画面ではトリガーをPUSHで開き、その後のループも個別に進行します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約31.8G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1・2・4・5・6を均等抽選し、公開SC初当りを使用", "SC純増、ナビ回数、潜伏、BIG／REGゲーム数、KSC継続率を反映", "未公表のSCストック数・超サバ・4大トリガー振り分けは体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["サミー 新機種発表", "https://www.sammy.co.jp/japanese/news/detail/?id=290"], ["パチマガスロマガFREE 機種解析", "https://pachimaga.com/free/mach/maker-s/sammy/l_jyuoh.php"], ["パチマガスロマガFREE AT解析", "https://psmaga.com/e/pachi/pla/s_conq/sammy_slot/228/at02.php"], ["必勝本 ボーナス解説", "https://p.hisshobon.jp/machine/4786/1/11"]],
+    readerGuide: { verdict: "ベルナビ回数ごとのSCを消化し、最大29Gの潜伏からストックを放出しながら超サバと4大トリガーを狙うストック連タイプです。", bestFor: ["SCごとのナビ回数と獲得枚数を確認したい", "潜伏からのサバ連をPUSHで体験したい", "超サバ後のKSC・EX・100ナビ・REGを狙いたい"], check: ["SC純増・ナビ回数・潜伏・BONUSゲーム数は公開値", "KSCは80%／90%を個別抽選", "未公表のストック数とトリガー振り分けは代表値"], compare: [["okidoki-gold", "沖ドキ！GOLD", "潜伏後の連チャン型と比較"], ["million-god-kiseki", "ミリオンゴッド 神々の軌跡", "ストック放出型ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v18", dedicatedFlow: true, dedicatedFlowKey: "juoh-slot", dedicatedFlowVersion: 2, juohFlow: true,
+    triggerLabel: "SC高確", triggerRate: 163.3, triggerSuccess: 0.50, mainLabel: "サバンナチャンス", mainRate: 326.5, base50: 31.8, coinUnit: 4.0, normalMin: 0, normalMax: 0, atPureIncrease: 8.0, atPayoutVariance: 0,
+    juohScNavi: [[10, 0.67], [20, 0.25], [30, 0.08]], juohSabaChainChance: 0.50, juohMaxSc: 18, juohMaxLatentGames: 29,
+    juohBigGames: 15, juohBigChance: 0.10, juohRegGames: 10, juohRegChance: 0.012, juohBonusStockRates: [[1, 0.72], [2, 0.20], [3, 0.07], [5, 0.01]],
+    juohSuperChanceEarly: 0.035, juohSuperChanceLate: 0.18, juohTriggerTypes: [[{ key: "ksc", label: "キリンサバチャン" }, 0.38], [{ key: "ex", label: "サバチャンEX" }, 0.30], [{ key: "freeze", label: "100ナビフリーズ" }, 0.20], [{ key: "reg", label: "REGULAR BONUS" }, 0.12]],
+    juohKscRates: [[0.80, 0.72], [0.90, 0.28]], juohExContinue: 0.72,
+    specialLabel: "サバ連", specialChance: 0.50, upperChallenge: "超サバ", upperChance: 0.18, upperSuccess: 1, upperLabel: "4大サバンナトリガー", upperContinue: 0.85, upperPayout: 0,
+    settingPool: [1, 2, 4, 5, 6], settingRates: { 1: { trigger: 163.3, main: 326.5, payout: 0.978 }, 2: { trigger: 160.8, main: 321.6, payout: 0.987 }, 4: { trigger: 147.9, main: 295.8, payout: 1.056 }, 5: { trigger: 143.8, main: 287.6, payout: 1.086 }, 6: { trigger: 139.9, main: 279.7, payout: 1.143 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
+
 (function applyMillionGodKisekiDedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["million-god-kiseki"];
   if (!machine) return;

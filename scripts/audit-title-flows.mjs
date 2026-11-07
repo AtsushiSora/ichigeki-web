@@ -9,8 +9,8 @@ vm.runInContext(source, sandbox);
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
 const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
-const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow || machine.sim?.godEaterFlow || machine.sim?.millionGodFlow);
-const expectedProfiles = { battle: 7, st: 2, heaven: 4, bonus: 7, addon: 12 };
+const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow || machine.sim?.godEaterFlow || machine.sim?.millionGodFlow || machine.sim?.juohFlow);
+const expectedProfiles = { battle: 7, st: 2, heaven: 4, bonus: 6, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -49,14 +49,14 @@ for (const [slug, machine] of declarativeFlows) {
 }
 
 if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
-if (declarativeFlows.length !== 32) errors.push(`expected 32 declarative dedicated flows, found ${declarativeFlows.length}`);
+if (declarativeFlows.length !== 31) errors.push(`expected 31 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(specializedFlows);
-if (specializedFlows.length !== 15 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"] || !dedicatedMap["million-god-kiseki"]) {
-  errors.push(`expected fifteen specialized flows including Million God Kiseki, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (specializedFlows.length !== 16 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"] || !dedicatedMap["million-god-kiseki"] || !dedicatedMap["juoh-slot"]) {
+  errors.push(`expected sixteen specialized flows including Juoh, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
   const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
@@ -182,6 +182,15 @@ if (specializedFlows.length !== 15 || !dedicatedMap["tokyo-ghoul-slot"] || !dedi
   if (Number(millionGodSim.millionGodRed7Rate) !== 6900 || Number(millionGodSim.millionGodGodRate) !== 16384) errors.push("million-god-kiseki: special symbol rates are incorrect");
   if (Number(millionGodSim.millionGodSggContinue) !== 0.75 || Number(millionGodSim.millionGodGodStocks) !== 4) errors.push("million-god-kiseki: SGG or GOD benefit is incorrect");
   if (Number(millionGodSim.base50) !== 30.8 || Number(millionGodSim.atPureIncrease) !== 7 || !millionGodSim.settingRates || Object.keys(millionGodSim.settingRates).length !== 6) errors.push("million-god-kiseki: base, pure increase, or setting rates are incomplete");
+  const juoh = dedicatedMap["juoh-slot"];
+  const juohSim = juoh.sim;
+  if (juohSim.cycleFlow || juohSim.titleFlow) errors.push("juoh-slot: legacy reusable flow still exists");
+  if (!Array.isArray(juohSim.settingPool) || juohSim.settingPool.join(",") !== "1,2,4,5,6") errors.push("juoh-slot: setting pool is incorrect");
+  if (!Array.isArray(juohSim.juohScNavi) || juohSim.juohScNavi.map(([navi]) => navi).join(",") !== "10,20,30") errors.push("juoh-slot: SC navigation distribution is incomplete");
+  if (!Array.isArray(juohSim.juohTriggerTypes) || juohSim.juohTriggerTypes.length !== 4) errors.push("juoh-slot: four Savannah triggers are incomplete");
+  if (!Array.isArray(juohSim.juohKscRates) || juohSim.juohKscRates.map(([rate]) => rate).join(",") !== "0.8,0.9") errors.push("juoh-slot: KSC loop rates are incorrect");
+  if (Number(juohSim.juohMaxLatentGames) !== 29 || Number(juohSim.juohBigGames) !== 15 || Number(juohSim.juohRegGames) !== 10) errors.push("juoh-slot: latent or bonus games are incorrect");
+  if (Number(juohSim.base50) !== 31.8 || Number(juohSim.atPureIncrease) !== 8 || !juohSim.settingRates || Object.keys(juohSim.settingRates).length !== 5) errors.push("juoh-slot: base, pure increase, or setting rates are incomplete");
 }
 
 if (process.argv.includes("--verbose")) console.table(rows);
