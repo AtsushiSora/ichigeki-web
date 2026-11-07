@@ -319,6 +319,14 @@ function snapshotMarkup(machine) {
       ["黄金AT", "約5.0枚/G", "絶唱バトル約60%"]
     ];
     note = "残りゲーム数、ギアVチャンスの装者獲得、キャラ別ギアVアタック、絶唱、上位ATと絶唱バトルを個別に記録します。";
+  } else if (sim.superBlackjackFlow) {
+    items = [
+      ["初当り", "60／100／300枚", "REG・赤7・青7"],
+      ["リオチャンス", "昇格6G＋α", "狙えまでジャッジ"],
+      ["ST", "50〜777G", "純増約0.4枚/G・平均RC2個"],
+      ["SST", "100G以上", "純増約5.1枚/G・平均RC5個"]
+    ];
+    note = "初当りBONUS、リオチャンス昇格、6種類の報酬、STのRCストック、SSTを機種専用で記録します。";
   } else if (sim.magicalHalloween8Flow) {
     items = [
       ["5種BONUS", "最大42〜203枚", "A＋ART"],

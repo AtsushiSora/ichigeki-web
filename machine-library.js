@@ -5316,6 +5316,41 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.titleFlow;
 })();
 
+(function applySuperBlackjackDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["super-blackjack-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "初当りBIGからリオチャンス高確へ。6G＋αの昇格PUSH、BONUS、ST、SSTをつなぐSBJループ。",
+    intro: "初当り3種類、リオチャンス高確、6G＋αの昇格パート、狙えまで続くジャッジ、6種類の報酬BONUS、50〜777Gのストックタイム、100G以上のスーパーストックタイムまでを専用画面で体験できます。",
+    points: ["初当りはREG60枚・赤BIG100枚・青BIG300枚", "リオチャンスは6G＋α＋狙えまでの2部構成", "STは純増約0.4枚/G・平均RC約2個", "SSTは純増約5.1枚/G・平均RC約5個"],
+    specs: [["BONUS初当り（設定1）", "約1/241.7"], ["BONUS初当り（設定6）", "約1/181.3"], ["RC高確（設定1）", "約1/417.6"], ["RC高確（設定6）", "約1/312.1"], ["ベース", "約31.4G/50枚"], ["初当りREG", "60枚"], ["初当り赤7BIG", "100枚"], ["初当り青7BIG", "300枚"], ["リオチャンス", "昇格6G＋α／ジャッジ不定"], ["STOCK TIME", "50〜777G・純増約0.4枚/G"], ["SUPER STOCK TIME", "100G以上・純増約5.1枚/G"]],
+    articleSections: [
+      { heading: "初当り3種類とリオチャンス高確", paragraphs: ["初当り振り分けはREG45.7%、赤7BIG49.4%、青7BIG4.9%。純増は約5.1枚/Gで、REGは60枚、赤7BIGは100枚、青7BIGは300枚です。", "BIG後はリオチャンス高確へ。REG後は通常へ戻り、通常ゲーム数を引き継ぎます。専用画面では初当り種類をPUSHで開き、BIG時だけリオチャンス高確へ進みます。"] },
+      { heading: "6G＋αのリオチャンス", paragraphs: ["リオチャンスは前半の昇格パートと後半のジャッジパートで構成。前半は6G＋α、毎ゲームの昇格期待度は約1/2です。レア役で超昇格へ入ると減算が止まり、2段階昇格のチャンスになります。", "後半は約1/3で発生する狙えカットインまで継続し、狙えが来なければ報酬が必ず昇格。PUSHでREG、赤BIG、青BIG、SUPER BIG、EPISODE、SSTのいずれかを開きます。"] },
+      { heading: "RC経由BONUSとST抽選", paragraphs: ["RC経由の報酬はREG60枚、赤7BIG200枚、青7BIG300枚、SUPER BIG400枚、EPISODE BONUS400枚、SP EPISODE BONUS200枚または500枚。BONUSは純増約5.1枚/Gです。", "青7BIGはST期待度約30%、SUPER BIGは約50%、EPISODE BONUSはST濃厚。BONUS後にSTへ入らなかった場合もRC高確へ戻り、SBJループの再当選を狙います。"] },
+      { heading: "STOCK TIME", paragraphs: ["STOCK TIMEは純増約0.4枚/G、50〜777G継続するRCストック高確。平均RCストックは約2個で、リプレイ・レア役・リーチ目から最大7個まで獲得する可能性があります。", "100G以上の選択率は約10.2%。ストックは50Gまたは100Gの区切りで放出され、RC→BONUS→残りSTへ復帰する流れを専用履歴で表示します。"] },
+      { heading: "SUPER STOCK TIMEとジョーカーモード", paragraphs: ["SSTは設定1で約1/6518.3、100G以上・純増約5.1枚/G・平均RCストック約5個。200G以上の選択率は約14%です。", "REGが続いた先の金BARからSP EPISODE BONUSを獲得するとジョーカーモードへ。シミュレーターではSSTを上位ルートとして進行し、ジョーカーモードは記事内で仕組みを解説します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約31.4G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6のBONUS初当り・RC高確は公開設定別値を使用", "初当り、RC昇格、報酬BONUS、ST、SSTを機種専用進行", "初当り3種類の振り分けとBONUS枚数は公開値", "RC初期配列・未公表の細かな昇格率や再高確率は体験用代表値"] }
+    ],
+    sources: [["山佐ネクスト 公式機種サイト", "https://yamasa-next.co.jp/slot/spbjck/"], ["山佐 公式ガイドブック", "https://www.cdn.yamasa.jp/guide_book/sbj_gb.pdf"], ["一撃 機種解析", "https://1geki.jp/slot/l_sbj/"], ["なな徹 リオチャンス解析", "https://nana-press.com/kaiseki/machine/876/27148/"], ["なな徹 STOCK TIME解析", "https://nana-press.com/kaiseki/machine/876/27153/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10174"]],
+    readerGuide: { verdict: "初当りBIGからリオチャンス高確へ入り、昇格型RCとBONUS、STのストック放出を往復するループ型です。", bestFor: ["RCの6G昇格と狙えPUSHを体験したい", "BONUS種類ごとの枚数とST期待度を比べたい", "SSTでRCストックをまとめて獲得したい"], check: ["初当り振り分け、BONUS枚数、主要ゲーム数、純増は公開値", "STとSSTのゲーム数・平均ストック差を反映", "RC初期配列など未公表部分は体験用代表値"], compare: [["magical-halloween8", "マジカルハロウィン8", "A＋ARTストック型と比較"], ["fire-force-slot", "Lパチスロ 炎炎ノ消防隊", "BONUSループ型と比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v24", dedicatedFlow: true, dedicatedFlowKey: "super-blackjack-slot", dedicatedFlowVersion: 2, superBlackjackFlow: true,
+    triggerLabel: "BONUS初当り", triggerRate: 241.7, triggerSuccess: 0.579, mainLabel: "リオチャンス", mainRate: 417.6, base50: 31.4, coinUnit: 3.0, normalMin: 0, normalMax: 0, atPureIncrease: 0.4, upperPureIncrease: 5.1, atPayoutVariance: 0,
+    sbjInitialBonuses: [[{ key: "reg", label: "REGULAR BONUS", games: 12, award: 60, rcHigh: false }, 0.457], [{ key: "red", label: "赤7 BIG BONUS", games: 20, award: 100, rcHigh: true }, 0.494], [{ key: "blue", label: "青7 BIG BONUS", games: 59, award: 300, rcHigh: true }, 0.049]],
+    sbjRcRewards: [[{ key: "reg", label: "REGULAR BONUS", games: 12, award: 60, stChance: 0.04 }, 0.28], [{ key: "red", label: "赤7 BIG BONUS", games: 39, award: 200, stChance: 0.12 }, 0.32], [{ key: "blue", label: "青7 BIG BONUS", games: 59, award: 300, stChance: 0.30 }, 0.20], [{ key: "super", label: "SUPER BIG BONUS", games: 78, award: 400, stChance: 0.50 }, 0.12], [{ key: "episode", label: "EPISODE BONUS", games: 78, award: 400, stChance: 1 }, 0.06], [{ key: "sst", label: "SUPER STOCK TIME", games: 0, award: 0, sst: true }, 0.02]],
+    sbjRcUpgradeGames: 6, sbjRcUpgradeChance: 0.50, sbjRcCutInChance: 1 / 3, sbjRcHighChance: 0.62, sbjMaxLoops: 12,
+    sbjStGames: [[50, 0.898], [100, 0.086], [200, 0.0032], [300, 0.0032], [400, 0.0032], [500, 0.0032], [600, 0.0016], [777, 0.0016]], sbjStStocks: [[1, 0.28], [2, 0.44], [3, 0.18], [4, 0.07], [5, 0.03]],
+    sbjSstGames: [[100, 0.86], [200, 0.035], [300, 0.025], [400, 0.020], [500, 0.020], [600, 0.015], [700, 0.015], [777, 0.010]], sbjSstStocks: [[3, 0.15], [4, 0.24], [5, 0.28], [6, 0.20], [7, 0.13]],
+    specialLabel: "STOCK TIME", specialChance: 0.30, upperChallenge: "RC報酬昇格", upperChance: 1, upperSuccess: 0.02, upperLabel: "SUPER STOCK TIME", upperContinue: 0, upperPayout: 0,
+    settingRates: { 1: { trigger: 241.7, main: 417.6, payout: 0.978 }, 2: { trigger: 238.8, main: 411.7, payout: 0.987 }, 3: { trigger: 235.9, main: 405.8, payout: 1.001 }, 4: { trigger: 201.8, main: 350.4, payout: 1.057 }, 5: { trigger: 194.9, main: 335.9, payout: 1.100 }, 6: { trigger: 181.3, main: 312.1, payout: 1.127 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
 
 (function applyFireForceDedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["fire-force-slot"];
