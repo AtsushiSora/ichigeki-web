@@ -5442,6 +5442,47 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.entryBonusAwardsNote;
 })();
 
+(function applyToloveruDarknessDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["toloveru-darkness-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "3種類のCZから初当りBONUSへ。10G＋αの楽園計画でヒロインを攻略し、ハーレムモードを目指す。",
+    intro: "きゅんきゅんバルーン、ときめきスイート、ぷっちゅんちゃれんじの3種類のCZ、初当りBONUS、10G＋αのST『楽園計画』、4種類のプレゼントちゃんす、ヒロイン攻略、上位ST『ハーレムモード』までを機種専用画面で体験できます。",
+    points: ["CZ合算は全設定共通約1/177.6", "楽園計画は10G＋α・BONUS期待度約52%", "3人攻略後は設定2で約34%の上位抽選", "6人攻略でハーレムモード濃厚・継続約80%"],
+    specs: [["AT（設定2）", "約1/352.0"], ["AT（設定6）", "約1/311.1"], ["CZ合算", "約1/177.6"], ["ベース", "約30G/50枚"], ["楽園計画", "10G＋α・期待度約52%"], ["とらぶるBONUS", "純増約6.6枚/G・100〜1600枚"], ["3人攻略後の上位抽選", "設定2約34%"], ["6人攻略", "上位ST濃厚"], ["ハーレムモード", "10G＋α・継続約80%"], ["設定", "2・3・4・5・6"]],
+    articleSections: [
+      { heading: "3種類のCZから初当りBONUSへ", paragraphs: ["CZはきゅんきゅんバルーン、ときめきスイート、ぷっちゅんちゃれんじの3種類。合算出現率は全設定共通約1/177.6です。", "成功期待度は順に約33%・約40%・約70%。シミュレーターはAT初当り確率から通常回転数を決め、当選契機となったCZを最後まで進めてPUSHで初当りBONUSを開きます。"] },
+      { heading: "10G＋αの楽園計画", paragraphs: ["楽園計画は10G＋αのSTで、BONUS期待度は約52%。ヒロインを1人ずつ攻略し、BONUS後はSTを再セットします。", "専用画面ではSTの数字を10Gから進め、最終PUSHでBONUS当落を表示します。初当りで獲得したVストックがある場合は次の攻略を保証します。"] },
+      { heading: "4種類のプレゼントちゃんす", paragraphs: ["ST成功後はプレゼントちゃんすへ進み、ばいんATTACK、ぺろぺろちゃんす、愛すぷRUSH、whisperのいずれかでBONUS枚数を決めます。", "通常ST中の選択率と平均獲得目安を使い、PUSHまでは種類と枚数を伏せます。とらぶるBONUSは純増約6.6枚/G、100〜1600枚です。"] },
+      { heading: "ヒロイン3人・6人攻略と上位ST", paragraphs: ["ヒロイン3人攻略後は上位STを抽選し、設定2の移行期待度は約34%。6人攻略ならハーレムモード濃厚です。", "ハーレムモードは10G＋α・継続期待度約80%。BONUS当選時は愛すぷRUSH以上が中心となる強化STとして、通常STと画面を切り替えます。"] },
+      { heading: "とらぶるエピソードとダークネス計画", paragraphs: ["初当りの一部はとらぶるエピソードとなり、楽園計画のVストックを持って開始します。ヤミエピソードでは45Gのエピソードと5Gのダークネス計画を経由します。", "ダークネス計画は毎ゲームSTゲーム数の上乗せを抽選し、獲得した追加ゲーム数を通常STへ反映します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約30G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定2・3・4・5・6を均等抽選し、AT初当りと出玉率は公開設定別値を使用", "3種類のCZ、初当りBONUS、楽園計画、プレゼントちゃんす、ヒロイン攻略、ハーレムモードを専用進行", "CZ選択率、初当りBONUS種別、上位中報酬の細かな比率など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["平和 公式ゲームフロー", "https://www.heiwanet.co.jp/assets/images/products/guide/l-td.pdf"], ["一撃 機種解析", "https://1geki.jp/slot/l_toloveru_darkness/"], ["なな徹 設定・確率", "https://nana-press.com/kaiseki/machine/752/21704/"], ["なな徹 楽園計画", "https://nana-press.com/kaiseki/machine/752/21719/"], ["なな徹 ハーレムモード", "https://nana-press.com/kaiseki/machine/752/21721/"], ["なな徹 プレゼントちゃんす", "https://nana-press.com/kaiseki/machine/752/24196/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10038"]],
+    readerGuide: { verdict: "10G＋αのSTでヒロインを攻略し、プレゼントちゃんすでBONUS枚数を決めながら上位STを目指す高純増STタイプです。", bestFor: ["10Gのカウントダウン後にPUSHでBONUS当落を開きたい", "4種類のプレゼントちゃんすを楽しみたい", "3人・6人攻略から上位STを狙いたい"], check: ["CZ・AT初当り、ST性能、純増、主要BONUS枚数は公開値", "BONUS枚数とSTゲーム数を分けて表示", "未公表の細かな選択率は体験用代表値"], compare: [["dmc5-st-slot", "スマスロ DMC5", "BONUS高確率STと比較"], ["gundam-seed-slot", "スマスロ ガンダムSEED", "上位を目指すST型ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v33", dedicatedFlow: true, dedicatedFlowKey: "toloveru-darkness-slot", dedicatedFlowVersion: 2, toloveruDarknessFlow: true,
+    triggerLabel: "初当りBONUS", triggerRate: 352.0, triggerSuccess: 1, mainLabel: "楽園計画", mainRate: 352.0, base50: 30.0, coinUnit: 4.2,
+    normalMin: 0, normalMax: 0, atPureIncrease: 6.6, upperPureIncrease: 6.6, atPayoutVariance: 0,
+    settingPool: [2, 3, 4, 5, 6],
+    toloveruCzRoutes: [[{ key: "balloon", label: "きゅんきゅんバルーン", games: 6, chance: 0.33 }, 0.425], [{ key: "sweet", label: "ときめきスイート", games: 5, chance: 0.40 }, 0.336], [{ key: "pucchun", label: "ぷっちゅんちゃれんじ", games: 7, chance: 0.70 }, 0.239]],
+    toloveruInitialBonuses: [[{ key: "memorial", label: "メモリアルボーナス", games: 16, payout: 100, stocks: 0 }, 0.84], [{ key: "episode", label: "とらぶるエピソード", games: 20, payout: 132, stocks: 1 }, 0.14], [{ key: "yami", label: "ヤミエピソード", games: 45, payout: 297, stocks: 1, darkness: true }, 0.02]],
+    toloveruHeroines: ["ララ", "春菜", "ヤミ", "唯", "モモ", "ナナ"],
+    toloveruStGames: 10, toloveruStContinue: 0.52, toloveruThreeHeroineUpper: 0.34, toloveruUpperContinue: 0.80, toloveruMaxUpperLoops: 12,
+    toloveruPresentChances: [[{ key: "boin", label: "ばいんATTACK", payouts: [[100, 0.22], [200, 0.38], [300, 0.25], [500, 0.10], [800, 0.04], [1600, 0.01]] }, 0.429], [{ key: "pero", label: "ぺろぺろちゃんす", payouts: [[300, 0.62], [500, 0.28], [800, 0.08], [1600, 0.02]] }, 0.375], [{ key: "icepu", label: "愛すぷRUSH", payouts: [[500, 0.65], [800, 0.27], [1600, 0.08]] }, 0.190], [{ key: "whisper", label: "whisper", payouts: [[800, 0.50], [1600, 0.50]] }, 0.006]],
+    toloveruUpperPresents: [[{ key: "icepu", label: "愛すぷRUSH", payouts: [[500, 0.58], [800, 0.32], [1600, 0.10]] }, 0.78], [{ key: "whisper", label: "whisper", payouts: [[800, 0.50], [1600, 0.50]] }, 0.12], [{ key: "episode", label: "とらぶるエピソード", payouts: [[500, 0.55], [800, 0.35], [1600, 0.10]] }, 0.10]],
+    toloveruDarknessAdds: [[10, 0.45], [20, 0.28], [30, 0.16], [50, 0.08], [100, 0.03]],
+    specialLabel: "プレゼントちゃんす", specialChance: 1, upperChallenge: "ヒロイン3人攻略ジャッジ", upperChance: 0.34, upperSuccess: 0.34, upperLabel: "ハーレムモード", upperContinue: 0.80, upperPayout: 650,
+    settingRates: { 2: { trigger: 352.0, main: 352.0, payout: 0.980 }, 3: { trigger: 345.7, main: 345.7, payout: 0.990 }, 4: { trigger: 328.4, main: 328.4, payout: 1.025 }, 5: { trigger: 311.3, main: 311.3, payout: 1.058 }, 6: { trigger: 311.1, main: 311.1, payout: 1.101 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+  delete machine.sim.entryBonusAwards;
+  delete machine.sim.entryBonusAwardsNote;
+})();
+
 (function applyInuyasha2DedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["inuyasha2-slot"];
   if (!machine) return;
