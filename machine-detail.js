@@ -363,6 +363,14 @@
         ["黄金AT", "約5.0枚/G", "絶唱バトル約60%"]
       ];
       note = "残りゲーム数、ギアVチャンスの装者獲得、キャラ別ギアVアタック、絶唱、上位ATと絶唱バトルを個別に記録します。";
+    } else if (sim.fireForceFlow) {
+      items = [
+        ["初当り", `約1/${sim.triggerRate}`, "灰焔騎士団・BONUS合算"],
+        ["炎炎ループ", `約1/${sim.mainRate}`, `設定${slotBaselineSetting}基準`],
+        ["炎炎激闘", "15G＋α・約61%", "複数ストックで再突入"],
+        ["アドラバースト", "20G＋JAC", "純増約5.7枚/G"]
+      ];
+      note = "灰焔騎士団、初当りBONUS、伝導者の影、炎炎激闘ストック、紅丸炎舞、森羅万象、アドラバーストを機種専用で記録します。";
     } else if (sim.sao2Flow) {
       items = [
         ["CZ突破", "約55%", "スコードロンバトル"],
@@ -1143,6 +1151,15 @@
         cards.splice(4, 0, ["BALANCE MODEL", "専用フローの抽選目安", `${profileNames[titleFlow.profile] || "機種専用型"}として、AT突入後は平均約${Number(titleFlow.balance.averageRounds).toFixed(1)}区間進行します。通常フローから${sim.upperLabel}へ到達する代表目安は約${percent(titleFlow.balance.upperRoute)}です。公開値と機種別の代表値から計算した比較用の目安で、実戦結果を保証するものではありません。`]);
       }
       note = `${cycle.label || sim.mainLabel}の区間順序、代表報酬、継続判定を${titleFlow ? "機種専用フローで" : "個別に"}表示する体験モデルです。成立役別抽選、内部状態、全報酬振り分けは短時間で比較できる形へ簡略化しています。`;
+    } else if (sim.fireForceFlow) {
+      cards = [
+        ["TWO ENTRY ROUTES", "灰焔騎士団／初当りBONUS", "通常時は15G＋α・BONUS期待度約50%の灰焔騎士団、またはREG／炎炎BONUSから始まります。"],
+        ["EVANGELIST SHADOW", "伝導者の影", "REG後は30G＋α、炎炎BONUS後は60G＋α。エピソードBONUSを獲得すれば炎炎激闘へ進みます。"],
+        ["FIRE FORCE BATTLE", "炎炎激闘とストック", "1セット15G＋α・BONUS期待度約61%。エピソードに応じた複数ストックでBONUS連を伸ばします。"],
+        ["SPECIAL LOOP", "紅丸炎舞・裏炎炎激闘", "紅丸炎舞はBONUS当選濃厚。特殊な炎炎激闘から森羅万象へのルートも抽選します。"],
+        ["ADOLLA", "森羅万象とアドラバースト", "森羅万象の最終PUSHを突破すると、初期20Gと10G／20G／30GのJACを重ねるアドラバーストへ進みます。"]
+      ];
+      note = "初当り・BONUS・炎炎ループ確率、主要ゲーム数、純増、公開期待度を優先しています。未公表の入口・特殊ルート振り分けは体験用代表値です。";
     } else if (sim.fireForce2Flow) {
       cards = [
         ["INITIAL BONUS", "REG／SPエピソードBONUS", "初当りは主に約85枚のREG。REG後は30G＋αの伝導者の罠へ進みます。約200枚のSPエピソードBONUSなら炎炎ループへ直行します。"],
@@ -1419,7 +1436,7 @@
       const averageInvestment = Math.round((machine.sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
-      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow || machine.sim.millionGodFlow || machine.sim.juohFlow || machine.sim.sunbreakFlow || machine.sim.paripiFlow || machine.sim.fireForce2Flow;
+      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow || machine.sim.millionGodFlow || machine.sim.juohFlow || machine.sim.sunbreakFlow || machine.sim.paripiFlow || machine.sim.fireForceFlow || machine.sim.fireForce2Flow;
       const settingModelLabel = machine.sim.settingRates
         ? hasDedicatedFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
         : hasDedicatedFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
@@ -1505,7 +1522,7 @@
         ? Math.max(1, mainRate * sim.triggerRate / sim.mainRate)
         : Math.max(1, sim.triggerRate * profile.rate);
     const publishedEntry = Number(publishedSetting?.entry);
-    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.fireForce2Flow
+    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.fireForceFlow || sim.fireForce2Flow
       ? Math.max(0, Math.min(1, Number(sim.triggerSuccess) || 0.55))
       : sim.godzillaEva2Flow || sim.mahoakoFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.shinEvaFlow
       ? 1
@@ -1521,7 +1538,7 @@
       ? Math.min(0.98, Number(publishedSetting.upper))
       : hasPublishedSettingRates ? sim.upperChance : Math.min(0.98, sim.upperChance + profile.upper);
     const settingModelLabel = hasPublishedTriggerRate && hasPublishedMainRate
-      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.darlingFranxxFlow ? "公開設定別値（CZ・BONUS・高確初当り）" : sim.godEaterFlow ? "公開設定別値（AT初当り・機種専用進行）" : sim.millionGodFlow ? "公開設定別値（GG初当り・機種専用進行）" : sim.juohFlow ? "公開設定別値（SC初当り・機種専用進行）" : sim.sunbreakFlow ? "公開設定別値（CZ・AT初当り・機種専用進行）" : sim.paripiFlow ? "公開設定別値（CZ3種・BONUS初当り・ST進行）" : sim.fireForce2Flow ? "公開設定別値（BONUS・炎炎ループ初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
+      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.darlingFranxxFlow ? "公開設定別値（CZ・BONUS・高確初当り）" : sim.godEaterFlow ? "公開設定別値（AT初当り・機種専用進行）" : sim.millionGodFlow ? "公開設定別値（GG初当り・機種専用進行）" : sim.juohFlow ? "公開設定別値（SC初当り・機種専用進行）" : sim.sunbreakFlow ? "公開設定別値（CZ・AT初当り・機種専用進行）" : sim.paripiFlow ? "公開設定別値（CZ3種・BONUS初当り・ST進行）" : sim.fireForceFlow ? "公開設定別値（初当り・BONUS・炎炎ループ）" : sim.fireForce2Flow ? "公開設定別値（BONUS・炎炎ループ初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
       : hasPublishedMainRate
         ? sim.bofuriFlow ? "公開設定別値（BONUS初当り）＋機種専用進行" : "公開設定別値（初当り）＋CZ簡易換算"
         : "サイト共通補正モデル";
@@ -1789,6 +1806,21 @@
     let paripiUpperLoops = 0;
     let paripiUltimateAttempts = 0;
     let paripiUltimateLoops = 0;
+    let fireForceEntry = null;
+    let fireForceInitialBonus = null;
+    let fireForceGrayAttempts = 0;
+    let fireForceGrayWins = 0;
+    let fireForceShadowAttempts = 0;
+    let fireForceShadowWins = 0;
+    let fireForceBattleRounds = 0;
+    let fireForceBattleWins = 0;
+    let fireForceStocks = 0;
+    let fireForceBonusCount = 0;
+    let fireForceBenimaruCount = 0;
+    let fireForceShinraAttempts = 0;
+    let fireForceShinraWins = 0;
+    let fireForceAdoraBursts = 0;
+    let fireForceAdoraJacs = 0;
     let fireForce2InitialBonus = null;
     let fireForce2TrapAttempts = 0;
     let fireForce2TrapWins = 0;
@@ -1819,6 +1851,45 @@
     let sunbreakPurificationAttempts = 0;
     let sunbreakPurificationWins = 0;
     let sunbreakMaxMonster = "未遭遇";
+    if (sim.fireForceFlow) {
+      fireForceEntry = weighted(sim.fireForceEntries || [[{ key: "bonus", label: "初当りBONUS", games: 1, chance: 1 }, 1]]);
+      let entryWon = true;
+      if (fireForceEntry.key === "gray") {
+        fireForceGrayAttempts = 1;
+        entryWon = Math.random() < Math.max(0, Math.min(1, Number(fireForceEntry.chance) || 0.50));
+        if (entryWon) fireForceGrayWins = 1;
+        atEvents.push({ kind: "fire-force-gray", label: fireForceEntry.label, games: Number(fireForceEntry.games) || 15, chance: (Number(fireForceEntry.chance) || 0.50) * 100, won: entryWon, cumulative: 0 });
+        flow[0] = `${games}Gで${fireForceEntry.label}`;
+      }
+      if (entryWon) {
+        fireForceInitialBonus = weighted(fireForceEntry.key === "gray" ? sim.fireForceGrayBonuses : sim.fireForceInitialBonuses);
+        payout = Math.min(Math.max(0, Number(fireForceInitialBonus.award) || 0), SLOT_COMPLETE_LIMIT);
+        bonusCount += 1;
+        bonusPayoutTotal += payout;
+        atGamesTotal += Math.max(1, Number(fireForceInitialBonus.games) || 15);
+        entryBonus = { ...fireForceInitialBonus, payout, atChance: fireForceInitialBonus.key === "episode" ? 1 : Number(sim.fireForceShadowChance) || 0.17, outcome: "" };
+        atEvents.push({ kind: "fire-force-initial-bonus", ...fireForceInitialBonus, award: payout, entry: fireForceEntry.key, cumulative: payout });
+        flow.push(`${fireForceInitialBonus.label} +${yen.format(payout)}枚`);
+        if (fireForceInitialBonus.key === "episode") {
+          entered = true;
+          triggerSucceeded = true;
+          entryBonus.outcome = "炎炎激闘ストック獲得";
+        } else {
+          fireForceShadowAttempts = 1;
+          const shadowChance = Math.max(0, Math.min(1, Number(sim.fireForceShadowChance) || 0.17));
+          entered = Math.random() < shadowChance;
+          triggerSucceeded = entered;
+          if (entered) fireForceShadowWins = 1;
+          entryBonus.outcome = entered ? "エピソードBONUS当選" : "伝導者の影終了";
+          atEvents.push({ kind: "fire-force-shadow", label: "伝導者の影", games: Number(fireForceInitialBonus.shadowGames) || 30, chance: shadowChance * 100, won: entered, cumulative: payout });
+          flow.push(`伝導者の影 ${entered ? "成功" : "終了"}`);
+        }
+      } else {
+        entered = false;
+        triggerSucceeded = false;
+        flow.push("灰焔騎士団・BONUS非当選");
+      }
+    }
     if (sim.fireForce2Flow) {
       fireForce2InitialBonus = weighted(sim.fireForce2InitialBonuses || [[{ key: "regular", label: "REGULAR BONUS", games: 15, award: 85, direct: false }, 1]]);
       fireForce2RegularCount = fireForce2InitialBonus.key === "regular" ? 1 : 0;
@@ -2947,6 +3018,99 @@
             atGamesTotal += 40;
             atEvents.push({ kind: "basilisk-fallback", label: "通常バジリスクタイム", games: 40, award: fallbackAward, cumulative: payout });
             flow.push(`通常バジリスクタイム 1セット・+${yen.format(fallbackAward)}枚`);
+          }
+        }
+        basePayout = payout - entryPayout;
+      } else if (sim.fireForceFlow) {
+        payout = entryPayout;
+        basePayout = 0;
+        const awardFireForceCoins = amount => {
+          const award = Math.max(0, Math.min(Math.round(Number(amount) || 0), SLOT_COMPLETE_LIMIT - payout));
+          payout += award;
+          return award;
+        };
+        if (fireForceShadowWins) {
+          const episodeAward = awardFireForceCoins(85);
+          bonusCount += 1;
+          bonusPayoutTotal += episodeAward;
+          atGamesTotal += 15;
+          atEvents.push({ kind: "fire-force-episode", label: "エピソードBONUS", games: 15, award: episodeAward, cumulative: payout });
+          flow.push(`エピソードBONUS +${yen.format(episodeAward)}枚`);
+        }
+
+        fireForceStocks = Math.max(2, Number(weighted(sim.fireForceInitialStocks || [[2, 1]])) || 2);
+        atEvents.push({ kind: "fire-force-stock-start", label: "炎炎激闘ストック", stocks: fireForceStocks, cumulative: payout });
+        const maxBattles = Math.max(2, Math.min(24, Number(sim.fireForceMaxBattles) || 14));
+        while (fireForceStocks > 0 && fireForceBattleRounds < maxBattles && payout < SLOT_COMPLETE_LIMIT && !upper) {
+          fireForceBattleRounds += 1;
+          cycleRounds += 1;
+          fireForceStocks -= 1;
+          const benimaru = Math.random() < (Number(sim.fireForceBenimaruChance) || 0.035);
+          if (benimaru) fireForceBenimaruCount += 1;
+          const battleChance = benimaru ? 1 : Math.max(0, Math.min(1, Number(sim.fireForceBattleChance) || 0.61));
+          const won = Math.random() < battleChance;
+          if (won) fireForceBattleWins += 1;
+          atGamesTotal += Math.max(1, Number(sim.fireForceBattleGames) || 15);
+          atEvents.push({ kind: "fire-force-battle", label: benimaru ? "紅丸炎舞" : "炎炎激闘", games: Number(sim.fireForceBattleGames) || 15, round: fireForceBattleRounds, chance: battleChance * 100, won, stocks: fireForceStocks, cumulative: payout });
+          flow.push(`${benimaru ? "紅丸炎舞" : "炎炎激闘"} ${fireForceBattleRounds}・${won ? "BONUS当選" : "終了"}・残り${fireForceStocks}個`);
+          if (!won) continue;
+          cycleContinues += 1;
+
+          const loopBonus = weighted(sim.fireForceLoopBonuses || [[{ key: "fire", label: "炎炎BONUS", games: 40, award: 230 }, 1]]);
+          const bonusAward = awardFireForceCoins(loopBonus.award);
+          const addedStocks = Math.max(0, Number(loopBonus.stock) || (Math.random() < 0.14 ? 1 : 0));
+          fireForceStocks += addedStocks;
+          fireForceBonusCount += 1;
+          bonusCount += 1;
+          bonusPayoutTotal += bonusAward;
+          atGamesTotal += Math.max(1, Number(loopBonus.games) || 15);
+          atEvents.push({ kind: "fire-force-loop-bonus", label: loopBonus.label, bonusType: loopBonus.key, games: Number(loopBonus.games) || 15, award: bonusAward, stockAdd: addedStocks, stocks: fireForceStocks, cumulative: payout, mode: benimaru ? "紅丸炎舞" : "炎炎激闘" });
+          flow.push(`${loopBonus.label} +${yen.format(bonusAward)}枚${addedStocks ? `・ストック+${addedStocks}` : ""}`);
+
+          if (Math.random() < (Number(sim.fireForceShinraChance) || 0.045)) {
+            fireForceShinraAttempts += 1;
+            const shinraWon = Math.random() < (Number(sim.fireForceShinraSuccess) || 0.50);
+            if (shinraWon) {
+              fireForceShinraWins += 1;
+              upper = true;
+            }
+            atGamesTotal += Number(sim.fireForceShinraGames) || 8;
+            atEvents.push({ kind: "fire-force-shinra", label: "森羅万象", games: Number(sim.fireForceShinraGames) || 8, chance: (Number(sim.fireForceShinraSuccess) || 0.50) * 100, won: shinraWon, cumulative: payout });
+            flow.push(`森羅万象 ${shinraWon ? "勝利・アドラバースト" : "敗北"}`);
+          }
+        }
+
+        if (upper && payout < SLOT_COMPLETE_LIMIT) {
+          let burstActive = true;
+          while (burstActive && fireForceAdoraBursts < 3 && payout < SLOT_COMPLETE_LIMIT) {
+            fireForceAdoraBursts += 1;
+            upperLoops = fireForceAdoraBursts;
+            const baseGames = Math.max(1, Number(sim.fireForceAdoraBaseGames) || 20);
+            const baseAward = awardFireForceCoins(slotAwardForGames(baseGames, Number(sim.upperPureIncrease) || 5.7, 0));
+            upperPayoutTotal += baseAward;
+            atGamesTotal += baseGames;
+            atEvents.push({ kind: "fire-force-adora-start", label: sim.upperLabel, burst: fireForceAdoraBursts, games: baseGames, award: baseAward, cumulative: payout });
+            flow.push(`${sim.upperLabel} ${fireForceAdoraBursts}回目・${baseGames}G`);
+            let jacActive = true;
+            let burstJacs = 0;
+            const maxJacs = Math.max(1, Math.min(15, Number(sim.fireForceAdoraMaxJacs) || 10));
+            while (jacActive && burstJacs < maxJacs && payout < SLOT_COMPLETE_LIMIT) {
+              burstJacs += 1;
+              fireForceAdoraJacs += 1;
+              const jac = weighted(sim.fireForceAdoraJacs || [[{ label: "炎炎JAC", games: 10 }, 1]]);
+              const jacGames = Math.max(1, Number(jac.games) || 10);
+              const jacAward = awardFireForceCoins(slotAwardForGames(jacGames, Number(sim.upperPureIncrease) || 5.7, 0));
+              const continued = burstJacs < maxJacs && Math.random() < (Number(sim.fireForceAdoraContinue) || 0.74);
+              upperPayoutTotal += jacAward;
+              atGamesTotal += jacGames;
+              atEvents.push({ kind: "fire-force-adora-jac", label: jac.label, burst: fireForceAdoraBursts, jac: burstJacs, games: jacGames, award: jacAward, continued, cumulative: payout });
+              flow.push(`${jac.label} ${jacGames}G・+${yen.format(jacAward)}枚`);
+              jacActive = continued;
+            }
+            const returned = fireForceAdoraBursts < 3 && Math.random() < (Number(sim.fireForceAdoraReturn) || 0.92);
+            atEvents.push({ kind: "fire-force-adora-return", label: "森羅万象 廻", games: 8, chance: (Number(sim.fireForceAdoraReturn) || 0.92) * 100, won: returned, cumulative: payout });
+            flow.push(`森羅万象 廻 ${returned ? "勝利・アドラバースト再突入" : "終了"}`);
+            burstActive = returned;
           }
         }
         basePayout = payout - entryPayout;
@@ -5681,11 +5845,12 @@
     const juohStats = sim.juohFlow ? [["サバンナチャンス", `${juohScSets}セット`], ["潜伏からのSC放出", `${juohSabaReturns}回`], ["最大ベルナビ", `${juohMaxNavi}回`], ["BONUS", `BIG ${juohBigCount}回・REG ${juohRegCount}回`], ["獲得SCストック", `${juohStocksWon}個`], ["超サバ", juohSuperSabaCount || upper ? "到達" : "非到達"], ["4大トリガー", juohTriggerCount ? `${juohTriggerCount}回` : "非当選"], ["KSCループ", `${juohKscLoops}回`], ["EX 30ナビ", `${juohExLoops}回`]] : [];
     const sunbreakStats = sim.sunbreakFlow ? [["今回の入口", sunbreakEntry?.label || sim.triggerLabel], ["盟勇クエスト", `${sunbreakQuestCount}回・討伐${sunbreakHunts}体`], ["討伐ゲーム数上乗せ", `+${sunbreakQuestAdds}G`], ["剥ぎ取りRUSH", `${sunbreakCarveEntries}回・+${sunbreakCarveAdds}G`], ["キュリアチャンス", `${sunbreakQuriaEntries}回・+${sunbreakQuriaAdds}G`], ["サンブレイクBONUS", `${sunbreakBonusCount}回`], ["最終モンスター", sunbreakMaxMonster], ["勇気の証明", sunbreakCourageAttempts ? `${sunbreakCourageAttempts}回・成功${sunbreakCourageWins}回` : "未到達"], [sim.upperLabel, sunbreakUpperLoops ? `${sunbreakUpperLoops}区間` : "非到達"], ["滅浄の裁き", sunbreakPurificationAttempts ? `${sunbreakPurificationAttempts}回・成功${sunbreakPurificationWins}回` : "未到達"]] : [];
     const paripiStats = sim.paripiFlow ? [["今回のCZ", paripiCz?.label || sim.triggerLabel], ["LIVE BONUS", `赤7 ${paripiRedCount}回・白7 ${paripiWhiteCount}回`], ["Party Time", `${paripiStLoops}セット`], ["パリピミッション", `${paripiMissionCount}回・成功${paripiMissionWins}回`], ["獲得兵法書", `${paripiScrollCount}個・${paripiScrollNames.length}/9種類`], ["兵法書一覧", paripiScrollNames.length ? paripiScrollNames.join("・") : "未獲得"], ["HEYHO ZONE", `${paripiHeyhoCount}回`], ["渋谷決戦BONUS", `${paripiShibuyaBonusCount}回`], ["渋谷決戦", paripiShibuyaAttempts ? `${paripiShibuyaAttempts}回・勝利${paripiShibuyaWins}回` : "未到達"], [sim.upperLabel, paripiUpperLoops ? `${paripiUpperLoops}セット` : "非到達"], ["究極孔明", paripiUltimateAttempts ? (paripiUltimateLoops ? `${paripiUltimateLoops}セット` : "抽選非当選") : "未到達"]] : [];
+    const fireForceStats = sim.fireForceFlow ? [["今回の入口", fireForceEntry?.label || sim.triggerLabel], ["灰焔騎士団", fireForceGrayAttempts ? `${fireForceGrayAttempts}回・成功${fireForceGrayWins}回` : "非経由"], ["初当りBONUS", fireForceInitialBonus?.label || "非当選"], ["伝導者の影", fireForceShadowAttempts ? `${fireForceShadowAttempts}回・成功${fireForceShadowWins}回` : fireForceInitialBonus?.key === "episode" ? "エピソードBONUSから直行" : "非経由"], ["炎炎激闘", `${fireForceBattleRounds}セット・BONUS当選${fireForceBattleWins}回`], ["炎炎ループBONUS", `${fireForceBonusCount}回`], ["紅丸炎舞", fireForceBenimaruCount ? `${fireForceBenimaruCount}回` : "非当選"], ["森羅万象", fireForceShinraAttempts ? `${fireForceShinraAttempts}回・成功${fireForceShinraWins}回` : "未到達"], [sim.upperLabel, fireForceAdoraBursts ? `${fireForceAdoraBursts}回・JAC ${fireForceAdoraJacs}回` : "非到達"]] : [];
     const fireForce2Stats = sim.fireForce2Flow ? [["初当りBONUS", fireForce2InitialBonus?.label || sim.triggerLabel], ["BONUS内訳", `REG ${fireForce2RegularCount}回・エピソード ${fireForce2EpisodeCount}回・ループ中 ${fireForce2BonusCount}回`], ["伝導者の罠", fireForce2TrapAttempts ? `${fireForce2TrapAttempts}回・成功${fireForce2TrapWins}回` : "SPエピソードから直行"], ["炎炎ループ", `${fireForce2LoopRounds}セット・BONUS当選${fireForce2LoopWins}回`], ["最終ループ", fireForce2LoopMode?.label || "非突入"], ["炎炎BOOST", fireForce2BoostCount ? `${fireForce2BoostCount}回` : "非当選"], ["森羅万象", fireForce2ShinraAttempts ? `${fireForce2ShinraAttempts}回・成功${fireForce2ShinraWins}回` : "未到達"], [sim.upperLabel, fireForce2AdoraBursts ? `${fireForce2AdoraBursts}回・JAC ${fireForce2AdoraJacs}回` : "非到達"]] : [];
     const cycleStats = sim.cycleFlow ? [[sim.cycleFlow.statLabel || (sim.titleFlow ? "機種専用進行" : "専用ループ"), `${cycleRounds}回・継続${cycleContinues}回`]] : [];
     const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
     const rushGamesTotal = Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
-    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.fireForce2Flow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
+    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.fireForceFlow || sim.fireForce2Flow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
     const gameAddOnStats = sim.karakuriJudgeFlow || coinAddOnCount
       ? [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(coinAddOnTotal || addOnTotal)}枚` : "上乗せなし"]]
       : [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnGamesTotal || otomeAddedGames)}G` : "上乗せなし"]];
@@ -5740,6 +5905,8 @@
         ? [["RUSH・クエスト消化", `${yen.format(rushGamesTotal)}G相当`], ...sunbreakStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : sim.paripiFlow
         ? [["BONUS・ST消化", `${yen.format(rushGamesTotal)}G相当`], ...paripiStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
+      : sim.fireForceFlow
+        ? [["BONUS・炎炎ループ消化", `${yen.format(rushGamesTotal)}G相当`], ...fireForceStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : sim.fireForce2Flow
         ? [["BONUS・炎炎ループ消化", `${yen.format(rushGamesTotal)}G相当`], ...fireForce2Stats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : [["RUSH消化モデル", `${yen.format(rushGamesTotal)}G相当`], ...karakuriStats, ...battleStats, ...sgStats, ...kabaneriStats, ...otomeStats, ...cycleStats, ...gameAddOnStats, ...bonusStats, ...genericSpecialStats, ["上位AT", upper ? (kabaneriUpperMode || `${sim.upperLabel} ${upperLoops}セット`) : "非到達"]]) : [];
@@ -5766,6 +5933,8 @@
         ? `今回の設定は設定${setting}。${games}Gで${sunbreakEntry?.label || sim.triggerLabel}、${entered ? `盟勇クエスト${sunbreakQuestCount}回・討伐${sunbreakHunts}体、ゲーム数上乗せ合計+${sunbreakQuestAdds + sunbreakCarveAdds + sunbreakQuriaAdds}Gで${yen.format(payout)}枚を獲得しました。${sunbreakUpperLoops ? `${sim.upperLabel}を${sunbreakUpperLoops}区間消化しました。` : sunbreakCourageAttempts ? "勇気の証明で終了しました。" : "サンブレイクRUSHは残り0Gで終了しました。"}` : `${sunbreakEntry?.label || sim.triggerLabel}は突破できませんでした。`}`
       : sim.paripiFlow
         ? `今回の設定は設定${setting}。${games}Gで${paripiCz?.label || sim.triggerLabel}、${entered ? `赤7 ${paripiRedCount}回・白7 ${paripiWhiteCount}回、Party Time ${paripiStLoops}セットで${yen.format(payout)}枚を獲得しました。${paripiUltimateLoops ? `究極孔明を${paripiUltimateLoops}セット消化しました。` : paripiUpperLoops ? `超Party Timeを${paripiUpperLoops}セット消化しました。` : paripiShibuyaAttempts ? "渋谷決戦を経て終了しました。" : "Party Timeは15G＋αで終了しました。"}` : `${paripiCz?.label || sim.triggerLabel}は突破できませんでした。`}`
+      : sim.fireForceFlow
+        ? `今回の設定は設定${setting}。${games}Gで${fireForceEntry?.label || sim.triggerLabel}、${entered ? `${fireForceBattleRounds}セットの炎炎激闘でBONUSを${fireForceBonusCount}回獲得し、${yen.format(payout)}枚となりました。${fireForceAdoraBursts ? `森羅万象を突破し、アドラバーストを${fireForceAdoraBursts}回・JACを${fireForceAdoraJacs}回消化しました。` : fireForceShinraAttempts ? "森羅万象の当落を経て終了しました。" : "炎炎激闘ストックがなくなり通常へ戻りました。"}` : fireForceGrayAttempts && !fireForceGrayWins ? "灰焔騎士団でBONUS非当選となりました。" : `${fireForceInitialBonus?.label || "初当り"}後、炎炎激闘には届きませんでした。`}`
       : sim.fireForce2Flow
         ? `今回の設定は設定${setting}。${games}Gで${fireForce2InitialBonus?.label || sim.triggerLabel}、${entered ? `${fireForce2LoopMode?.label || sim.mainLabel}を${fireForce2LoopRounds}セット・BONUSを${fireForce2BonusCount}回消化し、${yen.format(payout)}枚を獲得しました。${fireForce2AdoraBursts ? `森羅万象を突破し、アドラバーストでJACを${fireForce2AdoraJacs}回獲得しました。` : fireForce2ShinraAttempts ? "森羅万象で終了しました。" : "炎炎ループ終了で通常へ戻りました。"}` : `${fireForce2InitialBonus?.label || sim.triggerLabel}で${yen.format(payout)}枚を獲得し、炎炎ループには届きませんでした。`}`
       : sim.okidokiGoldFlow
@@ -5807,7 +5976,7 @@
         ? (Number(sim.kabaneriUpperRareContinue) || 0.95)
         : (Number(sim.kabaneriUpperNormalContinue) || 0.80)) * 100
       : sim.upperContinue * 100;
-    return { title: `設定${setting}｜${resultTitle}`, summary: resultSummary, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, triggerSucceeded, triggerSuccessChance: sim.basiliskTenzenFlow ? 100 : sim.paripiFlow ? (Number(paripiCz?.chance) || 0) * 100 : sim.sunbreakFlow ? (Number(sunbreakEntry?.chance) || 0) * 100 : sim.goblinSlayerFlow ? (Number(goblinCz?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : sim.lycorisFlow ? (Number(lycorisCz?.chance) || 0) * 100 : triggerSuccess * 100, entryBonusModel: Boolean(sim.basiliskTenzenFlow) || Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0, entryBonus, entered, entryChance: entryBonus ? (Number(entryBonus.atChance) || 0) * 100 : sim.paripiFlow ? (Number(paripiCz?.chance) || 0) * 100 : sim.sunbreakFlow ? (Number(sunbreakEntry?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : sim.lycorisFlow ? (Number(lycorisCz?.chance) || 0) * 100 : triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, paripiFlow: Boolean(sim.paripiFlow), paripiCz, sunbreakFlow: Boolean(sim.sunbreakFlow), sunbreakEntry, setPushFlow: Boolean(sim.setPushFlow), karakuriJudgeFlow: Boolean(sim.karakuriJudgeFlow), battleBonusFlow: Boolean(sim.battleBonusFlow), garoBattleFlow: Boolean(sim.garoBattleFlow), ragnadorUpperFlow: Boolean(sim.ragnadorUpperFlow), seiyaTempleFlow: Boolean(sim.seiyaTempleFlow), ggoStFlow: Boolean(sim.ggoStFlow), godzillaEva2Flow: Boolean(sim.godzillaEva2Flow), mahoakoFlow: Boolean(sim.mahoakoFlow), okidokiGoldFlow: Boolean(sim.okidokiGoldFlow), okidokiBlackFlow: Boolean(sim.okidokiBlackFlow), okidokiPureIncrease: Number(sim.atPureIncrease) || 3.0, okidokiBigCount, okidokiRegCount, okidokiMaxChain, okidokiGoldCount, okidokiOneGameCount, okidokiGuaranteeCount, okidokiGodMode, okidokiHighestMode, tokyoGhoulFlow: Boolean(sim.tokyoGhoulFlow), tokyoGhoulCz, tokyoGhoulBattles, tokyoGhoulWins, tokyoGhoulBitesCount, tokyoGhoulSpecialCount, tokyoGhoulArimaBattle, tokyoGhoulArimaWon, tokyoGhoulUpperAt, tokyoGhoulCcgAward, basiliskTenzenFlow: Boolean(sim.basiliskTenzenFlow), basiliskBc, basiliskScenario, basiliskSets, basiliskBtBcCount, basiliskHighCount, basiliskMoonCount, basiliskGrudgeAttempts, basiliskGrudgeSuccesses, basiliskTenzenSets, sao2Flow: Boolean(sim.sao2Flow), sao2SniperAttempts, sao2SniperWins, sao2LastAttackAttempts, sao2LastAttackSuccesses, sao2DeathGunAttempts, sao2DeathGunWins, sao2UpperSections, sao2ZekkenAward, sao2Ultima, lycorisFlow: Boolean(sim.lycorisFlow), lycorisCz, lycorisRushRoute, lycorisRush20Won, lycorisNormalBonusCount, lycorisPoints, lycorisStResets, lycorisUpperCzAttempts, lycorisUpperCzWins, lycorisUpperSections, lycorisUpperBonusCount, lycorisLegendaryAward, tentenFlow: Boolean(sim.tentenFlow), goblinSlayerFlow: Boolean(sim.goblinSlayerFlow), goblinCz, goblinLoopMode: goblinLoopMode * 100, goblinAtSets, goblinBonusCount, goblinMaxContinueRate, assaultLilyFlow: Boolean(sim.assaultLilyFlow), assaultEntry, assaultBossBattles, assaultBossWins, assaultRewardCount, assaultUpperCz, assaultUpperCzAttempts, assaultUpperCzSuccesses, assaultMaxAddOn, kaguyaFlow: Boolean(sim.kaguyaFlow), kaguyaRegCount, kaguyaBigCount, kaguyaSuperCount, kaguyaOneGameCount, kaguyaReturnCount, kaguyaSpecialCount, kaguyaStockCount, kaguyaMarriageCount, kaguyaExtraGames, dumbbellFlow: Boolean(sim.dumbbellFlow), dumbbellCz, dumbbellNormalGames, dumbbellGameAddCount, dumbbellGameAddTotal, dumbbellGoldenChallenges, dumbbellGoldenSuccesses, dumbbellVStockTotal, dumbbellCoinAddTotal, dumbbellRisingChallenges, sgRaceFlow: Boolean(sim.sgRaceFlow), kabaneriStFlow: Boolean(sim.kabaneriStFlow), otomeRushFlow: Boolean(sim.otomeRushFlow), cycleFlow: Boolean(sim.cycleFlow), cycleRounds, cycleContinues, kabaneriStBonuses, kabaneriUpperMode, otomeAddedGames, otomeBonusCount, otomeAwakeningCount, otomeBattleWon, otomeAddOnChance: (Number(sim.otomeAddOnChance) || 0) * 100, battleBonusSets, battleContinuationRate: battleContinuationRate * 100, sgRushSets, sgScenarioName, karakuriJudgeAttempts, karakuriJudgeSuccesses, karakuriUpperRoute, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, addOnGamesTotal, coinAddOnCount, coinAddOnTotal, bonusCount, bonusPayoutTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: kabaneriUpperContinueChance, upperChallenge: sim.upperChallenge || "", upper, upperLabel: upperResultLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
+    return { title: `設定${setting}｜${resultTitle}`, summary: resultSummary, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, triggerSucceeded, triggerSuccessChance: sim.basiliskTenzenFlow ? 100 : sim.paripiFlow ? (Number(paripiCz?.chance) || 0) * 100 : sim.sunbreakFlow ? (Number(sunbreakEntry?.chance) || 0) * 100 : sim.goblinSlayerFlow ? (Number(goblinCz?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : sim.lycorisFlow ? (Number(lycorisCz?.chance) || 0) * 100 : triggerSuccess * 100, entryBonusModel: Boolean(sim.basiliskTenzenFlow) || Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0, entryBonus, fireForceEntry, entered, entryChance: entryBonus ? (Number(entryBonus.atChance) || 0) * 100 : sim.paripiFlow ? (Number(paripiCz?.chance) || 0) * 100 : sim.sunbreakFlow ? (Number(sunbreakEntry?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : sim.lycorisFlow ? (Number(lycorisCz?.chance) || 0) * 100 : triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, paripiFlow: Boolean(sim.paripiFlow), paripiCz, sunbreakFlow: Boolean(sim.sunbreakFlow), sunbreakEntry, setPushFlow: Boolean(sim.setPushFlow), karakuriJudgeFlow: Boolean(sim.karakuriJudgeFlow), battleBonusFlow: Boolean(sim.battleBonusFlow), garoBattleFlow: Boolean(sim.garoBattleFlow), ragnadorUpperFlow: Boolean(sim.ragnadorUpperFlow), seiyaTempleFlow: Boolean(sim.seiyaTempleFlow), ggoStFlow: Boolean(sim.ggoStFlow), godzillaEva2Flow: Boolean(sim.godzillaEva2Flow), mahoakoFlow: Boolean(sim.mahoakoFlow), okidokiGoldFlow: Boolean(sim.okidokiGoldFlow), okidokiBlackFlow: Boolean(sim.okidokiBlackFlow), okidokiPureIncrease: Number(sim.atPureIncrease) || 3.0, okidokiBigCount, okidokiRegCount, okidokiMaxChain, okidokiGoldCount, okidokiOneGameCount, okidokiGuaranteeCount, okidokiGodMode, okidokiHighestMode, tokyoGhoulFlow: Boolean(sim.tokyoGhoulFlow), tokyoGhoulCz, tokyoGhoulBattles, tokyoGhoulWins, tokyoGhoulBitesCount, tokyoGhoulSpecialCount, tokyoGhoulArimaBattle, tokyoGhoulArimaWon, tokyoGhoulUpperAt, tokyoGhoulCcgAward, basiliskTenzenFlow: Boolean(sim.basiliskTenzenFlow), basiliskBc, basiliskScenario, basiliskSets, basiliskBtBcCount, basiliskHighCount, basiliskMoonCount, basiliskGrudgeAttempts, basiliskGrudgeSuccesses, basiliskTenzenSets, sao2Flow: Boolean(sim.sao2Flow), sao2SniperAttempts, sao2SniperWins, sao2LastAttackAttempts, sao2LastAttackSuccesses, sao2DeathGunAttempts, sao2DeathGunWins, sao2UpperSections, sao2ZekkenAward, sao2Ultima, lycorisFlow: Boolean(sim.lycorisFlow), lycorisCz, lycorisRushRoute, lycorisRush20Won, lycorisNormalBonusCount, lycorisPoints, lycorisStResets, lycorisUpperCzAttempts, lycorisUpperCzWins, lycorisUpperSections, lycorisUpperBonusCount, lycorisLegendaryAward, tentenFlow: Boolean(sim.tentenFlow), goblinSlayerFlow: Boolean(sim.goblinSlayerFlow), goblinCz, goblinLoopMode: goblinLoopMode * 100, goblinAtSets, goblinBonusCount, goblinMaxContinueRate, assaultLilyFlow: Boolean(sim.assaultLilyFlow), assaultEntry, assaultBossBattles, assaultBossWins, assaultRewardCount, assaultUpperCz, assaultUpperCzAttempts, assaultUpperCzSuccesses, assaultMaxAddOn, kaguyaFlow: Boolean(sim.kaguyaFlow), kaguyaRegCount, kaguyaBigCount, kaguyaSuperCount, kaguyaOneGameCount, kaguyaReturnCount, kaguyaSpecialCount, kaguyaStockCount, kaguyaMarriageCount, kaguyaExtraGames, dumbbellFlow: Boolean(sim.dumbbellFlow), dumbbellCz, dumbbellNormalGames, dumbbellGameAddCount, dumbbellGameAddTotal, dumbbellGoldenChallenges, dumbbellGoldenSuccesses, dumbbellVStockTotal, dumbbellCoinAddTotal, dumbbellRisingChallenges, sgRaceFlow: Boolean(sim.sgRaceFlow), kabaneriStFlow: Boolean(sim.kabaneriStFlow), otomeRushFlow: Boolean(sim.otomeRushFlow), cycleFlow: Boolean(sim.cycleFlow), cycleRounds, cycleContinues, kabaneriStBonuses, kabaneriUpperMode, otomeAddedGames, otomeBonusCount, otomeAwakeningCount, otomeBattleWon, otomeAddOnChance: (Number(sim.otomeAddOnChance) || 0) * 100, battleBonusSets, battleContinuationRate: battleContinuationRate * 100, sgRushSets, sgScenarioName, karakuriJudgeAttempts, karakuriJudgeSuccesses, karakuriUpperRoute, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, addOnGamesTotal, coinAddOnCount, coinAddOnTotal, bonusCount, bonusPayoutTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: kabaneriUpperContinueChance, upperChallenge: sim.upperChallenge || "", upper, upperLabel: upperResultLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
   }
 
   function createATypeSession(setting) {
@@ -6473,6 +6642,7 @@
     const juohFlow = Boolean(machine.sim.juohFlow);
     const sunbreakFlow = Boolean(data.sunbreakFlow || machine.sim.sunbreakFlow);
     const paripiFlow = Boolean(data.paripiFlow || machine.sim.paripiFlow);
+    const fireForceFlow = Boolean(machine.sim.fireForceFlow);
     const fireForce2Flow = Boolean(machine.sim.fireForce2Flow);
     setSlotAtStatus({ visible: false });
     setExperienceHud("0G", "0円", "0枚");
@@ -6496,10 +6666,97 @@
       setExperienceStage(1, "QUEST ENTRY", data.sunbreakEntry?.label || data.hitLabel, `${yen.format(data.attempts)}G`, "専用CZを消化し、最後のPUSHでサンブレイクRUSHを判定", "hit", data.triggerSuccessChance, "CZ・AT直撃の機種専用ルート");
     } else if (paripiFlow) {
       setExperienceStage(1, "PARIPI CHANCE", data.paripiCz?.label || data.hitLabel, `${yen.format(data.attempts)}G`, "3種類の専用CZを消化し、最後のPUSHでLIVE BONUSを判定", "hit", data.triggerSuccessChance, "CZ別の公開成功期待度");
+    } else if (fireForceFlow) {
+      setExperienceStage(1, "INITIAL ROUTE", data.fireForceEntry?.label || data.hitLabel, `${yen.format(data.attempts)}G`, data.fireForceEntry?.key === "gray" ? "15G＋αの灰焔騎士団へ。最後のPUSHでBONUSを判定" : "PUSHでREG／炎炎BONUSを開きます", "hit", data.fireForceEntry?.key === "gray" ? 50 : 100, "灰焔騎士団／初当りBONUS");
     } else if (fireForce2Flow) {
       setExperienceStage(1, "INITIAL BONUS", data.entryBonus?.label || data.hitLabel, `${yen.format(data.attempts)}G`, "PUSHで初当りBONUSを開きます", "hit", 100, "REG／SPエピソードBONUS");
     }
     await waitForExperience(780);
+    if (fireForceFlow) {
+      const events = Array.isArray(data.atEvents) ? data.atEvents : [];
+      for (const event of events) {
+        if (runId !== experienceRunId) return;
+        setSlotAtStatus({ visible: true, remaining: Math.max(0, Number(event.games) || 0), remainingUnit: "G", addOn: Math.max(0, Number(event.stocks) || 0), addOnUnit: "個", total: Number(event.cumulative) || 0 });
+        if (event.kind === "fire-force-gray") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 15), "G", "GRAY KNIGHTS", "灰焔騎士団", "十字目変換から伝導者バトルを目指します", Number(event.chance) || 50, "BONUS期待度 約50%", runId);
+          if (!complete) return;
+          setExperienceStage(2, "EVANGELIST BATTLE", "灰焔騎士団 最終ゲーム", "PUSH", "伝導者バトルの勝敗を開きます", "judge", Number(event.chance) || 50, "15G＋α");
+          await waitForExperienceAction("灰焔騎士団 PUSH", 5000, event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(2, event.won ? "BONUS HIT" : "GRAY KNIGHTS END", event.won ? "伝導者バトル 勝利" : "灰焔騎士団 終了", event.won ? "初当りBONUS" : "通常へ", event.won ? "BONUS種類を次のPUSHで開きます" : "今回の一撃はここで終了", event.won ? "hit" : "end", event.won ? 100 : 0, "灰焔騎士団結果");
+          await waitForExperience(800);
+          if (!event.won) return;
+        } else if (event.kind === "fire-force-initial-bonus") {
+          setExperienceStage(2, "BONUS TYPE JUDGE", "初当りBONUS", "PUSH", "REG／炎炎BONUS／エピソードBONUSを開きます", "judge", event.key === "episode" ? 100 : 50, "初当りBONUS種別");
+          await waitForExperienceAction("初当りBONUS PUSH", 5000, event.key === "episode" ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 15), "G", event.key === "episode" ? "EPISODE BONUS" : event.key === "fire" ? "FIRE FORCE BONUS" : "REGULAR BONUS", event.label, `+${yen.format(event.award)}枚`, 100, `累計${yen.format(event.cumulative)}枚`, runId);
+          if (!complete) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          await waitForExperience(700);
+        } else if (event.kind === "fire-force-shadow") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 30), "G", "EVANGELIST SHADOW", "伝導者の影", "エピソードBONUS当選を目指します", Number(event.chance) || 17, `${yen.format(event.games)}G＋α`, runId);
+          if (!complete) return;
+          setExperienceStage(2, "SHADOW FINAL JUDGE", "伝導者の影 最終ゲーム", "PUSH", "エピソードBONUSの当落を開きます", "judge", Number(event.chance) || 17, "成功で炎炎激闘へ");
+          await waitForExperienceAction("伝導者の影 PUSH", 5000, event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(2, event.won ? "EPISODE BONUS" : "SHADOW END", event.won ? "伝導者の影 成功" : "伝導者の影 終了", event.won ? "炎炎激闘ストック獲得" : "通常へ", event.won ? "エピソードBONUS消化後に炎炎激闘へ" : "今回の一撃はここで終了", event.won ? "hit" : "end", event.won ? 100 : 0, "伝導者の影結果");
+          await waitForExperience(850);
+          if (!event.won) return;
+        } else if (event.kind === "fire-force-episode") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 15), "G", "EPISODE BONUS", `+${yen.format(event.award)}枚`, "炎炎激闘ストックを獲得", 100, `累計${yen.format(event.cumulative)}枚`, runId);
+          if (!complete) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+        } else if (event.kind === "fire-force-stock-start") {
+          setExperienceStage(3, "STOCK READY", "炎炎激闘ストック", `${yen.format(event.stocks)}個`, "ストックがある限り潜伏後に炎炎激闘へ再突入", "rush", 100, "エピソードBONUS恩恵");
+          await waitForExperience(750);
+        } else if (event.kind === "fire-force-battle") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 15), "G", event.label === "紅丸炎舞" ? "BENIMARU DANCE" : "FIRE FORCE BATTLE", `${event.label} ${event.round}`, "十字目変換から伝導者バトルへ", Number(event.chance) || 61, `残りストック ${yen.format(event.stocks)}個`, runId);
+          if (!complete) return;
+          setExperienceStage(3, "BONUS JUDGE", `${event.label} ${event.round}`, "PUSH", "BONUSの当落を開きます", "judge", Number(event.chance) || 61, event.label === "紅丸炎舞" ? "BONUS当選濃厚" : "BONUS期待度 約61%");
+          await waitForExperienceAction(`${event.label} PUSH`, 5000, event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.won ? "BATTLE WIN" : "STOCK USED", event.won ? "伝導者バトル 勝利" : `${event.label} 終了`, event.won ? "BONUS" : `残りストック ${yen.format(event.stocks)}個`, event.won ? "BONUS種類を次のPUSHで開きます" : event.stocks ? "潜伏後に次の炎炎激闘へ" : "炎炎ループ終了", event.won ? "hit" : event.stocks ? "rush" : "end", event.won ? 100 : 0, `${event.label}結果`);
+          await waitForExperience(700);
+        } else if (event.kind === "fire-force-loop-bonus") {
+          setExperienceStage(3, "BONUS TYPE JUDGE", event.mode || "炎炎激闘", "PUSH", "BONUS種類とストックを開きます", "judge", Number(event.award) >= 230 ? 90 : 10, "炎炎BONUS／特殊BONUS");
+          await waitForExperienceAction("炎炎BONUS PUSH", 5000, event.bonusType === "episode" || event.bonusType === "joker" ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 15), "G", event.bonusType === "joker" ? "JOKER CHANCE" : event.bonusType === "accel" ? "ACCEL BONUS" : "FIRE FORCE BONUS", event.label, `+${yen.format(event.award)}枚`, 100, event.stockAdd ? `炎炎激闘ストック +${yen.format(event.stockAdd)}個` : `累計${yen.format(event.cumulative)}枚`, runId);
+          if (!complete) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          await waitForExperience(700);
+        } else if (event.kind === "fire-force-shinra") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 8), "G", "SHINRA BANSHO", "森羅万象", "森羅と象のバトルを進めます", Number(event.chance) || 50, "勝利でアドラバースト", runId);
+          if (!complete) return;
+          setExperienceStage(4, "SHINRA FINAL JUDGE", "森羅万象 最終ゲーム", "PUSH", "アドラバーストの当落を開きます", "judge", Number(event.chance) || 50, "森羅と象の決戦");
+          await waitForExperienceAction("森羅万象 PUSH", 5000, event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(4, event.won ? "ADOLLA BURST" : "SHINRA FAILED", event.won ? "森羅万象 勝利" : "森羅万象 敗北", event.won ? machine.sim.upperLabel : "炎炎激闘へ", event.won ? "初期20G＋JACの上位BONUSへ" : "通常の炎炎ループを継続", event.won ? "hyper" : "rush", event.won ? 100 : 0, "森羅万象結果");
+          await waitForExperience(850);
+        } else if (event.kind === "fire-force-adora-start") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 20), "G", "ADOLLA BURST", `${machine.sim.upperLabel} ${event.burst}`, "小役ゲーム中にJACを抽選します", 100, `純増約5.7枚/G・累計${yen.format(event.cumulative)}枚`, runId);
+          if (!complete) return;
+        } else if (event.kind === "fire-force-adora-jac") {
+          setExperienceStage(4, "JAC JUDGE", `アドラバースト ${event.burst}`, "PUSH", "JACの継続ゲーム数を開きます", "judge", 100, "10G／20G／30G");
+          await waitForExperienceAction(`JAC ${event.jac} PUSH`, 5000, Number(event.games) >= 20 ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(4, event.continued ? "JAC CONTINUE" : "ADOLLA END", event.label, `${yen.format(event.games)}G / +${yen.format(event.award)}枚`, event.continued ? "次のJACへ" : "森羅万象 廻へ", event.continued ? "hyper" : "end", event.continued ? 100 : 0, `累計${yen.format(event.cumulative)}枚`);
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          await waitForExperience(900);
+        } else if (event.kind === "fire-force-adora-return") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 8), "G", "SHINRA BANSHO KAI", "森羅万象 廻", "アドラバースト再突入をかけたバトル", Number(event.chance) || 92, "最大引き戻し期待度 約92%", runId);
+          if (!complete) return;
+          setExperienceStage(4, "RETURN JUDGE", "森羅万象 廻", "PUSH", "アドラバースト引き戻しを開きます", "judge", Number(event.chance) || 92, "勝利で再突入");
+          await waitForExperienceAction("森羅万象 廻 PUSH", 5000, event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(4, event.won ? "ADOLLA RETURN" : "ADOLLA COMPLETE", event.won ? "森羅万象 廻 勝利" : "森羅万象 廻 敗北", event.won ? "アドラバースト再突入" : "上位終了", event.won ? "次のアドラバーストへ" : "最終結果へ", event.won ? "hyper" : "end", event.won ? 100 : 0, "引き戻し結果");
+          await waitForExperience(850);
+        }
+      }
+      setSlotAtStatus({ visible: true, remaining: 0, remainingUnit: "G", addOn: 0, addOnUnit: "個", total: Number(data.payout) || 0 });
+      return;
+    }
     if (fireForce2Flow) {
       const events = Array.isArray(data.atEvents) ? data.atEvents : [];
       for (const event of events) {

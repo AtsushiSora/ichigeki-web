@@ -5246,6 +5246,44 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
 })();
 
 
+(function applyFireForceDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["fire-force-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "灰焔騎士団と初当りBONUS、2つの入口から伝導者の影を越え、炎炎ループとアドラバーストを目指す。",
+    intro: "15G＋α・BONUS期待度約50%の灰焔騎士団、REG後30G＋α／炎炎BONUS後60G＋αの伝導者の影、15G＋α・BONUS期待度約61%の炎炎激闘、紅丸炎舞、森羅万象、アドラバーストまでを専用画面で体験できます。",
+    points: ["灰焔騎士団は15G＋α・BONUS期待度約50%", "炎炎激闘は15G＋α・BONUS期待度約61%", "炎炎BONUS約230枚・REG／エピソードBONUS約85枚"],
+    specs: [["初当り（設定1）", "約1/197"], ["初当り（設定6）", "約1/169"], ["BONUS（設定1）", "約1/291"], ["BONUS（設定6）", "約1/230"], ["炎炎ループ（設定1）", "約1/790"], ["炎炎ループ（設定6）", "約1/537"], ["ベース", "約33.8G/50枚"], ["純増", "約5.7枚/G"], ["灰焔騎士団", "15G＋α・BONUS期待度約50%"], ["伝導者バトル", "3G・勝利期待度約28%"], ["伝導者の影", "REG後30G＋α／炎炎BONUS後60G＋α"], ["炎炎激闘", "15G＋α・BONUS期待度約61%"], ["紅丸炎舞", "BONUS当選濃厚"], ["アドラバースト", "初期20G＋JAC・純増約5.7枚/G"]],
+    articleSections: [
+      { heading: "灰焔騎士団と初当りBONUS", paragraphs: ["通常時の入口は、十字目変換などから入る15G＋αの灰焔騎士団と、REG／炎炎BONUSの2系統です。灰焔騎士団は伝導者バトル発展率約1/8、バトル勝利期待度約28%、区間全体のBONUS期待度約50%です。", "シミュレーターでは通常時の初当りで入口を抽選し、灰焔騎士団は15Gを進めて最終PUSHでBONUS当落を開きます。"] },
+      { heading: "伝導者の影とエピソードBONUS", paragraphs: ["初当りREGまたは炎炎BONUSでエピソードBONUSを取れなかった場合は伝導者の影へ。REG後は30G＋α、炎炎BONUS後は60G＋αの保証があります。", "エピソードBONUSはベルナビ10回・約85枚で、消化後は炎炎激闘へ。専用画面では伝導者の影を最後まで進め、エピソードBONUS当選をPUSHで判定します。"] },
+      { heading: "炎炎激闘と炎炎ループ", paragraphs: ["炎炎激闘は1セット15G＋αのBONUS高確率状態で、BONUS期待度は約61%。エピソードに応じて最低2個以上の炎炎激闘ストックを持ち、ストックがある限り潜伏後に再突入します。", "炎炎激闘中のBONUSは約9割が炎炎BONUS／ラッキースケベられBONUS、残りはアクセルBONUS・エピソードBONUS・ジョーカーチャンスなど。1セットごとに15Gを進め、PUSHでBONUSと残りストックを表示します。"] },
+      { heading: "紅丸炎舞・森羅万象・アドラバースト", paragraphs: ["紅丸炎舞はBONUS当選まで続く上位版の炎炎激闘で、当選するBONUSは炎炎BONUS以上。裏・炎炎激闘や森羅エピソードなどから森羅万象を目指します。", "森羅万象の最終PUSHに成功すると、初期20Gの小役ゲームと10G／20G／30GのJACで増やすアドラバーストへ。終了後は森羅万象 廻の引き戻しも抽選します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約33.8G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1・2・4・5・6を均等抽選し、初当り・BONUS・炎炎ループは公開設定別値を使用", "灰焔騎士団、伝導者の影、炎炎激闘ストック、紅丸炎舞、森羅万象、アドラバーストを専用進行", "エピソード当選率、特殊炎炎激闘・上位ルートの出現率など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["SANKYO 公式スペック", "https://www.sankyo-fever.jp/products/machine_list/sai/spec/"], ["一撃 機種解析", "https://1geki.jp/slot/l_ennenn/"], ["必勝本 灰焔騎士団解析", "https://p.hisshobon.jp/machine/4288/1/102625"], ["必勝本 伝導者の影解析", "https://p.hisshobon.jp/machine/4288/1/102415"], ["必勝本 初当りBONUS解析", "https://p.hisshobon.jp/machine/4288/1/102414"], ["なな徹 紅丸炎舞解析", "https://nana-press.com/kaiseki/machine/738/21313/"]],
+    readerGuide: { verdict: "灰焔騎士団または初当りBONUSからエピソードBONUSをつかみ、複数ストックの炎炎激闘でBONUSを重ねるループ型です。", bestFor: ["灰焔騎士団15Gの最終PUSHを体験したい", "炎炎激闘ストックとBONUS連を見たい", "紅丸炎舞からアドラバーストを狙いたい"], check: ["初当り・BONUS・炎炎ループ確率、主要ゲーム数は公開値", "炎炎BONUSと約85枚BONUSを分けて表示", "未公表の入口・特殊ルート振り分けは代表モデル"], compare: [["fire-force2-slot", "Lパチスロ 炎炎ノ消防隊2", "続編の炎炎大戦と比較"], ["paripi-koumei-slot", "スマスロ パリピ孔明", "BONUS＋ST型と比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v21", dedicatedFlow: true, dedicatedFlowKey: "fire-force-slot", dedicatedFlowVersion: 2, fireForceFlow: true,
+    triggerLabel: "初当り", triggerRate: 197, triggerSuccess: 0.249, mainLabel: "炎炎ループ", mainRate: 790, base50: 33.8, coinUnit: 3.1, normalMin: 0, normalMax: 0, atPureIncrease: 5.7, upperPureIncrease: 5.7, atPayoutVariance: 0,
+    fireForceEntries: [[{ key: "gray", label: "灰焔騎士団", games: 15, chance: 0.50 }, 0.344], [{ key: "bonus", label: "初当りBONUS", games: 1, chance: 1 }, 0.656]],
+    fireForceInitialBonuses: [[{ key: "regular", label: "REGULAR BONUS", games: 15, award: 85, shadowGames: 30 }, 0.52], [{ key: "fire", label: "炎炎BONUS", games: 40, award: 230, shadowGames: 60 }, 0.43], [{ key: "episode", label: "エピソードBONUS", games: 15, award: 85, shadowGames: 0 }, 0.05]],
+    fireForceGrayBonuses: [[{ key: "regular", label: "REGULAR BONUS", games: 15, award: 85, shadowGames: 30 }, 0.28], [{ key: "fire", label: "炎炎BONUS", games: 40, award: 230, shadowGames: 60 }, 0.47], [{ key: "episode", label: "エピソードBONUS", games: 15, award: 85, shadowGames: 0 }, 0.25]],
+    fireForceShadowChance: 0.17,
+    fireForceInitialStocks: [[2, 0.54], [3, 0.27], [4, 0.13], [5, 0.06]],
+    fireForceBattleGames: 15, fireForceBattleChance: 0.61, fireForceMaxBattles: 14,
+    fireForceLoopBonuses: [[{ key: "fire", label: "炎炎BONUS", games: 40, award: 230 }, 0.68], [{ key: "lucky", label: "ラッキースケベられBONUS", games: 40, award: 230 }, 0.22], [{ key: "accel", label: "アクセルBONUS", games: 15, award: 85 }, 0.045], [{ key: "episode", label: "エピソードBONUS", games: 15, award: 85, stock: 2 }, 0.035], [{ key: "joker", label: "ジョーカーチャンス", games: 15, award: 85, stock: 2 }, 0.02]],
+    fireForceBenimaruChance: 0.035, fireForceShinraChance: 0.045, fireForceShinraGames: 8, fireForceShinraSuccess: 0.50,
+    fireForceAdoraBaseGames: 20, fireForceAdoraJacs: [[{ label: "炎炎JAC", games: 10 }, 0.70], [{ label: "炎炎JAC BURST", games: 20 }, 0.23], [{ label: "炎炎JAC BURST", games: 30 }, 0.07]], fireForceAdoraMaxJacs: 10, fireForceAdoraContinue: 0.74, fireForceAdoraReturn: 0.92,
+    specialLabel: "紅丸炎舞", specialChance: 0.035, upperChallenge: "森羅万象", upperChance: 0.045, upperSuccess: 0.50, upperLabel: "アドラバースト", upperContinue: 0.92, upperPayout: 0,
+    settingRates: { 1: { trigger: 197, main: 790, bonus: 291, payout: 0.977 }, 2: { trigger: 194, main: 756, bonus: 282, payout: 0.992 }, 4: { trigger: 182, main: 669, bonus: 257, payout: 1.044 }, 5: { trigger: 173, main: 611, bonus: 239, payout: 1.101 }, 6: { trigger: 169, main: 537, bonus: 230, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
 (function applyFireForce2DedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["fire-force2-slot"];
   if (!machine) return;
