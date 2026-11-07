@@ -4537,7 +4537,7 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
       roundDetail: "対戦区間を最後まで進め、PUSHで勝敗と報酬を開きます"
     },
     st: {
-      slugs: ["lycoris-recoil-slot", "kanokari-slot", "aobuta-slot", "bofuri-slot", "azur-lane-slot", "magia-record-slot", "toaru-index2-slot", "darling-in-the-franxx-slot", "dmc5-st-slot", "initial-d-2nd-slot"],
+      slugs: ["kanokari-slot", "aobuta-slot", "bofuri-slot", "azur-lane-slot", "magia-record-slot", "toaru-index2-slot", "darling-in-the-franxx-slot", "dmc5-st-slot", "initial-d-2nd-slot"],
       phaseLabel: "ST FLOW",
       resultContinue: "ST CONTINUE",
       resultEnd: "ST END",
@@ -4770,6 +4770,74 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
     upperPureIncrease: 5.0,
     settingPool: [1, 2, 4, 5, 6],
     settingRates: { 1: { main: 295.2, payout: 0.982 }, 2: { main: 285.9, payout: 0.994 }, 4: { main: 250.1, payout: 1.044 }, 5: { main: 227.1, payout: 1.083 }, 6: { main: 199.4, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
+(function applyLycorisRecoilDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["lycoris-recoil-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "20Gの初回RUSHを突破し、50G＋ST10Gから1000ptと上位を目指す。",
+    intro: "約100枚のプロローグ後、ボーナス期待度約60%のリコリスラッシュ20へ。突破後は前半50G＋後半ST10G、4種類のボーナス、1000pt到達、10G・約70%の上位CZ、リコリスラッシュWまでを実機順に体験できます。",
+    points: ["リコリスラッシュ20は20G＋α・BONUS期待度約60%", "リコリスラッシュ50は前半50G＋α・後半ST10G", "リコイル オブ リコリスは10G・成功期待度約70%"],
+    specs: [["CZ（設定1）", "約1/198.7"], ["AT（設定1）", "約1/328.8"], ["AT（設定6）", "約1/256.7"], ["プロローグ", "約100枚"], ["リコリスラッシュ20", "20G＋α・BONUS期待度約60%"], ["リコリスラッシュ50", "前半50G＋α・後半ST10G"], ["BONUS確率", "前半約1/18・ST約1/12"], ["BONUS純増", "約8.4枚/G"], ["リコリスBONUS", "100枚"], ["リコリスBONUS W", "200枚以上"], ["エピソードBONUS", "約300枚"], ["りこりすぷらっしゅ", "平均約385枚"], ["上位CZ", "10G・成功期待度約70%"], ["リコリスラッシュW", "前半50G＋α・後半ST10G"], ["レジェンダリーリコリス", "7G＋α・平均上乗せ約1000枚"], ["ベース", "約31.8G/50枚"], ["設定", "1〜6"]],
+    articleSections: [
+      { heading: "通常時と2種類のCZ", paragraphs: ["通常時は規定ゲーム数、スタンプカード、小役変換からCZを目指します。CZはオポジットバトルと、AT期待度約83%のファーストリコリスです。", "設定別CZ・AT初当りは公開値を使用し、通常時の全モード・小役変換・天井は初当り確率へまとめます。"] },
+      { heading: "プロローグとリコリスラッシュ20", paragraphs: ["AT初当り後は約100枚のプロローグを消化し、千束ラッシュまたはたきなラッシュへ。千束はチェリー、たきなはスイカの才能レベル2が常時点灯します。", "初回は20G＋αで、BONUS期待度は約60%、BONUS確率は約1/18。BONUS当選でリコリスラッシュ50へ昇格します。"] },
+      { heading: "リコリスラッシュ50と4種類のBONUS", paragraphs: ["前半は50G＋α・BONUS約1/18。後半は10GのSTでBONUS約1/12、当選するたびに10Gを再セットします。ゲーム数上乗せ型ではなく、残りGを減らしながらBONUSを重ねるゲーム性です。", "BONUSは100枚、200枚以上、約300枚、平均約385枚の4種類。PUSHまで種類を伏せ、払い出し枚数と獲得ポイントを別々に表示します。"] },
+      { heading: "1000pt・上位CZ・リコリスラッシュW", paragraphs: ["BONUS中に100pt到達ごとの報酬を狙い、1000ptで上位CZの権利を獲得。リコイル オブ リコリスは10G・成功期待度約70%で、最後のPUSHで上位当落を開きます。", "上位ATは前半50G＋α・後半ST10G。チェリーとスイカが常時才能レベル2、BONUSはW揃い以上となり、1000pt到達時は上位CZを経由せず再セットします。"] },
+      { heading: "レジェンダリーリコリスと簡略化する範囲", paragraphs: ["上位AT突入時の一部やロングフリーズでは、7G＋α・平均上乗せ約1000枚のレジェンダリーリコリスへ進みます。獲得枚数をPUSHで開き、上位ATへ加算します。", "BONUS種類の詳細振り分け、ポイント獲得量、才能レベルの変化、レジェンダリー突入率など非公表部分は、公開された平均値とゲーム性を崩さない体験用代表値です。"] },
+      { heading: "固定条件と収支", bullets: ["約31.8G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6から均等抽選", "RUSH残りG・BONUS枚数・ポイントを別表示", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["なな徹 解析情報", "https://nana-press.com/kaiseki/machine/1166/"], ["一撃 リコリスラッシュ解析", "https://1geki.jp/slot/l_lycoreco/"], ["パチマガスロマガ 上位CZ・上位AT解析", "https://pachimaga.com/free/mach/maker-s/sammy/l_lycoreco.php"]],
+    readerGuide: {
+      verdict: "20Gの初回RUSHでBONUSを引いて50G＋ST10Gへ昇格し、BONUS中の1000ptから約70%の上位CZを目指す高純増BONUS連打型です。",
+      bestFor: ["20Gから50G＋STへ育てる流れをPUSHで見たい", "4種類のBONUSとポイント獲得を比べたい", "1000ptから上位CZ・上位ATを狙いたい"],
+      check: ["RUSHゲーム数・BONUS確率・主要出玉は公開値", "BONUS種類比率・ポイント量は代表値", "旧6区間の汎用STフローは廃止"],
+      compare: [["sao2-slot", "スマスロ SAO II", "差枚ATの対戦型ゲーム性と比較"], ["kabaneri", "スマスロ カバネリ", "10G再セット型STと比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v9",
+    dedicatedFlow: true,
+    dedicatedFlowKey: "lycoris-recoil-slot",
+    dedicatedFlowVersion: 2,
+    lycorisFlow: true,
+    triggerLabel: "CZ（オポジットバトル／ファーストリコリス）",
+    triggerRate: 198.7,
+    triggerSuccess: 0.60,
+    mainLabel: "リコリスラッシュ",
+    mainRate: 328.8,
+    base50: 31.8,
+    normalMin: 0,
+    normalMax: 0,
+    atPureIncrease: 8.4,
+    atPayoutVariance: 0,
+    lycorisCzRoutes: [[{ key: "opposite", label: "オポジットバトル", games: 10, chance: 0.53 }, 0.90], [{ key: "first", label: "ファーストリコリス", games: 10, chance: 0.83 }, 0.08], [{ key: "direct", label: "AT直撃", games: 1, chance: 1 }, 0.02]],
+    lycorisRushRoutes: [[{ key: "chisato", label: "千束ラッシュ", talent: "チェリー才能Lv2" }, 0.50], [{ key: "takina", label: "たきなラッシュ", talent: "スイカ才能Lv2" }, 0.50]],
+    lycorisRush20Chance: 0.60,
+    lycorisFrontBonusRate: 18,
+    lycorisStBonusRate: 12,
+    lycorisBonusTypes: [[{ key: "single", label: "リコリスBONUS", payout: 100, points: [[100, 0.55], [200, 0.30], [300, 0.15]] }, 0.56], [{ key: "double", label: "リコリスBONUS W", payout: [[200, 0.62], [250, 0.22], [300, 0.12], [500, 0.04]], points: [[200, 0.50], [300, 0.34], [500, 0.16]] }, 0.28], [{ key: "episode", label: "エピソードBONUS", payout: 300, points: [[300, 0.55], [500, 0.32], [700, 0.13]] }, 0.10], [{ key: "splash", label: "りこりすぷらっしゅ", payout: [[300, 0.28], [350, 0.25], [385, 0.24], [450, 0.15], [500, 0.08]], points: [[300, 0.44], [500, 0.36], [700, 0.20]] }, 0.06]],
+    lycorisUpperBonusTypes: [[{ key: "double", label: "リコリスBONUS W", payout: [[200, 0.52], [250, 0.24], [300, 0.17], [500, 0.07]], points: [[200, 0.45], [300, 0.34], [500, 0.21]] }, 0.66], [{ key: "episode", label: "エピソードBONUS", payout: 300, points: [[300, 0.48], [500, 0.34], [700, 0.18]] }, 0.22], [{ key: "splash", label: "りこりすぷらっしゅ", payout: [[300, 0.24], [350, 0.24], [385, 0.24], [450, 0.18], [500, 0.10]], points: [[300, 0.38], [500, 0.38], [700, 0.24]] }, 0.12]],
+    lycorisUpperCzGames: 10,
+    lycorisUpperCzChance: 0.70,
+    lycorisLegendaryChance: 0.08,
+    lycorisLegendaryAwards: [[700, 0.18], [800, 0.20], [1000, 0.32], [1200, 0.18], [1500, 0.09], [2000, 0.03]],
+    lycorisUpperMaxSections: 3,
+    specialLabel: "リコリスBONUS W／りこりすぷらっしゅ",
+    specialChance: 0.34,
+    upperChallenge: "リコイル オブ リコリス",
+    upperChance: 0,
+    upperSuccess: 0.70,
+    upperLabel: "リコリスラッシュW",
+    upperContinue: 0.70,
+    upperPayout: 0,
+    upperPureIncrease: 8.4,
+    settingRates: { 1: { trigger: 198.7, main: 328.8, payout: 0.979 }, 2: { trigger: 196.9, main: 323.4, payout: 0.989 }, 3: { trigger: 191.3, main: 312.1, payout: 1.013 }, 4: { trigger: 183.3, main: 288.3, payout: 1.061 }, 5: { trigger: 175.9, main: 271.6, payout: 1.104 }, 6: { trigger: 169.4, main: 256.7, payout: 1.146 } }
   });
   delete machine.sim.cycleFlow;
   delete machine.sim.titleFlow;

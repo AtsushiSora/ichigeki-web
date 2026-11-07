@@ -9,8 +9,8 @@ vm.runInContext(source, sandbox);
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
 const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
-const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow);
-const expectedProfiles = { battle: 8, st: 10, heaven: 4, bonus: 8, addon: 12 };
+const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow);
+const expectedProfiles = { battle: 8, st: 9, heaven: 4, bonus: 8, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -49,14 +49,14 @@ for (const [slug, machine] of declarativeFlows) {
 }
 
 if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
-if (declarativeFlows.length !== 42) errors.push(`expected 42 declarative dedicated flows, found ${declarativeFlows.length}`);
+if (declarativeFlows.length !== 41) errors.push(`expected 41 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(specializedFlows);
-if (specializedFlows.length !== 5 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"]) {
-  errors.push(`expected specialized Tokyo Ghoul, Basilisk Tenzen, Okidoki GOLD, SAO II and Symphogear flows, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (specializedFlows.length !== 6 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"]) {
+  errors.push(`expected specialized Tokyo Ghoul, Basilisk Tenzen, Okidoki GOLD, SAO II, Symphogear and Lycoris Recoil flows, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
   const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
@@ -96,6 +96,15 @@ if (specializedFlows.length !== 5 || !dedicatedMap["tokyo-ghoul-slot"] || !dedic
   if (!Array.isArray(symphogearSim.symphogearUpperThresholds) || symphogearSim.symphogearUpperThresholds.length !== 4) errors.push("symphogear-seigi-slot: upper thresholds are incomplete");
   if (Number(symphogearSim.triggerSuccess) !== 0.65 || Number(symphogearSim.upperSuccess) !== 0.60) errors.push("symphogear-seigi-slot: battle probabilities are incorrect");
   if (Number(symphogearSim.atPureIncrease) !== 2.8 || Number(symphogearSim.upperPureIncrease) !== 5.0) errors.push("symphogear-seigi-slot: AT pure increase is incorrect");
+  const lycoris = dedicatedMap["lycoris-recoil-slot"];
+  const lycorisSim = lycoris.sim;
+  if (lycorisSim.cycleFlow || lycorisSim.titleFlow) errors.push("lycoris-recoil-slot: legacy reusable flow still exists");
+  if (!Array.isArray(lycorisSim.lycorisCzRoutes) || lycorisSim.lycorisCzRoutes.length !== 3) errors.push("lycoris-recoil-slot: CZ routes are incomplete");
+  if (!Array.isArray(lycorisSim.lycorisBonusTypes) || lycorisSim.lycorisBonusTypes.length !== 4) errors.push("lycoris-recoil-slot: normal bonus types are incomplete");
+  if (!Array.isArray(lycorisSim.lycorisUpperBonusTypes) || lycorisSim.lycorisUpperBonusTypes.length !== 3) errors.push("lycoris-recoil-slot: upper bonus types are incomplete");
+  if (Number(lycorisSim.lycorisRush20Chance) !== 0.60 || Number(lycorisSim.lycorisUpperCzChance) !== 0.70) errors.push("lycoris-recoil-slot: RUSH20 or upper CZ probabilities are incorrect");
+  if (Number(lycorisSim.base50) !== 31.8 || Number(lycorisSim.atPureIncrease) !== 8.4) errors.push("lycoris-recoil-slot: base or bonus pure increase is incorrect");
+  if (!lycorisSim.settingRates || Object.keys(lycorisSim.settingRates).length !== 6) errors.push("lycoris-recoil-slot: setting rates are incomplete");
 }
 
 if (process.argv.includes("--verbose")) console.table(rows);

@@ -295,6 +295,14 @@
         ["設定抽選", slotSettingLabel, "設定3は非搭載"]
       ];
       note = "BONUS後32Gを毎回数え、10連後のIREGUIと獲得ストックを結果へ残します。";
+    } else if (sim.lycorisFlow) {
+      items = [
+        ["初回RUSH", "20G＋α", "BONUS期待度約60%"],
+        ["RUSH50", "50G＋ST10G", "BONUS約1/18・約1/12"],
+        ["上位CZ", "約70%", "10G・全設定共通"],
+        ["BONUS純増", "約8.4枚/G", "最低100枚"]
+      ];
+      note = "20Gから50G＋STへ昇格する流れ、4種類のBONUS、ポイント1000pt、上位CZ、リコリスラッシュWを個別に記録します。";
     } else if (sim.symphogearSeigiFlow) {
       items = [
         ["CZ突破", "約65%", "AXZバトル"],
@@ -405,6 +413,22 @@
         "天国モード滞在時の代表ループ率です。金ドキによる再連は別抽選です。"
       ));
       note = "BONUS内訳は設定1の公表確率から算出し、天国の継続割合とは別に表示しています。モード初回振り分けは非公表のため円グラフには含めていません。";
+    } else if (sim.lycorisFlow) {
+      charts.push(ratioChartMarkup(
+        "RUSH 20",
+        "初回20GのBONUS当選割合",
+        [["BONUS当選", 0.60], ["駆け抜け", 0.40]],
+        "約60%",
+        "リコリスラッシュ20からリコリスラッシュ50へ進む公表期待度です。"
+      ));
+      charts.push(ratioChartMarkup(
+        "UPPER CZ",
+        "リコイル オブ リコリス成功割合",
+        [["成功", 0.70], ["失敗", 0.30]],
+        "約70%",
+        "1000pt獲得後の10G上位CZからリコリスラッシュWへ進む公表期待度です。"
+      ));
+      note = "初回RUSH約60%と上位CZ約70%は別々の抽選です。BONUS種類の詳細振り分けとポイント獲得量は非公表のため円グラフには含めていません。";
     } else if (sim.symphogearSeigiFlow) {
       charts.push(ratioChartMarkup(
         "CZ ENTRY",
@@ -801,6 +825,16 @@
         ["GRUDGE LOOP", "宿怨チャレンジと天膳BT", "カットイン3回まで・成功期待度50%超。成功時は激闘シナリオ相当の天膳BT＋初回10人状態、失敗時も通常BTへ進みます。12セット完走後はエンディングを経て必ず挑戦します。"]
       ];
       note = "BC・BT設定別確率、各ゲーム数、純増、シナリオ表・設定1振り分け、宿怨チャレンジの基本性能は公開値です。継続率A〜D、絆玉・BT中BC・月下閃滅・宿怨ポイントMAXの出現率は体験用の代表値です。";
+    } else if (sim.lycorisFlow) {
+      cards = [
+        ["CHANCE ZONE", "3種類の入口からRUSHへ", "通常CZは対極のふたり・ファーストリコリスの2種類。成功後は約100枚のプロローグを経て、千束ラッシュまたはたきなラッシュを1:1で決定します。通常時の直撃ルートはアフターエピソードから始まります。"],
+        ["RUSH 20", "20G・BONUS期待度約60%", "リコリスラッシュ20は20G以内のBONUS当選を目指す入口です。最後までゲーム数を進め、BONUS当選時は4種類の報酬をPUSHで開いたあと、前半50G＋後半ST10Gのリコリスラッシュ50へ進みます。"],
+        ["RUSH 50", "前半50G＋後半ST10G", "前半はBONUS確率約1/18、後半は約1/12。ST中のBONUS当選で10Gを再セットします。千束はチェリー、たきなはスイカが才能Lv2となる専用ルートを結果へ残します。"],
+        ["FOUR BONUS", "4種類のBONUS", "リコリスBONUS約100枚、リコリスBONUS W約200枚以上、エピソードBONUS約300枚、スプラッシュBONUS平均約385枚。獲得枚数とポイントを同時に加算し、1000pt到達で上位CZへ進みます。"],
+        ["UPPER ROUTE", "真島バトルからRUSH Wへ", `${sim.upperChallenge}は10G・成功期待度約70%。成功後の${sim.upperLabel}は前半50G＋後半ST10Gで、チェリー・スイカが常に才能Lv2、BONUSはW以上。1000pt到達時はCZを挟まず上位を再セットします。`],
+        ["LEGENDARY", "レジェンダリーリコリス", "上位突入時の一部で7G＋αのレジェンダリーリコリスへ。平均約1000枚の上乗せをPUSHで開き、上位RUSHのBONUS獲得と分けて記録します。"]
+      ];
+      note = "設定別CZ・AT初当り、各RUSHのゲーム数とBONUS確率、RUSH20の期待度、BONUS獲得枚数、上位CZ期待度などの公開値を優先しています。CZ種類比率、BONUS振り分け、ポイント振り分け、レジェンダリー当選率など未公表部分は体験用の代表値です。";
     } else if (sim.symphogearSeigiFlow) {
       cards = [
         ["AXZ BATTLE", "成功期待度約65%", "通常時はCZのAXZバトルまたは上位CZの最終決戦からATを目指します。最後のPUSHまで勝敗を伏せ、突破時は初期ゲーム数決定へ進みます。"],
@@ -1100,7 +1134,7 @@
       const averageInvestment = Math.round((machine.sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
-      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow;
+      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow;
       const settingModelLabel = machine.sim.settingRates
         ? hasDedicatedFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
         : hasDedicatedFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
@@ -1186,7 +1220,7 @@
         ? Math.max(1, mainRate * sim.triggerRate / sim.mainRate)
         : Math.max(1, sim.triggerRate * profile.rate);
     const publishedEntry = Number(publishedSetting?.entry);
-    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow
+    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow
       ? Math.max(0, Math.min(1, Number(sim.triggerSuccess) || 0.55))
       : sim.godzillaEva2Flow || sim.mahoakoFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.shinEvaFlow
       ? 1
@@ -1202,7 +1236,7 @@
       ? Math.min(0.98, Number(publishedSetting.upper))
       : hasPublishedSettingRates ? sim.upperChance : Math.min(0.98, sim.upperChance + profile.upper);
     const settingModelLabel = hasPublishedTriggerRate && hasPublishedMainRate
-      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
+      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
       : hasPublishedMainRate
         ? "公開設定別値（初当り）＋CZ簡易換算"
         : "サイト共通補正モデル";
@@ -1348,6 +1382,17 @@
     let symphogearZesshoBattleAttempts = 0;
     let symphogearZesshoBattleWins = 0;
     let symphogearGoldenZesshoGames = 0;
+    let lycorisCz = null;
+    let lycorisRushRoute = null;
+    let lycorisRush20Won = false;
+    let lycorisNormalBonusCount = 0;
+    let lycorisPoints = 0;
+    let lycorisStResets = 0;
+    let lycorisUpperCzAttempts = 0;
+    let lycorisUpperCzWins = 0;
+    let lycorisUpperSections = 0;
+    let lycorisUpperBonusCount = 0;
+    let lycorisLegendaryAward = 0;
     if (sim.basiliskTenzenFlow) {
       basiliskBc = weighted(sim.basiliskBcTypes || [[{ key: "hetero", label: "異色BC", games: 16, award: 30 }, 1]]);
       triggerSucceeded = true;
@@ -1394,6 +1439,12 @@
       triggerSucceeded = Math.random() < Math.max(0, Math.min(1, Number(dumbbellCz.chance) || 0));
       entered = triggerSucceeded;
       flow[0] = `${games}GでMUSCLE ZONE・${dumbbellCz.label}`;
+    }
+    if (sim.lycorisFlow) {
+      lycorisCz = weighted(sim.lycorisCzRoutes || [[{ key: "opposite", label: "オポジットバトル", games: 10, chance: 0.53 }, 1]]);
+      triggerSucceeded = Math.random() < Math.max(0, Math.min(1, Number(lycorisCz.chance) || 0));
+      entered = triggerSucceeded;
+      flow[0] = `${games}Gで${lycorisCz.label}`;
     }
     if (triggerSucceeded && Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length) {
       const entryBonusTemplate = weighted(sim.entryBonusAwards);
@@ -2308,6 +2359,142 @@
           }
         }
         basePayout = payout - entryPayout;
+      } else if (sim.lycorisFlow) {
+        payout = 0;
+        basePayout = 0;
+        lycorisRushRoute = weighted(sim.lycorisRushRoutes || [[{ key: "chisato", label: "千束ラッシュ", talent: "チェリー才能Lv2" }, 1]]);
+        const prologueAward = Math.max(0, Math.min(100, SLOT_COMPLETE_LIMIT - payout));
+        const prologueGames = Math.max(1, Math.round(prologueAward / 8.4));
+        payout += prologueAward;
+        atGamesTotal += prologueGames;
+        atEvents.push({ kind: "lycoris-prologue", label: lycorisCz?.key === "direct" ? "アフターエピソード" : "プロローグ", route: lycorisRushRoute.label, talent: lycorisRushRoute.talent, games: prologueGames, award: prologueAward, cumulative: payout });
+        flow.push(`${lycorisCz?.key === "direct" ? "アフターエピソード" : "プロローグ"} +${prologueAward}枚 → ${lycorisRushRoute.label}`);
+
+        const chooseLycorisValue = value => Array.isArray(value) ? Number(weighted(value)) || 0 : Number(value) || 0;
+        const appendLycorisBonus = ({ upperMode = false, source = "RUSH中" } = {}) => {
+          const bonus = weighted(upperMode ? sim.lycorisUpperBonusTypes : sim.lycorisBonusTypes) || { key: "single", label: "リコリスBONUS", payout: 100, points: [[100, 1]] };
+          const requestedAward = Math.max(0, chooseLycorisValue(bonus.payout));
+          const award = Math.max(0, Math.min(requestedAward, SLOT_COMPLETE_LIMIT - payout));
+          const points = Math.max(100, chooseLycorisValue(bonus.points) || 100);
+          const bonusGames = Math.max(1, Math.ceil(award / Math.max(0.1, Number(sim.atPureIncrease) || 8.4)));
+          payout += award;
+          lycorisPoints += points;
+          atGamesTotal += bonusGames;
+          bonusCount += 1;
+          bonusPayoutTotal += award;
+          if (upperMode) lycorisUpperBonusCount += 1;
+          else lycorisNormalBonusCount += 1;
+          atEvents.push({ kind: "lycoris-bonus", label: bonus.label, bonusType: bonus.key, games: bonusGames, award, points, totalPoints: lycorisPoints, cumulative: payout, upper: upperMode, source, number: bonusCount });
+          flow.push(`${bonus.label} +${award}枚・+${points}pt（累計${Math.min(1000, lycorisPoints)}pt）`);
+          return bonus;
+        };
+
+        const appendLycorisRun = ({ kind, label, games: runGames, remaining, upperMode = false, section = 0 }) => {
+          const safeGames = Math.max(0, Number(runGames) || 0);
+          if (!safeGames) return;
+          atGamesTotal += safeGames;
+          atEvents.push({ kind, label, games: safeGames, remaining, cumulative: payout, points: lycorisPoints, upper: upperMode, section });
+        };
+
+        lycorisRush20Won = Math.random() < (Number(sim.lycorisRush20Chance) || 0.60);
+        atGamesTotal += 20;
+        atEvents.push({ kind: "lycoris-rush20", label: "リコリスラッシュ20", route: lycorisRushRoute.label, talent: lycorisRushRoute.talent, games: 20, chance: (Number(sim.lycorisRush20Chance) || 0.60) * 100, success: lycorisRush20Won, cumulative: payout });
+        flow.push(`リコリスラッシュ20・${lycorisRush20Won ? "BONUS当選" : "20G駆け抜け"}`);
+
+        if (lycorisRush20Won && payout < SLOT_COMPLETE_LIMIT) {
+          appendLycorisBonus({ source: "リコリスラッシュ20" });
+          let frontRemaining = 50;
+          let frontBonuses = 0;
+          const frontRate = Math.max(1, Number(sim.lycorisFrontBonusRate) || 18);
+          while (frontRemaining > 0 && frontBonuses < 5 && payout < SLOT_COMPLETE_LIMIT) {
+            const gap = geometric(frontRate);
+            if (gap > frontRemaining) {
+              appendLycorisRun({ kind: "lycoris-front", label: "リコリスラッシュ50・前半", games: frontRemaining, remaining: 0 });
+              frontRemaining = 0;
+              break;
+            }
+            frontRemaining -= gap;
+            appendLycorisRun({ kind: "lycoris-front", label: "リコリスラッシュ50・前半", games: gap, remaining: frontRemaining });
+            appendLycorisBonus({ source: "前半50G" });
+            frontBonuses += 1;
+          }
+
+          const normalStChance = 1 - Math.pow(1 - 1 / Math.max(1, Number(sim.lycorisStBonusRate) || 12), 10);
+          for (let st = 1; st <= 8 && payout < SLOT_COMPLETE_LIMIT; st += 1) {
+            const success = Math.random() < normalStChance;
+            atGamesTotal += 10;
+            atEvents.push({ kind: "lycoris-st", label: "リコリスラッシュ50・ST", games: 10, chance: normalStChance * 100, success, reset: st, cumulative: payout, points: lycorisPoints, upper: false });
+            flow.push(`ST ${st}回目・${success ? "BONUS当選／10G再セット" : "10G駆け抜け"}`);
+            if (!success) break;
+            lycorisStResets += 1;
+            appendLycorisBonus({ source: `ST ${st}回目` });
+          }
+
+          if (lycorisPoints >= 1000 && payout < SLOT_COMPLETE_LIMIT) {
+            lycorisUpperCzAttempts += 1;
+            const upperSuccess = Math.random() < (Number(sim.lycorisUpperCzChance) || 0.70);
+            if (upperSuccess) lycorisUpperCzWins += 1;
+            atGamesTotal += Math.max(1, Number(sim.lycorisUpperCzGames) || 10);
+            atEvents.push({ kind: "lycoris-upper-cz", label: sim.upperChallenge, games: Math.max(1, Number(sim.lycorisUpperCzGames) || 10), chance: (Number(sim.lycorisUpperCzChance) || 0.70) * 100, success: upperSuccess, cumulative: payout, points: lycorisPoints });
+            flow.push(`${sim.upperChallenge}・${upperSuccess ? "成功" : "失敗"}`);
+            upper = upperSuccess;
+          }
+        }
+
+        if (upper && payout < SLOT_COMPLETE_LIMIT) {
+          lycorisPoints = 0;
+          if (Math.random() < (Number(sim.lycorisLegendaryChance) || 0.08)) {
+            const requested = Math.max(1, Number(weighted(sim.lycorisLegendaryAwards || [[1000, 1]])) || 1000);
+            lycorisLegendaryAward = Math.max(0, Math.min(requested, SLOT_COMPLETE_LIMIT - payout));
+            payout += lycorisLegendaryAward;
+            atGamesTotal += 7;
+            addOnCount += 1;
+            addOnTotal += lycorisLegendaryAward;
+            coinAddOnCount += 1;
+            coinAddOnTotal += lycorisLegendaryAward;
+            atEvents.push({ kind: "lycoris-legendary", label: "レジェンダリーリコリス", games: 7, award: lycorisLegendaryAward, cumulative: payout });
+            flow.push(`レジェンダリーリコリス +${lycorisLegendaryAward}枚`);
+          }
+
+          let upperActive = true;
+          const upperMaxSections = Math.max(1, Number(sim.lycorisUpperMaxSections) || 3);
+          while (upperActive && lycorisUpperSections < upperMaxSections && payout < SLOT_COMPLETE_LIMIT) {
+            lycorisUpperSections += 1;
+            upperLoops = lycorisUpperSections;
+            let upperFrontRemaining = 50;
+            let upperFrontBonuses = 0;
+            const upperFrontRate = 14;
+            while (upperFrontRemaining > 0 && upperFrontBonuses < 6 && payout < SLOT_COMPLETE_LIMIT) {
+              const gap = geometric(upperFrontRate);
+              if (gap > upperFrontRemaining) {
+                appendLycorisRun({ kind: "lycoris-upper-front", label: sim.upperLabel, games: upperFrontRemaining, remaining: 0, upperMode: true, section: lycorisUpperSections });
+                upperFrontRemaining = 0;
+                break;
+              }
+              upperFrontRemaining -= gap;
+              appendLycorisRun({ kind: "lycoris-upper-front", label: sim.upperLabel, games: gap, remaining: upperFrontRemaining, upperMode: true, section: lycorisUpperSections });
+              appendLycorisBonus({ upperMode: true, source: `上位前半 SET ${lycorisUpperSections}` });
+              upperFrontBonuses += 1;
+            }
+
+            const upperStChance = 1 - Math.pow(1 - 1 / 9, 10);
+            for (let st = 1; st <= 10 && payout < SLOT_COMPLETE_LIMIT; st += 1) {
+              const success = Math.random() < upperStChance;
+              atGamesTotal += 10;
+              atEvents.push({ kind: "lycoris-upper-st", label: "リコリスラッシュW・ST", games: 10, chance: upperStChance * 100, success, reset: st, section: lycorisUpperSections, cumulative: payout, points: lycorisPoints });
+              if (!success) break;
+              appendLycorisBonus({ upperMode: true, source: `上位ST SET ${lycorisUpperSections}` });
+            }
+            const reset = lycorisPoints >= 1000;
+            atEvents.push({ kind: "lycoris-upper-reset", label: "虹MAX・上位再セット", games: 1, success: reset, section: lycorisUpperSections, cumulative: payout, points: lycorisPoints });
+            flow.push(`リコリスラッシュW SET ${lycorisUpperSections}・${reset ? "1000pt到達／再セット" : "終了"}`);
+            if (!reset) upperActive = false;
+            else lycorisPoints = 0;
+          }
+        }
+        cycleRounds = lycorisNormalBonusCount + lycorisUpperBonusCount;
+        cycleContinues = lycorisStResets;
+        basePayout = payout;
       } else if (sim.symphogearSeigiFlow) {
         payout = entryPayout;
         basePayout = 0;
@@ -3285,7 +3472,7 @@
           }
           flow.push(`${karakuriUpperRoute}突破 → ${sim.upperLabel} ${upperLoops}セット・+${yen.format(upperPayoutTotal)}枚`);
         }
-      } else if (!sim.battleBonusFlow && !sim.sgRaceFlow && !sim.kabaneriStFlow && !sim.otomeRushFlow && !sim.cycleFlow && !sim.godzillaEva2Flow && !sim.mahoakoFlow && !sim.okidokiGoldFlow && !sim.uminchuFlow && !sim.tentenFlow && !sim.goblinSlayerFlow && !sim.assaultLilyFlow && !sim.kaguyaFlow && !sim.dumbbellFlow && !sim.shinEvaFlow && !sim.sao2Flow && !sim.symphogearSeigiFlow) {
+      } else if (!sim.battleBonusFlow && !sim.sgRaceFlow && !sim.kabaneriStFlow && !sim.otomeRushFlow && !sim.cycleFlow && !sim.godzillaEva2Flow && !sim.mahoakoFlow && !sim.okidokiGoldFlow && !sim.uminchuFlow && !sim.tentenFlow && !sim.goblinSlayerFlow && !sim.assaultLilyFlow && !sim.kaguyaFlow && !sim.dumbbellFlow && !sim.shinEvaFlow && !sim.sao2Flow && !sim.symphogearSeigiFlow && !sim.lycorisFlow) {
         // Keep the published overall special-zone chance while allowing rare multi-hit runs.
         const specialChecks = Math.max(1, Math.min(3, Math.ceil(payout / 500)));
         const perCheckChance = 1 - Math.pow(1 - specialChance, 1 / specialChecks);
@@ -3406,10 +3593,11 @@
     const basiliskStats = sim.basiliskTenzenFlow ? [["初当りBC", basiliskBc?.label || sim.triggerLabel], ["BTシナリオ", basiliskScenario?.name || "BT非突入"], ["通常BT", `${basiliskSets}セット`], ["BT中BC", `${basiliskBtBcCount}回`], ["絆高確", `${basiliskHighCount}セット`], ["月下閃滅", basiliskMoonCount ? `${basiliskMoonCount}回` : "非当選"], [sim.upperChallenge, basiliskGrudgeAttempts ? `${basiliskGrudgeAttempts}回・成功${basiliskGrudgeSuccesses}回` : "未到達"], [sim.upperLabel, basiliskTenzenSets ? `${basiliskTenzenSets}セット` : "非到達"]] : [];
     const sao2Stats = sim.sao2Flow ? [["スナイパーチャンス", `${sao2SniperAttempts}回・勝利${sao2SniperWins}回`], ["ラストアタック", sao2LastAttackAttempts ? `${sao2LastAttackAttempts}回・成功${sao2LastAttackSuccesses}回` : "未到達"], [sim.upperChallenge, sao2DeathGunAttempts ? `${sao2DeathGunAttempts}回・勝利${sao2DeathGunWins}回` : "未到達"], [sim.upperLabel, sao2UpperSections ? `${sao2UpperSections}区間` : "非到達"], ["絶剣", sao2ZekkenAward ? `+${yen.format(sao2ZekkenAward)}枚` : "非当選"], ["アルティマ状態", sao2Ultima ? "移行" : "非移行"]] : [];
     const symphogearStats = sim.symphogearSeigiFlow ? [["初期ゲーム", symphogearInitialRoute?.upper ? "ギアフラグ・絶唱" : `${symphogearInitialRoute?.label || "通常"}・${symphogearInitialRoute?.games || 0}G`], ["ギアVチャンス", `${symphogearGearVChances}回・装者獲得${symphogearGearVWins}回`], ["ギアVアタック", `${symphogearGearVAttacks}回`], ["ゲーム数上乗せ", `+${yen.format(symphogearTotalAddGames)}G`], ["ギアVアタック EX", symphogearExCount ? `${symphogearExCount}回` : "非到達"], ["絶唱", symphogearZesshoCount ? `${symphogearZesshoCount}回` : "非到達"], [sim.upperLabel, symphogearUpperSections ? `${symphogearUpperSections}区間・BONUS ${symphogearBonusCount}回` : "非到達"], [sim.upperChallenge, symphogearZesshoBattleAttempts ? `${symphogearZesshoBattleAttempts}回・勝利${symphogearZesshoBattleWins}回` : "未到達"], ["黄金絶唱", symphogearGoldenZesshoGames ? `+${yen.format(symphogearGoldenZesshoGames)}G` : "非当選"]] : [];
+    const lycorisStats = sim.lycorisFlow ? [["通常時CZ", lycorisCz?.label || sim.triggerLabel], ["RUSHタイプ", lycorisRushRoute ? `${lycorisRushRoute.label}・${lycorisRushRoute.talent}` : "非突入"], ["リコリスラッシュ20", lycorisRush20Won ? "BONUS当選・RUSH50へ" : "20G駆け抜け"], ["通常RUSH BONUS", `${lycorisNormalBonusCount}回`], ["ST再セット", `${lycorisStResets}回`], ["獲得ポイント", `${yen.format(Math.min(1000, lycorisPoints))}pt`], [sim.upperChallenge, lycorisUpperCzAttempts ? `${lycorisUpperCzAttempts}回・成功${lycorisUpperCzWins}回` : "未到達"], [sim.upperLabel, lycorisUpperSections ? `${lycorisUpperSections}セット・BONUS ${lycorisUpperBonusCount}回` : "非到達"], ["レジェンダリーリコリス", lycorisLegendaryAward ? `+${yen.format(lycorisLegendaryAward)}枚` : "非当選"]] : [];
     const cycleStats = sim.cycleFlow ? [[sim.cycleFlow.statLabel || (sim.titleFlow ? "機種専用進行" : "専用ループ"), `${cycleRounds}回・継続${cycleContinues}回`]] : [];
     const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
     const rushGamesTotal = Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
-    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
+    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
     const gameAddOnStats = sim.karakuriJudgeFlow || coinAddOnCount
       ? [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(coinAddOnTotal || addOnTotal)}枚` : "上乗せなし"]]
       : [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnGamesTotal || otomeAddedGames)}G` : "上乗せなし"]];
@@ -3438,6 +3626,8 @@
         ? [["BoB・上位消化", `${yen.format(rushGamesTotal)}G相当`], ...sao2Stats]
       : sim.symphogearSeigiFlow
         ? [["AT・上位消化", `${yen.format(rushGamesTotal)}G相当`], ...symphogearStats]
+      : sim.lycorisFlow
+        ? [["RUSH・BONUS消化", `${yen.format(rushGamesTotal)}G相当`], ...lycorisStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : [["RUSH消化モデル", `${yen.format(rushGamesTotal)}G相当`], ...karakuriStats, ...battleStats, ...sgStats, ...kabaneriStats, ...otomeStats, ...cycleStats, ...gameAddOnStats, ...bonusStats, ...genericSpecialStats, ["上位AT", upper ? (kabaneriUpperMode || `${sim.upperLabel} ${upperLoops}セット`) : "非到達"]]) : [];
     const stats = [["今回の設定", `設定${setting}`], ["設定差モデル", settingModelLabel], ["今回のゲーム数", `${yen.format(games)}G`], ...settingRateStats, ["現金投資目安", `${yen.format(investment)}円`], ...entryBonusStats, ...atStats, ["獲得枚数", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]];
     if (complete) stats.unshift(["到達状態", "コンプリート"]);
@@ -3468,6 +3658,8 @@
           ? `今回の設定は設定${setting}。${games}Gでスコードロンバトル、${entered ? `スナイパーチャンス${sao2SniperAttempts}回・勝利${sao2SniperWins}回で${yen.format(payout)}枚を獲得しました。${sao2ZekkenAward ? `絶剣で${yen.format(sao2ZekkenAward)}枚を獲得し、アルティマ状態へ移行しました。` : sao2UpperSections ? `デス・ガンバトルを突破し、FULL DIVEを${sao2UpperSections}区間消化しました。` : sao2DeathGunAttempts ? "デス・ガンバトルで終了しました。" : "上位CZの権利には届きませんでした。"}` : "CZは突破できませんでした。"}`
         : sim.symphogearSeigiFlow
           ? `今回の設定は設定${setting}。${games}GでAXZバトル、${entered ? `ギアVチャンス${symphogearGearVChances}回・ギアVアタック${symphogearGearVAttacks}回、上乗せ合計${symphogearTotalAddGames}Gで${yen.format(payout)}枚を獲得しました。${symphogearGoldenZesshoGames ? `黄金絶唱で${symphogearGoldenZesshoGames}Gを獲得しました。` : symphogearUpperSections ? `AXZラッシュ黄金を${symphogearUpperSections}区間消化しました。` : "絶唱・上位ATには届きませんでした。"}` : "AXZバトルは突破できませんでした。"}`
+        : sim.lycorisFlow
+          ? `今回の設定は設定${setting}。${games}Gで${lycorisCz?.label || sim.triggerLabel}、${entered ? `${lycorisRushRoute?.label || sim.mainLabel}でBONUS ${lycorisNormalBonusCount}回・ST再セット${lycorisStResets}回、${yen.format(payout)}枚を獲得しました。${lycorisLegendaryAward ? `レジェンダリーリコリスで${yen.format(lycorisLegendaryAward)}枚を上乗せしました。` : lycorisUpperSections ? `リコリスラッシュWを${lycorisUpperSections}セット消化しました。` : lycorisUpperCzAttempts ? "リコイル オブ リコリスで終了しました。" : lycorisRush20Won ? "1000pt・上位CZには届きませんでした。" : "リコリスラッシュ20は駆け抜けでした。"}` : "CZは突破できませんでした。"}`
         : `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}。${entered ? `${payout}枚を獲得しました。${sim.kabaneriStFlow ? `ST中ボーナス${kabaneriStBonuses}回・${upper ? `${upperResultLabel} ${upperLoops}回当選。` : "上位ST非到達。"}` : `上乗せ${addOnCount}回・${upper ? `${upperResultLabel} ${upperLoops}セット。` : "上位AT非到達。"}`}` : entryBonus ? `${entryBonus.label}で約${yen.format(payout)}枚を獲得し、${sim.mainLabel}には届きませんでした。` : `${machine.initialHitLabel || sim.mainLabel}には届きませんでした。`}`;
     const kabaneriRareUpperLabel = sim.kabaneriUpperRareLabel || "裏美馬ST";
     const kabaneriUpperContinueChance = kabaneriUpperMode
@@ -3475,7 +3667,7 @@
         ? (Number(sim.kabaneriUpperRareContinue) || 0.95)
         : (Number(sim.kabaneriUpperNormalContinue) || 0.80)) * 100
       : sim.upperContinue * 100;
-    return { title: `設定${setting}｜${resultTitle}`, summary: resultSummary, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, triggerSucceeded, triggerSuccessChance: sim.basiliskTenzenFlow ? 100 : sim.goblinSlayerFlow ? (Number(goblinCz?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : triggerSuccess * 100, entryBonusModel: Boolean(sim.basiliskTenzenFlow) || Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0, entryBonus, entered, entryChance: entryBonus ? (Number(entryBonus.atChance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, setPushFlow: Boolean(sim.setPushFlow), karakuriJudgeFlow: Boolean(sim.karakuriJudgeFlow), battleBonusFlow: Boolean(sim.battleBonusFlow), garoBattleFlow: Boolean(sim.garoBattleFlow), ragnadorUpperFlow: Boolean(sim.ragnadorUpperFlow), seiyaTempleFlow: Boolean(sim.seiyaTempleFlow), ggoStFlow: Boolean(sim.ggoStFlow), godzillaEva2Flow: Boolean(sim.godzillaEva2Flow), mahoakoFlow: Boolean(sim.mahoakoFlow), okidokiGoldFlow: Boolean(sim.okidokiGoldFlow), okidokiBigCount, okidokiRegCount, okidokiMaxChain, okidokiGoldCount, okidokiOneGameCount, okidokiGuaranteeCount, okidokiGodMode, okidokiHighestMode, tokyoGhoulFlow: Boolean(sim.tokyoGhoulFlow), tokyoGhoulCz, tokyoGhoulBattles, tokyoGhoulWins, tokyoGhoulBitesCount, tokyoGhoulSpecialCount, tokyoGhoulArimaBattle, tokyoGhoulArimaWon, tokyoGhoulUpperAt, tokyoGhoulCcgAward, basiliskTenzenFlow: Boolean(sim.basiliskTenzenFlow), basiliskBc, basiliskScenario, basiliskSets, basiliskBtBcCount, basiliskHighCount, basiliskMoonCount, basiliskGrudgeAttempts, basiliskGrudgeSuccesses, basiliskTenzenSets, sao2Flow: Boolean(sim.sao2Flow), sao2SniperAttempts, sao2SniperWins, sao2LastAttackAttempts, sao2LastAttackSuccesses, sao2DeathGunAttempts, sao2DeathGunWins, sao2UpperSections, sao2ZekkenAward, sao2Ultima, tentenFlow: Boolean(sim.tentenFlow), goblinSlayerFlow: Boolean(sim.goblinSlayerFlow), goblinCz, goblinLoopMode: goblinLoopMode * 100, goblinAtSets, goblinBonusCount, goblinMaxContinueRate, assaultLilyFlow: Boolean(sim.assaultLilyFlow), assaultEntry, assaultBossBattles, assaultBossWins, assaultRewardCount, assaultUpperCz, assaultUpperCzAttempts, assaultUpperCzSuccesses, assaultMaxAddOn, kaguyaFlow: Boolean(sim.kaguyaFlow), kaguyaRegCount, kaguyaBigCount, kaguyaSuperCount, kaguyaOneGameCount, kaguyaReturnCount, kaguyaSpecialCount, kaguyaStockCount, kaguyaMarriageCount, kaguyaExtraGames, dumbbellFlow: Boolean(sim.dumbbellFlow), dumbbellCz, dumbbellNormalGames, dumbbellGameAddCount, dumbbellGameAddTotal, dumbbellGoldenChallenges, dumbbellGoldenSuccesses, dumbbellVStockTotal, dumbbellCoinAddTotal, dumbbellRisingChallenges, sgRaceFlow: Boolean(sim.sgRaceFlow), kabaneriStFlow: Boolean(sim.kabaneriStFlow), otomeRushFlow: Boolean(sim.otomeRushFlow), cycleFlow: Boolean(sim.cycleFlow), cycleRounds, cycleContinues, kabaneriStBonuses, kabaneriUpperMode, otomeAddedGames, otomeBonusCount, otomeAwakeningCount, otomeBattleWon, otomeAddOnChance: (Number(sim.otomeAddOnChance) || 0) * 100, battleBonusSets, battleContinuationRate: battleContinuationRate * 100, sgRushSets, sgScenarioName, karakuriJudgeAttempts, karakuriJudgeSuccesses, karakuriUpperRoute, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, addOnGamesTotal, coinAddOnCount, coinAddOnTotal, bonusCount, bonusPayoutTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: kabaneriUpperContinueChance, upperChallenge: sim.upperChallenge || "", upper, upperLabel: upperResultLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
+    return { title: `設定${setting}｜${resultTitle}`, summary: resultSummary, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, triggerSucceeded, triggerSuccessChance: sim.basiliskTenzenFlow ? 100 : sim.goblinSlayerFlow ? (Number(goblinCz?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : sim.lycorisFlow ? (Number(lycorisCz?.chance) || 0) * 100 : triggerSuccess * 100, entryBonusModel: Boolean(sim.basiliskTenzenFlow) || Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0, entryBonus, entered, entryChance: entryBonus ? (Number(entryBonus.atChance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : sim.lycorisFlow ? (Number(lycorisCz?.chance) || 0) * 100 : triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, setPushFlow: Boolean(sim.setPushFlow), karakuriJudgeFlow: Boolean(sim.karakuriJudgeFlow), battleBonusFlow: Boolean(sim.battleBonusFlow), garoBattleFlow: Boolean(sim.garoBattleFlow), ragnadorUpperFlow: Boolean(sim.ragnadorUpperFlow), seiyaTempleFlow: Boolean(sim.seiyaTempleFlow), ggoStFlow: Boolean(sim.ggoStFlow), godzillaEva2Flow: Boolean(sim.godzillaEva2Flow), mahoakoFlow: Boolean(sim.mahoakoFlow), okidokiGoldFlow: Boolean(sim.okidokiGoldFlow), okidokiBigCount, okidokiRegCount, okidokiMaxChain, okidokiGoldCount, okidokiOneGameCount, okidokiGuaranteeCount, okidokiGodMode, okidokiHighestMode, tokyoGhoulFlow: Boolean(sim.tokyoGhoulFlow), tokyoGhoulCz, tokyoGhoulBattles, tokyoGhoulWins, tokyoGhoulBitesCount, tokyoGhoulSpecialCount, tokyoGhoulArimaBattle, tokyoGhoulArimaWon, tokyoGhoulUpperAt, tokyoGhoulCcgAward, basiliskTenzenFlow: Boolean(sim.basiliskTenzenFlow), basiliskBc, basiliskScenario, basiliskSets, basiliskBtBcCount, basiliskHighCount, basiliskMoonCount, basiliskGrudgeAttempts, basiliskGrudgeSuccesses, basiliskTenzenSets, sao2Flow: Boolean(sim.sao2Flow), sao2SniperAttempts, sao2SniperWins, sao2LastAttackAttempts, sao2LastAttackSuccesses, sao2DeathGunAttempts, sao2DeathGunWins, sao2UpperSections, sao2ZekkenAward, sao2Ultima, lycorisFlow: Boolean(sim.lycorisFlow), lycorisCz, lycorisRushRoute, lycorisRush20Won, lycorisNormalBonusCount, lycorisPoints, lycorisStResets, lycorisUpperCzAttempts, lycorisUpperCzWins, lycorisUpperSections, lycorisUpperBonusCount, lycorisLegendaryAward, tentenFlow: Boolean(sim.tentenFlow), goblinSlayerFlow: Boolean(sim.goblinSlayerFlow), goblinCz, goblinLoopMode: goblinLoopMode * 100, goblinAtSets, goblinBonusCount, goblinMaxContinueRate, assaultLilyFlow: Boolean(sim.assaultLilyFlow), assaultEntry, assaultBossBattles, assaultBossWins, assaultRewardCount, assaultUpperCz, assaultUpperCzAttempts, assaultUpperCzSuccesses, assaultMaxAddOn, kaguyaFlow: Boolean(sim.kaguyaFlow), kaguyaRegCount, kaguyaBigCount, kaguyaSuperCount, kaguyaOneGameCount, kaguyaReturnCount, kaguyaSpecialCount, kaguyaStockCount, kaguyaMarriageCount, kaguyaExtraGames, dumbbellFlow: Boolean(sim.dumbbellFlow), dumbbellCz, dumbbellNormalGames, dumbbellGameAddCount, dumbbellGameAddTotal, dumbbellGoldenChallenges, dumbbellGoldenSuccesses, dumbbellVStockTotal, dumbbellCoinAddTotal, dumbbellRisingChallenges, sgRaceFlow: Boolean(sim.sgRaceFlow), kabaneriStFlow: Boolean(sim.kabaneriStFlow), otomeRushFlow: Boolean(sim.otomeRushFlow), cycleFlow: Boolean(sim.cycleFlow), cycleRounds, cycleContinues, kabaneriStBonuses, kabaneriUpperMode, otomeAddedGames, otomeBonusCount, otomeAwakeningCount, otomeBattleWon, otomeAddOnChance: (Number(sim.otomeAddOnChance) || 0) * 100, battleBonusSets, battleContinuationRate: battleContinuationRate * 100, sgRushSets, sgScenarioName, karakuriJudgeAttempts, karakuriJudgeSuccesses, karakuriUpperRoute, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, addOnGamesTotal, coinAddOnCount, coinAddOnTotal, bonusCount, bonusPayoutTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: kabaneriUpperContinueChance, upperChallenge: sim.upperChallenge || "", upper, upperLabel: upperResultLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
   }
 
   function createATypeSession(setting) {
@@ -4114,6 +4306,7 @@
     const basiliskTenzenFlow = Boolean(data.basiliskTenzenFlow);
     const sao2Flow = Boolean(data.sao2Flow);
     const symphogearSeigiFlow = Boolean(machine.sim.symphogearSeigiFlow);
+    const lycorisFlow = Boolean(data.lycorisFlow);
     setSlotAtStatus({ visible: false });
     setExperienceHud("0G", "0円", "0枚");
     setExperienceStage(0, experienceProfile.system, "通常ゲーム中", "0G", `${data.hitLabel}を目指して抽選中`, "normal", data.hitChance, "1Gごとの契機当選率");
@@ -4125,7 +4318,7 @@
       await waitForExperience(115);
     }
     if (runId !== experienceRunId) return;
-    setExperienceStage(1, okidokiGoldFlow ? "HIBISCUS LIGHT" : uminchuFlow ? "BONUS HIT" : basiliskTenzenFlow ? "BASILISK CHANCE" : sao2Flow ? "SQUADRON BATTLE" : symphogearSeigiFlow ? "AXZ BATTLE" : tentenFlow ? "EPISODE BATTLE" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "DIRECT AT" : "CHANCE ZONE") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "DIRECT AT" : data.assaultEntry?.key === "bouquet" ? "BOUQUET BONUS" : "LILY CHALLENGE") : kaguyaFlow ? "LOVE BRAIN BATTLE" : dumbbellFlow ? "MUSCLE ZONE" : shinEvaFlow ? "INITIAL HIT" : tokyoGhoulFlow ? "CHANCE ZONE" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", basiliskTenzenFlow ? (data.basiliskBc?.label || data.hitLabel) : tokyoGhoulFlow ? (data.tokyoGhoulCz?.label || data.hitLabel) : goblinSlayerFlow ? (data.goblinCz?.label || data.hitLabel) : assaultLilyFlow ? (data.assaultEntry?.label || data.hitLabel) : data.hitLabel, `${yen.format(data.attempts)}G`, okidokiGoldFlow ? "ハイビスカス点灯・初当りBONUS確定" : basiliskTenzenFlow ? `${data.basiliskBc?.games || 16}GのBCでバジリスクタイムを抽選` : sao2Flow ? "スコードロンバトルの最後にPUSHでBoB突入を判定" : symphogearSeigiFlow ? "AXZバトルを進め、最後のPUSHでAXZラッシュを判定" : tokyoGhoulFlow ? "8GのCZを進め、最後のPUSHで東京喰種咬を判定" : uminchuFlow ? "告知音とともに初当りBONUSへ" : tentenFlow ? "10GのレベルUPパートと4Gのバトルへ" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "規定ゲーム数からAT直撃" : "CZの専用ゲーム数を進めて最後にPUSH") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "規定ゲーム数・レア役などからRUSH直撃" : data.assaultEntry?.key === "bouquet" ? "25GのBONUS後にRUSHを判定" : "10Gの専用CZを進めて最後にPUSH") : kaguyaFlow ? "恋愛頭脳戦を経て15G＋αのCZへ" : dumbbellFlow ? "10Gの前半パートから後半発展を目指します" : shinEvaFlow ? "3GのEVANGELION IMPACTで作戦を決定します" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
+    setExperienceStage(1, okidokiGoldFlow ? "HIBISCUS LIGHT" : uminchuFlow ? "BONUS HIT" : basiliskTenzenFlow ? "BASILISK CHANCE" : sao2Flow ? "SQUADRON BATTLE" : symphogearSeigiFlow ? "AXZ BATTLE" : lycorisFlow ? (data.lycorisCz?.key === "direct" ? "DIRECT RUSH" : "CHANCE ZONE") : tentenFlow ? "EPISODE BATTLE" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "DIRECT AT" : "CHANCE ZONE") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "DIRECT AT" : data.assaultEntry?.key === "bouquet" ? "BOUQUET BONUS" : "LILY CHALLENGE") : kaguyaFlow ? "LOVE BRAIN BATTLE" : dumbbellFlow ? "MUSCLE ZONE" : shinEvaFlow ? "INITIAL HIT" : tokyoGhoulFlow ? "CHANCE ZONE" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", basiliskTenzenFlow ? (data.basiliskBc?.label || data.hitLabel) : tokyoGhoulFlow ? (data.tokyoGhoulCz?.label || data.hitLabel) : lycorisFlow ? (data.lycorisCz?.label || data.hitLabel) : goblinSlayerFlow ? (data.goblinCz?.label || data.hitLabel) : assaultLilyFlow ? (data.assaultEntry?.label || data.hitLabel) : data.hitLabel, `${yen.format(data.attempts)}G`, okidokiGoldFlow ? "ハイビスカス点灯・初当りBONUS確定" : basiliskTenzenFlow ? `${data.basiliskBc?.games || 16}GのBCでバジリスクタイムを抽選` : sao2Flow ? "スコードロンバトルの最後にPUSHでBoB突入を判定" : symphogearSeigiFlow ? "AXZバトルを進め、最後のPUSHでAXZラッシュを判定" : lycorisFlow ? (data.lycorisCz?.key === "direct" ? "アフターエピソードからRUSHへ直行" : `${data.lycorisCz?.games || 10}GのCZを進め、最後のPUSHでRUSHを判定`) : tokyoGhoulFlow ? "8GのCZを進め、最後のPUSHで東京喰種咬を判定" : uminchuFlow ? "告知音とともに初当りBONUSへ" : tentenFlow ? "10GのレベルUPパートと4Gのバトルへ" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "規定ゲーム数からAT直撃" : "CZの専用ゲーム数を進めて最後にPUSH") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "規定ゲーム数・レア役などからRUSH直撃" : data.assaultEntry?.key === "bouquet" ? "25GのBONUS後にRUSHを判定" : "10Gの専用CZを進めて最後にPUSH") : kaguyaFlow ? "恋愛頭脳戦を経て15G＋αのCZへ" : dumbbellFlow ? "10Gの前半パートから後半発展を目指します" : shinEvaFlow ? "3GのEVANGELION IMPACTで作戦を決定します" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
     await waitForExperience(780);
     if (basiliskTenzenFlow) {
       const bc = { ...(data.basiliskBc || {}), ...(data.entryBonus || {}) };
@@ -4181,6 +4374,22 @@
       setExperienceStage(2, "AXZ BATTLE RESULT", data.entered ? "AXZバトル突破" : "AXZバトル敗北", data.entered ? "AXZラッシュ" : "通常へ", data.entered ? "初期ゲーム数決定ゾーンへ進みます" : "今回の一撃はここで終了", data.entered ? "rush" : "end", data.entered ? 100 : 0, "AXZバトル結果");
       await waitForExperience(950);
       if (!data.entered) return;
+    }
+    if (lycorisFlow) {
+      const cz = data.lycorisCz || { key: "opposite", label: "対極のふたり", games: 10, chance: 0.53 };
+      if (cz.key === "direct") {
+        setExperienceStage(2, "DIRECT RUSH", cz.label, "RUSH直撃", "アフターエピソードからプロローグへ進みます", "hit", 100, "通常時直撃ルート");
+        await waitForExperience(900);
+      } else {
+        const czComplete = await animateExperienceCounter(Math.max(1, Number(cz.games) || 10), "G", "CHANCE ZONE", cz.label, "小役・対応役でリコリスラッシュを抽選します", data.triggerSuccessChance, `成功期待度 約${Math.round(data.triggerSuccessChance)}%`, runId);
+        if (!czComplete) return;
+        setExperienceStage(2, "CZ FINAL JUDGE", cz.label, "PUSH", "リコリスラッシュの当落を開きます", "judge", data.triggerSuccessChance, "CZ最終結果");
+        await waitForExperienceAction(`${cz.label} PUSH`, 5000, data.entered ? "gold" : "normal");
+        if (runId !== experienceRunId) return;
+        setExperienceStage(2, "CZ RESULT", data.entered ? "ミッション成功" : "ミッション失敗", data.entered ? "RUSH突入" : "通常へ", data.entered ? "約100枚のプロローグへ進みます" : "今回の一撃はここで終了", data.entered ? "rush" : "end", data.entered ? 100 : 0, `${cz.label}結果`);
+        await waitForExperience(950);
+        if (!data.entered) return;
+      }
     }
     if (tentenFlow) {
       const levelComplete = await animateExperienceCounter(10, "G", "LEVEL UP PART", "EPレベルを上げろ", "ヒロイン目・レア役でEPレベルUPを抽選します", data.triggerSuccessChance, "CZ 10GレベルUP", runId);
@@ -4286,7 +4495,7 @@
       await waitForExperience(900);
       if (!data.entered) return;
     }
-    if (!okidokiGoldFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !basiliskTenzenFlow && !sao2Flow && !symphogearSeigiFlow) {
+    if (!okidokiGoldFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !basiliskTenzenFlow && !sao2Flow && !symphogearSeigiFlow && !lycorisFlow) {
     const dedicatedEntryFlow = godzillaEva2Flow || mahoakoFlow;
     const entryJudgeLabel = dedicatedEntryFlow && data.entryBonus?.judgeLabel ? data.entryBonus.judgeLabel : `${data.mainLabel}突入ジャッジ`;
     const entryJudgeGames = dedicatedEntryFlow ? Math.max(1, Number(data.entryBonus?.judgeGames) || 3) : 3;
@@ -4330,7 +4539,7 @@
       const normalSetCount = rushEvents.filter(event => event.kind === "rush-set").length;
       const hadUpperChallenge = rushEvents.some(event => event.kind === "upper-challenge");
       let route = [...rushEvents];
-      if (!setPushFlow && !karakuriJudgeFlow && !battleBonusFlow && !godzillaEva2Flow && !mahoakoFlow && !okidokiGoldFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !basiliskTenzenFlow && !symphogearSeigiFlow && !sgRaceFlow && !kabaneriStFlow && !otomeRushFlow && !cycleFlow && route.length > 10) {
+      if (!setPushFlow && !karakuriJudgeFlow && !battleBonusFlow && !godzillaEva2Flow && !mahoakoFlow && !okidokiGoldFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !basiliskTenzenFlow && !symphogearSeigiFlow && !lycorisFlow && !sgRaceFlow && !kabaneriStFlow && !otomeRushFlow && !cycleFlow && route.length > 10) {
         const visibleEvents = route.slice(0, 7);
         const remainingEvents = route.slice(7);
         const previousTotal = Number(visibleEvents[visibleEvents.length - 1]?.cumulative) || 0;
@@ -5103,6 +5312,105 @@
           setExperienceStage(3, "BASILISK TIME END", event.label, `+${yen.format(event.award)}枚`, `累計 ${yen.format(event.cumulative)}枚・最終結果へ`, "rush", 100, "通常BT獲得結果");
           setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
           await waitForExperience(1000);
+          continue;
+        }
+
+        if (event.kind === "lycoris-prologue") {
+          const prologueComplete = await animateExperienceCounter(eventGames, "G", "PROLOGUE", event.label, "約100枚を獲得しながら今回のRUSHタイプを決定します", 100, `${event.route}・${event.talent}`, runId);
+          if (!prologueComplete) return;
+          consumedGames += eventGames;
+          setExperienceStage(3, "RUSH ROUTE", event.route, `+${yen.format(event.award)}枚`, `${event.talent}・リコリスラッシュ20へ`, "rush", 100, "RUSHタイプ 1:1");
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: 20, remainingUnit: "G", total: event.cumulative });
+          await waitForExperience(1000);
+          continue;
+        }
+
+        if (event.kind === "lycoris-rush20") {
+          const rush20Complete = await animateExperienceCounter(20, "G", "LYCORIS RUSH 20", event.route, "20G以内のBONUS当選を目指します", event.chance, `${event.talent}・BONUS期待度約60%`, runId);
+          if (!rush20Complete) return;
+          consumedGames += 20;
+          setSlotAtStatus({ visible: true, remaining: 0, remainingUnit: "G", total: event.cumulative });
+          setExperienceStage(3, "RUSH 20 FINAL", event.label, "PUSH", "BONUS当選とRUSH50突入の結果を開きます", "judge", event.chance, "20G最終結果");
+          await waitForExperienceAction("リコリスラッシュ20 PUSH", 5000, event.success ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.success ? "BONUS HIT" : "RUSH 20 END", event.success ? "BONUS当選" : "20G駆け抜け", event.success ? "RUSH50へ" : "通常へ", event.success ? "次のPUSHでBONUSの種類を開きます" : `累計 ${yen.format(event.cumulative)}枚・最終結果へ`, event.success ? "hit" : "end", event.success ? 100 : 0, "リコリスラッシュ20結果");
+          await waitForExperience(event.success ? 900 : 1150);
+          continue;
+        }
+
+        if (event.kind === "lycoris-front" || event.kind === "lycoris-upper-front") {
+          const upperMode = event.kind === "lycoris-upper-front";
+          const frontComplete = await animateExperienceCounter(eventGames, "G", upperMode ? "LYCORIS RUSH W" : "LYCORIS RUSH 50", upperMode ? `上位 SET ${event.section}・前半` : "前半50G", upperMode ? "チェリー・スイカ才能Lv2でW以上のBONUSを狙います" : "BONUS確率約1/18・残りゲーム数を減らします", 100, `残り ${yen.format(event.remaining)}G`, runId);
+          if (!frontComplete) return;
+          consumedGames += eventGames;
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: event.remaining, remainingUnit: "G", total: event.cumulative });
+          continue;
+        }
+
+        if (event.kind === "lycoris-bonus") {
+          setExperienceStage(3, event.upper ? "UPPER BONUS JUDGE" : "BONUS JUDGE", `${event.number}回目・${event.source}`, "PUSH", "4種類からBONUSと獲得ポイントを開きます", "judge", 100, "BONUS種別はPUSHまで非表示");
+          await waitForExperienceAction(`リコリスBONUS ${event.number} PUSH`, 5000, event.upper || event.award >= 300 ? "upper" : event.award >= 200 ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.upper ? "LYCORIS BONUS W+" : "LYCORIS BONUS", event.label, `+${yen.format(event.award)}枚`, `+${yen.format(event.points)}pt・累計${yen.format(Math.min(1000, event.totalPoints))}pt`, event.upper || event.award >= 300 ? "hyper" : "hit", 100, `${event.source} BONUS結果`);
+          await waitForExperience(1000);
+          const bonusComplete = await animateExperienceCounter(eventGames, "G", event.label, `${event.number}回目 BONUS消化`, "純増約8.4枚/Gで獲得枚数を加算します", 100, `獲得 ${yen.format(event.award)}枚`, runId);
+          if (!bonusComplete) return;
+          consumedGames += eventGames;
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: 0, remainingUnit: "G", addOn: event.points, total: event.cumulative });
+          continue;
+        }
+
+        if (event.kind === "lycoris-st" || event.kind === "lycoris-upper-st") {
+          const upperMode = event.kind === "lycoris-upper-st";
+          const stComplete = await animateExperienceCounter(10, "G", upperMode ? "LYCORIS RUSH W ST" : "LYCORIS RUSH 50 ST", upperMode ? `上位 SET ${event.section}・ST ${event.reset}` : `ST ${event.reset}回目`, upperMode ? "BONUS確率約1/9・当選で10G再セット" : "BONUS確率約1/12・当選で10G再セット", event.chance, "残り0Gで最終PUSH", runId);
+          if (!stComplete) return;
+          consumedGames += 10;
+          setExperienceStage(3, "ST FINAL JUDGE", upperMode ? `上位ST ${event.reset}回目` : `ST ${event.reset}回目`, "PUSH", "BONUS当選またはRUSH終了を開きます", "judge", event.chance, "10G ST最終結果");
+          await waitForExperienceAction(`${upperMode ? "上位" : "通常"}ST ${event.reset} PUSH`, 5000, event.success ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.success ? "ST RESET" : "RUSH END", event.success ? "BONUS当選" : "10G駆け抜け", event.success ? "10G再セット" : "RUSH終了", event.success ? "BONUS消化後、STを10Gに戻します" : `累計 ${yen.format(event.cumulative)}枚`, event.success ? "hit" : "end", event.success ? 100 : 0, `${upperMode ? "上位" : "通常"}ST結果`);
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: event.success ? 10 : 0, remainingUnit: "G", total: event.cumulative });
+          await waitForExperience(event.success ? 900 : 1100);
+          continue;
+        }
+
+        if (event.kind === "lycoris-upper-cz") {
+          const upperCzComplete = await animateExperienceCounter(eventGames, "G", "MAJIMA BATTLE", event.label, "1000pt到達後の上位CZを最後まで進めます", event.chance, "成功期待度 約70%", runId);
+          if (!upperCzComplete) return;
+          consumedGames += eventGames;
+          setExperienceStage(3, "UPPER CZ FINAL", event.label, "PUSH", "リコリスラッシュWの当落を開きます", "judge", event.chance, "10G 上位CZ最終結果");
+          await waitForExperienceAction("真島バトル PUSH", 5000, event.success ? "upper" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.success ? "RUSH W ENTRY" : "MAJIMA BATTLE END", event.success ? "真島撃破" : "真島バトル敗北", event.success ? "上位RUSH" : "通常へ", event.success ? "前半50G＋後半ST10Gの上位へ進みます" : `累計 ${yen.format(event.cumulative)}枚・最終結果へ`, event.success ? "hyper" : "end", event.success ? 100 : 0, "真島バトル結果");
+          await waitForExperience(event.success ? 1300 : 1050);
+          continue;
+        }
+
+        if (event.kind === "lycoris-legendary") {
+          const legendaryComplete = await animateExperienceCounter(eventGames, "G", "LEGENDARY LYCORIS", event.label, "7G＋αの特化ゾーンを進めます", 100, "平均上乗せ約1000枚", runId);
+          if (!legendaryComplete) return;
+          consumedGames += eventGames;
+          setExperienceStage(3, "LEGENDARY RESULT", event.label, "PUSH", "上乗せ枚数を開きます", "judge", 100, "レジェンダリーリコリス結果");
+          await waitForExperienceAction("レジェンダリーリコリス PUSH", 5000, "upper");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, "LEGENDARY LYCORIS", event.label, `+${yen.format(event.award)}枚`, "リコリスラッシュWへ進みます", "hyper", 100, "特化ゾーン上乗せ結果");
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: 50, remainingUnit: "G", addOn: event.award, total: event.cumulative });
+          await waitForExperience(1400);
+          continue;
+        }
+
+        if (event.kind === "lycoris-upper-reset") {
+          setExperienceStage(3, "RAINBOW POINT JUDGE", `上位 SET ${event.section} 終了`, "PUSH", "1000pt再到達による上位再セットを開きます", "judge", event.success ? 100 : 0, `獲得 ${yen.format(event.points)}pt`);
+          await waitForExperienceAction(`上位 SET ${event.section} 再セット PUSH`, 5000, event.success ? "upper" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.success ? "RUSH W RESET" : "RUSH W END", event.success ? "虹MAX・上位再セット" : "上位RUSH終了", event.success ? "NEXT SET" : "通常へ", event.success ? "CZを挟まず前半50Gへ戻ります" : `累計 ${yen.format(event.cumulative)}枚・最終結果へ`, event.success ? "hyper" : "end", event.success ? 100 : 0, "上位ポイント結果");
+          setSlotAtStatus({ visible: true, remaining: event.success ? 50 : 0, remainingUnit: "G", total: event.cumulative });
+          await waitForExperience(event.success ? 1250 : 1100);
           continue;
         }
 
