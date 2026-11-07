@@ -5282,6 +5282,45 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.titleFlow;
 })();
 
+(function applyGodzillaEvaDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["godzilla-eva-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "約100枚のBONUSから5G＋αのRUSHチャレンジへ。50〜600Gの高純増ATと決戦キングギドラを専用進行で体験。",
+    intro: "3種類の初当りBONUS、RUSHチャレンジ、ゴジエヴァアタック、純増約5.0枚/GのゴジエヴァRUSH、殲滅作戦、4Gの決戦キングギドラ、初回100G以上×約77%のG覚醒RUSHまでを機種専用画面で再現します。",
+    points: ["BONUSは20G・約100枚・純増約5.0枚/G", "RUSHチャレンジは5G＋α・期待度約57%", "通常ATの初期ゲーム数は50〜600G", "G覚醒RUSHは初回100G以上・約77%ループ"],
+    specs: [["BONUS（設定1）", "約1/299.9"], ["AT（設定1）", "約1/581.8"], ["AT（設定6）", "約1/407.3"], ["ベース", "約33G/50枚"], ["BONUS", "20G・約100枚"], ["RUSHチャレンジ", "5G＋α・期待度約57%"], ["ゴジエヴァアタック", "初期50〜600G"], ["AT純増", "約5.0枚/G"], ["殲滅作戦", "勝利期待度約50%"], ["決戦キングギドラ", "4G・初回期待度約55%"], ["G覚醒RUSH", "初回100G以上・約77%ループ"], ["設定", "1・2・4・5・6"]],
+    articleSections: [
+      { heading: "3種類のBONUSとRUSHチャレンジ", paragraphs: ["初当りはエヴァンゲリオンBONUS、ゴジラBONUS、G覚醒チャレンジの3種類。いずれも20G・純増約5.0枚/Gで、獲得目安は約100枚です。エヴァンゲリオンBONUSは小役でRUSHチャレンジ獲得を抽選し、ゴジラBONUSはRUSHチャレンジ濃厚です。", "RUSHチャレンジは5G＋αで、全役でATを抽選。平均期待度は約57%です。G覚醒チャレンジは失敗でも通常AT、成功ならG覚醒アタックから上位ATへ進みます。専用画面ではBONUS消化と最終PUSHを分けて表示します。"] },
+      { heading: "ゴジエヴァアタックと通常AT", paragraphs: ["AT突入時はゴジエヴァアタックで初期ゲーム数を決定。獲得範囲は50〜600Gで、ハズレ・ベルでも約16%、リプレイなら約45%で100G以上、レア役・G侵食役なら100G以上が濃厚です。", "ゴジエヴァRUSHは純増約5.0枚/Gのゲーム数上乗せ型。小役連とレア役で直乗せとバトル上乗せをダブル抽選し、ベルでG因子ポイント、スイカで殲滅作戦を抽選します。"] },
+      { heading: "殲滅作戦と10倍上乗せ", paragraphs: ["殲滅作戦はAT中のスイカ成立時の一部から入るバトル型CZ。通常AT中の勝利期待度は約50%で、勝利時は10〜30G上乗せと追撃チャンスへ進みます。", "追撃チャンスの成功期待度も約50%。成功すれば獲得した10〜30Gが10倍へ昇格します。専用画面ではバトルと追撃を別々のPUSHにし、上乗せゲーム数だけを先に表示します。"] },
+      { heading: "決戦キングギドラとG覚醒RUSH", paragraphs: ["決戦キングギドラは4Gの上位ATチャレンジで、初回成功期待度は約55%。AT最終ゲームのレア役、ギドラアイコン、エンディング後などから突入します。", "勝利後はG覚醒アタックで初回100〜600Gを決定し、G覚醒RUSHへ。2セット目以降は30G以上で、セット終了ごとに決戦キングギドラへ進み約77%でループします。上位終了後70G以内のBONUSは上位復帰濃厚です。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約33G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1・2・4・5・6のBONUS・AT初当りと出玉率は公開設定別値", "3種類のBONUS、RUSHチャレンジ、初期G決定、殲滅作戦、決戦キングギドラ、G覚醒RUSHを専用進行", "BONUS種類比率、通常AT中の各上乗せ出現率など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["一撃 機種概要・解析", "https://1geki.jp/slot/l_gojieva/"], ["必勝本 基本スペック", "https://hisshobon.com/machineinfo/82812/"], ["必勝本 上位G覚醒RUSH", "https://p.hisshobon.jp/machine/4242/1/100579"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9990"]],
+    readerGuide: { verdict: "約100枚のBONUSから5G＋αのチャレンジを突破し、50〜600Gの高純増AT、10倍上乗せ、約77%ループの上位を目指すゲーム数管理型です。", bestFor: ["BONUS後の5Gを回して最終PUSHを押したい", "殲滅作戦のバトルと10倍追撃を体験したい", "決戦キングギドラから上位ATを狙いたい"], check: ["BONUS・AT初当り、主要ゲーム数、純増、公開期待度は解析値", "上乗せゲーム数と獲得枚数を分けて表示", "未公表の細かな振り分けは体験用代表値"], compare: [["godzilla-eva2-slot", "Lゴジラ対エヴァ2", "後継機の震撃チャンス型と比較"], ["zenigata4-slot", "主役は銭形4", "ゲーム数上乗せATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v29", dedicatedFlow: true, dedicatedFlowKey: "godzilla-eva-slot", dedicatedFlowVersion: 2, godzillaEvaFlow: true,
+    triggerLabel: "初当りBONUS", triggerRate: 299.9, triggerSuccess: 1, mainLabel: "ゴジエヴァRUSH", mainRate: 581.8, base50: 33.0, coinUnit: 4.0,
+    normalMin: 0, normalMax: 0, atPureIncrease: 5.0, upperPureIncrease: 5.0, atPayoutVariance: 0,
+    entryBonusAwards: [[{ key: "eva", label: "エヴァンゲリオンBONUS", games: 20, payout: 100, atChance: 0.302, challenge: true }, 0.49], [{ key: "godzilla", label: "ゴジラBONUS", games: 20, payout: 100, atChance: 0.57, challenge: true }, 0.35], [{ key: "awakening", label: "G覚醒チャレンジ", games: 20, payout: 100, atChance: 1, directUpperChance: 0.50 }, 0.16]],
+    entryBonusAwardsNote: "BONUS種類の公表比率がないため種類比率は体験用代表値。エヴァBONUSはRUSHチャレンジ獲得約53%×チャレンジ約57%として判定",
+    godzillaInitialGames: [[50, 0.61], [100, 0.22], [150, 0.08], [200, 0.05], [300, 0.025], [500, 0.01], [600, 0.005]],
+    godzillaAwakeningGames: [[100, 0.56], [200, 0.25], [300, 0.11], [400, 0.05], [500, 0.02], [600, 0.01]],
+    godzillaAddOnChecks: [[1, 0.38], [2, 0.37], [3, 0.18], [4, 0.07]],
+    godzillaDirectAddGames: [[10, 0.52], [20, 0.27], [30, 0.13], [50, 0.06], [100, 0.02]],
+    godzillaAnnihilationChance: 0.50, godzillaPursuitChance: 0.50,
+    specialLabel: "殲滅作戦", specialChance: 0.30, upperChallenge: "決戦キングギドラ", upperChallengeGames: 4, upperChance: 0.22, upperSuccess: 0.55, upperLabel: "G覚醒RUSH", upperContinue: 0.77, upperPayout: 0,
+    upperFirstGames: [[100, 0.56], [200, 0.25], [300, 0.11], [400, 0.05], [500, 0.02], [600, 0.01]],
+    upperSetGames: [[30, 0.58], [50, 0.24], [100, 0.12], [200, 0.05], [300, 0.01]], upperMaxLoops: 12, upperReturnGames: 70, upperReturnChance: 0.18,
+    settingRates: { 1: { trigger: 299.9, main: 581.8, payout: 0.977 }, 2: { trigger: 292.2, main: 552.7, payout: 0.992 }, 4: { trigger: 272.3, main: 487.8, payout: 1.046 }, 5: { trigger: 256.7, main: 446.2, payout: 1.107 }, 6: { trigger: 244.8, main: 407.3, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
 (function applyInuyasha2DedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["inuyasha2-slot"];
   if (!machine) return;
