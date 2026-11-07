@@ -8155,7 +8155,7 @@
     document.getElementById("machineAtypeActions").hidden = true;
     const session = aTypeSession;
     const startGames = session.games;
-    setExperienceStage(0, "NEXT BONUS", "次のボーナスを抽選中", `${yen.format(startGames)}G`, "設定はまだ非公開です", "normal", 100 / session.combinedRate, "1Gごとのボーナス合算");
+    setExperienceStage(0, "NEXT BONUS", "次のボーナスを抽選中", "0G", `ボーナス後から再計測・総ゲーム ${yen.format(startGames)}G`, "normal", 100 / session.combinedRate, "今回のボーナス間ゲーム数");
     await waitForExperience(260);
     if (runId !== experienceRunId || !aTypeSession) { aTypeBusy = false; return; }
 
@@ -8171,7 +8171,7 @@
     session.minDiff = Math.min(session.minDiff, preBonusDiff);
     session.maxDiff = Math.max(session.maxDiff, preBonusDiff);
 
-    const normalSpinComplete = await animateExperienceCounter(session.lastGap, "G", "NORMAL GAME", "通常ゲーム消化中", "ボーナス成立までリールを回します", 100 / session.combinedRate, "通常時ボーナス抽選", runId, { countdown: false, startValue: startGames, stageIndex: 0, duration: 2000, chainWindow: hadPreviousBonus ? 100 : 0, chainTitle: "ジャグ連中", chainMessage: "ボーナス後100G以内を回転中" });
+    const normalSpinComplete = await animateExperienceCounter(session.lastGap, "G", "NORMAL GAME", "通常ゲーム消化中", "ボーナス後のゲーム数を0Gから表示します", 100 / session.combinedRate, "今回のボーナス間ゲーム数", runId, { countdown: false, startValue: 0, stageIndex: 0, duration: 2000, chainWindow: hadPreviousBonus ? 100 : 0, chainTitle: "ジャグ連中", chainMessage: "ボーナス後100G以内を回転中" });
     if (!normalSpinComplete || runId !== experienceRunId || !aTypeSession) { aTypeBusy = false; return; }
 
     if (startGames + gap <= session.maxGames) {
@@ -8183,7 +8183,7 @@
       session.maxDiff = Math.max(session.maxDiff, postBonusDiff);
       const interim = buildATypeResult(session, false);
       const jagRenHit = hadPreviousBonus && session.lastGap <= 100;
-      setExperienceHud(`${yen.format(session.games)}G`, `${yen.format(interim.investment)}円`, `${interim.score >= 0 ? "+" : ""}${yen.format(interim.score)}枚`);
+      setExperienceHud(`${yen.format(session.lastGap)}G`, `${yen.format(interim.investment)}円`, `${interim.score >= 0 ? "+" : ""}${yen.format(interim.score)}枚`);
       setExperienceStage(1, jagRenHit ? "JUGGLER CHAIN" : "BONUS HIT", jagRenHit ? `${session.lastBonus} BONUS・ジャグ連中` : `${session.lastBonus} BONUS`, `${yen.format(session.lastGap)}Gで当選`, `${jagRenHit ? "100G以内のジャグ連 / " : ""}累計 BIG ${session.big}回・REG ${session.reg}回 / 設定は終了時に発表`, session.lastBonus === "BIG" ? "hyper" : "hit", 100, jagRenHit ? "ジャグ連ボーナス" : `${session.lastBonus}当選`);
       await waitForExperience(650);
     }
@@ -8194,7 +8194,7 @@
       await finishATypeExperience(true);
       return;
     }
-    setExperienceStage(2, "PLAY SELECT", "続けますか？", `現在 ${yen.format(session.games)}G`, `BIG ${session.big}回・REG ${session.reg}回 / やめると設定と収支を発表`, "judge", 100, "続行判断");
+    setExperienceStage(2, "PLAY SELECT", "続けますか？", `今回 ${yen.format(session.lastGap)}G`, `総ゲーム ${yen.format(session.games)}G / BIG ${session.big}回・REG ${session.reg}回`, "judge", 100, "続行判断");
     document.getElementById("machineAtypeActions").hidden = false;
     document.getElementById("machineAtypeContinue").focus({ preventScroll: true });
   }
