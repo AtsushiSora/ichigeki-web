@@ -9,8 +9,8 @@ vm.runInContext(source, sandbox);
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
 const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
-const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow || machine.sim?.godEaterFlow || machine.sim?.millionGodFlow || machine.sim?.juohFlow || machine.sim?.sunbreakFlow || machine.sim?.paripiFlow || machine.sim?.superBlackjackFlow || machine.sim?.magicalHalloween8Flow || machine.sim?.gundamSeedFlow || machine.sim?.fireForceFlow || machine.sim?.fireForce2Flow);
-const expectedProfiles = { battle: 6, st: 2, heaven: 3, bonus: 0, addon: 12 };
+const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow || machine.sim?.godEaterFlow || machine.sim?.millionGodFlow || machine.sim?.juohFlow || machine.sim?.sunbreakFlow || machine.sim?.paripiFlow || machine.sim?.goldenKamuyFlow || machine.sim?.superBlackjackFlow || machine.sim?.magicalHalloween8Flow || machine.sim?.gundamSeedFlow || machine.sim?.fireForceFlow || machine.sim?.fireForce2Flow);
+const expectedProfiles = { battle: 6, st: 2, heaven: 3, bonus: 0, addon: 11 };
 const errors = [];
 const rows = [];
 
@@ -49,15 +49,22 @@ for (const [slug, machine] of declarativeFlows) {
 }
 
 if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
-if (declarativeFlows.length !== 23) errors.push(`expected 23 declarative dedicated flows, found ${declarativeFlows.length}`);
+if (declarativeFlows.length !== 22) errors.push(`expected 22 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(specializedFlows);
-if (specializedFlows.length !== 24 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["okidoki-black"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"] || !dedicatedMap["million-god-kiseki"] || !dedicatedMap["juoh-slot"] || !dedicatedMap["monster-hunter-sunbreak"] || !dedicatedMap["paripi-koumei-slot"] || !dedicatedMap["super-blackjack-slot"] || !dedicatedMap["magical-halloween8"] || !dedicatedMap["gundam-seed-slot"] || !dedicatedMap["fire-force-slot"] || !dedicatedMap["fire-force2-slot"]) {
-  errors.push(`expected twenty-four specialized flows including Super Blackjack, Magical Halloween 8, Gundam SEED and both Fire Force titles, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (specializedFlows.length !== 25 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["okidoki-black"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"] || !dedicatedMap["million-god-kiseki"] || !dedicatedMap["juoh-slot"] || !dedicatedMap["monster-hunter-sunbreak"] || !dedicatedMap["paripi-koumei-slot"] || !dedicatedMap["golden-kamuy-slot"] || !dedicatedMap["super-blackjack-slot"] || !dedicatedMap["magical-halloween8"] || !dedicatedMap["gundam-seed-slot"] || !dedicatedMap["fire-force-slot"] || !dedicatedMap["fire-force2-slot"]) {
+  errors.push(`expected twenty-five specialized flows including Golden Kamuy, Super Blackjack, Magical Halloween 8, Gundam SEED and both Fire Force titles, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
+  const goldenKamuy = dedicatedMap["golden-kamuy-slot"];
+  const goldenKamuySim = goldenKamuy.sim;
+  if (goldenKamuySim.cycleFlow || goldenKamuySim.titleFlow) errors.push("golden-kamuy-slot: legacy reusable flow still exists");
+  if (!Array.isArray(goldenKamuySim.goldenKamuyBonuses) || goldenKamuySim.goldenKamuyBonuses.length !== 2) errors.push("golden-kamuy-slot: initial bonus types are incomplete");
+  if (!Array.isArray(goldenKamuySim.goldenKamuyEvents) || goldenKamuySim.goldenKamuyEvents.length !== 5) errors.push("golden-kamuy-slot: AT event types are incomplete");
+  if (Number(goldenKamuySim.goldenKamuyAtGames) !== 100 || Number(goldenKamuySim.goldenKamuyUpperThreshold) !== 2000) errors.push("golden-kamuy-slot: AT game or upper threshold is incorrect");
+  if (Number(goldenKamuySim.atPureIncrease) !== 2.7 || Number(goldenKamuySim.upperPureIncrease) !== 4.5) errors.push("golden-kamuy-slot: AT pure increase is incorrect");
   const sbj = dedicatedMap["super-blackjack-slot"];
   const sbjSim = sbj.sim;
   if (sbjSim.cycleFlow || sbjSim.titleFlow) errors.push("super-blackjack-slot: legacy reusable flow still exists");

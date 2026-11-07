@@ -5282,6 +5282,40 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.titleFlow;
 })();
 
+(function applyGoldenKamuyDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["golden-kamuy-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "ピュウ☆と仲間参戦から2種類のBONUSへ。100Gの黄金神威で上乗せ・覚醒・GOLDEN BONUSを重ね、真・黄金神威を目指す。",
+    intro: "規定ピュウ☆、狩猟チャレンジ、温泉チャンス、KAMUY BONUS／決戦BONUS、100G＋αの黄金神威、仲間参戦、覚醒、GOLDEN BONUS、2000枚到達後のGOLDEN ROADと真・黄金神威までを専用画面で体験できます。",
+    points: ["初当り合算は設定1で約1/308.1", "黄金神威は初期100G・純増約2.7枚/G", "GOLDEN BONUSは30G＋最終+10G", "2000枚獲得後は純増約4.5枚/Gへ"],
+    specs: [["初当り合算（設定1）", "約1/308.1"], ["AT初当り（設定1）", "約1/818.4"], ["AT初当り（設定6）", "約1/647.3"], ["ベース", "約36.9G/50枚"], ["KAMUY BONUS", "11G・純増約4.5枚/G"], ["決戦BONUS", "30G・純増約4.5枚/G"], ["黄金神威", "初期100G・純増約2.7枚/G"], ["GOLDEN BONUS", "30G＋最終+10G"], ["覚醒／極・覚醒", "10G＋α"], ["GOLDEN ROAD", "50G"], ["真・黄金神威", "純増約4.5枚/G"]],
+    articleSections: [
+      { heading: "ピュウ☆と仲間参戦", paragraphs: ["通常時は毎ゲーム貯まるピュウ☆の規定数到達、絆役、レア役からBONUSを目指します。狩猟チャレンジは5G＋αのピュウ☆獲得特化ゾーン、温泉チャンスは20G＋α・期待度約60%のBONUS高確率ゾーンです。", "杉元・アシㇼパ・白石の参戦は15G＋α継続し、対応役の性能を強化。複数参戦中の絆役はBONUS直撃の期待が高まります。通常時の内部ピュウ☆量や参戦抽選は初当り確率へまとめています。"] },
+      { heading: "2種類の初当りBONUS", paragraphs: ["通常時のBONUSは11GのKAMUY BONUSと30Gの決戦BONUS。どちらも純増約4.5枚/Gで、フリーズ発生ならAT濃厚です。", "決戦BONUS後は20G＋αの決戦CHANCEへ。杉元参戦状態で期待度を上げ、最終PUSHでAT『黄金神威』の当落を開きます。シミュレーターではAT初当りの公開値に合うよう、BONUS経由の突破結果を固定抽選します。"] },
+      { heading: "黄金神威と上乗せ", paragraphs: ["黄金神威は初期100G・純増約2.7枚/Gのゲーム数上乗せ型AT。レア役でゲーム数上乗せ、仲間参戦、覚醒、GOLDEN BONUS、特化ゾーンを抽選します。", "専用画面では残りゲーム数を減らし、区間の最後にPUSHを表示。直乗せ、GOLDEN BONUS、覚醒のいずれかを開いて残りゲーム数と累計枚数へ反映します。"] },
+      { heading: "GOLDEN BONUSと覚醒", paragraphs: ["AT中のGOLDEN BONUSは30G・純増約2.7枚/Gで、最終ゲームに+10G上乗せ。BONUS中は参戦を抽選し、参戦後は覚醒を目指します。", "覚醒／極・覚醒は10G＋αの上乗せ特化ゾーン。リプレイ・レア役で上乗せに期待でき、3人集結なら極・覚醒となります。専用PUSHで上乗せゲーム数を開き、枚数とは分けて表示します。"] },
+      { heading: "GOLDEN ROADと真・黄金神威", paragraphs: ["AT中の獲得枚数が2000枚を超えると純増が約4.5枚/Gへ上昇。終了後は50GのGOLDEN ROADを経て、上位AT『真・黄金神威』へ進みます。", "真・黄金神威中に再び2000枚を獲得すると上位ループの権利を狙えます。シミュレーターでは2000枚到達を条件に上位へ進め、未公表の継続抽選は体験用代表値として扱います。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約36.9G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6の初当り・AT初当り・出玉率は公開設定別値を使用", "2種類BONUS、決戦CHANCE、100G AT、上乗せ、覚醒、GOLDEN BONUS、上位ATを専用進行", "BONUS振り分け、AT中の各契機選択率、上乗せ振り分けなど未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["Sammy 公式製品情報", "https://www.sammy.co.jp/japanese/product/pachislot/goldenkamuy/"], ["一撃 機種解析", "https://1geki.jp/slot/l_golden_kamui/"], ["必勝本 AT・上位AT解析", "https://p.hisshobon.jp/vpage/2600/4"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9987"]],
+    readerGuide: { verdict: "2種類のBONUSから100G＋αの上乗せATへ進み、仲間参戦・覚醒・BONUSを重ねて2000枚到達後の上位を狙うゲーム数管理型です。", bestFor: ["BONUS後の決戦CHANCEをPUSHで体験したい", "残りゲーム数と上乗せを見ながらATを進めたい", "覚醒とGOLDEN ROADの上位ルートを狙いたい"], check: ["初当り・AT初当り、主要ゲーム数、純増は公開値", "上乗せゲーム数と獲得枚数を分けて表示", "未公表の細かな振り分けは体験用代表値"], compare: [["bancho4-slot", "スマスロ 押忍！番長4", "ゲーム数上乗せATと比較"], ["zenigata4-slot", "L主役は銭形4", "ゲーム数管理ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v25", dedicatedFlow: true, dedicatedFlowKey: "golden-kamuy-slot", dedicatedFlowVersion: 2, goldenKamuyFlow: true,
+    triggerLabel: "初当りBONUS", triggerRate: 308.1, triggerSuccess: 308.1 / 818.4, mainLabel: "黄金神威", mainRate: 818.4, base50: 36.9, coinUnit: 3.6, normalMin: 0, normalMax: 0, atPureIncrease: 2.7, upperPureIncrease: 4.5, atPayoutVariance: 0,
+    goldenKamuyBonuses: [[{ key: "kamuy", label: "KAMUY BONUS", games: 11, award: 50 }, 0.48], [{ key: "battle", label: "決戦BONUS", games: 30, award: 135 }, 0.52]],
+    goldenKamuyAtGames: 100, goldenKamuySectionGames: 20, goldenKamuyMaxSections: 18,
+    goldenKamuyEvents: [[{ key: "none", label: "仲間参戦", addGames: 0, bonusGames: 0 }, 0.43], [{ key: "add", label: "ゲーム数上乗せ", addGames: [[10, 0.44], [20, 0.28], [30, 0.16], [50, 0.09], [100, 0.03]], bonusGames: 0 }, 0.27], [{ key: "golden-bonus", label: "GOLDEN BONUS", addGames: 10, bonusGames: 30 }, 0.18], [{ key: "awakening", label: "覚醒", addGames: [[20, 0.42], [30, 0.30], [50, 0.20], [100, 0.08]], bonusGames: 10 }, 0.10], [{ key: "extreme", label: "極・覚醒", addGames: [[50, 0.50], [100, 0.35], [200, 0.15]], bonusGames: 10 }, 0.02]],
+    goldenKamuyUpperThreshold: 2000, goldenKamuyRoadGames: 50, goldenKamuyUpperGames: 100, goldenKamuyUpperContinue: 0.72, goldenKamuyUpperMaxSections: 10,
+    specialLabel: "覚醒／極・覚醒", specialChance: 0.12, upperChallenge: "GOLDEN ROAD", upperChance: 0, upperSuccess: 1, upperLabel: "真・黄金神威", upperContinue: 0.72, upperPayout: 0,
+    settingRates: { 1: { trigger: 308.1, main: 818.4, payout: 0.979 }, 2: { trigger: 302.4, main: 805.9, payout: 0.986 }, 3: { trigger: 290.4, main: 775.6, payout: 1.008 }, 4: { trigger: 268.5, main: 717.3, payout: 1.054 }, 5: { trigger: 260.1, main: 694.8, payout: 1.088 }, 6: { trigger: 248.8, main: 647.3, payout: 1.133 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
 (function applyMagicalHalloween8DedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["magical-halloween8"];
   if (!machine) return;
