@@ -731,6 +731,10 @@
         ["ENTRY / ZONE", "初当り・突破率", `${sim.triggerLabel}の基準は約1/${sim.triggerRate}、${sim.mainLabel}初当りは設定${slotBaselineSetting}基準で約1/${sim.mainRate}です。通常時の全モード・規定ゲーム数・天井は初当り確率へまとめています。`],
         ["UPPER", "上位ルート", `${upperCondition}${upperDescription}`]
       ];
+      if (titleFlow?.balance) {
+        const profileNames = { battle: "継続バトル型", st: "ST・連続当選型", heaven: "天国・1G連型", bonus: "BONUS連鎖型", addon: "ゲーム数上乗せ型" };
+        cards.splice(4, 0, ["BALANCE MODEL", "専用フローの抽選目安", `${profileNames[titleFlow.profile] || "機種専用型"}として、AT突入後は平均約${Number(titleFlow.balance.averageRounds).toFixed(1)}区間進行します。通常フローから${sim.upperLabel}へ到達する代表目安は約${percent(titleFlow.balance.upperRoute)}です。公開値と機種別の代表値から計算した比較用の目安で、実戦結果を保証するものではありません。`]);
+      }
       note = `${cycle.label || sim.mainLabel}の区間順序、代表報酬、継続判定を${titleFlow ? "機種専用フローで" : "個別に"}表示する体験モデルです。成立役別抽選、内部状態、全報酬振り分けは短時間で比較できる形へ簡略化しています。`;
     } else {
       const upperRouteRate = Math.max(0, Number(sim.upperChance) || 0);

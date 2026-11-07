@@ -4576,6 +4576,35 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
     .map(entry => entry?.[0]?.label)
     .filter(Boolean)
     .join("・");
+  const clampedRate = value => Math.max(0.05, Math.min(1, Number(value) || 0.72));
+  const calculateBalance = (sim, cycle) => {
+    const rounds = Array.isArray(cycle.rounds) ? cycle.rounds : [];
+    const maxRounds = Math.max(1, Math.min(rounds.length, Number(cycle.maxRounds) || rounds.length));
+    let reach = 1;
+    let averageRounds = 0;
+    for (let index = 0; index < maxRounds; index += 1) {
+      averageRounds += reach;
+      reach *= clampedRate(rounds[index]?.continueChance ?? cycle.continueChance);
+    }
+
+    const upperAfterRounds = Math.max(0, Number(cycle.upperAfterRounds) || 0);
+    const upperChance = Math.max(0, Math.min(1, Number(sim.upperChance) || 0));
+    const upperSuccess = Math.max(0, Math.min(1, Number(sim.upperSuccess) || 0));
+    let upperRoute = upperChance * upperSuccess;
+    if (upperAfterRounds > 0) {
+      let thresholdReach = 1;
+      for (let index = 0; index < upperAfterRounds - 1; index += 1) {
+        thresholdReach *= clampedRate(rounds[Math.min(index, rounds.length - 1)]?.continueChance ?? cycle.continueChance);
+      }
+      const thresholdSuccess = cycle.upperAfterRoundsAutoSuccess === false ? upperSuccess : 1;
+      upperRoute = thresholdReach * thresholdSuccess;
+      if (!cycle.upperOnlyAfterRounds) upperRoute += (1 - thresholdReach) * upperChance * upperSuccess;
+    }
+    return {
+      averageRounds: Number(averageRounds.toFixed(2)),
+      upperRoute: Number(Math.max(0, Math.min(1, upperRoute)).toFixed(4))
+    };
+  };
 
   Object.entries(profileDefinitions).forEach(([profile, definition]) => {
     definition.slugs.forEach(slug => {
@@ -4606,7 +4635,8 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
         phaseLabel: definition.phaseLabel,
         resultContinue: definition.resultContinue,
         resultEnd: definition.resultEnd,
-        pushDetail: definition.pushDetail
+        pushDetail: definition.pushDetail,
+        balance: calculateBalance(sim, cycle)
       };
       sim.rankingVersion = "v7";
       machine.updated = "2026-11-07";
