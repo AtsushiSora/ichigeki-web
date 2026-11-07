@@ -9,8 +9,8 @@ vm.runInContext(source, sandbox);
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
 const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
-const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow);
-const expectedProfiles = { battle: 8, st: 7, heaven: 4, bonus: 8, addon: 12 };
+const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow);
+const expectedProfiles = { battle: 8, st: 6, heaven: 4, bonus: 8, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -49,14 +49,14 @@ for (const [slug, machine] of declarativeFlows) {
 }
 
 if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
-if (declarativeFlows.length !== 39) errors.push(`expected 39 declarative dedicated flows, found ${declarativeFlows.length}`);
+if (declarativeFlows.length !== 38) errors.push(`expected 38 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(specializedFlows);
-if (specializedFlows.length !== 8 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"]) {
-  errors.push(`expected eight specialized flows including Aobuta, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (specializedFlows.length !== 9 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"]) {
+  errors.push(`expected nine specialized flows including Bofuri, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
   const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
@@ -121,6 +121,15 @@ if (specializedFlows.length !== 8 || !dedicatedMap["tokyo-ghoul-slot"] || !dedic
   if (Number(aobutaSim.aobutaUpperContinue) !== 0.80 || !Array.isArray(aobutaSim.aobutaUpperAwards)) errors.push("aobuta-slot: upper ST model is incomplete");
   if (Number(aobutaSim.base50) !== 31.5 || Number(aobutaSim.atPureIncrease) !== 8) errors.push("aobuta-slot: base or bonus pure increase is incorrect");
   if (!Array.isArray(aobutaSim.settingPool) || aobutaSim.settingPool.join(",") !== "2,3,4,5,6") errors.push("aobuta-slot: setting pool is incorrect");
+  const bofuri = dedicatedMap["bofuri-slot"];
+  const bofuriSim = bofuri.sim;
+  if (bofuriSim.cycleFlow || bofuriSim.titleFlow) errors.push("bofuri-slot: legacy reusable flow still exists");
+  if (!Array.isArray(bofuriSim.bofuriCzRoutes) || bofuriSim.bofuriCzRoutes.length !== 3) errors.push("bofuri-slot: CZ routes are incomplete");
+  if (!Array.isArray(bofuriSim.bofuriBonuses) || bofuriSim.bofuriBonuses.length !== 4) errors.push("bofuri-slot: bonus types are incomplete");
+  if (!Array.isArray(bofuriSim.bofuriDefenseLevels) || bofuriSim.bofuriDefenseLevels.length !== 5) errors.push("bofuri-slot: defense levels are incomplete");
+  if (Number(bofuriSim.bofuriFirstDefenseChance) !== 0.88 || Number(bofuriSim.bofuriCzAppearance) !== 11.9) errors.push("bofuri-slot: defense state model is incorrect");
+  if (Number(bofuriSim.bofuriAngelGames) !== 30 || Number(bofuriSim.bofuriViolenceGames) !== 50) errors.push("bofuri-slot: special zones are incorrect");
+  if (Number(bofuriSim.base50) !== 33 || Number(bofuriSim.atPureIncrease) !== 5.5) errors.push("bofuri-slot: base or bonus pure increase is incorrect");
 }
 
 if (process.argv.includes("--verbose")) console.table(rows);

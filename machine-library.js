@@ -4984,6 +4984,71 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.titleFlow;
 })();
 
++(function applyBofuriDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["bofuri-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "高確率ZONEを突破し、ボーナスと防御状態を約77〜94%でループ。",
+    intro: "高確率ZONEからBIG・REG・エピソードBONUSを目指し、ボーナス後は必ず防御状態へ。防御状態Lv.0〜4、天使ZONE、暴虐ZONEまでを実機の順番に沿って体験できます。",
+    points: ["運営高確率はボーナス期待度約50%", "防御状態は初回CZ期待度88%以上・以後約77〜94%ループ", "天使ZONEは30G、暴虐ZONEは50G・期待枚数約3500枚"],
+    specs: [["ボーナス初当り（設定1）", "約1/319.0"], ["ボーナス初当り（設定6）", "約1/229.7"], ["高確率ZONE", "ボーナス期待度約50%"], ["REG BONUS", "約100枚"], ["BIG BONUS", "約150枚／約250枚"], ["防御状態", "最大80G・CZ約1/11.9"], ["初回CZ期待度", "88%以上"], ["防御状態ループ", "約77〜94%"], ["天使ZONE", "30G・ボーナス期待度約70%"], ["暴虐ZONE", "50G・期待枚数約3500枚"], ["純増", "約5.5枚/G"], ["ベース", "約33G/50枚"]],
+    articleSections: [
+      { heading: "通常時と3種類の高確率ZONE", paragraphs: ["通常時はレア役・ヒドラ目・規定ゲーム数から高確率ZONEを目指します。運営高確率のボーナス期待度は約50%。機械神高確率と極・高確率は成功でエピソードBONUS濃厚です。", "シミュレーターでは初当り確率を設定別に抽選し、CZ種類と最終PUSHを機種専用画面で表示します。"] },
+      { heading: "3種類のBONUS", paragraphs: ["REGは約100枚、BIGはシングル揃い約150枚・ダブル揃い約250枚。エピソードBONUSは約250枚を獲得し、天使ZONEまたは暴虐ZONEへの分岐に期待できます。", "防御状態中のBIGはダブル揃い濃厚です。ボーナス中は防御力ポイントとスキルを抽選し、次の防御状態を強化します。"] },
+      { heading: "防御状態Lv.0〜4", paragraphs: ["ボーナス後は必ず防御状態へ。初回のCZ期待度は88%以上、CZ出現率は約1/11.9です。レベルはLv.0〜4の5段階で、CZループは約77・79・83・86・94%です。", "最大80Gまでに転落しなければ無限CZへ。強ヒドラ目は無限の運営高確率または極・高確率濃厚です。"] },
+      { heading: "天使ZONEと暴虐ZONE", paragraphs: ["天使ZONEは30G継続し、高確率ZONE出現約1/5.5、ボーナス期待度約70%。", "暴虐ZONEは50G継続し、暴虐高確率成功時は暴虐BONUSへ。突入時の期待枚数は約3500枚とされる本機最上位の出玉ルートです。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約33G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6を均等抽選", "防御状態のCZ出現率・ループ率・特化ZONEは公開値を優先", "CZ種類・防御Lv・エピソード分岐など非公開配分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["なな徹 機種解析", "https://nana-press.com/kaiseki/machine/764/"], ["なな徹 防御状態解析", "https://nana-press.com/kaiseki/machine/764/21900/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10036"], ["サミー 公式機種情報", "https://www.sammy.co.jp/japanese/product/pachislot/bou_fu/"]],
+    readerGuide: {
+      verdict: "約50%のCZを突破し、ボーナスで防御力を高めながらLv.0〜4の防御状態をループさせるボーナス連鎖型です。",
+      bestFor: ["CZの最後をPUSHで決めたい", "防御状態のレベルアップと連チャンを追いたい", "天使ZONE・暴虐ZONEの上位ルートを狙いたい"],
+      check: ["設定別初当り・純増・防御状態は公開値", "BIG・REG・特化ZONEの代表獲得枚数を反映", "非公開のルート配分は体験用代表値"],
+      compare: [["kanokari-slot", "スマスロ かのかり", "疑似BONUSループ型と比較"], ["shin-eva-slot", "スマスロ シン・エヴァ", "ST型BONUSループと比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v11",
+    dedicatedFlow: true,
+    dedicatedFlowKey: "bofuri-slot",
+    dedicatedFlowVersion: 2,
+    bofuriFlow: true,
+    triggerLabel: "高確率ZONE",
+    triggerRate: 159.5,
+    triggerSuccess: 0.50,
+    mainLabel: "防振りBONUS",
+    mainRate: 319.0,
+    base50: 33,
+    normalMin: 0,
+    normalMax: 0,
+    atPureIncrease: 5.5,
+    atPayoutVariance: 0,
+    bofuriCzRoutes: [[{ key: "admin", label: "運営高確率", games: 15, chance: 0.50 }, 0.84], [{ key: "machine", label: "機械神高確率", games: 15, chance: 0.62 }, 0.10], [{ key: "extreme", label: "極・高確率", games: 15, chance: 0.55 }, 0.06]],
+    bofuriBonuses: [[{ key: "reg", label: "REG BONUS", games: 18, payout: 100, defensePoints: 650 }, 0.35], [{ key: "big-single", label: "BIG BONUS・シングル", games: 28, payout: 150, defensePoints: 1200 }, 0.40], [{ key: "big-double", label: "BIG BONUS・ダブル", games: 46, payout: 250, defensePoints: 1900 }, 0.21], [{ key: "episode", label: "エピソードBONUS", games: 46, payout: 250, defensePoints: 2600 }, 0.04]],
+    bofuriDefenseLevels: [{ level: 0, label: "Lv.0 ショートA", loop: 0.77, points: 0 }, { level: 1, label: "Lv.1 ショートB", loop: 0.79, points: 1000 }, { level: 2, label: "Lv.2 ミドル", loop: 0.83, points: 3000 }, { level: 3, label: "Lv.3 ロング", loop: 0.86, points: 6000 }, { level: 4, label: "Lv.4 極ロング", loop: 0.94, points: 10000 }],
+    bofuriFirstDefenseChance: 0.88,
+    bofuriCzAppearance: 11.9,
+    bofuriAngelGames: 30,
+    bofuriAngelChance: 0.70,
+    bofuriViolenceGames: 50,
+    bofuriViolenceExpected: 3500,
+    bofuriMaxLoops: 20,
+    specialLabel: "天使ZONE",
+    specialChance: 0.04,
+    upperChallenge: "暴虐高確率",
+    upperChance: 0.012,
+    upperSuccess: 0.87,
+    upperLabel: "暴虐ZONE",
+    upperContinue: 0,
+    upperPayout: 3500,
+    settingRates: { 1: { main: 319.0, payout: 0.979 }, 2: { main: 309.8, payout: 0.988 }, 3: { main: 307.3, payout: 1.005 }, 4: { main: 266.8, payout: 1.059 }, 5: { main: 257.1, payout: 1.095 }, 6: { main: 229.7, payout: 1.130 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
+
 (function applyTokyoGhoulDedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["tokyo-ghoul-slot"];
   if (!machine) return;

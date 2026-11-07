@@ -78,6 +78,7 @@
   function machineTags(machine) {
     const tags = [];
     if (!isReady(machine)) tags.push("準備中");
+    if (isReady(machine) && machine.sim.dedicatedFlow) tags.push("専用ゲーム性");
     if (isNewMachine(machine)) tags.push("新台");
     if (machine.type === "pachinko") {
       if (Number(machine.sim.hitRate) <= 199.9) tags.push("ライト");
