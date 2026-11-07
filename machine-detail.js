@@ -437,6 +437,7 @@
     const sim = machine.sim;
     if (sim.kind !== "slot") return "";
     const isDirectEntry = Number(sim.triggerSuccess) >= .995 || sim.triggerLabel === sim.mainLabel;
+    const isBasiliskBc = Boolean(sim.basiliskTenzenFlow);
     const triggerRate = Number(sim.triggerRate) || Number(sim.mainRate) || 0;
     const mainRate = Number(sim.mainRate) || triggerRate;
     const successRate = Math.max(0, Math.min(1, Number(sim.triggerSuccess) || 0));
@@ -463,19 +464,30 @@
           ? `${sim.specialLabel}などで獲得を伸ばし、ハラキリチャレンジを3回成功させると4セット目から${sim.upperLabel}へ移行します。`
         : `${sim.specialLabel}などで獲得を伸ばし、${sim.upperChallenge}成功から${sim.upperLabel}を目指します。`
       : `${sim.specialLabel}などの出玉契機で獲得枚数を伸ばします。`;
-    const judgeText = isDirectEntry
+    const judgeText = isBasiliskBc
+      ? `16Gまたは30Gの${sim.triggerLabel}を消化し、異色BCはBT抽選、同色BCはBT期待度50%以上、エピソードBC・プレミアムBCはBT濃厚の代表ルートとして判定します。`
+      : isDirectEntry
       ? sim.uminchuFlow
         ? `${sim.triggerLabel}当選後はBIGまたはREGへ進み、BONUS消化後の32Gでストック放出または自力連チャンを判定します。`
         : `${sim.triggerLabel}を初当りとして扱い、独立したCZ突破抽選は行いません。`
       : `${sim.triggerLabel}到達後、代表突破率${percent(successRate)}で${hasEntryBonuses ? entryLabel : sim.mainLabel}への当落を判定します。`;
-    const missText = isDirectEntry
+    const missText = isBasiliskBc
+      ? `BT当選時は追想の刻10G＋争忍の刻平均30Gへ進み、非当選時はBCの獲得枚数を記録して通常時へ戻ります。`
+      : isDirectEntry
       ? hasEntryBonuses
         ? `初当り後は${sim.entryBonusAwards.map(([bonus]) => bonus.label).join("・")}の代表ルートへ進み、それぞれの条件で${sim.mainLabel}を判定します。`
         : "初当り後はそのままメイン区間へ進みます。"
       : hasEntryBonuses
         ? `成功で${entryLabel}へ進み、獲得後にボーナス種別ごとの期待度で${sim.mainLabel}を抽選します。失敗時は通常時へ戻ります。`
         : `成功で${sim.mainLabel}、失敗時は通常時へ戻る流れです。`;
-    const flow = isDirectEntry
+    const flow = isBasiliskBc
+      ? [
+          ["01", "通常時", `${sim.triggerLabel}を目指す`],
+          ["02", "BC・入口", `約1/${triggerRate}`],
+          ["03", "BT当選ジャッジ", "BC種別で期待度変化"],
+          ["04", "追想＋争忍", sim.mainLabel]
+        ]
+      : isDirectEntry
       ? hasEntryBonuses
         ? [
             ["01", "通常時", `${sim.triggerLabel}を待つ`],
@@ -498,7 +510,13 @@
     const upperStep = sim.upperLabel
       ? `<div class="machine-cz-upper"><span>その先</span><strong>${sim.karakuriJudgeFlow ? "激情3回→運命の一劇 / 4回→運命連鎖" : sim.uminchuFlow ? "BONUS 10連" : sim.goblinSlayerFlow ? "3・5・最大8セット目" : sim.assaultLilyFlow ? "上乗せ特化の報酬" : sim.kaguyaFlow ? "1G連・約100G引き戻し" : sim.dumbbellFlow ? "通常AT中の権利獲得" : sim.shinEvaFlow ? "BONUS後の一部" : sim.upperChallenge}</strong><i aria-hidden="true">→</i><strong>${sim.upperLabel}</strong><small>${sim.karakuriJudgeFlow ? "激情ジャッジ成功回数で上位ルートが変化" : sim.uminchuFlow ? "10連到達で8Gのストック特化ゾーンへ突入" : sim.tentenFlow ? "王宮舞踏会終了後に10G・成功期待度約50%" : sim.goblinSlayerFlow ? "ゴブリンロード撃破または最大8セット継続" : sim.assaultLilyFlow ? "4種類のラストバレットジャッジメント成功で上位AT" : sim.kaguyaFlow ? "5連目以降はBONUSループ期待度約80%" : sim.dumbbellFlow ? "3G・約56%突破後、平均Vストック約4個" : sim.shinEvaFlow ? "マリ獣化チャレンジ10G・成功期待度約38%" : "上位ルートはCZ突破後の別抽選"}</small></div>`
       : "";
-    return `<section class="machine-cz-guide${isDirectEntry ? " is-direct" : ""}" id="cz-game" aria-labelledby="machine-cz-title"><div class="machine-cz-head"><span>${isDirectEntry ? "DIRECT ENTRY FLOW" : "CHANCE ZONE GUIDE"}</span><h3 id="machine-cz-title">${machine.shortName}の${isDirectEntry ? "初当りゲーム性" : "CZのゲーム性"}</h3><p>${isDirectEntry ? "CZを経由しない初当りから、出玉を伸ばす流れを整理します。" : `${sim.triggerLabel}の役割、突破後の行き先、上位までの流れを整理します。`}</p></div><div class="machine-cz-flow" aria-label="${escapeHtml(`${machine.shortName}のゲームフロー`)}">${flow.map(([number, label, detail], index) => `<div><span>${number}</span><strong>${escapeHtml(label)}</strong><small>${escapeHtml(detail)}</small></div>${index < flow.length - 1 ? '<i aria-hidden="true">›</i>' : ""}`).join("")}</div>${upperStep}<div class="machine-cz-detail-grid"><article><span>ROLE</span><h4>${isDirectEntry ? "初当りの役割" : "CZの役割"}</h4><p>通常時の入口は${sim.triggerLabel}で、発生目安は約1/${triggerRate}です。${isDirectEntry ? hasEntryBonuses ? `${initialHitName(entryLabel)}後に複数の代表ルートへ振り分けます。` : `${sim.mainLabel}へ直接つながる代表ルートとして扱います。` : `${hasEntryBonuses ? entryLabel : sim.mainLabel}へ進むための関門として扱います。`}</p></article><article><span>JUDGE</span><h4>${isDirectEntry ? "直結タイプ" : "CZ中の当落"}</h4><p>${judgeText} 実機の小役、ポイント、バトルなど複数の条件は、このサイトでは一連のジャッジへまとめています。</p></article><article><span>RESULT</span><h4>成功・失敗後</h4><p>${missText} 設定${slotBaselineSetting}基準の${initialHitName(sim.mainLabel)}は約1/${mainRate}です。</p></article><article><span>NEXT ROUTE</span><h4>AT中と上位ルート</h4><p>${upperRoute}</p></article></div><p class="machine-cz-note">表示するCZ発生率・突破率・上位到達率は、記事に収録した公表値または比較用の代表値です。実機の全小役、内部状態、モード、天井は完全再現していません。</p></section>`;
+    const guideKicker = isBasiliskBc ? "BONUS ENTRY GUIDE" : isDirectEntry ? "DIRECT ENTRY FLOW" : "CHANCE ZONE GUIDE";
+    const guideTitle = isBasiliskBc ? "BCのゲーム性" : isDirectEntry ? "初当りゲーム性" : "CZのゲーム性";
+    const guideLead = isBasiliskBc ? `${sim.triggerLabel}の種類、BT当選後の追想・争忍、宿怨チャレンジまでの流れを整理します。` : isDirectEntry ? "CZを経由しない初当りから、出玉を伸ばす流れを整理します。" : `${sim.triggerLabel}の役割、突破後の行き先、上位までの流れを整理します。`;
+    const roleTitle = isBasiliskBc ? "BCの役割" : isDirectEntry ? "初当りの役割" : "CZの役割";
+    const judgeTitle = isBasiliskBc ? "BC中の当落" : isDirectEntry ? "直結タイプ" : "CZ中の当落";
+    const rateKind = isBasiliskBc ? "BC" : "CZ";
+    return `<section class="machine-cz-guide${isDirectEntry ? " is-direct" : ""}" id="cz-game" aria-labelledby="machine-cz-title"><div class="machine-cz-head"><span>${guideKicker}</span><h3 id="machine-cz-title">${machine.shortName}の${guideTitle}</h3><p>${guideLead}</p></div><div class="machine-cz-flow" aria-label="${escapeHtml(`${machine.shortName}のゲームフロー`)}">${flow.map(([number, label, detail], index) => `<div><span>${number}</span><strong>${escapeHtml(label)}</strong><small>${escapeHtml(detail)}</small></div>${index < flow.length - 1 ? '<i aria-hidden="true">›</i>' : ""}`).join("")}</div>${upperStep}<div class="machine-cz-detail-grid"><article><span>ROLE</span><h4>${roleTitle}</h4><p>通常時の入口は${sim.triggerLabel}で、発生目安は約1/${triggerRate}です。${isBasiliskBc ? `${sim.triggerLabel}の種類によって${sim.mainLabel}期待度が変化します。` : isDirectEntry ? hasEntryBonuses ? `${initialHitName(entryLabel)}後に複数の代表ルートへ振り分けます。` : `${sim.mainLabel}へ直接つながる代表ルートとして扱います。` : `${hasEntryBonuses ? entryLabel : sim.mainLabel}へ進むための関門として扱います。`}</p></article><article><span>JUDGE</span><h4>${judgeTitle}</h4><p>${judgeText} 実機の小役、ポイント、バトルなど複数の条件は、このサイトでは一連のジャッジへまとめています。</p></article><article><span>RESULT</span><h4>成功・失敗後</h4><p>${missText} 設定${slotBaselineSetting}基準の${initialHitName(sim.mainLabel)}は約1/${mainRate}です。</p></article><article><span>NEXT ROUTE</span><h4>AT中と上位ルート</h4><p>${upperRoute}</p></article></div><p class="machine-cz-note">表示する${rateKind}発生率・突破率・上位到達率は、記事に収録した公表値または比較用の代表値です。実機の全小役、内部状態、モード、天井は完全再現していません。</p></section>`;
   }
 
   function detailedGameGuideMarkup() {
@@ -687,6 +705,15 @@
         ["RETURN", "50G引き戻し", `通常AT・上位AT終了後は50Gの引き戻し区間をカウントします。設定1のAT引き戻し目安約${percent(sim.upperReturnChance)}を代表値として、成功時は再びG覚醒アタックからATへ戻ります。`]
       ];
       note = "公開されているBONUS出玉・AT期待度・初期ゲーム数・純増・各上乗せ契機の期待度を優先した体験モデルです。成立役別抽選、内部状態、全振り分け、設定差が未公表の抽選は代表値へ簡略化しています。";
+    } else if (sim.basiliskTenzenFlow) {
+      cards = [
+        ["BASILISK CHANCE", "16GのBCからBTへ", "異色BC・同色BCは16G。BC当選時と消化中にBTを抽選し、同色BCはBT期待度50%以上です。EPBC・PBCは30GかつBT濃厚として別表示します。"],
+        ["BASILISK TIME", "追想10G＋争忍平均30G", `BTは純増約${Number(sim.atPureIncrease).toFixed(1)}枚/G・1セット平均約40G。追想の刻でBCと絆玉を抽選し、争忍の刻の最後にPUSHで甲賀勝利を開きます。`],
+        ["KIZUNA KOUKAKU", "初回は絆高確", "絆玉1個で縁・想・恋のいずれか、2個で2種類、3個で縁想恋、4個で全役対応の絆モード。対応役によるBC当選で次セット継続を狙います。"],
+        ["BT SCENARIO", "全10種類・12セット管理", "設定1の公開シナリオ振り分けと12セットのA〜F配列を使用します。A〜Dの具体的な継続率は非公表のため、強弱関係を保った代表値で判定し、FはA〜Eから抽選します。"],
+        ["GRUDGE LOOP", "宿怨チャレンジと天膳BT", "カットイン3回まで・成功期待度50%超。成功時は激闘シナリオ相当の天膳BT＋初回10人状態、失敗時も通常BTへ進みます。12セット完走後はエンディングを経て必ず挑戦します。"]
+      ];
+      note = "BC・BT設定別確率、各ゲーム数、純増、シナリオ表・設定1振り分け、宿怨チャレンジの基本性能は公開値です。継続率A〜D、絆玉・BT中BC・月下閃滅・宿怨ポイントMAXの出現率は体験用の代表値です。";
     } else if (sim.tokyoGhoulFlow) {
       cards = [
         ["CHANCE ZONE", "8GのCZからATへ", "レミニセンスは8G・成功期待度約50%、大喰いの利世は8G・約75%。成功後は初期約150枚・純増約4.0枚/Gの東京喰種咬へ進みます。"],
@@ -965,7 +992,7 @@
       const averageInvestment = Math.round((machine.sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
-      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow;
+      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow;
       const settingModelLabel = machine.sim.settingRates
         ? hasDedicatedFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
         : hasDedicatedFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
@@ -1065,7 +1092,7 @@
       ? Math.min(0.98, Number(publishedSetting.upper))
       : hasPublishedSettingRates ? sim.upperChance : Math.min(0.98, sim.upperChance + profile.upper);
     const settingModelLabel = hasPublishedTriggerRate && hasPublishedMainRate
-      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
+      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
       : hasPublishedMainRate
         ? "公開設定別値（初当り）＋CZ簡易換算"
         : "サイト共通補正モデル";
@@ -1173,6 +1200,32 @@
     let tokyoGhoulArimaWon = false;
     let tokyoGhoulUpperAt = false;
     let tokyoGhoulCcgAward = 0;
+    let basiliskBc = null;
+    let basiliskScenario = null;
+    let basiliskSets = 0;
+    let basiliskBtBcCount = 0;
+    let basiliskHighCount = 0;
+    let basiliskMoonCount = 0;
+    let basiliskGrudgeAttempts = 0;
+    let basiliskGrudgeSuccesses = 0;
+    let basiliskTenzenSets = 0;
+    if (sim.basiliskTenzenFlow) {
+      basiliskBc = weighted(sim.basiliskBcTypes || [[{ key: "hetero", label: "異色BC", games: 16, award: 30 }, 1]]);
+      triggerSucceeded = true;
+      const basiliskBtChance = basiliskBc.key === "episode" || basiliskBc.key === "premium"
+        ? 1
+        : basiliskBc.key === "same"
+          ? Math.max(0.50, triggerSuccess)
+          : triggerSuccess;
+      entered = Math.random() < basiliskBtChance;
+      const bcAward = Math.max(0, Number(basiliskBc.award) || 0);
+      payout = Math.min(bcAward, SLOT_COMPLETE_LIMIT);
+      entryBonus = { ...basiliskBc, payout: bcAward, atChance: basiliskBtChance, outcome: entered ? "BT当選" : "BT非当選" };
+      atGamesTotal += Number(basiliskBc.games) || 16;
+      atEvents.push({ kind: "entry-bonus", label: basiliskBc.label, games: basiliskBc.games, award: payout, cumulative: payout, atChance: entryBonus.atChance, outcome: entryBonus.outcome });
+      flow[0] = `${games}Gで${basiliskBc.label}`;
+      flow.push(`${basiliskBc.label} ${basiliskBc.games}G・${entryBonus.outcome}`);
+    }
     if (sim.goblinSlayerFlow) {
       goblinCz = weighted(sim.goblinCzRoutes || [[{ key: "mission", label: "ゴブリンスレイヤーミッション", games: 12, chance: 0.33 }, 1]]);
       triggerSucceeded = Math.random() < Math.max(0, Math.min(1, Number(goblinCz.chance) || 0));
@@ -1912,6 +1965,100 @@
         }
         cycleRounds = shinEvaOperationRounds;
         cycleContinues = bonusCount;
+        basePayout = payout - entryPayout;
+      } else if (sim.basiliskTenzenFlow) {
+        payout = entryPayout;
+        basePayout = 0;
+        basiliskScenario = weighted(sim.basiliskScenarios || [[{ name: "安定", grades: "CCCCCCCCCCCC" }, 1]]);
+        const gradeChances = sim.basiliskGradeChances || { A: 0.25, B: 0.40, C: 0.55, D: 0.80, E: 1 };
+        atEvents.push({ kind: "basilisk-bt-start", label: sim.mainLabel, games: 1, scenario: basiliskScenario.name, grades: basiliskScenario.grades, cumulative: payout });
+        flow.push(`${sim.mainLabel}・シナリオ「${basiliskScenario.name}」`);
+
+        for (let set = 1; set <= 12 && payout < SLOT_COMPLETE_LIMIT; set += 1) {
+          const rawGrade = basiliskScenario.grades?.[set - 1] || "C";
+          const grade = rawGrade === "F" ? weighted([["A", 0.10], ["B", 0.20], ["C", 0.34], ["D", 0.28], ["E", 0.08]]) : rawGrade;
+          const continueChance = Math.max(0, Math.min(1, Number(gradeChances[grade]) || 0.55));
+          const high = set === 1 || Math.random() < (Number(sim.basiliskLaterHighChance) || 0.34);
+          const bondBalls = high ? Number(weighted([[1, 0.50], [2, 0.28], [3, 0.16], [4, 0.06]])) || 1 : 0;
+          const highLabel = !high ? "絆高確なし" : bondBalls >= 4 ? "絆モード" : bondBalls === 3 ? "縁・想・恋" : bondBalls === 2 ? weighted([["縁・想", 1], ["縁・恋", 1], ["想・恋", 1]]) : weighted([["縁", 1], ["想", 1], ["恋", 1]]);
+          if (high) basiliskHighCount += 1;
+          const btBc = Math.random() < Math.min(0.85, (Number(sim.basiliskBtBcChance) || 0.22) + (high ? 0.14 : 0));
+          const btBcType = btBc ? weighted([[{ label: "異色BC", games: 16, award: 46 }, 0.66], [{ label: "同色BC", games: 16, award: 46 }, 0.27], [{ label: "エピソードBC", games: 30, award: 87 }, 0.06], [{ label: "プレミアムBC", games: 30, award: 87 }, 0.01]]) : null;
+          const continued = set === 12 || btBc || Math.random() < continueChance;
+          const setAward = Math.max(0, Math.min(slotAwardForGames(40, Number(sim.atPureIncrease) || 2.9, 0), SLOT_COMPLETE_LIMIT - payout));
+          payout += setAward;
+          atGamesTotal += 40;
+          let bcAward = 0;
+          if (btBcType && payout < SLOT_COMPLETE_LIMIT) {
+            bcAward = Math.max(0, Math.min(Number(btBcType.award) || 46, SLOT_COMPLETE_LIMIT - payout));
+            payout += bcAward;
+            atGamesTotal += Number(btBcType.games) || 16;
+            basiliskBtBcCount += 1;
+            bonusCount += 1;
+            bonusPayoutTotal += bcAward;
+          }
+          basiliskSets = set;
+          cycleRounds = set;
+          if (continued) cycleContinues += 1;
+          atEvents.push({ kind: "basilisk-set", label: sim.mainLabel, games: 40, set, scenario: basiliskScenario.name, rawGrade, grade, chance: continueChance * 100, high, highLabel, bondBalls, btBc: btBcType, bcAward, award: setAward + bcAward, cumulative: payout, continued, completed: set === 12 });
+          flow.push(`BT SET ${set}・${rawGrade === "F" ? `F→${grade}` : grade}・${highLabel}・${btBcType ? `${btBcType.label}当選` : continued ? "甲賀勝利" : "敗北"}`);
+          if (!continued) break;
+        }
+
+        const completedScenario = basiliskSets >= 12;
+        if (completedScenario && payout < SLOT_COMPLETE_LIMIT) {
+          const endingAward = Math.max(0, Math.min(slotAwardForGames(40, Number(sim.atPureIncrease) || 2.9, 0), SLOT_COMPLETE_LIMIT - payout));
+          payout += endingAward;
+          atGamesTotal += 40;
+          atEvents.push({ kind: "basilisk-ending", label: "エンディング", games: 40, award: endingAward, cumulative: payout });
+          flow.push(`12セット完走・エンディング +${yen.format(endingAward)}枚`);
+        }
+
+        const grudgeReached = completedScenario || (payout < SLOT_COMPLETE_LIMIT && Math.random() < (Number(sim.basiliskGrudgeChance) || 0.18));
+        if (grudgeReached && payout < SLOT_COMPLETE_LIMIT) {
+          basiliskGrudgeAttempts += 1;
+          const grudgeSuccess = Math.random() < (Number(sim.upperSuccess) || 0.50);
+          if (grudgeSuccess) basiliskGrudgeSuccesses += 1;
+          upper = grudgeSuccess;
+          atGamesTotal += 3;
+          atEvents.push({ kind: "basilisk-grudge", label: sim.upperChallenge, games: 3, chance: (Number(sim.upperSuccess) || 0.50) * 100, success: grudgeSuccess, mandatory: completedScenario, cumulative: payout });
+          flow.push(`${sim.upperChallenge} ${grudgeSuccess ? "成功・天膳BT" : "失敗・通常BT"}`);
+
+          if (grudgeSuccess) {
+            for (let set = 1; set <= 12 && payout < SLOT_COMPLETE_LIMIT; set += 1) {
+              const firstTen = set === 1;
+              const moon = firstTen && Math.random() < (Number(sim.basiliskMoonChance) || 0.12);
+              const baseAward = Math.max(0, Math.min(slotAwardForGames(40, Number(sim.upperPureIncrease) || 2.9, 0), SLOT_COMPLETE_LIMIT - payout));
+              payout += baseAward;
+              atGamesTotal += 40;
+              let moonAward = 0;
+              let moonStocks = 0;
+              if (moon && payout < SLOT_COMPLETE_LIMIT) {
+                moonStocks = Number(weighted([[2, 0.45], [3, 0.30], [4, 0.16], [5, 0.07], [7, 0.02]])) || 2;
+                moonAward = Math.max(0, Math.min(moonStocks * 116, SLOT_COMPLETE_LIMIT - payout));
+                payout += moonAward;
+                basiliskMoonCount += 1;
+                addOnCount += 1;
+                addOnTotal += moonAward;
+                coinAddOnCount += 1;
+                coinAddOnTotal += moonAward;
+              }
+              const continued = set < 12 && Math.random() < (Number(sim.upperContinue) || 0.80);
+              basiliskTenzenSets = set;
+              upperLoops = set;
+              upperPayoutTotal += baseAward + moonAward;
+              atEvents.push({ kind: "basilisk-tenzen-set", label: sim.upperLabel, games: 40, set, grade: "D", chance: (Number(sim.upperContinue) || 0.80) * 100, tenPeople: firstTen, moon, moonStocks, award: baseAward + moonAward, cumulative: payout, continued });
+              flow.push(`天膳BT SET ${set}・${firstTen ? "10人状態・" : ""}${moon ? `月下閃滅 ${moonStocks}ストック` : continued ? "継続" : "終了"}`);
+              if (!continued) break;
+            }
+          } else {
+            const fallbackAward = Math.max(0, Math.min(slotAwardForGames(40, Number(sim.atPureIncrease) || 2.9, 0), SLOT_COMPLETE_LIMIT - payout));
+            payout += fallbackAward;
+            atGamesTotal += 40;
+            atEvents.push({ kind: "basilisk-fallback", label: "通常バジリスクタイム", games: 40, award: fallbackAward, cumulative: payout });
+            flow.push(`通常バジリスクタイム 1セット・+${yen.format(fallbackAward)}枚`);
+          }
+        }
         basePayout = payout - entryPayout;
       } else if (sim.tokyoGhoulFlow) {
         payout = entryPayout;
@@ -2752,10 +2899,11 @@
     const dumbbellStats = sim.dumbbellFlow ? [["CZ発展先", dumbbellCz?.label || sim.triggerLabel], ["通常AT", `${dumbbellNormalGames}G`], ["ゲーム数上乗せ", dumbbellGameAddCount ? `${dumbbellGameAddCount}回・+${dumbbellGameAddTotal}G` : "上乗せなし"], [sim.upperChallenge, dumbbellGoldenChallenges ? `${dumbbellGoldenChallenges}回・成功${dumbbellGoldenSuccesses ? "あり" : "なし"}` : "未獲得"], ["Vストック", `${dumbbellVStockTotal}個`], [sim.upperLabel, upper ? `${upperLoops}回` : "非到達"], ["差枚数上乗せ", dumbbellCoinAddTotal ? `+${yen.format(dumbbellCoinAddTotal)}枚` : "上乗せなし"], ["引き戻しCZ", dumbbellRisingChallenges ? `${dumbbellRisingChallenges}回` : "未到達"]] : [];
     const shinEvaStats = sim.shinEvaFlow ? [["作戦ST", `${shinEvaOperationRounds}回・進行${shinEvaPhaseAdvances}段階`], ["BONUS内訳", `BIG ${shinEvaBigCount}回・SUPER BIG ${shinEvaSuperCount}回・SPECIAL ${shinEvaSpecialCount}回`], ["作戦進行ストック", `${shinEvaProgressStocks}個`], ["Vストック", `${shinEvaVStocks}個`], [sim.specialLabel, shinEvaSankiCount ? `${shinEvaSankiCount}回` : "非到達"], [sim.upperChallenge, shinEvaMariAttempts ? `${shinEvaMariAttempts}回・成功${shinEvaMariSuccesses}回` : "未到達"], [sim.upperLabel, upper ? `${shinEvaUpperLoops}セット` : "非到達"]] : [];
     const tokyoGhoulStats = sim.tokyoGhoulFlow ? [["今回のCZ", tokyoGhoulCz?.label || sim.triggerLabel], ["喰種対決", `${tokyoGhoulBattles}戦・勝利${tokyoGhoulWins}回`], ["BITES", `${tokyoGhoulBitesCount}回`], ["特化ゾーン", tokyoGhoulSpecialCount ? `${tokyoGhoulSpecialCount}回` : "非当選"], ["有馬貴将", tokyoGhoulArimaBattle ? `${tokyoGhoulArimaBattle}戦目・${tokyoGhoulArimaWon ? "勝利" : "敗北または未到達"}` : "未到達"], ["CCGの死神", tokyoGhoulCcgAward ? `+${yen.format(tokyoGhoulCcgAward)}枚` : "非到達"], ["裏AT", tokyoGhoulUpperAt ? "到達・100G＋α" : "非到達"]] : [];
+    const basiliskStats = sim.basiliskTenzenFlow ? [["初当りBC", basiliskBc?.label || sim.triggerLabel], ["BTシナリオ", basiliskScenario?.name || "BT非突入"], ["通常BT", `${basiliskSets}セット`], ["BT中BC", `${basiliskBtBcCount}回`], ["絆高確", `${basiliskHighCount}セット`], ["月下閃滅", basiliskMoonCount ? `${basiliskMoonCount}回` : "非当選"], [sim.upperChallenge, basiliskGrudgeAttempts ? `${basiliskGrudgeAttempts}回・成功${basiliskGrudgeSuccesses}回` : "未到達"], [sim.upperLabel, basiliskTenzenSets ? `${basiliskTenzenSets}セット` : "非到達"]] : [];
     const cycleStats = sim.cycleFlow ? [[sim.cycleFlow.statLabel || (sim.titleFlow ? "機種専用進行" : "専用ループ"), `${cycleRounds}回・継続${cycleContinues}回`]] : [];
     const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
     const rushGamesTotal = Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
-    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
+    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
     const gameAddOnStats = sim.karakuriJudgeFlow || coinAddOnCount
       ? [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(coinAddOnTotal || addOnTotal)}枚` : "上乗せなし"]]
       : [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnGamesTotal || otomeAddedGames)}G` : "上乗せなし"]];
@@ -2776,6 +2924,8 @@
         ? [["ST・BONUS消化", `${yen.format(rushGamesTotal)}G相当`], ...shinEvaStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : sim.tokyoGhoulFlow
         ? [["AT・BITES消化", `${yen.format(rushGamesTotal)}G相当`], ...tokyoGhoulStats]
+      : sim.basiliskTenzenFlow
+        ? [["BC・BT消化", `${yen.format(rushGamesTotal)}G相当`], ...basiliskStats]
       : [["RUSH消化モデル", `${yen.format(rushGamesTotal)}G相当`], ...karakuriStats, ...battleStats, ...sgStats, ...kabaneriStats, ...otomeStats, ...cycleStats, ...gameAddOnStats, ...bonusStats, ...genericSpecialStats, ["上位AT", upper ? (kabaneriUpperMode || `${sim.upperLabel} ${upperLoops}セット`) : "非到達"]]) : [];
     const stats = [["今回の設定", `設定${setting}`], ["設定差モデル", settingModelLabel], ["今回のゲーム数", `${yen.format(games)}G`], ...settingRateStats, ["現金投資目安", `${yen.format(investment)}円`], ...entryBonusStats, ...atStats, ["獲得枚数", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]];
     if (complete) stats.unshift(["到達状態", "コンプリート"]);
@@ -2798,6 +2948,8 @@
           ? `今回の設定は設定${setting}。${games}Gで初当り、作戦ST ${shinEvaOperationRounds}回・BONUS ${bonusCount}回で${yen.format(payout)}枚を獲得しました。${upper ? `${sim.upperLabel}は${shinEvaUpperLoops}セットです。` : shinEvaSankiCount ? `${sim.specialLabel}は${shinEvaSankiCount}回です。` : "上位STには届きませんでした。"}`
         : sim.tokyoGhoulFlow
           ? `今回の設定は設定${setting}。${games}Gで${tokyoGhoulCz?.label || sim.triggerLabel}、喰種対決${tokyoGhoulBattles}戦・BITES ${tokyoGhoulBitesCount}回で${yen.format(payout)}枚を獲得しました。${tokyoGhoulUpperAt ? "有馬貴将JUDGEMENTを突破し、裏ATへ到達しました。" : tokyoGhoulCcgAward ? `CCGの死神で${yen.format(tokyoGhoulCcgAward)}枚を獲得しました。` : "上位ルートには届きませんでした。"}`
+        : sim.basiliskTenzenFlow
+          ? `今回の設定は設定${setting}。${games}Gで${basiliskBc?.label || sim.triggerLabel}、${entered ? `${basiliskScenario?.name || "通常"}シナリオのBTを${basiliskSets}セット消化し、${yen.format(payout)}枚を獲得しました。${basiliskTenzenSets ? `宿怨チャレンジ成功から天膳BTを${basiliskTenzenSets}セット消化しました。` : basiliskGrudgeAttempts ? "宿怨チャレンジ失敗後は通常BTへ進みました。" : "宿怨チャレンジには届きませんでした。"}` : `BCを${basiliskBc?.games || 16}G消化し、BTには入りませんでした。`}`
         : `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}。${entered ? `${payout}枚を獲得しました。${sim.kabaneriStFlow ? `ST中ボーナス${kabaneriStBonuses}回・${upper ? `${upperResultLabel} ${upperLoops}回当選。` : "上位ST非到達。"}` : `上乗せ${addOnCount}回・${upper ? `${upperResultLabel} ${upperLoops}セット。` : "上位AT非到達。"}`}` : entryBonus ? `${entryBonus.label}で約${yen.format(payout)}枚を獲得し、${sim.mainLabel}には届きませんでした。` : `${machine.initialHitLabel || sim.mainLabel}には届きませんでした。`}`;
     const kabaneriRareUpperLabel = sim.kabaneriUpperRareLabel || "裏美馬ST";
     const kabaneriUpperContinueChance = kabaneriUpperMode
@@ -2805,7 +2957,7 @@
         ? (Number(sim.kabaneriUpperRareContinue) || 0.95)
         : (Number(sim.kabaneriUpperNormalContinue) || 0.80)) * 100
       : sim.upperContinue * 100;
-    return { title: `設定${setting}｜${resultTitle}`, summary: resultSummary, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, triggerSucceeded, triggerSuccessChance: sim.goblinSlayerFlow ? (Number(goblinCz?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : triggerSuccess * 100, entryBonusModel: Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0, entryBonus, entered, entryChance: entryBonus ? (Number(entryBonus.atChance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, setPushFlow: Boolean(sim.setPushFlow), karakuriJudgeFlow: Boolean(sim.karakuriJudgeFlow), battleBonusFlow: Boolean(sim.battleBonusFlow), garoBattleFlow: Boolean(sim.garoBattleFlow), ragnadorUpperFlow: Boolean(sim.ragnadorUpperFlow), seiyaTempleFlow: Boolean(sim.seiyaTempleFlow), ggoStFlow: Boolean(sim.ggoStFlow), godzillaEva2Flow: Boolean(sim.godzillaEva2Flow), mahoakoFlow: Boolean(sim.mahoakoFlow), tokyoGhoulFlow: Boolean(sim.tokyoGhoulFlow), tokyoGhoulCz, tokyoGhoulBattles, tokyoGhoulWins, tokyoGhoulBitesCount, tokyoGhoulSpecialCount, tokyoGhoulArimaBattle, tokyoGhoulArimaWon, tokyoGhoulUpperAt, tokyoGhoulCcgAward, tentenFlow: Boolean(sim.tentenFlow), goblinSlayerFlow: Boolean(sim.goblinSlayerFlow), goblinCz, goblinLoopMode: goblinLoopMode * 100, goblinAtSets, goblinBonusCount, goblinMaxContinueRate, assaultLilyFlow: Boolean(sim.assaultLilyFlow), assaultEntry, assaultBossBattles, assaultBossWins, assaultRewardCount, assaultUpperCz, assaultUpperCzAttempts, assaultUpperCzSuccesses, assaultMaxAddOn, kaguyaFlow: Boolean(sim.kaguyaFlow), kaguyaRegCount, kaguyaBigCount, kaguyaSuperCount, kaguyaOneGameCount, kaguyaReturnCount, kaguyaSpecialCount, kaguyaStockCount, kaguyaMarriageCount, kaguyaExtraGames, dumbbellFlow: Boolean(sim.dumbbellFlow), dumbbellCz, dumbbellNormalGames, dumbbellGameAddCount, dumbbellGameAddTotal, dumbbellGoldenChallenges, dumbbellGoldenSuccesses, dumbbellVStockTotal, dumbbellCoinAddTotal, dumbbellRisingChallenges, sgRaceFlow: Boolean(sim.sgRaceFlow), kabaneriStFlow: Boolean(sim.kabaneriStFlow), otomeRushFlow: Boolean(sim.otomeRushFlow), cycleFlow: Boolean(sim.cycleFlow), cycleRounds, cycleContinues, kabaneriStBonuses, kabaneriUpperMode, otomeAddedGames, otomeBonusCount, otomeAwakeningCount, otomeBattleWon, otomeAddOnChance: (Number(sim.otomeAddOnChance) || 0) * 100, battleBonusSets, battleContinuationRate: battleContinuationRate * 100, sgRushSets, sgScenarioName, karakuriJudgeAttempts, karakuriJudgeSuccesses, karakuriUpperRoute, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, addOnGamesTotal, coinAddOnCount, coinAddOnTotal, bonusCount, bonusPayoutTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: kabaneriUpperContinueChance, upperChallenge: sim.upperChallenge || "", upper, upperLabel: upperResultLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
+    return { title: `設定${setting}｜${resultTitle}`, summary: resultSummary, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, triggerSucceeded, triggerSuccessChance: sim.basiliskTenzenFlow ? 100 : sim.goblinSlayerFlow ? (Number(goblinCz?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : triggerSuccess * 100, entryBonusModel: Boolean(sim.basiliskTenzenFlow) || Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0, entryBonus, entered, entryChance: entryBonus ? (Number(entryBonus.atChance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, setPushFlow: Boolean(sim.setPushFlow), karakuriJudgeFlow: Boolean(sim.karakuriJudgeFlow), battleBonusFlow: Boolean(sim.battleBonusFlow), garoBattleFlow: Boolean(sim.garoBattleFlow), ragnadorUpperFlow: Boolean(sim.ragnadorUpperFlow), seiyaTempleFlow: Boolean(sim.seiyaTempleFlow), ggoStFlow: Boolean(sim.ggoStFlow), godzillaEva2Flow: Boolean(sim.godzillaEva2Flow), mahoakoFlow: Boolean(sim.mahoakoFlow), tokyoGhoulFlow: Boolean(sim.tokyoGhoulFlow), tokyoGhoulCz, tokyoGhoulBattles, tokyoGhoulWins, tokyoGhoulBitesCount, tokyoGhoulSpecialCount, tokyoGhoulArimaBattle, tokyoGhoulArimaWon, tokyoGhoulUpperAt, tokyoGhoulCcgAward, basiliskTenzenFlow: Boolean(sim.basiliskTenzenFlow), basiliskBc, basiliskScenario, basiliskSets, basiliskBtBcCount, basiliskHighCount, basiliskMoonCount, basiliskGrudgeAttempts, basiliskGrudgeSuccesses, basiliskTenzenSets, tentenFlow: Boolean(sim.tentenFlow), goblinSlayerFlow: Boolean(sim.goblinSlayerFlow), goblinCz, goblinLoopMode: goblinLoopMode * 100, goblinAtSets, goblinBonusCount, goblinMaxContinueRate, assaultLilyFlow: Boolean(sim.assaultLilyFlow), assaultEntry, assaultBossBattles, assaultBossWins, assaultRewardCount, assaultUpperCz, assaultUpperCzAttempts, assaultUpperCzSuccesses, assaultMaxAddOn, kaguyaFlow: Boolean(sim.kaguyaFlow), kaguyaRegCount, kaguyaBigCount, kaguyaSuperCount, kaguyaOneGameCount, kaguyaReturnCount, kaguyaSpecialCount, kaguyaStockCount, kaguyaMarriageCount, kaguyaExtraGames, dumbbellFlow: Boolean(sim.dumbbellFlow), dumbbellCz, dumbbellNormalGames, dumbbellGameAddCount, dumbbellGameAddTotal, dumbbellGoldenChallenges, dumbbellGoldenSuccesses, dumbbellVStockTotal, dumbbellCoinAddTotal, dumbbellRisingChallenges, sgRaceFlow: Boolean(sim.sgRaceFlow), kabaneriStFlow: Boolean(sim.kabaneriStFlow), otomeRushFlow: Boolean(sim.otomeRushFlow), cycleFlow: Boolean(sim.cycleFlow), cycleRounds, cycleContinues, kabaneriStBonuses, kabaneriUpperMode, otomeAddedGames, otomeBonusCount, otomeAwakeningCount, otomeBattleWon, otomeAddOnChance: (Number(sim.otomeAddOnChance) || 0) * 100, battleBonusSets, battleContinuationRate: battleContinuationRate * 100, sgRushSets, sgScenarioName, karakuriJudgeAttempts, karakuriJudgeSuccesses, karakuriUpperRoute, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, addOnGamesTotal, coinAddOnCount, coinAddOnTotal, bonusCount, bonusPayoutTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: kabaneriUpperContinueChance, upperChallenge: sim.upperChallenge || "", upper, upperLabel: upperResultLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
   }
 
   function createATypeSession(setting) {
@@ -3440,6 +3592,7 @@
     const dumbbellFlow = Boolean(data.dumbbellFlow);
     const shinEvaFlow = Boolean(machine.sim.shinEvaFlow);
     const tokyoGhoulFlow = Boolean(data.tokyoGhoulFlow);
+    const basiliskTenzenFlow = Boolean(data.basiliskTenzenFlow);
     setSlotAtStatus({ visible: false });
     setExperienceHud("0G", "0円", "0枚");
     setExperienceStage(0, experienceProfile.system, "通常ゲーム中", "0G", `${data.hitLabel}を目指して抽選中`, "normal", data.hitChance, "1Gごとの契機当選率");
@@ -3451,9 +3604,21 @@
       await waitForExperience(115);
     }
     if (runId !== experienceRunId) return;
-    setExperienceStage(1, uminchuFlow ? "BONUS HIT" : tentenFlow ? "EPISODE BATTLE" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "DIRECT AT" : "CHANCE ZONE") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "DIRECT AT" : data.assaultEntry?.key === "bouquet" ? "BOUQUET BONUS" : "LILY CHALLENGE") : kaguyaFlow ? "LOVE BRAIN BATTLE" : dumbbellFlow ? "MUSCLE ZONE" : shinEvaFlow ? "INITIAL HIT" : tokyoGhoulFlow ? "CHANCE ZONE" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", tokyoGhoulFlow ? (data.tokyoGhoulCz?.label || data.hitLabel) : goblinSlayerFlow ? (data.goblinCz?.label || data.hitLabel) : assaultLilyFlow ? (data.assaultEntry?.label || data.hitLabel) : data.hitLabel, `${yen.format(data.attempts)}G`, tokyoGhoulFlow ? "8GのCZを進め、最後のPUSHで東京喰種咬を判定" : uminchuFlow ? "告知音とともに初当りBONUSへ" : tentenFlow ? "10GのレベルUPパートと4Gのバトルへ" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "規定ゲーム数からAT直撃" : "CZの専用ゲーム数を進めて最後にPUSH") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "規定ゲーム数・レア役などからRUSH直撃" : data.assaultEntry?.key === "bouquet" ? "25GのBONUS後にRUSHを判定" : "10Gの専用CZを進めて最後にPUSH") : kaguyaFlow ? "恋愛頭脳戦を経て15G＋αのCZへ" : dumbbellFlow ? "10Gの前半パートから後半発展を目指します" : shinEvaFlow ? "3GのEVANGELION IMPACTで作戦を決定します" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
+    setExperienceStage(1, uminchuFlow ? "BONUS HIT" : basiliskTenzenFlow ? "BASILISK CHANCE" : tentenFlow ? "EPISODE BATTLE" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "DIRECT AT" : "CHANCE ZONE") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "DIRECT AT" : data.assaultEntry?.key === "bouquet" ? "BOUQUET BONUS" : "LILY CHALLENGE") : kaguyaFlow ? "LOVE BRAIN BATTLE" : dumbbellFlow ? "MUSCLE ZONE" : shinEvaFlow ? "INITIAL HIT" : tokyoGhoulFlow ? "CHANCE ZONE" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", basiliskTenzenFlow ? (data.basiliskBc?.label || data.hitLabel) : tokyoGhoulFlow ? (data.tokyoGhoulCz?.label || data.hitLabel) : goblinSlayerFlow ? (data.goblinCz?.label || data.hitLabel) : assaultLilyFlow ? (data.assaultEntry?.label || data.hitLabel) : data.hitLabel, `${yen.format(data.attempts)}G`, basiliskTenzenFlow ? `${data.basiliskBc?.games || 16}GのBCでバジリスクタイムを抽選` : tokyoGhoulFlow ? "8GのCZを進め、最後のPUSHで東京喰種咬を判定" : uminchuFlow ? "告知音とともに初当りBONUSへ" : tentenFlow ? "10GのレベルUPパートと4Gのバトルへ" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "規定ゲーム数からAT直撃" : "CZの専用ゲーム数を進めて最後にPUSH") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "規定ゲーム数・レア役などからRUSH直撃" : data.assaultEntry?.key === "bouquet" ? "25GのBONUS後にRUSHを判定" : "10Gの専用CZを進めて最後にPUSH") : kaguyaFlow ? "恋愛頭脳戦を経て15G＋αのCZへ" : dumbbellFlow ? "10Gの前半パートから後半発展を目指します" : shinEvaFlow ? "3GのEVANGELION IMPACTで作戦を決定します" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
     await waitForExperience(780);
-    if (data.entryBonusModel) {
+    if (basiliskTenzenFlow) {
+      const bc = { ...(data.basiliskBc || {}), ...(data.entryBonus || {}) };
+      const bcComplete = await animateExperienceCounter(Math.max(1, Number(bc.games) || 16), "G", "BASILISK CHANCE", bc.label, "成立役でバジリスクタイムを抽選します", data.entryChance, `BT期待度 約${Math.round(data.entryChance)}%`, runId);
+      if (!bcComplete) return;
+      setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(bc.payout || bc.award || 0)}枚`);
+      setExperienceStage(2, "BC FINAL JUDGE", bc.label, "PUSH", "バジリスクタイムの当落を開きます", "judge", data.entryChance, `${bc.games || 16}G BC最終結果`);
+      await waitForExperienceAction(`${bc.label} BT判定 PUSH`, 5000, data.entered ? "gold" : "normal");
+      if (runId !== experienceRunId) return;
+      setExperienceStage(2, "BC RESULT", data.entered ? "BT当選" : "BT非当選", data.entered ? "バジリスクタイム" : "通常へ", data.entered ? "追想の刻から1セット目を開始します" : "BC獲得枚数を収支へ加えて終了します", data.entered ? "rush" : "end", data.entered ? 100 : 0, `${bc.label}結果`);
+      await waitForExperience(950);
+      if (!data.entered) return;
+    }
+    if (data.entryBonusModel && !basiliskTenzenFlow) {
       setExperienceStage(2, mahoakoFlow ? "CZ / BONUS ROUTE" : "BONUS JUDGE", mahoakoFlow ? "初当りルートジャッジ" : "初当りBONUSジャッジ", "PUSH", mahoakoFlow ? "3種類CZ・4種類BONUSから今回の入口を開きます" : "BONUSの当落を開きます", "judge", data.triggerSuccessChance, mahoakoFlow ? "CZ・BONUS合算契機" : "CZ突破期待度");
       await waitForExperienceAction(mahoakoFlow ? "ルート PUSH" : "BONUS PUSH");
       if (runId !== experienceRunId) return;
@@ -3578,7 +3743,7 @@
       await waitForExperience(900);
       if (!data.entered) return;
     }
-    if (!uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow) {
+    if (!uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !basiliskTenzenFlow) {
     const dedicatedEntryFlow = godzillaEva2Flow || mahoakoFlow;
     const entryJudgeLabel = dedicatedEntryFlow && data.entryBonus?.judgeLabel ? data.entryBonus.judgeLabel : `${data.mainLabel}突入ジャッジ`;
     const entryJudgeGames = dedicatedEntryFlow ? Math.max(1, Number(data.entryBonus?.judgeGames) || 3) : 3;
@@ -3622,7 +3787,7 @@
       const normalSetCount = rushEvents.filter(event => event.kind === "rush-set").length;
       const hadUpperChallenge = rushEvents.some(event => event.kind === "upper-challenge");
       let route = [...rushEvents];
-      if (!setPushFlow && !karakuriJudgeFlow && !battleBonusFlow && !godzillaEva2Flow && !mahoakoFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !sgRaceFlow && !kabaneriStFlow && !otomeRushFlow && !cycleFlow && route.length > 10) {
+      if (!setPushFlow && !karakuriJudgeFlow && !battleBonusFlow && !godzillaEva2Flow && !mahoakoFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !basiliskTenzenFlow && !sgRaceFlow && !kabaneriStFlow && !otomeRushFlow && !cycleFlow && route.length > 10) {
         const visibleEvents = route.slice(0, 7);
         const remainingEvents = route.slice(7);
         const previousTotal = Number(visibleEvents[visibleEvents.length - 1]?.cumulative) || 0;
@@ -4288,6 +4453,80 @@
           }
           setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
           setSlotAtStatus({ visible: true, remaining: 0, addOnGames: runningAddOnGames, total: event.cumulative });
+          continue;
+        }
+
+        if (event.kind === "basilisk-bt-start") {
+          setExperienceStage(3, "BASILISK TIME", `${event.label} 開始`, event.scenario, `12セットの継続シナリオ「${event.scenario}」を選択`, "rush", 100, event.grades);
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: 12, remainingUnit: "SET", total: event.cumulative });
+          await waitForExperience(950);
+          continue;
+        }
+
+        if (event.kind === "basilisk-set") {
+          const reminiscenceComplete = await animateExperienceCounter(10, "G", "TSUISOU NO TOKI", `追想の刻・SET ${event.set}`, event.high ? `絆玉${event.bondBalls}個・${event.highLabel}を準備` : "BCと絆玉を抽選します", event.high ? 100 : 34, event.high ? event.highLabel : "絆高確抽選", runId);
+          if (!reminiscenceComplete) return;
+          const battleComplete = await animateExperienceCounter(30, "G", event.high ? "KIZUNA KOUKAKU" : "SOUNIN NO TOKI", `争忍の刻・SET ${event.set}`, event.high ? `${event.highLabel}中・対応役でBCを狙います` : "甲賀十人と伊賀十人の争忍を進めます", event.chance, `${event.scenario}・継続ランク${event.rawGrade === "F" ? `F→${event.grade}` : event.grade}`, runId);
+          if (!battleComplete) return;
+          consumedGames += 40;
+          setExperienceStage(3, "SOUNIN FINAL JUDGE", `SET ${event.set}・ランク${event.rawGrade === "F" ? `F→${event.grade}` : event.grade}`, "PUSH", event.btBc ? `${event.btBc.label}と次セット継続を開きます` : "甲賀勝利と次セット継続を開きます", "judge", event.chance, event.high ? event.highLabel : "争忍の刻 最終結果");
+          await waitForExperienceAction(`争忍の刻 SET ${event.set} PUSH`, 5000, event.completed ? "upper" : event.continued ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          const resultValue = event.btBc ? `${event.btBc.label} +${yen.format(event.bcAward)}枚` : event.completed ? "12セット完走" : event.continued ? "甲賀勝利" : "伊賀勝利";
+          setExperienceStage(3, event.completed ? "SCENARIO COMPLETE" : event.continued ? "KOGA WIN" : "IGA WIN", event.completed ? "シナリオ完走" : event.continued ? `SET ${event.set} 継続` : `SET ${event.set} 終了`, resultValue, event.completed ? "エンディングへ進みます" : event.continued ? `次の追想の刻へ・累計 ${yen.format(event.cumulative)}枚` : `BT終了・累計 ${yen.format(event.cumulative)}枚`, event.completed ? "hyper" : event.continued ? "hit" : "end", event.continued ? 100 : 0, "争忍の刻 結果");
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: Math.max(0, 12 - event.set), remainingUnit: "SET", total: event.cumulative });
+          await waitForExperience(event.completed ? 1250 : 950);
+          continue;
+        }
+
+        if (event.kind === "basilisk-ending") {
+          const endingComplete = await animateExperienceCounter(eventGames, "G", "ENDING", "来世邂逅", "12セット完走後のエンディングを消化します", 100, "終了後は宿怨チャレンジ確定", runId);
+          if (!endingComplete) return;
+          consumedGames += eventGames;
+          setExperienceStage(3, "ENDING COMPLETE", "エンディング完走", `+${yen.format(event.award)}枚`, "駿府城を経て宿怨チャレンジへ", "hyper", 100, "宿怨LOOP入口");
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          await waitForExperience(1100);
+          continue;
+        }
+
+        if (event.kind === "basilisk-grudge") {
+          const grudgeComplete = await animateExperienceCounter(3, "回", "SHUKUEN CHALLENGE", event.label, "紫図柄を狙うカットイン3回で成功を目指します", event.chance, event.mandatory ? "エンディング後・BT確定" : "宿怨ポイントMAX", runId);
+          if (!grudgeComplete) return;
+          consumedGames += 3;
+          setExperienceStage(3, "SHUKUEN FINAL JUDGE", event.label, "PUSH", "天膳BTまたは通常BTを開きます", "judge", event.chance, "失敗してもBT確定");
+          await waitForExperienceAction("宿怨チャレンジ PUSH", 5000, event.success ? "upper" : "gold");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.success ? "SHUKUEN SUCCESS" : "SHUKUEN FAILED", event.success ? "紫図柄揃い" : "チャレンジ失敗", event.success ? "天膳BT" : "通常BT", event.success ? "激闘シナリオ・初回10人状態で開始" : "失敗時の恩恵で通常バジリスクタイムへ", event.success ? "hyper" : "rush", 100, "宿怨チャレンジ結果");
+          await waitForExperience(1150);
+          continue;
+        }
+
+        if (event.kind === "basilisk-tenzen-set") {
+          const tenzenReminiscence = await animateExperienceCounter(10, "G", "TENZEN BT", `追想の刻・上位SET ${event.set}`, event.tenPeople ? "初回10人状態・完全勝利で月下閃滅" : "激闘シナリオの追想を進めます", event.chance, "継続ランクD代表80%", runId);
+          if (!tenzenReminiscence) return;
+          const tenzenBattle = await animateExperienceCounter(30, "G", event.tenPeople ? "10 PEOPLE BATTLE" : "TENZEN SOUNIN", `争忍の刻・上位SET ${event.set}`, event.tenPeople ? "10人状態を維持して完全勝利を狙います" : "天膳BTの争忍を最後まで進めます", event.chance, event.moon ? "月下閃滅チャンス" : "激闘シナリオ", runId);
+          if (!tenzenBattle) return;
+          consumedGames += 40;
+          setExperienceStage(3, "TENZEN FINAL JUDGE", `天膳BT SET ${event.set}`, "PUSH", event.moon ? "完全勝利と月下閃滅のストック数を開きます" : "次セットへの継続を開きます", "judge", event.chance, event.tenPeople ? "初回10人状態" : "天膳BT継続判定");
+          await waitForExperienceAction(`天膳BT SET ${event.set} PUSH`, 5000, event.moon ? "upper" : event.continued ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          const tenzenValue = event.moon ? `月下閃滅 ${event.moonStocks}ストック` : event.continued ? "BT継続" : "BT終了";
+          setExperienceStage(3, event.moon ? "GEKKA SENMETSU" : event.continued ? "TENZEN CONTINUE" : "TENZEN END", event.moon ? "10人完全勝利" : `天膳BT SET ${event.set}`, tenzenValue, event.moon ? `ストック分を含め累計 ${yen.format(event.cumulative)}枚` : event.continued ? "次の上位セットへ進みます" : `累計 ${yen.format(event.cumulative)}枚・最終結果へ`, event.moon ? "hyper" : event.continued ? "rush" : "end", event.continued || event.moon ? 100 : 0, "天膳BT結果");
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: event.continued ? 1 : 0, remainingUnit: "SET", total: event.cumulative });
+          await waitForExperience(event.moon ? 1400 : 1050);
+          continue;
+        }
+
+        if (event.kind === "basilisk-fallback") {
+          const fallbackComplete = await animateExperienceCounter(eventGames, "G", "BASILISK TIME", event.label, "宿怨失敗の恩恵で通常BTを1セット消化します", 100, "宿怨チャレンジ失敗時もBT確定", runId);
+          if (!fallbackComplete) return;
+          consumedGames += eventGames;
+          setExperienceStage(3, "BASILISK TIME END", event.label, `+${yen.format(event.award)}枚`, `累計 ${yen.format(event.cumulative)}枚・最終結果へ`, "rush", 100, "通常BT獲得結果");
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          await waitForExperience(1000);
           continue;
         }
 

@@ -4700,6 +4700,55 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.titleFlow;
 })();
 
+(function applyBasiliskTenzenDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["basilisk-tenzen-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "16GのBCから、追想の刻・争忍の刻・絆高確・宿怨チャレンジへ。",
+    intro: "BCでBTを目指し、追想の刻10G＋αと争忍の刻平均30Gを10種類のシナリオで進めます。初回絆高確、月下閃滅、12セット完走後の宿怨チャレンジと天膳BTまでを専用表示します。",
+    points: ["通常BCは16G、BTは1セット平均約40G", "BT純増約2.9枚/G・全10種類のシナリオ管理", "宿怨チャレンジは成功期待度50%超・失敗してもBT"],
+    specs: [["BC（設定1）", "約1/124.7"], ["BT（設定1）", "約1/418.1"], ["BT（設定6）", "約1/247.3"], ["ベース", "約31.7G/50枚"], ["通常BC", "16G"], ["EPBC・PBC", "30G"], ["BT", "1セット平均約40G"], ["BT純増", "約2.9枚/G"], ["BTシナリオ", "全10種類・12セット管理"], ["宿怨チャレンジ", "カットイン3回まで・50%超"]],
+    articleSections: [
+      { heading: "BCからBTを目指す通常時", paragraphs: ["通常時は成立役、モード、内部状態に応じてBCを抽選。異色BC・同色BCは16Gで、BC当選時と消化中にBTを抽選します。", "同色BCはBT期待度50%以上。EPBCとPBCは30GでBT濃厚となるため、通常BCと別イベントで表示します。"] },
+      { heading: "追想の刻と争忍の刻", paragraphs: ["BTは純増約2.9枚/G・1セット平均約40G。前半の追想の刻10G＋αでBCと絆玉を抽選し、後半の争忍の刻平均30Gで甲賀勝利を目指します。", "BT初回セットは絆高確。絆玉1〜4個で縁・想・恋・絆が点灯し、対応役でBC当選を狙います。"] },
+      { heading: "10種類のBTシナリオ", paragraphs: ["継続率はA〜Fを12セット1組で並べた全10種類のシナリオで管理されます。設定1の公開振り分けを使い、各セットの継続ランクを結果に表示します。", "A〜Dの具体的な継続率は非公表のため、サイト内では強弱関係を保つ代表値で判定します。Eは継続濃厚、FはA〜Eのいずれかとして扱います。"] },
+      { heading: "月下閃滅と宿怨チャレンジ", paragraphs: ["10人状態の完全勝利などから月下閃滅へ進むと、BTストックを獲得する特化ゾーンとして別表示します。", "宿怨チャレンジはカットイン3回までで成功期待度50%超。成功時は激闘シナリオの天膳BT＋初回10人状態、失敗時も通常BTへ進みます。エンディング後は必ず宿怨チャレンジへ進みます。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約31.7G/50枚・1,000円46枚貸し・5.2枚交換で固定", "BC・BT設定別確率、シナリオ表と設定1振り分けは公開値", "継続率A〜D、絆玉獲得率、BT中BC率、月下閃滅率、宿怨ポイントMAX率は代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["ユニバーサル 公式機種サイト", "https://www.universal-777.com/product/slot/bk2t/"], ["一撃 機種解析・ゲームフロー", "https://1geki.jp/slot/l_b_kizuna2_tnzn/"], ["一撃 BTシナリオ解析", "https://1geki.jp/slot/l_b_kizuna2_tnzn/84/"], ["なな徹 宿怨チャレンジ解析", "https://nana-press.com/kaiseki/machine/666/18342/"]],
+    readerGuide: {
+      verdict: "16GのBCからBTへ入り、追想10G＋争忍平均30Gをセットごとのシナリオランクと絆高確で突破する台です。",
+      bestFor: ["BCからBTまでの当落をPUSHで見たい", "12セットのシナリオ変化を確認したい", "宿怨チャレンジから天膳BTを狙いたい"],
+      check: ["BC・BT確率、ゲーム数、純増、シナリオ表は公開値", "A〜Dの具体率など未公表部分は代表値", "宿怨失敗時も通常BTへ進む"],
+      compare: [["tokyo-ghoul-slot", "スマスロ 東京喰種", "対戦型差枚ATと比較"], ["basilisk4-slot", "スマスロ バジリスクIV", "新旧BTを比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v8",
+    basiliskTenzenFlow: true,
+    atPureIncrease: 2.9,
+    atPayoutVariance: 0,
+    basiliskBcTypes: [[{ key: "hetero", label: "異色BC", games: 16, award: 30 }, 0.68], [{ key: "same", label: "同色BC", games: 16, award: 46 }, 0.24], [{ key: "episode", label: "エピソードBC", games: 30, award: 87 }, 0.07], [{ key: "premium", label: "プレミアムBC", games: 30, award: 87 }, 0.01]],
+    basiliskScenarios: [[{ name: "しりあがり", grades: "BBBBCCCCDDDE" }, 0.125], [{ name: "朝駆け", grades: "DCBADADADADA" }, 0.156], [{ name: "混沌", grades: "FFFFFFFFFFFF" }, 0.188], [{ name: "安定", grades: "CCCCCCCCCCCC" }, 0.25], [{ name: "超しりあがり", grades: "BBBCCCDDDEEE" }, 0.063], [{ name: "波乱", grades: "ADDADDADDADD" }, 0.125], [{ name: "超安定", grades: "CCCCCCDDDDDD" }, 0.031], [{ name: "超混沌", grades: "FFFFFFDEDEDE" }, 0.047], [{ name: "夢幻", grades: "EEEEEEEEEEEE" }, 0.004], [{ name: "激闘", grades: "DDDDDDDDDDDD" }, 0.012]],
+    basiliskGradeChances: { A: 0.25, B: 0.40, C: 0.55, D: 0.80, E: 1 },
+    basiliskBtBcChance: 0.22,
+    basiliskFirstHighChance: 1,
+    basiliskLaterHighChance: 0.34,
+    basiliskMoonChance: 0.12,
+    basiliskGrudgeChance: 0.18,
+    upperChallenge: "宿怨チャレンジ",
+    upperChance: 0,
+    upperSuccess: 0.50,
+    upperLabel: "天膳BT",
+    upperContinue: 0.80,
+    upperPayout: 0,
+    upperPureIncrease: 2.9
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
 // Dedicated implementations take precedence over the older reusable cycle map.
 // Keep this final cleanup after every enrichment pass so page copy and gameplay
 // both use the same title-specific model.

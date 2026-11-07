@@ -8,8 +8,8 @@ vm.runInContext(source, sandbox);
 
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const titleFlows = machines.filter(([, machine]) => machine.sim?.titleFlow);
-const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.tokyoGhoulFlow);
-const expectedProfiles = { battle: 9, st: 12, heaven: 5, bonus: 8, addon: 12 };
+const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow);
+const expectedProfiles = { battle: 8, st: 12, heaven: 5, bonus: 8, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -36,15 +36,16 @@ for (const [slug, machine] of titleFlows) {
   });
 }
 
-if (titleFlows.length !== 46) errors.push(`expected 46 reusable title flows, found ${titleFlows.length}`);
+if (titleFlows.length !== 45) errors.push(`expected 45 reusable title flows, found ${titleFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = titleFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
-if (dedicatedFlows.length !== 1 || dedicatedFlows[0]?.[0] !== "tokyo-ghoul-slot") {
-  errors.push(`expected dedicated Tokyo Ghoul flow, found ${dedicatedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+const dedicatedMap = Object.fromEntries(dedicatedFlows);
+if (dedicatedFlows.length !== 2 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"]) {
+  errors.push(`expected dedicated Tokyo Ghoul and Basilisk Tenzen flows, found ${dedicatedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
-  const [, tokyoGhoul] = dedicatedFlows[0];
+  const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
   if (sim.cycleFlow || sim.titleFlow) errors.push("tokyo-ghoul-slot: legacy reusable flow still exists");
   if (!Array.isArray(sim.tokyoGhoulCzRoutes) || sim.tokyoGhoulCzRoutes.length !== 2) errors.push("tokyo-ghoul-slot: CZ routes are incomplete");
@@ -52,6 +53,14 @@ if (dedicatedFlows.length !== 1 || dedicatedFlows[0]?.[0] !== "tokyo-ghoul-slot"
   if (!Array.isArray(sim.tokyoGhoulArimaBattles) || sim.tokyoGhoulArimaBattles.length !== 5) errors.push("tokyo-ghoul-slot: Arima battle distribution is incomplete");
   if (!Array.isArray(sim.tokyoGhoulBitesModes) || sim.tokyoGhoulBitesModes.length !== 3) errors.push("tokyo-ghoul-slot: BITES modes are incomplete");
   if (!Array.isArray(sim.tokyoGhoulCcgRewards) || sim.tokyoGhoulCcgRewards.length !== 4) errors.push("tokyo-ghoul-slot: CCG rewards are incomplete");
+  const basilisk = dedicatedMap["basilisk-tenzen-slot"];
+  const basiliskSim = basilisk.sim;
+  if (basiliskSim.cycleFlow || basiliskSim.titleFlow) errors.push("basilisk-tenzen-slot: legacy reusable flow still exists");
+  if (!Array.isArray(basiliskSim.basiliskBcTypes) || basiliskSim.basiliskBcTypes.length !== 4) errors.push("basilisk-tenzen-slot: BC types are incomplete");
+  if (!Array.isArray(basiliskSim.basiliskScenarios) || basiliskSim.basiliskScenarios.length !== 10) errors.push("basilisk-tenzen-slot: BT scenarios are incomplete");
+  for (const [scenario] of basiliskSim.basiliskScenarios || []) {
+    if (!scenario.name || String(scenario.grades || "").length !== 12) errors.push(`basilisk-tenzen-slot: ${scenario.name || "unnamed"} scenario is incomplete`);
+  }
 }
 
 if (process.argv.includes("--verbose")) console.table(rows);
