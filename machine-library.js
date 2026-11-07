@@ -5528,6 +5528,45 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.entryBonusAwardsNote;
 })();
 
+(function applyYoshimuneDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["yoshimune-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "BIG約711枚の一撃感。高確率から初当りをつかみ、1G連と裏鷹狩りで連チャンを伸ばす。",
+    intro: "通常時の前兆、高確率・鷹狩り、BIG／REG、BONUS終了時の1G連ジャッジ、2個以上のストックから始まる裏鷹狩り、終了後の天国フォローまでを機種専用画面で体験できます。",
+    points: ["BIGは約711枚・REGは約72枚", "50枚あたり約33G・純増約7.11枚/G", "鷹狩りのBONUS期待度は約69%", "裏鷹狩りは1G連ストック2個以上・期待枚数約3600枚"],
+    specs: [["BONUS初当り（設定1）", "約1/378.9"], ["BONUS初当り（設定6）", "約1/292.4"], ["ベース", "約33G/50枚"], ["天井", "999G＋α"], ["BIG BONUS", "約711枚"], ["REG BONUS", "約72枚"], ["BONUS純増", "約7.11枚/G"], ["鷹狩り", "BONUS期待度約69%"], ["Super BIG", "1G連期待度約95%"], ["裏鷹狩り", "1G連ストック2個以上・期待枚数約3600枚"], ["設定", "1〜6"]],
+    articleSections: [
+      { heading: "高確率と鷹狩りからBONUSへ", paragraphs: ["通常時は規定ゲーム数や小役を契機に前兆へ進み、最終的にBONUSを告知します。最大天井は999G＋αです。", "鷹狩りは高確率移行時の一部で突入し、BONUS期待度は約69%。当選時はBIGと次回天国が期待できる強い入口です。専用画面では前兆ゲームを最後まで進め、最終PUSHでBONUSを開きます。"] },
+      { heading: "BIG約711枚・REG約72枚", paragraphs: ["BIG BONUSは純増約7.11枚/Gで約711枚、REG BONUSは12枚俵のナビ8回までで約72枚です。設定ごとのBONUS初当りは約1/378.9〜約1/292.4です。", "BIG中は3種類の告知タイプがありますが、体験では終了時まで1G連ストックの有無を伏せます。REGは俵8連やJACハズレなどで1G連を抽選します。"] },
+      { heading: "1G連ジャッジ", paragraphs: ["BONUS終了後はPUSHで1G連ストックを開きます。ストックがあれば次のBONUSはBIGとなり、約711枚を上乗せして再び1G連を抽選します。", "Super BIGは1G連期待度約95%。出現率や通常BIG中のストック率など未公表の細部は、公表されている出玉性能を壊さない体験用代表値で構成します。"] },
+      { heading: "裏鷹狩り", paragraphs: ["1G連ストック2個以上を獲得した場合などは裏鷹狩りへ。滞在中に当選すればBIGが1G連し、失敗までループします。期待枚数は約3600枚です。", "専用画面では18〜20Gの前兆を進め、最後のPUSHでBIG当落を表示。終了後は天国濃厚の流れを表示し、100G以内のフォロー結果まで確認できます。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約33G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6を均等抽選し、BONUS初当り・出玉率は公開設定別値を使用", "前兆、高確率、鷹狩り、BIG／REG、1G連、Super BIG、裏鷹狩り、天国フォローを専用進行", "BIG／REG比率、通常BONUS中のストック率、裏鷹狩り継続率など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["大都技研 公式製品情報", "https://www.daitogiken.com/contents/product/slot/yoshimunes/"], ["なな徹 基本スペック", "https://nana-press.com/kaiseki/machine/920/"], ["なな徹 REG BONUS", "https://nana-press.com/kaiseki/machine/920/29020/"], ["なな徹 鷹狩り", "https://nana-press.com/kaiseki/machine/920/29014/"], ["パチマガスロマガ 機種解析", "https://pachimaga.com/free/mach/maker-s/sabohani/064246.php"]],
+    readerGuide: { verdict: "BIG約711枚を軸に、BONUS終了時の1G連と裏鷹狩りで一気に枚数を伸ばす高純増BONUSタイプです。", bestFor: ["約711枚BIGの獲得感を味わいたい", "BONUS終了時のPUSHで1G連を開きたい", "裏鷹狩りのループから大量獲得を狙いたい"], check: ["初当り・純増・主要BONUS枚数・鷹狩り期待度は公開値", "BONUS獲得枚数と1G連ストックを別表示", "未公表の細かな振り分けは体験用代表値"], compare: [["kaguya-sama-slot", "スマスロ かぐや様", "BONUS連タイプと比較"], ["okidoki-gold", "沖ドキ！GOLD", "32G連チャン型と比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v35", dedicatedFlow: true, dedicatedFlowKey: "yoshimune-slot", dedicatedFlowVersion: 2, yoshimuneFlow: true,
+    triggerLabel: "BONUS前兆", triggerRate: 378.9, triggerSuccess: 1, mainLabel: "BIG／REG BONUS", mainRate: 378.9, base50: 33.0, coinUnit: 4.0,
+    normalMin: 0, normalMax: 0, atPureIncrease: 7.11, upperPureIncrease: 7.11, atPayoutVariance: 0,
+    yoshimunePremonitionGames: [[16, 0.32], [20, 0.34], [24, 0.22], [28, 0.09], [32, 0.03]],
+    yoshimuneHawkChance: 0.08, yoshimuneHawkGames: [[18, 0.25], [19, 0.35], [20, 0.40]], yoshimuneHawkSuccess: 0.69,
+    yoshimuneBonuses: [[{ key: "big", label: "BIG BONUS", games: 100, award: 711 }, 0.60], [{ key: "reg", label: "REG BONUS", games: 10, award: 72 }, 0.40]],
+    yoshimuneSuperBigChance: 0.01, yoshimuneSuperBigStockChance: 0.95,
+    yoshimuneBigStockChance: 0.24, yoshimuneDoubleStockChance: 0.035, yoshimuneRegStockChance: 0.08,
+    yoshimuneUpperGames: [[18, 0.25], [19, 0.35], [20, 0.40]], yoshimuneUpperContinue: 0.80, yoshimuneUpperMaxLoops: 10,
+    yoshimuneHeavenGames: [[32, 0.28], [64, 0.42], [96, 0.30]], yoshimuneHeavenBonusChance: 1,
+    specialLabel: "1G連", specialChance: 0.24, upperChallenge: "裏鷹狩り", upperChance: 0.035, upperSuccess: 0.80, upperLabel: "裏鷹狩りループ", upperContinue: 0.80, upperPayout: 0,
+    settingRates: { 1: { trigger: 378.9, main: 378.9, payout: 0.978 }, 2: { trigger: 369.6, main: 369.6, payout: 0.991 }, 3: { trigger: 358.8, main: 358.8, payout: 1.006 }, 4: { trigger: 335.1, main: 335.1, payout: 1.041 }, 5: { trigger: 318.5, main: 318.5, payout: 1.071 }, 6: { trigger: 292.4, main: 292.4, payout: 1.120 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+  delete machine.sim.entryBonusAwards;
+  delete machine.sim.entryBonusAwardsNote;
+})();
+
 (function applyInuyasha2DedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["inuyasha2-slot"];
   if (!machine) return;
