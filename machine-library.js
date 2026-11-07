@@ -4749,6 +4749,60 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.titleFlow;
 })();
 
+(function applyOkidokiGoldDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["okidoki-gold"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    maker: "ユニバーサルブロス",
+    catchcopy: "ハイビスカス点灯から、32Gの天国・金ドキ・ドキドキへ。",
+    intro: "ハイビスカス点灯でBIGまたはREGへ進み、BONUS後32Gを毎回カウント。天国・ドキドキ・超ドキドキ・保証・金ドキと、1G連までを機種専用の連チャンフローで体験できます。",
+    points: ["BIG70G約210枚・REG30G約90枚", "天国約75%・ドキドキ約80%・超ドキドキ約90%", "金ドキは32G以内BIG＋次回天国以上"],
+    specs: [["初当り（設定1）", "約1/299.6"], ["初当り（設定6）", "約1/237.0"], ["BIG（設定1）", "約1/175.3"], ["REG（設定1）", "約1/368.7"], ["ベース", "約32G/50枚"], ["コイン単価", "約3.8円"], ["純増", "約3.0枚/G"], ["BIG", "70G・平均約210枚"], ["REG", "30G・平均約90枚"], ["天国", "32G・約75%ループ"], ["ドキドキ", "約80%＋保証"], ["超ドキドキ", "約90%＋保証"], ["金ドキ", "32G以内BIG＋次回天国以上"]],
+    articleSections: [
+      { heading: "ハイビスカス点灯でBONUS", paragraphs: ["通常時は毎ゲームBONUSを抽選し、ハイビスカス点灯で当選を告知します。BIGは70G・平均約210枚、REGは30G・平均約90枚で、どちらも純増約3.0枚/Gです。", "設定は実機どおり1・2・3・5・6から抽選。設定別の初当り、BIG、REG、出玉率を結果と機種別ランキングへ表示します。"] },
+      { heading: "BONUS後32Gと1G連", paragraphs: ["BONUS終了後は必ず32Gをカウントし、天国以上なら32G以内の次回BONUSを判定します。連チャン中のBIGでは規定ゲーム数0Gが選ばれ、BONUS中に1G連が告知される場合があります。", "サイトでは32Gを進めたあとPUSHで『連チャン』『保証』『金ドキ』『終了』を開き、次のBIG・REGを別のPUSHで表示します。"] },
+      { heading: "天国・ドキドキ・超ドキドキ", paragraphs: ["天国モードは約75%でループし、期待値はシリーズ最高の約1300枚。ドキドキモードは約80%、超ドキドキモードは約90%でループします。", "ドキドキ・超ドキドキ転落時は保証モードへ進み、32G以内のBONUSを1回追加してから終了を判定します。"] },
+      { heading: "金ドキとシームレスな再連", paragraphs: ["天国や保証終了後の非有利区間から金ドキへ移行すると、32G以内のBIGと次回天国以上が濃厚です。見た目では通常の天国ループと区別できないため、結果画面で今回の内部ルートを表示します。", "金ドキ移行率、通常A・B・引き戻しなどの全モード移行率は非公表のため、公開されているループ性能を崩さない代表値で抽選します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約32G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定別初当り・BIG・REG・出玉率、BONUSゲーム数と純増は公開値", "天国約75%・ドキドキ約80%・超ドキドキ約90%を個別判定", "モード初回振り分け、金ドキ移行率、1G連率は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["ユニバーサル 公式機種サイト", "https://www.universal-777.com/product/slot/okidoki_gold/"], ["P-WORLD 機種情報・解析", "https://www.p-world.co.jp/machine/database/9750"], ["なな徹 BONUS基本解析", "https://nana-press.com/kaiseki/machine/478/12853/"]],
+    readerGuide: {
+      verdict: "ハイビスカス点灯でBIG・REGを獲得し、BONUS後32Gの連チャンを天国・ドキドキ・超ドキドキ・金ドキで伸ばす告知型AT機です。",
+      bestFor: ["32Gを最後まで数えてPUSHで連チャンを見たい", "BIG・REGと1G連を別々に確認したい", "金ドキや超ドキドキの内部ルートを結果で知りたい"],
+      check: ["設定4は非搭載で1・2・3・5・6を抽選", "BIG70G約210枚・REG30G約90枚", "非公表のモード移行率は体験用代表値"],
+      compare: [["okidoki-black", "沖ドキ！BLACK", "後継の32G連タイプと比較"], ["chibariyo2-slot", "チバリヨ2", "天国連タイプと比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v8",
+    okidokiGoldFlow: true,
+    mainLabel: "BONUS連",
+    mainRateLabel: "BONUS初当り",
+    atPureIncrease: 3.0,
+    atPayoutVariance: 0,
+    okidokiInitialBigChance: 0.55,
+    okidokiChainBigChance: 0.72,
+    okidokiEntryModes: [["normal", 0.55], ["heaven", 0.35], ["doki", 0.08], ["super", 0.02]],
+    okidokiModeRates: { heaven: 0.75, doki: 0.80, super: 0.90 },
+    okidokiGoldChance: 0.15,
+    okidokiOneGameChance: 0.10,
+    okidokiGodChance: 1 / 30000,
+    settingRates: { 1: { trigger: 299.6, main: 299.6, big: 175.3, reg: 368.7, payout: 0.972 }, 2: { trigger: 287.3, main: 287.3, big: 168.3, reg: 346.2, payout: 0.987 }, 3: { trigger: 266.7, main: 266.7, big: 157.7, reg: 324.0, payout: 1.013 }, 5: { trigger: 247.6, main: 247.6, big: 143.0, reg: 297.9, payout: 1.047 }, 6: { trigger: 237.0, main: 237.0, big: 134.0, reg: 276.5, payout: 1.081 } },
+    specialLabel: "金ドキモード",
+    specialChance: 0.15,
+    upperChallenge: "ドキドキモード",
+    upperChance: 0,
+    upperSuccess: 1,
+    upperLabel: "超ドキドキモード",
+    upperContinue: 0.90,
+    upperPayout: 0,
+    upperPureIncrease: 3.0
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
 // Dedicated implementations take precedence over the older reusable cycle map.
 // Keep this final cleanup after every enrichment pass so page copy and gameplay
 // both use the same title-specific model.

@@ -8,8 +8,8 @@ vm.runInContext(source, sandbox);
 
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const titleFlows = machines.filter(([, machine]) => machine.sim?.titleFlow);
-const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow);
-const expectedProfiles = { battle: 8, st: 12, heaven: 5, bonus: 8, addon: 12 };
+const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow);
+const expectedProfiles = { battle: 8, st: 12, heaven: 4, bonus: 8, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -36,14 +36,14 @@ for (const [slug, machine] of titleFlows) {
   });
 }
 
-if (titleFlows.length !== 45) errors.push(`expected 45 reusable title flows, found ${titleFlows.length}`);
+if (titleFlows.length !== 44) errors.push(`expected 44 reusable title flows, found ${titleFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = titleFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(dedicatedFlows);
-if (dedicatedFlows.length !== 2 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"]) {
-  errors.push(`expected dedicated Tokyo Ghoul and Basilisk Tenzen flows, found ${dedicatedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (dedicatedFlows.length !== 3 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"]) {
+  errors.push(`expected dedicated Tokyo Ghoul, Basilisk Tenzen and Okidoki GOLD flows, found ${dedicatedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
   const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
@@ -61,6 +61,12 @@ if (dedicatedFlows.length !== 2 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicat
   for (const [scenario] of basiliskSim.basiliskScenarios || []) {
     if (!scenario.name || String(scenario.grades || "").length !== 12) errors.push(`basilisk-tenzen-slot: ${scenario.name || "unnamed"} scenario is incomplete`);
   }
+  const okidoki = dedicatedMap["okidoki-gold"];
+  const okidokiSim = okidoki.sim;
+  if (okidokiSim.cycleFlow || okidokiSim.titleFlow) errors.push("okidoki-gold: legacy reusable flow still exists");
+  if (!Array.isArray(okidokiSim.okidokiEntryModes) || okidokiSim.okidokiEntryModes.length !== 4) errors.push("okidoki-gold: entry modes are incomplete");
+  if (!["heaven", "doki", "super"].every(mode => Number(okidokiSim.okidokiModeRates?.[mode]) > 0)) errors.push("okidoki-gold: loop rates are incomplete");
+  if (!Array.isArray(okidokiSim.settingPool) || okidokiSim.settingPool.join(",") !== "1,2,3,5,6") errors.push("okidoki-gold: setting pool is incorrect");
 }
 
 if (process.argv.includes("--verbose")) console.table(rows);
