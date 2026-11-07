@@ -9,8 +9,8 @@ vm.runInContext(source, sandbox);
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
 const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
-const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow || machine.sim?.godEaterFlow || machine.sim?.millionGodFlow || machine.sim?.juohFlow || machine.sim?.sunbreakFlow);
-const expectedProfiles = { battle: 6, st: 2, heaven: 4, bonus: 6, addon: 12 };
+const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow || machine.sim?.godEaterFlow || machine.sim?.millionGodFlow || machine.sim?.juohFlow || machine.sim?.sunbreakFlow || machine.sim?.paripiFlow);
+const expectedProfiles = { battle: 6, st: 2, heaven: 4, bonus: 5, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -49,14 +49,14 @@ for (const [slug, machine] of declarativeFlows) {
 }
 
 if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
-if (declarativeFlows.length !== 30) errors.push(`expected 30 declarative dedicated flows, found ${declarativeFlows.length}`);
+if (declarativeFlows.length !== 29) errors.push(`expected 29 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(specializedFlows);
-if (specializedFlows.length !== 17 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"] || !dedicatedMap["million-god-kiseki"] || !dedicatedMap["juoh-slot"] || !dedicatedMap["monster-hunter-sunbreak"]) {
-  errors.push(`expected seventeen specialized flows including Sunbreak, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (specializedFlows.length !== 18 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"] || !dedicatedMap["million-god-kiseki"] || !dedicatedMap["juoh-slot"] || !dedicatedMap["monster-hunter-sunbreak"] || !dedicatedMap["paripi-koumei-slot"]) {
+  errors.push(`expected eighteen specialized flows including Paripi Koumei, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
   const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
@@ -201,6 +201,17 @@ if (specializedFlows.length !== 17 || !dedicatedMap["tokyo-ghoul-slot"] || !dedi
   const scorned = (sunbreakSim.sunbreakMonsters || []).map(([monster]) => monster).find(monster => monster.key === "scorned");
   if (Number(scorned?.carveRate) !== 0.80 || Number(sunbreakSim.sunbreakCourageSuccess) !== 0.40 || Number(sunbreakSim.sunbreakPurificationSuccess) !== 0.47) errors.push("monster-hunter-sunbreak: special route probabilities are incorrect");
   if (Number(sunbreakSim.base50) !== 31.9 || Number(sunbreakSim.atPureIncrease) !== 2.7 || Number(sunbreakSim.upperPureIncrease) !== 6.6 || !sunbreakSim.settingRates || Object.keys(sunbreakSim.settingRates).length !== 6) errors.push("monster-hunter-sunbreak: base, pure increase, or setting rates are incomplete");
+  const paripi = dedicatedMap["paripi-koumei-slot"];
+  const paripiSim = paripi.sim;
+  if (paripiSim.cycleFlow || paripiSim.titleFlow) errors.push("paripi-koumei-slot: legacy reusable flow still exists");
+  if (!Array.isArray(paripiSim.paripiCzRoutes) || paripiSim.paripiCzRoutes.length !== 3) errors.push("paripi-koumei-slot: three CZ routes are incomplete");
+  if (!Array.isArray(paripiSim.paripiScrolls) || paripiSim.paripiScrolls.length !== 9) errors.push("paripi-koumei-slot: nine tactics scrolls are incomplete");
+  if (!Array.isArray(paripiSim.paripiMissionTypes) || paripiSim.paripiMissionTypes.length !== 7) errors.push("paripi-koumei-slot: Party Time mission routes are incomplete");
+  const paripiRoutes = Object.fromEntries((paripiSim.paripiCzRoutes || []).map(route => [route.key, route]));
+  if (Number(paripiRoutes.sanka?.games) !== 7 || Number(paripiRoutes.sanka?.maxSets) !== 3 || Number(paripiRoutes.eiko?.games) !== 16 || Number(paripiRoutes.sekibei?.games) !== 15) errors.push("paripi-koumei-slot: CZ game structures are incorrect");
+  if (Number(paripiSim.paripiStGames) !== 15 || Number(paripiSim.paripiMissionGames) !== 4 || Number(paripiSim.paripiShibuyaGames) !== 4 || Number(paripiSim.paripiEpilogueGames) !== 30) errors.push("paripi-koumei-slot: ST, mission, battle, or epilogue games are incorrect");
+  if (Number(paripiSim.paripiStContinue) !== 0.73 || Number(paripiSim.paripiShibuyaSuccess) !== 0.84 || Number(paripiSim.paripiUpperContinue) !== 0.81 || Number(paripiSim.paripiUltimateContinue) !== 0.91) errors.push("paripi-koumei-slot: ST continuation probabilities are incorrect");
+  if (Number(paripiSim.base50) !== 31 || Number(paripiSim.atPureIncrease) !== 4.2 || !paripiSim.settingRates || Object.keys(paripiSim.settingRates).length !== 6) errors.push("paripi-koumei-slot: base, pure increase, or setting rates are incomplete");
 }
 
 if (process.argv.includes("--verbose")) console.table(rows);

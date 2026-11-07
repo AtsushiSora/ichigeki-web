@@ -5246,6 +5246,53 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
 })();
 
 
+(function applyParipiKoumeiDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["paripi-koumei-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "3種類のCZからLIVE BONUSへ。15G＋αのParty Timeで兵法書を生かしてボーナスを重ねる。",
+    intro: "三歌の礼・英子の試練・石兵八陣から初当りボーナスを目指し、消化後は必ず15G＋αのST『Party Time』へ。9種類の兵法書、4Gのパリピミッション、閃KING孔明、渋谷決戦、超Party Timeまでを専用画面で体験できます。",
+    points: ["CZは三歌の礼約33%・英子の試練約50%・石兵八陣約85%", "Party Timeは15G＋α・継続約73%・兵法書は全9種類", "渋谷決戦は4G・勝利期待度約84%、超Party Timeは継続約81%"],
+    specs: [["BONUS初当り（設定1）", "約1/309.9"], ["BONUS初当り（設定6）", "約1/228.8"], ["CZ合算", "約1/213.6〜1/171.7"], ["三歌の礼", "7G×最大3セット・期待度約33%"], ["英子の試練", "16G・期待度約50%"], ["石兵八陣", "15G・期待度約85%"], ["LIVE BONUS", "赤7約200枚・白7約400枚"], ["BONUS純増", "約4.2枚/G"], ["Party Time", "15G＋α・継続約73%"], ["渋谷決戦", "4G・勝利期待度約84%"], ["超Party Time", "15G＋α・継続約81%"]],
+    articleSections: [
+      { heading: "3種類のパリピチャンス", paragraphs: ["通常時は約32G周期のステージチェンジやレア役からCZ・ボーナスを目指します。ボーナス当選の約66%がCZ経由です。", "三歌の礼は1セット7G・最大3セットで期待度約33%、英子の試練は16G・期待度約50%、石兵八陣は15Gで小役4回成立を目指し期待度約85%。専用画面ではCZごとのゲーム数を進め、最後のPUSHで当落を開きます。"] },
+      { heading: "LIVE BONUSと9種類の兵法書", paragraphs: ["LIVE BONUSは赤7が平均約200枚、白7が平均約400枚で、純増約4.2枚/G。ボーナス中は兵法書ポイント、HEYHO ZONE、上乗せバンバンを抽選します。", "兵法書はチェリー・スイカ・チャンス目対応、ベルナビ、ミッション発展、臥龍転生、STホールド、赤7強化、Vストックの全9種類。平均3.4個の獲得を代表分布で抽選し、ST画面へ表示します。"] },
+      { heading: "15G＋αのParty Time", paragraphs: ["ボーナス後は必ずParty Timeへ。1セット15G＋α・継続約73%で、ベル・レア役・パリピミッション・DIVAフリーズ・閃KING孔明から次のボーナスを狙います。", "パリピミッションは4G・成功期待度約36%。臥龍転生は小役を1回引けば成功となる約75%の特殊ミッション、閃KING孔明は2択成功でボーナスとなる期待度50%の演出です。"] },
+      { heading: "渋谷決戦から上位STへ", paragraphs: ["通常STの5連目は12.5%、7連目は25%、10連目はボーナス当選時に渋谷決戦ボーナスが選ばれるチャンス。ボーナスは平均約150枚で、終了後に4G・勝利期待度約84%の渋谷決戦へ進みます。", "勝利時は30Gのエピローグを経て、15G＋α・継続約81%の超Party Timeへ。エンディング後の天下泰平への道は15Gで究極孔明を抽選し、非当選でも超Party Timeへ進みます。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約31G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6を均等抽選し、CZ3種類・CZ合算・BONUS初当りの公開設定別値を使用", "CZゲーム数、ST15G、ミッション4G、渋谷決戦4G、エピローグ30Gを反映", "未公表のCZ選択・兵法書獲得・特化ゾーン発生率は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["山佐ネクスト 公式機種サイト", "https://yamasa-next.co.jp/slot/prskkm/"], ["一撃 3種類のCZ・設定差", "https://1geki.jp/slot/l_paripikoumei/0/"], ["一撃 Party Time解析", "https://1geki.jp/slot/l_paripikoumei/81/"], ["一撃 LIVE BONUS解析", "https://1geki.jp/slot/l_paripikoumei/85/"], ["一撃 渋谷決戦解析", "https://1geki.jp/slot/l_paripikoumei/89/"], ["一撃 兵法書解析", "https://1geki.jp/slot/l_paripikoumei/83/"]],
+    readerGuide: { verdict: "3種類のCZから初当りボーナスをつかみ、15G＋αのSTで9種類の兵法書を生かしながらボーナス連を目指す直ST型です。", bestFor: ["CZごとのゲーム性とPUSH当落を比較したい", "兵法書を集めてParty Timeを伸ばしたい", "渋谷決戦から上位STまで一続きで体験したい"], check: ["CZ・ST・渋谷決戦の主要ゲーム数は公開値", "9種類の兵法書と赤7・白7を個別表示", "未公表の当選率は体験用代表値"], compare: [["aobuta-slot", "スマスロ 青春ブタ野郎", "ボーナス＋ST型と比較"], ["kanokari-slot", "スマスロ 彼女、お借りします", "ボーナス連鎖型と比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v20", dedicatedFlow: true, dedicatedFlowKey: "paripi-koumei-slot", dedicatedFlowVersion: 2, paripiFlow: true,
+    triggerLabel: "パリピチャンス（CZ）", triggerRate: 213.6, triggerSuccess: 0.69, mainLabel: "Party Time", mainRate: 309.9, base50: 31.0, coinUnit: 3.3, normalMin: 0, normalMax: 0, atPureIncrease: 4.2, upperPureIncrease: 4.2, atPayoutVariance: 0,
+    paripiCzRoutes: [
+      { key: "sanka", label: "三歌の礼", games: 7, maxSets: 3, chance: 0.33 },
+      { key: "eiko", label: "英子の試練", games: 16, chance: 0.50 },
+      { key: "sekibei", label: "石兵八陣", games: 15, chance: 0.85 }
+    ],
+    paripiScrolls: ["桜桃当当", "西瓜当当", "好機当当", "鈴々指示", "鈴任発展", "臥龍高確", "刻々凍結", "赤七強化", "武威貯留"],
+    paripiMissionTypes: [[{ key: "drive", label: "ドライブナイト", chance: 0.30 }, 0.24], [{ key: "dance", label: "スピーカーダンス", chance: 0.36 }, 0.22], [{ key: "glasses", label: "パリピ眼鏡", chance: 0.43 }, 0.18], [{ key: "koumei", label: "孔明光臨", chance: 0.52 }, 0.15], [{ key: "azalea", label: "エピソードAZALEA", chance: 0.68 }, 0.10], [{ key: "dreamer", label: "エピソードDREAMER", chance: 0.82 }, 0.07], [{ key: "garyu", label: "臥龍転生", chance: 0.75 }, 0.04]],
+    paripiRedBonus: 200, paripiWhiteBonus: 400, paripiWhiteChance: 0.16, paripiAverageScrolls: 3.4, paripiHeyhoGames: 5,
+    paripiStGames: 15, paripiStContinue: 0.73, paripiMissionGames: 4, paripiMissionChance: 0.36, paripiSenkingRate: 420, paripiSenkingChance: 0.50, paripiMaxLoops: 15,
+    paripiShibuyaBonus: 150, paripiShibuyaGames: 4, paripiShibuyaSuccess: 0.84, paripiEpilogueGames: 30,
+    paripiUpperContinue: 0.81, paripiUpperMaxLoops: 10, paripiUltimateChallengeGames: 15, paripiUltimateContinue: 0.91, paripiUltimateMaxLoops: 10,
+    specialLabel: "兵法書／HEYHO ZONE", specialChance: 0.24, upperChallenge: "渋谷決戦", upperChance: 0.16, upperSuccess: 0.84, upperLabel: "超Party Time", upperContinue: 0.81, upperPayout: 0,
+    settingRates: {
+      1: { trigger: 213.6, main: 309.9, sanka: 369.9, eiko: 701.9, sekibei: 1809.0, payout: 0.976 },
+      2: { trigger: 207.3, main: 299.6, sanka: 359.9, eiko: 676.9, sekibei: 1761.7, payout: 0.989 },
+      3: { trigger: 199.2, main: 280.0, sanka: 345.6, eiko: 648.8, sekibei: 1710.5, payout: 1.014 },
+      4: { trigger: 188.8, main: 262.0, sanka: 332.1, eiko: 607.1, sekibei: 1564.5, payout: 1.045 },
+      5: { trigger: 179.4, main: 243.9, sanka: 323.0, eiko: 560.9, sekibei: 1440.7, payout: 1.090 },
+      6: { trigger: 171.7, main: 228.8, sanka: 314.8, eiko: 528.4, sekibei: 1324.4, payout: 1.136 }
+    }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
 (function applyMonsterHunterSunbreakDedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["monster-hunter-sunbreak"];
   if (!machine) return;
