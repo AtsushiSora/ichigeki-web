@@ -4524,6 +4524,96 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   });
 })();
 
+// The remaining playable machines already carry title-specific phase names,
+// rewards and upper-route conditions. Promote those declarative models to the
+// shared title-flow engine so every machine keeps its own game progression
+// without duplicating the simulator code 47 times.
+(function applyPlayableTitleFlows() {
+  const profileDefinitions = {
+    battle: {
+      slugs: ["kinnikuman-7-slot", "hokuto-tensei2", "tokyo-ghoul-slot", "monster-hunter-sunbreak", "god-eater-resurrection", "monster-hunter-rise-slot", "tokyo-revengers-slot", "shin-onimusha3-slot", "shin-onimusha2-slot", "basilisk-tenzen-slot"],
+      phaseLabel: "BATTLE FLOW",
+      resultContinue: "BATTLE WIN",
+      resultEnd: "BATTLE END",
+      pushDetail: "勝敗と撃破報酬をPUSHで開きます",
+      roundDetail: "対戦区間を最後まで進め、PUSHで勝敗と報酬を開きます"
+    },
+    st: {
+      slugs: ["symphogear-seigi-slot", "lycoris-recoil-slot", "kanokari-slot", "aobuta-slot", "bofuri-slot", "azur-lane-slot", "magia-record-slot", "toaru-index2-slot", "darling-in-the-franxx-slot", "sao2-slot", "dmc5-st-slot", "initial-d-2nd-slot"],
+      phaseLabel: "ST FLOW",
+      resultContinue: "ST CONTINUE",
+      resultEnd: "ST END",
+      pushDetail: "当選内容と次区間への継続をPUSHで開きます",
+      roundDetail: "規定ゲーム数を進め、PUSHで当選内容と継続結果を開きます"
+    },
+    heaven: {
+      slugs: ["okidoki-black", "okidoki-gold", "super-bingo-neo-slot", "yoshimune-slot", "chibariyo2-slot"],
+      phaseLabel: "HEAVEN FLOW",
+      resultContinue: "HEAVEN CONTINUE",
+      resultEnd: "HEAVEN END",
+      pushDetail: "告知結果と次のBONUSをPUSHで開きます",
+      roundDetail: "連チャン区間を進め、PUSHで告知と次回BONUSを開きます"
+    },
+    bonus: {
+      slugs: ["million-god-kiseki", "juoh-slot", "paripi-koumei-slot", "magical-halloween8", "super-blackjack-slot", "fire-force2-slot", "fire-force-slot", "gundam-seed-slot"],
+      phaseLabel: "BONUS FLOW",
+      resultContinue: "BONUS CONTINUE",
+      resultEnd: "BONUS END",
+      pushDetail: "BONUS・継続報酬をPUSHで開きます",
+      roundDetail: "報酬区間を進め、PUSHでBONUSと継続結果を開きます"
+    },
+    addon: {
+      slugs: ["gundam-unicorn-awakening-drive", "mushoku-tensei-slot", "toloveru-darkness-slot", "biohazard5-slot", "vivy-slot", "golden-kamuy-slot", "bancho4-slot", "zenigata4-slot", "inuyasha2-slot", "godzilla-eva-slot", "lupin-dai-koukaisha", "iza-bancho"],
+      phaseLabel: "ADD-ON FLOW",
+      resultContinue: "ADD-ON CONTINUE",
+      resultEnd: "AT END",
+      pushDetail: "上乗せ・BONUS・継続結果をPUSHで開きます",
+      roundDetail: "残りゲーム数を進め、PUSHで上乗せかBONUSを開きます"
+    }
+  };
+
+  const rewardDescription = rewards => (Array.isArray(rewards) ? rewards : [])
+    .map(entry => entry?.[0]?.label)
+    .filter(Boolean)
+    .join("・");
+
+  Object.entries(profileDefinitions).forEach(([profile, definition]) => {
+    definition.slugs.forEach(slug => {
+      const machine = window.ICHIGEKI_MACHINES[slug];
+      const sim = machine?.sim;
+      const cycle = sim?.cycleFlow;
+      if (!machine || !sim || !cycle) return;
+
+      const labels = Array.isArray(cycle.roundLabels) && cycle.roundLabels.length
+        ? cycle.roundLabels
+        : Array.from({ length: Math.max(1, Number(cycle.maxRounds) || 1) }, (_, index) => `${cycle.label || sim.mainLabel} ${index + 1}回目`);
+      const existingRounds = Array.isArray(cycle.rounds) ? cycle.rounds : [];
+      const roundCount = Math.max(labels.length, existingRounds.length, Number(cycle.maxRounds) || 1);
+      cycle.rounds = Array.from({ length: roundCount }, (_, index) => ({
+        title: labels[index] || existingRounds[index]?.title || `${cycle.label || sim.mainLabel} ${index + 1}回目`,
+        games: cycle.games,
+        continueChance: cycle.continueChance,
+        rewards: cycle.rewards,
+        detail: definition.roundDetail,
+        ...(existingRounds[index] || {})
+      }));
+      cycle.routeSummary ||= cycle.rounds.map(round => round.title).filter(Boolean).join(" → ");
+      cycle.rewardSummary ||= rewardDescription(cycle.rewards) || cycle.rewardLabel || "専用報酬";
+      cycle.engine = "title-flow-v1";
+      sim.titleFlow = {
+        profile,
+        version: 1,
+        phaseLabel: definition.phaseLabel,
+        resultContinue: definition.resultContinue,
+        resultEnd: definition.resultEnd,
+        pushDetail: definition.pushDetail
+      };
+      sim.rankingVersion = "v7";
+      machine.updated = "2026-11-07";
+    });
+  });
+})();
+
 // Dedicated implementations take precedence over the older reusable cycle map.
 // Keep this final cleanup after every enrichment pass so page copy and gameplay
 // both use the same title-specific model.
