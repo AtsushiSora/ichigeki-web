@@ -7625,18 +7625,34 @@
             continue;
           }
           if (event.hokutoType === "shinken") {
-            const soulCounterComplete = await animateExperienceCounter(event.hokutoSoulsBefore, "魂", "SHINKEN SHOBU", cycleRoundTitle, "勝舞魂を1個ずつ使い、勝利契機を待ちます", event.continueChance, "勝舞魂1個＝1勝負", runId, { countdown: true });
-            if (!soulCounterComplete) return;
+            const soulsBefore = Math.max(1, Number(event.hokutoSoulsBefore) || 1);
+            const soulsUsed = Math.max(1, Math.min(soulsBefore, Number(event.hokutoSoulsUsed) || soulsBefore));
             consumedGames += eventGames;
             setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
-            setSlotAtStatus({ visible: true, remaining: event.hokutoSoulsRemaining, remainingUnit: "魂", addOn: runningAddOn, total: event.cumulative });
-            setExperienceStage(3, "SHINKEN SHOBU JUDGE", "神拳勝舞 当落", "PUSH", `${yen.format(event.hokutoSoulsUsed)}魂目の勝負結果を開きます`, "judge", event.continueChance, "神拳勝舞・勝敗ジャッジ");
-            await waitForExperienceAction("神拳勝舞 当落 PUSH", 5000, event.continued ? "gold" : "normal");
-            if (runId !== experienceRunId) return;
+            setSlotAtStatus({ visible: true, remaining: soulsBefore, remainingUnit: "魂", addOn: runningAddOn, total: event.cumulative });
+            setExperienceStage(3, "SHINKEN SHOBU", cycleRoundTitle, `${yen.format(soulsBefore)}魂`, "勝舞魂1個につき1回PUSH。勝利するまで勝負します", "judge", event.continueChance, "勝舞魂1個＝1勝負");
+            await waitForExperience(550);
+            for (let attempt = 1; attempt <= soulsUsed; attempt += 1) {
+              if (runId !== experienceRunId) return;
+              const soulsRemainingBeforeJudge = Math.max(0, soulsBefore - attempt + 1);
+              const isWinningAttempt = event.continued && attempt === soulsUsed;
+              const soulsRemainingAfterJudge = Math.max(0, soulsBefore - attempt);
+              setSlotAtStatus({ visible: true, remaining: soulsRemainingBeforeJudge, remainingUnit: "魂", addOn: runningAddOn, total: event.cumulative });
+              setExperienceStage(3, "SHINKEN SHOBU JUDGE", `神拳勝舞 ${attempt}戦目`, "PUSH", `残り${yen.format(soulsRemainingBeforeJudge)}魂・1魂を使って勝負`, "judge", 18, `勝舞魂 ${attempt}/${soulsBefore}`);
+              await waitForExperienceAction(`神拳勝舞 ${attempt}戦目 PUSH`, 5000, isWinningAttempt ? "gold" : "normal");
+              if (runId !== experienceRunId) return;
+              setSlotAtStatus({ visible: true, remaining: soulsRemainingAfterJudge, remainingUnit: "魂", addOn: runningAddOn, total: event.cumulative });
+              if (isWinningAttempt) {
+                setExperienceStage(3, "SHINKEN SHOBU WIN", "神拳勝舞 勝利", "闘神演舞 継続", `残り ${yen.format(soulsRemainingAfterJudge)}魂を次セットへ持ち越し`, "rush", 100, `${attempt}戦目で勝利`);
+                await waitForExperience(950);
+                break;
+              }
+              const hasNextSoul = soulsRemainingAfterJudge > 0;
+              setExperienceStage(3, hasNextSoul ? "SHINKEN SHOBU NEXT" : "SHINKEN SHOBU LOSE", hasNextSoul ? `${attempt}戦目 敗北` : "神拳勝舞 敗北", hasNextSoul ? `残り${yen.format(soulsRemainingAfterJudge)}魂` : "AT終了", hasNextSoul ? "次の勝舞魂でもう一度勝負します" : "勝舞魂をすべて使い切りました", hasNextSoul ? "judge" : "end", hasNextSoul ? 18 : 0, hasNextSoul ? "次のPUSHへ" : `${soulsUsed}戦すべて敗北`);
+              await waitForExperience(hasNextSoul ? 600 : 1100);
+            }
             runningAddOn += Number(event.award) || 0;
-            setExperienceStage(3, event.continued ? "SHINKEN SHOBU WIN" : "SHINKEN SHOBU LOSE", event.continued ? "神拳勝舞 勝利" : "神拳勝舞 敗北", event.continued ? "闘神演舞 継続" : "AT終了", event.continued ? `残り ${yen.format(event.hokutoSoulsRemaining)}魂を次セットへ持ち越し` : `${yen.format(event.hokutoSoulsUsed)}魂を使い切って終了`, event.continued ? "rush" : "end", event.continued ? 100 : 0, `${cycleRoundTitle} 結果`);
             setSlotAtStatus({ visible: true, remaining: event.hokutoSoulsRemaining, remainingUnit: "魂", addOn: runningAddOn, total: event.cumulative });
-            await waitForExperience(event.continued ? 950 : 1100);
             continue;
           }
           const counterComplete = await animateExperienceCounter(eventGames, "G", event.phase || "AT LOOP", cycleRoundTitle, cycleRoundDetail, event.continueChance, `${cycleRoundTitle} 継続目安`, runId);
