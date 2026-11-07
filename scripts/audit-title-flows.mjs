@@ -9,8 +9,8 @@ vm.runInContext(source, sandbox);
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
 const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
-const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow);
-const expectedProfiles = { battle: 8, st: 12, heaven: 4, bonus: 8, addon: 12 };
+const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow);
+const expectedProfiles = { battle: 8, st: 11, heaven: 4, bonus: 8, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -49,14 +49,14 @@ for (const [slug, machine] of declarativeFlows) {
 }
 
 if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
-if (declarativeFlows.length !== 44) errors.push(`expected 44 declarative dedicated flows, found ${declarativeFlows.length}`);
+if (declarativeFlows.length !== 43) errors.push(`expected 43 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(specializedFlows);
-if (specializedFlows.length !== 3 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"]) {
-  errors.push(`expected specialized Tokyo Ghoul, Basilisk Tenzen and Okidoki GOLD flows, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (specializedFlows.length !== 4 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"]) {
+  errors.push(`expected specialized Tokyo Ghoul, Basilisk Tenzen, Okidoki GOLD and SAO II flows, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
   const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
@@ -80,6 +80,14 @@ if (specializedFlows.length !== 3 || !dedicatedMap["tokyo-ghoul-slot"] || !dedic
   if (!Array.isArray(okidokiSim.okidokiEntryModes) || okidokiSim.okidokiEntryModes.length !== 4) errors.push("okidoki-gold: entry modes are incomplete");
   if (!["heaven", "doki", "super"].every(mode => Number(okidokiSim.okidokiModeRates?.[mode]) > 0)) errors.push("okidoki-gold: loop rates are incomplete");
   if (!Array.isArray(okidokiSim.settingPool) || okidokiSim.settingPool.join(",") !== "1,2,3,5,6") errors.push("okidoki-gold: setting pool is incorrect");
+  const sao2 = dedicatedMap["sao2-slot"];
+  const sao2Sim = sao2.sim;
+  if (sao2Sim.cycleFlow || sao2Sim.titleFlow) errors.push("sao2-slot: legacy reusable flow still exists");
+  if (!Array.isArray(sao2Sim.sao2SniperOpponents) || sao2Sim.sao2SniperOpponents.length !== 5) errors.push("sao2-slot: Sniper Chance opponents are incomplete");
+  if (Number(sao2Sim.sao2SniperMaxWins) !== 3) errors.push("sao2-slot: Sniper Chance win target is incorrect");
+  if (Number(sao2Sim.sao2LastAttackGames) !== 5 || Number(sao2Sim.sao2LastAttackChance) !== 0.35) errors.push("sao2-slot: Last Attack model is incorrect");
+  if (Number(sao2Sim.sao2DeathGunGames) !== 5 || Number(sao2Sim.sao2DeathGunChance) !== 0.50) errors.push("sao2-slot: Death Gun Battle model is incorrect");
+  if (Number(sao2Sim.atPureIncrease) !== 3.6 || Number(sao2Sim.upperPureIncrease) !== 7.2) errors.push("sao2-slot: AT pure increase is incorrect");
 }
 
 if (process.argv.includes("--verbose")) console.table(rows);

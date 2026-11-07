@@ -3369,7 +3369,6 @@ window.ICHIGEKI_MACHINES = {
     "kinnikuman-7-slot": { phase: "DEVIL CHOJIN BATTLE", label: "悪魔超人バトル", statLabel: "悪魔超人撃破", roundLabels: ["悪魔超人 1戦目", "悪魔超人 2戦目", "悪魔超人 3戦目", "悪魔超人 4戦目", "悪魔超人 5戦目", "悪魔超人 6戦目", "悪魔超人 7戦目"], games: 20, continueChance: 0.70, maxRounds: 7, upperAfterRounds: 7, upperAfterRoundsAutoSuccess: true, upperOnlyAfterRounds: true, rewards: [[{ kind: "coins", label: "悪魔超人撃破", payout: 250 }, 0.55], [{ kind: "coins", label: "正義超人参戦", payout: 500 }, 0.30], [{ kind: "bonus", label: "バッファローマン撃破", games: 30, payout: 750 }, 0.15]], endLabel: "7人の悪魔超人終了" },
     "seiya-ougon-slot": { phase: "TWELVE TEMPLES", label: "十二宮バトル", statLabel: "黄金聖闘士撃破", roundLabels: ["白羊宮", "金牛宮", "双児宮", "巨蟹宮", "獅子宮", "処女宮", "天秤宮", "天蠍宮", "人馬宮", "磨羯宮", "宝瓶宮", "双魚宮"], games: 30, continueChance: 0.76, maxRounds: 12, upperAfterRounds: 12, upperAfterRoundsAutoSuccess: true, upperOnlyAfterRounds: true, rewards: [[{ kind: "games", label: "小宇宙上乗せ", games: [[10, 0.50], [20, 0.30], [30, 0.15], [50, 0.05]] }, 0.55], [{ kind: "bonus", label: "黄金聖闘士撃破報酬", games: 30, payout: 300 }, 0.30], [{ kind: "games", label: "小宇宙覚醒", games: [[50, 0.75], [100, 0.25]] }, 0.15]], endLabel: "十二宮バトル終了" },
     "ggo-slot": { phase: "SQUAD JAM", label: "SQUAD JAMバトル", statLabel: "SQUAD JAM勝利", roundLabels: ["SQUAD JAM 予選", "市街地戦", "チーム対決", "FINAL BATTLE"], games: 20, continueChance: 0.72, maxRounds: 4, upperAfterRounds: 4, upperAfterRoundsAutoSuccess: false, upperOnlyAfterRounds: true, rewards: [[{ kind: "games", label: "レン上乗せ", games: [[10, 0.50], [20, 0.30], [30, 0.15], [50, 0.05]] }, 0.55], [{ kind: "bonus", label: "ガンゲイルBONUS", games: 30, payout: 260 }, 0.30], [{ kind: "games", label: "上乗せ特化", games: [[50, 0.75], [100, 0.25]] }, 0.15]], endLabel: "SQUAD JAM敗退" },
-    "sao2-slot": { phase: "BULLET OF BULLETS", label: "BoBバトル", statLabel: "BoB勝利", roundLabels: ["BoB 予選", "BoB 第1戦", "BoB 準決勝", "BoB 決勝"], games: 30, continueChance: 0.72, maxRounds: 4, upperAfterRounds: 4, upperAfterRoundsAutoSuccess: false, upperOnlyAfterRounds: true, rewards: [[{ kind: "games", label: "スナイパーチャンス", games: [[10, 0.45], [20, 0.30], [30, 0.15], [50, 0.10]] }, 0.55], [{ kind: "bonus", label: "BoB BONUS", games: 30, payout: 360 }, 0.30], [{ kind: "games", label: "絶剣ストック", games: [[50, 0.70], [100, 0.30]] }, 0.15]], endLabel: "BoBバトル終了" },
     "god-eater-resurrection": { phase: "ARAGAMI BATTLE", label: "アラガミ交戦", statLabel: "アラガミ討伐", roundLabels: ["索敵パート", "アラガミ交戦", "部位破壊", "捕喰チャンス", "強襲アラガミ", "討伐決着"], games: 25, continueChance: 0.76, maxRounds: 6, upperAfterRounds: 6, upperAfterRoundsAutoSuccess: false, rewards: [[{ kind: "games", label: "捕喰成功", games: [[10, 0.45], [20, 0.30], [30, 0.15], [50, 0.10]] }, 0.55], [{ kind: "bonus", label: "部位破壊報酬", games: 30, payout: 360 }, 0.30], [{ kind: "games", label: "神機覚醒", games: [[50, 0.70], [100, 0.30]] }, 0.15]], endLabel: "アラガミ交戦終了" },
     "shin-eva-slot": { phase: "OPERATION ST", label: "作戦ST", statLabel: "作戦成功", roundLabels: ["迎撃作戦", "初号機出撃", "三機殲滅", "使徒強襲", "最終作戦"], games: 30, continueChance: 0.68, maxRounds: 5, upperAfterRounds: 5, upperAfterRoundsAutoSuccess: false, rewards: [[{ kind: "bonus", label: "シン・エヴァBONUS", games: 30, payout: 200 }, 0.55], [{ kind: "bonus", label: "三機殲滅BONUS", games: 40, payout: 400 }, 0.30], [{ kind: "bonus", label: "エピソードBONUS", games: 50, payout: 800 }, 0.15]], endLabel: "作戦ST終了" },
     "garo-yami-slot": { phase: "MAKAI BONUS", label: "BONUSジャッジ", statLabel: "魔戒継続", roundLabels: ["魔戒への扉", "牙狼剣ジャッジ", "ホラーバトル", "魔戒決戦", "究極ジャッジ"], games: [[20, 0.80], [110, 0.20]], continueChance: 0.50, maxRounds: 5, upperAfterRounds: 5, upperAfterRoundsAutoSuccess: false, rewards: [[{ kind: "bonus", label: "GARO BONUS", games: 20, payout: 180 }, 0.70], [{ kind: "bonus", label: "BIG BONUS", games: 40, payout: 360 }, 0.20], [{ kind: "bonus", label: "SUPER GARO BONUS", games: 110, payout: 1000 }, 0.10]], endLabel: "BONUSジャッジ終了" },
@@ -4538,7 +4537,7 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
       roundDetail: "対戦区間を最後まで進め、PUSHで勝敗と報酬を開きます"
     },
     st: {
-      slugs: ["symphogear-seigi-slot", "lycoris-recoil-slot", "kanokari-slot", "aobuta-slot", "bofuri-slot", "azur-lane-slot", "magia-record-slot", "toaru-index2-slot", "darling-in-the-franxx-slot", "sao2-slot", "dmc5-st-slot", "initial-d-2nd-slot"],
+      slugs: ["symphogear-seigi-slot", "lycoris-recoil-slot", "kanokari-slot", "aobuta-slot", "bofuri-slot", "azur-lane-slot", "magia-record-slot", "toaru-index2-slot", "darling-in-the-franxx-slot", "dmc5-st-slot", "initial-d-2nd-slot"],
       phaseLabel: "ST FLOW",
       resultContinue: "ST CONTINUE",
       resultEnd: "ST END",
@@ -4647,6 +4646,65 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
       machine.updated = "2026-11-07";
     });
   });
+})();
+
+(function applySao2DedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["sao2-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    maker: "パオン・ディーピー",
+    catchcopy: "スナイパーチャンス最大3勝から、デス・ガンバトルとFULL DIVEへ。",
+    intro: "約55%のスコードロンバトルから純増約3.6枚/G・初期150枚＋αのBullet of Bulletsへ。20G周期のスナイパーチャンス、5Gのラストアタック、4G＋最終1Gのデス・ガンバトル、純増約7.2枚/GのFULL DIVEまでを実機順に体験できます。",
+    points: ["スコードロンバトル成功期待度約55%", "BoBは初期150枚＋α・SC最大3勝", "デス・ガンバトル約50%・上位純増約7.2枚/G"],
+    specs: [["CZ（設定1）", "約1/238.4"], ["AT（設定1）", "約1/386.2"], ["AT（設定6）", "約1/269.6"], ["スコードロンバトル", "成功期待度約55%"], ["BoB", "初期150枚＋α"], ["通常AT純増", "約3.6枚/G"], ["スナイパーチャンス", "液晶20Gごと・最大3勝"], ["ラストアタック", "5G・成功期待度約35%"], ["デス・ガンバトル", "4G＋最終1G・約50%"], ["FULL DIVE", "純増約7.2枚/G"], ["絶剣", "初期2200枚＋α"], ["ベース", "約31G/50枚"], ["コイン単価", "約4.1円"], ["設定", "1〜6"]],
+    articleSections: [
+      { heading: "スコードロンバトルからBoBへ", paragraphs: ["通常時は液晶ゲーム数、バレットカウンター、強チェリーなどからCZを目指します。CZスコードロンバトルの成功期待度は約55%で、成功するとBullet of Bulletsへ進みます。", "設定別CZ・AT初当りは公開値を使用。通常時の内部モードと全小役抽選は初当り確率へまとめています。"] },
+      { heading: "150枚＋αとスナイパーチャンス", paragraphs: ["BoBは純増約3.6枚/G・初期150枚＋αの差枚数AT。液晶20Gごとにスナイパーチャンスを抽選し、AT1回につき最大3勝を目指します。", "対戦相手はダイン、ペイルライダー、闇風、銃士X、デス・ガン。デス・ガン勝利時は上位CZの権利を獲得します。相手別の詳細勝率が非公表の部分は強弱関係を保つ代表値です。"] },
+      { heading: "ラストアタックとデス・ガンバトル", paragraphs: ["差枚を使い切ると5Gのラストアタックへ進み、成功期待度約35%でスナイパーチャンスへ復帰します。スナイパーチャンス3勝、またはデス・ガン撃破でデス・ガンバトルの権利を獲得します。", "デス・ガンバトルは4Gのバトル＋最終1GのPUSHで決着し、成功期待度は約50%。突破すると上位ATへ進みます。"] },
+      { heading: "FULL DIVE・絶剣・アルティマ状態", paragraphs: ["FULL DIVEは純増約7.2枚/G。上乗せは3桁以上となり、終了後は再びデス・ガンバトルへ進みます。サイトでは上位区間と継続ジャッジを交互に表示します。", "上位突入の一部は1G完結の絶剣へ進み、初期2200枚＋αを獲得。アルティマ状態中はデス・ガンバトルの勝利期待度を高めた代表値で判定します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約31G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定別CZ・AT確率、CZ約55%、ラストアタック約35%、デス・ガンバトル約50%は公開値", "SC相手別勝率、直乗せ、絶剣振り分け、アルティマ状態の詳細は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["大都技研 公式機種サイト", "https://www.daitogiken.com/contents/product/slot/sao2/"], ["大都技研 製品情報", "https://www.daitogiken.com/products/slot/"], ["なな徹 デス・ガンバトル解析", "https://nana-press.com/kaiseki/machine/1158/37267/"], ["ちょんぼりすた 解析まとめ", "https://chonborista.com/slot/daito-slot/256112/"]],
+    readerGuide: {
+      verdict: "初期150枚＋αのBoBでスナイパーチャンス最大3勝を重ね、約50%のデス・ガンバトルから純増約7.2枚/GのFULL DIVEを狙う台です。",
+      bestFor: ["20G周期のスナイパーチャンスをPUSHで見たい", "ラストアタック5Gの引き戻しを体験したい", "デス・ガンバトルからFULL DIVEを狙いたい"],
+      check: ["設定別CZ・AT確率と主要ゲーム数は公開値", "SC相手別勝率など非公表部分は代表値", "BoB予選・準決勝という旧簡易フローは廃止"],
+      compare: [["ggo-slot", "スマスロ GGO", "同作品のST型ゲーム性と比較"], ["tokyo-ghoul-slot", "スマスロ 東京喰種", "差枚数ATの対戦型フローと比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v9",
+    dedicatedFlow: true,
+    dedicatedFlowKey: "sao2-slot",
+    dedicatedFlowVersion: 2,
+    sao2Flow: true,
+    atPureIncrease: 3.6,
+    atPayoutVariance: 0,
+    sao2InitialCoins: [[150, 0.72], [200, 0.20], [300, 0.08]],
+    sao2SniperOpponents: [[{ key: "dyne", label: "ダイン", chance: 0.72 }, 0.28], [{ key: "pale-rider", label: "ペイルライダー", chance: 0.62 }, 0.24], [{ key: "yamikaze", label: "闇風", chance: 0.55 }, 0.22], [{ key: "musketeer-x", label: "銃士X", chance: 0.45 }, 0.18], [{ key: "death-gun", label: "デス・ガン", chance: 0.35, upperRight: true }, 0.08]],
+    sao2SniperMaxWins: 3,
+    sao2SniperInterval: 20,
+    sao2LastAttackGames: 5,
+    sao2LastAttackChance: 0.35,
+    sao2DeathGunGames: 5,
+    sao2DeathGunChance: 0.50,
+    sao2UpperAwards: [[300, 0.50], [500, 0.30], [1000, 0.15], [1500, 0.05]],
+    sao2ZekkenChance: 0.08,
+    sao2ZekkenAwards: [[2200, 0.70], [3300, 0.22], [4400, 0.08]],
+    sao2UltimaChance: 0.20,
+    sao2UltimaDeathGunChance: 0.72,
+    upperChallenge: "デス・ガンバトル",
+    upperChance: 0,
+    upperSuccess: 0.50,
+    upperLabel: "FULL DIVE",
+    upperContinue: 0.50,
+    upperPayout: 0,
+    upperPureIncrease: 7.2,
+    settingRates: { 1: { trigger: 238.4, main: 386.2, payout: 0.976 }, 2: { trigger: 232.3, main: 364.3, payout: 0.988 }, 3: { trigger: 232.7, main: 368.1, payout: 1.002 }, 4: { trigger: 218.9, main: 326.8, payout: 1.053 }, 5: { trigger: 225.2, main: 340.6, payout: 1.104 }, 6: { trigger: 191.7, main: 269.6, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
 })();
 
 (function applyTokyoGhoulDedicatedFlow() {

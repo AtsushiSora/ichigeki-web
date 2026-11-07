@@ -246,6 +246,14 @@ function snapshotMarkup(machine) {
       ["設定抽選", `設定${settingPool.join("・")}`, "設定4は非搭載"]
     ];
     note = "BONUSごとに32Gを数え、天国・ドキドキ・超ドキドキ・保証・金ドキの内部ルートを結果へ残します。";
+  } else if (sim.sao2Flow) {
+    items = [
+      ["CZ突破", "約55%", "スコードロンバトル"],
+      ["BoB", "150枚＋α", "純増約3.6枚/G"],
+      ["上位CZ", "約50%", "デス・ガンバトル"],
+      ["FULL DIVE", "約7.2枚/G", "上位AT純増"]
+    ];
+    note = "20G周期のスナイパーチャンスで最大3勝を目指し、ラストアタック、デス・ガンバトル、FULL DIVEまでを個別に記録します。";
   } else {
     const settingPool = Array.isArray(sim.settingPool) && sim.settingPool.length ? sim.settingPool : [1, 2, 3, 4, 5, 6];
     const gamesPerThousand = sim.base50 * 46 / 50;

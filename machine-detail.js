@@ -295,6 +295,14 @@
         ["設定抽選", slotSettingLabel, "設定3は非搭載"]
       ];
       note = "BONUS後32Gを毎回数え、10連後のIREGUIと獲得ストックを結果へ残します。";
+    } else if (sim.sao2Flow) {
+      items = [
+        ["CZ突破", "約55%", "スコードロンバトル"],
+        ["BoB", "150枚＋α", "純増約3.6枚/G"],
+        ["上位CZ", "約50%", "デス・ガンバトル"],
+        ["FULL DIVE", "約7.2枚/G", "上位AT純増"]
+      ];
+      note = "20G周期のスナイパーチャンスで最大3勝を目指し、ラストアタック、デス・ガンバトル、FULL DIVEまでを個別に記録します。";
     } else {
       const gamesPerThousand = sim.base50 * RANKING_RATE.slot.lendCoins / 50;
       const averageInvestment = Math.round((sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
@@ -389,6 +397,22 @@
         "天国モード滞在時の代表ループ率です。金ドキによる再連は別抽選です。"
       ));
       note = "BONUS内訳は設定1の公表確率から算出し、天国の継続割合とは別に表示しています。モード初回振り分けは非公表のため円グラフには含めていません。";
+    } else if (sim.sao2Flow) {
+      charts.push(ratioChartMarkup(
+        "CZ ENTRY",
+        "スコードロンバトル突破割合",
+        [["突破", 0.55], ["非突破", 0.45]],
+        "約55%",
+        "CZからBullet of Bulletsへ進む公表期待度です。"
+      ));
+      charts.push(ratioChartMarkup(
+        "UPPER JUDGE",
+        "デス・ガンバトル勝利割合",
+        [["勝利", sim.sao2DeathGunChance], ["敗北", 1 - sim.sao2DeathGunChance]],
+        "約50%",
+        "4Gのバトル＋最終1GでFULL DIVEを目指す公表期待度です。"
+      ));
+      note = "CZ約55%と上位CZ約50%は別々の抽選です。スナイパーチャンス相手別勝率と絶剣振り分けは非公表のため円グラフには含めていません。";
     } else {
       const hasEntryBonuses = Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0;
       if (hasEntryBonuses && Number(sim.triggerSuccess) >= 0.995) {
@@ -753,6 +777,16 @@
         ["GRUDGE LOOP", "宿怨チャレンジと天膳BT", "カットイン3回まで・成功期待度50%超。成功時は激闘シナリオ相当の天膳BT＋初回10人状態、失敗時も通常BTへ進みます。12セット完走後はエンディングを経て必ず挑戦します。"]
       ];
       note = "BC・BT設定別確率、各ゲーム数、純増、シナリオ表・設定1振り分け、宿怨チャレンジの基本性能は公開値です。継続率A〜D、絆玉・BT中BC・月下閃滅・宿怨ポイントMAXの出現率は体験用の代表値です。";
+    } else if (sim.sao2Flow) {
+      cards = [
+        ["SQUADRON BATTLE", "CZ成功期待度約55%", "液晶ゲーム数、バレットカウンター、強チェリーなどからCZへ。最終PUSHでBullet of Bulletsの当落を開きます。"],
+        ["BULLET OF BULLETS", "初期150枚＋α・純増約3.6枚/G", "差枚数を消化しながら液晶20Gごとのスナイパーチャンスを狙います。AT開始時は約25%で高確へ移行しますが、本サイトでは全体のSC発生結果へまとめています。"],
+        ["SNIPER CHANCE", "最大3勝を目指す対戦", "ダイン、ペイルライダー、闇風、銃士X、デス・ガンから相手を抽選。PUSHまで勝敗を伏せ、3勝またはデス・ガン撃破で上位CZの権利を獲得します。"],
+        ["LAST ATTACK", "5G・成功期待度約35%", "BoBの差枚を使い切ると5Gのラストアタックへ。成功時はスナイパーチャンスへ復帰し、最後の対戦結果をPUSHで開きます。"],
+        ["DEATH GUN BATTLE", "4G＋最終1G・約50%", "4Gのバトルを最後まで進め、最終1GのPUSHでFULL DIVE当落を表示。上位終了後も再びデス・ガンバトルへ進みます。"],
+        ["FULL DIVE / ZEKKEN", "上位純増約7.2枚/G", "FULL DIVEは3桁以上の差枚上乗せを区間ごとに表示。絶剣当選時は初期2200枚＋αを開き、アルティマ状態の上位ループへ進みます。"]
+      ];
+      note = "設定別CZ・AT初当り、CZ約55%、初期150枚＋α、純増約3.6枚/G・約7.2枚/G、ラストアタック約35%、デス・ガンバトル約50%は公開値です。SC相手別勝率、直乗せ、絶剣・アルティマ状態の詳細は体験用代表値です。";
     } else if (sim.tokyoGhoulFlow) {
       cards = [
         ["CHANCE ZONE", "8GのCZからATへ", "レミニセンスは8G・成功期待度約50%、大喰いの利世は8G・約75%。成功後は初期約150枚・純増約4.0枚/Gの東京喰種咬へ進みます。"],
@@ -1033,7 +1067,7 @@
       const averageInvestment = Math.round((machine.sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
-      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow;
+      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow;
       const settingModelLabel = machine.sim.settingRates
         ? hasDedicatedFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
         : hasDedicatedFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
@@ -1119,7 +1153,9 @@
         ? Math.max(1, mainRate * sim.triggerRate / sim.mainRate)
         : Math.max(1, sim.triggerRate * profile.rate);
     const publishedEntry = Number(publishedSetting?.entry);
-    const triggerSuccess = sim.godzillaEva2Flow || sim.mahoakoFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.shinEvaFlow
+    const triggerSuccess = sim.sao2Flow
+      ? Math.max(0, Math.min(1, Number(sim.triggerSuccess) || 0.55))
+      : sim.godzillaEva2Flow || sim.mahoakoFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.shinEvaFlow
       ? 1
       : Number.isFinite(publishedEntry) && publishedEntry >= 0
         ? Math.min(1, publishedEntry)
@@ -1258,6 +1294,15 @@
     let basiliskGrudgeAttempts = 0;
     let basiliskGrudgeSuccesses = 0;
     let basiliskTenzenSets = 0;
+    let sao2SniperAttempts = 0;
+    let sao2SniperWins = 0;
+    let sao2LastAttackAttempts = 0;
+    let sao2LastAttackSuccesses = 0;
+    let sao2DeathGunAttempts = 0;
+    let sao2DeathGunWins = 0;
+    let sao2UpperSections = 0;
+    let sao2ZekkenAward = 0;
+    let sao2Ultima = false;
     if (sim.basiliskTenzenFlow) {
       basiliskBc = weighted(sim.basiliskBcTypes || [[{ key: "hetero", label: "異色BC", games: 16, award: 30 }, 1]]);
       triggerSucceeded = true;
@@ -2218,6 +2263,99 @@
           }
         }
         basePayout = payout - entryPayout;
+      } else if (sim.sao2Flow) {
+        payout = entryPayout;
+        basePayout = 0;
+        const initialCoins = Math.max(1, Number(weighted(sim.sao2InitialCoins || [[150, 1]])) || 150);
+        let remainingCoins = initialCoins;
+        let deathGunRight = false;
+        const initialAward = Math.max(0, Math.min(initialCoins, SLOT_COMPLETE_LIMIT - payout));
+        payout += initialAward;
+        atEvents.push({ kind: "sao2-at-start", label: sim.mainLabel, games: 1, award: initialAward, cumulative: payout, remainingCoins });
+        flow.push(`${sim.mainLabel} 初期${yen.format(initialCoins)}枚`);
+
+        const runSniperChance = source => {
+          if (payout >= SLOT_COMPLETE_LIMIT) return false;
+          sao2SniperAttempts += 1;
+          const opponent = weighted(sim.sao2SniperOpponents || [[{ key: "dyne", label: "ダイン", chance: 0.72 }, 1]]);
+          const won = Math.random() < Math.max(0, Math.min(1, Number(opponent.chance) || 0.50));
+          let reward = 0;
+          if (won) {
+            sao2SniperWins += 1;
+            reward = Math.max(0, Math.min(Number(weighted([[50, 0.55], [100, 0.32], [200, 0.10], [300, 0.03]])) || 50, SLOT_COMPLETE_LIMIT - payout));
+            payout += reward;
+            remainingCoins += reward;
+            if (opponent.upperRight) deathGunRight = true;
+          }
+          atGamesTotal += 5;
+          atEvents.push({ kind: "sao2-sniper", label: "スナイパーチャンス", opponent: opponent.label, games: 5, chance: Number(opponent.chance) * 100, won, reward, source, attempt: sao2SniperAttempts, wins: sao2SniperWins, upperRight: Boolean(opponent.upperRight && won), cumulative: payout, remainingCoins });
+          flow.push(`SC ${sao2SniperAttempts}回目 VS ${opponent.label}・${won ? `勝利 +${reward}枚` : "敗北"}`);
+          return won;
+        };
+
+        const sniperMaxWins = Math.max(1, Number(sim.sao2SniperMaxWins) || 3);
+        const sniperInterval = Math.max(1, Number(sim.sao2SniperInterval) || 20);
+        while (remainingCoins > 0 && sao2SniperAttempts < 12 && sao2SniperWins < sniperMaxWins && !deathGunRight && payout < SLOT_COMPLETE_LIMIT) {
+          const spend = Math.min(remainingCoins, Math.round(sniperInterval * (Number(sim.atPureIncrease) || 3.6)));
+          remainingCoins -= spend;
+          atGamesTotal += sniperInterval;
+          atEvents.push({ kind: "sao2-at-run", label: sim.mainLabel, games: sniperInterval, spentCoins: spend, remainingCoins, cumulative: payout, interval: sao2SniperAttempts + 1 });
+          runSniperChance("20G周期");
+        }
+
+        if (!deathGunRight && sao2SniperWins < sniperMaxWins && payout < SLOT_COMPLETE_LIMIT) {
+          sao2LastAttackAttempts += 1;
+          const lastAttackSuccess = Math.random() < (Number(sim.sao2LastAttackChance) || 0.35);
+          if (lastAttackSuccess) sao2LastAttackSuccesses += 1;
+          atGamesTotal += Math.max(1, Number(sim.sao2LastAttackGames) || 5);
+          atEvents.push({ kind: "sao2-last-attack", label: "ラストアタック", games: Math.max(1, Number(sim.sao2LastAttackGames) || 5), chance: (Number(sim.sao2LastAttackChance) || 0.35) * 100, success: lastAttackSuccess, cumulative: payout });
+          flow.push(`ラストアタック ${lastAttackSuccess ? "成功" : "失敗"}`);
+          if (lastAttackSuccess) runSniperChance("ラストアタック");
+        }
+
+        deathGunRight ||= sao2SniperWins >= sniperMaxWins;
+        const resolveDeathGunBattle = ({ ultima = false } = {}) => {
+          sao2DeathGunAttempts += 1;
+          const chance = ultima ? (Number(sim.sao2UltimaDeathGunChance) || 0.72) : (Number(sim.sao2DeathGunChance) || 0.50);
+          const success = Math.random() < chance;
+          if (success) sao2DeathGunWins += 1;
+          atGamesTotal += Math.max(1, Number(sim.sao2DeathGunGames) || 5);
+          atEvents.push({ kind: "sao2-death-gun", label: sim.upperChallenge, games: Math.max(1, Number(sim.sao2DeathGunGames) || 5), chance: chance * 100, success, ultima, attempt: sao2DeathGunAttempts, cumulative: payout });
+          flow.push(`${sim.upperChallenge} ${success ? "勝利" : "敗北"}${ultima ? "・アルティマ状態" : ""}`);
+          return success;
+        };
+
+        let upperActive = deathGunRight && resolveDeathGunBattle();
+        upper = upperActive;
+        while (upperActive && sao2UpperSections < 10 && payout < SLOT_COMPLETE_LIMIT) {
+          sao2UpperSections += 1;
+          upperLoops = sao2UpperSections;
+          const zekken = sao2UpperSections === 1 && Math.random() < (Number(sim.sao2ZekkenChance) || 0.08);
+          if (zekken) {
+            sao2ZekkenAward = Math.max(0, Math.min(Number(weighted(sim.sao2ZekkenAwards || [[2200, 1]])) || 2200, SLOT_COMPLETE_LIMIT - payout));
+            payout += sao2ZekkenAward;
+            upperPayoutTotal += sao2ZekkenAward;
+            sao2Ultima = true;
+            const zekkenGames = Math.max(1, Math.round(sao2ZekkenAward / (Number(sim.upperPureIncrease) || 7.2)));
+            atGamesTotal += zekkenGames;
+            atEvents.push({ kind: "sao2-zekken", label: "絶剣", games: zekkenGames, award: sao2ZekkenAward, cumulative: payout, section: sao2UpperSections });
+            flow.push(`絶剣 +${yen.format(sao2ZekkenAward)}枚・アルティマ状態`);
+          } else {
+            const upperAward = Math.max(0, Math.min(Number(weighted(sim.sao2UpperAwards || [[300, 1]])) || 300, SLOT_COMPLETE_LIMIT - payout));
+            payout += upperAward;
+            upperPayoutTotal += upperAward;
+            const upperGames = Math.max(1, Math.round(upperAward / (Number(sim.upperPureIncrease) || 7.2)));
+            atGamesTotal += upperGames;
+            atEvents.push({ kind: "sao2-upper", label: sim.upperLabel, games: upperGames, award: upperAward, cumulative: payout, section: sao2UpperSections, ultima: sao2Ultima });
+            flow.push(`${sim.upperLabel} ${sao2UpperSections}区間目 +${yen.format(upperAward)}枚`);
+            if (!sao2Ultima && Math.random() < (Number(sim.sao2UltimaChance) || 0.20)) sao2Ultima = true;
+          }
+          if (payout >= SLOT_COMPLETE_LIMIT) break;
+          upperActive = resolveDeathGunBattle({ ultima: sao2Ultima });
+        }
+        cycleRounds = sao2SniperAttempts;
+        cycleContinues = sao2SniperWins;
+        basePayout = payout - entryPayout;
       } else if (sim.tokyoGhoulFlow) {
         payout = entryPayout;
         basePayout = 0;
@@ -2942,7 +3080,7 @@
           }
           flow.push(`${karakuriUpperRoute}突破 → ${sim.upperLabel} ${upperLoops}セット・+${yen.format(upperPayoutTotal)}枚`);
         }
-      } else if (!sim.battleBonusFlow && !sim.sgRaceFlow && !sim.kabaneriStFlow && !sim.otomeRushFlow && !sim.cycleFlow && !sim.godzillaEva2Flow && !sim.mahoakoFlow && !sim.okidokiGoldFlow && !sim.uminchuFlow && !sim.tentenFlow && !sim.goblinSlayerFlow && !sim.assaultLilyFlow && !sim.kaguyaFlow && !sim.dumbbellFlow && !sim.shinEvaFlow) {
+      } else if (!sim.battleBonusFlow && !sim.sgRaceFlow && !sim.kabaneriStFlow && !sim.otomeRushFlow && !sim.cycleFlow && !sim.godzillaEva2Flow && !sim.mahoakoFlow && !sim.okidokiGoldFlow && !sim.uminchuFlow && !sim.tentenFlow && !sim.goblinSlayerFlow && !sim.assaultLilyFlow && !sim.kaguyaFlow && !sim.dumbbellFlow && !sim.shinEvaFlow && !sim.sao2Flow) {
         // Keep the published overall special-zone chance while allowing rare multi-hit runs.
         const specialChecks = Math.max(1, Math.min(3, Math.ceil(payout / 500)));
         const perCheckChance = 1 - Math.pow(1 - specialChance, 1 / specialChecks);
@@ -3061,10 +3199,11 @@
     const shinEvaStats = sim.shinEvaFlow ? [["作戦ST", `${shinEvaOperationRounds}回・進行${shinEvaPhaseAdvances}段階`], ["BONUS内訳", `BIG ${shinEvaBigCount}回・SUPER BIG ${shinEvaSuperCount}回・SPECIAL ${shinEvaSpecialCount}回`], ["作戦進行ストック", `${shinEvaProgressStocks}個`], ["Vストック", `${shinEvaVStocks}個`], [sim.specialLabel, shinEvaSankiCount ? `${shinEvaSankiCount}回` : "非到達"], [sim.upperChallenge, shinEvaMariAttempts ? `${shinEvaMariAttempts}回・成功${shinEvaMariSuccesses}回` : "未到達"], [sim.upperLabel, upper ? `${shinEvaUpperLoops}セット` : "非到達"]] : [];
     const tokyoGhoulStats = sim.tokyoGhoulFlow ? [["今回のCZ", tokyoGhoulCz?.label || sim.triggerLabel], ["喰種対決", `${tokyoGhoulBattles}戦・勝利${tokyoGhoulWins}回`], ["BITES", `${tokyoGhoulBitesCount}回`], ["特化ゾーン", tokyoGhoulSpecialCount ? `${tokyoGhoulSpecialCount}回` : "非当選"], ["有馬貴将", tokyoGhoulArimaBattle ? `${tokyoGhoulArimaBattle}戦目・${tokyoGhoulArimaWon ? "勝利" : "敗北または未到達"}` : "未到達"], ["CCGの死神", tokyoGhoulCcgAward ? `+${yen.format(tokyoGhoulCcgAward)}枚` : "非到達"], ["裏AT", tokyoGhoulUpperAt ? "到達・100G＋α" : "非到達"]] : [];
     const basiliskStats = sim.basiliskTenzenFlow ? [["初当りBC", basiliskBc?.label || sim.triggerLabel], ["BTシナリオ", basiliskScenario?.name || "BT非突入"], ["通常BT", `${basiliskSets}セット`], ["BT中BC", `${basiliskBtBcCount}回`], ["絆高確", `${basiliskHighCount}セット`], ["月下閃滅", basiliskMoonCount ? `${basiliskMoonCount}回` : "非当選"], [sim.upperChallenge, basiliskGrudgeAttempts ? `${basiliskGrudgeAttempts}回・成功${basiliskGrudgeSuccesses}回` : "未到達"], [sim.upperLabel, basiliskTenzenSets ? `${basiliskTenzenSets}セット` : "非到達"]] : [];
+    const sao2Stats = sim.sao2Flow ? [["スナイパーチャンス", `${sao2SniperAttempts}回・勝利${sao2SniperWins}回`], ["ラストアタック", sao2LastAttackAttempts ? `${sao2LastAttackAttempts}回・成功${sao2LastAttackSuccesses}回` : "未到達"], [sim.upperChallenge, sao2DeathGunAttempts ? `${sao2DeathGunAttempts}回・勝利${sao2DeathGunWins}回` : "未到達"], [sim.upperLabel, sao2UpperSections ? `${sao2UpperSections}区間` : "非到達"], ["絶剣", sao2ZekkenAward ? `+${yen.format(sao2ZekkenAward)}枚` : "非当選"], ["アルティマ状態", sao2Ultima ? "移行" : "非移行"]] : [];
     const cycleStats = sim.cycleFlow ? [[sim.cycleFlow.statLabel || (sim.titleFlow ? "機種専用進行" : "専用ループ"), `${cycleRounds}回・継続${cycleContinues}回`]] : [];
     const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
     const rushGamesTotal = Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
-    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
+    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
     const gameAddOnStats = sim.karakuriJudgeFlow || coinAddOnCount
       ? [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(coinAddOnTotal || addOnTotal)}枚` : "上乗せなし"]]
       : [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnGamesTotal || otomeAddedGames)}G` : "上乗せなし"]];
@@ -3089,6 +3228,8 @@
         ? [["AT・BITES消化", `${yen.format(rushGamesTotal)}G相当`], ...tokyoGhoulStats]
       : sim.basiliskTenzenFlow
         ? [["BC・BT消化", `${yen.format(rushGamesTotal)}G相当`], ...basiliskStats]
+      : sim.sao2Flow
+        ? [["BoB・上位消化", `${yen.format(rushGamesTotal)}G相当`], ...sao2Stats]
       : [["RUSH消化モデル", `${yen.format(rushGamesTotal)}G相当`], ...karakuriStats, ...battleStats, ...sgStats, ...kabaneriStats, ...otomeStats, ...cycleStats, ...gameAddOnStats, ...bonusStats, ...genericSpecialStats, ["上位AT", upper ? (kabaneriUpperMode || `${sim.upperLabel} ${upperLoops}セット`) : "非到達"]]) : [];
     const stats = [["今回の設定", `設定${setting}`], ["設定差モデル", settingModelLabel], ["今回のゲーム数", `${yen.format(games)}G`], ...settingRateStats, ["現金投資目安", `${yen.format(investment)}円`], ...entryBonusStats, ...atStats, ["獲得枚数", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]];
     if (complete) stats.unshift(["到達状態", "コンプリート"]);
@@ -3115,6 +3256,8 @@
           ? `今回の設定は設定${setting}。${games}Gで${tokyoGhoulCz?.label || sim.triggerLabel}、喰種対決${tokyoGhoulBattles}戦・BITES ${tokyoGhoulBitesCount}回で${yen.format(payout)}枚を獲得しました。${tokyoGhoulUpperAt ? "有馬貴将JUDGEMENTを突破し、裏ATへ到達しました。" : tokyoGhoulCcgAward ? `CCGの死神で${yen.format(tokyoGhoulCcgAward)}枚を獲得しました。` : "上位ルートには届きませんでした。"}`
         : sim.basiliskTenzenFlow
           ? `今回の設定は設定${setting}。${games}Gで${basiliskBc?.label || sim.triggerLabel}、${entered ? `${basiliskScenario?.name || "通常"}シナリオのBTを${basiliskSets}セット消化し、${yen.format(payout)}枚を獲得しました。${basiliskTenzenSets ? `宿怨チャレンジ成功から天膳BTを${basiliskTenzenSets}セット消化しました。` : basiliskGrudgeAttempts ? "宿怨チャレンジ失敗後は通常BTへ進みました。" : "宿怨チャレンジには届きませんでした。"}` : `BCを${basiliskBc?.games || 16}G消化し、BTには入りませんでした。`}`
+        : sim.sao2Flow
+          ? `今回の設定は設定${setting}。${games}Gでスコードロンバトル、${entered ? `スナイパーチャンス${sao2SniperAttempts}回・勝利${sao2SniperWins}回で${yen.format(payout)}枚を獲得しました。${sao2ZekkenAward ? `絶剣で${yen.format(sao2ZekkenAward)}枚を獲得し、アルティマ状態へ移行しました。` : sao2UpperSections ? `デス・ガンバトルを突破し、FULL DIVEを${sao2UpperSections}区間消化しました。` : sao2DeathGunAttempts ? "デス・ガンバトルで終了しました。" : "上位CZの権利には届きませんでした。"}` : "CZは突破できませんでした。"}`
         : `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}。${entered ? `${payout}枚を獲得しました。${sim.kabaneriStFlow ? `ST中ボーナス${kabaneriStBonuses}回・${upper ? `${upperResultLabel} ${upperLoops}回当選。` : "上位ST非到達。"}` : `上乗せ${addOnCount}回・${upper ? `${upperResultLabel} ${upperLoops}セット。` : "上位AT非到達。"}`}` : entryBonus ? `${entryBonus.label}で約${yen.format(payout)}枚を獲得し、${sim.mainLabel}には届きませんでした。` : `${machine.initialHitLabel || sim.mainLabel}には届きませんでした。`}`;
     const kabaneriRareUpperLabel = sim.kabaneriUpperRareLabel || "裏美馬ST";
     const kabaneriUpperContinueChance = kabaneriUpperMode
@@ -3122,7 +3265,7 @@
         ? (Number(sim.kabaneriUpperRareContinue) || 0.95)
         : (Number(sim.kabaneriUpperNormalContinue) || 0.80)) * 100
       : sim.upperContinue * 100;
-    return { title: `設定${setting}｜${resultTitle}`, summary: resultSummary, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, triggerSucceeded, triggerSuccessChance: sim.basiliskTenzenFlow ? 100 : sim.goblinSlayerFlow ? (Number(goblinCz?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : triggerSuccess * 100, entryBonusModel: Boolean(sim.basiliskTenzenFlow) || Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0, entryBonus, entered, entryChance: entryBonus ? (Number(entryBonus.atChance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, setPushFlow: Boolean(sim.setPushFlow), karakuriJudgeFlow: Boolean(sim.karakuriJudgeFlow), battleBonusFlow: Boolean(sim.battleBonusFlow), garoBattleFlow: Boolean(sim.garoBattleFlow), ragnadorUpperFlow: Boolean(sim.ragnadorUpperFlow), seiyaTempleFlow: Boolean(sim.seiyaTempleFlow), ggoStFlow: Boolean(sim.ggoStFlow), godzillaEva2Flow: Boolean(sim.godzillaEva2Flow), mahoakoFlow: Boolean(sim.mahoakoFlow), okidokiGoldFlow: Boolean(sim.okidokiGoldFlow), okidokiBigCount, okidokiRegCount, okidokiMaxChain, okidokiGoldCount, okidokiOneGameCount, okidokiGuaranteeCount, okidokiGodMode, okidokiHighestMode, tokyoGhoulFlow: Boolean(sim.tokyoGhoulFlow), tokyoGhoulCz, tokyoGhoulBattles, tokyoGhoulWins, tokyoGhoulBitesCount, tokyoGhoulSpecialCount, tokyoGhoulArimaBattle, tokyoGhoulArimaWon, tokyoGhoulUpperAt, tokyoGhoulCcgAward, basiliskTenzenFlow: Boolean(sim.basiliskTenzenFlow), basiliskBc, basiliskScenario, basiliskSets, basiliskBtBcCount, basiliskHighCount, basiliskMoonCount, basiliskGrudgeAttempts, basiliskGrudgeSuccesses, basiliskTenzenSets, tentenFlow: Boolean(sim.tentenFlow), goblinSlayerFlow: Boolean(sim.goblinSlayerFlow), goblinCz, goblinLoopMode: goblinLoopMode * 100, goblinAtSets, goblinBonusCount, goblinMaxContinueRate, assaultLilyFlow: Boolean(sim.assaultLilyFlow), assaultEntry, assaultBossBattles, assaultBossWins, assaultRewardCount, assaultUpperCz, assaultUpperCzAttempts, assaultUpperCzSuccesses, assaultMaxAddOn, kaguyaFlow: Boolean(sim.kaguyaFlow), kaguyaRegCount, kaguyaBigCount, kaguyaSuperCount, kaguyaOneGameCount, kaguyaReturnCount, kaguyaSpecialCount, kaguyaStockCount, kaguyaMarriageCount, kaguyaExtraGames, dumbbellFlow: Boolean(sim.dumbbellFlow), dumbbellCz, dumbbellNormalGames, dumbbellGameAddCount, dumbbellGameAddTotal, dumbbellGoldenChallenges, dumbbellGoldenSuccesses, dumbbellVStockTotal, dumbbellCoinAddTotal, dumbbellRisingChallenges, sgRaceFlow: Boolean(sim.sgRaceFlow), kabaneriStFlow: Boolean(sim.kabaneriStFlow), otomeRushFlow: Boolean(sim.otomeRushFlow), cycleFlow: Boolean(sim.cycleFlow), cycleRounds, cycleContinues, kabaneriStBonuses, kabaneriUpperMode, otomeAddedGames, otomeBonusCount, otomeAwakeningCount, otomeBattleWon, otomeAddOnChance: (Number(sim.otomeAddOnChance) || 0) * 100, battleBonusSets, battleContinuationRate: battleContinuationRate * 100, sgRushSets, sgScenarioName, karakuriJudgeAttempts, karakuriJudgeSuccesses, karakuriUpperRoute, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, addOnGamesTotal, coinAddOnCount, coinAddOnTotal, bonusCount, bonusPayoutTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: kabaneriUpperContinueChance, upperChallenge: sim.upperChallenge || "", upper, upperLabel: upperResultLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
+    return { title: `設定${setting}｜${resultTitle}`, summary: resultSummary, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, triggerSucceeded, triggerSuccessChance: sim.basiliskTenzenFlow ? 100 : sim.goblinSlayerFlow ? (Number(goblinCz?.chance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : triggerSuccess * 100, entryBonusModel: Boolean(sim.basiliskTenzenFlow) || Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0, entryBonus, entered, entryChance: entryBonus ? (Number(entryBonus.atChance) || 0) * 100 : sim.assaultLilyFlow ? (Number(assaultEntry?.chance) || 0) * 100 : sim.dumbbellFlow ? (Number(dumbbellCz?.chance) || 0) * 100 : triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, setPushFlow: Boolean(sim.setPushFlow), karakuriJudgeFlow: Boolean(sim.karakuriJudgeFlow), battleBonusFlow: Boolean(sim.battleBonusFlow), garoBattleFlow: Boolean(sim.garoBattleFlow), ragnadorUpperFlow: Boolean(sim.ragnadorUpperFlow), seiyaTempleFlow: Boolean(sim.seiyaTempleFlow), ggoStFlow: Boolean(sim.ggoStFlow), godzillaEva2Flow: Boolean(sim.godzillaEva2Flow), mahoakoFlow: Boolean(sim.mahoakoFlow), okidokiGoldFlow: Boolean(sim.okidokiGoldFlow), okidokiBigCount, okidokiRegCount, okidokiMaxChain, okidokiGoldCount, okidokiOneGameCount, okidokiGuaranteeCount, okidokiGodMode, okidokiHighestMode, tokyoGhoulFlow: Boolean(sim.tokyoGhoulFlow), tokyoGhoulCz, tokyoGhoulBattles, tokyoGhoulWins, tokyoGhoulBitesCount, tokyoGhoulSpecialCount, tokyoGhoulArimaBattle, tokyoGhoulArimaWon, tokyoGhoulUpperAt, tokyoGhoulCcgAward, basiliskTenzenFlow: Boolean(sim.basiliskTenzenFlow), basiliskBc, basiliskScenario, basiliskSets, basiliskBtBcCount, basiliskHighCount, basiliskMoonCount, basiliskGrudgeAttempts, basiliskGrudgeSuccesses, basiliskTenzenSets, sao2Flow: Boolean(sim.sao2Flow), sao2SniperAttempts, sao2SniperWins, sao2LastAttackAttempts, sao2LastAttackSuccesses, sao2DeathGunAttempts, sao2DeathGunWins, sao2UpperSections, sao2ZekkenAward, sao2Ultima, tentenFlow: Boolean(sim.tentenFlow), goblinSlayerFlow: Boolean(sim.goblinSlayerFlow), goblinCz, goblinLoopMode: goblinLoopMode * 100, goblinAtSets, goblinBonusCount, goblinMaxContinueRate, assaultLilyFlow: Boolean(sim.assaultLilyFlow), assaultEntry, assaultBossBattles, assaultBossWins, assaultRewardCount, assaultUpperCz, assaultUpperCzAttempts, assaultUpperCzSuccesses, assaultMaxAddOn, kaguyaFlow: Boolean(sim.kaguyaFlow), kaguyaRegCount, kaguyaBigCount, kaguyaSuperCount, kaguyaOneGameCount, kaguyaReturnCount, kaguyaSpecialCount, kaguyaStockCount, kaguyaMarriageCount, kaguyaExtraGames, dumbbellFlow: Boolean(sim.dumbbellFlow), dumbbellCz, dumbbellNormalGames, dumbbellGameAddCount, dumbbellGameAddTotal, dumbbellGoldenChallenges, dumbbellGoldenSuccesses, dumbbellVStockTotal, dumbbellCoinAddTotal, dumbbellRisingChallenges, sgRaceFlow: Boolean(sim.sgRaceFlow), kabaneriStFlow: Boolean(sim.kabaneriStFlow), otomeRushFlow: Boolean(sim.otomeRushFlow), cycleFlow: Boolean(sim.cycleFlow), cycleRounds, cycleContinues, kabaneriStBonuses, kabaneriUpperMode, otomeAddedGames, otomeBonusCount, otomeAwakeningCount, otomeBattleWon, otomeAddOnChance: (Number(sim.otomeAddOnChance) || 0) * 100, battleBonusSets, battleContinuationRate: battleContinuationRate * 100, sgRushSets, sgScenarioName, karakuriJudgeAttempts, karakuriJudgeSuccesses, karakuriUpperRoute, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, addOnGamesTotal, coinAddOnCount, coinAddOnTotal, bonusCount, bonusPayoutTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: kabaneriUpperContinueChance, upperChallenge: sim.upperChallenge || "", upper, upperLabel: upperResultLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
   }
 
   function createATypeSession(setting) {
@@ -3759,6 +3902,7 @@
     const shinEvaFlow = Boolean(machine.sim.shinEvaFlow);
     const tokyoGhoulFlow = Boolean(data.tokyoGhoulFlow);
     const basiliskTenzenFlow = Boolean(data.basiliskTenzenFlow);
+    const sao2Flow = Boolean(data.sao2Flow);
     setSlotAtStatus({ visible: false });
     setExperienceHud("0G", "0円", "0枚");
     setExperienceStage(0, experienceProfile.system, "通常ゲーム中", "0G", `${data.hitLabel}を目指して抽選中`, "normal", data.hitChance, "1Gごとの契機当選率");
@@ -3770,7 +3914,7 @@
       await waitForExperience(115);
     }
     if (runId !== experienceRunId) return;
-    setExperienceStage(1, okidokiGoldFlow ? "HIBISCUS LIGHT" : uminchuFlow ? "BONUS HIT" : basiliskTenzenFlow ? "BASILISK CHANCE" : tentenFlow ? "EPISODE BATTLE" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "DIRECT AT" : "CHANCE ZONE") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "DIRECT AT" : data.assaultEntry?.key === "bouquet" ? "BOUQUET BONUS" : "LILY CHALLENGE") : kaguyaFlow ? "LOVE BRAIN BATTLE" : dumbbellFlow ? "MUSCLE ZONE" : shinEvaFlow ? "INITIAL HIT" : tokyoGhoulFlow ? "CHANCE ZONE" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", basiliskTenzenFlow ? (data.basiliskBc?.label || data.hitLabel) : tokyoGhoulFlow ? (data.tokyoGhoulCz?.label || data.hitLabel) : goblinSlayerFlow ? (data.goblinCz?.label || data.hitLabel) : assaultLilyFlow ? (data.assaultEntry?.label || data.hitLabel) : data.hitLabel, `${yen.format(data.attempts)}G`, okidokiGoldFlow ? "ハイビスカス点灯・初当りBONUS確定" : basiliskTenzenFlow ? `${data.basiliskBc?.games || 16}GのBCでバジリスクタイムを抽選` : tokyoGhoulFlow ? "8GのCZを進め、最後のPUSHで東京喰種咬を判定" : uminchuFlow ? "告知音とともに初当りBONUSへ" : tentenFlow ? "10GのレベルUPパートと4Gのバトルへ" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "規定ゲーム数からAT直撃" : "CZの専用ゲーム数を進めて最後にPUSH") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "規定ゲーム数・レア役などからRUSH直撃" : data.assaultEntry?.key === "bouquet" ? "25GのBONUS後にRUSHを判定" : "10Gの専用CZを進めて最後にPUSH") : kaguyaFlow ? "恋愛頭脳戦を経て15G＋αのCZへ" : dumbbellFlow ? "10Gの前半パートから後半発展を目指します" : shinEvaFlow ? "3GのEVANGELION IMPACTで作戦を決定します" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
+    setExperienceStage(1, okidokiGoldFlow ? "HIBISCUS LIGHT" : uminchuFlow ? "BONUS HIT" : basiliskTenzenFlow ? "BASILISK CHANCE" : sao2Flow ? "SQUADRON BATTLE" : tentenFlow ? "EPISODE BATTLE" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "DIRECT AT" : "CHANCE ZONE") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "DIRECT AT" : data.assaultEntry?.key === "bouquet" ? "BOUQUET BONUS" : "LILY CHALLENGE") : kaguyaFlow ? "LOVE BRAIN BATTLE" : dumbbellFlow ? "MUSCLE ZONE" : shinEvaFlow ? "INITIAL HIT" : tokyoGhoulFlow ? "CHANCE ZONE" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", basiliskTenzenFlow ? (data.basiliskBc?.label || data.hitLabel) : tokyoGhoulFlow ? (data.tokyoGhoulCz?.label || data.hitLabel) : goblinSlayerFlow ? (data.goblinCz?.label || data.hitLabel) : assaultLilyFlow ? (data.assaultEntry?.label || data.hitLabel) : data.hitLabel, `${yen.format(data.attempts)}G`, okidokiGoldFlow ? "ハイビスカス点灯・初当りBONUS確定" : basiliskTenzenFlow ? `${data.basiliskBc?.games || 16}GのBCでバジリスクタイムを抽選` : sao2Flow ? "スコードロンバトルの最後にPUSHでBoB突入を判定" : tokyoGhoulFlow ? "8GのCZを進め、最後のPUSHで東京喰種咬を判定" : uminchuFlow ? "告知音とともに初当りBONUSへ" : tentenFlow ? "10GのレベルUPパートと4Gのバトルへ" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "規定ゲーム数からAT直撃" : "CZの専用ゲーム数を進めて最後にPUSH") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "規定ゲーム数・レア役などからRUSH直撃" : data.assaultEntry?.key === "bouquet" ? "25GのBONUS後にRUSHを判定" : "10Gの専用CZを進めて最後にPUSH") : kaguyaFlow ? "恋愛頭脳戦を経て15G＋αのCZへ" : dumbbellFlow ? "10Gの前半パートから後半発展を目指します" : shinEvaFlow ? "3GのEVANGELION IMPACTで作戦を決定します" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
     await waitForExperience(780);
     if (basiliskTenzenFlow) {
       const bc = { ...(data.basiliskBc || {}), ...(data.entryBonus || {}) };
@@ -3808,6 +3952,14 @@
     if (uminchuFlow) {
       setExperienceStage(2, "CHANCE!", "ピュイ♪ BONUS確定", "PUSH", "BIGかREGか、BONUS種別を開きます", "judge", 100, "初当りBONUS");
       await waitForExperience(650);
+    }
+    if (sao2Flow) {
+      setExperienceStage(2, "SQUADRON FINAL", "スコードロンバトル", "PUSH", "Bullet of Bulletsの当落を開きます", "judge", data.triggerSuccessChance, "CZ成功期待度 約55%");
+      await waitForExperienceAction("スコードロンバトル PUSH", 5000, data.entered ? "gold" : "normal");
+      if (runId !== experienceRunId) return;
+      setExperienceStage(2, "CZ RESULT", data.entered ? "SQUADRON WIN" : "SQUADRON LOSE", data.entered ? "BoB突入" : "通常へ", data.entered ? "初期150枚＋αの差枚数ATを開始します" : "今回の一撃はここで終了", data.entered ? "rush" : "end", data.entered ? 100 : 0, "スコードロンバトル結果");
+      await waitForExperience(950);
+      if (!data.entered) return;
     }
     if (tentenFlow) {
       const levelComplete = await animateExperienceCounter(10, "G", "LEVEL UP PART", "EPレベルを上げろ", "ヒロイン目・レア役でEPレベルUPを抽選します", data.triggerSuccessChance, "CZ 10GレベルUP", runId);
@@ -3913,7 +4065,7 @@
       await waitForExperience(900);
       if (!data.entered) return;
     }
-    if (!okidokiGoldFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !basiliskTenzenFlow) {
+    if (!okidokiGoldFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !basiliskTenzenFlow && !sao2Flow) {
     const dedicatedEntryFlow = godzillaEva2Flow || mahoakoFlow;
     const entryJudgeLabel = dedicatedEntryFlow && data.entryBonus?.judgeLabel ? data.entryBonus.judgeLabel : `${data.mainLabel}突入ジャッジ`;
     const entryJudgeGames = dedicatedEntryFlow ? Math.max(1, Number(data.entryBonus?.judgeGames) || 3) : 3;
@@ -4730,6 +4882,81 @@
           setExperienceStage(3, "BASILISK TIME END", event.label, `+${yen.format(event.award)}枚`, `累計 ${yen.format(event.cumulative)}枚・最終結果へ`, "rush", 100, "通常BT獲得結果");
           setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
           await waitForExperience(1000);
+          continue;
+        }
+
+        if (event.kind === "sao2-at-start") {
+          setExperienceStage(3, "BULLET OF BULLETS", event.label, `初期 ${yen.format(event.award)}枚`, "20G周期でスナイパーチャンスを狙います", "rush", 100, "純増約3.6枚/G");
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: event.remainingCoins, remainingUnit: "枚", total: event.cumulative });
+          await waitForExperience(950);
+          continue;
+        }
+
+        if (event.kind === "sao2-at-run") {
+          const atComplete = await animateExperienceCounter(eventGames, "G", "BULLET OF BULLETS", `${event.interval}回目の20G周期`, "液晶ゲーム数を進め、スナイパーチャンスを目指します", 100, `残り差枚 ${yen.format(event.remainingCoins)}枚`, runId);
+          if (!atComplete) return;
+          consumedGames += eventGames;
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: event.remainingCoins, remainingUnit: "枚", total: event.cumulative });
+          continue;
+        }
+
+        if (event.kind === "sao2-sniper") {
+          const sniperComplete = await animateExperienceCounter(eventGames, "G", "SNIPER CHANCE", `VS ${event.opponent}`, "バトルを最後まで進め、PUSHで勝敗を開きます", event.chance, `勝利期待度 約${Math.round(event.chance)}%`, runId);
+          if (!sniperComplete) return;
+          consumedGames += eventGames;
+          setExperienceStage(3, "SNIPER FINAL JUDGE", `VS ${event.opponent}`, "PUSH", event.upperRight ? "勝利すればデス・ガンバトル権利獲得" : "スナイパーチャンスの勝敗を開きます", "judge", event.chance, `${event.attempt}回目・現在${event.wins}勝`);
+          await waitForExperienceAction(`スナイパーチャンス ${event.attempt} PUSH`, 5000, event.upperRight ? "upper" : event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.won ? "SNIPER WIN" : "SNIPER LOSE", event.won ? `${event.opponent}撃破` : `${event.opponent}に敗北`, event.won ? `+${yen.format(event.reward)}枚` : "上乗せなし", event.upperRight ? "デス・ガンバトル権利獲得" : event.won ? `通算${event.wins}勝・BoBへ戻ります` : "BoBへ戻ります", event.won ? "hit" : "end", event.won ? 100 : 0, "スナイパーチャンス結果");
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: event.remainingCoins, remainingUnit: "枚", total: event.cumulative });
+          await waitForExperience(1050);
+          continue;
+        }
+
+        if (event.kind === "sao2-last-attack") {
+          const lastComplete = await animateExperienceCounter(eventGames, "G", "LAST ATTACK", event.label, "5Gでスナイパーチャンス復帰を目指します", event.chance, `成功期待度 約${Math.round(event.chance)}%`, runId);
+          if (!lastComplete) return;
+          consumedGames += eventGames;
+          setExperienceStage(3, "LAST ATTACK FINAL", event.label, "PUSH", "スナイパーチャンス復帰の当落を開きます", "judge", event.chance, "5G 最終結果");
+          await waitForExperienceAction("ラストアタック PUSH", 5000, event.success ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.success ? "LAST ATTACK SUCCESS" : "LAST ATTACK FAILED", event.success ? "復帰成功" : "BoB終了", event.success ? "スナイパーチャンス" : "通常へ", event.success ? "最後の対戦相手を開きます" : `累計 ${yen.format(event.cumulative)}枚`, event.success ? "hit" : "end", event.success ? 100 : 0, "ラストアタック結果");
+          await waitForExperience(1000);
+          continue;
+        }
+
+        if (event.kind === "sao2-death-gun") {
+          const battleComplete = await animateExperienceCounter(Math.max(1, eventGames - 1), "G", "DEATH GUN BATTLE", event.ultima ? "アルティマ状態・VS デス・ガン" : "VS デス・ガン", "4Gのバトルを進め、最終1GのPUSHで決着します", event.chance, `勝利期待度 約${Math.round(event.chance)}%`, runId);
+          if (!battleComplete) return;
+          consumedGames += eventGames;
+          setExperienceStage(3, "DEATH GUN FINAL", "最終1G・決着", "PUSH", "FULL DIVEの当落を開きます", "judge", event.chance, `${event.attempt}回目 デス・ガンバトル`);
+          await waitForExperienceAction(`デス・ガンバトル ${event.attempt} PUSH`, 5000, event.success ? "upper" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.success ? "DEATH GUN DEFEATED" : "BATTLE LOST", event.success ? "デス・ガン撃破" : "デス・ガンに敗北", event.success ? "FULL DIVE" : "RUSH終了", event.success ? "純増約7.2枚/Gの上位ATへ" : `累計 ${yen.format(event.cumulative)}枚`, event.success ? "hyper" : "end", event.success ? 100 : 0, "デス・ガンバトル結果");
+          await waitForExperience(1150);
+          continue;
+        }
+
+        if (event.kind === "sao2-zekken") {
+          setExperienceStage(3, "ZEKKEN JUDGE", "絶剣", "PUSH", "1G完結の獲得差枚を開きます", "judge", 100, "上位突入時のプレミアム報酬");
+          await waitForExperienceAction("絶剣 PUSH", 5000, "upper");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, "MOTHER'S ROSARIO", "絶剣", `+${yen.format(event.award)}枚`, "アルティマ状態でFULL DIVEへ", "hyper", 100, "初期2200枚＋α");
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          await waitForExperience(1400);
+          continue;
+        }
+
+        if (event.kind === "sao2-upper") {
+          const upperComplete = await animateExperienceCounter(eventGames, "G", "FULL DIVE", `${event.section}区間目・${yen.format(event.award)}枚`, "純増約7.2枚/Gで上位差枚を消化します", 100, event.ultima ? "アルティマ状態" : "上位AT", runId);
+          if (!upperComplete) return;
+          consumedGames += eventGames;
+          setExperienceStage(3, "FULL DIVE RESULT", event.label, `+${yen.format(event.award)}枚`, `累計 ${yen.format(event.cumulative)}枚・次のデス・ガンバトルへ`, "hyper", 100, `${event.section}区間目 獲得結果`);
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          await waitForExperience(1100);
           continue;
         }
 
