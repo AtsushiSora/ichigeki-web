@@ -5400,6 +5400,48 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.titleFlow;
 })();
 
+(function applyLupinDaikoukaishaDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["lupin-dai-koukaisha"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "50〜300GのSUPER HEROで、直乗せ・8Gのルパンゲーム・4種類のBIG CHANCEを重ねる。",
+    intro: "8GのICPO CHALLENGE、ダブル7直行／シングル7ボーナス、初期50〜300GのSUPER HERO、ルパンゲーム、キャラ別BIG CHANCE、怪盗RUSH、32Gの『俺の名はルパン三世ゾーン』、上位ATまでを機種専用画面で再現します。",
+    points: ["ICPO CHALLENGEは8G・期待度約43%以上", "初当りの約70%はダブル7揃いでAT直行", "SUPER HEROは初期50〜300G・純増約2.7枚/G", "上位ATは初期100〜300G・純増約4.7枚/G"],
+    specs: [["初当り（設定1）", "約1/289.1"], ["AT（設定1）", "約1/421.5"], ["AT（設定6）", "約1/327.5"], ["ベース", "約31.1G/50枚"], ["ICPO CHALLENGE", "8G・期待度約43%以上"], ["初当りダブル7", "約70%・AT直行"], ["シングル7 BONUS", "30G・AT期待度約30%"], ["SUPER HERO", "初期50〜300G・純増約2.7枚/G"], ["ルパンゲーム", "8G・成功期待度約50%"], ["怪盗RUSH", "1セット11G・期待枚数2300枚超"], ["俺の名はルパン三世ゾーン", "32G・成功期待度50%超"], ["盗り放題 SUPER HERO", "初期100〜300G・純増約4.7枚/G"], ["設定", "1〜6"]],
+    articleSections: [
+      { heading: "ICPO CHALLENGEと初当り7揃い", paragraphs: ["通常時は規定ゲーム数とレア役から8GのICPO CHALLENGEを目指します。成功期待度は設定1約43.3%〜設定6約51.8%で、成功すると初当りへ進みます。", "初当りの約70%はダブル7揃いでSUPER HEROへ直行。シングル7揃いは30GのキャラBONUSで、AT期待度は約30%です。専用画面では8Gを進め、PUSHで7揃いラインとAT当落を開きます。"] },
+      { heading: "SUPER HEROとトリプル抽選", paragraphs: ["SUPER HEROは初期50〜300G・純増約2.7枚/Gのゲーム数管理型AT。レア役・デカ目でゲーム数直乗せ、ルパンゲーム、BIG CHANCEを同時に抽選します。", "デカ目は通常約1/357.7、デカ目高確中は約1/25。専用画面では残りゲーム数を10Gずつ減らし、直乗せとCZ・特化ゾーンを別々のPUSHで表示します。"] },
+      { heading: "8Gのルパンゲーム", paragraphs: ["ルパンゲームは8G継続するAT中CZで、成功期待度は約50%。デカ目・強チェリーなら勝利濃厚です。成功するとBIG CHANCEへ進みます。", "規定ゲーム数とレア役の両方から抽選され、ゼニロボルパンゲームなら成功時に上位ATも濃厚。専用進行では8Gを最後まで進め、最終PUSHで当落を開きます。"] },
+      { heading: "4種類のBIG CHANCEと怪盗RUSH", paragraphs: ["BIG CHANCEは次元の一発上乗せ、五ェ門の分裂上乗せ、ルパンの高継続ループ上乗せ、不二子の怪盗RUSHの4種類。ダブル7揃いなら上乗せ性能が強化されます。", "怪盗RUSHは1セット11Gのループ型で、お宝獲得ごとに上乗せ・BIG CHANCE・ATストック・上位ATなどを獲得。期待枚数は2300枚超です。キャラと報酬はPUSHまで伏せます。"] },
+      { heading: "俺の名はルパン三世ゾーンと上位AT", paragraphs: ["エンディング後は32Gの『俺の名はルパン三世ゾーン』へ。フリーズ発生で上位ATに入り、成功期待度は50%超です。失敗しても通常SUPER HEROを100G以上獲得します。", "上位AT『盗り放題 SUPER HERO』は初期100〜300G・純増約4.7枚/G。基本のゲーム性を引き継ぎながら出玉速度が上がります。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約31.1G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6の初当り・AT初当り・出玉率は公開設定別値", "ICPO、7揃い、ゲーム数管理AT、直乗せ、ルパンゲーム、4種類のBIG CHANCE、怪盗RUSH、上位ATを専用進行", "AT中イベント出現率、BIG CHANCE種別、怪盗RUSH報酬など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["平和 公式ゲームフロー", "https://www.heiwanet.co.jp/assets/images/products/guide/l-l13.pdf"], ["一撃 機種解析", "https://1geki.jp/slot/l_lupin_totgn/"], ["必勝本 基本スペック", "https://p.hisshobon.jp/machine/4415/1/106070"], ["必勝本 ルパンゲーム抽選", "https://p.hisshobon.jp/machine/4415/1/106385"], ["必勝本 AT解説", "https://hisshobon.com/machineinfo/85401/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10157"]],
+    readerGuide: { verdict: "50〜300Gのゲーム数管理ATで直乗せ・8G CZ・4種類の特化ゾーンを重ね、32Gの上位ジャッジを目指す上乗せ型です。", bestFor: ["残りゲーム数を見ながら直乗せとCZを待ちたい", "4種類のBIG CHANCEをPUSHで開きたい", "失敗でも100G以上が残る上位ジャッジを試したい"], check: ["初当り・AT初当り・主要ゲーム数・純増は公開値", "ゲーム数上乗せと獲得枚数を分けて表示", "未公表のイベント配分は体験用代表値"], compare: [["zenigata4-slot", "L主役は銭形4", "ゲーム数上乗せATと比較"], ["bancho4-slot", "スマスロ 押忍！番長4", "対決＋上乗せATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v32", dedicatedFlow: true, dedicatedFlowKey: "lupin-dai-koukaisha", dedicatedFlowVersion: 2, lupinDaikoukaishaFlow: true,
+    triggerLabel: "ICPO CHALLENGE", triggerRate: 289.1, triggerSuccess: 0.70, mainLabel: "SUPER HERO", mainRate: 421.5, base50: 31.1, coinUnit: 3.3,
+    normalMin: 0, normalMax: 0, atPureIncrease: 2.7, upperPureIncrease: 4.7, atPayoutVariance: 0,
+    lupinCzGames: 8, lupinCzSuccessRates: { 1: 0.433, 2: 0.441, 3: 0.454, 4: 0.478, 5: 0.497, 6: 0.518 },
+    lupinEntryLines: [[{ key: "double", label: "ダブル7揃い", games: 1, award: 0, atChance: 1 }, 0.70], [{ key: "single", label: "シングル7揃い・キャラBONUS", games: 30, award: 81, atChance: 0.30 }, 0.30]],
+    lupinInitialGames: [[50, 0.70], [100, 0.20], [200, 0.08], [300, 0.02]], lupinBonusInitialGames: [[50, 0.35], [100, 0.45], [200, 0.15], [300, 0.05]],
+    lupinSectionGames: 10, lupinMaxSections: 60, lupinDirectChance: 0.24, lupinDirectAdds: [[10, 0.59], [30, 0.30], [50, 0.10], [100, 0.01]],
+    lupinGameChance: 0.18, lupinGameGames: 8, lupinGameSuccess: 0.50, lupinZeroRoboChance: 0.006,
+    lupinBigChanceChance: 0.08,
+    lupinBigChances: [[{ key: "jigen", label: "次元BIG CHANCE・一発上乗せ", adds: [[30, 0.745], [100, 0.20], [200, 0.04], [300, 0.01], [500, 0.005]] }, 0.36], [{ key: "goemon", label: "五ェ門BIG CHANCE・分裂上乗せ", adds: [[20, 0.45], [60, 0.30], [120, 0.17], [300, 0.07], [600, 0.01]] }, 0.28], [{ key: "lupin", label: "ルパンBIG CHANCE・ループ上乗せ", adds: [[50, 0.495], [100, 0.28], [150, 0.14], [200, 0.06], [300, 0.02], [700, 0.005]] }, 0.28], [{ key: "fujiko", label: "不二子BIG CHANCE・怪盗RUSH", kaito: true }, 0.08]],
+    lupinKaitoGames: 11, lupinKaitoContinue: 0.75, lupinKaitoMaxSets: 8, lupinKaitoRewards: [[{ key: "games", label: "お宝・ゲーム数上乗せ", adds: [[30, 0.48], [50, 0.30], [100, 0.17], [200, 0.05]] }, 0.52], [{ key: "big", label: "お宝・BIG CHANCE", adds: [[50, 0.55], [100, 0.30], [200, 0.15]] }, 0.30], [{ key: "stock", label: "お宝・ATストック", adds: [[50, 1]] }, 0.13], [{ key: "upper", label: "お宝・盗り放題", upper: true }, 0.05]],
+    lupinUpperThreshold: 2200, lupinUpperZoneGames: 32, lupinUpperSuccess: 0.55, lupinUpperGames: [[100, 0.76], [200, 0.19], [300, 0.05]], lupinUpperFailureGames: [[100, 0.82], [200, 0.14], [300, 0.04]],
+    specialLabel: "BIG CHANCE", specialChance: 0.08, upperChallenge: "俺の名はルパン三世ゾーン", upperChance: 0.08, upperSuccess: 0.55, upperLabel: "盗り放題 SUPER HERO", upperContinue: 0, upperPayout: 0,
+    settingRates: { 1: { trigger: 289.1, main: 421.5, payout: 0.977 }, 2: { trigger: 275.6, main: 401.4, payout: 0.991 }, 3: { trigger: 262.6, main: 383.9, payout: 1.014 }, 4: { trigger: 233.9, main: 355.1, payout: 1.061 }, 5: { trigger: 223.6, main: 345.6, payout: 1.101 }, 6: { trigger: 216.3, main: 327.5, payout: 1.143 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+  delete machine.sim.entryBonusAwards;
+  delete machine.sim.entryBonusAwardsNote;
+})();
+
 (function applyInuyasha2DedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["inuyasha2-slot"];
   if (!machine) return;
