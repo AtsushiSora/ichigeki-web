@@ -4255,6 +4255,61 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   });
 })();
 
+// Lゴブリンスレイヤー uses three distinct CZ routes, a 100G set AT,
+// 5G JUDGEMENT battles and a separate 100G/82% ULTIMATE LOOP.
+(() => {
+  const machine = window.ICHIGEKI_MACHINES["goblin-slayer-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    intro: "3種類のCZから純増約2.7枚/G・1セット100GのゴブリンスレイヤーRUSHを目指すセット継続機。オーブで継続率を上げ、5GのJUDGEMENT、報酬ジャッジ、純増約5.0枚/G・実質約82%のULTIMATE LOOPまでを専用演出で体験できます。",
+    points: ["CZはMISSION約33%・CHANCE約45%・BATTLE約70%", "通常ATは1セット100G＋5G JUDGEMENT", "ULTIMATE LOOPは100G・純増約5.0枚/G・実質約82%"],
+    specs: [["CZ合算（設定1）", "約1/226"], ["CZ合算（設定6）", "約1/184"], ["AT（設定1）", "約1/547.9"], ["AT（設定6）", "約1/435.7"], ["通常AT", "1セット100G＋α"], ["通常AT純増", "約2.7枚/G"], ["ループモード", "52%・62%・80%"], ["JUDGEMENT", "5G"], ["GS BONUS", "20G＋AT10G以上"], ["上位AT", "100G・実質約82%"], ["上位AT純増", "約5.0枚/G"], ["上位期待獲得", "3000枚OVER"], ["ベース", "約31.6G/50枚"]],
+    articleSections: [
+      { heading: "設定別CZ・AT初当り", paragraphs: ["CZ合算は設定1約1/226から設定6約1/184、AT初当りは設定1約1/547.9から設定6約1/435.7です。", "通常時はレア役、規定ゲーム数、スイカカウンター、小役履歴など複数契機があります。サイトでは設定別のCZ合算とAT初当りへまとめ、開始時に設定1〜6を均等抽選します。"] },
+      { heading: "3種類のCZを個別表示", paragraphs: ["ゴブリンスレイヤーミッションは10G＋2Gジャッジ・期待度約33%。ゴブリンスレイヤーチャンスは青BAR狙えカットイン3回まで継続・期待度約45%です。", "ゴブリンスレイヤーバトルは最大7G・期待度約70%。サイトではCZ種類を開示し、それぞれのゲーム数を進めて最後のPUSHでAT当落を表示します。規定ゲーム数などからのAT直撃も代表ルートとして含めます。"] },
+      { heading: "100G ATとオーブの継続率上乗せ", paragraphs: ["ゴブリンスレイヤーRUSHは1セット100G＋α・純増約2.7枚/G。52%・62%・80%のループモードは固定継続率ではなく、オーブ獲得や最終継続率の上がりやすさに影響します。", "オーブ3個ごとに継続率を10〜30%上乗せ。サイトではセットごとにオーブ数と最終継続率を表示し、100Gを最後まで消化してから5GのJUDGEMENTへ進みます。"] },
+      { heading: "JUDGEMENT・報酬ジャッジ・BONUS", paragraphs: ["JUDGEMENTは5G。ホブゴブリンまたはゴブリンロードを撃破できれば次セットへ進み、1Gの報酬ジャッジで連撃・大連撃・上位ATなどを決めます。", "ゴブリンスレイヤーBONUSは20G・純増約2.7枚/Gで、終了後にATゲーム数を10G以上加算します。サイトではBONUS出玉とAT上乗せを分けて表示します。"] },
+      { heading: "ULTIMATE LOOP", paragraphs: ["3・5セット目はゴブリンロードのチャンスで、撃破時は約50%でULTIMATE LOOP。最大8セット継続でも上位移行濃厚です。AT初当り時の約1/70で直行するルートもあります。", "ULTIMATE LOOPは1セット100G・純増約5.0枚/G・80%固定。ストック込みの実質継続は約82%で、突入時の期待獲得は3000枚OVERです。"] },
+      { heading: "固定レートと収支の条件", bullets: ["約31.6G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均AT投資目安は約18,800円", "ATセット・BONUS・上位セットを別集計", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["藤商事 公式発売発表", "https://www.fujimarukun.co.jp/corp/news/tdpr_20230303b.pdf"], ["一撃 CZ MISSION解析", "https://1geki.jp/slot/s_l_goblinslayer/44/"], ["一撃 CZ CHANCE解析", "https://1geki.jp/slot/s_l_goblinslayer/45/"], ["一撃 CZ BATTLE解析", "https://1geki.jp/slot/s_l_goblinslayer/46/"], ["一撃 AT解析", "https://1geki.jp/slot/s_l_goblinslayer/81/"], ["一撃 ULTIMATE LOOP解析", "https://1geki.jp/slot/s_l_goblinslayer/87/"]],
+    readerGuide: {
+      verdict: "3種類のCZを突破し、100GのATでオーブを集めて継続率を上げ、5GのJUDGEMENTから実質約82%のULTIMATE LOOPを目指す台です。",
+      bestFor: ["100Gを回して継続率を育てたい", "セット最後のPUSHで当落を見たい", "純増約5.0枚/Gの上位ループを狙いたい"],
+      check: ["52%・62%・80%はオーブ獲得を含む平均的な継続目安", "3・5セット目はゴブリンロードのチャンス", "通常時の全モードと小役履歴は代表モデルへ簡略化"],
+      compare: [["kinnikuman-7-slot", "スマスロ キン肉マン", "セット突破型と比較"], ["smart-hokuto", "スマスロ北斗の拳", "継続バトル型と比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v7",
+    triggerLabel: "CZ合算／AT直撃",
+    triggerRate: 226,
+    triggerSuccess: 0.412,
+    mainLabel: "ゴブリンスレイヤーRUSH",
+    mainRate: 547.9,
+    normalMin: 0,
+    normalMax: 0,
+    atPureIncrease: 2.7,
+    atPayoutVariance: 0,
+    goblinSlayerFlow: true,
+    goblinCzRoutes: [[{ key: "mission", label: "ゴブリンスレイヤーミッション", games: 12, chance: 0.33 }, 0.65], [{ key: "chance", label: "ゴブリンスレイヤーチャンス", games: 3, chance: 0.45 }, 0.255], [{ key: "battle", label: "ゴブリンスレイヤーバトル", games: 7, chance: 0.70 }, 0.035], [{ key: "direct", label: "規定G数AT直撃", games: 1, chance: 1 }, 0.06]],
+    goblinLoopModes: [[0.52, 0.60], [0.62, 0.30], [0.80, 0.10]],
+    goblinBonusChance: 0.18,
+    goblinDirectUpperChance: 1 / 70,
+    specialLabel: "連撃モード／ゴブリンスレイヤーBONUS",
+    specialChance: 0.28,
+    upperChallenge: "JUDGEMENT・ゴブリンロード",
+    upperChance: 0,
+    upperSuccess: 0.50,
+    upperLabel: "ULTIMATE LOOP",
+    upperContinue: 0.82,
+    upperPayout: 0,
+    upperPureIncrease: 5.0,
+    settingRates: { 1: { trigger: 226, main: 547.9, payout: 0.978 }, 2: { trigger: 223, main: 538.4, payout: 0.989 }, 3: { trigger: 215, main: 517.7, payout: 1.012 }, 4: { trigger: 204, main: 492.3, payout: 1.054 }, 5: { trigger: 196, main: 470.5, payout: 1.100 }, 6: { trigger: 184, main: 435.7, payout: 1.149 } }
+  });
+})();
+
 // Dedicated implementations take precedence over the older reusable cycle map.
 // Keep this final cleanup after every enrichment pass so page copy and gameplay
 // both use the same title-specific model.
@@ -4270,4 +4325,6 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   if (uminchu?.uminchuFlow) delete uminchu.cycleFlow;
   const tenten = window.ICHIGEKI_MACHINES["tenten-slot"]?.sim;
   if (tenten?.tentenFlow) delete tenten.cycleFlow;
+  const goblinSlayer = window.ICHIGEKI_MACHINES["goblin-slayer-slot"]?.sim;
+  if (goblinSlayer?.goblinSlayerFlow) delete goblinSlayer.cycleFlow;
 })();
