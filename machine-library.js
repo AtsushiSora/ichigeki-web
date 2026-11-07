@@ -5282,6 +5282,44 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.titleFlow;
 })();
 
+(function applyZenigata4DedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["zenigata4-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "規定ガッツ到達から50G＋αの逮捕RUSHへ。デカチャンス、BIG GAME、30G連を突破して超逮捕RUSHを狙う。",
+    intro: "通常時のガッツ獲得、ゼニガダッシュ、50G＋αの逮捕RUSH、デカチャンス、BIG GAME、ゼニロボ起動から30G連、超逮捕RUSHまでを専用画面で体験できます。",
+    points: ["AT初当りは設定1約1/367.9〜設定6約1/305.8", "逮捕RUSHは50G＋α・純増約2.7枚/G", "BIG GAMEは10Gメイン＋3G連チャレンジ", "超逮捕RUSHは10Gオープニング＋30G・期待枚数2000枚超"],
+    specs: [["AT（設定1）", "約1/367.9"], ["AT（設定6）", "約1/305.8"], ["ベース", "約32G/50枚"], ["天井", "999Gまたは1399ガッツ"], ["逮捕RUSH", "50G＋α・純増約2.7枚/G"], ["デカチャンス成功時BIG GAME", "約36%"], ["BIG GAME", "メイン10G＋3G連"], ["30G連", "30G"], ["超逮捕RUSH", "オープニング10G＋本編30G"], ["設定", "1〜6"]],
+    articleSections: [
+      { heading: "規定ガッツから逮捕RUSHへ", paragraphs: ["通常時は毎ゲーム獲得するガッツを積み上げ、規定ガッツ到達からATへ。ゼニガダッシュは6G／1セットで、平均約90ガッツの獲得契機です。天井は通常時999Gまたは1399ガッツです。", "シミュレーターでは設定別のAT初当り確率を使い、通常回転後に規定ガッツ到達を表示。最後のPUSHで50G＋αの逮捕RUSHへ進みます。通常モード、規定ガッツ、ゼニガタイムなどの細かな内部抽選はAT初当り確率へまとめています。"] },
+      { heading: "50G＋αの逮捕RUSH", paragraphs: ["逮捕RUSHは純増約2.7枚/Gのゲーム数管理型AT。レア役・デカ目でゲーム数上乗せとデカチャンスを同時に抽選し、規定ゲーム数到達からもデカチャンスへ発展します。", "強チェリー・中段チェリー・デカ目はゲーム数上乗せ濃厚。専用進行では残りゲーム数を10Gずつ減らし、直乗せとデカチャンスを別々のPUSHで表示します。"] },
+      { heading: "デカチャンス", paragraphs: ["デカチャンスは選ばれたキャラクターで成功期待度と恩恵が変化。不二子は成功期待度約67.2%、ルパン一味は成功かつBIG GAME濃厚、ゼニロボ起動は30G連への契機です。", "成功時はゲーム数上乗せが濃厚で、約36%でBIG GAMEへ。赤アイコン成功時はBIG GAME期待度50%、紫アイコンは不二子・ゼニロボ・ルパン宇宙ステージのいずれかが濃厚です。専用画面では相手・成功・報酬をPUSH後に開きます。"] },
+      { heading: "BIG GAME", paragraphs: ["BIG GAMEは10Gのメインパートと3G連チャレンジを行き来する上乗せ特化ゾーンです。突入時に継続ストックを1個持つため単発終了はなく、継続率は33%または64%。10セット目の上乗せは3桁濃厚です。", "継続時はゼニガ逮捕アイコンを獲得し、終了時に後乗せを告知。シミュレーターでは各セットのPUSHで継続と+20〜300Gを表示し、ゲーム数上乗せと獲得枚数を混ぜません。"] },
+      { heading: "30G連と超逮捕RUSH", paragraphs: ["ゼニロボ起動やエンディング後などから30G連へ。30G間は金7（約1/64.0）、デカ目、中段チェリーで成功濃厚。弱チェリー・ベル・チャンスリプレイは3.5%、強チェリーは40.0%で成功を抽選します。", "成功後は10Gのオープニングを経て30Gの超逮捕RUSHへ。超逮捕RUSHは上乗せ・デカ目・デカチャンスのトリプル高確率で、期待枚数は2000枚超。専用進行では30Gを回して最後のPUSH、成功後はオープニングと本編を分けて表示します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約32G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6のAT初当り・出玉率は公開設定別値を使用", "逮捕RUSH、直乗せ、デカチャンス、BIG GAME、30G連、超逮捕RUSHを機種専用進行", "デカチャンスの一部キャラ選択率、AT中の各契機選択率など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["平和 公式遊技ガイド", "https://www.heiwanet.co.jp/assets/images/products/guide/l-l12.pdf"], ["一撃 逮捕RUSH解析", "https://1geki.jp/slot/s_zenigata4/81/"], ["一撃 BIG GAME解析", "https://1geki.jp/slot/s_zenigata4/83/"], ["必勝本 逮捕RUSH解析", "https://p.hisshobon.jp/machine/4076/1/94981"], ["必勝本 BIG GAME解析", "https://p.hisshobon.jp/machine/4076/1/95279"], ["必勝本 超逮捕RUSH解析", "https://p.hisshobon.jp/machine/4076/1/95285"], ["パチナビ 機種解析", "https://pachinavi.net/machines/smasloth-zenigata-4/uchikata/"], ["パチナビ 設定別解析", "https://pachinavi.net/machines/smasloth-zenigata-4/settei/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9809"]],
+    readerGuide: { verdict: "規定ガッツから50G＋αの逮捕RUSHへ入り、デカチャンスとBIG GAMEでゲーム数を伸ばし、30G連突破から最強特化ゾーンを狙うゲーム数管理型です。", bestFor: ["デカチャンスの相手と報酬をPUSHで開きたい", "残りゲーム数と後乗せを見ながらATを進めたい", "30G連から超逮捕RUSHまで挑戦したい"], check: ["AT初当り、主要ゲーム数、純増、公開抽選値は実機解析値", "ゲーム数上乗せと獲得枚数を分けて表示", "未公表の細かな振り分けは体験用代表値"], compare: [["bancho4-slot", "スマスロ 押忍！番長4", "ゲーム数上乗せATと比較"], ["golden-kamuy-slot", "スマスロ ゴールデンカムイ", "上乗せ型ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v27", dedicatedFlow: true, dedicatedFlowKey: "zenigata4-slot", dedicatedFlowVersion: 2, zenigata4Flow: true,
+    triggerLabel: "規定ガッツ到達", triggerRate: 367.9, triggerSuccess: 1, mainLabel: "逮捕RUSH", mainRate: 367.9, base50: 32, coinUnit: 3.8, normalMin: 0, normalMax: 0, atPureIncrease: 2.7, upperPureIncrease: 2.7, atPayoutVariance: 0,
+    zenigataAtGames: 50, zenigataSectionGames: 10, zenigataMaxSections: 24,
+    zenigataAtEvents: [[{ key: "none", label: "通常消化" }, 0.40], [{ key: "add", label: "ゲーム数直乗せ" }, 0.25], [{ key: "deka", label: "デカチャンス" }, 0.35]],
+    zenigataDirectAdds: [[10, 0.67], [30, 0.22], [50, 0.07], [100, 0.035], [200, 0.003], [300, 0.002]],
+    zenigataDekaRoutes: [[{ key: "jigen", label: "次元", chance: 0.34 }, 0.29], [{ key: "goemon", label: "五ェ門", chance: 0.45 }, 0.25], [{ key: "lupin", label: "ルパン", chance: 0.56 }, 0.23], [{ key: "fujiko", label: "不二子", chance: 0.672 }, 0.14], [{ key: "zenirobo", label: "ゼニロボ起動", chance: 1, thirty: true }, 0.06], [{ key: "gang", label: "ルパン一味", chance: 1, bigGame: true }, 0.03]],
+    zenigataDekaAdds: [[10, 0.44], [30, 0.35], [50, 0.13], [100, 0.06], [200, 0.012], [300, 0.008]], zenigataBigGameChance: 0.36,
+    zenigataBigGameModes: [[{ label: "継続率33%", chance: 0.33 }, 0.70], [{ label: "継続率64%", chance: 0.64 }, 0.30]], zenigataBigGameAdds: [[20, 0.55], [30, 0.27], [50, 0.12], [100, 0.05], [200, 0.007], [300, 0.003]], zenigataBigGameMaxSets: 10,
+    zenigataThirtyGames: 30, zenigataThirtyGoldRate: 64, zenigataThirtyRareChance: 0.13, zenigataThirtyLastChance: 0.22,
+    zenigataSuperOpeningGames: 10, zenigataSuperGames: 30, zenigataSuperExpectedAward: 2000, zenigataSuperDekaChance: 0.48, zenigataSuperAdds: [[10, 0.45], [30, 0.27], [50, 0.14], [100, 0.09], [200, 0.03], [300, 0.02]],
+    specialLabel: "BIG GAME", specialChance: 0.36, upperChallenge: "30G連", upperChance: 0.14, upperSuccess: 0.50, upperLabel: "超逮捕RUSH", upperContinue: 0, upperPayout: 0,
+    settingRates: { 1: { trigger: 367.9, main: 367.9, payout: 0.982 }, 2: { trigger: 365.3, main: 365.3, payout: 0.987 }, 3: { trigger: 348.3, main: 348.3, payout: 1.007 }, 4: { trigger: 329.0, main: 329.0, payout: 1.043 }, 5: { trigger: 314.5, main: 314.5, payout: 1.095 }, 6: { trigger: 305.8, main: 305.8, payout: 1.141 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
 (function applyBancho4DedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["bancho4-slot"];
   if (!machine) return;
