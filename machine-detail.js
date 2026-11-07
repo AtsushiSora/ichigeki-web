@@ -295,6 +295,14 @@
         ["設定抽選", slotSettingLabel, "設定3は非搭載"]
       ];
       note = "BONUS後32Gを毎回数え、10連後のIREGUIと獲得ストックを結果へ残します。";
+    } else if (sim.aobutaFlow) {
+      items = [
+        ["初当りBONUS", `約1/${sim.mainRate}`, "設定2の青春BONUS"],
+        ["完走型ST", "8G＋α", "1セット2G×4ヒロイン"],
+        ["上位CZ", "約53%", "10G＋6G＋α"],
+        ["上位ST", "約80%", "BONUS平均約640枚"]
+      ];
+      note = "青春BONUS、完走型STのVストック、ヒロイン別DREAM BURST、夢現JUDGEMENT、上位STを実機順に個別表示します。";
     } else if (sim.kanokariFlow) {
       items = [
         ["CZ", "約56%／約75%", "15G＋α／10G"],
@@ -421,6 +429,22 @@
         "天国モード滞在時の代表ループ率です。金ドキによる再連は別抽選です。"
       ));
       note = "BONUS内訳は設定1の公表確率から算出し、天国の継続割合とは別に表示しています。モード初回振り分けは非公表のため円グラフには含めていません。";
+    } else if (sim.aobutaFlow) {
+      charts.push(ratioChartMarkup(
+        "NORMAL ST",
+        "青ブタJUDGE継続割合",
+        [["継続", 0.60], ["終了", 0.40]],
+        "約60%",
+        "設定2の通常ST継続期待度です。STは4セット＋αを完走し、複数Vを取る場合があります。"
+      ));
+      charts.push(ratioChartMarkup(
+        "MUGEN JUDGE",
+        "夢現JUDGEMENT成功割合",
+        [["成功", sim.aobutaUpperCzChance], ["失敗", 1 - sim.aobutaUpperCzChance]],
+        "約53%",
+        "10Gの前半＋6G以上の後半から上位STへ進む設定2の公表期待度です。"
+      ));
+      note = "通常ST約60%、上位CZ約53%、上位ST約80%は別の抽選です。V個数や翔子選択率など未公表部分は含めていません。";
     } else if (sim.kanokariFlow) {
       charts.push(ratioChartMarkup(
         "ONE GAME RENT",
@@ -548,6 +572,9 @@
   function czGameMarkup() {
     const sim = machine.sim;
     if (sim.kind !== "slot") return "";
+    if (sim.aobutaFlow) {
+      return `<section class="machine-cz-guide" id="cz-game" aria-labelledby="machine-cz-title"><div class="machine-cz-head"><span>NORMAL TO ST FLOW</span><h3 id="machine-cz-title">${machine.shortName}の初当りゲーム性</h3><p>思春期ポイント・規定ゲーム数・CZなどをまとめ、公開BONUS初当りから完走型STと上位までの流れを整理します。</p></div><div class="machine-cz-flow" aria-label="${escapeHtml(`${machine.shortName}のゲームフロー`)}"><div><span>01</span><strong>通常時</strong><small>ポイント・規定G・アオハル</small></div><i aria-hidden="true">›</i><div><span>02</span><strong>CZ・直撃</strong><small>エピソードチャンスなど</small></div><i aria-hidden="true">›</i><div><span>03</span><strong>青春BONUS</strong><small>設定2 約1/${sim.mainRate}</small></div><i aria-hidden="true">›</i><div><span>04</span><strong>完走型ST</strong><small>4セット＋α</small></div></div><div class="machine-cz-upper"><span>その先</span><strong>${sim.upperChallenge}</strong><i aria-hidden="true">→</i><strong>${sim.upperLabel}</strong><small>10G＋6G＋α・成功期待度約53%</small></div><div class="machine-cz-detail-grid"><article><span>ROLE</span><h4>通常時の入口</h4><p>思春期ポイントは毎ゲーム1pt以上を獲得し、100ptごとにCZ前兆が発生。規定ゲーム数やアオハルチャンスからのBONUS直撃もあります。</p></article><article><span>CHANCE ZONE</span><h4>エピソードチャンス</h4><p>前後半の2部構成で、ヒロインごとに対応役と期待度が変化します。シミュレーターでは設定別青春BONUS初当りへ合算しています。</p></article><article><span>BONUS / ST</span><h4>初当り後は必ずST</h4><p>青春BONUS後は青ブタJUDGEへ必ず突入。1セット2G・4セット＋αを完走し、獲得したVをすべてDREAM BURSTへ進めます。</p></article><article><span>UPPER</span><h4>夢現JUDGEMENT</h4><p>翔子成功時などに10G＋6G＋αの上位CZへ。設定2で約53%成功後は300枚のエピソードBONUSと約80%の上位STへ進みます。</p></article></div><p class="machine-cz-note">通常時の全ポイント・CZキャラ・小役抽選はBONUS初当り確率へ集約し、ST以降を機種専用進行で表示します。</p></section>`;
+    }
     const isDirectEntry = Number(sim.triggerSuccess) >= .995 || sim.triggerLabel === sim.mainLabel;
     const isBasiliskBc = Boolean(sim.basiliskTenzenFlow);
     const isOkidokiBonus = Boolean(sim.okidokiGoldFlow);
@@ -831,6 +858,15 @@
         ["RETURN", "50G引き戻し", `通常AT・上位AT終了後は50Gの引き戻し区間をカウントします。設定1のAT引き戻し目安約${percent(sim.upperReturnChance)}を代表値として、成功時は再びG覚醒アタックからATへ戻ります。`]
       ];
       note = "公開されているBONUS出玉・AT期待度・初期ゲーム数・純増・各上乗せ契機の期待度を優先した体験モデルです。成立役別抽選、内部状態、全振り分け、設定差が未公表の抽選は代表値へ簡略化しています。";
+    } else if (sim.aobutaFlow) {
+      cards = [
+        ["SEISHUN BONUS", "初当り後は必ずSTへ", "青春BONUSはベルナビ5回、稀に25回。20pt到達で青ブタJUDGEを1セット（2G）追加し、消化後は必ず完走型STへ進みます。"],
+        ["AO BUTA JUDGE", "1セット2G・4セット＋α", "4ヒロインの区間を最後まで消化し、Vを複数獲得する可能性があります。1回でもVを取れば次のSTへ継続します。"],
+        ["DREAM BURST", "ヒロイン別の枚数決定", "V獲得数だけ青春DREAM BURSTを消化。朋絵・のどか・双葉・かえでで上乗せ方法と平均枚数が異なり、PUSHまで結果を伏せます。"],
+        ["MUGEN JUDGEMENT", "10G＋6G＋α・約53%", "翔子のST成功時などに獲得。前半10Gと後半6G以上を進め、最後のPUSHで上位ST当落を開きます。"],
+        ["INFINITY ST", "継続約80%・平均約640枚", "成功時は300枚のエピソードBONUS後に上位STへ。V獲得率とBONUS枚数が上がった高純増ループを専用表示します。"]
+      ];
+      note = "初当り、STゲーム数、通常・上位継続、上位CZ、純増、ヒロイン別平均枚数は公開値を優先しています。V当選率や翔子選択率など未公表部分は体験用代表値です。";
     } else if (sim.okidokiGoldFlow) {
       cards = [
         ["HIBISCUS", "点灯でBONUS確定", "通常時は毎ゲームBONUSを抽選。ハイビスカス点灯後のPUSHでBIGまたはREGを開き、設定別初当り確率と今回の投資を結果へ反映します。"],
@@ -1168,7 +1204,7 @@
       const averageInvestment = Math.round((machine.sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
-      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow;
+      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow;
       const settingModelLabel = machine.sim.settingRates
         ? hasDedicatedFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
         : hasDedicatedFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
@@ -1254,7 +1290,7 @@
         ? Math.max(1, mainRate * sim.triggerRate / sim.mainRate)
         : Math.max(1, sim.triggerRate * profile.rate);
     const publishedEntry = Number(publishedSetting?.entry);
-    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow
+    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow
       ? Math.max(0, Math.min(1, Number(sim.triggerSuccess) || 0.55))
       : sim.godzillaEva2Flow || sim.mahoakoFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.shinEvaFlow
       ? 1
@@ -1270,7 +1306,7 @@
       ? Math.min(0.98, Number(publishedSetting.upper))
       : hasPublishedSettingRates ? sim.upperChance : Math.min(0.98, sim.upperChance + profile.upper);
     const settingModelLabel = hasPublishedTriggerRate && hasPublishedMainRate
-      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
+      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
       : hasPublishedMainRate
         ? "公開設定別値（初当り）＋CZ簡易換算"
         : "サイト共通補正モデル";
@@ -1443,6 +1479,12 @@
     let kanokariSDreamTimeCount = 0;
     let kanokariAllLoveCount = 0;
     let kanokariMaxChain = 0;
+    let aobutaStRounds = 0;
+    let aobutaVCount = 0;
+    let aobutaDreamBurstCount = 0;
+    let aobutaUpperCzAttempts = 0;
+    let aobutaUpperCzWins = 0;
+    let aobutaUpperStLoops = 0;
     if (sim.basiliskTenzenFlow) {
       basiliskBc = weighted(sim.basiliskBcTypes || [[{ key: "hetero", label: "異色BC", games: 16, award: 30 }, 1]]);
       triggerSucceeded = true;
@@ -1501,6 +1543,11 @@
       triggerSucceeded = Math.random() < Math.max(0, Math.min(1, Number(kanokariCz.chance) || 0));
       entered = triggerSucceeded;
       flow[0] = `${games}Gで${kanokariCz.label}`;
+    }
+    if (sim.aobutaFlow) {
+      triggerSucceeded = true;
+      entered = true;
+      flow[0] = `${games}Gで青春BONUS`;
     }
     if (triggerSucceeded && Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length) {
       const entryBonusTemplate = weighted(sim.entryBonusAwards);
@@ -2415,6 +2462,94 @@
           }
         }
         basePayout = payout - entryPayout;
+      } else if (sim.aobutaFlow) {
+        payout = 0;
+        basePayout = 0;
+        const initialBonus = sim.aobutaInitialBonus || { label: "青春BONUS", games: 5, payout: 75 };
+        const initialAward = Math.max(0, Math.min(Number(initialBonus.payout) || 75, SLOT_COMPLETE_LIMIT - payout));
+        payout += initialAward;
+        atGamesTotal += Math.max(1, Number(initialBonus.games) || 5);
+        bonusCount += 1;
+        bonusPayoutTotal += initialAward;
+        atEvents.push({ kind: "aobuta-entry-bonus", label: initialBonus.label, games: Math.max(1, Number(initialBonus.games) || 5), award: initialAward, cumulative: payout, navs: 5 });
+        flow.push(`${initialBonus.label} ベルナビ5回・+${yen.format(initialAward)}枚`);
+
+        const heroes = Array.isArray(sim.aobutaStHeroes) && sim.aobutaStHeroes.length
+          ? sim.aobutaStHeroes
+          : [{ key: "hero", label: "ヒロイン", awards: [[200, 1]] }];
+        const chooseAward = hero => Math.max(100, Number(weighted(hero.awards || [[200, 1]])) || 200);
+        let normalLoop = 0;
+        let normalContinues = true;
+        while (normalContinues && normalLoop < (Number(sim.aobutaMaxNormalLoops) || 10) && payout < SLOT_COMPLETE_LIMIT && !upper) {
+          normalLoop += 1;
+          aobutaStRounds += 1;
+          const extraSet = Math.random() < (Number(sim.aobutaExtraSetChance) || 0.18);
+          const roundHeroes = extraSet ? [...heroes, heroes[normalLoop % heroes.length]] : heroes;
+          const wins = [];
+          for (const hero of roundHeroes) {
+            if (Math.random() < (Number(sim.aobutaHeroVChance) || 0.205)) wins.push(hero);
+          }
+          aobutaVCount += wins.length;
+          const shoko = wins.length > 0 && Math.random() < (Number(sim.aobutaShokoChance) || 0.12);
+          atGamesTotal += roundHeroes.length * 2;
+          atEvents.push({ kind: "aobuta-st", label: "青ブタJUDGE", games: roundHeroes.length * 2, round: normalLoop, sets: roundHeroes.length, wins: wins.length, continued: wins.length > 0, shoko, cumulative: payout });
+          flow.push(`青ブタJUDGE ${normalLoop}周目・${roundHeroes.length}セット・V ${wins.length}個`);
+
+          for (let index = 0; index < wins.length && payout < SLOT_COMPLETE_LIMIT; index += 1) {
+            const hero = wins[index];
+            const award = Math.max(0, Math.min(chooseAward(hero), SLOT_COMPLETE_LIMIT - payout));
+            payout += award;
+            const bonusGames = Math.max(1, Math.ceil(award / Math.max(0.1, Number(sim.atPureIncrease) || 8)));
+            atGamesTotal += bonusGames;
+            bonusCount += 1;
+            bonusPayoutTotal += award;
+            aobutaDreamBurstCount += 1;
+            atEvents.push({ kind: "aobuta-dream-burst", label: "青春DREAM BURST", hero: hero.label, games: bonusGames, award, cumulative: payout, vIndex: index + 1, vTotal: wins.length, round: normalLoop, super: award >= 500 });
+            flow.push(`${hero.label} 青春DREAM BURST +${yen.format(award)}枚`);
+          }
+
+          if (shoko && payout < SLOT_COMPLETE_LIMIT) {
+            aobutaUpperCzAttempts += 1;
+            const success = Math.random() < (Number(sim.aobutaUpperCzChance) || 0.53);
+            if (success) aobutaUpperCzWins += 1;
+            atGamesTotal += Number(sim.aobutaUpperCzGames) || 16;
+            atEvents.push({ kind: "aobuta-upper-cz", label: sim.upperChallenge, games: Number(sim.aobutaUpperCzGames) || 16, chance: (Number(sim.aobutaUpperCzChance) || 0.53) * 100, success, cumulative: payout });
+            flow.push(`${sim.upperChallenge}・${success ? "成功" : "失敗"}`);
+            if (success) {
+              upper = true;
+              const episodeAward = Math.max(0, Math.min(Number(sim.aobutaUpperEpisodePayout) || 300, SLOT_COMPLETE_LIMIT - payout));
+              payout += episodeAward;
+              atGamesTotal += Math.max(1, Math.ceil(episodeAward / 8));
+              bonusCount += 1;
+              bonusPayoutTotal += episodeAward;
+              atEvents.push({ kind: "aobuta-upper-episode", label: "エピソードBONUS", games: Math.max(1, Math.ceil(episodeAward / 8)), award: episodeAward, cumulative: payout });
+              flow.push(`エピソードBONUS +${yen.format(episodeAward)}枚`);
+            }
+          }
+          normalContinues = wins.length > 0 && !upper && !shoko;
+        }
+
+        if (upper && payout < SLOT_COMPLETE_LIMIT) {
+          let upperContinues = true;
+          while (upperContinues && aobutaUpperStLoops < (Number(sim.aobutaMaxUpperLoops) || 8) && payout < SLOT_COMPLETE_LIMIT) {
+            aobutaUpperStLoops += 1;
+            upperLoops = aobutaUpperStLoops;
+            const award = Math.max(0, Math.min(Number(weighted(sim.aobutaUpperAwards || [[640, 1]])) || 640, SLOT_COMPLETE_LIMIT - payout));
+            const continued = Math.random() < (Number(sim.aobutaUpperContinue) || 0.80);
+            payout += award;
+            const bonusGames = Math.max(1, Math.ceil(award / 8));
+            atGamesTotal += 8 + bonusGames;
+            bonusCount += 1;
+            bonusPayoutTotal += award;
+            upperPayoutTotal += award;
+            atEvents.push({ kind: "aobuta-upper-st", label: sim.upperLabel, games: 8 + bonusGames, loop: aobutaUpperStLoops, award, cumulative: payout, continued, chance: (Number(sim.aobutaUpperContinue) || 0.80) * 100 });
+            flow.push(`上位ST ${aobutaUpperStLoops}周目・+${yen.format(award)}枚・${continued ? "継続" : "終了"}`);
+            upperContinues = continued;
+          }
+        }
+        cycleRounds = aobutaStRounds + aobutaUpperStLoops;
+        cycleContinues = Math.max(0, aobutaStRounds - 1) + Math.max(0, aobutaUpperStLoops - 1);
+        basePayout = payout;
       } else if (sim.kanokariFlow) {
         payout = 0;
         basePayout = 0;
@@ -3783,6 +3918,8 @@
       ? (tokyoGhoulUpperAt ? "東京喰種咬 裏AT" : "CCGの死神")
       : sim.kanokariFlow
       ? (kanokariSDreamTimeCount ? "S級DREAM TIME" : "S級ななかりDREAM")
+      : sim.aobutaFlow
+      ? sim.upperLabel
       : kabaneriUpperMode || sim.upperLabel;
     const resultLabel = complete ? "コンプリート" : upper ? upperResultLabel : entered ? sim.mainLabel : entryBonus ? `${entryBonus.label}終了` : `${sim.triggerLabel}失敗`;
     const atGameTimeline = atEvents.map(event => Math.max(1, Number(event.games) || 1));
@@ -3810,10 +3947,11 @@
     const symphogearStats = sim.symphogearSeigiFlow ? [["初期ゲーム", symphogearInitialRoute?.upper ? "ギアフラグ・絶唱" : `${symphogearInitialRoute?.label || "通常"}・${symphogearInitialRoute?.games || 0}G`], ["ギアVチャンス", `${symphogearGearVChances}回・装者獲得${symphogearGearVWins}回`], ["ギアVアタック", `${symphogearGearVAttacks}回`], ["ゲーム数上乗せ", `+${yen.format(symphogearTotalAddGames)}G`], ["ギアVアタック EX", symphogearExCount ? `${symphogearExCount}回` : "非到達"], ["絶唱", symphogearZesshoCount ? `${symphogearZesshoCount}回` : "非到達"], [sim.upperLabel, symphogearUpperSections ? `${symphogearUpperSections}区間・BONUS ${symphogearBonusCount}回` : "非到達"], [sim.upperChallenge, symphogearZesshoBattleAttempts ? `${symphogearZesshoBattleAttempts}回・勝利${symphogearZesshoBattleWins}回` : "未到達"], ["黄金絶唱", symphogearGoldenZesshoGames ? `+${yen.format(symphogearGoldenZesshoGames)}G` : "非当選"]] : [];
     const lycorisStats = sim.lycorisFlow ? [["通常時CZ", lycorisCz?.label || sim.triggerLabel], ["RUSHタイプ", lycorisRushRoute ? `${lycorisRushRoute.label}・${lycorisRushRoute.talent}` : "非突入"], ["リコリスラッシュ20", lycorisRush20Won ? "BONUS当選・RUSH50へ" : "20G駆け抜け"], ["通常RUSH BONUS", `${lycorisNormalBonusCount}回`], ["ST再セット", `${lycorisStResets}回`], ["獲得ポイント", `${yen.format(Math.min(1000, lycorisPoints))}pt`], [sim.upperChallenge, lycorisUpperCzAttempts ? `${lycorisUpperCzAttempts}回・成功${lycorisUpperCzWins}回` : "未到達"], [sim.upperLabel, lycorisUpperSections ? `${lycorisUpperSections}セット・BONUS ${lycorisUpperBonusCount}回` : "非到達"], ["レジェンダリーリコリス", lycorisLegendaryAward ? `+${yen.format(lycorisLegendaryAward)}枚` : "非当選"]] : [];
     const kanokariStats = sim.kanokariFlow ? [["通常時CZ", kanokariCz?.label || sim.triggerLabel], ["BONUS内訳", `REG ${kanokariRegCount}回・BIG ${kanokariBigCount}回・EP ${kanokariEpisodeCount}回`], ["最大BONUS連", `${kanokariMaxChain}連`], ["1GレンCHANCE／1G恋", `${kanokariOneGameAttempts}回・成功${kanokariOneGameWins}回`], ["獲得ストック", `通常${kanokariNormalStocks}個・1G恋${kanokariLoveStocks}個`], ["66G引き戻し", `${kanokariReturnAttempts}回・成功${kanokariReturnWins}回`], ["ユメカノモード", `${kanokariYumekanoEntries}回`], ["ななかりDREAM", `${kanokariDreamCount}回`], ["DREAM TIME", kanokariDreamTimeCount ? `${kanokariDreamTimeCount}回（S級${kanokariSDreamTimeCount}回）` : "非到達"], ["ALL 1G恋変換", kanokariAllLoveCount ? `${kanokariAllLoveCount}回` : "非当選"]] : [];
+    const aobutaStats = sim.aobutaFlow ? [["青春BONUS", "ベルナビ5回"], ["青ブタJUDGE", `${aobutaStRounds}周・V ${aobutaVCount}個`], ["青春DREAM BURST", `${aobutaDreamBurstCount}回`], [sim.upperChallenge, aobutaUpperCzAttempts ? `${aobutaUpperCzAttempts}回・成功${aobutaUpperCzWins}回` : "未到達"], [sim.upperLabel, aobutaUpperStLoops ? `${aobutaUpperStLoops}周` : "非到達"]] : [];
     const cycleStats = sim.cycleFlow ? [[sim.cycleFlow.statLabel || (sim.titleFlow ? "機種専用進行" : "専用ループ"), `${cycleRounds}回・継続${cycleContinues}回`]] : [];
     const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
     const rushGamesTotal = Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
-    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
+    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
     const gameAddOnStats = sim.karakuriJudgeFlow || coinAddOnCount
       ? [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(coinAddOnTotal || addOnTotal)}枚` : "上乗せなし"]]
       : [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnGamesTotal || otomeAddedGames)}G` : "上乗せなし"]];
@@ -3846,6 +3984,8 @@
         ? [["RUSH・BONUS消化", `${yen.format(rushGamesTotal)}G相当`], ...lycorisStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : sim.kanokariFlow
         ? [["BONUS・1G連・引き戻し消化", `${yen.format(rushGamesTotal)}G相当`], ...kanokariStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
+      : sim.aobutaFlow
+        ? [["BONUS・完走型ST消化", `${yen.format(rushGamesTotal)}G相当`], ...aobutaStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : [["RUSH消化モデル", `${yen.format(rushGamesTotal)}G相当`], ...karakuriStats, ...battleStats, ...sgStats, ...kabaneriStats, ...otomeStats, ...cycleStats, ...gameAddOnStats, ...bonusStats, ...genericSpecialStats, ["上位AT", upper ? (kabaneriUpperMode || `${sim.upperLabel} ${upperLoops}セット`) : "非到達"]]) : [];
     const stats = [["今回の設定", `設定${setting}`], ["設定差モデル", settingModelLabel], ["今回のゲーム数", `${yen.format(games)}G`], ...settingRateStats, ["現金投資目安", `${yen.format(investment)}円`], ...entryBonusStats, ...atStats, ["獲得枚数", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]];
     if (complete) stats.unshift(["到達状態", "コンプリート"]);
@@ -3880,6 +4020,8 @@
           ? `今回の設定は設定${setting}。${games}Gで${lycorisCz?.label || sim.triggerLabel}、${entered ? `${lycorisRushRoute?.label || sim.mainLabel}でBONUS ${lycorisNormalBonusCount}回・ST再セット${lycorisStResets}回、${yen.format(payout)}枚を獲得しました。${lycorisLegendaryAward ? `レジェンダリーリコリスで${yen.format(lycorisLegendaryAward)}枚を上乗せしました。` : lycorisUpperSections ? `リコリスラッシュWを${lycorisUpperSections}セット消化しました。` : lycorisUpperCzAttempts ? "リコイル オブ リコリスで終了しました。" : lycorisRush20Won ? "1000pt・上位CZには届きませんでした。" : "リコリスラッシュ20は駆け抜けでした。"}` : "CZは突破できませんでした。"}`
         : sim.kanokariFlow
           ? `今回の設定は設定${setting}。${games}Gで${kanokariCz?.label || sim.triggerLabel}、${entered ? `REG ${kanokariRegCount}回・BIG ${kanokariBigCount}回・エピソード${kanokariEpisodeCount}回、1GレンCHANCE／1G恋は${kanokariOneGameAttempts}回中${kanokariOneGameWins}回成功し、${yen.format(payout)}枚を獲得しました。${kanokariSDreamTimeCount ? "S級DREAM TIMEへ到達しました。" : kanokariDreamTimeCount ? `DREAM TIMEを${kanokariDreamTimeCount}回消化しました。` : kanokariDreamCount ? `ななかりDREAMを${kanokariDreamCount}回獲得しました。` : `66G引き戻しは${kanokariReturnAttempts}回中${kanokariReturnWins}回成功しました。`}` : "CZは突破できませんでした。"}`
+        : sim.aobutaFlow
+          ? `今回の設定は設定${setting}。${games}Gで青春BONUS、青ブタJUDGEを${aobutaStRounds}周してVを${aobutaVCount}個獲得し、${yen.format(payout)}枚を獲得しました。${aobutaUpperStLoops ? `夢現JUDGEMENTを突破し、上位STを${aobutaUpperStLoops}周消化しました。` : aobutaUpperCzAttempts ? "夢現JUDGEMENTで終了しました。" : "翔子・上位ルートには届きませんでした。"}`
         : `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}。${entered ? `${payout}枚を獲得しました。${sim.kabaneriStFlow ? `ST中ボーナス${kabaneriStBonuses}回・${upper ? `${upperResultLabel} ${upperLoops}回当選。` : "上位ST非到達。"}` : `上乗せ${addOnCount}回・${upper ? `${upperResultLabel} ${upperLoops}セット。` : "上位AT非到達。"}`}` : entryBonus ? `${entryBonus.label}で約${yen.format(payout)}枚を獲得し、${sim.mainLabel}には届きませんでした。` : `${machine.initialHitLabel || sim.mainLabel}には届きませんでした。`}`;
     const kabaneriRareUpperLabel = sim.kabaneriUpperRareLabel || "裏美馬ST";
     const kabaneriUpperContinueChance = kabaneriUpperMode
@@ -4529,6 +4671,7 @@
     const symphogearSeigiFlow = Boolean(machine.sim.symphogearSeigiFlow);
     const lycorisFlow = Boolean(data.lycorisFlow);
     const kanokariFlow = Boolean(machine.sim.kanokariFlow);
+    const aobutaFlow = Boolean(machine.sim.aobutaFlow);
     setSlotAtStatus({ visible: false });
     setExperienceHud("0G", "0円", "0枚");
     setExperienceStage(0, experienceProfile.system, "通常ゲーム中", "0G", `${data.hitLabel}を目指して抽選中`, "normal", data.hitChance, "1Gごとの契機当選率");
@@ -4540,7 +4683,7 @@
       await waitForExperience(115);
     }
     if (runId !== experienceRunId) return;
-    setExperienceStage(1, okidokiGoldFlow ? "HIBISCUS LIGHT" : uminchuFlow ? "BONUS HIT" : basiliskTenzenFlow ? "BASILISK CHANCE" : sao2Flow ? "SQUADRON BATTLE" : symphogearSeigiFlow ? "AXZ BATTLE" : lycorisFlow ? (data.lycorisCz?.key === "direct" ? "DIRECT RUSH" : "CHANCE ZONE") : tentenFlow ? "EPISODE BATTLE" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "DIRECT AT" : "CHANCE ZONE") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "DIRECT AT" : data.assaultEntry?.key === "bouquet" ? "BOUQUET BONUS" : "LILY CHALLENGE") : kaguyaFlow ? "LOVE BRAIN BATTLE" : dumbbellFlow ? "MUSCLE ZONE" : shinEvaFlow ? "INITIAL HIT" : tokyoGhoulFlow ? "CHANCE ZONE" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", basiliskTenzenFlow ? (data.basiliskBc?.label || data.hitLabel) : tokyoGhoulFlow ? (data.tokyoGhoulCz?.label || data.hitLabel) : lycorisFlow ? (data.lycorisCz?.label || data.hitLabel) : goblinSlayerFlow ? (data.goblinCz?.label || data.hitLabel) : assaultLilyFlow ? (data.assaultEntry?.label || data.hitLabel) : data.hitLabel, `${yen.format(data.attempts)}G`, okidokiGoldFlow ? "ハイビスカス点灯・初当りBONUS確定" : basiliskTenzenFlow ? `${data.basiliskBc?.games || 16}GのBCでバジリスクタイムを抽選` : sao2Flow ? "スコードロンバトルの最後にPUSHでBoB突入を判定" : symphogearSeigiFlow ? "AXZバトルを進め、最後のPUSHでAXZラッシュを判定" : lycorisFlow ? (data.lycorisCz?.key === "direct" ? "アフターエピソードからRUSHへ直行" : `${data.lycorisCz?.games || 10}GのCZを進め、最後のPUSHでRUSHを判定`) : tokyoGhoulFlow ? "8GのCZを進め、最後のPUSHで東京喰種咬を判定" : uminchuFlow ? "告知音とともに初当りBONUSへ" : tentenFlow ? "10GのレベルUPパートと4Gのバトルへ" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "規定ゲーム数からAT直撃" : "CZの専用ゲーム数を進めて最後にPUSH") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "規定ゲーム数・レア役などからRUSH直撃" : data.assaultEntry?.key === "bouquet" ? "25GのBONUS後にRUSHを判定" : "10Gの専用CZを進めて最後にPUSH") : kaguyaFlow ? "恋愛頭脳戦を経て15G＋αのCZへ" : dumbbellFlow ? "10Gの前半パートから後半発展を目指します" : shinEvaFlow ? "3GのEVANGELION IMPACTで作戦を決定します" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
+    setExperienceStage(1, okidokiGoldFlow ? "HIBISCUS LIGHT" : uminchuFlow ? "BONUS HIT" : basiliskTenzenFlow ? "BASILISK CHANCE" : sao2Flow ? "SQUADRON BATTLE" : symphogearSeigiFlow ? "AXZ BATTLE" : lycorisFlow ? (data.lycorisCz?.key === "direct" ? "DIRECT RUSH" : "CHANCE ZONE") : aobutaFlow ? "SEISHUN BONUS" : tentenFlow ? "EPISODE BATTLE" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "DIRECT AT" : "CHANCE ZONE") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "DIRECT AT" : data.assaultEntry?.key === "bouquet" ? "BOUQUET BONUS" : "LILY CHALLENGE") : kaguyaFlow ? "LOVE BRAIN BATTLE" : dumbbellFlow ? "MUSCLE ZONE" : shinEvaFlow ? "INITIAL HIT" : tokyoGhoulFlow ? "CHANCE ZONE" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", basiliskTenzenFlow ? (data.basiliskBc?.label || data.hitLabel) : tokyoGhoulFlow ? (data.tokyoGhoulCz?.label || data.hitLabel) : lycorisFlow ? (data.lycorisCz?.label || data.hitLabel) : goblinSlayerFlow ? (data.goblinCz?.label || data.hitLabel) : assaultLilyFlow ? (data.assaultEntry?.label || data.hitLabel) : data.hitLabel, `${yen.format(data.attempts)}G`, okidokiGoldFlow ? "ハイビスカス点灯・初当りBONUS確定" : basiliskTenzenFlow ? `${data.basiliskBc?.games || 16}GのBCでバジリスクタイムを抽選` : sao2Flow ? "スコードロンバトルの最後にPUSHでBoB突入を判定" : symphogearSeigiFlow ? "AXZバトルを進め、最後のPUSHでAXZラッシュを判定" : lycorisFlow ? (data.lycorisCz?.key === "direct" ? "アフターエピソードからRUSHへ直行" : `${data.lycorisCz?.games || 10}GのCZを進め、最後のPUSHでRUSHを判定`) : aobutaFlow ? "青春BONUS後は必ず4セット＋αの完走型STへ" : tokyoGhoulFlow ? "8GのCZを進め、最後のPUSHで東京喰種咬を判定" : uminchuFlow ? "告知音とともに初当りBONUSへ" : tentenFlow ? "10GのレベルUPパートと4Gのバトルへ" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "規定ゲーム数からAT直撃" : "CZの専用ゲーム数を進めて最後にPUSH") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "規定ゲーム数・レア役などからRUSH直撃" : data.assaultEntry?.key === "bouquet" ? "25GのBONUS後にRUSHを判定" : "10Gの専用CZを進めて最後にPUSH") : kaguyaFlow ? "恋愛頭脳戦を経て15G＋αのCZへ" : dumbbellFlow ? "10Gの前半パートから後半発展を目指します" : shinEvaFlow ? "3GのEVANGELION IMPACTで作戦を決定します" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
     await waitForExperience(780);
     if (basiliskTenzenFlow) {
       const bc = { ...(data.basiliskBc || {}), ...(data.entryBonus || {}) };
@@ -4633,6 +4776,11 @@
         await waitForExperience(950);
         if (!data.entered) return;
       }
+    }
+    if (aobutaFlow) {
+      setExperienceStage(2, "SEISHUN BONUS", "青春BONUS", "ベルナビ5回", "消化後は青ブタJUDGEへ必ず突入します", "hit", 100, "初当りBONUS");
+      await waitForExperience(950);
+      if (runId !== experienceRunId) return;
     }
     if (tentenFlow) {
       const levelComplete = await animateExperienceCounter(10, "G", "LEVEL UP PART", "EPレベルを上げろ", "ヒロイン目・レア役でEPレベルUPを抽選します", data.triggerSuccessChance, "CZ 10GレベルUP", runId);
@@ -4738,7 +4886,7 @@
       await waitForExperience(900);
       if (!data.entered) return;
     }
-    if (!okidokiGoldFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !basiliskTenzenFlow && !sao2Flow && !symphogearSeigiFlow && !lycorisFlow && !kanokariFlow) {
+    if (!okidokiGoldFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !basiliskTenzenFlow && !sao2Flow && !symphogearSeigiFlow && !lycorisFlow && !kanokariFlow && !aobutaFlow) {
     const dedicatedEntryFlow = godzillaEva2Flow || mahoakoFlow;
     const entryJudgeLabel = dedicatedEntryFlow && data.entryBonus?.judgeLabel ? data.entryBonus.judgeLabel : `${data.mainLabel}突入ジャッジ`;
     const entryJudgeGames = dedicatedEntryFlow ? Math.max(1, Number(data.entryBonus?.judgeGames) || 3) : 3;
@@ -4782,7 +4930,7 @@
       const normalSetCount = rushEvents.filter(event => event.kind === "rush-set").length;
       const hadUpperChallenge = rushEvents.some(event => event.kind === "upper-challenge");
       let route = [...rushEvents];
-      if (!setPushFlow && !karakuriJudgeFlow && !battleBonusFlow && !godzillaEva2Flow && !mahoakoFlow && !okidokiGoldFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !basiliskTenzenFlow && !symphogearSeigiFlow && !lycorisFlow && !kanokariFlow && !sgRaceFlow && !kabaneriStFlow && !otomeRushFlow && !cycleFlow && route.length > 10) {
+      if (!setPushFlow && !karakuriJudgeFlow && !battleBonusFlow && !godzillaEva2Flow && !mahoakoFlow && !okidokiGoldFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !basiliskTenzenFlow && !symphogearSeigiFlow && !lycorisFlow && !kanokariFlow && !aobutaFlow && !sgRaceFlow && !kabaneriStFlow && !otomeRushFlow && !cycleFlow && route.length > 10) {
         const visibleEvents = route.slice(0, 7);
         const remainingEvents = route.slice(7);
         const previousTotal = Number(visibleEvents[visibleEvents.length - 1]?.cumulative) || 0;
@@ -4799,6 +4947,81 @@
         if (runId !== experienceRunId || experienceSkipped) break;
         const event = route[index];
         const eventGames = Math.max(1, Number(event.games) || data.atGameTimeline?.[index] || 20);
+
+        if (event.kind === "aobuta-entry-bonus") {
+          const bonusComplete = await animateExperienceCounter(eventGames, "回", "SEISHUN BONUS", event.label, "ベルナビを消化し、ST強化ポイントを抽選します", 100, `獲得 ${yen.format(event.award)}枚`, runId);
+          if (!bonusComplete) return;
+          consumedGames += eventGames;
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: 4, remainingUnit: "SET", addOn: 0, addOnGames: null, total: event.cumulative });
+          setExperienceStage(3, "AO BUTA JUDGE", "完走型STへ", "4SET＋α", "1セット2Gを最後まで消化します", "rush", 100, "最低8G＋α");
+          await waitForExperience(900);
+          continue;
+        }
+
+        if (event.kind === "aobuta-st") {
+          const stComplete = await animateExperienceCounter(event.sets * 2, "G", "AO BUTA JUDGE", `${event.round}周目・完走型ST`, "ボーナス当選後も残りゲーム数をすべて消化します", event.continued ? 100 : 0, "1SET 2G・複数V獲得あり", runId);
+          if (!stComplete) return;
+          consumedGames += eventGames;
+          setExperienceStage(3, "ST RESULT", `${event.round}周目 青ブタJUDGE`, "PUSH", "今回獲得したV個数を開きます", "judge", event.continued ? 60 : 0, `${event.sets}セット完走`);
+          await waitForExperienceAction(`青ブタJUDGE ${event.round}周目 PUSH`, 5000, event.shoko ? "upper" : event.continued ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.shoko ? "SHOKO V" : event.continued ? "V STOCK" : "ST END", event.wins ? `Vストック ${event.wins}個` : "V獲得なし", event.continued ? "BONUSへ" : "RUSH終了", event.shoko ? "翔子成功・夢現JUDGEMENTの権利を獲得" : event.continued ? "獲得したVを順にDREAM BURSTへ" : "4セット＋αを駆け抜けて終了", event.shoko ? "hyper" : event.continued ? "hit" : "end", event.continued ? 100 : 0, "完走型ST結果");
+          setSlotAtStatus({ visible: true, remaining: event.wins, remainingUnit: "V", total: event.cumulative });
+          await waitForExperience(1000);
+          continue;
+        }
+
+        if (event.kind === "aobuta-dream-burst") {
+          setExperienceStage(3, event.super ? "SUPER DREAM BURST" : "DREAM BURST", `V ${event.vIndex} / ${event.vTotal}`, "PUSH", "ヒロインとボーナス枚数を開きます", "judge", 100, "枚数はPUSHまで非表示");
+          await waitForExperienceAction(`青春DREAM BURST ${event.round}-${event.vIndex} PUSH`, 5000, event.super ? "upper" : "gold");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.super ? "超 青春DREAM BURST" : "青春DREAM BURST", event.hero, `+${yen.format(event.award)}枚`, `${eventGames}G相当・純増約8.0枚/G`, event.super ? "hyper" : "hit", 100, "ヒロイン乗せ結果");
+          await waitForExperience(1000);
+          const dreamComplete = await animateExperienceCounter(eventGames, "G", "BONUS", event.hero, "決定した払い出し枚数までBONUSを消化します", 100, `獲得 +${yen.format(event.award)}枚`, runId);
+          if (!dreamComplete) return;
+          consumedGames += eventGames;
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: Math.max(0, event.vTotal - event.vIndex), remainingUnit: "V", total: event.cumulative });
+          continue;
+        }
+
+        if (event.kind === "aobuta-upper-cz") {
+          const upperCzComplete = await animateExperienceCounter(eventGames, "G", "MUGEN JUDGEMENT", event.label, "前半10G＋後半6G以上を進め、最後にPUSHします", event.chance, "成功期待度 約53%", runId);
+          if (!upperCzComplete) return;
+          consumedGames += eventGames;
+          setExperienceStage(3, "MUGEN FINAL JUDGE", event.label, "PUSH", "上位STの当落を開きます", "judge", event.chance, "10G＋6G＋α 最終結果");
+          await waitForExperienceAction("夢現JUDGEMENT PUSH", 5000, event.success ? "upper" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.success ? "MUGEN SUCCESS" : "MUGEN END", event.success ? "フリーズ発生" : "夢現JUDGEMENT失敗", event.success ? "上位STへ" : "通常へ", event.success ? "エピソードBONUS 300枚を経て上位STへ" : "今回の一撃はここで終了", event.success ? "hyper" : "end", event.success ? 100 : 0, "上位CZ結果");
+          await waitForExperience(1050);
+          continue;
+        }
+
+        if (event.kind === "aobuta-upper-episode") {
+          const episodeComplete = await animateExperienceCounter(eventGames, "G", "EPISODE BONUS", event.label, "300枚のエピソードBONUSを消化します", 100, `獲得 +${yen.format(event.award)}枚`, runId);
+          if (!episodeComplete) return;
+          consumedGames += eventGames;
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setExperienceStage(3, "INFINITY ST", "青春ブタ野郎は∞の夢を見る", "上位ST", "約80%継続・BONUS平均約640枚", "hyper", 80, "設定2の公表値");
+          await waitForExperience(1000);
+          continue;
+        }
+
+        if (event.kind === "aobuta-upper-st") {
+          const upperStComplete = await animateExperienceCounter(8, "G", "INFINITY ST", `上位ST ${event.loop}周目`, "ボーナス超高確率状態を最後まで消化します", event.chance, "継続期待度 約80%", runId);
+          if (!upperStComplete) return;
+          consumedGames += 8;
+          setExperienceStage(3, "SUPER DREAM BURST", `上位ST ${event.loop}周目`, "PUSH", "上位BONUS枚数と継続結果を開きます", "judge", event.chance, "平均約640枚");
+          await waitForExperienceAction(`上位ST ${event.loop}周目 PUSH`, 5000, event.continued ? "upper" : "gold");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.continued ? "INFINITY CONTINUE" : "INFINITY END", `+${yen.format(event.award)}枚`, event.continued ? "上位ST継続" : "上位ST終了", event.continued ? "次の8Gへ進みます" : "最後まで消化してRUSH終了", event.continued ? "hyper" : "end", event.continued ? 100 : 0, `上位ST ${event.loop}周目結果`);
+          consumedGames += Math.max(0, eventGames - 8);
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: event.continued ? 8 : 0, remainingUnit: "G", total: event.cumulative });
+          await waitForExperience(1100);
+          continue;
+        }
 
         if (event.kind === "kanokari-bonus") {
           const isEpisode = event.bonusType === "episode" || event.bonusType === "special-episode";

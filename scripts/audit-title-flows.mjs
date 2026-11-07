@@ -9,8 +9,8 @@ vm.runInContext(source, sandbox);
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
 const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
-const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow);
-const expectedProfiles = { battle: 8, st: 8, heaven: 4, bonus: 8, addon: 12 };
+const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow);
+const expectedProfiles = { battle: 8, st: 7, heaven: 4, bonus: 8, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -49,14 +49,14 @@ for (const [slug, machine] of declarativeFlows) {
 }
 
 if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
-if (declarativeFlows.length !== 40) errors.push(`expected 40 declarative dedicated flows, found ${declarativeFlows.length}`);
+if (declarativeFlows.length !== 39) errors.push(`expected 39 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(specializedFlows);
-if (specializedFlows.length !== 7 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"]) {
-  errors.push(`expected seven specialized flows including Kanokari, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (specializedFlows.length !== 8 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"]) {
+  errors.push(`expected eight specialized flows including Aobuta, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
   const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
@@ -113,6 +113,14 @@ if (specializedFlows.length !== 7 || !dedicatedMap["tokyo-ghoul-slot"] || !dedic
   if (Number(kanokariSim.kanokariRentChance) !== 0.40 || Number(kanokariSim.kanokariReturnChance) !== 0.25 || Number(kanokariSim.kanokariYumekanoChance) !== 0.58) errors.push("kanokari-slot: loop probabilities are incorrect");
   if (Number(kanokariSim.base50) !== 31 || Number(kanokariSim.atPureIncrease) !== 5) errors.push("kanokari-slot: base or bonus pure increase is incorrect");
   if (!kanokariSim.settingRates || Object.keys(kanokariSim.settingRates).length !== 6) errors.push("kanokari-slot: setting rates are incomplete");
+  const aobuta = dedicatedMap["aobuta-slot"];
+  const aobutaSim = aobuta.sim;
+  if (aobutaSim.cycleFlow || aobutaSim.titleFlow) errors.push("aobuta-slot: legacy reusable flow still exists");
+  if (!Array.isArray(aobutaSim.aobutaStHeroes) || aobutaSim.aobutaStHeroes.length !== 4) errors.push("aobuta-slot: ST heroines are incomplete");
+  if (Number(aobutaSim.aobutaUpperCzGames) !== 16 || Number(aobutaSim.aobutaUpperCzChance) !== 0.53) errors.push("aobuta-slot: upper CZ model is incorrect");
+  if (Number(aobutaSim.aobutaUpperContinue) !== 0.80 || !Array.isArray(aobutaSim.aobutaUpperAwards)) errors.push("aobuta-slot: upper ST model is incomplete");
+  if (Number(aobutaSim.base50) !== 31.5 || Number(aobutaSim.atPureIncrease) !== 8) errors.push("aobuta-slot: base or bonus pure increase is incorrect");
+  if (!Array.isArray(aobutaSim.settingPool) || aobutaSim.settingPool.join(",") !== "2,3,4,5,6") errors.push("aobuta-slot: setting pool is incorrect");
 }
 
 if (process.argv.includes("--verbose")) console.table(rows);

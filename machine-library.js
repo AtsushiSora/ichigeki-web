@@ -4911,6 +4911,79 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.titleFlow;
 })();
 
+(function applyAobutaDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["aobuta-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "4セット＋αの完走型STでVを集め、夢現JUDGEMENTから約80%の上位STへ。",
+    intro: "青春BONUS後は必ず青ブタJUDGEへ。1セット2G×4ヒロインの完走型STで複数Vを獲得し、ヒロイン別の青春DREAM BURSTでボーナス枚数を決定します。翔子成功時の夢現JUDGEMENTと上位STまでを実機順に体験できます。",
+    points: ["青春BONUS後は青ブタJUDGEへ必ず突入", "青ブタJUDGEは1セット2G・4セット＋αの完走型ST", "夢現JUDGEMENTは10G＋6G以上・成功期待度約53%"],
+    specs: [["設定", "2・3・4・5・6"], ["初当り（設定2）", "約1/350.8"], ["初当り（設定6）", "約1/207.8"], ["青春BONUS", "ベルナビ5回（稀に25回）"], ["青ブタJUDGE", "4セット＋α・8G＋α"], ["通常ST継続", "設定2で約60%"], ["夢現JUDGEMENT", "10G＋6G＋α・約53%"], ["上位ST継続", "設定2で約80%"], ["上位BONUS平均", "約640枚（払出）"], ["ボーナス純増", "約8.0枚/G"], ["ベース", "約31.5G/50枚"]],
+    articleSections: [
+      { heading: "通常時から青春BONUSまで", paragraphs: ["通常時は思春期ポイント、規定ゲーム数、アオハルチャンスなどからCZまたはボーナスを目指します。エピソードチャンスは前後半の2部構成で成功期待度60%超です。", "本シミュレーターでは公開されている設定別BONUS初当りを使い、通常時の複数ルートを初当り確率へまとめます。"] },
+      { heading: "青春BONUSとST強化", paragraphs: ["青春BONUSはベルナビ5回で、稀に25回。リプレイ・レア役・特殊ナビでヒロインメーターを加算し、20pt到達で青ブタJUDGEを1セット（2G）追加します。", "BONUS消化後は必ず青ブタJUDGEへ。初当りBONUSの獲得枚数とSTのVストック・DREAM BURST出玉は別イベントで表示します。"] },
+      { heading: "青ブタJUDGEは完走型ST", paragraphs: ["青ブタJUDGEは1セット2G、最低4セット＋α。ボーナス当選後も残りセットを消化するため、1回のSTで複数Vを獲得できます。通常STの継続期待度は設定2で約60%です。", "V獲得時は対応ヒロインの青春DREAM BURSTへ。朋絵・のどか・双葉・かえでなどで上乗せ方法と平均枚数が異なり、PUSHまでヒロインと枚数を伏せます。"] },
+      { heading: "夢現JUDGEMENTと上位ST", paragraphs: ["翔子の青ブタJUDGE成功時などは上位CZの夢現JUDGEMENTへ。前半10G＋後半6G＋αで、成功期待度は設定2で約53%です。", "成功時は300枚のエピソードBONUSを経て、上位ST『青春ブタ野郎は∞の夢を見る』へ。設定2で継続約80%、ボーナス平均約640枚の流れを専用演出で表示します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約31.5G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定2・3・4・5・6から均等抽選", "ヒロイン別平均枚数は公開値を優先", "V当選率・翔子選択率など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["一撃 機種解析", "https://1geki.jp/slot/l_ao_buta/"], ["一撃 青春BONUS解析", "https://1geki.jp/slot/l_ao_buta/61/"], ["一撃 青春DREAM BURST解析", "https://1geki.jp/slot/l_ao_buta/83/"], ["一撃 夢現JUDGEMENT解析", "https://1geki.jp/slot/l_ao_buta/87/"]],
+    readerGuide: {
+      verdict: "初当りBONUS後の完走型STで複数Vを集め、ヒロイン別の枚数決定と約53%の上位CZをPUSHで楽しむ高純増BONUSループ型です。",
+      bestFor: ["4セット＋αを最後まで消化して複数Vを狙いたい", "ヒロイン別DREAM BURSTの枚数をPUSHで開きたい", "夢現JUDGEMENTから約80%の上位STを目指したい"],
+      check: ["初当り・STゲーム数・上位CZ・上位STは公開値", "ヒロイン別の主要平均枚数は公開値", "V当選率など非公表部分は代表値"],
+      compare: [["lycoris-recoil-slot", "スマスロ リコリコ", "高純増BONUS連打型と比較"], ["shin-eva-slot", "スマスロ シン・エヴァ", "ST型BONUSループと比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v10",
+    dedicatedFlow: true,
+    dedicatedFlowKey: "aobuta-slot",
+    dedicatedFlowVersion: 2,
+    aobutaFlow: true,
+    triggerLabel: "青春BONUS初当り",
+    triggerRate: 350.8,
+    triggerSuccess: 1,
+    mainLabel: "青ブタJUDGE",
+    mainRate: 350.8,
+    base50: 31.5,
+    normalMin: 0,
+    normalMax: 0,
+    atPureIncrease: 8.0,
+    atPayoutVariance: 0,
+    aobutaInitialBonus: { label: "青春BONUS", games: 5, payout: 75 },
+    aobutaStHeroes: [
+      { key: "tomoe", label: "古賀朋絵", awards: [[111, 0.42], [222, 0.42], [333, 0.10], [555, 0.05], [1111, 0.01]] },
+      { key: "nodoka", label: "豊浜のどか", awards: [[100, 0.85], [200, 0.11], [500, 0.03], [1000, 0.01]] },
+      { key: "futaba", label: "双葉理央", awards: [[100, 0.67], [200, 0.16], [500, 0.12], [1000, 0.04], [1500, 0.01]] },
+      { key: "kaede", label: "梓川かえで", awards: [[200, 0.42], [300, 0.25], [400, 0.15], [800, 0.10], [1200, 0.05], [2000, 0.01]] }
+    ],
+    aobutaHeroVChance: 0.205,
+    aobutaExtraSetChance: 0.18,
+    aobutaShokoChance: 0.12,
+    aobutaUpperCzGames: 16,
+    aobutaUpperCzChance: 0.53,
+    aobutaUpperEpisodePayout: 300,
+    aobutaUpperContinue: 0.80,
+    aobutaUpperAwards: [[500, 0.28], [600, 0.30], [640, 0.20], [700, 0.14], [800, 0.08]],
+    aobutaMaxNormalLoops: 10,
+    aobutaMaxUpperLoops: 8,
+    specialLabel: "青春DREAM BURST",
+    specialChance: 0.60,
+    upperChallenge: "夢現JUDGEMENT",
+    upperChance: 0.12,
+    upperSuccess: 0.53,
+    upperLabel: "青春ブタ野郎は∞の夢を見る",
+    upperContinue: 0.80,
+    upperPayout: 640,
+    upperPureIncrease: 8.0,
+    settingPool: [2, 3, 4, 5, 6],
+    settingRates: { 2: { trigger: 350.8, main: 350.8, payout: 0.981 }, 3: { trigger: 336.5, main: 336.5, payout: 0.993 }, 4: { trigger: 295.1, main: 295.1, payout: 1.053 }, 5: { trigger: 274.6, main: 274.6, payout: 1.084 }, 6: { trigger: 207.8, main: 207.8, payout: 1.103 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
 (function applyTokyoGhoulDedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["tokyo-ghoul-slot"];
   if (!machine) return;
