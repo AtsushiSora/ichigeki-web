@@ -640,8 +640,8 @@ for (const [slug, machine] of Object.entries(machines)) {
   } else {
     html = html.replace("</head>", '<link rel="stylesheet" href="style.css?v=181"></head>');
   }
-  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=248");
-  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=223");
+  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=249");
+  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=224");
   html = html.replace(/app-shell\.js\?v=\d+/, "app-shell.js?v=10");
   html = html.replace(/adsense-loader\.js\?v=\d+/, "adsense-loader.js?v=2");
   if (!html.includes("site-insights.js")) html = html.replace(/(<script src="machine-detail\.js\?v=129"><\/script>)/, '<script src="site-insights.js?v=1"></script>\n  $1');

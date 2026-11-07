@@ -4148,6 +4148,7 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   const machine = window.ICHIGEKI_MACHINES["uminchu-slot"];
   if (!machine) return;
   Object.assign(machine, {
+    maker: "アデリオン",
     updated: "2026-11-07",
     intro: "2026年10月19日導入の疑似ボーナスループ機。フルーツ連状態、BIGのJAC消化、BONUS後32G、10連で突入する8GのIREGUI、ストック消化後の約80%ループを専用演出で体験できます。",
     points: ["BIG平均約202枚・REG平均約53枚", "BONUS後は32G以内の自力連とストック放出を抽選", "10連で8GのIREGUI・突入時平均22連OVER"],
@@ -4205,6 +4206,7 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   const machine = window.ICHIGEKI_MACHINES["tenten-slot"];
   if (!machine) return;
   Object.assign(machine, {
+    maker: "アデリオン",
     updated: "2026-11-07",
     intro: "2026年10月5日導入の疑似ボーナスループ機。14GのEPISODE BATTLE、初回約100枚、40G＋αの王宮舞踏会、4種類の王宮BONUS、転天STOCKチャレンジ、10Gの輪廻転天チャレンジを専用演出で体験できます。",
     points: ["CZは10GのレベルUP＋4Gのバトル", "王宮舞踏会は40G＋α・BONUS確率約1/34.1〜1/14.4", "上位CZは10G・成功期待度約50%"],
@@ -5316,6 +5318,42 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
     upperFirstGames: [[100, 0.56], [200, 0.25], [300, 0.11], [400, 0.05], [500, 0.02], [600, 0.01]],
     upperSetGames: [[30, 0.58], [50, 0.24], [100, 0.12], [200, 0.05], [300, 0.01]], upperMaxLoops: 12, upperReturnGames: 70, upperReturnChance: 0.18,
     settingRates: { 1: { trigger: 299.9, main: 581.8, payout: 0.977 }, 2: { trigger: 292.2, main: 552.7, payout: 0.992 }, 4: { trigger: 272.3, main: 487.8, payout: 1.046 }, 5: { trigger: 256.7, main: 446.2, payout: 1.107 }, 6: { trigger: 244.8, main: 407.3, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
+(function applyDmc5DedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["dmc5-st-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    maker: "アデリオン",
+    updated: "2026-11-07",
+    catchcopy: "初当りBONUSから24G＋α＋3GのSTへ。500枚到達後のURIZEN BATTLEと約89%の上位STを専用進行で体験。",
+    intro: "3種類のCZ、EPISODE BONUS／DMC BONUS、前半24G＋α＋後半3GのSTYLISH TIME、150〜300枚のSTYLISH BONUS、平均約560枚のJUDGEMENT CUT BONUS、100GのURIZEN BATTLE、約89%でDEVIL BONUSがループするDevils Never Cryまでを機種専用画面で再現します。",
+    points: ["通常STは24G＋α＋後半3G・継続約65%", "EPISODE BONUSとDMC BONUSは1:1", "500枚獲得後のBONUSでURIZEN BATTLE", "上位STはDEVIL BONUSが約89%ループ"],
+    specs: [["BONUS（設定1）", "約1/257.0"], ["ST（設定1）", "約1/445.4"], ["ST（設定6）", "約1/303.9"], ["ベース", "約33.7G/50枚"], ["EPISODE BONUS", "20G・純増約5.8枚/G"], ["DMC BONUS", "15G＋α・純増約3.8枚/G"], ["DMC BONUSからST", "約20%"], ["STYLISH TIME", "24G＋α＋3G・継続約65%"], ["STYLISH BONUS", "150〜300枚"], ["JUDGEMENT CUT BONUS", "平均約560枚"], ["URIZEN BATTLE", "100G・上位期待度約24%"], ["Devils Never Cry", "継続約89%"], ["DEVIL BONUS", "平均約400枚"], ["設定", "1〜6"]],
+    articleSections: [
+      { heading: "3種類のCZと2種類の初当りBONUS", paragraphs: ["通常時はポイントからNERO、V、DANTEの3種類のCZを抽選します。NEROは狙え3回保障・成功約40%、Vは5G＋α・成功約41%、DANTEは9G・成功約70%で、成功時はEPISODE BONUS濃厚です。", "初当りBONUSはEPISODE BONUSとDMC BONUSが1:1。EPISODEは20G・純増約5.8枚/GでST濃厚、DMC BONUSは15G＋α・純増約3.8枚/Gで、BLOODY BATTLE勝利などから約20%でSTへ進みます。"] },
+      { heading: "STYLISH TIMEと3種類のST中BONUS", paragraphs: ["通常STは前半24G＋αと後半3Gで構成され、継続期待度は約65%。前半はエンブレム点灯とチャンス目、後半3Gは64%以上の期待度でBONUSを狙います。", "STYLISH BONUSは150・200・250・300枚。EPISODE BONUS-閻魔刀-は250枚。JUDGEMENT CUT BONUSは平均約560枚で、上乗せパート中は約1/3.5で枚数上乗せを抽選します。専用画面ではSTを最後まで回してからPUSHし、BONUS種類と枚数を開きます。"] },
+      { heading: "URIZEN BATTLEと強ST", paragraphs: ["同一ST内で500枚以上獲得した後の最初のBONUSは、100GのURIZEN BATTLEへ。平均約740ORBを減算し、残りORBが0ならEPISODE BONUSと上位STです。", "上位STへのトータル期待度は約24%。敗北時も残りORBに応じて次回ST平均継続率が約75〜86%へ上がる強STとなります。専用画面では100Gを進め、最終PUSHで上位または強STを表示します。"] },
+      { heading: "Devils Never CryとDEVIL BONUS", paragraphs: ["上位STは前半24G＋α＋後半3Gで、平均約400枚のDEVIL BONUSが約89%でシームレスにループします。獲得期待枚数はSTYLISH TIME突入から一連の増加区間終了まで平均約3400枚です。", "DEVIL BONUSは15G＋α・純増約5.8枚/G。バージルJACは50枚、ダンテJACは100枚以上で、最大上乗せは1000枚です。専用画面では各上位STを27G進め、PUSH後にBONUS枚数を表示します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約33.7G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6のBONUS・ST初当りと出玉率は公開設定別値", "初当りBONUS、通常ST、ST中BONUS、URIZEN BATTLE、強ST、上位STを専用進行", "CZ選択率、BONUS種類振り分け、ORB獲得量など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["一撃 機種概要・解析", "https://1geki.jp/slot/l_dmc5_st/"], ["一撃 STYLISH TIME詳細", "https://1geki.jp/slot/l_dmc5_st/81/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10277"], ["エンターライズ 公式機種一覧", "https://www.enterrise.co.jp/slot.php"]],
+    readerGuide: { verdict: "初当りBONUSの種類でST突入期待度が変わり、27GのSTでBONUSを重ね、500枚到達後の強化バトルから約89%の上位を目指すBONUS＋ST型です。", bestFor: ["24G＋後半3Gを回して最終PUSHを押したい", "150〜300枚／250枚／平均560枚のBONUSを開きたい", "URIZEN BATTLEから強ST・上位STを狙いたい"], check: ["BONUS・ST初当り、主要ゲーム数、純増、公開期待度は解析値", "ST中BONUSと上位DEVIL BONUSを別表示", "未公表の細かな振り分けは体験用代表値"], compare: [["gundam-seed-slot", "スマスロ ガンダムSEED", "20G ST型と比較"], ["paripi-koumei-slot", "スマスロ パリピ孔明", "BONUS＋ST型と比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v30", dedicatedFlow: true, dedicatedFlowKey: "dmc5-st-slot", dedicatedFlowVersion: 2, dmc5Flow: true,
+    triggerLabel: "初当りBONUS", triggerRate: 257.0, triggerSuccess: 0.577, mainLabel: "STYLISH TIME", mainRate: 445.4, base50: 33.7, coinUnit: 3.5,
+    normalMin: 0, normalMax: 0, atPureIncrease: 5.8, upperPureIncrease: 5.8, atPayoutVariance: 0,
+    dmcCzRoutes: [[{ key: "nero", label: "NERO", games: 3, chance: 0.40 }, 0.45], [{ key: "v", label: "V", games: 5, chance: 0.41 }, 0.35], [{ key: "dante", label: "DANTE", games: 9, chance: 0.70, episode: true }, 0.20]],
+    dmcInitialBonuses: [[{ key: "episode", label: "EPISODE BONUS", games: 20, award: 116, stChance: 1 }, 0.50], [{ key: "dmc", label: "DMC BONUS", games: 15, award: 57, stChance: 0.20 }, 0.50]],
+    dmcStGames: 27, dmcStContinue: 0.65, dmcStBonuses: [[{ key: "stylish-c", label: "STYLISH BONUS C", award: 150, games: 26 }, 0.30], [{ key: "stylish-b", label: "STYLISH BONUS B", award: 200, games: 35 }, 0.25], [{ key: "stylish-a", label: "STYLISH BONUS A", award: 250, games: 43 }, 0.18], [{ key: "stylish-s", label: "STYLISH BONUS S", award: 300, games: 52 }, 0.12], [{ key: "episode-yamato", label: "EPISODE BONUS -閻魔刀-", award: 250, games: 43 }, 0.10], [{ key: "judgement", label: "JUDGEMENT CUT BONUS", award: 560, games: 97 }, 0.05]],
+    dmcMaxStLoops: 15, dmcUrizenThreshold: 500, dmcUrizenGames: 100, dmcUrizenUpperChance: 0.24, dmcStrongStRates: [[0.75, 0.30], [0.78, 0.30], [0.82, 0.25], [0.86, 0.15]],
+    dmcUpperGames: 27, dmcUpperContinue: 0.89, dmcUpperBonuses: [[{ key: "virgil", label: "DEVIL BONUS・バージルJAC", award: 350, games: 60 }, 0.45], [{ key: "dante", label: "DEVIL BONUS・ダンテJAC", award: 400, games: 69 }, 0.38], [{ key: "burst", label: "DEVIL BONUS BURST", award: 600, games: 103 }, 0.17]], dmcUpperMaxLoops: 30,
+    specialLabel: "URIZEN BATTLE", specialChance: 0.24, upperChallenge: "URIZEN BATTLE", upperChance: 0.24, upperSuccess: 0.24, upperLabel: "Devils Never Cry", upperContinue: 0.89, upperPayout: 400,
+    settingRates: { 1: { trigger: 257.0, main: 445.4, payout: 0.975 }, 2: { trigger: 254.1, main: 436.5, payout: 0.982 }, 3: { trigger: 251.5, main: 411.2, payout: 1.002 }, 4: { trigger: 222.6, main: 359.6, payout: 1.052 }, 5: { trigger: 217.3, main: 329.5, payout: 1.092 }, 6: { trigger: 204.1, main: 303.9, payout: 1.149 } }
   });
   delete machine.sim.cycleFlow;
   delete machine.sim.titleFlow;
