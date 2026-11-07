@@ -5608,6 +5608,55 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.entryBonusAwardsNote;
 })();
 
+(function applyKinnikuman7DedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["kinnikuman-7-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "26Gの悪魔超人バトルを7戦突破。悪魔将軍を倒し、魔界ループへ。",
+    intro: "前半11G＋バトル15Gのセットを重ね、7戦突破後の30Gエピソード、悪魔将軍バトル、上位AT『悪魔大行進』と30Gの魔界の荒野までを機種専用画面で体験できます。",
+    points: ["通常ATは1セット26G・純増約6.1枚/G", "全8シナリオ・各セット50%以上", "7戦突破後の悪魔将軍バトルは上位期待度約90%", "悪魔大行進は100枚＋α・継続約65〜99%"],
+    specs: [["正義超人ゾーン（設定1）", "約1/99.8"], ["AT（設定1）", "約1/404.1"], ["AT（設定6）", "約1/336.5"], ["ベース", "約31.0G/50枚"], ["7人の悪魔超人", "11G＋15G・純増約6.1枚/G"], ["セット継続", "全8シナリオ・50%以上"], ["エピソード", "7戦突破後・30G"], ["悪魔将軍バトル", "1セット6G・最大5セット"], ["初回上位期待度", "約90%"], ["悪魔大行進", "1セット100枚＋α"], ["上位セット継続", "約65〜99%"], ["魔界の荒野", "30G＋α・引き戻し約30%"]],
+    articleSections: [
+      { heading: "超人パワーから7人の悪魔超人へ", paragraphs: ["通常時は規定超人パワー到達や正義超人チャレンジ・正義超人アタックからATを目指します。正義超人ゾーン合算は設定1約1/99.8〜設定6約1/91.7、AT初当りは約1/404.1〜約1/336.5です。", "専用画面では通常回転後にCZ最終PUSHを行い、成功時は赤7準備・3GのオープニングからATを開始します。通常時の超人パワーモードや全前兆は初当り確率へまとめています。"] },
+      { heading: "前半11G＋バトル15Gの7戦", paragraphs: ["通常AT『7人の悪魔超人』は1セット26G、純増約6.1枚/G。前半11Gで対戦相手やVストックを確認し、後半15Gのバトル最終PUSHで継続を開きます。", "継続率は全8種類のシナリオで管理され、各セット50%以上。4戦目以降は65%以上、7戦目は85%以上です。専用画面では8シナリオの代表選択率を用い、セットごとの公開下限値で判定します。"] },
+      { heading: "バッファローマンと7戦突破", paragraphs: ["1〜6戦目にバッファローマンが乱入し、勝利すると残りバトルの継続が濃厚です。通常の継続抽選、Vストック、書き換えをすべて個別再現せず、SP発動時は残りセットを勝利として進めます。", "7戦突破後は30Gのエピソードへ。エピソード中も悪魔将軍バトルの勝利ストックを抽選し、終了後は初回期待度約90%の悪魔将軍バトルへ進みます。"] },
+      { heading: "悪魔将軍バトルから魔界ループ", paragraphs: ["悪魔将軍バトルは1セット6G・最大5セット。勝利すると上位AT『悪魔大行進』、敗北すると30G＋αの『魔界の荒野』へ進みます。魔界の荒野からの悪魔将軍バトル引き戻し期待度は約30%です。", "悪魔大行進は1セット100枚＋α・純増約6.1枚/G。初期枚数により継続期待度が変わり、100枚で約66.1%、400枚で約98.8%。終了後は魔界の荒野へ戻り、悪魔将軍バトルと悪魔大行進の魔界ループを狙います。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約31.0G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1・2・4・5・6を均等抽選し、CZ・AT初当りと出玉率は公開設定別値を使用", "26G×7戦、30Gエピソード、悪魔将軍バトル、悪魔大行進、魔界の荒野を専用進行", "8シナリオの選択率、バッファローマンSP選択率、上位初期枚数の細かな振り分けは体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["山佐ネクスト 公式機種サイト", "https://www1.yamasa.co.jp/svakcj/"], ["パチ＆スロ必勝本 AT解説", "https://p.hisshobon.jp/machine/4117/1/97293"], ["パチ＆スロ必勝本 継続シナリオ", "https://p.hisshobon.jp/machine/4117/1/102184"], ["なな徹 魔界ループ解析", "https://nana-press.com/kaiseki/machine/583/16197/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9849"]],
+    readerGuide: { verdict: "26Gのバトルを7戦突破し、悪魔将軍バトルから魔界ループを狙うシナリオ継続型ATです。", bestFor: ["セットごとに継続PUSHを楽しみたい", "バッファローマン乱入で残り勝利を確定させたい", "悪魔将軍バトルから上位ATを目指したい"], check: ["ATゲーム数・純増・シナリオ下限・上位期待度は公開値", "各セットのゲーム数と獲得枚数を別表示", "未公表の選択率は体験用代表値"], compare: [["hokuto-tensei2", "スマスロ 北斗転生2", "勝舞型ATと比較"], ["monster-hunter-rise-slot", "スマスロ モンハンライズ", "討伐型ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v37", dedicatedFlow: true, dedicatedFlowKey: "kinnikuman-7-slot", dedicatedFlowVersion: 2, kinnikuman7Flow: true,
+    triggerLabel: "正義超人ゾーン", triggerRate: 99.8, triggerSuccess: 0.247, mainLabel: "7人の悪魔超人", mainRate: 404.1, base50: 31.0, coinUnit: 3.8,
+    normalMin: 0, normalMax: 0, atPureIncrease: 6.1, upperPureIncrease: 6.1, atPayoutVariance: 0,
+    kinnikumanSetGames: 26, kinnikumanFrontGames: 11, kinnikumanBattleGames: 15, kinnikumanEpisodeGames: 30,
+    kinnikumanDevils: ["ステカセキング", "ブラックホール", "アトランティス", "ミスターカーメン", "ザ・魔雲天", "スプリングマン", "バッファローマン"],
+    kinnikumanScenarios: [
+      [{ name: "シナリオ1", rates: [0.65, 0.50, 0.50, 0.65, 0.65, 0.65, 0.85] }, 0.18],
+      [{ name: "シナリオ2", rates: [0.55, 0.50, 0.55, 0.65, 0.65, 0.85, 0.85] }, 0.18],
+      [{ name: "シナリオ3", rates: [0.55, 0.50, 0.55, 0.65, 0.85, 0.85, 0.85] }, 0.16],
+      [{ name: "シナリオ4", rates: [0.55, 0.50, 0.65, 0.65, 0.85, 0.85, 0.85] }, 0.14],
+      [{ name: "シナリオ5", rates: [0.55, 0.50, 0.65, 0.85, 0.85, 0.85, 0.85] }, 0.12],
+      [{ name: "シナリオ6", rates: [0.55, 0.65, 0.85, 0.85, 0.85, 0.85, 0.85] }, 0.10],
+      [{ name: "シナリオ7", rates: [1.00, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85] }, 0.08],
+      [{ name: "シナリオ8", rates: [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00] }, 0.04]
+    ],
+    kinnikumanBuffaloSpChance: 0.08, kinnikumanEpisodeShogunSuccess: 0.90, kinnikumanReturnShogunSuccess: 0.30,
+    kinnikumanShogunBattleGames: [[6, 0.22], [12, 0.24], [18, 0.24], [24, 0.18], [30, 0.12]],
+    kinnikumanUpperInitialCoins: [[100, 0.64], [200, 0.20], [300, 0.10], [400, 0.06]],
+    kinnikumanUpperContinueByCoins: { 100: 0.661, 200: 0.83, 300: 0.94, 400: 0.988 },
+    kinnikumanUpperMaxSets: 20, kinnikumanWildernessGames: 30,
+    specialLabel: "Vストック", specialChance: 0.16, upperChallenge: "悪魔将軍バトル", upperChance: 0.90, upperSuccess: 0.90, upperLabel: "悪魔大行進", upperContinue: 0.661, upperPayout: 0,
+    settingRates: { 1: { trigger: 99.8, main: 404.1, payout: 0.979 }, 2: { trigger: 98.6, main: 400.6, payout: 0.991 }, 4: { trigger: 96.3, main: 362.1, payout: 1.060 }, 5: { trigger: 94.2, main: 350.7, payout: 1.106 }, 6: { trigger: 91.7, main: 336.5, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+  delete machine.sim.entryBonusAwards;
+  delete machine.sim.entryBonusAwardsNote;
+})();
+
 (function applyInuyasha2DedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["inuyasha2-slot"];
   if (!machine) return;
