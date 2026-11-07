@@ -5567,6 +5567,47 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.entryBonusAwardsNote;
 })();
 
+(function applyChibariyo2DedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["chibariyo2-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "花笠が光ればBONUS。32G連を重ね、赤・虹パトランプからリミットレスを目指す。",
+    intro: "初当りBONUS、32G以内の天国連、6連目の赤パトランプ昇格抽選、10連目の赤・15連目の虹パトランプ、虹終了後のリミットレスまでを機種専用画面で体験できます。",
+    points: ["REG約90枚・BIG約210枚・SBB約315枚", "天国A約66%／B約75%／C約80%", "赤約88%・虹約92%でループ", "虹終了後はリミットレスへ移行"],
+    specs: [["BONUS初当り（設定1）", "約1/328.0"], ["BONUS初当り（設定6）", "約1/224.8"], ["ベース", "約27.9G/50枚"], ["REG BONUS", "30G・約90枚"], ["BIG BONUS", "70G・約210枚"], ["SUPER BIG", "70G・約315枚"], ["天国A", "約66%ループ"], ["天国B", "約75%ループ"], ["天国C", "約80%ループ"], ["赤パトランプ", "約88%ループ"], ["虹パトランプ", "約92%ループ"], ["リミットレス", "約88%ループ"]],
+    articleSections: [
+      { heading: "チェリーと規定ゲーム数から花笠BONUSへ", paragraphs: ["通常時はチェリー成立回数と規定ゲーム数を軸にBONUSを目指します。チェリー回数は5の倍数が節目で、最大45回。ゲーム数天井は最大999Gです。", "設定別のBONUS初当りは約1/328.0〜約1/224.8。専用画面では通常回転後に花笠ランプが点灯し、最初のBONUS種類をPUSHで開きます。"] },
+      { heading: "REG・BIG・SUPER BIG", paragraphs: ["REGは30G・約90枚、BIGは70G・約210枚で純増約3.0枚/G。SUPER BIGは70G・約315枚で純増約4.5枚/Gです。", "1G連当選時はモードに応じてBIG／SUPER BIGを振り分けます。弱チェリーによる1G連はBIG、強チェリーならSUPER BIGとなる公開法則も反映しています。"] },
+      { heading: "32G連とパトランプモード", paragraphs: ["天国Aは約66%、天国Bは約75%、天国Cは約80%で32G以内のBONUSをループします。スイカでの継続書き換えは約3.1%です。", "6連目は赤パトランプへの昇格チャンス、10連目は赤、15連目は虹へ。赤は約88%、虹は約92%でループするため、連チャン数を重ねるほど上位モードが見えてきます。"] },
+      { heading: "虹の先にあるリミットレス", paragraphs: ["虹パトランプモードが終了するとリミットレスへ移行。リミットレスは約88%でループし、BONUSごとに有利区間をリセットします。", "リミットレス中はBONUS当選ごとに15%で虹パトランプへ再昇格。専用画面では現在モード、32Gカウント、BONUS種類、連チャン数を順に表示します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約27.9G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1・2・4・5・6を均等抽選し、初当りと出玉率は公開設定別値を使用", "REG／BIG／SBB、32G連、6・10・15連の昇格、1G連、リミットレスを専用進行", "天国A〜Cの初期振り分け、6連目の赤昇格率、通常契機の1G連率など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["NET 公式機種情報", "https://www.net-fun.co.jp/chibariyo2/"], ["一撃 基本スペック・モード", "https://1geki.jp/slot/l_chibariyo2/"], ["なな徹 BONUS解析", "https://nana-press.com/kaiseki/machine/722/19952/"], ["なな徹 天国・パトランプモード", "https://nana-press.com/kaiseki/machine/722/19944/"]],
+    readerGuide: { verdict: "32G連を重ねるほど赤・虹・リミットレスへ近づく、モード昇格型のBONUS連チャン機です。", bestFor: ["花笠告知からBONUS種類をPUSHで開きたい", "32Gのカウントダウンを毎連楽しみたい", "赤・虹・リミットレスへ段階的に上げたい"], check: ["初当り・BONUS枚数・主要モード継続率は公開値", "BONUSゲーム数と獲得枚数を別表示", "未公表の細かな振り分けは体験用代表値"], compare: [["okidoki-black", "沖ドキ！BLACK", "32G連タイプと比較"], ["okidoki-gold", "沖ドキ！GOLD", "天国連タイプと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v36", dedicatedFlow: true, dedicatedFlowKey: "chibariyo2-slot", dedicatedFlowVersion: 2, chibariyo2Flow: true,
+    triggerLabel: "花笠BONUS初当り", triggerRate: 328.0, triggerSuccess: 1, mainLabel: "天国32G連", mainRate: 328.0, base50: 27.9, coinUnit: 4.5,
+    normalMin: 0, normalMax: 0, atPureIncrease: 3.0, upperPureIncrease: 4.5, atPayoutVariance: 0,
+    chibariyoBonuses: {
+      reg: { key: "reg", label: "REG BONUS", games: 30, award: 90, pure: 3.0 },
+      big: { key: "big", label: "BIG BONUS", games: 70, award: 210, pure: 3.0 },
+      sbig: { key: "sbig", label: "SUPER BIG", games: 70, award: 315, pure: 4.5 }
+    },
+    chibariyoBonusRates: { 1: { reg: 321.5, big: 226.1, sbig: 707.9 }, 2: { reg: 308.3, big: 217.2, sbig: 673.4 }, 4: { reg: 275.9, big: 193.6, sbig: 590.1 }, 5: { reg: 258.1, big: 181.0, sbig: 545.0 }, 6: { reg: 221.8, big: 156.1, sbig: 453.5 } },
+    chibariyoModes: { heavenA: 0.66, heavenB: 0.75, heavenC: 0.80, red: 0.88, rainbow: 0.92, limitless: 0.88 },
+    chibariyoEntryModes: [["heavenA", 0.55], ["heavenB", 0.30], ["heavenC", 0.15]],
+    chibariyoSixthRedChance: 0.25, chibariyoRewriteChance: 0.031, chibariyoOneGameChance: 0.08, chibariyoLimitlessRainbowChance: 0.15,
+    chibariyoMaxChains: 50, specialLabel: "1G連", specialChance: 0.08, upperChallenge: "虹パトランプ", upperChance: 0.15, upperSuccess: 0.92, upperLabel: "リミットレス", upperContinue: 0.88, upperPayout: 0,
+    settingRates: { 1: { trigger: 328.0, main: 328.0, payout: 0.973 }, 2: { trigger: 314.4, main: 314.4, payout: 0.993 }, 4: { trigger: 281.1, main: 281.1, payout: 1.047 }, 5: { trigger: 263.3, main: 263.3, payout: 1.096 }, 6: { trigger: 224.8, main: 224.8, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+  delete machine.sim.entryBonusAwards;
+  delete machine.sim.entryBonusAwardsNote;
+})();
+
 (function applyInuyasha2DedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["inuyasha2-slot"];
   if (!machine) return;
