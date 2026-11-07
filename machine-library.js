@@ -656,25 +656,28 @@ window.ICHIGEKI_MACHINES = {
     sources: [["ゴジラ対エヴァンゲリオン2 公式サイト", "https://www.eva-project.jp/l_godzilla_vs_eva2/"], ["一撃 ゴジエヴァ2 機種概要・スペック", "https://1geki.jp/slot/l_goji_eva2/"], ["一撃 ゴジエヴァアタック解析", "https://1geki.jp/slot/l_goji_eva2/81/"], ["一撃 ゴジエヴァRUSH解析", "https://1geki.jp/slot/l_goji_eva2/83/"], ["一撃 震撃チャンス・震撃連鎖解析", "https://1geki.jp/slot/l_goji_eva2/87/"], ["一撃 決戦カイザーギドラ解析", "https://1geki.jp/slot/l_goji_eva2/89/"]]
   },
   "mahoako-slot": {
-    order: 0.75, type: "slot", theme: "magenta", year: "2026年10月", maker: "ニューギン", updated: "2026-10-31",
+    order: 0.75, type: "slot", theme: "magenta", year: "2026年10月", maker: "ニューギン", updated: "2026-11-07",
     name: "L魔法少女にあこがれて", shortName: "スマスロ まほあこ",
     image: "assets/machines/mahoako-slot-key-visual.jpg",
     imageAlt: "L魔法少女にあこがれてのキービジュアル",
     imageCredit: "ニューギン",
     imageSource: "https://www.newgin.co.jp/products/lmahoako/",
     catchcopy: "3種類のCZを突破し、超あこがれver.へ。",
-    intro: "2026年10月19日導入の疑似ボーナス＋AT機。全設定共通約1/249.6のBONUS、設定差のあるCZ・AT初当り、上乗せ特化ゾーンから上位ATまでを簡易体験できます。",
-    points: ["CZは設定1約1/357.0〜設定6約1/235.4", "BONUSは全設定共通約1/249.6", "通常AT約2.5枚/G・上位AT約5.0枚/G"],
-    specs: [["CZ（設定1）", "約1/357.0"], ["CZ（設定6）", "約1/235.4"], ["BONUS", "約1/249.6（全設定共通）"], ["AT（設定1）", "約1/436.3"], ["AT（設定6）", "約1/305.7"], ["ベース", "約31.4G/50枚"], ["通常AT純増", "約2.5枚/G"], ["上位AT純増", "約5.0枚/G"]],
-    sim: { kind: "slot", triggerLabel: "トランスマジア", triggerRate: 357.0, triggerSuccess: 0.42, mainLabel: "まほあこラッシュ", mainRate: 436.3, base50: 31.4, coinUnit: 3.2, normalMin: 200, normalMax: 1050, atPureIncrease: 2.5, specialLabel: "あこがれATTACK", specialChance: 0.34, specialMin: 180, specialMax: 900, specialOutcomes: [[{ kind: "games", label: "あこがれATTACK", games: [[10, 0.45], [20, 0.30], [30, 0.15], [50, 0.08], [100, 0.02]], triggerGames: 8 }, 0.60], [{ kind: "bonus", label: "サディスティックBONUS", games: [[20, 0.65], [40, 0.35]], payouts: [[180, 0.65], [360, 0.35]], triggerGames: 10 }, 0.40]], upperChallenge: "VSロードエノルメ", upperChance: 0.18, upperSuccess: 0.50, upperLabel: "まほあこラッシュ 超あこがれver.", upperContinue: 0.60, upperPayout: 520, upperPureIncrease: 5.0, settingRates: { 1: { trigger: 357.0, main: 436.3, payout: 0.976 }, 2: { trigger: 333.8, main: 422.7, payout: 0.988 }, 3: { trigger: 310.7, main: 401.4, payout: 1.005 }, 4: { trigger: 273.3, main: 352.4, payout: 1.050 }, 5: { trigger: 243.0, main: 316.1, payout: 1.102 }, 6: { trigger: 235.4, main: 305.7, payout: 1.120 } } },
+    intro: "2026年10月19日導入の疑似A＋AT機。3種類CZ、4種類BONUS、3GのあこがれATTACK、3種類の上乗せ特化ゾーン、無限AT、VSロードエノルメ、上位AT後の2段階引き戻しを専用演出で体験できます。",
+    points: ["CZは約42%・約60%・AT濃厚の3種類", "BONUSは全設定共通約1/249.6・4種類", "上位AT終了後は2段階で引き戻し60%超"],
+    specs: [["CZ（設定1）", "約1/357.0"], ["CZ（設定6）", "約1/235.4"], ["BONUS", "約1/249.6（全設定共通）"], ["AT（設定1）", "約1/436.3"], ["AT（設定6）", "約1/305.7"], ["ベース", "約31.4G/50枚"], ["あこがれATTACK", "3G・初期G／特化獲得"], ["通常AT純増", "約2.5枚/G"], ["特化ゾーン平均", "約70G・100G・200G"], ["上位AT純増", "約5.0枚/G"], ["上位AT期待獲得", "約2000枚"], ["上位引き戻し", "VS＋あの星で60%超"]],
+    rankingVersion: "v6",
+    sim: { kind: "slot", triggerLabel: "CZ／BONUS初当り契機", triggerRate: 147.1, triggerSuccess: 1, mainLabel: "まほあこラッシュ", mainRate: 436.3, base50: 31.4, coinUnit: 3.2, normalMin: 125, normalMax: 900, atPureIncrease: 2.5, atPayoutVariance: 0.05, entryBonusAwards: [[{ label: "トランスマジア", games: 12, payout: 0, atChance: 0.42, judgeLabel: "BAR揃いチャレンジ", judgeGames: 12, routeType: "cz" }, 0.309], [{ label: "パネルアタック", games: 7, payout: 0, atChance: 0.60, judgeLabel: "3枚パネル獲得チャレンジ", judgeGames: 7, routeType: "cz" }, 0.082], [{ label: "ヴェナリータチャレンジ", games: 7, payout: 0, atChance: 1, judgeLabel: "上位ルートチャレンジ", judgeGames: 7, routeType: "upper-cz", upperEntryChance: 0.42 }, 0.021], [{ label: "レギュラーボーナス", games: 14, payout: 70, atChance: 0.10, judgeLabel: "AT抽選", judgeGames: 7, routeType: "bonus" }, 0.234], [{ label: "まほあこボーナス", games: 26, payout: 130, atChance: 0.25, judgeLabel: "ピンク7揃いチャレンジ", judgeGames: 13, routeType: "bonus" }, 0.292], [{ label: "まほあこボーナス あこがれVer.", games: 14, payout: 70, atChance: 0.50, judgeLabel: "ピンク7揃いチャレンジ", judgeGames: 7, routeType: "bonus" }, 0.049], [{ label: "スペシャルムービーボーナス", games: 14, payout: 70, atChance: 1, judgeLabel: "AT＋あこがれATTACK", judgeGames: 7, routeType: "bonus" }, 0.013]], entryBonusAwardsNote: "CZとBONUSを並行抽選する体験用代表比率。BONUS4種類の割合は公開値、CZ内訳とREGのAT当選率は全体AT初当りへ近づける代表値", mahoakoFlow: true, mahoakoInitialGames: [[30, 0.24], [50, 0.42], [70, 0.20], [100, 0.10], [150, 0.03], [200, 0.01]], mahoakoSpecialAwards: [[{ label: "サディスティックタイム", games: 70, zoneGames: 10 }, 0.55], [{ label: "ぶるぶるマッサージタイム", games: 100, zoneGames: 10 }, 0.30], [{ label: "マジアベーゼ無双", games: 200, zoneGames: 10 }, 0.15]], specialLabel: "あこがれATTACK", specialChance: 0.34, specialMin: 25, specialMax: 500, upperChallenge: "VSロードエノルメ", upperChallengeGames: 5, upperChance: 0.18, upperSuccess: 0.50, upperLabel: "まほあこラッシュ 超あこがれver.", upperContinue: 0.60, upperPayout: 650, upperPureIncrease: 5.0, upperGameManaged: true, upperSetGames: [[100, 0.55], [150, 0.25], [200, 0.15], [300, 0.05]], upperMaxLoops: 8, upperReturnGames: 10, upperReturnChance: 0.60, settingRates: { 1: { trigger: 147.1, main: 436.3, payout: 0.976 }, 2: { trigger: 142.9, main: 422.7, payout: 0.988 }, 3: { trigger: 138.3, main: 401.4, payout: 1.005 }, 4: { trigger: 130.3, main: 352.4, payout: 1.050 }, 5: { trigger: 123.1, main: 316.1, payout: 1.102 }, 6: { trigger: 121.0, main: 305.7, payout: 1.120 } } },
     articleSections: [
       { heading: "BONUSと設定差の見方", paragraphs: ["BONUS確率は全設定共通で約1/249.6です。一方、CZとAT初当りには設定差があり、設定1のAT約1/436.3から設定6の約1/305.7まで段階的に軽くなります。", "シミュレーターはSTART時に設定1〜6を均等抽選し、選ばれた設定のCZ・AT初当り・出玉率を使用します。結果と機種別ランキングにも今回の設定を表示します。"] },
-      { heading: "3種類のCZをひとつの流れへ簡略化", paragraphs: ["実機にはトランスマジア、マジアマゼンタ決戦、マジアサルファ決戦の3種類のCZがあります。トランスマジアの成功期待度は約42%です。", "サイトでは演出を長くしすぎないため、3種類の入口を代表CZ『トランスマジア』へまとめています。実機のCZ振り分けや内部状態を完全再現するものではありません。"] },
-      { heading: "通常AT・特化ゾーン・上位AT", paragraphs: ["通常AT『まほあこラッシュ』は純増約2.5枚/G。サディスティックタイム、ぶるぶるマッサージタイム、マジアベーゼ無双などの上乗せ要素があります。", "上位AT『まほあこラッシュ 超あこがれver.』は純増約5.0枚/Gです。シミュレーターでは特化ゾーンを追加枚数抽選へまとめ、上位CZと上位ATはサイト共通の固定確率で簡易表現します。"] },
+      { heading: "3種類CZと4種類BONUS", paragraphs: ["CZは12G＋α・期待度約42%のトランスマジア、7G＋α・約60%のパネルアタック、成功でAT濃厚かつ約42%が上位ATとなるヴェナリータチャレンジの3種類です。", "BONUSは全設定共通約1/249.6。公開比率はREG39.8%、まほあこBONUS49.7%、あこがれVer.8.3%、スペシャルムービー2.3%です。サイトではCZとBONUSを並行する初当りルートとしてPUSHで表示します。"] },
+      { heading: "あこがれATTACKと3種類の特化ゾーン", paragraphs: ["AT突入時は3GのあこがれATTACKで初期ゲーム数と特化ゾーンを決めます。各ゲームでキャラ対応役を引けば特化獲得のチャンスで、通常AT中の上乗せ時にも同じ3G演出へ進みます。", "特化ゾーンは10Gのサディスティックタイム平均約70G、ぶるぶるマッサージタイム平均約100G、マジアベーゼ無双平均約200G。サイトではPUSHまで結果を伏せ、選ばれた特化名と上乗せゲーム数を別表示します。"] },
+      { heading: "通常AT・無限AT・BONUS", paragraphs: ["まほあこラッシュは純増約2.5枚/Gのゲーム数上乗せ型です。レア役からゲーム数、BONUS、あこがれATTACKを抽選し、百合pt MAXやBONUSからBAR揃い高確へ進みます。", "BAR揃い高確成功時は『マジアベーゼが満足するまで出られない部屋』へ。サイトでは無限ATの長さを代表ゲーム数で消化し、通常上乗せ・BONUS・特化とは別の履歴に残します。"] },
+      { heading: "VSロードエノルメと上位後の引き戻し", paragraphs: ["VSロードエノルメ勝利で純増約5.0枚/G・期待獲得約2000枚の上位ATへ。上位中もあこがれATTACKでゲーム数を決め、赤背景の上位キャラが1人以上出る流れをPUSHで表現します。", "上位終了後は必ずVSロードエノルメへ進み、敗北後は10Gの『あの星を堕とせ』へ。2段階合算の引き戻し60%超を代表60%として、最後までゲーム数をカウントして判定します。"] },
       { heading: "設定1〜6の公開値を反映", bullets: ["設定1：CZ約1/357.0・AT約1/436.3・出玉率97.6%", "設定4：CZ約1/273.3・AT約1/352.4・出玉率105.0%", "設定6：CZ約1/235.4・AT約1/305.7・出玉率112.0%", "非公表の特化ゾーン・上位到達率には設定差を加えない"] },
       { heading: "固定レートと収支の条件", bullets: ["約31.4G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均AT投資目安は約15,100円", "コイン単価は設定1の参考値約3.2円として表示", "19,000枚到達時はコンプリート表示"] }
     ],
-    sources: [["ニューギン公式 機種サイト", "https://www.newgin.co.jp/products/lmahoako/"], ["ニューギン開発者Q&A", "https://www.newgin.co.jp/devfaq/faq_category/lmahoako/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10563"], ["パチ＆スロ必勝本 機種情報", "https://p.hisshobon.jp/vpage/2818/1"]]
+    sources: [["ニューギン公式 機種サイト", "https://www.newgin.co.jp/products/lmahoako/"], ["ニューギン開発者Q&A", "https://www.newgin.co.jp/devfaq/faq_category/lmahoako/"], ["一撃 BONUS抽選・4種類比率", "https://1geki.jp/slot/l_mahoako/49/"], ["一撃 まほあこラッシュ解析", "https://1geki.jp/slot/l_mahoako/81/"], ["一撃 あこがれATTACK解析", "https://1geki.jp/slot/l_mahoako/83/"], ["一撃 VSロードエノルメ解析", "https://1geki.jp/slot/l_mahoako/93/"], ["一撃 上位AT・引き戻し解析", "https://1geki.jp/slot/l_mahoako/95/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10563"]]
   },
   "uminchu-slot": {
     order: 0.9, type: "slot", theme: "aqua", year: "2026年10月", maker: "岡崎産業", updated: "2026-10-31",
@@ -4052,6 +4055,12 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
       bestFor: ["エヴァ約41%・ゴジラ約64%のAT当落を分けて試したい", "PUSHで10倍上乗せのゲーム数を開きたい", "4G決戦と100G以上のG覚醒RUSHを体験したい"],
       check: ["BONUS比率と通常AT中の各ルート出現率は体験用代表値", "決戦カイザーギドラ突破期待度は約66%", "G覚醒RUSH終了後は4G決戦と50G引き戻しを表示"],
       compare: [["ggo-slot", "スマスロ GGO", "BONUSからSTへ進む機種と比較"], ["garo-yami-slot", "スマスロ 牙狼", "高純増の上位ループ型と比較"]]
+    },
+    "mahoako-slot": {
+      verdict: "3種類のCZと4種類のBONUSを入口に、3GのあこがれATTACK、3種類の特化ゾーン、無限AT、2段階の上位引き戻しまで進むゲーム数上乗せ型です。",
+      bestFor: ["CZとBONUSが並行する入口を試したい", "PUSHで特化ゾーンと上乗せGを開きたい", "純増約5.0枚/Gの上位ATと引き戻しを体験したい"],
+      check: ["BONUS4種類の比率は公開値を使用", "CZ内訳とREGからのAT率は全体初当りへ合わせる代表値", "上位終了後はVSロードエノルメと10Gの引き戻しを表示"],
+      compare: [["godzilla-eva2-slot", "スマスロ ゴジエヴァ2", "高純増ゲーム数管理ATと比較"], ["ggo-slot", "スマスロ GGO", "BONUS・ST型との違いを比較"]]
     }
   };
 
@@ -4138,6 +4147,11 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
 // Keep this final cleanup after every enrichment pass so page copy and gameplay
 // both use the same title-specific model.
 (() => {
-  const sim = window.ICHIGEKI_MACHINES["godzilla-eva2-slot"]?.sim;
-  if (sim?.godzillaEva2Flow) delete sim.cycleFlow;
+  const godzillaEva2 = window.ICHIGEKI_MACHINES["godzilla-eva2-slot"]?.sim;
+  if (godzillaEva2?.godzillaEva2Flow) delete godzillaEva2.cycleFlow;
+  const mahoako = window.ICHIGEKI_MACHINES["mahoako-slot"]?.sim;
+  if (mahoako?.mahoakoFlow) {
+    delete mahoako.cycleFlow;
+    mahoako.rankingVersion = "v6";
+  }
 })();
