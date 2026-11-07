@@ -9,8 +9,8 @@ vm.runInContext(source, sandbox);
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
 const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
-const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow);
-const expectedProfiles = { battle: 8, st: 2, heaven: 4, bonus: 8, addon: 12 };
+const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow || machine.sim?.godEaterFlow);
+const expectedProfiles = { battle: 7, st: 2, heaven: 4, bonus: 8, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -49,14 +49,14 @@ for (const [slug, machine] of declarativeFlows) {
 }
 
 if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
-if (declarativeFlows.length !== 34) errors.push(`expected 34 declarative dedicated flows, found ${declarativeFlows.length}`);
+if (declarativeFlows.length !== 33) errors.push(`expected 33 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(specializedFlows);
-if (specializedFlows.length !== 13 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"]) {
-  errors.push(`expected thirteen specialized flows including Darling in the Franxx, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (specializedFlows.length !== 14 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"]) {
+  errors.push(`expected fourteen specialized flows including God Eater Resurrection, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
   const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
@@ -165,6 +165,15 @@ if (specializedFlows.length !== 13 || !dedicatedMap["tokyo-ghoul-slot"] || !dedi
   if (!Array.isArray(darlingSim.darlingBeatLevels) || darlingSim.darlingBeatLevels.length !== 3) errors.push("darling-in-the-franxx-slot: Hiyoku BEATS levels are incomplete");
   if (Number(darlingSim.darlingHighBaseGames) !== 10 || Number(darlingSim.darlingHighBonusRate) !== 10.4 || Number(darlingSim.darlingHighMaxGames) !== 30) errors.push("darling-in-the-franxx-slot: bonus high-probability model is incorrect");
   if (Number(darlingSim.base50) !== 30.8 || Number(darlingSim.atPureIncrease) !== 5 || !darlingSim.settingRates || Object.keys(darlingSim.settingRates).length !== 6) errors.push("darling-in-the-franxx-slot: base, pure increase, or setting rates are incomplete");
+  const godEater = dedicatedMap["god-eater-resurrection"];
+  const godEaterSim = godEater.sim;
+  if (godEaterSim.cycleFlow || godEaterSim.titleFlow) errors.push("god-eater-resurrection: legacy reusable flow still exists");
+  if (!Array.isArray(godEaterSim.godEaterEnemies) || godEaterSim.godEaterEnemies.length !== 8) errors.push("god-eater-resurrection: Aragami opponents are incomplete");
+  if (!Array.isArray(godEaterSim.godEaterRewards) || godEaterSim.godEaterRewards.length !== 6) errors.push("god-eater-resurrection: devour rewards are incomplete");
+  if (!Array.isArray(godEaterSim.godEaterGateOutcomes) || godEaterSim.godEaterGateOutcomes.length !== 3) errors.push("god-eater-resurrection: Resurrection Gate outcomes are incomplete");
+  if (Number(godEaterSim.godEaterBattleGames) !== 25 || Number(godEaterSim.godEaterBattleChance) !== 0.76 || Number(godEaterSim.godEaterHannibalGames) !== 50 || Number(godEaterSim.godEaterHannibalSuccess) !== 0.75) errors.push("god-eater-resurrection: battle model is incorrect");
+  if (Number(godEaterSim.godEaterGateBaseGames) !== 50 || Number(godEaterSim.godEaterGateMaxGames) !== 99 || Number(godEaterSim.godEaterUpperBattleChance) !== 0.84 || Number(godEaterSim.godEaterKamiochiContinue) !== 0.90) errors.push("god-eater-resurrection: upper route is incorrect");
+  if (Number(godEaterSim.base50) !== 31 || Number(godEaterSim.atPureIncrease) !== 9 || !godEaterSim.settingRates || Object.keys(godEaterSim.settingRates).length !== 6) errors.push("god-eater-resurrection: base, pure increase, or setting rates are incomplete");
 }
 
 if (process.argv.includes("--verbose")) console.table(rows);

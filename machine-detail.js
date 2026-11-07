@@ -1139,6 +1139,15 @@
         cards.splice(4, 0, ["BALANCE MODEL", "専用フローの抽選目安", `${profileNames[titleFlow.profile] || "機種専用型"}として、AT突入後は平均約${Number(titleFlow.balance.averageRounds).toFixed(1)}区間進行します。通常フローから${sim.upperLabel}へ到達する代表目安は約${percent(titleFlow.balance.upperRoute)}です。公開値と機種別の代表値から計算した比較用の目安で、実戦結果を保証するものではありません。`]);
       }
       note = `${cycle.label || sim.mainLabel}の区間順序、代表報酬、継続判定を${titleFlow ? "機種専用フローで" : "個別に"}表示する体験モデルです。成立役別抽選、内部状態、全報酬振り分けは短時間で比較できる形へ簡略化しています。`;
+    } else if (sim.godEaterFlow) {
+      cards = [
+        ["GAME FLOW", "ゲーム性", "AT初回は100枚のストーリーを消化し、25G＋αのアラガミ交戦へ進みます。討伐成功後は『神を喰らえ』で次セットの規定枚数を決め、交戦敗北までループします。"],
+        ["BATTLE", "アラガミ交戦", "平均勝利期待度は約76%。対戦相手ごとにチャンス目・チェリー・スイカなどの弱点役が異なり、結合崩壊がある交戦は体験モデル上の勝率を上げています。"],
+        ["REWARD", "捕喰報酬・上乗せ", "討伐後の『神を喰らえ』は最低200枚。壱式・ミズチ・パニッシャー・ベンディガー・金ノ咢・漆黒リンドウを分け、OVERKILL時は『神機覚醒』として510枚以上の代表報酬を抽選します。"],
+        ["ENTRY / ZONE", "初当り・救済ゾーン", `AT初当りは設定${slotBaselineSetting}基準で約1/${sim.mainRate}です。通常時の規定ゲーム数や内部状態は初当り確率へまとめ、逆鱗ハンニバル敗北時のみ次回100Gゾーン濃厚を専用表示します。`],
+        ["UPPER", "上位ルート", "AT獲得1,000枚以降は逆鱗ハンニバルを抽選。約75%の交戦を突破すると50〜99Gのリザレクションゲートへ進み、主人公覚醒は勝利期待度約84%の『漆黒の捕喰者』、リンドウ覚醒は継続期待度約90%の『神堕』へ移行します。"]
+      ];
+      note = "純増、主要ゲーム数、交戦・上位の公開期待度、最低報酬を優先しています。敵選択率、報酬振り分け、結合崩壊・OVERKILL・覚醒分岐は短時間でゲーム性を比較するための代表値です。";
     } else {
       const upperRouteRate = Math.max(0, Number(sim.upperChance) || 0);
       const upperSuccessRate = Math.max(0, Number(sim.upperSuccess) || 0);
@@ -1361,7 +1370,7 @@
       const averageInvestment = Math.round((machine.sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
-      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow;
+      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow;
       const settingModelLabel = machine.sim.settingRates
         ? hasDedicatedFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
         : hasDedicatedFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
@@ -1447,7 +1456,7 @@
         ? Math.max(1, mainRate * sim.triggerRate / sim.mainRate)
         : Math.max(1, sim.triggerRate * profile.rate);
     const publishedEntry = Number(publishedSetting?.entry);
-    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow
+    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow
       ? Math.max(0, Math.min(1, Number(sim.triggerSuccess) || 0.55))
       : sim.godzillaEva2Flow || sim.mahoakoFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.shinEvaFlow
       ? 1
@@ -1463,7 +1472,7 @@
       ? Math.min(0.98, Number(publishedSetting.upper))
       : hasPublishedSettingRates ? sim.upperChance : Math.min(0.98, sim.upperChance + profile.upper);
     const settingModelLabel = hasPublishedTriggerRate && hasPublishedMainRate
-      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.darlingFranxxFlow ? "公開設定別値（CZ・BONUS・高確初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
+      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.darlingFranxxFlow ? "公開設定別値（CZ・BONUS・高確初当り）" : sim.godEaterFlow ? "公開設定別値（AT初当り・機種専用進行）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
       : hasPublishedMainRate
         ? sim.bofuriFlow ? "公開設定別値（BONUS初当り）＋機種専用進行" : "公開設定別値（初当り）＋CZ簡易換算"
         : "サイト共通補正モデル";
@@ -1688,6 +1697,16 @@
     let darlingMaxBeatLevel = 0;
     let darlingTakeouts = 0;
     let darlingClimaxx = false;
+    let godEaterBattles = 0;
+    let godEaterWins = 0;
+    let godEaterRewards = 0;
+    let godEaterOverkills = 0;
+    let godEaterBondBreaks = 0;
+    let godEaterHannibal = false;
+    let godEaterHannibalWon = false;
+    let godEaterGateGames = 0;
+    let godEaterUpperMode = "";
+    let godEaterUpperLoops = 0;
     if (sim.basiliskTenzenFlow) {
       basiliskBc = weighted(sim.basiliskBcTypes || [[{ key: "hetero", label: "異色BC", games: 16, award: 30 }, 1]]);
       triggerSucceeded = true;
@@ -2731,6 +2750,112 @@
             flow.push(`通常バジリスクタイム 1セット・+${yen.format(fallbackAward)}枚`);
           }
         }
+        basePayout = payout - entryPayout;
+      } else if (sim.godEaterFlow) {
+        payout = entryPayout;
+        basePayout = 0;
+        const awardCoins = amount => {
+          const award = Math.max(0, Math.min(Math.round(Number(amount) || 0), SLOT_COMPLETE_LIMIT - payout));
+          payout += award;
+          return award;
+        };
+        const firstAward = awardCoins(100);
+        atGamesTotal += Math.max(1, Math.round(firstAward / Math.max(0.1, Number(sim.atPureIncrease) || 9)));
+        atEvents.push({ kind: "god-eater-start", label: sim.mainLabel, games: Math.max(1, Math.round(firstAward / 9)), award: firstAward, cumulative: payout });
+        flow.push(`${sim.mainLabel} 初回ストーリー +${firstAward}枚`);
+        let storyAward = firstAward;
+        let hannibalResolved = false;
+
+        for (let battle = 1; battle <= (Number(sim.godEaterMaxBattles) || 10) && payout < SLOT_COMPLETE_LIMIT; battle += 1) {
+          const storyGames = Math.max(1, Math.round(storyAward / Math.max(0.1, Number(sim.atPureIncrease) || 9)));
+          if (battle > 1) {
+            atGamesTotal += storyGames;
+            atEvents.push({ kind: "god-eater-story", label: "ストーリーパート", games: storyGames, storyAward, battle, cumulative: payout });
+          }
+          const bondBreak = Math.random() < (Number(sim.godEaterBondBreakChance) || 0.28);
+          if (bondBreak) godEaterBondBreaks += 1;
+          const enemy = weighted(sim.godEaterEnemies || [[{ label: "ハンニバル", weak: "チャンス目", chance: 0.76 }, 1]]);
+          const chance = Math.min(0.98, Math.max(0.01, Number(enemy.chance) || 0.76) + (bondBreak ? 0.08 : 0));
+          const won = Math.random() < chance;
+          godEaterBattles += 1;
+          if (won) godEaterWins += 1;
+          atGamesTotal += Number(sim.godEaterBattleGames) || 25;
+          atEvents.push({ kind: "god-eater-battle", label: enemy.label, enemy: enemy.label, weak: enemy.weak, games: Number(sim.godEaterBattleGames) || 25, battle, chance: chance * 100, bondBreak, won, cumulative: payout });
+          flow.push(`アラガミ交戦 ${enemy.label}・${won ? "討伐成功" : "敗北"}`);
+          if (!won) {
+            atEvents.push({ kind: "god-eater-end", label: "アラガミバースト終了", games: 3, cumulative: payout });
+            break;
+          }
+
+          const overkill = Math.random() < (Number(sim.godEaterOverkillChance) || 0.16);
+          const reward = weighted(sim.godEaterRewards || [[{ key: "type-1", label: "壱式", payout: 200 }, 1]]);
+          const rewardAmount = overkill ? Number(weighted(sim.godEaterAwakenRewards || [[510, 1]])) || 510 : Number(reward.payout) || 200;
+          const rewardAward = awardCoins(rewardAmount);
+          godEaterRewards += 1;
+          if (overkill) godEaterOverkills += 1;
+          addOnCount += 1;
+          addOnTotal += rewardAward;
+          coinAddOnCount += 1;
+          coinAddOnTotal += rewardAward;
+          atGamesTotal += 1;
+          storyAward = rewardAward;
+          atEvents.push({ kind: "god-eater-reward", label: overkill ? "神機覚醒" : reward.label, rewardType: overkill ? "overkill" : reward.key, games: 1, award: rewardAward, cumulative: payout, overkill });
+          flow.push(`${overkill ? "OVERKILL・神機覚醒" : `神を喰らえ ${reward.label}`} +${rewardAward}枚`);
+
+          if (!hannibalResolved && payout >= (Number(sim.godEaterHannibalThreshold) || 1000) && Math.random() < (Number(sim.godEaterHannibalChance) || 0.45)) {
+            hannibalResolved = true;
+            godEaterHannibal = true;
+            const usedGames = randomInt(1, Number(sim.godEaterHannibalGames) || 50);
+            const hannibalWon = Math.random() < (Number(sim.godEaterHannibalSuccess) || 0.75);
+            godEaterHannibalWon = hannibalWon;
+            atGamesTotal += usedGames;
+            atEvents.push({ kind: "god-eater-hannibal", label: "逆鱗ハンニバル", games: usedGames, limitGames: Number(sim.godEaterHannibalGames) || 50, chance: (Number(sim.godEaterHannibalSuccess) || 0.75) * 100, won: hannibalWon, cumulative: payout });
+            flow.push(`逆鱗ハンニバル ${hannibalWon ? `${usedGames}Gで撃破` : "敗北・次回100Gゾーン濃厚"}`);
+            if (!hannibalWon) {
+              atEvents.push({ kind: "god-eater-return-zone", label: "100Gゾーン", games: 100, cumulative: payout });
+              break;
+            }
+
+            godEaterGateGames = Math.min(Number(sim.godEaterGateMaxGames) || 99, (Number(sim.godEaterGateBaseGames) || 50) + Math.max(0, (Number(sim.godEaterHannibalGames) || 50) - usedGames));
+            const gateOutcome = weighted(sim.godEaterGateOutcomes || [[{ key: "yu", label: "主人公覚醒", upper: "漆黒の捕喰者" }, 1]]);
+            atGamesTotal += godEaterGateGames;
+            atEvents.push({ kind: "god-eater-gate", label: "リザレクションゲート", games: godEaterGateGames, outcome: gateOutcome.key, outcomeLabel: gateOutcome.label, upperMode: gateOutcome.upper, cumulative: payout });
+            if (!gateOutcome.upper) break;
+
+            upper = true;
+            godEaterUpperMode = gateOutcome.upper;
+            if (gateOutcome.key === "lindow") {
+              for (let loop = 1; loop <= (Number(sim.godEaterKamiochiMaxLoops) || 12) && payout < SLOT_COMPLETE_LIMIT; loop += 1) {
+                const continued = loop === 1 || Math.random() < (Number(sim.godEaterKamiochiContinue) || 0.90);
+                if (!continued) {
+                  atEvents.push({ kind: "god-eater-kamiochi-end", label: "神堕終了", games: 3, loop, cumulative: payout });
+                  break;
+                }
+                const kamiochiAward = awardCoins(Number(weighted([[510, 0.64], [700, 0.22], [1000, 0.11], [1500, 0.03]])) || 510);
+                godEaterUpperLoops = loop;
+                upperLoops = loop;
+                upperPayoutTotal += kamiochiAward;
+                atGamesTotal += Math.max(1, Math.round(kamiochiAward / 9));
+                atEvents.push({ kind: "god-eater-kamiochi", label: "神堕", games: Math.max(1, Math.round(kamiochiAward / 9)), loop, chance: (Number(sim.godEaterKamiochiContinue) || 0.90) * 100, award: kamiochiAward, cumulative: payout });
+              }
+            } else {
+              for (let loop = 1; loop <= (Number(sim.godEaterUpperMaxBattles) || 12) && payout < SLOT_COMPLETE_LIMIT; loop += 1) {
+                const upperEnemy = weighted(sim.godEaterEnemies || [[{ label: "ハンニバル", weak: "チャンス目" }, 1]]);
+                const wonUpper = Math.random() < (Number(sim.godEaterUpperBattleChance) || 0.84);
+                const upperReward = wonUpper ? awardCoins(Number(weighted([[200, 0.45], [300, 0.25], [400, 0.16], [510, 0.10], [700, 0.04]])) || 200) : 0;
+                godEaterUpperLoops = loop;
+                upperLoops = loop;
+                upperPayoutTotal += upperReward;
+                atGamesTotal += Number(sim.godEaterBattleGames) || 25;
+                atEvents.push({ kind: "god-eater-upper-battle", label: "漆黒の捕喰者", enemy: upperEnemy.label, weak: upperEnemy.weak, games: Number(sim.godEaterBattleGames) || 25, loop, chance: (Number(sim.godEaterUpperBattleChance) || 0.84) * 100, won: wonUpper, award: upperReward, cumulative: payout });
+                if (!wonUpper) break;
+              }
+            }
+            break;
+          }
+        }
+        cycleRounds = godEaterBattles;
+        cycleContinues = godEaterWins;
         basePayout = payout - entryPayout;
       } else if (sim.darlingFranxxFlow) {
         basePayout = 0;
@@ -4696,6 +4821,8 @@
       ? sim.upperLabel
       : sim.bofuriFlow
       ? sim.upperLabel
+      : sim.godEaterFlow
+      ? (godEaterUpperMode || sim.upperLabel)
       : kabaneriUpperMode || sim.upperLabel;
     const resultLabel = complete ? "コンプリート" : upper ? upperResultLabel : entered ? sim.mainLabel : entryBonus ? `${entryBonus.label}終了` : `${sim.triggerLabel}失敗`;
     const atGameTimeline = atEvents.map(event => Math.max(1, Number(event.games) || 1));
@@ -4729,10 +4856,11 @@
     const magiaStats = sim.magiaRecordFlow ? [["初当りBONUS", magiaBonus?.label || sim.triggerLabel], ["マギアアタック", `+${yen.format(magiaAttackTotal)}G`], ["ストーリー", `${magiaStoryCount}/8話（SP ${magiaSpecialStories}回）`], ["コネクトチャンス", `${magiaConnectAttempts}回・成功${magiaConnectWins}回`], ["コネクト上乗せ", `+${yen.format(magiaConnectGames)}G`], ["決戦神浜聖女", `${magiaBattleRewards}回`], ["マギアBONUS", `${magiaBonusRewards}回`], [sim.upperLabel, magiaUpperSections ? "到達" : "非到達"]] : [];
     const toaruStats = sim.toaruIndex2Flow ? [["今回の入口", toaruEntry?.label || sim.triggerLabel], ["バトル", `${toaruBattles}戦・勝利${toaruBattleWins}回`], ["とある運命の上乗遊技", `${toaruChargeCount}回・+${yen.format(toaruChargeGames)}G`], ["PLUS ACTION", `${toaruPlusActionCount}回・+${yen.format(toaruPlusActionGames)}G`], [sim.upperChallenge, toaruFiammaAttempts ? `${toaruFiammaAttempts}回・成功${toaruFiammaWins}回` : "未到達"], [sim.upperLabel, toaruFiammaWins ? "到達" : "非到達"]] : [];
     const darlingStats = sim.darlingFranxxFlow ? [["今回の入口", darlingEntry?.label || sim.triggerLabel], ["初当りBONUS", darlingInitialBonus?.label || "非当選"], ["高確中BONUS", `${darlingHighBonuses}回（フランクス${darlingFranxxBonuses}回）`], ["BONUS獲得", `+${yen.format(darlingBonusAwards)}枚`], ["比翼BEATS", `${darlingBeatEntries}回・+${yen.format(darlingBeatAdds)}G`], ["最高Beatレベル", darlingMaxBeatLevel ? `Lv.${darlingMaxBeatLevel === 3 ? "MAXX" : darlingMaxBeatLevel}` : "非到達"], ["連れ出し", darlingTakeouts ? `${darlingTakeouts}回` : "非当選"], ["CLIMAXX", darlingClimaxx ? "到達" : "非到達"]] : [];
+    const godEaterStats = sim.godEaterFlow ? [["アラガミ交戦", `${godEaterBattles}戦・討伐${godEaterWins}回`], ["結合崩壊", `${godEaterBondBreaks}回`], ["捕喰報酬", `${godEaterRewards}回`], ["神機覚醒", godEaterOverkills ? `${godEaterOverkills}回` : "非当選"], ["逆鱗ハンニバル", godEaterHannibal ? (godEaterHannibalWon ? "撃破" : "敗北・次回100Gゾーン濃厚") : "未到達"], ["リザレクションゲート", godEaterGateGames ? `${godEaterGateGames}G` : "未到達"], ["上位AT", godEaterUpperMode ? `${godEaterUpperMode}・${godEaterUpperLoops}回` : "非到達"]] : [];
     const cycleStats = sim.cycleFlow ? [[sim.cycleFlow.statLabel || (sim.titleFlow ? "機種専用進行" : "専用ループ"), `${cycleRounds}回・継続${cycleContinues}回`]] : [];
     const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
     const rushGamesTotal = Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
-    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
+    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
     const gameAddOnStats = sim.karakuriJudgeFlow || coinAddOnCount
       ? [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(coinAddOnTotal || addOnTotal)}枚` : "上乗せなし"]]
       : [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnGamesTotal || otomeAddedGames)}G` : "上乗せなし"]];
@@ -4777,6 +4905,8 @@
         ? [["CZ・AT・引き戻し消化", `${yen.format(rushGamesTotal)}G相当`], ...toaruStats]
       : sim.darlingFranxxFlow
         ? [["CZ・BONUS高確消化", `${yen.format(rushGamesTotal)}G相当`], ...darlingStats]
+      : sim.godEaterFlow
+        ? [["AT・交戦・上位消化", `${yen.format(rushGamesTotal)}G相当`], ...godEaterStats]
       : [["RUSH消化モデル", `${yen.format(rushGamesTotal)}G相当`], ...karakuriStats, ...battleStats, ...sgStats, ...kabaneriStats, ...otomeStats, ...cycleStats, ...gameAddOnStats, ...bonusStats, ...genericSpecialStats, ["上位AT", upper ? (kabaneriUpperMode || `${sim.upperLabel} ${upperLoops}セット`) : "非到達"]]) : [];
     const stats = [["今回の設定", `設定${setting}`], ["設定差モデル", settingModelLabel], ["今回のゲーム数", `${yen.format(games)}G`], ...settingRateStats, ["現金投資目安", `${yen.format(investment)}円`], ...entryBonusStats, ...atStats, ["獲得枚数", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]];
     if (complete) stats.unshift(["到達状態", "コンプリート"]);
@@ -4791,6 +4921,8 @@
         ? `今回の設定は設定${setting}。${games}Gで${toaruEntry?.label || sim.triggerLabel}、${entered ? `バトル${toaruBattles}戦・勝利${toaruBattleWins}回、とある運命の上乗遊技${toaruChargeCount}回・PLUS ACTION ${toaruPlusActionCount}回で${yen.format(payout)}枚を獲得しました。${toaruFiammaWins ? "フィアンマBATTLEを突破し、幻想殺しRUSHへ再突入しました。" : "幻想殺しRUSHは残り0Gで終了しました。"}` : "CZは突破できませんでした。"}`
       : sim.darlingFranxxFlow
         ? `今回の設定は設定${setting}。${games}Gで${darlingEntry?.label || sim.triggerLabel}、${triggerSucceeded ? `${darlingInitialBonus?.label || "初当りBONUS"}から高確中BONUS ${darlingHighBonuses}回・比翼BEATS ${darlingBeatEntries}回で${yen.format(payout)}枚を獲得しました。${darlingClimaxx ? "高確ゲーム数30GのCLIMAXXへ到達しました。" : entered ? "ボーナス高確は残り0Gで終了しました。" : "初当りBONUSで終了しました。"}` : "CZは突破できませんでした。"}`
+      : sim.godEaterFlow
+        ? `今回の設定は設定${setting}。${games}Gでアラガミバースト、アラガミ交戦${godEaterBattles}戦・討伐${godEaterWins}回、捕喰報酬${godEaterRewards}回で${yen.format(payout)}枚を獲得しました。${godEaterUpperMode ? `${godEaterUpperMode}へ到達し、${godEaterUpperLoops}回消化しました。` : godEaterHannibal ? (godEaterHannibalWon ? "リザレクションゲートで覚醒には届きませんでした。" : "逆鱗ハンニバル敗北で、次回100Gゾーン濃厚です。") : "上位ルートには届きませんでした。"}`
       : sim.okidokiGoldFlow
         ? `今回の設定は設定${setting}。${games}Gでハイビスカス点灯、最大${okidokiMaxChain}連・BIG ${okidokiBigCount}回・REG ${okidokiRegCount}回で${yen.format(payout)}枚を獲得しました。最高内部モードは${okidokiHighestMode}です。`
       : sim.uminchuFlow
@@ -5491,6 +5623,7 @@
     const magiaRecordFlow = Boolean(machine.sim.magiaRecordFlow);
     const toaruIndex2Flow = Boolean(machine.sim.toaruIndex2Flow);
     const darlingFranxxFlow = Boolean(machine.sim.darlingFranxxFlow);
+    const godEaterFlow = Boolean(machine.sim.godEaterFlow);
     setSlotAtStatus({ visible: false });
     setExperienceHud("0G", "0円", "0枚");
     setExperienceStage(0, experienceProfile.system, "通常ゲーム中", "0G", `${data.hitLabel}を目指して抽選中`, "normal", data.hitChance, "1Gごとの契機当選率");
@@ -5503,7 +5636,86 @@
     }
     if (runId !== experienceRunId) return;
     setExperienceStage(1, magiaRecordFlow ? "BONUS HIT" : bofuriFlow ? "HIGH PROBABILITY ZONE" : okidokiGoldFlow ? "HIBISCUS LIGHT" : uminchuFlow ? "BONUS HIT" : basiliskTenzenFlow ? "BASILISK CHANCE" : sao2Flow ? "SQUADRON BATTLE" : symphogearSeigiFlow ? "AXZ BATTLE" : lycorisFlow ? (data.lycorisCz?.key === "direct" ? "DIRECT RUSH" : "CHANCE ZONE") : aobutaFlow ? "SEISHUN BONUS" : tentenFlow ? "EPISODE BATTLE" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "DIRECT AT" : "CHANCE ZONE") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "DIRECT AT" : data.assaultEntry?.key === "bouquet" ? "BOUQUET BONUS" : "LILY CHALLENGE") : kaguyaFlow ? "LOVE BRAIN BATTLE" : dumbbellFlow ? "MUSCLE ZONE" : shinEvaFlow ? "INITIAL HIT" : tokyoGhoulFlow ? "CHANCE ZONE" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", basiliskTenzenFlow ? (data.basiliskBc?.label || data.hitLabel) : tokyoGhoulFlow ? (data.tokyoGhoulCz?.label || data.hitLabel) : lycorisFlow ? (data.lycorisCz?.label || data.hitLabel) : goblinSlayerFlow ? (data.goblinCz?.label || data.hitLabel) : assaultLilyFlow ? (data.assaultEntry?.label || data.hitLabel) : data.hitLabel, `${yen.format(data.attempts)}G`, magiaRecordFlow ? "初当りBONUSを消化し、最後のPUSHでマギアラッシュを判定" : bofuriFlow ? "高確率ZONEを進め、最後のPUSHでBONUSを判定" : okidokiGoldFlow ? "ハイビスカス点灯・初当りBONUS確定" : basiliskTenzenFlow ? `${data.basiliskBc?.games || 16}GのBCでバジリスクタイムを抽選` : sao2Flow ? "スコードロンバトルの最後にPUSHでBoB突入を判定" : symphogearSeigiFlow ? "AXZバトルを進め、最後のPUSHでAXZラッシュを判定" : lycorisFlow ? (data.lycorisCz?.key === "direct" ? "アフターエピソードからRUSHへ直行" : `${data.lycorisCz?.games || 10}GのCZを進め、最後のPUSHでRUSHを判定`) : aobutaFlow ? "青春BONUS後は必ず4セット＋αの完走型STへ" : tokyoGhoulFlow ? "8GのCZを進め、最後のPUSHで東京喰種咬を判定" : uminchuFlow ? "告知音とともに初当りBONUSへ" : tentenFlow ? "10GのレベルUPパートと4Gのバトルへ" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "規定ゲーム数からAT直撃" : "CZの専用ゲーム数を進めて最後にPUSH") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "規定ゲーム数・レア役などからRUSH直撃" : data.assaultEntry?.key === "bouquet" ? "25GのBONUS後にRUSHを判定" : "10Gの専用CZを進めて最後にPUSH") : kaguyaFlow ? "恋愛頭脳戦を経て15G＋αのCZへ" : dumbbellFlow ? "10Gの前半パートから後半発展を目指します" : shinEvaFlow ? "3GのEVANGELION IMPACTで作戦を決定します" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
+    if (godEaterFlow) {
+      setExperienceStage(1, "AT HIT", "アラガミバースト", `${yen.format(data.attempts)}G`, "初回ストーリー100枚からアラガミ交戦へ", "hit", 100, "AT初当り");
+    }
     await waitForExperience(780);
+    if (godEaterFlow) {
+      const events = Array.isArray(data.atEvents) ? data.atEvents : [];
+      for (const event of events) {
+        if (runId !== experienceRunId) return;
+        setSlotAtStatus({ visible: true, remaining: Math.max(0, Number(event.games) || 0), addOn: event.kind === "god-eater-reward" || event.kind === "god-eater-upper-battle" || event.kind === "god-eater-kamiochi" ? Number(event.award) || 0 : 0, total: Number(event.cumulative) || 0 });
+        if (event.kind === "god-eater-start") {
+          const startComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 11), "G", "ARAGAMI BURST", "初回ストーリー", "純増約9.0枚/Gで100枚を獲得", 100, `獲得 +${yen.format(event.award)}枚`, runId);
+          if (!startComplete) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+        } else if (event.kind === "god-eater-story") {
+          const storyComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 22), "G", "STORY PART", `ストーリー ${event.battle}`, "規定枚数消化・フェンリルポイントを抽選", 100, `${yen.format(event.storyAward)}枚区間`, runId);
+          if (!storyComplete) return;
+        } else if (event.kind === "god-eater-battle") {
+          const battleComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 25), "G", "ARAGAMI BATTLE", event.enemy, `弱点役 ${event.weak}${event.bondBreak ? "・結合崩壊あり" : ""}`, Number(event.chance) || 76, `討伐期待度 約${Math.round(Number(event.chance) || 76)}%`, runId);
+          if (!battleComplete) return;
+          setExperienceStage(3, "ARAGAMI FINAL JUDGE", event.enemy, "PUSH", "討伐の当落を開きます", "judge", Number(event.chance) || 76, event.bondBreak ? "結合崩壊ストックあり" : `弱点役 ${event.weak}`);
+          await waitForExperienceAction("アラガミ交戦 PUSH", 5000, event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, "BATTLE RESULT", event.won ? "アラガミ討伐" : "討伐失敗", event.won ? "神を喰らえ" : "AT終了", event.won ? "報酬決定へ進みます" : `累計 ${yen.format(event.cumulative)}枚`, event.won ? "hit" : "end", event.won ? 100 : 0, `${event.enemy}戦 結果`);
+          await waitForExperience(850);
+        } else if (event.kind === "god-eater-reward") {
+          setExperienceStage(3, event.overkill ? "OVERKILL" : "DEVOUR REWARD", event.overkill ? "神機覚醒" : "神を喰らえ", "PUSH", "次のストーリー枚数を開きます", "judge", 100, event.overkill ? "強力報酬" : "最低200枚");
+          await waitForExperienceAction(event.overkill ? "神機覚醒 PUSH" : "神を喰らえ PUSH", 5000, event.overkill || Number(event.award) >= 510 ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setExperienceStage(3, "REWARD RESULT", event.label, `+${yen.format(event.award)}枚`, `累計 ${yen.format(event.cumulative)}枚`, event.overkill || Number(event.award) >= 510 ? "hyper" : "rush", 100, "次セットへ");
+          await waitForExperience(1000);
+        } else if (event.kind === "god-eater-hannibal") {
+          const hannibalComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 50), "G", "WRATH HANNIBAL", event.label, "上位ルートをかけた特殊交戦", Number(event.chance) || 75, `勝利期待度 約${Math.round(Number(event.chance) || 75)}%`, runId);
+          if (!hannibalComplete) return;
+          setExperienceStage(4, "HANNIBAL FINAL JUDGE", event.label, "PUSH", "リザレクションゲートの当落を開きます", "judge", Number(event.chance) || 75, "50G＋α");
+          await waitForExperienceAction("逆鱗ハンニバル PUSH", 5000, event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(4, "HANNIBAL RESULT", event.won ? "逆鱗ハンニバル撃破" : "交戦敗北", event.won ? "リザレクションゲート" : "次回100Gゾーン濃厚", event.won ? "覚醒を目指します" : "救済ゾーンを表示します", event.won ? "hyper" : "end", event.won ? 100 : 0, "特殊交戦結果");
+          await waitForExperience(950);
+        } else if (event.kind === "god-eater-gate") {
+          const gateComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 50), "G", "RESURRECTION GATE", event.label, "主人公・リンドウ覚醒を抽選", 88, `${event.games}G`, runId);
+          if (!gateComplete) return;
+          setExperienceStage(4, "AWAKENING JUDGE", event.label, "PUSH", "覚醒結果を開きます", "judge", 88, `${event.games}G消化`);
+          await waitForExperienceAction("覚醒 PUSH", 5000, event.upperMode ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(4, "GATE RESULT", event.outcomeLabel, event.upperMode || "覚醒非当選", event.upperMode ? "上位ATへ突入" : "AT終了", event.upperMode ? "hyper" : "end", event.upperMode ? 100 : 0, "リザレクションゲート結果");
+          await waitForExperience(1000);
+        } else if (event.kind === "god-eater-upper-battle") {
+          const upperComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 25), "G", "BLACK DEVOURER", `${event.enemy}・第${event.loop}戦`, `弱点役 ${event.weak}`, Number(event.chance) || 84, "勝利期待度 約84%", runId);
+          if (!upperComplete) return;
+          setExperienceStage(4, "UPPER FINAL JUDGE", "漆黒の捕喰者", "PUSH", "上位STの討伐結果を開きます", "judge", Number(event.chance) || 84, `${event.enemy}戦`);
+          await waitForExperienceAction("漆黒の捕喰者 PUSH", 5000, event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setExperienceStage(4, "UPPER RESULT", event.won ? "討伐成功" : "上位ST終了", event.won ? `+${yen.format(event.award)}枚` : "0G", event.won ? `累計 ${yen.format(event.cumulative)}枚` : "最終結果へ", event.won ? "hyper" : "end", event.won ? 100 : 0, "上位ST結果");
+          await waitForExperience(900);
+        } else if (event.kind === "god-eater-kamiochi") {
+          const kamiochiComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 57), "G", "KAMIOCHI", `神堕 LOOP ${event.loop}`, "最低510枚のプレミアムAT", Number(event.chance) || 90, "継続期待度 約90%", runId);
+          if (!kamiochiComplete) return;
+          setExperienceStage(4, "KAMIOCHI REWARD", "神堕", "PUSH", "獲得枚数を開きます", "judge", 100, `LOOP ${event.loop}`);
+          await waitForExperienceAction("神堕 PUSH", 5000, "gold");
+          if (runId !== experienceRunId) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setExperienceStage(4, "KAMIOCHI RESULT", `神堕 LOOP ${event.loop}`, `+${yen.format(event.award)}枚`, `累計 ${yen.format(event.cumulative)}枚`, "hyper", 100, "神堕報酬");
+          await waitForExperience(1000);
+        } else if (event.kind === "god-eater-return-zone") {
+          const returnComplete = await animateExperienceCounter(100, "G", "RETURN ZONE", "100Gゾーン", "逆鱗ハンニバル敗北時の救済", 100, "次回AT当選濃厚", runId);
+          if (!returnComplete) return;
+          setExperienceStage(4, "RETURN ZONE", "100Gゾーン到達", "AT当選濃厚", "今回の結果へ戻ります", "hit", 100, "救済ルート");
+          await waitForExperience(850);
+        } else if (event.kind === "god-eater-end" || event.kind === "god-eater-kamiochi-end") {
+          const endComplete = await animateExperienceCounter(3, "G", "LAST 3 GAMES", event.label, "残りゲーム数を0まで進めます", 0, `累計 ${yen.format(event.cumulative)}枚`, runId);
+          if (!endComplete) return;
+          setExperienceStage(4, "AT END", event.label, "0G", `累計 ${yen.format(event.cumulative)}枚・最終結果へ`, "end", 0, "消化完了");
+          await waitForExperience(700);
+        }
+      }
+      setSlotAtStatus({ visible: true, remaining: 0, addOn: Number(data.addOnTotal) || 0, total: Number(data.payout) || 0 });
+      return;
+    }
     if (darlingFranxxFlow) {
       const events = Array.isArray(data.atEvents) ? data.atEvents : [];
       for (const event of events) {
@@ -8017,8 +8229,8 @@
     else await playSlotExperience(result, runId);
     if (runId !== experienceRunId) return;
     addMachinePlaySessionResult(result);
-    if (result.experience.assaultLilyFlow && result.experience.entered) {
-      setSlotAtStatus({ visible: true, remaining: 0, remainingUnit: "枚", addOn: result.experience.coinAddOnTotal, total: result.payout });
+    if (result.experience.kind === "slot" && result.experience.entered) {
+      setSlotAtStatus({ visible: true, remaining: 0, remainingUnit: result.experience.assaultLilyFlow ? "枚" : "G", addOn: Number(result.experience.coinAddOnTotal) || Number(result.experience.addOnTotal) || 0, total: result.payout });
     }
     setExperienceStage(4, "FINAL RESULT", result.title, result.experience.finalValue || `${yen.format(result.payout)}${result.scoreKind === "coins" ? "枚" : "玉"}`, `今回の収支 ${result.balanceYen >= 0 ? "+" : ""}${yen.format(result.balanceYen)}円 / 今回の差${result.scoreKind === "coins" ? "枚" : "玉"} ${result.score >= 0 ? "+" : ""}${yen.format(result.score)}`, result.complete ? "complete" : result.experience.kind === "juggler" ? (result.score >= 0 ? "rush" : "end") : result.experience.upper ? "hyper" : result.experience.entered ? "rush" : "end", 100, "今回の最終結果");
     document.getElementById("machineExperienceSkip").hidden = true;

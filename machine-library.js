@@ -5246,6 +5246,43 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
 })();
 
 
+(function applyGodEaterResurrectionDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["god-eater-resurrection"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "25G＋αのアラガミ交戦を突破し、捕喰報酬と上位STをつなぐ討伐型AT。",
+    intro: "純増約9.0枚/Gのアラガミバーストで規定枚数を獲得し、25G＋αのアラガミ交戦へ。討伐後の『神を喰らえ』、OVERKILLの神機覚醒、逆鱗ハンニバル、リザレクションゲート、上位STまでを専用画面で体験できます。",
+    points: ["アラガミ交戦は25G＋α・平均勝利期待度約76%", "報酬『神を喰らえ』は最低200枚", "上位ST『漆黒の捕喰者』はバトル勝利期待度約84%"],
+    specs: [["AT初当り（設定1）", "約1/351.9"], ["アラガミバースト", "純増約9.0枚/G"], ["初回ストーリー", "100枚"], ["アラガミ交戦", "25G＋α"], ["交戦勝利期待度", "平均約76%"], ["神を喰らえ", "1G・最低200枚"], ["逆鱗ハンニバル", "50G＋α・勝利期待度約75%"], ["リザレクションゲート", "50〜99G"], ["漆黒の捕喰者", "勝利期待度約84%"], ["神堕", "継続期待度約90%"], ["ベース", "約31G/50枚"], ["設定", "1〜6ランダム"]],
+    articleSections: [
+      { heading: "ストーリーからアラガミ交戦へ", paragraphs: ["AT『アラガミバースト』は、規定枚数を獲得するストーリーパートと、25G＋αのアラガミ交戦で構成されます。初回ストーリーは100枚、以降は直前の報酬枚数を消化して交戦へ進みます。", "ストーリー中はリプレイ・レア役でフェンリルポイントを獲得し、MAX到達で結合崩壊ストックや枚数上乗せに期待できます。シミュレーターでは結合崩壊を交戦の勝率補助として表示します。"] },
+      { heading: "アラガミ交戦は敵ごとに弱点が違う", paragraphs: ["アラガミ交戦は25G＋αで、平均勝利期待度は約76%。ハンニバルはチャンス目、エンハンス・アラガミはチェリー、ヴィーナスはスイカなど、対戦相手ごとに有効役が異なります。", "専用画面では対戦相手と弱点役を表示し、25Gを進めた後のPUSHで討伐結果を開きます。結合崩壊ストックがある場合は、その有利さも当落画面へ反映します。"] },
+      { heading: "討伐報酬『神を喰らえ』", paragraphs: ["討伐成功後は1Gの報酬決定『神を喰らえ』へ進み、最低200枚を獲得します。壱式・ミズチ・パニッシャー・ベンディガー・金ノ咢・漆黒リンドウを段階別の報酬として表示します。", "OVERKILL時は強力な報酬決定『神機覚醒』へ。報酬種類やOVERKILL発生率など公表されていない細かな振り分けは、ゲーム性を体験するための代表値です。"] },
+      { heading: "1,000枚以降の逆鱗ハンニバル", paragraphs: ["AT獲得が1,000枚を超えると、50G＋αの逆鱗ハンニバルが選ばれる可能性があります。勝利期待度は約75%で、敗北時も次回ATの100Gゾーンが濃厚となる救済があります。", "勝利時は残りゲーム数を加えた50〜99Gのリザレクションゲートへ。主人公覚醒なら勝利期待度約84%の上位ST『漆黒の捕喰者』、リンドウ覚醒なら継続期待度約90%のプレミアムAT『神堕』へ進みます。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約31G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6を均等抽選し、AT初当りは公開設定別値を使用", "純増、主要ゲーム数、交戦・上位の公開期待度、最低報酬を優先", "敵選択率、報酬振り分け、結合崩壊・OVERKILL・上位分岐は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["山佐ネクスト 公式ガイドブック", "https://www.cdn.yamasa.jp/guide_book/ger_gb.pdf"], ["山佐ネクスト 公式機種サイト", "https://www1.yamasa.co.jp/rsgdet/"], ["一撃 機種解析", "https://1geki.jp/slot/l_godeater_r/"], ["なな徹 アラガミ交戦", "https://nana-press.com/kaiseki/machine/767/22726/"], ["なな徹 報酬パート", "https://nana-press.com/kaiseki/machine/767/22727/"], ["なな徹 逆鱗ハンニバル", "https://nana-press.com/kaiseki/machine/767/23323/"], ["なな徹 リザレクションゲート", "https://nana-press.com/kaiseki/machine/767/22728/"]],
+    readerGuide: { verdict: "100枚の初回ストーリーから25G＋αのアラガミ交戦へ入り、討伐報酬を積み重ねて上位STを目指す討伐ループ型です。", bestFor: ["対戦相手と弱点役を見ながら交戦したい", "討伐後のPUSHで報酬種類を開きたい", "逆鱗ハンニバルから上位STを狙いたい"], check: ["純増・主要ゲーム数・公開期待度・最低報酬を反映", "結合崩壊、OVERKILL、上位分岐を専用表示", "未公表の選択率・振り分けは体験用代表値"], compare: [["monster-hunter-rise-slot", "スマスロ モンハンライズ", "討伐報酬型ATと比較"], ["basilisk-tenzen-slot", "バジリスク天膳", "継続バトル型ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v16", dedicatedFlow: true, dedicatedFlowKey: "god-eater-resurrection", dedicatedFlowVersion: 2, godEaterFlow: true,
+    triggerLabel: "AT初当り", triggerRate: 351.9, triggerSuccess: 1, mainLabel: "アラガミバースト", mainRate: 351.9, base50: 31, coinUnit: 3.4, normalMin: 100, normalMax: 100, atPureIncrease: 9.0, atPayoutVariance: 0,
+    godEaterEnemies: [[{ key: "hannibal", label: "ハンニバル", weak: "チャンス目", chance: 0.76 }, 0.24], [{ key: "aether", label: "エンハンス・アラガミ", weak: "チェリー", chance: 0.75 }, 0.18], [{ key: "venus", label: "ヴィーナス", weak: "スイカ", chance: 0.75 }, 0.16], [{ key: "tsukuyomi", label: "ツクヨミ", weak: "7揃い", chance: 0.80 }, 0.14], [{ key: "caligula", label: "カリギュラ", weak: "チェリー", chance: 0.79 }, 0.11], [{ key: "tezcatlipoca", label: "テスカトリポカ", weak: "チェリー・スイカ", chance: 0.84 }, 0.08], [{ key: "deus-pita", label: "ディアウス・ピター", weak: "リプレイ以外", chance: 0.86 }, 0.07], [{ key: "amaterasu", label: "アマテラス", weak: "全役", chance: 0.90 }, 0.02]],
+    godEaterRewards: [[{ key: "type-1", label: "壱式", payout: 200 }, 0.42], [{ key: "mizuchi", label: "ミズチ", payout: 300 }, 0.25], [{ key: "punisher", label: "パニッシャー", payout: 400 }, 0.16], [{ key: "vendiger", label: "ベンディガー", payout: 510 }, 0.10], [{ key: "golden-jaw", label: "金ノ咢", payout: 700 }, 0.05], [{ key: "black-lindow", label: "漆黒リンドウ", payout: 1000 }, 0.02]],
+    godEaterAwakenRewards: [[510, 0.55], [700, 0.28], [1000, 0.14], [1500, 0.03]],
+    godEaterBattleGames: 25, godEaterBattleChance: 0.76, godEaterBondBreakChance: 0.28, godEaterOverkillChance: 0.16, godEaterMaxBattles: 10,
+    godEaterHannibalThreshold: 1000, godEaterHannibalChance: 0.45, godEaterHannibalGames: 50, godEaterHannibalSuccess: 0.75,
+    godEaterGateBaseGames: 50, godEaterGateMaxGames: 99, godEaterGateOutcomes: [[{ key: "yu", label: "主人公覚醒", upper: "漆黒の捕喰者" }, 0.80], [{ key: "lindow", label: "リンドウ覚醒", upper: "神堕" }, 0.08], [{ key: "none", label: "覚醒非当選", upper: "" }, 0.12]],
+    godEaterUpperBattleChance: 0.84, godEaterUpperMaxBattles: 12, godEaterKamiochiContinue: 0.90, godEaterKamiochiMaxLoops: 12,
+    specialLabel: "神機覚醒", specialChance: 0.16, specialMin: 510, specialMax: 1500, upperChallenge: "リザレクションゲート", upperChance: 0.45, upperSuccess: 0.88, upperLabel: "漆黒の捕喰者／神堕", upperContinue: 0.84, upperPayout: 510,
+    settingRates: { 1: { trigger: 351.9, main: 351.9, payout: 0.979 }, 2: { trigger: 344.5, main: 344.5, payout: 0.989 }, 3: { trigger: 330.1, main: 330.1, payout: 1.011 }, 4: { trigger: 317.0, main: 317.0, payout: 1.056 }, 5: { trigger: 302.2, main: 302.2, payout: 1.100 }, 6: { trigger: 290.3, main: 290.3, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
+
 (function applyDarlingFranxxDedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["darling-in-the-franxx-slot"];
   if (!machine) return;
