@@ -4200,6 +4200,61 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   });
 })();
 
+// L転天 follows a 14G CZ, an initial 100-coin bonus, a game-counted bonus
+// high, four palace bonus routes and a separate 10G upper challenge.
+(() => {
+  const machine = window.ICHIGEKI_MACHINES["tenten-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    intro: "2026年10月5日導入の疑似ボーナスループ機。14GのEPISODE BATTLE、初回約100枚、40G＋αの王宮舞踏会、4種類の王宮BONUS、転天STOCKチャレンジ、10Gの輪廻転天チャレンジを専用演出で体験できます。",
+    points: ["CZは10GのレベルUP＋4Gのバトル", "王宮舞踏会は40G＋α・BONUS確率約1/34.1〜1/14.4", "上位CZは10G・成功期待度約50%"],
+    specs: [["CZ（設定1）", "約1/171.5"], ["CZ（設定6）", "約1/136.0"], ["BONUS（設定1）", "約1/320.0"], ["BONUS（設定6）", "約1/246.4"], ["初回BONUS", "約100枚"], ["王宮BONUS", "約150枚・デュエット約200枚"], ["王宮舞踏会", "初回40G＋α"], ["BONUS確率", "約1/34.1〜1/14.4"], ["転天STOCK", "8G＋α・平均約2個"], ["輪廻転天CZ", "10G・成功期待度約50%"], ["上位期待獲得", "約3100枚"], ["純増", "約4.5枚/G"], ["ベース", "約32.4G/50枚"]],
+    articleSections: [
+      { heading: "設定別CZ・BONUS初当り", paragraphs: ["EPISODE BATTLEは設定1約1/171.5から設定6約1/136.0、転天BONUS初当りは設定1約1/320.0から設定6約1/246.4です。", "シミュレーターは設定1〜6を開始時に均等抽選し、CZ出現率・BONUS初当り・出玉率を設定別に使用します。"] },
+      { heading: "14GのEPISODE BATTLE", paragraphs: ["CZは10GのレベルUPパートと4Gのバトルパートで構成。EPレベルが上がるほどバトル内容が変わり、勝利で初回BONUSを獲得します。", "EPレベルMAX時は10Gの精霊契約エピソードへ。フリーズ期待度は約26%で、成功時はエピソードBONUSに加えて革命ジャッジ1〜3個または輪廻転天チャレンジを獲得します。"] },
+      { heading: "初回約100枚から王宮舞踏会へ", paragraphs: ["CZ成功後は転天BONUSまたはエピソードBONUSを約100枚獲得し、必ずロイヤルパレスパーティー～王宮舞踏会～へ進みます。", "王宮舞踏会は初回40G＋α。通常はBONUS約1/34.1、withアニス・withユフィは約1/20.6、withデュエットは約1/14.4です。"] },
+      { heading: "4種類の王宮BONUSと革命ジャッジ", paragraphs: ["BIG、BIG withアニス、BIG withユフィは約150枚、デュエットBIGは約200枚。ヒロインBONUS後は対応した15G高確へ移行します。", "規定ゲーム数で2Gの革命ジャッジへ進み、小役成立でBONUS濃厚。サイトでは高確の残りゲーム数を減らし、最後のPUSHでBONUS種別を開きます。"] },
+      { heading: "本気チャレ・転天STOCK", paragraphs: ["本気チャレチャンスは5GのST型で、ヒロイン出現ごとに高確ゲーム数を上乗せして5Gを再セットします。30G上乗せごとに革命ジャッジをストックします。", "転天STOCKチャレンジは8G＋α・平均約2個のBONUSストック特化ゾーン。獲得したストックは白BIG、赤BIG、青BIG、デュエットの順に放出されます。"] },
+      { heading: "輪廻転天チャレンジと上位", paragraphs: ["輪廻転天チャレンジは10G・成功期待度約50%。成功時は約100枚のエピソードBONUSを経由し、上位ボーナス高確『王宮舞踏会～輪廻転天～』へ進みます。", "上位は初回40G＋α、withデュエット20Gから始まり、期待獲得は約3100枚。終了後も輪廻転天チャレンジで再突入を目指します。"] },
+      { heading: "固定レートと収支の条件", bullets: ["約32.4G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均BONUS投資目安は約10,700円", "王宮BONUSと初回BONUSを別集計", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["平和 公式製品情報", "https://www.heiwanet.co.jp/products/1000/"], ["パチマガスロマガFREE 転天解析", "https://pachimaga.com/free/mach/maker-s/olympiaestate/l_tenten.php"], ["パチ＆スロ必勝本 BONUS解説", "https://p.hisshobon.jp/machine/4814/1/17"], ["なな徹 転天STOCKチャレンジ", "https://nana-press.com/kaiseki/machine/1233/39375/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10550"]],
+    readerGuide: {
+      verdict: "14GのCZを突破し、残りゲーム数をつなぐ王宮舞踏会で4種類のBONUSを重ね、10Gの輪廻転天チャレンジから上位を目指す台です。",
+      bestFor: ["残りゲーム数が減る緊張感を楽しみたい", "BONUS種別とヒロイン高確を追いたい", "ストックと上位CZをPUSHで開きたい"],
+      check: ["初回BONUSと王宮BONUSは獲得枚数が異なる", "ヒロイン高確は15G、上位はwithデュエット20G", "非公表の細かなルート比率は代表値"],
+      compare: [["mahoako-slot", "スマスロ まほあこ", "ゲーム数上乗せ型と比較"], ["uminchu-slot", "スマスロ 海人", "BONUS連タイプと比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v7",
+    triggerLabel: "EPISODE BATTLE",
+    triggerRate: 171.5,
+    triggerSuccess: 0.536,
+    mainLabel: "王宮舞踏会",
+    mainRate: 320.0,
+    normalMin: 0,
+    normalMax: 0,
+    atPayoutVariance: 0,
+    tentenFlow: true,
+    tentenInitialPayout: 100,
+    tentenHighRates: { default: 34.1, anis: 20.6, yuffie: 20.6, duet: 14.4 },
+    tentenStockAwards: [[1, 0.25], [2, 0.50], [3, 0.20], [4, 0.05]],
+    tentenUpperSuccess: 0.50,
+    specialLabel: "転天STOCKチャレンジ",
+    specialChance: 0.10,
+    upperChallenge: "輪廻転天チャレンジ",
+    upperChance: 0,
+    upperSuccess: 0.50,
+    upperLabel: "王宮舞踏会～輪廻転天～",
+    upperContinue: 0.50,
+    upperPayout: 0,
+    upperPureIncrease: 4.5,
+    settingRates: { 1: { trigger: 171.5, main: 320.0, payout: 0.979 }, 2: { trigger: 168.3, main: 314.7, payout: 0.989 }, 3: { trigger: 154.9, main: 294.2, payout: 1.010 }, 4: { trigger: 147.0, main: 276.9, payout: 1.036 }, 5: { trigger: 140.4, main: 260.0, payout: 1.076 }, 6: { trigger: 136.0, main: 246.4, payout: 1.103 } }
+  });
+})();
+
 // Dedicated implementations take precedence over the older reusable cycle map.
 // Keep this final cleanup after every enrichment pass so page copy and gameplay
 // both use the same title-specific model.
@@ -4213,4 +4268,6 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   }
   const uminchu = window.ICHIGEKI_MACHINES["uminchu-slot"]?.sim;
   if (uminchu?.uminchuFlow) delete uminchu.cycleFlow;
+  const tenten = window.ICHIGEKI_MACHINES["tenten-slot"]?.sim;
+  if (tenten?.tentenFlow) delete tenten.cycleFlow;
 })();

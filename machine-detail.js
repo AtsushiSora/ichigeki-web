@@ -444,6 +444,8 @@
     const entryLabel = sim.mainRateLabel || machine.initialHitLabel || "初当りBONUS";
     const upperRoute = sim.uminchuFlow
       ? `BONUS後32G以内の連チャンを10回重ねると${sim.upperLabel}へ進み、ストック獲得後は約${percent(sim.uminchuPostIreguiContinue)}のループで連チャンを伸ばします。`
+      : sim.tentenFlow
+        ? `王宮舞踏会中に上位CZの権利を獲得し、終了後の10G${sim.upperChallenge}を約${percent(sim.upperSuccess)}で突破すると${sim.upperLabel}へ進みます。`
       : sim.upperLabel
       ? sim.karakuriJudgeFlow
         ? `${sim.specialLabel}を3回成功させて${sim.upperChallenge}、4回目以降の成功時は運命連鎖から${sim.upperLabel}を目指します。`
@@ -484,7 +486,7 @@
           ["04", hasEntryBonuses ? "初当りBONUS" : "AT・ST", hasEntryBonuses ? entryLabel : sim.mainLabel]
         ];
     const upperStep = sim.upperLabel
-      ? `<div class="machine-cz-upper"><span>その先</span><strong>${sim.karakuriJudgeFlow ? "激情3回→運命の一劇 / 4回→運命連鎖" : sim.uminchuFlow ? "BONUS 10連" : sim.upperChallenge}</strong><i aria-hidden="true">→</i><strong>${sim.upperLabel}</strong><small>${sim.karakuriJudgeFlow ? "激情ジャッジ成功回数で上位ルートが変化" : sim.uminchuFlow ? "10連到達で8Gのストック特化ゾーンへ突入" : "上位ルートはCZ突破後の別抽選"}</small></div>`
+      ? `<div class="machine-cz-upper"><span>その先</span><strong>${sim.karakuriJudgeFlow ? "激情3回→運命の一劇 / 4回→運命連鎖" : sim.uminchuFlow ? "BONUS 10連" : sim.upperChallenge}</strong><i aria-hidden="true">→</i><strong>${sim.upperLabel}</strong><small>${sim.karakuriJudgeFlow ? "激情ジャッジ成功回数で上位ルートが変化" : sim.uminchuFlow ? "10連到達で8Gのストック特化ゾーンへ突入" : sim.tentenFlow ? "王宮舞踏会終了後に10G・成功期待度約50%" : "上位ルートはCZ突破後の別抽選"}</small></div>`
       : "";
     return `<section class="machine-cz-guide${isDirectEntry ? " is-direct" : ""}" id="cz-game" aria-labelledby="machine-cz-title"><div class="machine-cz-head"><span>${isDirectEntry ? "DIRECT ENTRY FLOW" : "CHANCE ZONE GUIDE"}</span><h3 id="machine-cz-title">${machine.shortName}の${isDirectEntry ? "初当りゲーム性" : "CZのゲーム性"}</h3><p>${isDirectEntry ? "CZを経由しない初当りから、出玉を伸ばす流れを整理します。" : `${sim.triggerLabel}の役割、突破後の行き先、上位までの流れを整理します。`}</p></div><div class="machine-cz-flow" aria-label="${escapeHtml(`${machine.shortName}のゲームフロー`)}">${flow.map(([number, label, detail], index) => `<div><span>${number}</span><strong>${escapeHtml(label)}</strong><small>${escapeHtml(detail)}</small></div>${index < flow.length - 1 ? '<i aria-hidden="true">›</i>' : ""}`).join("")}</div>${upperStep}<div class="machine-cz-detail-grid"><article><span>ROLE</span><h4>${isDirectEntry ? "初当りの役割" : "CZの役割"}</h4><p>通常時の入口は${sim.triggerLabel}で、発生目安は約1/${triggerRate}です。${isDirectEntry ? hasEntryBonuses ? `${initialHitName(entryLabel)}後に複数の代表ルートへ振り分けます。` : `${sim.mainLabel}へ直接つながる代表ルートとして扱います。` : `${hasEntryBonuses ? entryLabel : sim.mainLabel}へ進むための関門として扱います。`}</p></article><article><span>JUDGE</span><h4>${isDirectEntry ? "直結タイプ" : "CZ中の当落"}</h4><p>${judgeText} 実機の小役、ポイント、バトルなど複数の条件は、このサイトでは一連のジャッジへまとめています。</p></article><article><span>RESULT</span><h4>成功・失敗後</h4><p>${missText} 設定${slotBaselineSetting}基準の${initialHitName(sim.mainLabel)}は約1/${mainRate}です。</p></article><article><span>NEXT ROUTE</span><h4>AT中と上位ルート</h4><p>${upperRoute}</p></article></div><p class="machine-cz-note">表示するCZ発生率・突破率・上位到達率は、記事に収録した公表値または比較用の代表値です。実機の全小役、内部状態、モード、天井は完全再現していません。</p></section>`;
   }
@@ -600,6 +602,15 @@
         ["80% LOOP", "ストック後のループ", `ストックを使い切った後も32G以内のBONUSが約${percent(sim.uminchuPostIreguiContinue)}でループします。再び10連へ到達すれば${sim.upperLabel}を再セットし、最終結果に最大連・BIG・REG・${sim.upperLabel}回数を表示します。`]
       ];
       note = "設定別初当り、BONUS平均枚数、32G、IREGUIの8G・最大8ストック・終了後約80%は公開値です。10連前の自力継続率、BONUS中ストック率、連チャン中BIG比率は詳細非公表のため、公開合算値へ近づける代表値です。";
+    } else if (sim.tentenFlow) {
+      cards = [
+        ["EPISODE BATTLE", "14GのCZ", "10GのレベルUPパートでEPレベルを上げ、4GのバトルをPUSHで決着します。勝利で約100枚の初回BONUSと王宮舞踏会へ進みます。"],
+        ["PALACE PARTY", "40G＋αの王宮舞踏会", "残りゲーム数を最後まで減らし、BONUS当選または終了をPUSHで開きます。通常約1/34.1、ヒロイン高確約1/20.6、デュエット高確約1/14.4です。"],
+        ["PALACE BONUS", "4種類の王宮BONUS", "白・アニス・ユフィは約150枚、デュエットは約200枚。ヒロインBONUS後は対応する15G高確へ移行し、結果に種類別回数を残します。"],
+        ["STOCK", "本気チャレ・転天STOCK", "3回目のBONUS後は5Gの本気チャレを表示。転天STOCKは8G＋αをカウントし、PUSHで平均約2個のBONUSストックを開きます。"],
+        ["RINNE TENTEN", "10Gの上位CZ", `獲得した権利は王宮舞踏会終了後に10Gの${sim.upperChallenge}で判定。約50%成功で期待獲得約3100枚の${sim.upperLabel}へ進みます。`]
+      ];
+      note = "CZゲーム数、BONUS枚数、高確ゲーム数、BONUS確率、転天STOCK平均、上位CZ期待度は公開値です。BONUS種別の細かな入口比率と上位CZ権利獲得率は非公表のため代表値です。";
     } else if (sim.mahoakoFlow) {
       cards = [
         ["GAME FLOW", "ゲーム性", `${sim.triggerLabel}は3種類CZと4種類BONUSの並行ルートです。成功後は3GのあこがれATTACKで初期ゲーム数を決め、純増約${Number(sim.atPureIncrease).toFixed(1)}枚/Gの${sim.mainLabel}で上乗せ・BONUS・特化ゾーンを重ねます。`],
@@ -807,7 +818,7 @@
     <section class="machine-simulator" id="simulator">
       <div class="machine-sim-head"><div><span class="machine-section-label">SIMULATOR</span><h2>${machine.shortName} 簡易シミュレーター</h2></div><span class="machine-sim-badge${machineReady ? "" : " is-preparing"}">${machineReady ? "娯楽用" : "準備中"}</span></div>
       ${machineReady ? "" : `<div class="machine-preparing-notice" role="status"><span>COMING SOON</span><strong>導入前のため、まだ遊べません</strong><p>${availabilityLabel}です。導入日を迎えると自動でスタートできるようになります。</p></div>`}
-      <p class="machine-sim-note">投資・換金・収支は固定レートで計算します。パチンコは250玉貸し・28玉交換、スロットは46枚貸し・5.2枚交換です。${machine.sim.kind === "pachinko" ? "表記出玉と、打ち出し・オーバー入賞を簡易反映した実獲得出玉を分けて表示します。" : machine.sim.kind === "juggler" ? `Aタイプは開始時に${slotSettingLabel}を均等抽選し、BIG・REGを重ねて終了時に設定を発表します。` : machine.sim.uminchuFlow ? `開始時に${slotSettingLabel}を抽選し、BIG・REG、BONUS後32G、10連後のIREGUIを時系列表示します。設定は最終結果で発表します。` : `開始時に${slotSettingLabel}を均等抽選し、AT中のレア役、上乗せ、特化ゾーン、上位ATを機種別の代表値で時系列表示します。設定は最終結果で発表します。`}</p>
+      <p class="machine-sim-note">投資・換金・収支は固定レートで計算します。パチンコは250玉貸し・28玉交換、スロットは46枚貸し・5.2枚交換です。${machine.sim.kind === "pachinko" ? "表記出玉と、打ち出し・オーバー入賞を簡易反映した実獲得出玉を分けて表示します。" : machine.sim.kind === "juggler" ? `Aタイプは開始時に${slotSettingLabel}を均等抽選し、BIG・REGを重ねて終了時に設定を発表します。` : machine.sim.uminchuFlow ? `開始時に${slotSettingLabel}を抽選し、BIG・REG、BONUS後32G、10連後のIREGUIを時系列表示します。設定は最終結果で発表します。` : machine.sim.tentenFlow ? `開始時に${slotSettingLabel}を抽選し、14G CZ、初回BONUS、40G高確、王宮BONUS、輪廻転天を時系列表示します。設定は最終結果で発表します。` : `開始時に${slotSettingLabel}を均等抽選し、AT中のレア役、上乗せ、特化ゾーン、上位ATを機種別の代表値で時系列表示します。設定は最終結果で発表します。`}</p>
       <div class="machine-sim-layout">
         <div class="machine-sim-controls">${controlMarkup()}<div class="machine-average-grid" id="averageGrid"></div><div class="machine-start-anchor" id="machineStartAnchor"></div><button class="machine-start-button${machineReady ? "" : " is-preparing"}" id="machineStart" type="button"${machineReady ? "" : " disabled"}><span>${machineReady ? startLabel : "準備中"}</span><small>${machineReady ? labels.join(" → ") : availabilityLabel}</small></button><button class="machine-sticky-back" id="machineStickyBack" type="button" aria-label="前のページに戻る" hidden><span aria-hidden="true">←</span><strong>戻る</strong></button></div>
         <div class="machine-result" id="machineResult" aria-live="polite"><span>${machineReady ? "RESULT" : "COMING SOON"}</span><strong id="resultTitle">${machineReady ? "開始ボタンを押してください" : "導入後に遊べます"}</strong><p id="resultSummary">${machineReady ? "平均値と今回の結果を比較できます。" : `${availabilityLabel}です。現在は記事とスペックをご覧ください。`}</p><div class="machine-result-stats" id="resultStats"></div><div class="machine-flow" id="resultFlow"></div><p class="machine-auto-save-status" id="machineAutoSaveStatus">${machineReady ? "結果は自動でマイ記録へ保存されます。" : "シミュレーターは導入日に自動で有効になります。"}</p><div class="achievement-unlock-toast" id="machineAchievementUnlock" hidden><span>TITLE UNLOCKED</span><strong></strong><small>新しい称号を獲得しました</small></div><div class="machine-result-actions"><a class="button" href="ranking.html#achievements">称号・記録を見る</a><a class="button" id="shareMachineResult" href="community.html?machine=${slug}&compose=simulation#simulationComposer">結果を投稿</a></div><div class="machine-ranking-entry"><label class="machine-ranking-name"><span>ランキングに登録する名前</span><input id="rankingNickname" type="text" maxlength="16" autocomplete="nickname" placeholder="ニックネーム"></label><button class="button primary" id="rankMachineResult" type="button" disabled>ランキングに登録</button></div></div>
@@ -982,7 +993,7 @@
       ? Math.min(0.98, Number(publishedSetting.upper))
       : hasPublishedSettingRates ? sim.upperChance : Math.min(0.98, sim.upperChance + profile.upper);
     const settingModelLabel = hasPublishedTriggerRate && hasPublishedMainRate
-      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : "公開設定別値（CZ・初当り）"
+      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : "公開設定別値（CZ・初当り）"
       : hasPublishedMainRate
         ? "公開設定別値（初当り）＋CZ簡易換算"
         : "サイト共通補正モデル";
@@ -1033,6 +1044,11 @@
     let uminchuIreguiCount = 0;
     let uminchuStockCount = 0;
     let uminchuMaxChain = 0;
+    let tentenPalaceBonusCount = 0;
+    let tentenDuetCount = 0;
+    let tentenStockChallengeCount = 0;
+    let tentenStockCount = 0;
+    let tentenUpperBonusCount = 0;
     if (triggerSucceeded && Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length) {
       const entryBonusTemplate = weighted(sim.entryBonusAwards);
       const entryChance = Math.max(0, Math.min(1, Number(entryBonusTemplate.atChance) || 0));
@@ -1139,6 +1155,115 @@
           appendBonus(stockUsed ? "BONUSストック放出" : "フルーツ連・自力当選");
         }
         cycleRounds = chainCount;
+        basePayout = payout - entryPayout;
+      } else if (sim.tentenFlow) {
+        payout = entryPayout;
+        basePayout = 0;
+        let highState = "default";
+        let highGames = 40;
+        let pendingStocks = 0;
+        let upperTicket = false;
+        const stateLabels = { default: "王宮舞踏会", anis: "withアニス", yuffie: "withユフィ", duet: "withデュエット" };
+        const stateRates = sim.tentenHighRates || { default: 34.1, anis: 20.6, yuffie: 20.6, duet: 14.4 };
+        const initialAward = Math.min(Number(sim.tentenInitialPayout) || 100, SLOT_COMPLETE_LIMIT - payout);
+        const initialGames = Math.max(1, Math.round(initialAward / 4.5));
+        payout += initialAward;
+        atGamesTotal += initialGames;
+        atEvents.push({ kind: "tenten-first-bonus", label: "転天BONUS", games: initialGames, award: initialAward, cumulative: payout });
+        flow.push(`転天BONUS +${initialAward}枚 → 王宮舞踏会40G`);
+
+        const choosePalaceBonus = (state, viaJudge, upperMode = false) => {
+          if (upperMode || state === "duet") return { key: "duet", label: "デュエットBIG BONUS", payout: 200, nextState: "duet" };
+          if (state === "anis") return weighted([[{ key: "white", label: "BIG BONUS", payout: 150, nextState: "default" }, 0.34], [{ key: "anis", label: "BIG BONUS withアニス", payout: 150, nextState: "anis" }, 0.652], [{ key: "duet", label: "デュエットBIG BONUS", payout: 200, nextState: "duet" }, 0.008]]);
+          if (state === "yuffie") return weighted([[{ key: "white", label: "BIG BONUS", payout: 150, nextState: "default" }, 0.34], [{ key: "yuffie", label: "BIG BONUS withユフィ", payout: 150, nextState: "yuffie" }, 0.652], [{ key: "duet", label: "デュエットBIG BONUS", payout: 200, nextState: "duet" }, 0.008]]);
+          return viaJudge
+            ? weighted([[{ key: "anis", label: "BIG BONUS withアニス", payout: 150, nextState: "anis" }, 0.492], [{ key: "yuffie", label: "BIG BONUS withユフィ", payout: 150, nextState: "yuffie" }, 0.492], [{ key: "duet", label: "デュエットBIG BONUS", payout: 200, nextState: "duet" }, 0.016]])
+            : { key: "white", label: "BIG BONUS", payout: 150, nextState: "default" };
+        };
+
+        const appendPalaceBonus = (bonus, source, upperMode = false) => {
+          const award = Math.max(0, Math.min(Number(bonus.payout) || 150, SLOT_COMPLETE_LIMIT - payout));
+          const bonusGames = Math.max(1, Math.round(award / 4.5));
+          payout += award;
+          atGamesTotal += bonusGames;
+          bonusCount += 1;
+          bonusPayoutTotal += award;
+          tentenPalaceBonusCount += 1;
+          if (bonus.key === "duet") tentenDuetCount += 1;
+          if (upperMode) tentenUpperBonusCount += 1;
+          atEvents.push({ kind: "tenten-bonus", label: bonus.label, bonusType: bonus.key, games: bonusGames, award, cumulative: payout, number: tentenPalaceBonusCount, source, upper: upperMode, nextState: bonus.nextState });
+          flow.push(`${bonus.label} +${award}枚${upperMode ? "・輪廻転天" : ""}`);
+        };
+
+        while (highGames > 0 && tentenPalaceBonusCount < 15 && payout < SLOT_COMPLETE_LIMIT) {
+          const rate = Math.max(1, Number(stateRates[highState]) || 34.1);
+          const stockUsed = pendingStocks > 0;
+          const hitChance = stockUsed ? 1 : 1 - Math.pow(1 - 1 / rate, highGames);
+          const continued = stockUsed || Math.random() < hitChance;
+          const eventGames = continued ? randomInt(1, highGames) : highGames;
+          if (stockUsed) pendingStocks -= 1;
+          highGames -= eventGames;
+          atGamesTotal += eventGames;
+          const viaJudge = continued && !stockUsed && Math.random() < 0.28;
+          atEvents.push({ kind: "tenten-high", label: stateLabels[highState], games: eventGames, remaining: highGames, rate, chance: hitChance * 100, continued, stockUsed, viaJudge, cumulative: payout, upper: false });
+          if (!continued) {
+            flow.push(`${stateLabels[highState]} 残り0G・BONUS高確終了`);
+            break;
+          }
+          const bonus = choosePalaceBonus(highState, viaJudge, false);
+          appendPalaceBonus(bonus, stockUsed ? "BONUSストック放出" : viaJudge ? "革命ジャッジ成功" : "7揃い", false);
+          highState = bonus.nextState;
+          if (highState !== "default") highGames = Math.max(highGames, 15);
+
+          if (tentenPalaceBonusCount === 3) {
+            const added = Number(weighted([[30, 0.60], [60, 0.30], [90, 0.10]])) || 30;
+            highGames += added;
+            atGamesTotal += 5;
+            addOnCount += 1;
+            addOnGamesTotal += added;
+            atEvents.push({ kind: "tenten-honki", label: "本気チャレチャンス", games: 5, gameAdd: added, remaining: highGames, cumulative: payout });
+            flow.push(`本気チャレチャンス +${added}G`);
+          }
+
+          if (Math.random() < 0.05 && payout < SLOT_COMPLETE_LIMIT) {
+            const stocks = Math.max(1, Number(weighted(sim.tentenStockAwards || [[2, 1]])) || 2);
+            pendingStocks += stocks;
+            tentenStockCount += stocks;
+            tentenStockChallengeCount += 1;
+            atGamesTotal += 8;
+            atEvents.push({ kind: "tenten-stock", label: "転天STOCKチャレンジ", games: 8, stocks, cumulative: payout, number: tentenStockChallengeCount });
+            flow.push(`転天STOCKチャレンジ ${stocks}個ストック`);
+          }
+
+          const ticketChance = tentenPalaceBonusCount >= 15 ? 1 : tentenPalaceBonusCount >= 10 ? 0.22 : tentenPalaceBonusCount >= 7 ? 0.14 : tentenPalaceBonusCount >= 5 ? 0.09 : 0.05;
+          if (!upperTicket && tentenPalaceBonusCount >= 3 && Math.random() < ticketChance) upperTicket = true;
+        }
+
+        if (upperTicket && payout < SLOT_COMPLETE_LIMIT) {
+          const upperSuccess = Math.random() < (Number(sim.tentenUpperSuccess) || 0.50);
+          atGamesTotal += 10;
+          atEvents.push({ kind: "tenten-upper-challenge", label: "輪廻転天チャレンジ", games: 10, chance: (Number(sim.tentenUpperSuccess) || 0.50) * 100, success: upperSuccess, cumulative: payout });
+          flow.push(`輪廻転天チャレンジ ${upperSuccess ? "成功" : "失敗"}`);
+          if (upperSuccess) {
+            upper = true;
+            upperLoops = 1;
+            const episodeAward = Math.min(100, SLOT_COMPLETE_LIMIT - payout);
+            payout += episodeAward;
+            atGamesTotal += 22;
+            atEvents.push({ kind: "tenten-first-bonus", label: "エピソードBONUS 輪廻転天", games: 22, award: episodeAward, cumulative: payout, upper: true });
+            flow.push(`エピソードBONUS 輪廻転天 +${episodeAward}枚`);
+            for (let upperRound = 1; upperRound <= 15 && payout < SLOT_COMPLETE_LIMIT; upperRound += 1) {
+              const upperContinued = Math.random() < 0.94;
+              const eventGames = upperContinued ? randomInt(1, 20) : 20;
+              atGamesTotal += eventGames;
+              atEvents.push({ kind: "tenten-high", label: "王宮舞踏会～輪廻転天～", games: eventGames, remaining: upperContinued ? 20 : 0, rate: 14.4, chance: 94, continued: upperContinued, stockUsed: false, viaJudge: false, cumulative: payout, upper: true, upperRound });
+              if (!upperContinued) break;
+              appendPalaceBonus(choosePalaceBonus("duet", false, true), "withデュエット超高確", true);
+            }
+          }
+        }
+        cycleRounds = tentenPalaceBonusCount;
+        cycleContinues = Math.max(0, tentenPalaceBonusCount - 1);
         basePayout = payout - entryPayout;
       } else if (sim.cycleFlow) {
         payout = entryPayout;
@@ -1870,16 +1995,19 @@
     const kabaneriStats = sim.kabaneriStFlow ? [["ST中ボーナス", `${kabaneriStBonuses}回`], ["上位ST", kabaneriUpperMode ? `${kabaneriUpperMode}・${upperLoops}回当選` : "非到達"]] : [];
     const otomeStats = sim.otomeRushFlow ? [["ゲーム数上乗せ", `+${yen.format(otomeAddedGames)}G`], [sim.otomeBonusLabel || "出陣ボーナス", `${otomeBonusCount}回`], [sim.specialLabel || "特化ゾーン", otomeAwakeningCount ? `${otomeAwakeningCount}回` : "非当選"], [sim.otomeBattleLabel || "オウガイバトル", otomeBattleWon ? "勝利" : "敗北"]] : [];
     const uminchuStats = sim.uminchuFlow ? [["BONUS内訳", `BIG ${uminchuBigCount}回・REG ${uminchuRegCount}回`], ["最大32G連", `${uminchuMaxChain}連`], ["IREGUI", uminchuIreguiCount ? `${uminchuIreguiCount}回` : "非到達"], ["獲得ストック", `${uminchuStockCount}個`]] : [];
+    const tentenStats = sim.tentenFlow ? [["初回BONUS", entered ? "約100枚" : "非当選"], ["王宮BONUS", `${tentenPalaceBonusCount}回`], ["デュエットBIG", `${tentenDuetCount}回`], ["転天STOCK", tentenStockChallengeCount ? `${tentenStockChallengeCount}回・${tentenStockCount}個` : "非当選"], ["輪廻転天", upper ? `到達・上位BONUS ${tentenUpperBonusCount}回` : "非到達"]] : [];
     const cycleStats = sim.cycleFlow ? [[sim.cycleFlow.statLabel || "専用ループ", `${cycleRounds}回・継続${cycleContinues}回`]] : [];
     const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
     const rushGamesTotal = Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
-    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.uminchuFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
+    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.uminchuFlow || sim.tentenFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
     const gameAddOnStats = sim.karakuriJudgeFlow || coinAddOnCount
       ? [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(coinAddOnTotal || addOnTotal)}枚` : "上乗せなし"]]
       : [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnGamesTotal || otomeAddedGames)}G` : "上乗せなし"]];
     const bonusStats = bonusCount ? [["ボーナス結果", `${bonusCount}回・+${yen.format(bonusPayoutTotal)}枚`]] : [];
     const atStats = entered ? (sim.uminchuFlow
       ? [["BONUS・32G消化", `${yen.format(rushGamesTotal)}G相当`], ...uminchuStats, ...bonusStats]
+      : sim.tentenFlow
+        ? [["BONUS・高確消化", `${yen.format(rushGamesTotal)}G相当`], ...tentenStats, ["王宮BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : [["RUSH消化モデル", `${yen.format(rushGamesTotal)}G相当`], ...karakuriStats, ...battleStats, ...sgStats, ...kabaneriStats, ...otomeStats, ...cycleStats, ...gameAddOnStats, ...bonusStats, ...genericSpecialStats, ["上位AT", upper ? (kabaneriUpperMode || `${sim.upperLabel} ${upperLoops}セット`) : "非到達"]]) : [];
     const stats = [["今回の設定", `設定${setting}`], ["設定差モデル", settingModelLabel], ["今回のゲーム数", `${yen.format(games)}G`], ...settingRateStats, ["現金投資目安", `${yen.format(investment)}円`], ...entryBonusStats, ...atStats, ["獲得枚数", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]];
     if (complete) stats.unshift(["到達状態", "コンプリート"]);
@@ -1888,6 +2016,8 @@
       ? `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}、獲得枚数が${yen.format(SLOT_COMPLETE_LIMIT)}枚に到達し、コンプリートしました。`
       : sim.uminchuFlow
         ? `今回の設定は設定${setting}。${games}GでBONUS初当り、最大${uminchuMaxChain}連・BIG ${uminchuBigCount}回・REG ${uminchuRegCount}回、${yen.format(payout)}枚を獲得しました。${uminchuIreguiCount ? `IREGUIは${uminchuIreguiCount}回です。` : "IREGUIには届きませんでした。"}`
+        : sim.tentenFlow
+          ? `今回の設定は設定${setting}。${games}GでEPISODE BATTLE、${entered ? `初回BONUSと王宮BONUS ${tentenPalaceBonusCount}回で${yen.format(payout)}枚を獲得しました。${upper ? `輪廻転天へ到達し、上位BONUSは${tentenUpperBonusCount}回です。` : "輪廻転天には届きませんでした。"}` : "CZは突破できませんでした。"}`
         : `今回の設定は設定${setting}。${games}Gで${sim.triggerLabel}。${entered ? `${payout}枚を獲得しました。${sim.kabaneriStFlow ? `ST中ボーナス${kabaneriStBonuses}回・${upper ? `${upperResultLabel} ${upperLoops}回当選。` : "上位ST非到達。"}` : `上乗せ${addOnCount}回・${upper ? `${upperResultLabel} ${upperLoops}セット。` : "上位AT非到達。"}`}` : entryBonus ? `${entryBonus.label}で約${yen.format(payout)}枚を獲得し、${sim.mainLabel}には届きませんでした。` : `${machine.initialHitLabel || sim.mainLabel}には届きませんでした。`}`;
     const kabaneriRareUpperLabel = sim.kabaneriUpperRareLabel || "裏美馬ST";
     const kabaneriUpperContinueChance = kabaneriUpperMode
@@ -1895,7 +2025,7 @@
         ? (Number(sim.kabaneriUpperRareContinue) || 0.95)
         : (Number(sim.kabaneriUpperNormalContinue) || 0.80)) * 100
       : sim.upperContinue * 100;
-    return { title: `設定${setting}｜${resultTitle}`, summary: resultSummary, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, triggerSucceeded, triggerSuccessChance: triggerSuccess * 100, entryBonusModel: Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0, entryBonus, entered, entryChance: entryBonus ? (Number(entryBonus.atChance) || 0) * 100 : triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, setPushFlow: Boolean(sim.setPushFlow), karakuriJudgeFlow: Boolean(sim.karakuriJudgeFlow), battleBonusFlow: Boolean(sim.battleBonusFlow), garoBattleFlow: Boolean(sim.garoBattleFlow), ragnadorUpperFlow: Boolean(sim.ragnadorUpperFlow), seiyaTempleFlow: Boolean(sim.seiyaTempleFlow), ggoStFlow: Boolean(sim.ggoStFlow), godzillaEva2Flow: Boolean(sim.godzillaEva2Flow), mahoakoFlow: Boolean(sim.mahoakoFlow), sgRaceFlow: Boolean(sim.sgRaceFlow), kabaneriStFlow: Boolean(sim.kabaneriStFlow), otomeRushFlow: Boolean(sim.otomeRushFlow), cycleFlow: Boolean(sim.cycleFlow), cycleRounds, cycleContinues, kabaneriStBonuses, kabaneriUpperMode, otomeAddedGames, otomeBonusCount, otomeAwakeningCount, otomeBattleWon, otomeAddOnChance: (Number(sim.otomeAddOnChance) || 0) * 100, battleBonusSets, battleContinuationRate: battleContinuationRate * 100, sgRushSets, sgScenarioName, karakuriJudgeAttempts, karakuriJudgeSuccesses, karakuriUpperRoute, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, addOnGamesTotal, coinAddOnCount, coinAddOnTotal, bonusCount, bonusPayoutTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: kabaneriUpperContinueChance, upperChallenge: sim.upperChallenge || "", upper, upperLabel: kabaneriUpperMode || sim.upperLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
+    return { title: `設定${setting}｜${resultTitle}`, summary: resultSummary, stats, flow: [`設定${setting}`, ...flow], share: `${machine.shortName}｜設定${setting}｜${yen.format(games)}G｜投資${yen.format(investment)}円｜${resultLabel}｜上乗せ${addOnCount}回｜${yen.format(payout)}枚｜換金${yen.format(exchangeValue)}円｜収支${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円｜${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換｜コイン単価${coinUnit.toFixed(1)}円`, setting, score: Math.round(diff), rankScore, rankInvestment, scoreKind: "coins", balanceYen, exchangeValue, investment, payout, attempts: games, complete, settingModel: settingModelLabel, experience: { kind: "slot", setting, attempts: games, unit: "G", hitLabel: sim.triggerLabel, hitChance: 100 / triggerRate, triggerSucceeded, triggerSuccessChance: triggerSuccess * 100, entryBonusModel: Array.isArray(sim.entryBonusAwards) && sim.entryBonusAwards.length > 0, entryBonus, entered, entryChance: entryBonus ? (Number(entryBonus.atChance) || 0) * 100 : triggerSuccess * 100, mainLabel: sim.mainLabel, mainSetContinueChance: (sim.mainSetContinue || 0) * 100, setPushFlow: Boolean(sim.setPushFlow), karakuriJudgeFlow: Boolean(sim.karakuriJudgeFlow), battleBonusFlow: Boolean(sim.battleBonusFlow), garoBattleFlow: Boolean(sim.garoBattleFlow), ragnadorUpperFlow: Boolean(sim.ragnadorUpperFlow), seiyaTempleFlow: Boolean(sim.seiyaTempleFlow), ggoStFlow: Boolean(sim.ggoStFlow), godzillaEva2Flow: Boolean(sim.godzillaEva2Flow), mahoakoFlow: Boolean(sim.mahoakoFlow), tentenFlow: Boolean(sim.tentenFlow), sgRaceFlow: Boolean(sim.sgRaceFlow), kabaneriStFlow: Boolean(sim.kabaneriStFlow), otomeRushFlow: Boolean(sim.otomeRushFlow), cycleFlow: Boolean(sim.cycleFlow), cycleRounds, cycleContinues, kabaneriStBonuses, kabaneriUpperMode, otomeAddedGames, otomeBonusCount, otomeAwakeningCount, otomeBattleWon, otomeAddOnChance: (Number(sim.otomeAddOnChance) || 0) * 100, battleBonusSets, battleContinuationRate: battleContinuationRate * 100, sgRushSets, sgScenarioName, karakuriJudgeAttempts, karakuriJudgeSuccesses, karakuriUpperRoute, specialLabel: sim.specialLabel, specialChance: specialChance * 100, addOnCount, addOnTotal, addOnGamesTotal, coinAddOnCount, coinAddOnTotal, bonusCount, bonusPayoutTotal, atGamesTotal, upperRouteChance: upperChance * 100, upperSuccessChance: sim.upperSuccess * 100, upperContinueChance: kabaneriUpperContinueChance, upperChallenge: sim.upperChallenge || "", upper, upperLabel: kabaneriUpperMode || sim.upperLabel || "", upperLoops, complete, payout, payoutUnit: "枚", atEvents, atGameTimeline, flow: [...flow] } };
   }
 
   function createATypeSession(setting) {
@@ -2524,6 +2654,7 @@
     const godzillaEva2Flow = Boolean(data.godzillaEva2Flow);
     const mahoakoFlow = Boolean(data.mahoakoFlow);
     const uminchuFlow = Boolean(machine.sim.uminchuFlow);
+    const tentenFlow = Boolean(data.tentenFlow);
     setExperienceHud("0G", "0円", "0枚");
     setExperienceStage(0, experienceProfile.system, "通常ゲーム中", "0G", `${data.hitLabel}を目指して抽選中`, "normal", data.hitChance, "1Gごとの契機当選率");
     for (const progress of [0.05, 0.13, 0.24, 0.39, 0.56, 0.72, 0.87, 1]) {
@@ -2534,7 +2665,7 @@
       await waitForExperience(115);
     }
     if (runId !== experienceRunId) return;
-    setExperienceStage(1, uminchuFlow ? "BONUS HIT" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", data.hitLabel, `${yen.format(data.attempts)}G`, uminchuFlow ? "告知音とともに初当りBONUSへ" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
+    setExperienceStage(1, uminchuFlow ? "BONUS HIT" : tentenFlow ? "EPISODE BATTLE" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", data.hitLabel, `${yen.format(data.attempts)}G`, uminchuFlow ? "告知音とともに初当りBONUSへ" : tentenFlow ? "10GのレベルUPパートと4Gのバトルへ" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
     await waitForExperience(780);
     if (data.entryBonusModel) {
       setExperienceStage(2, mahoakoFlow ? "CZ / BONUS ROUTE" : "BONUS JUDGE", mahoakoFlow ? "初当りルートジャッジ" : "初当りBONUSジャッジ", "PUSH", mahoakoFlow ? "3種類CZ・4種類BONUSから今回の入口を開きます" : "BONUSの当落を開きます", "judge", data.triggerSuccessChance, mahoakoFlow ? "CZ・BONUS合算契機" : "CZ突破期待度");
@@ -2557,7 +2688,19 @@
       setExperienceStage(2, "CHANCE!", "ピュイ♪ BONUS確定", "PUSH", "BIGかREGか、BONUS種別を開きます", "judge", 100, "初当りBONUS");
       await waitForExperience(650);
     }
-    if (!uminchuFlow) {
+    if (tentenFlow) {
+      const levelComplete = await animateExperienceCounter(10, "G", "LEVEL UP PART", "EPレベルを上げろ", "ヒロイン目・レア役でEPレベルUPを抽選します", data.triggerSuccessChance, "CZ 10GレベルUP", runId);
+      if (!levelComplete) return;
+      const battleComplete = await animateExperienceCounter(4, "G", "BATTLE PART", "EPISODE BATTLE", "4Gのバトルを消化し、最後のPUSHで決着します", data.triggerSuccessChance, "CZ突破期待度", runId);
+      if (!battleComplete) return;
+      setExperienceStage(2, "EPISODE JUDGE", "EPISODE BATTLE", "PUSH", "初回BONUSの当落を開きます", "judge", data.triggerSuccessChance, "14G CZ最終結果");
+      await waitForExperienceAction("EPISODE BATTLE PUSH", 5000, data.triggerSucceeded ? "gold" : "normal");
+      if (runId !== experienceRunId) return;
+      setExperienceStage(2, "EPISODE RESULT", data.triggerSucceeded ? "WIN・BONUS確定" : "BATTLE敗北", data.triggerSucceeded ? "転天BONUS" : "通常へ", data.triggerSucceeded ? "約100枚獲得後、王宮舞踏会40Gへ" : "今回の一撃はここで終了", data.triggerSucceeded ? "hit" : "end", data.triggerSucceeded ? 100 : 0, "EPISODE BATTLE結果");
+      await waitForExperience(900);
+      if (!data.triggerSucceeded) return;
+    }
+    if (!uminchuFlow && !tentenFlow) {
     const dedicatedEntryFlow = godzillaEva2Flow || mahoakoFlow;
     const entryJudgeLabel = dedicatedEntryFlow && data.entryBonus?.judgeLabel ? data.entryBonus.judgeLabel : `${data.mainLabel}突入ジャッジ`;
     const entryJudgeGames = dedicatedEntryFlow ? Math.max(1, Number(data.entryBonus?.judgeGames) || 3) : 3;
@@ -2601,7 +2744,7 @@
       const normalSetCount = rushEvents.filter(event => event.kind === "rush-set").length;
       const hadUpperChallenge = rushEvents.some(event => event.kind === "upper-challenge");
       let route = [...rushEvents];
-      if (!setPushFlow && !karakuriJudgeFlow && !battleBonusFlow && !godzillaEva2Flow && !mahoakoFlow && !uminchuFlow && !sgRaceFlow && !kabaneriStFlow && !otomeRushFlow && !cycleFlow && route.length > 10) {
+      if (!setPushFlow && !karakuriJudgeFlow && !battleBonusFlow && !godzillaEva2Flow && !mahoakoFlow && !uminchuFlow && !tentenFlow && !sgRaceFlow && !kabaneriStFlow && !otomeRushFlow && !cycleFlow && route.length > 10) {
         const visibleEvents = route.slice(0, 7);
         const remainingEvents = route.slice(7);
         const previousTotal = Number(visibleEvents[visibleEvents.length - 1]?.cumulative) || 0;
@@ -2658,6 +2801,77 @@
           await waitForExperience(1300);
           setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
           setSlotAtStatus({ visible: true, remaining: 0, total: event.cumulative });
+          continue;
+        }
+
+        if (event.kind === "tenten-first-bonus") {
+          setExperienceStage(3, event.upper ? "RINNE TENTEN EPISODE" : "FIRST BONUS", event.label, `+${yen.format(event.award)}枚`, event.upper ? "上位ボーナス高確へ突入します" : "消化後は王宮舞踏会40Gへ進みます", event.upper ? "hyper" : "hit", 100, "初回BONUS獲得結果");
+          await waitForExperience(1000);
+          const bonusComplete = await animateExperienceCounter(eventGames, "G", event.upper ? "EPISODE BONUS" : "TENTEN BONUS", event.label, "純増約4.5枚/GでBONUSを消化します", 100, "約100枚獲得", runId);
+          if (!bonusComplete) return;
+          consumedGames += eventGames;
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: event.upper ? 40 : 40, total: event.cumulative });
+          continue;
+        }
+
+        if (event.kind === "tenten-high") {
+          const highComplete = await animateExperienceCounter(eventGames, "G", event.upper ? "RINNE TENTEN HIGH" : "ROYAL PALACE PARTY", event.label, event.stockUsed ? "BONUSストックを放出します" : event.viaJudge ? "規定G数から革命ジャッジへ" : "7揃い・ヒロイン目からBONUSを抽選します", event.chance, event.upper ? "withデュエット 約1/14.4" : `BONUS確率 約1/${event.rate}`, runId);
+          if (!highComplete) return;
+          consumedGames += eventGames;
+          setSlotAtStatus({ visible: true, remaining: event.remaining, total: event.cumulative });
+          setExperienceStage(3, event.upper ? "UPPER BONUS JUDGE" : event.viaJudge ? "革命ジャッジ" : "BONUS JUDGE", event.label, "PUSH", event.continued ? "BONUS当選と種別を開きます" : "高確終了の結果を開きます", "judge", event.chance, event.upper ? "上位BONUS高確" : "王宮舞踏会結果");
+          await waitForExperienceAction(event.upper ? "輪廻転天 PUSH" : event.viaJudge ? "革命ジャッジ PUSH" : "王宮BONUS PUSH", 5000, event.upper ? "upper" : event.continued ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.continued ? "BONUS HIT" : "PARTY END", event.continued ? "王宮BONUS確定" : "王宮舞踏会終了", event.continued ? "7揃い" : "残り0G", event.continued ? "次の画面でBONUS種別を表示します" : event.upper ? "上位BONUS高確終了" : "獲得した上位CZ権利を確認します", event.continued ? "hit" : "end", event.continued ? 100 : 0, "BONUS高確結果");
+          await waitForExperience(event.continued ? 700 : 1000);
+          continue;
+        }
+
+        if (event.kind === "tenten-bonus") {
+          setExperienceStage(3, event.upper ? "UPPER PALACE BONUS" : "PALACE BONUS", event.label, `+${yen.format(event.award)}枚`, `${event.source}・${event.nextState === "anis" ? "アニス高確15Gへ" : event.nextState === "yuffie" ? "ユフィ高確15Gへ" : event.nextState === "duet" ? "デュエット高確へ" : "残り高確Gへ"}`, event.upper || event.bonusType === "duet" ? "hyper" : "rush", 100, `${event.number}回目 王宮BONUS`);
+          await waitForExperience(1000);
+          const palaceBonusComplete = await animateExperienceCounter(eventGames, "G", "PALACE BONUS", event.label, "純増約4.5枚/G・高確ゲーム数上乗せも抽選します", 100, `獲得約${event.award}枚`, runId);
+          if (!palaceBonusComplete) return;
+          consumedGames += eventGames;
+          setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setSlotAtStatus({ visible: true, remaining: event.nextState === "default" ? 0 : event.upper ? 20 : 15, total: event.cumulative });
+          continue;
+        }
+
+        if (event.kind === "tenten-honki") {
+          const honkiComplete = await animateExperienceCounter(5, "G", "HONKI CHALLENGE", event.label, "ヒロイン出現で上乗せし、5Gを再セットします", 100, "BONUS3回目の恩恵", runId);
+          if (!honkiComplete) return;
+          consumedGames += 5;
+          setExperienceStage(3, "GAME ADD ON", event.label, "PUSH", "王宮舞踏会へ加算するゲーム数を開きます", "judge", 100, "5G ST結果");
+          await waitForExperienceAction("本気チャレ PUSH", 5000, "gold");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, "GAME ADD ON", "ヒロイン共闘", `+${yen.format(event.gameAdd)}G`, `王宮舞踏会 残り${yen.format(event.remaining)}G`, "hit", 100, "本気チャレ結果");
+          await waitForExperience(1100);
+          continue;
+        }
+
+        if (event.kind === "tenten-stock") {
+          const stockComplete = await animateExperienceCounter(8, "G", "TENTEN STOCK CHALLENGE", event.label, "小役・ヒロイン目からBONUSストックを抽選します", 100, "8G＋α・平均約2個", runId);
+          if (!stockComplete) return;
+          consumedGames += 8;
+          setExperienceStage(3, "STOCK RESULT", event.label, "PUSH", "獲得したBONUSストック数を開きます", "judge", 100, `転天STOCK ${event.number}回目`);
+          await waitForExperienceAction("転天STOCK PUSH", 5000, "upper");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, "BONUS STOCK", "ストック獲得", `${event.stocks}個`, "白→赤→青→デュエットの順に放出します", "hyper", 100, "転天STOCK結果");
+          await waitForExperience(1200);
+          continue;
+        }
+
+        if (event.kind === "tenten-upper-challenge") {
+          const upperComplete = await animateExperienceCounter(10, "G", "RINNE TENTEN CHALLENGE", event.label, "成立役から上位ボーナス高確を抽選します", event.chance, "成功期待度約50%", runId);
+          if (!upperComplete) return;
+          consumedGames += 10;
+          setExperienceStage(3, "UPPER JUDGE", event.label, "PUSH", "輪廻転天の当落を開きます", "judge", event.chance, "10G上位CZ最終結果");
+          await waitForExperienceAction("輪廻転天 PUSH", 5000, event.success ? "upper" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.success ? "RINNE TENTEN" : "CHALLENGE END", event.success ? "輪廻転天 成功！" : "輪廻転天 失敗", event.success ? "上位突入" : "通常へ", event.success ? "エピソードBONUS後、上位40Gへ" : "最終結果へ進みます", event.success ? "hyper" : "end", event.success ? 100 : 0, "輪廻転天チャレンジ結果");
+          await waitForExperience(event.success ? 1300 : 1000);
           continue;
         }
 
