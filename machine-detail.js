@@ -363,6 +363,14 @@
         ["黄金AT", "約5.0枚/G", "絶唱バトル約60%"]
       ];
       note = "残りゲーム数、ギアVチャンスの装者獲得、キャラ別ギアVアタック、絶唱、上位ATと絶唱バトルを個別に記録します。";
+    } else if (sim.magicalHalloween8Flow) {
+      items = [
+        ["5種BONUS", "42〜203枚", "A＋ART"],
+        ["詠唱チャレンジ", "6択まで継続", "自力正解約1/6"],
+        ["カボチャンス", "1セット30G", "純増約1.0枚/G"],
+        ["特殊ART", "悪・王・極・スーパー", "ストック強化"]
+      ];
+      note = "BONUS、詠唱チャレンジ、30Gのカボチャンス、ストック、悪・王・極・スーパーカボチャンスを機種専用で記録します。";
     } else if (sim.gundamSeedFlow) {
       items = [
         ["CZ", "18G・約62%", "HITマスを縦横につなぐ"],
@@ -1159,6 +1167,14 @@
         cards.splice(4, 0, ["BALANCE MODEL", "専用フローの抽選目安", `${profileNames[titleFlow.profile] || "機種専用型"}として、AT突入後は平均約${Number(titleFlow.balance.averageRounds).toFixed(1)}区間進行します。通常フローから${sim.upperLabel}へ到達する代表目安は約${percent(titleFlow.balance.upperRoute)}です。公開値と機種別の代表値から計算した比較用の目安で、実戦結果を保証するものではありません。`]);
       }
       note = `${cycle.label || sim.mainLabel}の区間順序、代表報酬、継続判定を${titleFlow ? "機種専用フローで" : "個別に"}表示する体験モデルです。成立役別抽選、内部状態、全報酬振り分けは短時間で比較できる形へ簡略化しています。`;
+    } else if (sim.magicalHalloween8Flow) {
+      cards = [
+        ["BONUS", "42〜203枚", "5種類のBONUSとまじかるちゃんす"],
+        ["詠唱", "6択リプレイまで", "ストックナビ／自力約1/6"],
+        ["ART", "30G", "カボチャ揃いでストック"],
+        ["特殊ART", "悪・王・極・スーパー", "複合モードあり"]
+      ];
+      note = "BONUS後とARTセット後は必ず詠唱チャレンジへ。ストック消費と6択結果を分けて表示します。";
     } else if (sim.gundamSeedFlow) {
       cards = [
         ["STRIKE ATTACK", "18GのHITマスCZ", "小役でHITマスを獲得し、縦または横に並べて白BAR揃いを狙います。成功後も残りゲームでBONUS昇格を抽選します。"],
@@ -1453,7 +1469,7 @@
       const averageInvestment = Math.round((machine.sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
-      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow || machine.sim.millionGodFlow || machine.sim.juohFlow || machine.sim.sunbreakFlow || machine.sim.paripiFlow || machine.sim.gundamSeedFlow || machine.sim.fireForceFlow || machine.sim.fireForce2Flow;
+      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow || machine.sim.millionGodFlow || machine.sim.juohFlow || machine.sim.sunbreakFlow || machine.sim.paripiFlow || machine.sim.magicalHalloween8Flow || machine.sim.gundamSeedFlow || machine.sim.fireForceFlow || machine.sim.fireForce2Flow;
       const settingModelLabel = machine.sim.settingRates
         ? hasDedicatedFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
         : hasDedicatedFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
@@ -1539,7 +1555,7 @@
         ? Math.max(1, mainRate * sim.triggerRate / sim.mainRate)
         : Math.max(1, sim.triggerRate * profile.rate);
     const publishedEntry = Number(publishedSetting?.entry);
-    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.gundamSeedFlow || sim.fireForceFlow || sim.fireForce2Flow
+    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.magicalHalloween8Flow || sim.gundamSeedFlow || sim.fireForceFlow || sim.fireForce2Flow
       ? Math.max(0, Math.min(1, Number(sim.triggerSuccess) || 0.55))
       : sim.godzillaEva2Flow || sim.mahoakoFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.shinEvaFlow
       ? 1
@@ -1555,7 +1571,7 @@
       ? Math.min(0.98, Number(publishedSetting.upper))
       : hasPublishedSettingRates ? sim.upperChance : Math.min(0.98, sim.upperChance + profile.upper);
     const settingModelLabel = hasPublishedTriggerRate && hasPublishedMainRate
-      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.darlingFranxxFlow ? "公開設定別値（CZ・BONUS・高確初当り）" : sim.godEaterFlow ? "公開設定別値（AT初当り・機種専用進行）" : sim.millionGodFlow ? "公開設定別値（GG初当り・機種専用進行）" : sim.juohFlow ? "公開設定別値（SC初当り・機種専用進行）" : sim.sunbreakFlow ? "公開設定別値（CZ・AT初当り・機種専用進行）" : sim.paripiFlow ? "公開設定別値（CZ3種・BONUS初当り・ST進行）" : sim.gundamSeedFlow ? "公開設定別値（CZ・BONUS・ST・上位AT）" : sim.fireForceFlow ? "公開設定別値（初当り・BONUS・炎炎ループ）" : sim.fireForce2Flow ? "公開設定別値（BONUS・炎炎ループ初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
+      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.darlingFranxxFlow ? "公開設定別値（CZ・BONUS・高確初当り）" : sim.godEaterFlow ? "公開設定別値（AT初当り・機種専用進行）" : sim.millionGodFlow ? "公開設定別値（GG初当り・機種専用進行）" : sim.juohFlow ? "公開設定別値（SC初当り・機種専用進行）" : sim.sunbreakFlow ? "公開設定別値（CZ・AT初当り・機種専用進行）" : sim.paripiFlow ? "公開設定別値（CZ3種・BONUS初当り・ST進行）" : sim.magicalHalloween8Flow ? "公開設定別値（BONUS・ART初当り・ストック進行）" : sim.gundamSeedFlow ? "公開設定別値（CZ・BONUS・ST・上位AT）" : sim.fireForceFlow ? "公開設定別値（初当り・BONUS・炎炎ループ）" : sim.fireForce2Flow ? "公開設定別値（BONUS・炎炎ループ初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
       : hasPublishedMainRate
         ? sim.bofuriFlow ? "公開設定別値（BONUS初当り）＋機種専用進行" : "公開設定別値（初当り）＋CZ簡易換算"
         : "サイト共通補正モデル";
@@ -1823,6 +1839,16 @@
     let paripiUpperLoops = 0;
     let paripiUltimateAttempts = 0;
     let paripiUltimateLoops = 0;
+    let magihalloInitialBonus = null;
+    let magihalloStocks = 0;
+    let magihalloSets = 0;
+    let magihalloBonusCount = 0;
+    let magihalloPumpkins = 0;
+    let magihalloMagicCount = 0;
+    let magihalloChantAttempts = 0;
+    let magihalloChantWins = 0;
+    let magihalloSpecialMode = null;
+    let magihalloSuperSets = 0;
     let gundamSeedEntry = null;
     let gundamSeedInitialBonus = null;
     let gundamSeedStRounds = 0;
@@ -1880,6 +1906,40 @@
     let sunbreakPurificationAttempts = 0;
     let sunbreakPurificationWins = 0;
     let sunbreakMaxMonster = "未遭遇";
+    if (sim.magicalHalloween8Flow) {
+      magihalloInitialBonus = weighted(sim.magihalloBonuses || [[{ key: "regular", label: "殲滅BONUS", games: 8, award: 42 }, 1]]);
+      payout = Math.max(0, Number(magihalloInitialBonus.award) || 42);
+      bonusCount = 1;
+      magihalloBonusCount = 1;
+      bonusPayoutTotal = payout;
+      atGamesTotal = Math.max(1, Number(magihalloInitialBonus.games) || 8);
+      magihalloStocks = Math.max(0, Number(magihalloInitialBonus.stocks) || (Math.random() < 0.42 ? 1 : 0));
+      if (Math.random() < (Number(sim.magihalloMagicChance) || 0.20)) {
+        magihalloMagicCount += 1;
+        magihalloStocks += Number(weighted([[1, 0.72], [3, 0.20], [5, 0.08]])) || 1;
+      }
+      entryBonus = { ...magihalloInitialBonus, payout, atChance: 1, outcome: "詠唱チャレンジ" };
+      atEvents.push({ kind: "magihallo-bonus", ...magihalloInitialBonus, initial: true, award: payout, stocks: magihalloStocks, magical: magihalloMagicCount > 0, cumulative: payout });
+      magihalloChantAttempts = 1;
+      const missionGames = Number(weighted(sim.magihalloMissionGames || [[10, 1]])) || 10;
+      const mission = Math.random() < 0.12;
+      if (mission) {
+        magihalloSpecialMode = weighted(sim.magihalloSpRewards || [[{ key: "king", label: "キングカボチャンス" }, 1]]);
+        magihalloStocks += 1;
+      }
+      const usedStock = magihalloStocks > 0;
+      if (usedStock) magihalloStocks -= 1;
+      const selfCorrect = !usedStock && Math.random() < (Number(sim.magihalloSelfSixChance) || 1 / 6);
+      entered = usedStock || selfCorrect || mission;
+      triggerSucceeded = entered;
+      if (entered) magihalloChantWins = 1;
+      entryBonus.atChance = entered ? 1 : 0;
+      entryBonus.outcome = entered ? "カボチャンス突入" : "詠唱チャレンジ終了";
+      atEvents.push({ kind: "magihallo-chant", label: "詠唱チャレンジ", games: missionGames, attempt: 1, usedStock, selfCorrect, mission, special: magihalloSpecialMode?.label || "", won: entered, stocks: magihalloStocks, cumulative: payout });
+      flow[0] = `${games}Gで${magihalloInitialBonus.label}`;
+      flow.push(`${magihalloInitialBonus.label} +${yen.format(payout)}枚 → 詠唱チャレンジ`);
+      flow.push(entered ? `${usedStock ? "ストックナビ" : selfCorrect ? "6択正解" : magihalloSpecialMode?.label}でカボチャンス` : "6択不正解・通常へ");
+    }
     if (sim.gundamSeedFlow) {
       gundamSeedEntry = weighted(sim.gundamSeedEntryRoutes || [[{ key: "cz", label: "ストライクアタック", games: 18, chance: 0.62 }, 1]]);
       const entryChance = Math.max(0, Math.min(1, Number(gundamSeedEntry.chance) || 0.62));
@@ -3077,6 +3137,87 @@
             flow.push(`通常バジリスクタイム 1セット・+${yen.format(fallbackAward)}枚`);
           }
         }
+        basePayout = payout - entryPayout;
+      } else if (sim.magicalHalloween8Flow) {
+        payout = entryPayout;
+        basePayout = 0;
+        const awardMagihalloCoins = amount => {
+          const award = Math.max(0, Math.min(Math.round(Number(amount) || 0), SLOT_COMPLETE_LIMIT - payout));
+          payout += award;
+          return award;
+        };
+        const maxSets = Math.max(1, Math.min(24, Number(sim.magihalloMaxSets) || 16));
+        while (entered && magihalloSets < maxSets && payout < SLOT_COMPLETE_LIMIT) {
+          magihalloSets += 1;
+          cycleRounds += 1;
+          const mode = magihalloSpecialMode || { key: "normal", label: "カボチャンス" };
+          const artGames = Math.max(1, Number(sim.magihalloArtGames) || 30);
+          const artAward = awardMagihalloCoins(slotAwardForGames(artGames, Number(sim.atPureIncrease) || 1, 0));
+          atGamesTotal += artGames;
+          let setStocks = 0;
+          let pumpkin = Math.random() < (mode.key.includes("extreme") ? 0.48 : Number(sim.magihalloPumpkinChance) || 0.18);
+          if (pumpkin) {
+            magihalloPumpkins += 1;
+            setStocks += mode.key.includes("king") ? 2 : 1;
+          }
+          if (mode.key.includes("king") && Math.random() < 0.38) setStocks += 1;
+          if (mode.key.includes("evil") && Math.random() < 0.34) setStocks += 1;
+          magihalloStocks += setStocks;
+          atEvents.push({ kind: "magihallo-art", label: mode.label, games: artGames, set: magihalloSets, award: artAward, pumpkin, addedStocks: setStocks, stocks: magihalloStocks, cumulative: payout });
+          flow.push(`${mode.label} SET ${magihalloSets}・+${yen.format(artAward)}枚${pumpkin ? `・カボチャ揃い +${setStocks}個` : ""}`);
+
+          if (Math.random() < (Number(sim.magihalloBonusChance) || 0.20) && payout < SLOT_COMPLETE_LIMIT) {
+            const artBonuses = (sim.magihalloBonuses || []).map(([bonus, weight]) => [bonus.key === "regular" ? { ...bonus, label: Math.random() < 0.16 ? "メモリアルBONUS" : "REG BONUS" } : bonus, weight]);
+            const bonus = weighted(artBonuses);
+            const bonusAward = awardMagihalloCoins(bonus.award);
+            magihalloBonusCount += 1;
+            bonusCount += 1;
+            bonusPayoutTotal += bonusAward;
+            atGamesTotal += Math.max(1, Number(bonus.games) || 8);
+            let bonusStocks = Math.max(0, Number(bonus.stocks) || 0);
+            const magical = Math.random() < (mode.key.includes("king") ? 1 : Number(sim.magihalloMagicChance) || 0.20);
+            if (magical) {
+              magihalloMagicCount += 1;
+              bonusStocks += Number(weighted([[1, 0.72], [3, 0.20], [5, 0.08]])) || 1;
+            }
+            magihalloStocks += bonusStocks;
+            atEvents.push({ kind: "magihallo-bonus", ...bonus, source: mode.label, award: bonusAward, magical, addedStocks: bonusStocks, stocks: magihalloStocks, cumulative: payout });
+            flow.push(`${bonus.label} +${yen.format(bonusAward)}枚${magical ? `・まじかるちゃんす +${bonusStocks}個` : ""}`);
+          }
+
+          const chimera = Math.random() < (Number(sim.magihalloChimeraChance) || 0.05);
+          if (chimera) {
+            const won = Math.random() < 0.50;
+            if (won) {
+              const upgrades = { normal: { key: "evil", label: "悪カボチャンス" }, king: { key: "evil-king", label: "悪キングカボチャンス" }, extreme: { key: "extreme-evil", label: "極悪カボチャンス" }, "extreme-king": { key: "ultimate", label: "究極悪王ワルティメットカボチャンス" } };
+              magihalloSpecialMode = upgrades[mode.key] || mode;
+            }
+            atEvents.push({ kind: "magihallo-chimera", label: "キメラバトル", won, before: mode.label, after: magihalloSpecialMode?.label || mode.label, cumulative: payout });
+          }
+
+          if (Math.random() < (Number(sim.magihalloSuperChance) || 0.015)) {
+            upper = true;
+            magihalloSpecialMode = { key: "super", label: sim.upperLabel };
+          }
+          magihalloChantAttempts += 1;
+          const usedStock = magihalloStocks > 0;
+          if (usedStock) magihalloStocks -= 1;
+          const evilLoop = mode.key.includes("evil") && Math.random() < (Number(sim.magihalloEvilContinue) || 0.70);
+          const superContinue = mode.key === "super" && (magihalloSuperSets < (Number(sim.magihalloSuperGuarantee) || 5) || Math.random() < (Number(sim.magihalloSuperContinue) || 0.80));
+          if (mode.key === "super") magihalloSuperSets += 1;
+          const selfCorrect = !usedStock && !evilLoop && !superContinue && Math.random() < (Number(sim.magihalloSelfSixChance) || 1 / 6);
+          const won = usedStock || evilLoop || superContinue || selfCorrect;
+          if (won) {
+            magihalloChantWins += 1;
+            cycleContinues += 1;
+          }
+          atEvents.push({ kind: "magihallo-chant", label: "詠唱チャレンジ", games: Number(weighted(sim.magihalloMissionGames || [[10, 1]])) || 10, attempt: magihalloChantAttempts, usedStock, selfCorrect, evilLoop, superContinue, won, stocks: magihalloStocks, cumulative: payout });
+          flow.push(`詠唱チャレンジ ${won ? usedStock ? "ストックナビ成功" : evilLoop ? "悪〜ぷ継続" : superContinue ? "スーパー継続" : "6択正解" : "6択不正解・ART終了"}`);
+          if (!won) break;
+          if (upper) magihalloSpecialMode = { key: "super", label: sim.upperLabel };
+          else if (magihalloSpecialMode && !magihalloSpecialMode.key.includes("evil")) magihalloSpecialMode = null;
+        }
+        upperLoops = magihalloSuperSets;
         basePayout = payout - entryPayout;
       } else if (sim.gundamSeedFlow) {
         payout = entryPayout;
@@ -6007,13 +6148,14 @@
     const juohStats = sim.juohFlow ? [["サバンナチャンス", `${juohScSets}セット`], ["潜伏からのSC放出", `${juohSabaReturns}回`], ["最大ベルナビ", `${juohMaxNavi}回`], ["BONUS", `BIG ${juohBigCount}回・REG ${juohRegCount}回`], ["獲得SCストック", `${juohStocksWon}個`], ["超サバ", juohSuperSabaCount || upper ? "到達" : "非到達"], ["4大トリガー", juohTriggerCount ? `${juohTriggerCount}回` : "非当選"], ["KSCループ", `${juohKscLoops}回`], ["EX 30ナビ", `${juohExLoops}回`]] : [];
     const sunbreakStats = sim.sunbreakFlow ? [["今回の入口", sunbreakEntry?.label || sim.triggerLabel], ["盟勇クエスト", `${sunbreakQuestCount}回・討伐${sunbreakHunts}体`], ["討伐ゲーム数上乗せ", `+${sunbreakQuestAdds}G`], ["剥ぎ取りRUSH", `${sunbreakCarveEntries}回・+${sunbreakCarveAdds}G`], ["キュリアチャンス", `${sunbreakQuriaEntries}回・+${sunbreakQuriaAdds}G`], ["サンブレイクBONUS", `${sunbreakBonusCount}回`], ["最終モンスター", sunbreakMaxMonster], ["勇気の証明", sunbreakCourageAttempts ? `${sunbreakCourageAttempts}回・成功${sunbreakCourageWins}回` : "未到達"], [sim.upperLabel, sunbreakUpperLoops ? `${sunbreakUpperLoops}区間` : "非到達"], ["滅浄の裁き", sunbreakPurificationAttempts ? `${sunbreakPurificationAttempts}回・成功${sunbreakPurificationWins}回` : "未到達"]] : [];
     const paripiStats = sim.paripiFlow ? [["今回のCZ", paripiCz?.label || sim.triggerLabel], ["LIVE BONUS", `赤7 ${paripiRedCount}回・白7 ${paripiWhiteCount}回`], ["Party Time", `${paripiStLoops}セット`], ["パリピミッション", `${paripiMissionCount}回・成功${paripiMissionWins}回`], ["獲得兵法書", `${paripiScrollCount}個・${paripiScrollNames.length}/9種類`], ["兵法書一覧", paripiScrollNames.length ? paripiScrollNames.join("・") : "未獲得"], ["HEYHO ZONE", `${paripiHeyhoCount}回`], ["渋谷決戦BONUS", `${paripiShibuyaBonusCount}回`], ["渋谷決戦", paripiShibuyaAttempts ? `${paripiShibuyaAttempts}回・勝利${paripiShibuyaWins}回` : "未到達"], [sim.upperLabel, paripiUpperLoops ? `${paripiUpperLoops}セット` : "非到達"], ["究極孔明", paripiUltimateAttempts ? (paripiUltimateLoops ? `${paripiUltimateLoops}セット` : "抽選非当選") : "未到達"]] : [];
+    const magihalloStats = sim.magicalHalloween8Flow ? [["初当りBONUS", magihalloInitialBonus?.label || sim.triggerLabel], ["BONUS合計", `${magihalloBonusCount}回`], ["カボチャンス", `${magihalloSets}セット`], ["詠唱チャレンジ", `${magihalloChantAttempts}回・成功${magihalloChantWins}回`], ["カボチャ揃い", `${magihalloPumpkins}回`], ["まじかるちゃんす", `${magihalloMagicCount}回`], ["最高特殊ART", magihalloSpecialMode?.label || "通常カボチャンス"], [sim.upperLabel, magihalloSuperSets ? `${magihalloSuperSets}セット` : "非到達"]] : [];
     const gundamSeedStats = sim.gundamSeedFlow ? [["今回の入口", gundamSeedEntry?.label || sim.triggerLabel], ["初当りBONUS", gundamSeedInitialBonus?.label || (gundamSeedEntry?.upper ? "上位AT直撃" : "非当選")], ["ストライクライド", `${gundamSeedStRounds}セット・BONUS当選${gundamSeedBattleWins}回`], ["BONUS合計", `${gundamSeedBonusCount}回`], ["最終宿命ポイント", `${gundamSeedDestinyPoints}pt`], ["宿命ZONE", gundamSeedDestinyAttempts ? `${gundamSeedDestinyAttempts}回・成功${gundamSeedDestinyWins}回` : "未到達"], ["ストライクバースト", gundamSeedBurstAttempts ? `${gundamSeedBurstAttempts}回・後半${gundamSeedBurstBacks}回` : "未到達"], [sim.upperLabel, gundamSeedUpperSets ? `${gundamSeedUpperSets}セット・フルバースト${gundamSeedFullBursts}回` : "非到達"]] : [];
     const fireForceStats = sim.fireForceFlow ? [["今回の入口", fireForceEntry?.label || sim.triggerLabel], ["灰焔騎士団", fireForceGrayAttempts ? `${fireForceGrayAttempts}回・成功${fireForceGrayWins}回` : "非経由"], ["初当りBONUS", fireForceInitialBonus?.label || "非当選"], ["伝導者の影", fireForceShadowAttempts ? `${fireForceShadowAttempts}回・成功${fireForceShadowWins}回` : fireForceInitialBonus?.key === "episode" ? "エピソードBONUSから直行" : "非経由"], ["炎炎激闘", `${fireForceBattleRounds}セット・BONUS当選${fireForceBattleWins}回`], ["炎炎ループBONUS", `${fireForceBonusCount}回`], ["紅丸炎舞", fireForceBenimaruCount ? `${fireForceBenimaruCount}回` : "非当選"], ["森羅万象", fireForceShinraAttempts ? `${fireForceShinraAttempts}回・成功${fireForceShinraWins}回` : "未到達"], [sim.upperLabel, fireForceAdoraBursts ? `${fireForceAdoraBursts}回・JAC ${fireForceAdoraJacs}回` : "非到達"]] : [];
     const fireForce2Stats = sim.fireForce2Flow ? [["初当りBONUS", fireForce2InitialBonus?.label || sim.triggerLabel], ["BONUS内訳", `REG ${fireForce2RegularCount}回・エピソード ${fireForce2EpisodeCount}回・ループ中 ${fireForce2BonusCount}回`], ["伝導者の罠", fireForce2TrapAttempts ? `${fireForce2TrapAttempts}回・成功${fireForce2TrapWins}回` : "SPエピソードから直行"], ["炎炎ループ", `${fireForce2LoopRounds}セット・BONUS当選${fireForce2LoopWins}回`], ["最終ループ", fireForce2LoopMode?.label || "非突入"], ["炎炎BOOST", fireForce2BoostCount ? `${fireForce2BoostCount}回` : "非当選"], ["森羅万象", fireForce2ShinraAttempts ? `${fireForce2ShinraAttempts}回・成功${fireForce2ShinraWins}回` : "未到達"], [sim.upperLabel, fireForce2AdoraBursts ? `${fireForce2AdoraBursts}回・JAC ${fireForce2AdoraJacs}回` : "非到達"]] : [];
     const cycleStats = sim.cycleFlow ? [[sim.cycleFlow.statLabel || (sim.titleFlow ? "機種専用進行" : "専用ループ"), `${cycleRounds}回・継続${cycleContinues}回`]] : [];
     const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
     const rushGamesTotal = Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
-    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.gundamSeedFlow || sim.fireForceFlow || sim.fireForce2Flow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
+    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.magicalHalloween8Flow || sim.gundamSeedFlow || sim.fireForceFlow || sim.fireForce2Flow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
     const gameAddOnStats = sim.karakuriJudgeFlow || coinAddOnCount
       ? [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(coinAddOnTotal || addOnTotal)}枚` : "上乗せなし"]]
       : [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnGamesTotal || otomeAddedGames)}G` : "上乗せなし"]];
@@ -6068,6 +6210,8 @@
         ? [["RUSH・クエスト消化", `${yen.format(rushGamesTotal)}G相当`], ...sunbreakStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : sim.paripiFlow
         ? [["BONUS・ST消化", `${yen.format(rushGamesTotal)}G相当`], ...paripiStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
+      : sim.magicalHalloween8Flow
+        ? [["BONUS・ART消化", `${yen.format(rushGamesTotal)}G相当`], ...magihalloStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : sim.gundamSeedFlow
         ? [["BONUS・ST・上位消化", `${yen.format(rushGamesTotal)}G相当`], ...gundamSeedStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : sim.fireForceFlow
@@ -6098,6 +6242,8 @@
         ? `今回の設定は設定${setting}。${games}Gで${sunbreakEntry?.label || sim.triggerLabel}、${entered ? `盟勇クエスト${sunbreakQuestCount}回・討伐${sunbreakHunts}体、ゲーム数上乗せ合計+${sunbreakQuestAdds + sunbreakCarveAdds + sunbreakQuriaAdds}Gで${yen.format(payout)}枚を獲得しました。${sunbreakUpperLoops ? `${sim.upperLabel}を${sunbreakUpperLoops}区間消化しました。` : sunbreakCourageAttempts ? "勇気の証明で終了しました。" : "サンブレイクRUSHは残り0Gで終了しました。"}` : `${sunbreakEntry?.label || sim.triggerLabel}は突破できませんでした。`}`
       : sim.paripiFlow
         ? `今回の設定は設定${setting}。${games}Gで${paripiCz?.label || sim.triggerLabel}、${entered ? `赤7 ${paripiRedCount}回・白7 ${paripiWhiteCount}回、Party Time ${paripiStLoops}セットで${yen.format(payout)}枚を獲得しました。${paripiUltimateLoops ? `究極孔明を${paripiUltimateLoops}セット消化しました。` : paripiUpperLoops ? `超Party Timeを${paripiUpperLoops}セット消化しました。` : paripiShibuyaAttempts ? "渋谷決戦を経て終了しました。" : "Party Timeは15G＋αで終了しました。"}` : `${paripiCz?.label || sim.triggerLabel}は突破できませんでした。`}`
+      : sim.magicalHalloween8Flow
+        ? `今回の設定は設定${setting}。${games}Gで${magihalloInitialBonus?.label || sim.triggerLabel}、${entered ? `カボチャンスを${magihalloSets}セット・BONUSを${magihalloBonusCount}回消化して${yen.format(payout)}枚を獲得しました。${magihalloSuperSets ? `スーパーカボチャンスを${magihalloSuperSets}セット消化しました。` : magihalloSpecialMode ? `${magihalloSpecialMode.label}まで到達しました。` : "詠唱チャレンジの6択不正解でART終了となりました。"}` : `${magihalloInitialBonus?.label || "初当りBONUS"}後の詠唱チャレンジは6択不正解でした。`}`
       : sim.gundamSeedFlow
         ? `今回の設定は設定${setting}。${games}Gで${gundamSeedEntry?.label || sim.triggerLabel}、${entered ? `${gundamSeedBonusCount}回のBONUSとストライクライド${gundamSeedStRounds}セットで${yen.format(payout)}枚を獲得しました。${gundamSeedUpperSets ? `ストライクバーストを突破し、フリーダムハイパーを${gundamSeedUpperSets}セット消化しました。` : gundamSeedBurstAttempts ? "ストライクバーストを経て通常STへ戻りました。" : "宿命ポイントMAXには届かずST終了となりました。"}` : "ストライクアタックは突破できませんでした。"}`
       : sim.fireForceFlow
@@ -6809,6 +6955,7 @@
     const juohFlow = Boolean(machine.sim.juohFlow);
     const sunbreakFlow = Boolean(data.sunbreakFlow || machine.sim.sunbreakFlow);
     const paripiFlow = Boolean(data.paripiFlow || machine.sim.paripiFlow);
+    const magicalHalloween8Flow = Boolean(machine.sim.magicalHalloween8Flow);
     const gundamSeedFlow = Boolean(machine.sim.gundamSeedFlow);
     const fireForceFlow = Boolean(machine.sim.fireForceFlow);
     const fireForce2Flow = Boolean(machine.sim.fireForce2Flow);
@@ -6834,6 +6981,8 @@
       setExperienceStage(1, "QUEST ENTRY", data.sunbreakEntry?.label || data.hitLabel, `${yen.format(data.attempts)}G`, "専用CZを消化し、最後のPUSHでサンブレイクRUSHを判定", "hit", data.triggerSuccessChance, "CZ・AT直撃の機種専用ルート");
     } else if (paripiFlow) {
       setExperienceStage(1, "PARIPI CHANCE", data.paripiCz?.label || data.hitLabel, `${yen.format(data.attempts)}G`, "3種類の専用CZを消化し、最後のPUSHでLIVE BONUSを判定", "hit", data.triggerSuccessChance, "CZ別の公開成功期待度");
+    } else if (magicalHalloween8Flow) {
+      setExperienceStage(1, "BONUS HIT", data.entryBonus?.label || data.hitLabel, `${yen.format(data.attempts)}G`, "PUSHでBONUS種類と獲得枚数を開きます", "hit", 100, "A＋ART BONUS");
     } else if (gundamSeedFlow) {
       const entry = (Array.isArray(data.atEvents) ? data.atEvents : []).find(event => event.kind === "gundam-seed-entry");
       setExperienceStage(1, entry?.upper ? "FREEDOM DIRECT" : entry?.key === "direct" ? "BLACK BAR DIRECT" : "STRIKE ATTACK", entry?.label || data.hitLabel, `${yen.format(data.attempts)}G`, entry?.key === "cz" ? "18GのHITマスCZを進め、最後のPUSHで白BAR揃いを判定" : "直撃ルートの結果を開きます", "hit", Number(entry?.chance) || 62, "CZ／BONUS直撃／上位直撃");
@@ -6843,6 +6992,47 @@
       setExperienceStage(1, "INITIAL BONUS", data.entryBonus?.label || data.hitLabel, `${yen.format(data.attempts)}G`, "PUSHで初当りBONUSを開きます", "hit", 100, "REG／SPエピソードBONUS");
     }
     await waitForExperience(780);
+    if (magicalHalloween8Flow) {
+      const events = Array.isArray(data.atEvents) ? data.atEvents : [];
+      for (const event of events) {
+        if (runId !== experienceRunId) return;
+        setSlotAtStatus({ visible: true, remaining: Math.max(0, Number(event.games) || 0), remainingUnit: "G", addOn: Math.max(0, Number(event.stocks) || 0), addOnUnit: "個", total: Number(event.cumulative) || 0 });
+        if (event.kind === "magihallo-bonus") {
+          setExperienceStage(2, "BONUS TYPE", event.source || "初当りBONUS", "PUSH", "BONUS種類と獲得枚数を開きます", "judge", 100, "42〜203枚");
+          await waitForExperienceAction(`マジハロ8 BONUS ${event.initial ? "初当り" : event.source || "ART中"} PUSH`, 5000, event.key === "episode" ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 8), "G", event.key === "regular" ? "REGULAR BONUS" : "BIG BONUS", event.label, `+${yen.format(event.award)}枚`, 100, `${event.magical ? `まじかるちゃんす・ストック${yen.format(event.stocks)}個` : `累計${yen.format(event.cumulative)}枚`}`, runId);
+          if (!complete) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          await waitForExperience(650);
+        } else if (event.kind === "magihallo-chant") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 10), "G", "CHANT CHALLENGE", `詠唱チャレンジ ${event.attempt}`, "6択リプレイ成立までミッションを抽選", event.usedStock ? 100 : 100 / 6, event.usedStock ? `ARTストック ${yen.format(event.stocks + 1)}個` : "自力6択正解 約1/6", runId);
+          if (!complete) return;
+          setExperienceStage(2, "SIX CHOICE REPLAY", "詠唱チャレンジ 最終ゲーム", "PUSH", "ナビ／自力6択の結果を開きます", "judge", event.usedStock ? 100 : 100 / 6, event.mission ? event.special : "6択リプレイ");
+          await waitForExperienceAction(`詠唱チャレンジ ${event.attempt} PUSH`, 5000, event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(2, event.won ? "KABO CHANCE" : "CHANT END", event.won ? event.special || (event.usedStock ? "ストックナビ成功" : event.evilLoop ? "悪〜ぷ継続" : event.superContinue ? "スーパー継続" : "6択正解") : "6択不正解", event.won ? "ART突入" : "通常へ", event.won ? "30Gのカボチャンスへ" : "今回の一撃はここで終了", event.won ? "rush" : "end", event.won ? 100 : 0, `残りストック ${yen.format(event.stocks)}個`);
+          await waitForExperience(750);
+          if (!event.won) break;
+        } else if (event.kind === "magihallo-art") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 30), "G", "KABO CHANCE", `${event.label} SET ${event.set}`, "BONUSとカボチャ揃いでストックを狙います", event.pumpkin ? 100 : 18, `純増約1.0枚/G・累計${yen.format(event.cumulative)}枚`, runId);
+          if (!complete) return;
+          setExperienceStage(3, "ART RESULT", `${event.label} SET ${event.set}`, "PUSH", "カボチャ揃いとストック結果を開きます", "judge", event.pumpkin ? 100 : 18, `現在ストック ${yen.format(event.stocks)}個`);
+          await waitForExperienceAction(`カボチャンス ${event.set} PUSH`, 5000, event.pumpkin ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.pumpkin ? "PUMPKIN ALIGN" : "ART COMPLETE", event.pumpkin ? "カボチャ揃い" : "30G完走", event.pumpkin ? `+${yen.format(event.addedStocks)}個` : `+${yen.format(event.award)}枚`, `累計${yen.format(event.cumulative)}枚・詠唱チャレンジへ`, event.pumpkin ? "hyper" : "rush", 100, `SET ${event.set}結果`);
+          await waitForExperience(700);
+        } else if (event.kind === "magihallo-chimera") {
+          setExperienceStage(4, "CHIMERA BATTLE", "キメラバトル", "PUSH", "特殊ARTへの昇格を開きます", "judge", 50, event.before);
+          await waitForExperienceAction("キメラバトル PUSH", 5000, event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(4, event.won ? "MODE UPGRADE" : "BATTLE END", event.won ? "キメラ撃破" : "キメラ敗北", event.won ? event.after : event.before, event.won ? "次セットから特殊ART" : "現在モードを継続", event.won ? "hyper" : "end", event.won ? 100 : 0, "キメラバトル結果");
+          await waitForExperience(750);
+        }
+      }
+      setSlotAtStatus({ visible: true, remaining: 0, remainingUnit: "G", addOn: 0, addOnUnit: "個", total: Number(data.payout) || 0 });
+      return;
+    }
     if (gundamSeedFlow) {
       const events = Array.isArray(data.atEvents) ? data.atEvents : [];
       for (const event of events) {

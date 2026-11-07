@@ -9,8 +9,8 @@ vm.runInContext(source, sandbox);
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
 const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
-const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow || machine.sim?.godEaterFlow || machine.sim?.millionGodFlow || machine.sim?.juohFlow || machine.sim?.sunbreakFlow || machine.sim?.paripiFlow || machine.sim?.gundamSeedFlow || machine.sim?.fireForceFlow || machine.sim?.fireForce2Flow);
-const expectedProfiles = { battle: 6, st: 2, heaven: 3, bonus: 2, addon: 12 };
+const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow || machine.sim?.godEaterFlow || machine.sim?.millionGodFlow || machine.sim?.juohFlow || machine.sim?.sunbreakFlow || machine.sim?.paripiFlow || machine.sim?.magicalHalloween8Flow || machine.sim?.gundamSeedFlow || machine.sim?.fireForceFlow || machine.sim?.fireForce2Flow);
+const expectedProfiles = { battle: 6, st: 2, heaven: 3, bonus: 1, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -49,15 +49,22 @@ for (const [slug, machine] of declarativeFlows) {
 }
 
 if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
-if (declarativeFlows.length !== 25) errors.push(`expected 25 declarative dedicated flows, found ${declarativeFlows.length}`);
+if (declarativeFlows.length !== 24) errors.push(`expected 24 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(specializedFlows);
-if (specializedFlows.length !== 22 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["okidoki-black"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"] || !dedicatedMap["million-god-kiseki"] || !dedicatedMap["juoh-slot"] || !dedicatedMap["monster-hunter-sunbreak"] || !dedicatedMap["paripi-koumei-slot"] || !dedicatedMap["gundam-seed-slot"] || !dedicatedMap["fire-force-slot"] || !dedicatedMap["fire-force2-slot"]) {
-  errors.push(`expected twenty-two specialized flows including Gundam SEED and both Fire Force titles, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (specializedFlows.length !== 23 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["okidoki-black"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"] || !dedicatedMap["million-god-kiseki"] || !dedicatedMap["juoh-slot"] || !dedicatedMap["monster-hunter-sunbreak"] || !dedicatedMap["paripi-koumei-slot"] || !dedicatedMap["magical-halloween8"] || !dedicatedMap["gundam-seed-slot"] || !dedicatedMap["fire-force-slot"] || !dedicatedMap["fire-force2-slot"]) {
+  errors.push(`expected twenty-three specialized flows including Magical Halloween 8, Gundam SEED and both Fire Force titles, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
+  const magihallo = dedicatedMap["magical-halloween8"];
+  const magihalloSim = magihallo.sim;
+  if (magihalloSim.cycleFlow || magihalloSim.titleFlow) errors.push("magical-halloween8: legacy reusable flow still exists");
+  if (!Array.isArray(magihalloSim.magihalloBonuses) || magihalloSim.magihalloBonuses.length !== 5) errors.push("magical-halloween8: bonus types are incomplete");
+  if (!Array.isArray(magihalloSim.magihalloMissionGames) || magihalloSim.magihalloMissionGames.length !== 5) errors.push("magical-halloween8: chant mission games are incomplete");
+  if (!Array.isArray(magihalloSim.magihalloSpRewards) || magihalloSim.magihalloSpRewards.length !== 7) errors.push("magical-halloween8: special ART rewards are incomplete");
+  if (Number(magihalloSim.magihalloArtGames) !== 30 || Number(magihalloSim.atPureIncrease) !== 1) errors.push("magical-halloween8: ART model is incorrect");
   const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
   if (sim.cycleFlow || sim.titleFlow) errors.push("tokyo-ghoul-slot: legacy reusable flow still exists");

@@ -5282,6 +5282,40 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.titleFlow;
 })();
 
+(function applyMagicalHalloween8DedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["magical-halloween8"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "5種類のBONUSから詠唱チャレンジへ。30Gのカボチャンスを重ね、悪・王・極・スーパーカボチャンスを目指す。",
+    intro: "A＋ARTのBONUS、6択リプレイまで続く詠唱チャレンジ、1セット30Gのカボチャンス、まじかるちゃんす、キメラバトル、悪・王・極カボチャンス、スーパーカボチャンスまでを専用画面で体験できます。",
+    points: ["BONUS合算は設定1で約1/177.1", "カボチャンスは1セット30G・純増約1.0枚/G", "BONUS／ART後は必ず詠唱チャレンジへ", "ストックなしの6択正解は自力約1/6"],
+    specs: [["BONUS合算（設定1）", "約1/177.1"], ["ART初当り（設定1）", "約1/352.2"], ["ART初当り（設定6）", "約1/226.8"], ["ベース", "約34.3G/50枚"], ["カボチャンス", "1セット30G"], ["ART純増", "約1.0枚/G"], ["赤7BIG", "最大203枚"], ["白7BIG", "最大175枚"], ["赤赤白BIG", "最大154枚"], ["REG／殲滅BONUS", "最大42枚"], ["詠唱チャレンジ", "6択リプレイまで"], ["スーパーカボチャンス", "5セット保証＋継続抽選"]],
+    articleSections: [
+      { heading: "5種類のBONUSとART抽選", paragraphs: ["通常時は赤7BIG最大203枚、白7BIG最大175枚、赤赤白BIG最大154枚、殲滅BONUS最大42枚などのBONUSを目指します。エピソードBONUSならARTストック獲得が期待できます。", "BIG中のまじかるちゃんすは宝箱でストックを示唆。銅は1個以上、銀は3個以上、金は5個以上のストックに対応します。専用画面ではBONUS種類、獲得枚数、まじかるちゃんすをPUSHで開きます。"] },
+      { heading: "詠唱チャレンジとミッション", paragraphs: ["BONUS／ART終了後は必ず詠唱チャレンジへ移行し、6択リプレイ成立まで継続します。ストックがあればナビでARTへ、ストックがなければ自力6択正解でカボチャンスへ入ります。", "規定ゲーム数を消化するとEX・SP・極ミッションを抽選。EXは毎ゲーム約1/2でストック、SPは悪・王・極などの特殊ART、極は6択正解時に極モードへ進みます。"] },
+      { heading: "30Gのカボチャンスとストック", paragraphs: ["カボチャンスは1セット30Gの完走型ARTで、純増は約1.0枚/G。消化中のBONUSとカボチャ揃いで次セットのストックを狙います。", "同一セットでカボチャ揃いを重ねるとキングカボチャンスの期待が高まります。セット終了後は再び詠唱チャレンジへ進み、ストックまたは自力6択正解で次セットへつなぎます。"] },
+      { heading: "悪・王・極カボチャンス", paragraphs: ["キングカボチャンスはコイン成立時のストック抽選が強化され、まじかるちゃんすは金箱が濃厚。悪カボチャンスは継続率管理で、ストック獲得時に0G連の悪〜ぷを抽選します。", "極カボチャンスはレア役が高頻度となるストック特化型。モードは複合することがあり、悪王、極王、極悪、すべてを備えた究極悪王ワルティメットへ発展します。"] },
+      { heading: "スーパーカボチャンス", paragraphs: ["スーパーカボチャンスは5セット保証＋継続抽選の上位ART。BONUS中は0G連のまじかる〜ぷが発生し、極スーパーカボチャンスへの昇格もあります。", "シミュレーターでは保証5セットを消化した後に継続判定を行い、BONUS・ストック・特殊ARTへの変化を一連の履歴へ残します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約34.3G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6のBONUS・ART初当りは公開設定別値を使用", "BONUS、詠唱チャレンジ、30G ART、ストック、特殊ARTを専用進行", "SPミッションの特殊ART振り分けは公開値を使用", "BONUS中ストック率、特殊ART継続率など未公表部分は体験用代表値"] }
+    ],
+    sources: [["KONAMI 公式機種サイト", "https://www.konami.com/amusement/psm/slot/magihallo8/"], ["KONAMI 詠唱チャレンジ解説", "https://www.konami.com/amusement/psm/slot/magihallo8/16_hint.html?category=eisho"], ["一撃 機種解析", "https://1geki.jp/slot/l_magicalhalloween8/"], ["必勝本 BONUS解析", "https://p.hisshobon.jp/machine/4184/1/99272"], ["必勝本 詠唱チャレンジ解析", "https://p.hisshobon.jp/machine/4184/1/99274"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9921"]],
+    readerGuide: { verdict: "5種類のBONUSから詠唱チャレンジを経て、30GのARTストックをつなぐA＋ART型です。", bestFor: ["BONUS種類と獲得枚数をPUSHで見たい", "詠唱チャレンジの6択とストック連を体験したい", "悪・王・極・スーパーの特殊ARTを狙いたい"], check: ["BONUS枚数、主要ゲーム数、ART純増は公開値", "詠唱チャレンジとストック消費をセットごとに表示", "未公表の細かな当選率は体験用代表値"], compare: [["fire-force-slot", "Lパチスロ 炎炎ノ消防隊", "BONUSループ型と比較"], ["aobuta-slot", "スマスロ 青春ブタ野郎", "BONUS＋ST型と比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v23", dedicatedFlow: true, dedicatedFlowKey: "magical-halloween8", dedicatedFlowVersion: 2, magicalHalloween8Flow: true,
+    triggerLabel: "BONUS", triggerRate: 177.1, triggerSuccess: 0.503, mainLabel: "カボチャンス", mainRate: 352.2, base50: 34.3, coinUnit: 2.4, normalMin: 0, normalMax: 0, atPureIncrease: 1.0, atPayoutVariance: 0,
+    magihalloBonuses: [[{ key: "red", label: "赤7BIG", games: 34, award: 203 }, 0.22], [{ key: "white", label: "白7BIG", games: 30, award: 175 }, 0.13], [{ key: "mixed", label: "赤赤白BIG", games: 26, award: 154 }, 0.27], [{ key: "regular", label: "殲滅BONUS", games: 8, award: 42 }, 0.35], [{ key: "episode", label: "エピソードBONUS", games: 34, award: 203, stocks: 2 }, 0.03]],
+    magihalloMissionGames: [[1, 0.004], [3, 0.020], [5, 0.074], [7, 0.102], [10, 0.800]],
+    magihalloSpRewards: [[{ key: "king", label: "キングカボチャンス" }, 0.250], [{ key: "evil", label: "悪カボチャンス" }, 0.188], [{ key: "extreme", label: "極カボチャンス" }, 0.313], [{ key: "evil-king", label: "悪キングカボチャンス" }, 0.063], [{ key: "extreme-king", label: "極キングカボチャンス" }, 0.117], [{ key: "extreme-evil", label: "極悪カボチャンス" }, 0.063], [{ key: "ultimate", label: "究極悪王ワルティメットカボチャンス" }, 0.008]],
+    magihalloArtGames: 30, magihalloMaxSets: 16, magihalloBonusChance: 0.20, magihalloPumpkinChance: 0.18, magihalloMagicChance: 0.20, magihalloKingChance: 0.10, magihalloChimeraChance: 0.05, magihalloSuperChance: 0.015, magihalloSelfSixChance: 1 / 6, magihalloEvilContinue: 0.70, magihalloSuperGuarantee: 5, magihalloSuperContinue: 0.80,
+    specialLabel: "特殊カボチャンス", specialChance: 0.18, upperChallenge: "キメラバトル", upperChance: 0.05, upperSuccess: 0.50, upperLabel: "スーパーカボチャンス", upperContinue: 0.80, upperPayout: 0,
+    settingRates: { 1: { trigger: 177.1, main: 352.2, payout: 0.977 }, 2: { trigger: 175.7, main: 335.5, payout: 0.988 }, 3: { trigger: 174.3, main: 297.1, payout: 1.013 }, 4: { trigger: 171.6, main: 269.3, payout: 1.052 }, 5: { trigger: 170.2, main: 254.4, payout: 1.073 }, 6: { trigger: 167.6, main: 226.8, payout: 1.092 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
 
 (function applyFireForceDedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["fire-force-slot"];
