@@ -443,6 +443,14 @@
         ["裏鷹狩り", "18〜20G", "BIGをループ・期待枚数約3600枚"]
       ];
       note = "通常前兆、高確率・鷹狩り、BIG／REG、1G連ストック、Super BIG、裏鷹狩り、天国フォローを機種専用で記録します。";
+    } else if (sim.hokutoTensei2Flow) {
+      items = [
+        ["闘神演舞", "1セット30G", "勝舞魂を獲得"],
+        ["神拳勝舞", "1魂につき1G", "PUSHで1個ずつ当落"],
+        ["天撃", "4G・50%以上", "成功で裏闘神演舞"],
+        ["裏闘神演舞", "初回70G＋赤魂2個", "次セット30〜300G"]
+      ];
+      note = "闘神演舞、魂1個ずつの神拳勝舞、拳王強襲・SPバトル、天撃、裏闘神演舞を機種専用で記録します。";
     } else if (sim.kinnikuman7Flow) {
       items = [
         ["7人の悪魔超人", "1セット26G", "前半11G＋バトル15G"],
@@ -772,6 +780,11 @@
       charts.push(ratioChartMarkup("TAKA GARI", "鷹狩りのBONUS当選割合", [["BONUS当選", 0.69], ["前兆終了", 0.31]], "約69%", "鷹狩り突入時の公表BONUS期待度です。"));
       charts.push(ratioChartMarkup("SUPER BIG", "Super BIGの1G連期待度", [["1G連", 0.95], ["非当選", 0.05]], "約95%", "Super BIG終了後の公表1G連期待度です。"));
       note = "BIG約711枚・REG約72枚、鷹狩り約69%、Super BIGの1G連約95%は公開値です。BIG／REG比率と通常BONUS中のストック率は体験用代表値です。";
+    } else if (sim.hokutoTensei2Flow) {
+      charts.push(ratioChartMarkup("SHINKEN SHOBU", "勝舞魂1個あたりのトータル勝利割合", [["勝利", 0.20], ["敗北", 0.80]], "約1/5", "1魂につき1Gで勝敗を抽選する公表目安です。小役によって勝率が変わります。"));
+      charts.push(ratioChartMarkup("REPLAY", "リプレイ成立時の勝利割合", [["勝利", 0.262], ["敗北", 0.738]], "約26.2%", "神拳勝舞中のリプレイ成立時に公開されている勝利期待度です。"));
+      charts.push(ratioChartMarkup("TENGEKI", "天撃の上位AT成功割合", [["裏闘神演舞", 0.50], ["天撃失敗", 0.50]], "50%以上", "突入ゲームを含む4Gで裏闘神演舞を目指す公表期待度です。"));
+      note = "神拳勝舞は成立役ごとに勝率が異なります。円グラフはトータル目安、リプレイ、天撃を別々に示しています。";
     } else if (sim.kinnikuman7Flow) {
       charts.push(ratioChartMarkup("SET SCENARIO", "通常ATの最低セット継続割合", [["継続", 0.50], ["終了", 0.50]], "50%以上", "全8シナリオの最低継続率です。4戦目以降は全シナリオ65%以上、7戦目は85%以上です。"));
       charts.push(ratioChartMarkup("AKUMA SHOGUN", "エピソード後の上位AT期待割合", [["悪魔大行進", 0.90], ["魔界の荒野", 0.10]], "約90%", "7戦突破後の30Gエピソードを経由した初回悪魔将軍バトルの公表期待度です。"));
@@ -861,6 +874,9 @@
   function czGameMarkup() {
     const sim = machine.sim;
     if (sim.kind !== "slot") return "";
+    if (sim.hokutoTensei2Flow) {
+      return `<section class="machine-cz-guide" id="cz-game" aria-labelledby="machine-cz-title"><div class="machine-cz-head"><span>TOUSHIN ENBU</span><h3 id="machine-cz-title">${machine.shortName}のゲーム性</h3><p>30Gで勝舞魂を集め、魂が尽きる前に神拳勝舞を突破。天撃から裏闘神演舞を目指します。</p></div><div class="machine-cz-flow" aria-label="${escapeHtml(`${machine.shortName}のゲームフロー`)}"><div><span>01</span><strong>規定あべし</strong><small>AT初当りへ</small></div><i aria-hidden="true">›</i><div><span>02</span><strong>闘神演舞</strong><small>30G・勝舞魂獲得</small></div><i aria-hidden="true">›</i><div><span>03</span><strong>神拳勝舞</strong><small>1魂ずつPUSH</small></div><i aria-hidden="true">›</i><div><span>04</span><strong>天撃</strong><small>4G・50%以上</small></div></div><div class="machine-cz-upper"><span>UPPER ROUTE</span><strong>裏闘神演舞</strong><i aria-hidden="true">→</i><strong>裏神拳勝舞</strong><small>残り赤魂で30〜300Gへ</small></div><div class="machine-cz-detail-grid"><article><span>30G SET</span><h4>闘神演舞</h4><p>純増約4.0枚/G。30G消化後のPUSHで今回の勝舞魂と拳王強襲・SPバトルを表示します。</p></article><article><span>ONE SOUL ONE PUSH</span><h4>神拳勝舞</h4><p>勝つまで魂を1個ずつ使用。勝利時の残り魂は次セットへ持ち越し、0個ならAT終了です。</p></article><article><span>ROLE CHANCE</span><h4>成立役ごとに勝率変化</h4><p>ハズレ約7.8%から強チェリー勝利濃厚まで、公表されている役別期待度で抽選します。</p></article><article><span>UPPER AT</span><h4>天撃と裏闘神演舞</h4><p>天撃4Gを突破すると初回70G＋赤勝舞魂2個。次セットは残り赤魂に応じて30〜300Gへ。</p></article></div></section>`;
+    }
     if (sim.kinnikuman7Flow) {
       return `<section class="machine-cz-guide" id="cz-game" aria-labelledby="machine-cz-title"><div class="machine-cz-head"><span>SEVEN DEVIL CHOJIN</span><h3 id="machine-cz-title">${machine.shortName}のゲーム性</h3><p>26Gのセットを7戦突破し、悪魔将軍バトルから100枚＋αの悪魔大行進へ進みます。</p></div><div class="machine-cz-flow" aria-label="${escapeHtml(`${machine.shortName}のゲームフロー`)}"><div><span>01</span><strong>正義超人ゾーン</strong><small>超人パワーを獲得</small></div><i aria-hidden="true">›</i><div><span>02</span><strong>7人の悪魔超人</strong><small>11G＋15G×最大7戦</small></div><i aria-hidden="true">›</i><div><span>03</span><strong>悪魔将軍バトル</strong><small>初回上位期待度約90%</small></div><i aria-hidden="true">›</i><div><span>04</span><strong>悪魔大行進</strong><small>100枚＋α・約65〜99%</small></div></div><div class="machine-cz-upper"><span>魔界ループ</span><strong>悪魔大行進終了</strong><i aria-hidden="true">→</i><strong>魔界の荒野</strong><small>30G＋α・引き戻し約30%</small></div><div class="machine-cz-detail-grid"><article><span>26G SET</span><h4>前半11G＋バトル15G</h4><p>前半を消化後、最後のPUSHで悪魔超人との勝敗を開きます。勝利時は約159枚を累計へ加算します。</p></article><article><span>EIGHT SCENARIOS</span><h4>全8種類・最低50%</h4><p>セットごとの公開下限値で継続抽選。4戦目以降65%以上、7戦目は85%以上です。</p></article><article><span>BUFFALOMAN</span><h4>乱入勝利で残り勝利</h4><p>SP発動時はバッファローマン乱入を表示し、残りの7戦まで勝利として進めます。</p></article><article><span>MAKAI LOOP</span><h4>上位ATと引き戻し</h4><p>悪魔大行進の初期枚数、継続PUSH、魔界の荒野、再び悪魔将軍バトルまで累計枚数を引き継ぎます。</p></article></div><p class="machine-cz-note">8シナリオの選択率、バッファローマンSP選択率、上位初期枚数の細かな振り分けは非公表のため体験用代表値です。</p></section>`;
     }
@@ -1034,6 +1050,15 @@
         ["BONUS", "上乗せ・出玉", `ATのゲーム数上乗せや上位ATはありません。BIG・REGの獲得枚数を積み重ね、総投入枚数との差から最終差枚と収支目安を算出します。`]
       ];
       note = "BIG・REG確率と出玉率は設定別値を使用します。小役確率、単独・重複当選、技術介入による差は簡易モデルに含めません。";
+    } else if (sim.hokutoTensei2Flow) {
+      cards = [
+        ["GAME FLOW", "ゲーム性", "規定あべしから闘神演舞へ。30Gで勝舞魂を集め、神拳勝舞では勝つまで魂を1個ずつPUSHします。勝利時の残り魂は次セットへ持ち越します。"],
+        ["TOUSHIN ENBU", "闘神演舞30G", "1セット30G＋α・純増約4.0枚/G。闘神レベルと成立役で勝舞魂を獲得し、拳王強襲・SPバトルでは追加の魂を獲得します。"],
+        ["SHINKEN SHOBU", "役別の勝利抽選", "ハズレ・10枚ベル約7.8%、リプレイ約26.2%、右下がりベル約32.0%、勝舞図柄約53.4%。チャンス目約75%、強チェリーは勝利濃厚です。"],
+        ["TENGEKI", "4Gの上位ジャッジ", "天撃は突入ゲームを含む4G・成功期待度50%以上。最終PUSH成功で裏闘神演舞へ進みます。"],
+        ["URA TOUSHIN", "赤勝舞魂とゲーム数アップ", "初回70G＋赤勝舞魂2個。裏神拳勝舞に勝利すると、残った赤勝舞魂に応じて次セット30〜300Gを決定します。"]
+      ];
+      note = "ゲーム数・純増・小役別神拳勝舞勝率・天撃期待度・上位初回条件は公開値です。勝舞魂の獲得個数や特化ゾーンの出現率は体験用代表値です。";
     } else if (sim.kinnikuman7Flow) {
       cards = [
         ["GAME FLOW", "ゲーム性", "正義超人ゾーンからATへ入り、前半11Gとバトル15Gを1セットとして最大7戦。セット最終PUSHで継続を開き、7戦突破後は上位ジャッジへ進みます。"],
@@ -1780,7 +1805,7 @@
       const averageInvestment = Math.round((machine.sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
-      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow || machine.sim.millionGodFlow || machine.sim.juohFlow || machine.sim.sunbreakFlow || machine.sim.paripiFlow || machine.sim.bancho4Flow || machine.sim.zenigata4Flow || machine.sim.inuyasha2Flow || machine.sim.godzillaEvaFlow || machine.sim.dmc5Flow || machine.sim.initialD2Flow || machine.sim.lupinDaikoukaishaFlow || machine.sim.toloveruDarknessFlow || machine.sim.biohazard5Flow || machine.sim.yoshimuneFlow || machine.sim.chibariyo2Flow || machine.sim.kinnikuman7Flow || machine.sim.goldenKamuyFlow || machine.sim.superBlackjackFlow || machine.sim.magicalHalloween8Flow || machine.sim.gundamSeedFlow || machine.sim.fireForceFlow || machine.sim.fireForce2Flow;
+      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow || machine.sim.millionGodFlow || machine.sim.juohFlow || machine.sim.sunbreakFlow || machine.sim.paripiFlow || machine.sim.bancho4Flow || machine.sim.zenigata4Flow || machine.sim.inuyasha2Flow || machine.sim.godzillaEvaFlow || machine.sim.dmc5Flow || machine.sim.initialD2Flow || machine.sim.lupinDaikoukaishaFlow || machine.sim.toloveruDarknessFlow || machine.sim.biohazard5Flow || machine.sim.yoshimuneFlow || machine.sim.chibariyo2Flow || machine.sim.hokutoTensei2Flow || machine.sim.kinnikuman7Flow || machine.sim.goldenKamuyFlow || machine.sim.superBlackjackFlow || machine.sim.magicalHalloween8Flow || machine.sim.gundamSeedFlow || machine.sim.fireForceFlow || machine.sim.fireForce2Flow;
       const settingModelLabel = machine.sim.settingRates
         ? hasDedicatedFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
         : hasDedicatedFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
@@ -1891,6 +1916,7 @@
     if (sim.biohazard5Flow) settingModelLabel = "公開設定別値（CZ・AT初当り・上乗せ専用進行）";
     if (sim.yoshimuneFlow) settingModelLabel = "公開設定別値（BONUS・1G連・裏鷹狩り専用進行）";
     if (sim.chibariyo2Flow) settingModelLabel = "公開設定別値（花笠BONUS・32G連・リミットレス専用進行）";
+    if (sim.hokutoTensei2Flow) settingModelLabel = "公開設定別値（勝舞魂・神拳勝舞・裏闘神演舞専用進行）";
     if (sim.kinnikuman7Flow) settingModelLabel = "公開設定別値（7戦・悪魔将軍バトル・魔界ループ専用進行）";
     const base = Math.max(20, Number(document.getElementById("baseRate").value) || sim.base50);
     const lendCoins = Math.max(40, Number(document.getElementById("lendCoins").value) || RANKING_RATE.slot.lendCoins);
@@ -2271,6 +2297,17 @@
     let chibariyoLimitlessCount = 0;
     let chibariyoRewriteCount = 0;
     let chibariyoHighestMode = "天国A";
+    let hokutoSets = 0;
+    let hokutoSoulGained = 0;
+    let hokutoSoulSpent = 0;
+    let hokutoShinkenWins = 0;
+    let hokutoKenohCount = 0;
+    let hokutoSpCount = 0;
+    let hokutoTengekiAttempts = 0;
+    let hokutoTengekiWins = 0;
+    let hokutoUpperSets = 0;
+    let hokutoUpperBattleWins = 0;
+    let hokutoMaxSouls = 0;
     let kinnikumanScenario = null;
     let kinnikumanBattles = 0;
     let kinnikumanWins = 0;
@@ -7198,6 +7235,128 @@
         upperLoops = chibariyoLimitlessCount;
         atEvents.push({ kind: "chibariyo-end", label: "花笠BONUS連終了", chain, mode: modeLabels[currentMode], cumulative: payout });
         basePayout = payout - entryPayout;
+      } else if (sim.hokutoTensei2Flow) {
+        payout = 0;
+        basePayout = 0;
+        let souls = Math.max(0, Number(sim.hokutoInitialSouls) || 2);
+        let normalWon = true;
+        const setGames = Math.max(1, Number(sim.hokutoSetGames) || 30);
+        const normalPure = Math.max(0.1, Number(sim.atPureIncrease) || 4.0);
+        const maxSets = Math.max(1, Number(sim.hokutoMaxSets) || 20);
+        flow.push(`勝舞魂${souls}個を持って闘神演舞開始`);
+        for (let set = 1; set <= maxSets && normalWon && payout < SLOT_COMPLETE_LIMIT; set += 1) {
+          hokutoSets += 1;
+          const soulsBefore = souls;
+          let soulGain = Math.max(1, Number(weighted(sim.hokutoSoulGains || [[2, 1]])) || 2);
+          const kenoh = Math.random() < Math.max(0, Math.min(1, Number(sim.hokutoKenohChance) || 0.08));
+          const sp = Math.random() < Math.max(0, Math.min(1, Number(sim.hokutoSpChanceOnWin) || 0.05));
+          let bonusSouls = 0;
+          if (kenoh) {
+            bonusSouls += Math.max(1, Number(weighted(sim.hokutoKenohSouls || [[3, 1]])) || 3);
+            hokutoKenohCount += 1;
+          }
+          if (sp) {
+            bonusSouls += Math.max(1, Number(weighted(sim.hokutoSpSouls || [[3, 1]])) || 3);
+            hokutoSpCount += 1;
+          }
+          soulGain += bonusSouls;
+          souls += soulGain;
+          hokutoSoulGained += soulGain;
+          hokutoMaxSouls = Math.max(hokutoMaxSouls, souls);
+          const award = Math.max(0, Math.min(Math.round(setGames * normalPure), SLOT_COMPLETE_LIMIT - payout));
+          payout += award;
+          atGamesTotal += setGames;
+          atEvents.push({ kind: "hokuto2-toushin", label: "闘神演舞", set, games: setGames, soulsBefore, soulGain, bonusSouls, soulsAfter: souls, kenoh, sp, award, cumulative: payout });
+          flow.push(`闘神演舞 SET ${set}・勝舞魂+${soulGain}個`);
+
+          const attempts = [];
+          let won = false;
+          let attempt = 0;
+          while (souls > 0 && !won) {
+            attempt += 1;
+            souls -= 1;
+            hokutoSoulSpent += 1;
+            const role = weighted(sim.hokutoRoles || [[{ key: "miss", label: "ハズレ・10枚ベル", chance: 0.078 }, 1]]);
+            const chance = Math.max(0, Math.min(1, Number(role?.chance) || 0.078));
+            won = Math.random() < chance;
+            attempts.push({ index: attempt, role: role?.label || "成立役", key: role?.key || "role", chance: chance * 100, won, remaining: souls });
+          }
+          if (won) {
+            hokutoShinkenWins += 1;
+            cycleContinues += 1;
+          }
+          cycleRounds = hokutoSets;
+          normalWon = won;
+          atEvents.push({ kind: "hokuto2-shinken", label: "神拳勝舞", set, attempts, spent: attempts.length, won, remaining: souls, cumulative: payout });
+          flow.push(`神拳勝舞 ${attempts.length}魂使用・${won ? `勝利（残り${souls}個）` : "全敗・AT終了"}`);
+        }
+
+        let tengekiTriggered = payout < SLOT_COMPLETE_LIMIT && Math.random() < Math.max(0, Math.min(1, Number(sim.hokutoTengekiChance) || 0.12));
+        if (tengekiTriggered) {
+          hokutoTengekiAttempts += 1;
+          const tengekiWon = Math.random() < Math.max(0, Math.min(1, Number(sim.hokutoTengekiSuccess) || 0.50));
+          if (tengekiWon) hokutoTengekiWins += 1;
+          atEvents.push({ kind: "hokuto2-tengeki", label: "天撃", attempt: hokutoTengekiAttempts, games: Number(sim.hokutoTengekiGames) || 4, chance: (Number(sim.hokutoTengekiSuccess) || 0.50) * 100, won: tengekiWon, cumulative: payout });
+          flow.push(`天撃 ${tengekiWon ? "成功・裏闘神演舞" : "失敗"}`);
+          if (tengekiWon) {
+            upper = true;
+            let upperActive = true;
+            let upperGames = Math.max(30, Number(sim.hokutoUpperFirstGames) || 70);
+            let redSouls = Math.max(1, Number(sim.hokutoUpperFirstSouls) || 2);
+            while (upperActive && hokutoUpperSets < Math.max(1, Number(sim.hokutoUpperMaxSets) || 12) && payout < SLOT_COMPLETE_LIMIT) {
+              hokutoUpperSets += 1;
+              upperLoops = hokutoUpperSets;
+              const first = hokutoUpperSets === 1;
+              const hyakuretsu = !first && Math.random() < Math.max(0, Math.min(1, Number(sim.hokutoHyakuretsuChance) || 0.12));
+              if (hyakuretsu && Math.random() < Math.max(0, Math.min(1, Number(sim.hokutoHyakuretsuRewrite) || 0.50))) {
+                upperGames = Math.max(100, Number(weighted([[100, 0.72], [200, 0.20], [300, 0.08]])) || 100);
+              }
+              const redGain = first ? 0 : Math.max(1, Number(weighted(sim.hokutoUpperSoulGains || [[2, 1]])) || 2);
+              redSouls += redGain;
+              hokutoSoulGained += redGain;
+              hokutoMaxSouls = Math.max(hokutoMaxSouls, redSouls);
+              const upperAward = Math.max(0, Math.min(Math.round(upperGames * (Number(sim.upperPureIncrease) || 4.0)), SLOT_COMPLETE_LIMIT - payout));
+              payout += upperAward;
+              upperPayoutTotal += upperAward;
+              atGamesTotal += upperGames;
+              atEvents.push({ kind: "hokuto2-upper", label: "裏闘神演舞", set: hokutoUpperSets, games: upperGames, first, hyakuretsu, soulGain: redGain, soulsAfter: redSouls, award: upperAward, cumulative: payout });
+
+              const upperAttempts = [];
+              let upperWon = false;
+              let upperAttempt = 0;
+              while (redSouls > 0 && !upperWon) {
+                upperAttempt += 1;
+                redSouls -= 1;
+                hokutoSoulSpent += 1;
+                const role = weighted(sim.hokutoUpperRoles || [[{ key: "red-bell", label: "ベル", chance: 0.28 }, 1]]);
+                const chance = Math.max(0, Math.min(1, Number(role?.chance) || 0.28));
+                upperWon = Math.random() < chance;
+                upperAttempts.push({ index: upperAttempt, role: role?.label || "成立役", key: role?.key || "role", chance: chance * 100, won: upperWon, remaining: redSouls });
+              }
+              if (upperWon) {
+                hokutoUpperBattleWins += 1;
+                const minimumGames = redSouls >= 20 ? 100 : redSouls >= 10 ? 70 : redSouls >= 5 ? 50 : redSouls >= 3 ? 40 : 30;
+                upperGames = Math.max(minimumGames, Number(weighted(sim.hokutoUpperGames || [[30, 1]])) || 30);
+              }
+              atEvents.push({ kind: "hokuto2-upper-shinken", label: "裏神拳勝舞", set: hokutoUpperSets, attempts: upperAttempts, spent: upperAttempts.length, won: upperWon, remaining: redSouls, nextGames: upperWon ? upperGames : 0, cumulative: payout });
+              if (!upperWon && payout < SLOT_COMPLETE_LIMIT) {
+                hokutoTengekiAttempts += 1;
+                const retryWon = Math.random() < Math.max(0, Math.min(1, Number(sim.hokutoTengekiSuccess) || 0.50));
+                if (retryWon) hokutoTengekiWins += 1;
+                atEvents.push({ kind: "hokuto2-tengeki", label: "天撃", attempt: hokutoTengekiAttempts, games: Number(sim.hokutoTengekiGames) || 4, chance: (Number(sim.hokutoTengekiSuccess) || 0.50) * 100, won: retryWon, retry: true, cumulative: payout });
+                upperActive = retryWon;
+                if (retryWon) {
+                  upperGames = Math.max(30, Number(sim.hokutoUpperFirstGames) || 70);
+                  redSouls = Math.max(1, Number(sim.hokutoUpperFirstSouls) || 2);
+                }
+              } else {
+                upperActive = upperWon;
+              }
+            }
+          }
+        }
+        atEvents.push({ kind: "hokuto2-end", label: upper ? "裏闘神演舞終了" : "闘神演舞終了", sets: hokutoSets, wins: hokutoShinkenWins, upperSets: hokutoUpperSets, souls: souls, cumulative: payout });
+        basePayout = payout;
       } else if (sim.kinnikuman7Flow) {
         // 初当り時の汎用払い出しは使わず、26Gセットの実消化分から積み上げる。
         payout = 0;
@@ -7956,7 +8115,7 @@
           }
           flow.push(`${karakuriUpperRoute}突破 → ${sim.upperLabel} ${upperLoops}セット・+${yen.format(upperPayoutTotal)}枚`);
         }
-      } else if (!sim.battleBonusFlow && !sim.sgRaceFlow && !sim.kabaneriStFlow && !sim.otomeRushFlow && !sim.cycleFlow && !sim.godzillaEva2Flow && !sim.mahoakoFlow && !sim.okidokiGoldFlow && !sim.uminchuFlow && !sim.tentenFlow && !sim.goblinSlayerFlow && !sim.assaultLilyFlow && !sim.kaguyaFlow && !sim.dumbbellFlow && !sim.shinEvaFlow && !sim.sao2Flow && !sim.symphogearSeigiFlow && !sim.lycorisFlow && !sim.kanokariFlow && !sim.biohazard5Flow && !sim.kinnikuman7Flow) {
+      } else if (!sim.battleBonusFlow && !sim.sgRaceFlow && !sim.kabaneriStFlow && !sim.otomeRushFlow && !sim.cycleFlow && !sim.godzillaEva2Flow && !sim.mahoakoFlow && !sim.okidokiGoldFlow && !sim.uminchuFlow && !sim.tentenFlow && !sim.goblinSlayerFlow && !sim.assaultLilyFlow && !sim.kaguyaFlow && !sim.dumbbellFlow && !sim.shinEvaFlow && !sim.sao2Flow && !sim.symphogearSeigiFlow && !sim.lycorisFlow && !sim.kanokariFlow && !sim.biohazard5Flow && !sim.hokutoTensei2Flow && !sim.kinnikuman7Flow) {
         // Keep the published overall special-zone chance while allowing rare multi-hit runs.
         const specialChecks = Math.max(1, Math.min(3, Math.ceil(payout / 500)));
         const perCheckChance = 1 - Math.pow(1 - specialChance, 1 / specialChecks);
@@ -8108,6 +8267,7 @@
     const biohazardStats = sim.biohazard5Flow ? [["今回のCZ", biohazardCz?.label || "AT直撃"], ["HAZARD RUSH", biohazardAtSections ? `${biohazardAtSections}区間` : "非突入"], ["インフェクション", biohazardInfectionGames ? `+${biohazardInfectionGames}G` : "非当選"], ["ゲーム数上乗せ", biohazardAddCount ? `${biohazardAddCount}回・+${biohazardAddGames}G` : "上乗せなし"], ["変異上乗せ", biohazardMutationCount ? `${biohazardMutationCount}回` : "非当選"], ["ウロボロスモード", biohazardUroborosCount ? `${biohazardUroborosCount}回` : "非当選"], ["EPISODE", `${biohazardEpisodeCount}/${Number(sim.bioEpisodeTarget) || 10}話`], ["シューティングバースト", biohazardBurstCount ? `${biohazardBurstCount}回` : "非当選"], [sim.upperChallenge, biohazardUpperCzAttempts ? `${biohazardUpperCzAttempts}回・成功${biohazardUpperCzWins}回` : "未到達"], [sim.upperLabel, biohazardUpperStages ? `${biohazardUpperStages}ステージ` : "非到達"]] : [];
     const yoshimuneStats = sim.yoshimuneFlow ? [["今回の前兆", yoshimuneRoute?.label || "高確率"], ["初当りBONUS", yoshimuneInitialBonus?.label || "BIG BONUS"], ["BIG BONUS", `${yoshimuneBigCount}回`], ["REG BONUS", `${yoshimuneRegCount}回`], ["Super BIG", yoshimuneSuperBigCount ? `${yoshimuneSuperBigCount}回` : "非当選"], ["1G連ストック", `${yoshimuneOneGameStocks}個`], ["1G連BIG", `${yoshimuneOneGameBigs}回`], ["最大BONUS連", `${yoshimuneMaxChain}連`], ["裏鷹狩り", yoshimuneUpperAttempts ? `${yoshimuneUpperAttempts}回・成功${yoshimuneUpperWins}回` : "非到達"], ["裏鷹狩りBIG", `${yoshimuneUpperBigs}回`], ["天国フォロー", yoshimuneHeavenBonus ? `${yoshimuneHeavenBonus.label}当選` : "なし"]] : [];
     const chibariyoStats = sim.chibariyo2Flow ? [["初当りBONUS", chibariyoInitialBonus?.label || "花笠BONUS"], ["BONUS内訳", `REG ${chibariyoRegCount}回・BIG ${chibariyoBigCount}回・SBB ${chibariyoSbigCount}回`], ["最大32G連", `${chibariyoMaxChain}連`], ["1G連", `${chibariyoOneGameCount}回`], ["最高モード", chibariyoHighestMode], ["赤パトランプ", chibariyoRedCount ? `${chibariyoRedCount}回` : "非到達"], ["虹パトランプ", chibariyoRainbowCount ? `${chibariyoRainbowCount}回` : "非到達"], ["リミットレス", chibariyoLimitlessCount ? `${chibariyoLimitlessCount}回` : "非到達"], ["スイカ書き換え", `${chibariyoRewriteCount}回`]] : [];
+    const hokutoStats = sim.hokutoTensei2Flow ? [["闘神演舞", `${hokutoSets}セット`], ["勝舞魂獲得", `${hokutoSoulGained}個（最大所持${hokutoMaxSouls}個）`], ["神拳勝舞", `${hokutoSoulSpent}魂使用・勝利${hokutoShinkenWins}回`], ["拳王強襲", hokutoKenohCount ? `${hokutoKenohCount}回` : "非当選"], ["SPバトル", hokutoSpCount ? `${hokutoSpCount}回` : "非当選"], ["天撃", hokutoTengekiAttempts ? `${hokutoTengekiAttempts}回・成功${hokutoTengekiWins}回` : "未到達"], ["裏闘神演舞", hokutoUpperSets ? `${hokutoUpperSets}セット` : "非到達"], ["裏神拳勝舞", hokutoUpperSets ? `勝利${hokutoUpperBattleWins}回` : "未到達"]] : [];
     const kinnikumanStats = sim.kinnikuman7Flow ? [["継続シナリオ", kinnikumanScenario?.name || "非突入"], ["悪魔超人バトル", `${kinnikumanBattles}戦・勝利${kinnikumanWins}回`], ["バッファローマンSP", kinnikumanBuffaloSp ? "発動・残り勝利" : "非発動"], ["7戦突破エピソード", kinnikumanEpisodeReached ? "30G消化" : "未到達"], ["悪魔将軍バトル", kinnikumanShogunAttempts ? `${kinnikumanShogunAttempts}回・勝利${kinnikumanShogunWins}回` : "未到達"], ["悪魔大行進", kinnikumanUpperSets ? `${kinnikumanUpperSets}セット` : "非到達"], ["魔界の荒野", kinnikumanWildernessReturns ? `${kinnikumanWildernessReturns}回` : "未到達"]] : [];
     const goldenKamuyStats = sim.goldenKamuyFlow ? [["初当りBONUS", goldenKamuyInitialBonus?.label || sim.triggerLabel], ["黄金神威", goldenKamuyAtSections ? `${goldenKamuyAtSections}区間` : "非突入"], ["ゲーム数上乗せ", goldenKamuyAddCount ? `${goldenKamuyAddCount}回・+${goldenKamuyAddGames}G` : "上乗せなし"], ["GOLDEN BONUS", `${Math.max(0, goldenKamuyBonusCount - 1)}回`], ["覚醒／極・覚醒", goldenKamuyAwakeningCount ? `${goldenKamuyAwakeningCount}回` : "非当選"], [sim.upperChallenge, upper ? "2000枚到達・通過" : "未到達"], [sim.upperLabel, goldenKamuyUpperSections ? `${goldenKamuyUpperSections}区間` : "非到達"]] : [];
     const sbjStats = sim.superBlackjackFlow ? [["初当りBONUS", sbjInitialBonus?.label || sim.triggerLabel], ["BONUS合計", `${sbjBonusCount}回`], ["リオチャンス", `${sbjRcCount}回`], ["最高RC報酬", sbjBestReward], ["STOCK TIME", sbjStCount ? `${sbjStCount}回・合計${sbjStGamesTotal}G` : "非当選"], ["RCストック獲得", `${sbjRcStocks}個`], [sim.upperLabel, sbjSstCount ? `${sbjSstCount}回・合計${sbjSstGamesTotal}G` : "非到達"]] : [];
@@ -8117,10 +8277,10 @@
     const fireForce2Stats = sim.fireForce2Flow ? [["初当りBONUS", fireForce2InitialBonus?.label || sim.triggerLabel], ["BONUS内訳", `REG ${fireForce2RegularCount}回・エピソード ${fireForce2EpisodeCount}回・ループ中 ${fireForce2BonusCount}回`], ["伝導者の罠", fireForce2TrapAttempts ? `${fireForce2TrapAttempts}回・成功${fireForce2TrapWins}回` : "SPエピソードから直行"], ["炎炎ループ", `${fireForce2LoopRounds}セット・BONUS当選${fireForce2LoopWins}回`], ["最終ループ", fireForce2LoopMode?.label || "非突入"], ["炎炎BOOST", fireForce2BoostCount ? `${fireForce2BoostCount}回` : "非当選"], ["森羅万象", fireForce2ShinraAttempts ? `${fireForce2ShinraAttempts}回・成功${fireForce2ShinraWins}回` : "未到達"], [sim.upperLabel, fireForce2AdoraBursts ? `${fireForce2AdoraBursts}回・JAC ${fireForce2AdoraJacs}回` : "非到達"]] : [];
     const cycleStats = sim.cycleFlow ? [[sim.cycleFlow.statLabel || (sim.titleFlow ? "機種専用進行" : "専用ループ"), `${cycleRounds}回・継続${cycleContinues}回`]] : [];
     const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
-    const rushGamesTotal = sim.kinnikuman7Flow
+    const rushGamesTotal = sim.kinnikuman7Flow || sim.hokutoTensei2Flow
       ? atEvents.reduce((sum, event) => sum + Math.max(0, Number(event.games) || 0), 0)
       : Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
-    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.bancho4Flow || sim.zenigata4Flow || sim.inuyasha2Flow || sim.dmc5Flow || sim.initialD2Flow || sim.lupinDaikoukaishaFlow || sim.toloveruDarknessFlow || sim.biohazard5Flow || sim.yoshimuneFlow || sim.chibariyo2Flow || sim.kinnikuman7Flow || sim.goldenKamuyFlow || sim.superBlackjackFlow || sim.magicalHalloween8Flow || sim.gundamSeedFlow || sim.fireForceFlow || sim.fireForce2Flow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
+    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.bancho4Flow || sim.zenigata4Flow || sim.inuyasha2Flow || sim.dmc5Flow || sim.initialD2Flow || sim.lupinDaikoukaishaFlow || sim.toloveruDarknessFlow || sim.biohazard5Flow || sim.yoshimuneFlow || sim.chibariyo2Flow || sim.hokutoTensei2Flow || sim.kinnikuman7Flow || sim.goldenKamuyFlow || sim.superBlackjackFlow || sim.magicalHalloween8Flow || sim.gundamSeedFlow || sim.fireForceFlow || sim.fireForce2Flow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
     const gameAddOnStats = sim.karakuriJudgeFlow || coinAddOnCount
       ? [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(coinAddOnTotal || addOnTotal)}枚` : "上乗せなし"]]
       : [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnGamesTotal || otomeAddedGames)}G` : "上乗せなし"]];
@@ -8195,6 +8355,8 @@
         ? [["BONUS消化回数", `${yen.format(bonusCount)}回`], ...yoshimuneStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
       : sim.chibariyo2Flow
         ? [["BONUS・32G消化", `${yen.format(rushGamesTotal)}G相当`], ...chibariyoStats, ["BONUS獲得", `${yen.format(bonusPayoutTotal)}枚`]]
+      : sim.hokutoTensei2Flow
+        ? [["AT・神拳勝舞消化", `${yen.format(rushGamesTotal)}G相当`], ...hokutoStats]
       : sim.kinnikuman7Flow
         ? [["AT・魔界ループ消化", `${yen.format(rushGamesTotal)}G相当`], ...kinnikumanStats]
       : sim.goldenKamuyFlow
@@ -8253,6 +8415,8 @@
         ? `今回の設定は設定${setting}。${games}Gで${yoshimuneRoute?.label || "高確率"}から${yoshimuneInitialBonus?.label || "BONUS"}に当選。BIG ${yoshimuneBigCount}回・REG ${yoshimuneRegCount}回、最大${yoshimuneMaxChain}連で${yen.format(payout)}枚を獲得しました。${yoshimuneUpperBigs ? `1G連ストック2個以上から裏鷹狩りへ入り、BIGを${yoshimuneUpperBigs}回獲得しました。` : yoshimuneOneGameBigs ? `1G連BIGを${yoshimuneOneGameBigs}回獲得しました。` : "1G連ジャッジは非当選でした。"}`
       : sim.chibariyo2Flow
         ? `今回の設定は設定${setting}。${games}Gで花笠ランプが点灯し、REG ${chibariyoRegCount}回・BIG ${chibariyoBigCount}回・SUPER BIG ${chibariyoSbigCount}回、最大${chibariyoMaxChain}連で${yen.format(payout)}枚を獲得しました。最高モードは${chibariyoHighestMode}、1G連は${chibariyoOneGameCount}回です。`
+      : sim.hokutoTensei2Flow
+        ? `今回の設定は設定${setting}。${games}Gで闘神演舞に当選し、闘神演舞${hokutoSets}セット・神拳勝舞勝利${hokutoShinkenWins}回で${yen.format(payout)}枚を獲得しました。${hokutoUpperSets ? `天撃を突破し、裏闘神演舞を${hokutoUpperSets}セット消化しました。` : hokutoTengekiAttempts ? "天撃の当落を経て終了しました。" : "勝舞魂が0個となり闘神演舞終了です。"}`
       : sim.kinnikuman7Flow
         ? `今回の設定は設定${setting}。${games}Gで正義超人ゾーン、${entered ? `${kinnikumanScenario?.name || "継続シナリオ"}で悪魔超人${kinnikumanBattles}戦・勝利${kinnikumanWins}回、${yen.format(payout)}枚を獲得しました。${kinnikumanUpperSets ? `悪魔将軍バトルを${kinnikumanShogunWins}回突破し、悪魔大行進を${kinnikumanUpperSets}セット消化しました。` : kinnikumanEpisodeReached ? "7戦突破後、悪魔将軍バトルと魔界の荒野を経て終了しました。" : "7人の悪魔超人のバトル敗北で終了しました。"}` : "正義超人ゾーンからATには届きませんでした。"}`
       : sim.goldenKamuyFlow
@@ -8983,6 +9147,7 @@
     const biohazard5Flow = Boolean(data.biohazard5Flow || machine.sim.biohazard5Flow);
     const yoshimuneFlow = Boolean(data.yoshimuneFlow || machine.sim.yoshimuneFlow);
     const chibariyo2Flow = Boolean(machine.sim.chibariyo2Flow);
+    const hokutoTensei2Flow = Boolean(machine.sim.hokutoTensei2Flow);
     const kinnikuman7Flow = Boolean(machine.sim.kinnikuman7Flow);
     const goldenKamuyFlow = Boolean(machine.sim.goldenKamuyFlow);
     const superBlackjackFlow = Boolean(machine.sim.superBlackjackFlow);
@@ -9002,7 +9167,9 @@
     }
     if (runId !== experienceRunId) return;
     setExperienceStage(1, magiaRecordFlow ? "BONUS HIT" : bofuriFlow ? "HIGH PROBABILITY ZONE" : okidokiGoldFlow ? "HIBISCUS LIGHT" : uminchuFlow ? "BONUS HIT" : basiliskTenzenFlow ? "BASILISK CHANCE" : sao2Flow ? "SQUADRON BATTLE" : symphogearSeigiFlow ? "AXZ BATTLE" : lycorisFlow ? (data.lycorisCz?.key === "direct" ? "DIRECT RUSH" : "CHANCE ZONE") : aobutaFlow ? "SEISHUN BONUS" : tentenFlow ? "EPISODE BATTLE" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "DIRECT AT" : "CHANCE ZONE") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "DIRECT AT" : data.assaultEntry?.key === "bouquet" ? "BOUQUET BONUS" : "LILY CHALLENGE") : kaguyaFlow ? "LOVE BRAIN BATTLE" : dumbbellFlow ? "MUSCLE ZONE" : shinEvaFlow ? "INITIAL HIT" : tokyoGhoulFlow ? "CHANCE ZONE" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", basiliskTenzenFlow ? (data.basiliskBc?.label || data.hitLabel) : tokyoGhoulFlow ? (data.tokyoGhoulCz?.label || data.hitLabel) : lycorisFlow ? (data.lycorisCz?.label || data.hitLabel) : goblinSlayerFlow ? (data.goblinCz?.label || data.hitLabel) : assaultLilyFlow ? (data.assaultEntry?.label || data.hitLabel) : data.hitLabel, `${yen.format(data.attempts)}G`, magiaRecordFlow ? "初当りBONUSを消化し、最後のPUSHでマギアラッシュを判定" : bofuriFlow ? "高確率ZONEを進め、最後のPUSHでBONUSを判定" : okidokiGoldFlow ? "ハイビスカス点灯・初当りBONUS確定" : basiliskTenzenFlow ? `${data.basiliskBc?.games || 16}GのBCでバジリスクタイムを抽選` : sao2Flow ? "スコードロンバトルの最後にPUSHでBoB突入を判定" : symphogearSeigiFlow ? "AXZバトルを進め、最後のPUSHでAXZラッシュを判定" : lycorisFlow ? (data.lycorisCz?.key === "direct" ? "アフターエピソードからRUSHへ直行" : `${data.lycorisCz?.games || 10}GのCZを進め、最後のPUSHでRUSHを判定`) : aobutaFlow ? "青春BONUS後は必ず4セット＋αの完走型STへ" : tokyoGhoulFlow ? "8GのCZを進め、最後のPUSHで東京喰種咬を判定" : uminchuFlow ? "告知音とともに初当りBONUSへ" : tentenFlow ? "10GのレベルUPパートと4Gのバトルへ" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "規定ゲーム数からAT直撃" : "CZの専用ゲーム数を進めて最後にPUSH") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "規定ゲーム数・レア役などからRUSH直撃" : data.assaultEntry?.key === "bouquet" ? "25GのBONUS後にRUSHを判定" : "10Gの専用CZを進めて最後にPUSH") : kaguyaFlow ? "恋愛頭脳戦を経て15G＋αのCZへ" : dumbbellFlow ? "10Gの前半パートから後半発展を目指します" : shinEvaFlow ? "3GのEVANGELION IMPACTで作戦を決定します" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
-    if (kinnikuman7Flow) {
+    if (hokutoTensei2Flow) {
+      setExperienceStage(1, "ABESHI TARGET", data.hitLabel, `${yen.format(data.attempts)}G`, "規定あべし到達・30Gの闘神演舞へ", "hit", 100, "AT初当りは設定別公開値");
+    } else if (kinnikuman7Flow) {
       setExperienceStage(1, "JUSTICE CHOJIN ZONE", data.hitLabel, `${yen.format(data.attempts)}G`, "超人パワーを獲得し、最後のPUSHでATを判定", "hit", data.triggerSuccessChance, "正義超人ゾーンからATへ");
     } else if (godEaterFlow) {
       setExperienceStage(1, "AT HIT", "アラガミバースト", `${yen.format(data.attempts)}G`, "初回ストーリー100枚からアラガミ交戦へ", "hit", 100, "AT初当り");
@@ -9327,6 +9494,59 @@
         }
       }
       setSlotAtStatus({ visible: true, remaining: 0, remainingUnit: "G", addOnGames: 0, total: Number(data.payout) || 0 });
+      return;
+    }
+    if (hokutoTensei2Flow) {
+      const events = Array.isArray(data.atEvents) ? data.atEvents : [];
+      for (const event of events) {
+        if (runId !== experienceRunId) return;
+        setSlotAtStatus({ visible: true, remaining: Math.max(0, Number(event.games) || 0), remainingUnit: "G", addOnGames: 0, total: Number(event.cumulative) || 0 });
+        setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+        if (event.kind === "hokuto2-toushin") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 30), "G", "TOUSHIN ENBU", `闘神演舞 SET ${event.set}`, "成立役と闘神レベルで勝舞魂を抽選", 100, `開始時 勝舞魂${event.soulsBefore}個`, runId);
+          if (!complete) return;
+          setExperienceStage(3, event.kenoh ? "KENOH ASSAULT" : event.sp ? "SP BATTLE" : "SHOBU-DAMA", `闘神演舞 SET ${event.set} 結果`, "PUSH", "獲得した勝舞魂を開きます", "judge", 100, "30G消化結果");
+          await waitForExperienceAction(`闘神演舞 SET ${event.set} PUSH`, 5000, event.kenoh || event.sp || Number(event.soulGain) >= 7 ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, event.kenoh ? "拳王強襲" : event.sp ? "SP BATTLE" : "勝舞魂獲得", `勝舞魂 +${event.soulGain}個`, `所持 ${event.soulsAfter}個`, event.kenoh || event.sp ? `特化上乗せ +${event.bonusSouls}個を含む` : `累計${yen.format(event.cumulative)}枚`, event.kenoh || event.sp ? "hyper" : "rush", 100, `闘神演舞 SET ${event.set}`);
+          await waitForExperience(800);
+        } else if (event.kind === "hokuto2-shinken" || event.kind === "hokuto2-upper-shinken") {
+          const upperBattle = event.kind === "hokuto2-upper-shinken";
+          for (const attempt of event.attempts || []) {
+            if (runId !== experienceRunId) return;
+            setSlotAtStatus({ visible: true, remaining: Number(attempt.remaining) + 1, remainingUnit: upperBattle ? "赤魂" : "魂", addOnGames: 0, total: Number(event.cumulative) || 0 });
+            setExperienceStage(upperBattle ? 4 : 3, upperBattle ? "URA SHINKEN SHOBU" : "SHINKEN SHOBU", `${upperBattle ? "裏" : ""}神拳勝舞 ${attempt.index}G目`, "PUSH", `${upperBattle ? "赤" : ""}勝舞魂を1個使います`, "judge", Number(attempt.chance) || 20, `残り${Number(attempt.remaining) + 1}個`);
+            await waitForExperienceAction(`${upperBattle ? "裏" : ""}神拳勝舞 ${event.set}-${attempt.index} PUSH`, 5000, attempt.won ? "gold" : "normal");
+            if (runId !== experienceRunId) return;
+            setExperienceStage(upperBattle ? 4 : 3, attempt.won ? "BATTLE WIN" : "BATTLE CONTINUE", attempt.role, attempt.won ? "勝利" : "敗北", attempt.won ? `残り${attempt.remaining}個を${upperBattle ? "ゲーム数アップ" : "次セット"}へ` : attempt.remaining ? `残り${attempt.remaining}個・次のPUSHへ` : "勝舞魂0個・AT終了", attempt.won ? "rush" : attempt.remaining ? "judge" : "end", attempt.won ? 100 : 0, `役別勝率 約${Number(attempt.chance).toFixed(1)}%`);
+            await waitForExperience(attempt.won || !attempt.remaining ? 780 : 430);
+          }
+          if (upperBattle && event.won) {
+            setExperienceStage(4, "GAME UP", "裏神拳勝舞 勝利", `${event.nextGames}G`, `残り赤勝舞魂${event.remaining}個から次セットゲーム数を決定`, "hyper", 100, "獲得枚数とは別表示");
+            await waitForExperience(850);
+          }
+        } else if (event.kind === "hokuto2-tengeki") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 4), "G", "TENGEKI", event.retry ? "裏神拳勝舞敗北後" : "上位ATチャレンジ", "4Gで裏闘神演舞を抽選", Number(event.chance) || 50, "成功期待度50%以上", runId);
+          if (!complete) return;
+          setExperienceStage(4, "TENGEKI FINAL", "天撃 最終ゲーム", "PUSH", "裏闘神演舞の当落を開きます", "judge", Number(event.chance) || 50, "4G最終結果");
+          await waitForExperienceAction(`天撃 ${event.attempt} PUSH`, 5000, event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(4, event.won ? "URA TOUSHIN ENBU" : "TENGEKI END", event.won ? "天撃成功" : "天撃失敗", event.won ? "上位AT突入" : "通常へ", event.won ? "初回70G＋赤勝舞魂2個" : "今回の一撃は終了", event.won ? "hyper" : "end", event.won ? 100 : 0, "天撃結果");
+          await waitForExperience(900);
+        } else if (event.kind === "hokuto2-upper") {
+          const complete = await animateExperienceCounter(Math.max(1, Number(event.games) || 30), "G", "URA TOUSHIN ENBU", `上位 SET ${event.set}・${event.games}G`, event.hyakuretsu ? "百裂モード・100G以上書き換えチャンス" : "赤勝舞魂を獲得", 100, `+${yen.format(event.award)}枚`, runId);
+          if (!complete) return;
+          setExperienceStage(4, "RED SHOBU-DAMA", `裏闘神演舞 SET ${event.set} 結果`, "PUSH", "赤勝舞魂の獲得数を開きます", "judge", 100, event.first ? "初回70G＋赤魂2個" : `${event.games}G消化`);
+          await waitForExperienceAction(`裏闘神演舞 SET ${event.set} PUSH`, 5000, Number(event.soulsAfter) >= 7 ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(4, "RED SHOBU-DAMA", `赤勝舞魂 +${event.soulGain}個`, `所持 ${event.soulsAfter}個`, "裏神拳勝舞へ", "hyper", 100, `累計${yen.format(event.cumulative)}枚`);
+          await waitForExperience(800);
+        } else if (event.kind === "hokuto2-end") {
+          setExperienceStage(4, "AT END", event.label, "RESULT", `闘神演舞${event.sets}セット・神拳勝舞勝利${event.wins}回・上位${event.upperSets}セット`, "end", 0, `累計${yen.format(event.cumulative)}枚`);
+          await waitForExperience(850);
+        }
+      }
+      setSlotAtStatus({ visible: true, remaining: 0, remainingUnit: "魂", addOnGames: 0, total: Number(data.payout) || 0 });
       return;
     }
     if (kinnikuman7Flow) {

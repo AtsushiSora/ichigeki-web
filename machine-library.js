@@ -5657,6 +5657,49 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.entryBonusAwardsNote;
 })();
 
+(function applyHokutoTensei2DedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["hokuto-tensei2"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "30Gの闘神演舞で勝舞魂を集め、1魂ずつPUSH。天撃の先に裏闘神演舞。",
+    intro: "闘神演舞30Gで勝舞魂を獲得し、神拳勝舞では勝舞魂1個につき1G・PUSH1回で継続を判定。天撃4Gから裏闘神演舞へ進み、赤勝舞魂とゲーム数アップまでを機種専用画面で体験できます。",
+    points: ["闘神演舞は1セット30G・純増約4.0枚/G", "神拳勝舞は勝舞魂1個につき1G・トータル勝率約1/5", "勝利時の残り勝舞魂は次セットへ持ち越し", "天撃は4G・成功期待度50%以上"],
+    specs: [["AT初当り（設定1）", "約1/366.0"], ["AT初当り（設定6）", "約1/273.1"], ["ベース", "約31.5G/50枚"], ["コイン単価", "約3.5円"], ["闘神演舞", "1セット30G・純増約4.0枚/G"], ["神拳勝舞", "勝舞魂1個につき1G"], ["勝舞魂トータル勝率", "約1/5"], ["天撃", "4G・成功期待度50%以上"], ["裏闘神演舞", "初回70G＋赤勝舞魂2個"], ["上位セット", "30〜300G"]],
+    articleSections: [
+      { heading: "規定あべしから闘神演舞へ", paragraphs: ["通常時は規定あべし到達を軸にAT『闘神演舞』を目指します。AT初当りは設定1約1/366.0〜設定6約1/273.1。専用シミュレーターはSTART時に設定1〜6を均等抽選し、公開されている設定別初当り確率を使用します。", "通常時のモード・天破の刻・前兆の全抽選は初当り確率へ集約し、初当り後から実機のAT順で進めます。"] },
+      { heading: "闘神演舞30Gで勝舞魂を獲得", paragraphs: ["闘神演舞は1セット30G＋α、純増約4.0枚/G。成立役と闘神レベルを参照して勝舞魂を獲得し、拳王強襲やSPバトルが絡むと魂の大量獲得にも期待できます。", "専用画面では30Gのカウント後にPUSHで今回の勝舞魂を表示します。勝舞魂の細かな獲得分布は未公表部分があるため、公開されているゲーム構造に沿った体験用代表値です。"] },
+      { heading: "勝舞魂1個につき1Gの神拳勝舞", paragraphs: ["神拳勝舞は勝舞魂1個につき1G。1個ずつPUSHし、勝利するまで残り魂を減らします。勝利すれば残った勝舞魂を次セットへ持ち越し、0個まで敗北するとAT終了です。", "トータル勝率は約1/5。小役別ではハズレ・10枚ベル約7.8%、リプレイ約26.2%、右下がりベル約32.0%、勝舞図柄約53.4%、スイカ約50%、チャンス目約75%、強チェリーは勝利濃厚という公開値を抽選へ反映します。"] },
+      { heading: "天撃から裏闘神演舞へ", paragraphs: ["天撃は突入ゲームを含む4Gで、成功期待度は50%以上。成功すると裏闘神演舞へ進みます。失敗後は天国移行が濃厚となり、次回初当りで上位へ進むルートがありますが、1回のシミュレーション内では天撃終了として集計します。", "裏闘神演舞は初回70G＋赤勝舞魂2個から開始。以後は30〜300Gを獲得し、裏神拳勝舞の勝利時は残った赤勝舞魂に応じて次セットのゲーム数が上がります。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約31.5G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6を均等抽選し、AT初当りと出玉率は公開設定別値を使用", "30G闘神演舞、魂1個ずつの神拳勝舞、天撃、裏闘神演舞を専用進行", "勝舞魂獲得個数、拳王強襲・SPバトル・天撃の到達配分など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["サミー 公式機種情報", "https://www.sammy.co.jp/japanese/product/pachislot/sp_hok_ke_tensei/"], ["パチマガスロマガ 神拳勝舞解析", "https://psmaga.com/e/pachi/pla/s_conq/sammy_slot/222/at03.php"], ["なな徹 神拳勝舞解析", "https://nana-press.com/kaiseki/machine/1059/33032/"], ["なな徹 天撃・裏闘神演舞解析", "https://nana-press.com/kaiseki/machine/1059/33035/"], ["パチ＆スロ必勝本 AT解説", "https://p.hisshobon.jp/machine/4636/1/113102"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10370"]],
+    readerGuide: { verdict: "30Gで集めた勝舞魂を1個ずつ使い、勝つまでPUSHする自力継続型ATです。", bestFor: ["勝舞魂が尽きる前に勝つ緊張感を楽しみたい", "小役ごとの勝率差をPUSHで確認したい", "天撃から裏闘神演舞を目指したい"], check: ["ATゲーム数・純増・神拳勝舞の小役別勝率・天撃期待度は公開値", "勝利時は残った魂を次セットへ持ち越し", "未公表の魂獲得分布・ルート比率は体験用代表値"], compare: [["kinnikuman-7-slot", "スマスロ キン肉マン", "7戦シナリオ型ATと比較"], ["monster-hunter-rise-slot", "スマスロ モンハンライズ", "討伐PUSH型ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v38", dedicatedFlow: true, dedicatedFlowKey: "hokuto-tensei2", dedicatedFlowVersion: 2, hokutoTensei2Flow: true,
+    triggerLabel: "規定あべし", triggerRate: 366, triggerSuccess: 1, mainLabel: "闘神演舞", mainRate: 366, base50: 31.5, coinUnit: 3.5,
+    normalMin: 0, normalMax: 0, atPureIncrease: 4.0, upperPureIncrease: 4.0, atPayoutVariance: 0,
+    hokutoSetGames: 30, hokutoInitialSouls: 2, hokutoMaxSets: 20,
+    hokutoSoulGains: [[1, 0.30], [2, 0.28], [3, 0.20], [5, 0.13], [7, 0.06], [10, 0.03]],
+    hokutoRoles: [[{ key: "miss", label: "ハズレ・10枚ベル", chance: 0.078 }, 0.49], [{ key: "replay", label: "リプレイ", chance: 0.262 }, 0.26], [{ key: "right-bell", label: "右下がりベル", chance: 0.320 }, 0.14], [{ key: "shobu", label: "勝舞図柄", chance: 0.534 }, 0.055], [{ key: "weak-cherry", label: "弱チェリー", chance: 0.670 }, 0.022], [{ key: "watermelon", label: "スイカ", chance: 0.500 }, 0.016], [{ key: "chance", label: "チャンス目", chance: 0.750 }, 0.011], [{ key: "strong-cherry", label: "強チェリー", chance: 1.000 }, 0.006]],
+    hokutoKenohChance: 0.08, hokutoKenohSouls: [[3, 0.40], [5, 0.32], [7, 0.18], [10, 0.10]],
+    hokutoSpChanceOnWin: 0.05, hokutoSpSouls: [[3, 0.34], [5, 0.30], [7, 0.20], [10, 0.11], [15, 0.05]],
+    hokutoTengekiChance: 0.12, hokutoTengekiGames: 4, hokutoTengekiSuccess: 0.50,
+    hokutoUpperFirstGames: 70, hokutoUpperFirstSouls: 2, hokutoUpperMaxSets: 12,
+    hokutoUpperSoulGains: [[1, 0.32], [2, 0.30], [3, 0.20], [5, 0.12], [7, 0.04], [10, 0.02]],
+    hokutoUpperRoles: [[{ key: "red-bell", label: "ベル", chance: 0.28 }, 0.48], [{ key: "red-replay", label: "リプレイ", chance: 0.42 }, 0.28], [{ key: "red-shobu", label: "勝舞図柄", chance: 0.75 }, 0.15], [{ key: "red-rare", label: "レア役", chance: 1.00 }, 0.09]],
+    hokutoUpperGames: [[30, 0.40], [40, 0.20], [50, 0.18], [70, 0.12], [100, 0.07], [200, 0.02], [300, 0.01]],
+    hokutoHyakuretsuChance: 0.12, hokutoHyakuretsuRewrite: 0.50,
+    specialLabel: "拳王強襲／SPバトル", specialChance: 0.08, upperChallenge: "天撃", upperChance: 0.12, upperSuccess: 0.50, upperLabel: "裏闘神演舞", upperContinue: 0.75, upperPayout: 0,
+    settingRates: { 1: { trigger: 366.0, main: 366.0, payout: 0.976 }, 2: { trigger: 357.0, main: 357.0, payout: 0.984 }, 3: { trigger: 336.3, main: 336.3, payout: 1.007 }, 4: { trigger: 298.7, main: 298.7, payout: 1.062 }, 5: { trigger: 283.2, main: 283.2, payout: 1.111 }, 6: { trigger: 273.1, main: 273.1, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+  delete machine.sim.entryBonusAwards;
+  delete machine.sim.entryBonusAwardsNote;
+})();
+
 (function applyInuyasha2DedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["inuyasha2-slot"];
   if (!machine) return;
