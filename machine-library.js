@@ -5181,6 +5181,71 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
 })();
 
 
+(function applyToaruIndex2DedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["toaru-index2-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "2種類のCZから幻想殺しRUSHへ。バトル勝利で『とある運命の上乗遊技』をつかむ。",
+    intro: "10Gのレールガンチャンス／アクセラレータチャンスからATを目指し、初期40G以上の幻想殺しRUSHへ。神の力・神の右席BATTLE、7段階の上乗せ報酬、フィアンマBATTLEまでを専用画面で体験できます。",
+    points: ["レールガンチャンスは10G・AT期待度約52%", "アクセラレータチャンスは10G・AT期待度約80%", "幻想殺しRUSHは初期40G以上・純増約4.0枚/G"],
+    specs: [["CZ（設定1）", "約1/235.6"], ["AT（設定1）", "約1/398.8"], ["AT（設定6）", "約1/338.4"], ["レールガンチャンス", "10G・AT期待度約52%"], ["アクセラレータチャンス", "10G・AT期待度約80%"], ["幻想殺しRUSH", "初期40G以上"], ["AT純増", "約4.0枚/G"], ["幻想リプレイ", "約1/99"], ["サポーター", "3G・平均約30G"], ["ヒロインズ", "5G・平均約60G"], ["イマジンブレイカー", "3G＋α・平均約310G"], ["設定", "1〜6ランダム"]],
+    articleSections: [
+      { heading: "2種類の10G CZからATへ", paragraphs: ["レールガンチャンスは10G・純増約2.2枚/G・AT期待度約52%。アクセラレータチャンスも10Gで、AT期待度は約80%です。", "シミュレーターではCZを最後まで進め、最終PUSHで幻想殺しRUSHの当落を開きます。通常時のAT直撃も独立した入口として扱います。"] },
+      { heading: "幻想殺しRUSHは初期40G以上", paragraphs: ["幻想殺しRUSHは純増約4.0枚/Gのゲーム数管理AT。レア役の直乗せ、指定ゲーム数のバトル、赤7揃いのATストックなどで継続を狙います。", "約1/99の幻想リプレイ後は3G間、小役が上位役へ変換される可能性があるため、シミュレーターではバトル・上乗せ契機の一部へ集約しています。"] },
+      { heading: "バトル勝利で上乗せ遊技", paragraphs: ["神の力BATTLE（ガブリエル）と神の右席BATTLEは、勝利すると『とある運命の上乗遊技』へ進みます。専用画面ではバトルを4G進め、最後のPUSHで勝敗と報酬を開きます。", "上乗せ遊技の報酬は＋20G、五和平均約50G、神裂火織約70G、御坂美琴約130G、一方通行約180G、竜王の顎約300G、自動書記平均約750Gを段階別に表示します。"] },
+      { heading: "PLUS ACTIONとフィアンマBATTLE", paragraphs: ["PLUS ACTIONはサポーター3G・平均約30G、ヒロインズ5G・平均約60G、イマジンブレイカー3G＋α・平均約310G。通常の上乗せと分けて記録します。", "AT終了時に権利を持っていればフィアンマBATTLEへ。成功時は上乗せ遊技を経て幻想殺しRUSHへ再突入する引き戻しルートとして表現します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約30.8G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6を均等抽選し、CZ・AT初当りは公式設定別値を使用", "CZ期待度、AT純増、主要ゲーム数、上乗せ平均は公開値を優先", "CZ選択率、バトル出現率・勝率、報酬振り分けなど未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["藤商事 公式機種情報", "https://www.fujimarukun.co.jp/products/l_toaru2/?search_type=2"], ["藤商事 公式プレスリリース", "https://www.fujimarukun.co.jp/corp/news/tdpr_20260619.pdf"], ["なな徹 機種解析", "https://nana-press.com/kaiseki/machine/1154/"], ["なな徹 とある運命の上乗遊技", "https://nana-press.com/kaiseki/machine/1154/38028/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10516"]],
+    readerGuide: {
+      verdict: "2種類のCZから初期40G以上のATへ入り、バトル勝利のPUSHで7段階のゲーム数上乗せを開くゲーム数管理型です。",
+      bestFor: ["CZ最終PUSHでAT当落を決めたい", "バトル勝利から上乗せ報酬を開きたい", "フィアンマBATTLEからAT再突入を狙いたい"],
+      check: ["CZ・AT初当り、CZ期待度、純増、主要ゲーム数は公開値", "上乗せ遊技のキャラ別平均を反映", "未公表の選択率・勝率は体験用代表値"],
+      compare: [["symphogear-seigi-slot", "スマスロ シンフォギア", "ゲーム数上乗せATと比較"], ["azur-lane-slot", "スマスロ アズールレーン", "バトル報酬型ATと比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v14",
+    dedicatedFlow: true,
+    dedicatedFlowKey: "toaru-index2-slot",
+    dedicatedFlowVersion: 2,
+    toaruIndex2Flow: true,
+    triggerLabel: "CZ・AT直撃",
+    triggerRate: 235.6,
+    triggerSuccess: 1,
+    mainLabel: "幻想殺しRUSH",
+    mainRate: 398.8,
+    base50: 30.8,
+    normalMin: 0,
+    normalMax: 0,
+    atPureIncrease: 4.0,
+    atPayoutVariance: 0,
+    toaruEntryRoutes: [[{ key: "railgun", label: "レールガンチャンス", games: 10, chance: 0.52 }, 0.82], [{ key: "accelerator", label: "アクセラレータチャンス", games: 10, chance: 0.80 }, 0.10], [{ key: "direct", label: "AT直撃", games: 1, chance: 1 }, 0.08]],
+    toaruBattleTypes: [[{ key: "gabriel", label: "神の力BATTLE ガブリエル", games: 4, chance: 0.50 }, 0.48], [{ key: "right-seat", label: "神の右席BATTLE", games: 4, chance: 0.50 }, 0.52]],
+    toaruChargeRewards: [[{ key: "plus20", label: "ゲーム数上乗せ", games: 20 }, 0.55], [{ key: "itsuwa", label: "五和", games: 50 }, 0.18], [{ key: "kaori", label: "神裂火織", games: 70 }, 0.10], [{ key: "mikoto", label: "御坂美琴", games: 130 }, 0.07], [{ key: "accelerator", label: "一方通行", games: 180 }, 0.045], [{ key: "dragon", label: "竜王の顎", games: 300 }, 0.035], [{ key: "auto-writing", label: "自動書記", games: 750 }, 0.02]],
+    toaruPlusActions: [[{ label: "サポーター", games: 30, zoneGames: 3 }, 0.60], [{ label: "ヒロインズ", games: 60, zoneGames: 5 }, 0.32], [{ label: "イマジンブレイカー", games: 310, zoneGames: 3 }, 0.08]],
+    toaruInitialGames: 40,
+    toaruBattleChance: 0.38,
+    toaruPlusActionChance: 0.11,
+    toaruFiammaChance: 0.28,
+    toaruFiammaSuccess: 0.50,
+    toaruMaxEvents: 14,
+    specialLabel: "とある運命の上乗遊技",
+    specialChance: 0.38,
+    upperChallenge: "フィアンマBATTLE",
+    upperChance: 0.28,
+    upperSuccess: 0.50,
+    upperLabel: "幻想殺しRUSH再突入",
+    upperContinue: 0,
+    upperPayout: 0,
+    settingRates: { 1: { trigger: 235.6, main: 398.8, payout: 0.979 }, 2: { trigger: 233.4, main: 394.5, payout: 0.987 }, 3: { trigger: 230.8, main: 389.6, payout: 1.000 }, 4: { trigger: 222.3, main: 369.5, payout: 1.045 }, 5: { trigger: 215.8, main: 358.0, payout: 1.082 }, 6: { trigger: 207.2, main: 338.4, payout: 1.133 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
+
 (function applyTokyoGhoulDedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["tokyo-ghoul-slot"];
   if (!machine) return;

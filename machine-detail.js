@@ -295,6 +295,14 @@
         ["設定抽選", slotSettingLabel, "設定3は非搭載"]
       ];
       note = "BONUS後32Gを毎回数え、10連後のIREGUIと獲得ストックを結果へ残します。";
+    } else if (sim.toaruIndex2Flow) {
+      items = [
+        ["CZ", `約1/${sim.triggerRate}`, "設定1のCZ合算"],
+        ["2種類のCZ", "約52%／約80%", "各10G"],
+        ["幻想殺しRUSH", "初期40G以上", "純増約4.0枚/G"],
+        ["上乗せ遊技", "20〜平均750G", "7段階の報酬"]
+      ];
+      note = "CZ、AT、バトル、キャラ別上乗せ、PLUS ACTION、フィアンマBATTLEを機種専用で記録します。";
     } else if (sim.magiaRecordFlow) {
       items = [
         ["初当りBONUS", `約1/${sim.triggerRate}`, "設定1のBONUS合算"],
@@ -453,6 +461,22 @@
         "天国モード滞在時の代表ループ率です。金ドキによる再連は別抽選です。"
       ));
       note = "BONUS内訳は設定1の公表確率から算出し、天国の継続割合とは別に表示しています。モード初回振り分けは非公表のため円グラフには含めていません。";
+    } else if (sim.toaruIndex2Flow) {
+      charts.push(ratioChartMarkup(
+        "RAILGUN CHANCE",
+        "レールガンチャンスのAT期待度",
+        [["AT当選", 0.52], ["AT非当選", 0.48]],
+        "約52%",
+        "10Gのレールガンチャンスから幻想殺しRUSHへ進む公表期待度です。"
+      ));
+      charts.push(ratioChartMarkup(
+        "ACCELERATOR CHANCE",
+        "アクセラレータチャンスのAT期待度",
+        [["AT当選", 0.80], ["AT非当選", 0.20]],
+        "約80%",
+        "10Gのアクセラレータチャンスから幻想殺しRUSHへ進む公表期待度です。"
+      ));
+      note = "2種類のCZ期待度は別々の公開値です。CZ選択率、バトル出現率・勝率、報酬選択率など未公表部分は円グラフに含めていません。";
     } else if (sim.magiaRecordFlow) {
       charts.push(ratioChartMarkup(
         "BIG BONUS",
@@ -644,6 +668,9 @@
   function czGameMarkup() {
     const sim = machine.sim;
     if (sim.kind !== "slot") return "";
+    if (sim.toaruIndex2Flow) {
+      return `<section class="machine-cz-guide" id="cz-game" aria-labelledby="machine-cz-title"><div class="machine-cz-head"><span>CZ TO IMAGINE BREAKER RUSH</span><h3 id="machine-cz-title">${machine.shortName}のゲーム性</h3><p>2種類の10G CZからATへ進み、バトル勝利で7段階の上乗せ報酬を開きます。</p></div><div class="machine-cz-flow" aria-label="${escapeHtml(`${machine.shortName}のゲームフロー`)}"><div><span>01</span><strong>通常時</strong><small>幻想リプレイ約1/99</small></div><i aria-hidden="true">›</i><div><span>02</span><strong>2種類のCZ</strong><small>10G・約52%／約80%</small></div><i aria-hidden="true">›</i><div><span>03</span><strong>幻想殺しRUSH</strong><small>初期40G以上</small></div><i aria-hidden="true">›</i><div><span>04</span><strong>上乗せ遊技</strong><small>7段階のゲーム数報酬</small></div></div><div class="machine-cz-upper"><span>引き戻しルート</span><strong>フィアンマBATTLE</strong><i aria-hidden="true">→</i><strong>幻想殺しRUSH再突入</strong><small>成功後は上乗せ遊技を経由</small></div><div class="machine-cz-detail-grid"><article><span>CHANCE ZONE</span><h4>レールガン／アクセラレータ</h4><p>どちらも10G。AT期待度はレールガン約52%、アクセラレータ約80%。最後のPUSHで当落を開きます。</p></article><article><span>IMAGINE BREAKER RUSH</span><h4>初期40G以上・純増約4.0枚/G</h4><p>残りゲーム数を減らしながら、直乗せ、赤7ストック、指定ゲーム数のバトルを抽選します。</p></article><article><span>CHARGE GAME</span><h4>とある運命の上乗遊技</h4><p>＋20Gから五和、神裂、御坂、一方通行、竜王の顎、自動書記まで、PUSHで報酬を開きます。</p></article><article><span>PLUS ACTION</span><h4>3種類のゲーム数上乗せ</h4><p>サポーター平均約30G、ヒロインズ約60G、イマジンブレイカー約310Gを通常上乗せと分けて表示します。</p></article></div><p class="machine-cz-note">CZ選択率、バトル出現率・勝率、報酬振り分けなど未公表部分は、公開性能を崩さない体験用代表値です。</p></section>`;
+    }
     if (sim.magiaRecordFlow) {
       return `<section class="machine-cz-guide" id="cz-game" aria-labelledby="machine-cz-title"><div class="machine-cz-head"><span>BONUS TO EMBRYO EVE</span><h3 id="machine-cz-title">${machine.shortName}のゲーム性</h3><p>4種類のBONUSでATを目指し、マギアアタックの初期ゲーム数、ストーリー全8種類、コネクト上乗せを重ねます。</p></div><div class="machine-cz-flow" aria-label="${escapeHtml(`${machine.shortName}のゲームフロー`)}"><div><span>01</span><strong>初当りBONUS</strong><small>BIG・みたま・EP・アリナ</small></div><i aria-hidden="true">›</i><div><span>02</span><strong>マギアアタック</strong><small>前半5G＋後半5G</small></div><i aria-hidden="true">›</i><div><span>03</span><strong>マギアラッシュ</strong><small>純増約2.6枚/G</small></div><i aria-hidden="true">›</i><div><span>04</span><strong>ストーリー</strong><small>全8種類を集める</small></div></div><div class="machine-cz-upper"><span>上位ルート</span><strong>覚醒準備32G</strong><i aria-hidden="true">→</i><strong>エンブリオ・イブ覚醒</strong><small>イブアタック10G＋αで初期G数決定</small></div><div class="machine-cz-detail-grid"><article><span>BONUS</span><h4>4種類の初当り</h4><p>BIGは30G＋α・AT期待度40%。みたまはベルナビ8回＋1G、エピソードとアリナミュージアムはAT濃厚です。</p></article><article><span>INITIAL GAMES</span><h4>マギアアタック</h4><p>前半5Gでカードを集め、後半5Gで5枚分の上乗せを決定。合計初期ゲーム数をPUSHで開きます。</p></article><article><span>STORY / CONNECT</span><h4>報酬とゲーム数上乗せ</h4><p>ストーリーは20G・カウント＋1、SPは30G・＋2。コネクト成功後はキャラ別最低ゲーム数を基準に上乗せします。</p></article><article><span>UPPER</span><h4>エンブリオ・イブ覚醒</h4><p>全8話コンプリート後にエンディング、32Gの準備、10G＋αのイブアタックへ。上位中のストーリーはコネクトチャンスが必ず発生します。</p></article></div><p class="machine-cz-note">BONUS種類、AT報酬、コネクトキャラなどの非公開配分は、公開性能を崩さない体験用代表値です。</p></section>`;
     }
@@ -939,6 +966,15 @@
         ["RETURN", "50G引き戻し", `通常AT・上位AT終了後は50Gの引き戻し区間をカウントします。設定1のAT引き戻し目安約${percent(sim.upperReturnChance)}を代表値として、成功時は再びG覚醒アタックからATへ戻ります。`]
       ];
       note = "公開されているBONUS出玉・AT期待度・初期ゲーム数・純増・各上乗せ契機の期待度を優先した体験モデルです。成立役別抽選、内部状態、全振り分け、設定差が未公表の抽選は代表値へ簡略化しています。";
+    } else if (sim.toaruIndex2Flow) {
+      cards = [
+        ["TWO CHANCE ZONES", "10G・約52%／約80%", "レールガンチャンスとアクセラレータチャンスを別々に抽選し、最後のPUSHで幻想殺しRUSH当落を開きます。"],
+        ["IMAGINE BREAKER RUSH", "初期40G以上・純増約4.0枚/G", "残りゲーム数を減らしながら、直乗せ、バトル、赤7ストックなどを抽選します。"],
+        ["CHARGE GAME", "7段階の上乗せ報酬", "＋20G、五和、神裂火織、御坂美琴、一方通行、竜王の顎、自動書記をPUSHまで伏せます。"],
+        ["PLUS ACTION", "平均約30・60・310G", "サポーター、ヒロインズ、イマジンブレイカーを通常のバトル報酬と分けて記録します。"],
+        ["FIAMMA BATTLE", "AT終了時の引き戻し", "権利獲得時はフィアンマBATTLEの最後にPUSH。成功後は上乗せ遊技を経て幻想殺しRUSHへ再突入します。"]
+      ];
+      note = "CZ・AT初当り、CZ期待度、AT純増、主要ゲーム数、上乗せ平均は公開値です。CZ選択率、バトル出現率・勝率、報酬配分など未公表部分は体験用代表値です。";
     } else if (sim.magiaRecordFlow) {
       cards = [
         ["FOUR BONUS", "4種類のBONUSからATへ", "BIGは30G＋α・AT期待度40%。みたまはベルナビ8回＋1G、エピソードは50G、アリナミュージアムは30G間毎ゲーム上乗せです。"],
@@ -1312,7 +1348,7 @@
       const averageInvestment = Math.round((machine.sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
-      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow;
+      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow;
       const settingModelLabel = machine.sim.settingRates
         ? hasDedicatedFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
         : hasDedicatedFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
@@ -1398,7 +1434,7 @@
         ? Math.max(1, mainRate * sim.triggerRate / sim.mainRate)
         : Math.max(1, sim.triggerRate * profile.rate);
     const publishedEntry = Number(publishedSetting?.entry);
-    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow
+    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow
       ? Math.max(0, Math.min(1, Number(sim.triggerSuccess) || 0.55))
       : sim.godzillaEva2Flow || sim.mahoakoFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.shinEvaFlow
       ? 1
@@ -1414,7 +1450,7 @@
       ? Math.min(0.98, Number(publishedSetting.upper))
       : hasPublishedSettingRates ? sim.upperChance : Math.min(0.98, sim.upperChance + profile.upper);
     const settingModelLabel = hasPublishedTriggerRate && hasPublishedMainRate
-      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
+      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
       : hasPublishedMainRate
         ? sim.bofuriFlow ? "公開設定別値（BONUS初当り）＋機種専用進行" : "公開設定別値（初当り）＋CZ簡易換算"
         : "サイト共通補正モデル";
@@ -1620,6 +1656,15 @@
     let magiaBattleRewards = 0;
     let magiaSetContinues = 0;
     let magiaUpperSections = 0;
+    let toaruEntry = null;
+    let toaruBattles = 0;
+    let toaruBattleWins = 0;
+    let toaruChargeCount = 0;
+    let toaruChargeGames = 0;
+    let toaruPlusActionCount = 0;
+    let toaruPlusActionGames = 0;
+    let toaruFiammaAttempts = 0;
+    let toaruFiammaWins = 0;
     if (sim.basiliskTenzenFlow) {
       basiliskBc = weighted(sim.basiliskBcTypes || [[{ key: "hetero", label: "異色BC", games: 16, award: 30 }, 1]]);
       triggerSucceeded = true;
@@ -1683,6 +1728,14 @@
       triggerSucceeded = true;
       entered = true;
       flow[0] = `${games}Gで青春BONUS`;
+    }
+    if (sim.toaruIndex2Flow) {
+      toaruEntry = weighted(sim.toaruEntryRoutes || [[{ key: "railgun", label: "レールガンチャンス", games: 10, chance: 0.52 }, 1]]);
+      triggerSucceeded = true;
+      entered = Math.random() < Math.max(0, Math.min(1, Number(toaruEntry.chance) || 0.52));
+      flow[0] = `${games}Gで${toaruEntry.label}`;
+      atEvents.push({ kind: "toaru-cz", label: toaruEntry.label, entryType: toaruEntry.key, games: Number(toaruEntry.games) || 10, chance: (Number(toaruEntry.chance) || 0.52) * 100, success: entered, cumulative: 0 });
+      flow.push(`${toaruEntry.label} ${entered ? "成功・幻想殺しRUSH" : "失敗"}`);
     }
     if (sim.magiaRecordFlow) {
       magiaBonus = weighted(sim.magiaBonusTypes || [[{ key: "big", label: "BIG BONUS", games: 30, payout: 78, atChance: 0.40 }, 1]]);
@@ -2631,6 +2684,96 @@
             flow.push(`通常バジリスクタイム 1セット・+${yen.format(fallbackAward)}枚`);
           }
         }
+        basePayout = payout - entryPayout;
+      } else if (sim.toaruIndex2Flow) {
+        basePayout = 0;
+        let remainingGames = Math.max(40, Number(sim.toaruInitialGames) || 40);
+        let eventCount = 0;
+        let returnLoop = 0;
+        atEvents.push({ kind: "toaru-rush-start", label: sim.mainLabel, games: remainingGames, remaining: remainingGames, cumulative: payout });
+        flow.push(`${sim.mainLabel} 初期${remainingGames}G・純増約${Number(sim.atPureIncrease).toFixed(1)}枚/G`);
+
+        while (remainingGames > 0 && eventCount < (Number(sim.toaruMaxEvents) || 14) && payout < SLOT_COMPLETE_LIMIT) {
+          const sectionGames = Math.min(remainingGames, randomInt(8, 14));
+          remainingGames -= sectionGames;
+          const sectionAward = Math.max(0, Math.min(slotAwardForGames(sectionGames, Number(sim.atPureIncrease) || 4, 0), SLOT_COMPLETE_LIMIT - payout));
+          payout += sectionAward;
+          atGamesTotal += sectionGames;
+          atEvents.push({ kind: "toaru-rush", label: sim.mainLabel, games: sectionGames, remaining: remainingGames, award: sectionAward, cumulative: payout });
+
+          if (remainingGames > 0 && Math.random() < (Number(sim.toaruPlusActionChance) || 0.11) && payout < SLOT_COMPLETE_LIMIT) {
+            eventCount += 1;
+            const action = weighted(sim.toaruPlusActions || [[{ label: "サポーター", games: 30, zoneGames: 3 }, 1]]);
+            const addGames = Math.max(10, Number(action.games) || 30);
+            remainingGames += addGames;
+            toaruPlusActionCount += 1;
+            toaruPlusActionGames += addGames;
+            addOnCount += 1;
+            addOnGamesTotal += addGames;
+            atGamesTotal += Number(action.zoneGames) || 3;
+            atEvents.push({ kind: "toaru-plus-action", label: action.label, games: Number(action.zoneGames) || 3, addGames, remaining: remainingGames, cumulative: payout });
+            flow.push(`${action.label} +${addGames}G`);
+            continue;
+          }
+
+          if (remainingGames > 0 && Math.random() < (Number(sim.toaruBattleChance) || 0.38) && payout < SLOT_COMPLETE_LIMIT) {
+            eventCount += 1;
+            const battle = weighted(sim.toaruBattleTypes || [[{ label: "神の右席BATTLE", games: 4, chance: 0.50 }, 1]]);
+            const won = Math.random() < Math.max(0, Math.min(1, Number(battle.chance) || 0.50));
+            toaruBattles += 1;
+            if (won) toaruBattleWins += 1;
+            atGamesTotal += Number(battle.games) || 4;
+            atEvents.push({ kind: "toaru-battle", label: battle.label, games: Number(battle.games) || 4, chance: (Number(battle.chance) || 0.50) * 100, won, remaining: remainingGames, cumulative: payout });
+            flow.push(`${battle.label} ${won ? "勝利" : "敗北"}`);
+
+            if (won) {
+              const reward = weighted(sim.toaruChargeRewards || [[{ label: "ゲーム数上乗せ", games: 20 }, 1]]);
+              const addGames = Math.max(20, Number(reward.games) || 20);
+              remainingGames += addGames;
+              toaruChargeCount += 1;
+              toaruChargeGames += addGames;
+              addOnCount += 1;
+              addOnGamesTotal += addGames;
+              atGamesTotal += 1;
+              atEvents.push({ kind: "toaru-charge", label: reward.label, games: 1, addGames, remaining: remainingGames, cumulative: payout });
+              flow.push(`とある運命の上乗遊技 ${reward.label} +${addGames}G`);
+            }
+          }
+        }
+
+        const lastAward = Math.max(0, Math.min(slotAwardForGames(3, Number(sim.atPureIncrease) || 4, 0), SLOT_COMPLETE_LIMIT - payout));
+        payout += lastAward;
+        atGamesTotal += 3;
+        atEvents.push({ kind: "toaru-end", label: `${sim.mainLabel}終了`, games: 3, cumulative: payout });
+
+        if (payout < SLOT_COMPLETE_LIMIT && Math.random() < (Number(sim.toaruFiammaChance) || 0.28)) {
+          toaruFiammaAttempts += 1;
+          const success = Math.random() < (Number(sim.toaruFiammaSuccess) || 0.50);
+          if (success) {
+            toaruFiammaWins += 1;
+            upper = true;
+            upperLoops = 1;
+          }
+          atGamesTotal += 4;
+          atEvents.push({ kind: "toaru-fiamma", label: sim.upperChallenge, games: 4, chance: (Number(sim.toaruFiammaSuccess) || 0.50) * 100, success, cumulative: payout });
+          flow.push(`${sim.upperChallenge} ${success ? "成功・RUSH再突入" : "失敗"}`);
+          if (success && payout < SLOT_COMPLETE_LIMIT) {
+            const reward = weighted(sim.toaruChargeRewards || [[{ label: "ゲーム数上乗せ", games: 20 }, 1]]);
+            const returnGames = Math.max(40, Number(reward.games) || 40);
+            const returnAward = Math.max(0, Math.min(slotAwardForGames(returnGames, Number(sim.atPureIncrease) || 4, 0), SLOT_COMPLETE_LIMIT - payout));
+            payout += returnAward;
+            atGamesTotal += returnGames;
+            toaruChargeCount += 1;
+            toaruChargeGames += Number(reward.games) || 20;
+            addOnCount += 1;
+            addOnGamesTotal += Number(reward.games) || 20;
+            upperPayoutTotal += returnAward;
+            atEvents.push({ kind: "toaru-return", label: sim.upperLabel, games: returnGames, reward: reward.label, addGames: Number(reward.games) || 20, award: returnAward, cumulative: payout });
+            flow.push(`${reward.label} +${Number(reward.games) || 20}G・${sim.upperLabel}`);
+          }
+        }
+        cycleRounds = toaruBattles;
+        cycleContinues = toaruBattleWins;
         basePayout = payout - entryPayout;
       } else if (sim.magiaRecordFlow) {
         basePayout = 0;
@@ -4441,10 +4584,11 @@
     const bofuriStats = sim.bofuriFlow ? [["初回CZ", bofuriCz?.label || sim.triggerLabel], ["BONUS", `${bofuriBonusCount}回・+${yen.format(bonusPayoutTotal)}枚`], ["防御状態", `${bofuriDefenseLoops}回・最高Lv.${bofuriMaxLevel}`], ["防御力ポイント", `${yen.format(bofuriDefensePoints)}pt`], ["天使ZONE", bofuriAngelCount ? `${bofuriAngelCount}回` : "非到達"], ["暴虐ZONE", bofuriViolenceCount ? `${bofuriViolenceCount}回` : "非到達"]] : [];
     const azurStats = sim.azurLaneFlow ? [["海戦BONUS", azurBonus?.label || sim.triggerLabel], ["海戦ATTACK・上乗せ", `+${yen.format(azurGameAddTotal)}G`], ["セイレーンバトル", `${azurBattles}戦・勝利${azurWins}回`], ["集結BONUS", `${azurGatherBonuses}回・${azurFactions}/4陣営`], [sim.upperChallenge, azurAmagiAttempts ? `${azurAmagiAttempts}回・成功${azurAmagiWins}回` : "未到達"], [sim.upperLabel, azurUpperLoops ? `${azurUpperLoops}区間` : "非到達"]] : [];
     const magiaStats = sim.magiaRecordFlow ? [["初当りBONUS", magiaBonus?.label || sim.triggerLabel], ["マギアアタック", `+${yen.format(magiaAttackTotal)}G`], ["ストーリー", `${magiaStoryCount}/8話（SP ${magiaSpecialStories}回）`], ["コネクトチャンス", `${magiaConnectAttempts}回・成功${magiaConnectWins}回`], ["コネクト上乗せ", `+${yen.format(magiaConnectGames)}G`], ["決戦神浜聖女", `${magiaBattleRewards}回`], ["マギアBONUS", `${magiaBonusRewards}回`], [sim.upperLabel, magiaUpperSections ? "到達" : "非到達"]] : [];
+    const toaruStats = sim.toaruIndex2Flow ? [["今回の入口", toaruEntry?.label || sim.triggerLabel], ["バトル", `${toaruBattles}戦・勝利${toaruBattleWins}回`], ["とある運命の上乗遊技", `${toaruChargeCount}回・+${yen.format(toaruChargeGames)}G`], ["PLUS ACTION", `${toaruPlusActionCount}回・+${yen.format(toaruPlusActionGames)}G`], [sim.upperChallenge, toaruFiammaAttempts ? `${toaruFiammaAttempts}回・成功${toaruFiammaWins}回` : "未到達"], [sim.upperLabel, toaruFiammaWins ? "到達" : "非到達"]] : [];
     const cycleStats = sim.cycleFlow ? [[sim.cycleFlow.statLabel || (sim.titleFlow ? "機種専用進行" : "専用ループ"), `${cycleRounds}回・継続${cycleContinues}回`]] : [];
     const entryBonusStats = entryBonus ? [["初当りBONUS", `${entryBonus.label}・約${yen.format(entryBonus.payout)}枚`], ["BONUS結果", entryBonus.outcome], ["BONUS中AT期待度", `${percent(Number(entryBonus.atChance) || 0)}`]] : [];
     const rushGamesTotal = Math.max(0, atGamesTotal - (Number(entryBonus?.games) || 0));
-    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
+    const genericSpecialStats = sim.otomeRushFlow || sim.kabaneriStFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.tentenFlow || sim.goblinSlayerFlow || sim.assaultLilyFlow || sim.kaguyaFlow || sim.dumbbellFlow || sim.shinEvaFlow || sim.tokyoGhoulFlow || sim.basiliskTenzenFlow || sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.azurLaneFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow ? [] : [["特化ゾーン", addOnCount ? `${sim.specialLabel} ${addOnCount}回` : bonusCount ? `${sim.specialLabel} ${bonusCount}回` : "非当選"]];
     const gameAddOnStats = sim.karakuriJudgeFlow || coinAddOnCount
       ? [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(coinAddOnTotal || addOnTotal)}枚` : "上乗せなし"]]
       : [["上乗せ結果", addOnCount ? `${addOnCount}回・+${yen.format(addOnGamesTotal || otomeAddedGames)}G` : "上乗せなし"]];
@@ -4485,6 +4629,8 @@
         ? [["BONUS・AT・上位消化", `${yen.format(rushGamesTotal)}G相当`], ...azurStats]
       : sim.magiaRecordFlow
         ? [["BONUS・AT・上位消化", `${yen.format(rushGamesTotal)}G相当`], ...magiaStats]
+      : sim.toaruIndex2Flow
+        ? [["CZ・AT・引き戻し消化", `${yen.format(rushGamesTotal)}G相当`], ...toaruStats]
       : [["RUSH消化モデル", `${yen.format(rushGamesTotal)}G相当`], ...karakuriStats, ...battleStats, ...sgStats, ...kabaneriStats, ...otomeStats, ...cycleStats, ...gameAddOnStats, ...bonusStats, ...genericSpecialStats, ["上位AT", upper ? (kabaneriUpperMode || `${sim.upperLabel} ${upperLoops}セット`) : "非到達"]]) : [];
     const stats = [["今回の設定", `設定${setting}`], ["設定差モデル", settingModelLabel], ["今回のゲーム数", `${yen.format(games)}G`], ...settingRateStats, ["現金投資目安", `${yen.format(investment)}円`], ...entryBonusStats, ...atStats, ["獲得枚数", `${yen.format(payout)}枚`], ["換金目安", `${yen.format(exchangeValue)}円`], ["差枚目安", `${diff >= 0 ? "+" : ""}${yen.format(diff)}枚`], ["収支目安", `${balanceYen >= 0 ? "+" : ""}${yen.format(balanceYen)}円`], ["利用レート", `${yen.format(lendCoins)}枚貸し・${exchangeCoins}枚交換`], ["コイン単価", `${coinUnit.toFixed(1)}円・${riskLabel(coinUnit)}`], ["単価換算の台売上指標", `${yen.format(salesIndex)}円`]];
     if (complete) stats.unshift(["到達状態", "コンプリート"]);
@@ -4495,6 +4641,8 @@
         ? `今回の設定は設定${setting}。${games}Gで${azurBonus?.label || sim.triggerLabel}、${entered ? `海戦ATTACKを経てセイレーンバトル${azurBattles}戦・勝利${azurWins}回、${azurFactions}/4陣営を集めて${yen.format(payout)}枚を獲得しました。${azurUpperLoops ? `天城BATTLEを突破し、異次元性能SS RUSHを${azurUpperLoops}区間消化しました。` : azurAmagiAttempts ? "天城BATTLEで終了しました。" : "4陣営集結には届きませんでした。"}` : `平均約${yen.format(payout)}枚の海戦BONUSで終了し、ATには届きませんでした。`}`
       : sim.magiaRecordFlow
         ? `今回の設定は設定${setting}。${games}Gで${magiaBonus?.label || sim.triggerLabel}、${entered ? `マギアアタック+${magiaAttackTotal}Gからストーリー${magiaStoryCount}/8話・コネクト${magiaConnectWins}回成功で${yen.format(payout)}枚を獲得しました。${magiaUpperSections ? "全8話をコンプリートし、エンブリオ・イブ覚醒へ到達しました。" : `マギアラッシュは残り0Gで終了しました。`}` : `${magiaBonus?.label || "初当りBONUS"}で${yen.format(payout)}枚を獲得し、マギアラッシュには届きませんでした。`}`
+      : sim.toaruIndex2Flow
+        ? `今回の設定は設定${setting}。${games}Gで${toaruEntry?.label || sim.triggerLabel}、${entered ? `バトル${toaruBattles}戦・勝利${toaruBattleWins}回、とある運命の上乗遊技${toaruChargeCount}回・PLUS ACTION ${toaruPlusActionCount}回で${yen.format(payout)}枚を獲得しました。${toaruFiammaWins ? "フィアンマBATTLEを突破し、幻想殺しRUSHへ再突入しました。" : "幻想殺しRUSHは残り0Gで終了しました。"}` : "CZは突破できませんでした。"}`
       : sim.okidokiGoldFlow
         ? `今回の設定は設定${setting}。${games}Gでハイビスカス点灯、最大${okidokiMaxChain}連・BIG ${okidokiBigCount}回・REG ${okidokiRegCount}回で${yen.format(payout)}枚を獲得しました。最高内部モードは${okidokiHighestMode}です。`
       : sim.uminchuFlow
@@ -5180,6 +5328,7 @@
     const bofuriFlow = Boolean(machine.sim.bofuriFlow);
     const azurLaneFlow = Boolean(machine.sim.azurLaneFlow);
     const magiaRecordFlow = Boolean(machine.sim.magiaRecordFlow);
+    const toaruIndex2Flow = Boolean(machine.sim.toaruIndex2Flow);
     setSlotAtStatus({ visible: false });
     setExperienceHud("0G", "0円", "0枚");
     setExperienceStage(0, experienceProfile.system, "通常ゲーム中", "0G", `${data.hitLabel}を目指して抽選中`, "normal", data.hitChance, "1Gごとの契機当選率");
@@ -5193,6 +5342,72 @@
     if (runId !== experienceRunId) return;
     setExperienceStage(1, magiaRecordFlow ? "BONUS HIT" : bofuriFlow ? "HIGH PROBABILITY ZONE" : okidokiGoldFlow ? "HIBISCUS LIGHT" : uminchuFlow ? "BONUS HIT" : basiliskTenzenFlow ? "BASILISK CHANCE" : sao2Flow ? "SQUADRON BATTLE" : symphogearSeigiFlow ? "AXZ BATTLE" : lycorisFlow ? (data.lycorisCz?.key === "direct" ? "DIRECT RUSH" : "CHANCE ZONE") : aobutaFlow ? "SEISHUN BONUS" : tentenFlow ? "EPISODE BATTLE" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "DIRECT AT" : "CHANCE ZONE") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "DIRECT AT" : data.assaultEntry?.key === "bouquet" ? "BOUQUET BONUS" : "LILY CHALLENGE") : kaguyaFlow ? "LOVE BRAIN BATTLE" : dumbbellFlow ? "MUSCLE ZONE" : shinEvaFlow ? "INITIAL HIT" : tokyoGhoulFlow ? "CHANCE ZONE" : mahoakoFlow ? "ENTRY CHANCE" : "CHANCE ZONE", basiliskTenzenFlow ? (data.basiliskBc?.label || data.hitLabel) : tokyoGhoulFlow ? (data.tokyoGhoulCz?.label || data.hitLabel) : lycorisFlow ? (data.lycorisCz?.label || data.hitLabel) : goblinSlayerFlow ? (data.goblinCz?.label || data.hitLabel) : assaultLilyFlow ? (data.assaultEntry?.label || data.hitLabel) : data.hitLabel, `${yen.format(data.attempts)}G`, magiaRecordFlow ? "初当りBONUSを消化し、最後のPUSHでマギアラッシュを判定" : bofuriFlow ? "高確率ZONEを進め、最後のPUSHでBONUSを判定" : okidokiGoldFlow ? "ハイビスカス点灯・初当りBONUS確定" : basiliskTenzenFlow ? `${data.basiliskBc?.games || 16}GのBCでバジリスクタイムを抽選` : sao2Flow ? "スコードロンバトルの最後にPUSHでBoB突入を判定" : symphogearSeigiFlow ? "AXZバトルを進め、最後のPUSHでAXZラッシュを判定" : lycorisFlow ? (data.lycorisCz?.key === "direct" ? "アフターエピソードからRUSHへ直行" : `${data.lycorisCz?.games || 10}GのCZを進め、最後のPUSHでRUSHを判定`) : aobutaFlow ? "青春BONUS後は必ず4セット＋αの完走型STへ" : tokyoGhoulFlow ? "8GのCZを進め、最後のPUSHで東京喰種咬を判定" : uminchuFlow ? "告知音とともに初当りBONUSへ" : tentenFlow ? "10GのレベルUPパートと4Gのバトルへ" : goblinSlayerFlow ? (data.goblinCz?.key === "direct" ? "規定ゲーム数からAT直撃" : "CZの専用ゲーム数を進めて最後にPUSH") : assaultLilyFlow ? (data.assaultEntry?.key === "direct" ? "規定ゲーム数・レア役などからRUSH直撃" : data.assaultEntry?.key === "bouquet" ? "25GのBONUS後にRUSHを判定" : "10Gの専用CZを進めて最後にPUSH") : kaguyaFlow ? "恋愛頭脳戦を経て15G＋αのCZへ" : dumbbellFlow ? "10Gの前半パートから後半発展を目指します" : shinEvaFlow ? "3GのEVANGELION IMPACTで作戦を決定します" : data.entryBonusModel ? (mahoakoFlow ? "CZまたはBONUSの種類をPUSHで開きます" : "初当りBONUSをかけたジャッジへ") : `${data.mainLabel}突入をかけたジャッジへ`, "hit", 100, experienceProfile.cue);
     await waitForExperience(780);
+    if (toaruIndex2Flow) {
+      const events = Array.isArray(data.atEvents) ? data.atEvents : [];
+      for (const event of events) {
+        if (runId !== experienceRunId) return;
+        if (event.kind === "toaru-cz") {
+          const czComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 10), "G", event.entryType === "direct" ? "DIRECT RUSH" : "CHANCE ZONE", event.label, event.entryType === "direct" ? "幻想殺しRUSHへ直行します" : "成立役でATを抽選します", Number(event.chance) || 52, event.entryType === "direct" ? "AT直撃" : `AT期待度 約${Number(event.chance || 52).toFixed(0)}%`, runId);
+          if (!czComplete) return;
+          setExperienceStage(2, "CZ FINAL JUDGE", event.label, "PUSH", "幻想殺しRUSHの当落を開きます", "judge", Number(event.chance) || 52, "CZ最終結果");
+          await waitForExperienceAction(`${event.label} PUSH`, 5000, event.success ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(2, "CZ RESULT", event.success ? "CZ突破" : "CZ失敗", event.success ? "幻想殺しRUSH" : "通常へ", event.success ? "初期40G以上のATを開始します" : "今回の一撃はここで終了", event.success ? "rush" : "end", event.success ? 100 : 0, `${event.label}結果`);
+          await waitForExperience(850);
+          if (!event.success) return;
+        } else if (event.kind === "toaru-rush-start") {
+          setExperienceStage(3, "IMAGINE BREAKER RUSH", "幻想殺しRUSH開始", `${yen.format(event.remaining)}G`, "純増約4.0枚/G・バトルと上乗せを抽選", "rush", 100, "初期40G以上");
+          await waitForExperience(850);
+        } else if (event.kind === "toaru-rush") {
+          const rushComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 8), "G", "IMAGINE BREAKER RUSH", "幻想殺しRUSH消化中", "残りゲーム数を減らしながらバトルを抽選", 38, `残り ${yen.format(event.remaining)}G`, runId);
+          if (!rushComplete) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+        } else if (event.kind === "toaru-plus-action") {
+          const actionComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 3), "G", "PLUS ACTION", event.label, "上乗せゲーム数を決定します", 100, "PLUS ACTION", runId);
+          if (!actionComplete) return;
+          setExperienceStage(3, "PLUS ACTION RESULT", event.label, "PUSH", "上乗せゲーム数を開きます", "judge", 100, "上乗せ結果");
+          await waitForExperienceAction(`${event.label} PUSH`, 5000, Number(event.addGames) >= 100 ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, "PLUS ACTION", event.label, `+${yen.format(event.addGames)}G`, `残り${yen.format(event.remaining)}G`, Number(event.addGames) >= 100 ? "hyper" : "rush", 100, "上乗せ完了");
+          await waitForExperience(850);
+        } else if (event.kind === "toaru-battle") {
+          const battleComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 4), "G", "BATTLE", event.label, "成立役で勝利を抽選します", Number(event.chance) || 50, "体験用代表勝率", runId);
+          if (!battleComplete) return;
+          setExperienceStage(3, "BATTLE FINAL JUDGE", event.label, "PUSH", "勝敗を開きます", "judge", Number(event.chance) || 50, "バトル最終結果");
+          await waitForExperienceAction(`${event.label} PUSH`, 5000, event.won ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, "BATTLE RESULT", event.won ? "バトル勝利" : "バトル敗北", event.won ? "上乗せ遊技へ" : "RUSHへ戻る", `残り${yen.format(event.remaining)}G`, event.won ? "hit" : "end", event.won ? 100 : 0, `${event.label}結果`);
+          await waitForExperience(850);
+        } else if (event.kind === "toaru-charge") {
+          setExperienceStage(3, "CHARGE GAME", "とある運命の上乗遊技", "PUSH", "上乗せ報酬を開きます", "judge", 100, "7段階の報酬");
+          await waitForExperienceAction("上乗せ遊技 PUSH", 5000, Number(event.addGames) >= 130 ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(3, "CHARGE GAME RESULT", event.label, `+${yen.format(event.addGames)}G`, `残り${yen.format(event.remaining)}G`, Number(event.addGames) >= 130 ? "hyper" : "rush", 100, "上乗せ完了");
+          await waitForExperience(900);
+        } else if (event.kind === "toaru-end") {
+          const endComplete = await animateExperienceCounter(3, "G", "LAST 3 GAMES", "幻想殺しRUSH最終ゲーム", "残りゲーム数を0まで進めます", 0, `累計 ${yen.format(event.cumulative)}枚`, runId);
+          if (!endComplete) return;
+          setExperienceStage(4, "RUSH END", "幻想殺しRUSH終了", "0G", `累計 ${yen.format(event.cumulative)}枚`, "end", 0, "残りゲーム数消化完了");
+          await waitForExperience(700);
+        } else if (event.kind === "toaru-fiamma") {
+          const fiammaComplete = await animateExperienceCounter(Math.max(1, Number(event.games) || 4), "G", "FIAMMA BATTLE", event.label, "幻想殺しRUSH再突入を抽選します", Number(event.chance) || 50, "体験用代表勝率", runId);
+          if (!fiammaComplete) return;
+          setExperienceStage(4, "FIAMMA FINAL JUDGE", event.label, "PUSH", "再突入の当落を開きます", "judge", Number(event.chance) || 50, "引き戻し最終結果");
+          await waitForExperienceAction("フィアンマBATTLE PUSH", 5000, event.success ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceStage(4, "FIAMMA RESULT", event.success ? "フィアンマ撃破" : "フィアンマBATTLE敗北", event.success ? "RUSH再突入" : "AT終了", event.success ? "上乗せ遊技を経て再開" : "最終結果へ", event.success ? "hyper" : "end", event.success ? 100 : 0, "フィアンマBATTLE結果");
+          await waitForExperience(900);
+        } else if (event.kind === "toaru-return") {
+          setExperienceStage(4, "CHARGE GAME", "再突入報酬", "PUSH", "上乗せ報酬を開きます", "judge", 100, "フィアンマ勝利報酬");
+          await waitForExperienceAction("再突入報酬 PUSH", 5000, Number(event.addGames) >= 130 ? "gold" : "normal");
+          if (runId !== experienceRunId) return;
+          setExperienceHud(`${yen.format(data.attempts)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+          setExperienceStage(4, "RUSH RETURN", event.reward, `+${yen.format(event.addGames)}G`, `${event.label}・累計${yen.format(event.cumulative)}枚`, "hyper", 100, "幻想殺しRUSH再突入");
+          await waitForExperience(950);
+        }
+      }
+      return;
+    }
     if (magiaRecordFlow) {
       const events = Array.isArray(data.atEvents) ? data.atEvents : [];
       for (const event of events) {

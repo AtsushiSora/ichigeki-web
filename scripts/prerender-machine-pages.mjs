@@ -246,6 +246,14 @@ function snapshotMarkup(machine) {
       ["設定抽選", `設定${settingPool.join("・")}`, "設定4は非搭載"]
     ];
     note = "BONUSごとに32Gを数え、天国・ドキドキ・超ドキドキ・保証・金ドキの内部ルートを結果へ残します。";
+  } else if (sim.toaruIndex2Flow) {
+    items = [
+      ["CZ", `約1/${sim.triggerRate}`, "設定1のCZ合算"],
+      ["2種類のCZ", "約52%／約80%", "各10G"],
+      ["幻想殺しRUSH", "初期40G以上", "純増約4.0枚/G"],
+      ["上乗せ遊技", "20〜平均750G", "7段階の報酬"]
+    ];
+    note = "CZ、AT、バトル、キャラ別上乗せ、PLUS ACTION、フィアンマBATTLEを機種専用で記録します。";
   } else if (sim.magiaRecordFlow) {
     items = [
       ["初当りBONUS", `約1/${sim.triggerRate}`, "設定1のBONUS合算"],
@@ -559,8 +567,8 @@ for (const [slug, machine] of Object.entries(machines)) {
   } else {
     html = html.replace("</head>", '<link rel="stylesheet" href="style.css?v=181"></head>');
   }
-  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=223");
-  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=203");
+  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=224");
+  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=204");
   html = html.replace(/app-shell\.js\?v=\d+/, "app-shell.js?v=10");
   html = html.replace(/adsense-loader\.js\?v=\d+/, "adsense-loader.js?v=2");
   if (!html.includes("site-insights.js")) html = html.replace(/(<script src="machine-detail\.js\?v=129"><\/script>)/, '<script src="site-insights.js?v=1"></script>\n  $1');
