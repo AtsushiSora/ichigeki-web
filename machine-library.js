@@ -5246,6 +5246,53 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
 })();
 
 
+(function applyMonsterHunterSunbreakDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["monster-hunter-sunbreak"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "BREAK ZONEを突破し、40G＋αのRUSHへ。盟勇クエストで討伐と上乗せを重ねる。",
+    intro: "BREAK ZONE・アイルー福引・猛焔一閃からサンブレイクRUSHへ。AT中は盟勇参戦、5G以上の盟勇クエスト、モンスター討伐、剥ぎ取りRUSH、キュリアチャンスを経て、勇気の証明と上位ATを目指します。",
+    points: ["BREAK ZONEは5G×最大10セット・設定1のAT期待度37.1%", "盟勇クエストはST5G＋討伐3G＋決着1G", "剥ぎ取りRUSHは50・60・70・80%継続、平均上乗せ約86G"],
+    specs: [["AT初当り（設定1）", "約1/349.9"], ["AT初当り（設定6）", "約1/242.3"], ["BREAK ZONE", "約1/111.4〜1/95.8"], ["アイルー福引", "約1/2290.1〜1/976.4"], ["AT", "40G＋α・純増約2.7枚/G"], ["キュリア揃い", "約1/5.6"], ["盟勇クエスト", "ST5G＋討伐3G＋決着1G"], ["剥ぎ取りRUSH", "50・60・70・80%継続"], ["キュリアチャンス", "1セット3G・平均上乗せ約187G"], ["勇気の証明", "4G・期待度約40%"], ["上位AT", "50G＋α・純増約6.6枚/G"]],
+    articleSections: [
+      { heading: "3つの入口からATへ", paragraphs: ["BREAK ZONEは1セット5G。1〜4G目に継続率を上げ、5G目のジャッジを繰り返します。10セット継続で猛焔一閃へ進み、設定1のAT期待度は37.1%、完走期待度は4.6%です。", "アイルー福引は10G＋α・成功期待度約60%。猛焔一閃直撃を含め、専用画面では選ばれた入口のゲーム数を進め、最後のPUSHでAT当落を開きます。"] },
+      { heading: "40G＋αのサンブレイクRUSH", paragraphs: ["下位ATは初期40G＋α、純増約2.7枚/G。AT中は約1/5.6のキュリア揃い・レア役から盟勇参戦や盟勇クエストを抽選します。", "専用画面では残りゲーム数を減らしながら、盟勇クエスト、サンブレイクBONUS、キュリアチャンスの発生を時系列で表示します。"] },
+      { heading: "盟勇クエストと13体のモンスター", paragraphs: ["盟勇クエストはSTパート5G（ヒノエ参戦時6G）、討伐パート3G、決着パート1G。討伐成功で20・30・40・50・100Gまたは剥ぎ取りRUSHを獲得し、STが再セットされます。", "リオレウスからメル・ゼナ、怨嗟響めくマガイマガド、アマツマガツチまで13体を収録。モンスターごとの討伐期待度と剥ぎ取りRUSH継続率を結果へ反映します。"] },
+      { heading: "剥ぎ取りRUSHとキュリアチャンス", paragraphs: ["剥ぎ取りRUSHは初回継続保証。20・50・100・200Gの上乗せを50・60・70・80%でループし、平均上乗せは約86Gです。怨嗟響めくマガイマガド討伐時は80%ループ濃厚です。", "キュリアチャンスは1セット3GのST型。キュリア揃い・レア役でゲーム数を上乗せして3Gを再セットし、平均上乗せは約187Gです。"] },
+      { heading: "勇気の証明から上位ATへ", paragraphs: ["AT終了時の一部で4Gの『勇気の証明』へ進み、ガイアデルム討伐成功でエンディングを経て上位ATへ。トータル期待度は約40%です。", "上位『サンブレイクRUSH G』は初期50G＋α・純増約6.6枚/G。終了時の『滅浄の裁き』は4G・期待度約47%で、成功すれば上位ATへ復帰します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約31.9G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6を均等抽選し、CZ・AT初当りは公開設定別値を使用", "CZゲーム数、盟勇クエスト構成、上乗せゲーム数、特化継続率、上位純増を反映", "未公表の入口選択・盟勇参戦・特化ゾーン当選率は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["エンターライズ 公式機種情報", "https://www.enterrise.co.jp/slot/mhrsb/"], ["一撃 設定差・CZ解析", "https://1geki.jp/slot/l_mh_sun/0/"], ["一撃 盟勇クエスト解析", "https://1geki.jp/slot/l_mh_sun/83/"], ["一撃 剥ぎ取りRUSH解析", "https://1geki.jp/slot/l_mh_sun/85/"], ["必勝本 勇気の証明・滅浄の裁き", "https://p.hisshobon.jp/machine/4830/1/14"]],
+    readerGuide: { verdict: "40G＋αのATで残りゲーム数を管理し、盟勇クエストの討伐報酬と剥ぎ取りRUSHでゲーム数を伸ばして上位ATを狙うハンティング型です。", bestFor: ["BREAK ZONEのセット継続をPUSHで確認したい", "盟勇クエストでモンスター別の討伐を楽しみたい", "剥ぎ取りRUSHと上位ATまで一続きで体験したい"], check: ["CZ・AT・クエストの主要ゲーム数は公開値", "13体のモンスターと公開上乗せ種類を収録", "未公表の当選率は体験用代表値"], compare: [["monster-hunter-rise-slot", "スマスロ モンスターハンターライズ", "前作の討伐型ATと比較"], ["god-eater-resurrection", "ゴッドイーター リザレクション", "モンスター交戦型ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v19", dedicatedFlow: true, dedicatedFlowKey: "monster-hunter-sunbreak", dedicatedFlowVersion: 2, sunbreakFlow: true,
+    triggerLabel: "CZ（BREAK ZONE／アイルー福引）", triggerRate: 105.5, triggerSuccess: 0.371, mainLabel: "サンブレイクRUSH", mainRate: 349.9, base50: 31.9, coinUnit: 3.2, normalMin: 0, normalMax: 0, atPureIncrease: 2.7, upperPureIncrease: 6.6, atPayoutVariance: 0,
+    sunbreakBreakZoneGames: 5, sunbreakBreakZoneMaxSets: 10, sunbreakBreakZoneChance: 0.371, sunbreakBreakZoneComplete: 0.046,
+    sunbreakAilooGames: 10, sunbreakAilooChance: 0.60, sunbreakInitialGames: 40, sunbreakUpperInitialGames: [[50, 0.58], [70, 0.27], [100, 0.15]],
+    sunbreakQuestRate: 83.5, sunbreakQuestStGames: 5, sunbreakQuestBattleGames: 3, sunbreakQuestDecisionGames: 1, sunbreakMaxEvents: 14,
+    sunbreakMonsters: [
+      [{ key: "rathalos", label: "リオレウス", chance: 0.52, carveRate: 0.50 }, 0.13], [{ key: "tigrex", label: "ティガレックス", chance: 0.54, carveRate: 0.50 }, 0.12], [{ key: "espinas", label: "エスピナス", chance: 0.56, carveRate: 0.50 }, 0.10], [{ key: "aurora", label: "イソネミクニ亜種", chance: 0.58, carveRate: 0.50 }, 0.09], [{ key: "garangolm", label: "ガランゴルム", chance: 0.60, carveRate: 0.50, carveChance: 0.55 }, 0.09], [{ key: "gore", label: "ゴア・マガラ", chance: 0.62, carveRate: 0.60 }, 0.09], [{ key: "pyre", label: "ヤツカダキ亜種", chance: 0.64, carveRate: 0.60 }, 0.08], [{ key: "lunagaron", label: "ルナガロン", chance: 0.66, carveRate: 0.60, carveChance: 0.55 }, 0.08], [{ key: "zinogre", label: "ジンオウガ", chance: 0.68, carveRate: 0.70 }, 0.07], [{ key: "flaming-espinas", label: "エスピナス亜種", chance: 0.70, carveRate: 0.70 }, 0.06], [{ key: "malzeno", label: "メル・ゼナ", chance: 0.74, carveRate: 0.70, carveChance: 1 }, 0.045], [{ key: "scorned", label: "怨嗟響めくマガイマガド", chance: 0.78, carveRate: 0.80, carveChance: 1 }, 0.035], [{ key: "amatsu", label: "アマツマガツチ", chance: 0.82, carveRate: 0.80, amatsu: true }, 0.025]
+    ],
+    sunbreakQuestRewards: [[20, 0.40], [30, 0.27], [40, 0.16], [50, 0.12], [100, 0.05]], sunbreakCarveRewards: [[20, 0.50], [50, 0.30], [100, 0.15], [200, 0.05]],
+    sunbreakQuriaChance: 0.08, sunbreakQuriaReset: 0.68, sunbreakQuriaRewards: [[20, 0.48], [30, 0.26], [50, 0.18], [100, 0.08]], sunbreakBonusChance: 0.055,
+    sunbreakCourageChance: 0.34, sunbreakCourageSuccess: 0.40, sunbreakPurificationSuccess: 0.47, sunbreakUpperMaxLoops: 3,
+    specialLabel: "剥ぎ取りRUSH／キュリアチャンス", specialChance: 0.28, upperChallenge: "勇気の証明", upperChance: 0.34, upperSuccess: 0.40, upperLabel: "サンブレイクRUSH G", upperContinue: 0.47, upperPayout: 0,
+    settingRates: {
+      1: { trigger: 105.5, main: 349.9, bz: 111.4, ailoo: 2290.1, direct: 16281.7, payout: 0.975 },
+      2: { trigger: 102.7, main: 337.0, bz: 108.8, ailoo: 2090.4, direct: 14875.5, payout: 0.988 },
+      3: { trigger: 99.0, main: 319.8, bz: 105.6, ailoo: 1821.1, direct: 12788.0, payout: 1.008 },
+      4: { trigger: 92.0, main: 283.6, bz: 99.3, ailoo: 1472.5, direct: 8702.1, payout: 1.052 },
+      5: { trigger: 88.8, main: 264.0, bz: 97.2, ailoo: 1219.3, direct: 6351.2, payout: 1.084 },
+      6: { trigger: 85.5, main: 242.3, bz: 95.8, ailoo: 976.4, direct: 4263.1, payout: 1.124 }
+    }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
+
 (function applyJuohDedicatedFlow() {
   const machine = window.ICHIGEKI_MACHINES["juoh-slot"];
   if (!machine) return;

@@ -9,8 +9,8 @@ vm.runInContext(source, sandbox);
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
 const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
-const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow || machine.sim?.godEaterFlow || machine.sim?.millionGodFlow || machine.sim?.juohFlow);
-const expectedProfiles = { battle: 7, st: 2, heaven: 4, bonus: 6, addon: 12 };
+const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow || machine.sim?.godEaterFlow || machine.sim?.millionGodFlow || machine.sim?.juohFlow || machine.sim?.sunbreakFlow);
+const expectedProfiles = { battle: 6, st: 2, heaven: 4, bonus: 6, addon: 12 };
 const errors = [];
 const rows = [];
 
@@ -49,14 +49,14 @@ for (const [slug, machine] of declarativeFlows) {
 }
 
 if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
-if (declarativeFlows.length !== 31) errors.push(`expected 31 declarative dedicated flows, found ${declarativeFlows.length}`);
+if (declarativeFlows.length !== 30) errors.push(`expected 30 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(specializedFlows);
-if (specializedFlows.length !== 16 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"] || !dedicatedMap["million-god-kiseki"] || !dedicatedMap["juoh-slot"]) {
-  errors.push(`expected sixteen specialized flows including Juoh, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (specializedFlows.length !== 17 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"] || !dedicatedMap["million-god-kiseki"] || !dedicatedMap["juoh-slot"] || !dedicatedMap["monster-hunter-sunbreak"]) {
+  errors.push(`expected seventeen specialized flows including Sunbreak, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
   const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
@@ -191,6 +191,16 @@ if (specializedFlows.length !== 16 || !dedicatedMap["tokyo-ghoul-slot"] || !dedi
   if (!Array.isArray(juohSim.juohKscRates) || juohSim.juohKscRates.map(([rate]) => rate).join(",") !== "0.8,0.9") errors.push("juoh-slot: KSC loop rates are incorrect");
   if (Number(juohSim.juohMaxLatentGames) !== 29 || Number(juohSim.juohBigGames) !== 15 || Number(juohSim.juohRegGames) !== 10) errors.push("juoh-slot: latent or bonus games are incorrect");
   if (Number(juohSim.base50) !== 31.8 || Number(juohSim.atPureIncrease) !== 8 || !juohSim.settingRates || Object.keys(juohSim.settingRates).length !== 5) errors.push("juoh-slot: base, pure increase, or setting rates are incomplete");
+  const sunbreak = dedicatedMap["monster-hunter-sunbreak"];
+  const sunbreakSim = sunbreak.sim;
+  if (sunbreakSim.cycleFlow || sunbreakSim.titleFlow) errors.push("monster-hunter-sunbreak: legacy reusable flow still exists");
+  if (!Array.isArray(sunbreakSim.sunbreakMonsters) || sunbreakSim.sunbreakMonsters.length !== 13) errors.push("monster-hunter-sunbreak: 13 monster routes are incomplete");
+  if (!Array.isArray(sunbreakSim.sunbreakQuestRewards) || sunbreakSim.sunbreakQuestRewards.length !== 5 || !Array.isArray(sunbreakSim.sunbreakCarveRewards) || sunbreakSim.sunbreakCarveRewards.length !== 4) errors.push("monster-hunter-sunbreak: quest or carve rewards are incomplete");
+  if (Number(sunbreakSim.sunbreakBreakZoneGames) !== 5 || Number(sunbreakSim.sunbreakBreakZoneMaxSets) !== 10 || Number(sunbreakSim.sunbreakBreakZoneChance) !== 0.371) errors.push("monster-hunter-sunbreak: BREAK ZONE model is incorrect");
+  if (Number(sunbreakSim.sunbreakQuestStGames) !== 5 || Number(sunbreakSim.sunbreakQuestBattleGames) !== 3 || Number(sunbreakSim.sunbreakQuestDecisionGames) !== 1) errors.push("monster-hunter-sunbreak: Follower Quest game structure is incorrect");
+  const scorned = (sunbreakSim.sunbreakMonsters || []).map(([monster]) => monster).find(monster => monster.key === "scorned");
+  if (Number(scorned?.carveRate) !== 0.80 || Number(sunbreakSim.sunbreakCourageSuccess) !== 0.40 || Number(sunbreakSim.sunbreakPurificationSuccess) !== 0.47) errors.push("monster-hunter-sunbreak: special route probabilities are incorrect");
+  if (Number(sunbreakSim.base50) !== 31.9 || Number(sunbreakSim.atPureIncrease) !== 2.7 || Number(sunbreakSim.upperPureIncrease) !== 6.6 || !sunbreakSim.settingRates || Object.keys(sunbreakSim.settingRates).length !== 6) errors.push("monster-hunter-sunbreak: base, pure increase, or setting rates are incomplete");
 }
 
 if (process.argv.includes("--verbose")) console.table(rows);
