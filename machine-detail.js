@@ -387,6 +387,14 @@
         ["上位AT", "奈落決戦", "約82%ループ"]
       ];
       note = "初期報酬、20G＋αのブッた斬りスラッシュ、ボーナス＋1、3種類のBONUS、奈落チャレンジ、奈落決戦を機種専用で記録します。";
+    } else if (sim.godzillaEvaFlow) {
+      items = [
+        ["初当りBONUS", "20G・約100枚", "エヴァ／ゴジラ／G覚醒"],
+        ["RUSH CHALLENGE", "5G＋α・約57%", "最終ゲームでPUSH"],
+        ["通常AT", "初期50〜600G", "純増約5.0枚/G"],
+        ["上位AT", "初回100G以上", "決戦約77%ループ"]
+      ];
+      note = "3種類のBONUS、5G＋αのRUSHチャレンジ、初期ゲーム数、殲滅作戦の追撃、決戦キングギドラ、G覚醒RUSHを機種専用で記録します。";
     } else if (sim.goldenKamuyFlow) {
       items = [
         ["初当り", `約1/${sim.triggerRate}`, "KAMUY／決戦BONUS"],
@@ -741,6 +749,9 @@
   function czGameMarkup() {
     const sim = machine.sim;
     if (sim.kind !== "slot") return "";
+    if (sim.godzillaEvaFlow) {
+      return `<section class="machine-cz-guide" id="cz-game" aria-labelledby="machine-cz-title"><div class="machine-cz-head"><span>BONUS TO G AWAKENING</span><h3 id="machine-cz-title">${machine.shortName}のゲーム性</h3><p>約100枚のBONUSから5G＋αを突破し、50〜600Gの通常AT、10倍上乗せ、約77%ループの上位ATを目指します。</p></div><div class="machine-cz-flow" aria-label="${escapeHtml(`${machine.shortName}のゲームフロー`)}"><div><span>01</span><strong>3種類のBONUS</strong><small>20G・約100枚</small></div><i aria-hidden="true">›</i><div><span>02</span><strong>RUSH CHALLENGE</strong><small>5G＋α・約57%</small></div><i aria-hidden="true">›</i><div><span>03</span><strong>ゴジエヴァRUSH</strong><small>初期50〜600G</small></div><i aria-hidden="true">›</i><div><span>04</span><strong>決戦キングギドラ</strong><small>4G・初回約55%</small></div></div><div class="machine-cz-upper"><span>上位ルート</span><strong>G覚醒アタック</strong><i aria-hidden="true">→</i><strong>G覚醒RUSH</strong><small>初回100G以上・約77%ループ</small></div><div class="machine-cz-detail-grid"><article><span>INITIAL BONUS</span><h4>エヴァ／ゴジラ／G覚醒</h4><p>全て20G・約100枚。BONUSの種類と終了後のルートをPUSHで開きます。</p></article><article><span>RUSH CHALLENGE</span><h4>5G＋α・期待度約57%</h4><p>全役でATを抽選。最後のPUSHに成功するとゴジエヴァアタックへ進みます。</p></article><article><span>ANNIHILATION</span><h4>殲滅作戦→追撃</h4><p>怪獣バトル勝利で10〜30G。追撃成功なら上乗せが10倍へ昇格します。</p></article><article><span>UPPER AT</span><h4>G覚醒RUSH</h4><p>初回100G以上、2セット目以降30G以上。各セット後の4G決戦を約77%でループします。</p></article></div><p class="machine-cz-note">BONUS種類比率や通常AT中の上乗せ出現率など、未公表部分は公開性能を崩さない体験用代表値です。</p></section>`;
+    }
     if (sim.darlingFranxxFlow) {
       return `<section class="machine-cz-guide" id="cz-game" aria-labelledby="machine-cz-title"><div class="machine-cz-head"><span>CZ TO BONUS HIGH</span><h3 id="machine-cz-title">${machine.shortName}のゲーム性</h3><p>CZから疑似BONUSを取り、10G＋αのボーナス高確と比翼BEATSで連チャンを伸ばします。</p></div><div class="machine-cz-flow" aria-label="${escapeHtml(`${machine.shortName}のゲームフロー`)}"><div><span>01</span><strong>2種類のCZ</strong><small>5G約46%／10G約69%</small></div><i aria-hidden="true">›</i><div><span>02</span><strong>初当りBONUS</strong><small>REG・DIF・EP</small></div><i aria-hidden="true">›</i><div><span>03</span><strong>BONUS高確</strong><small>10G＋α・約1/10.4</small></div><i aria-hidden="true">›</i><div><span>04</span><strong>比翼BEATS</strong><small>2〜4G・約75〜94%</small></div></div><div class="machine-cz-upper"><span>強化ルート</span><strong>Beat Lv.MAXX</strong><i aria-hidden="true">→</i><strong>CLIMAXX</strong><small>高確G数30Gで上乗せをBONUSへ変換</small></div><div class="machine-cz-detail-grid"><article><span>CHANCE ZONE</span><h4>コネクト／ココロ</h4><p>5G約46%と10G約69%。最後のPUSHでBONUS当落を開きます。</p></article><article><span>INITIAL BONUS</span><h4>3種類の初当り</h4><p>REG約40枚、ダーリンBONUS約100枚、エピソード約200枚。REGは約22%で昇格します。</p></article><article><span>BONUS HIGH</span><h4>10G＋α・約1/10.4</h4><p>残りゲーム数を減らし、小役成立時に即PUSHでBONUS種類を開きます。</p></article><article><span>HIYOKU BEATS</span><h4>レベル別ST</h4><p>Lv.1は2G約75%、Lv.2は3G約88%、MAXXは4G約94%。上乗せでSTを再セットします。</p></article></div><p class="machine-cz-note">CZ選択率、BONUS種別、連れ出し発生率など未公表部分は、公開性能を崩さない体験用代表値です。</p></section>`;
     }
@@ -1234,6 +1245,15 @@
         ["NARAKU", "5G→約82%ループ", "奈落チャレンジ成功後はボーナスゲットZONEと奈落決戦を繰り返します。"]
       ];
       note = "公開されているゲーム数・純増・BONUS枚数・上位ループを優先し、未公表のルート比率と小役抽選は体験用代表値です。";
+    } else if (sim.godzillaEvaFlow) {
+      cards = [
+        ["INITIAL BONUS", "20G・約100枚", "エヴァンゲリオン／ゴジラ／G覚醒チャレンジの3種類。"],
+        ["RUSH CHALLENGE", "5G＋α・期待度約57%", "全役でATを抽選し、最後のPUSHで当落を開きます。"],
+        ["GODZILLA EVA ATTACK", "初期50〜600G", "通常ATの初期ゲーム数をPUSHで決定します。"],
+        ["ANNIHILATION", "勝利約50%→追撃約50%", "追撃成功なら10〜30Gが10倍に昇格します。"],
+        ["G AWAKENING", "初回100G以上・約77%", "4Gの決戦キングギドラを突破してセットを重ねます。"]
+      ];
+      note = "上乗せゲーム数と獲得枚数を同時に見せず、BONUS、AT初期G、殲滅作戦、追撃、上位継続を順番に表示します。未公表の種類比率は体験用代表値です。";
     } else if (sim.goldenKamuyFlow) {
       cards = [
         ["INITIAL BONUS", "11G／30G", "KAMUY BONUS／決戦BONUS"],
@@ -1552,7 +1572,7 @@
       const averageInvestment = Math.round((machine.sim.mainRate / gamesPerThousand * 1000) / 100) * 100;
       const averageCoinIn = machine.sim.mainRate / base * 50;
       const salesIndex = Math.round(averageCoinIn * coinUnit);
-      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow || machine.sim.millionGodFlow || machine.sim.juohFlow || machine.sim.sunbreakFlow || machine.sim.paripiFlow || machine.sim.bancho4Flow || machine.sim.zenigata4Flow || machine.sim.inuyasha2Flow || machine.sim.goldenKamuyFlow || machine.sim.superBlackjackFlow || machine.sim.magicalHalloween8Flow || machine.sim.gundamSeedFlow || machine.sim.fireForceFlow || machine.sim.fireForce2Flow;
+      const hasDedicatedFlow = machine.sim.titleFlow || machine.sim.tokyoGhoulFlow || machine.sim.basiliskTenzenFlow || machine.sim.sao2Flow || machine.sim.symphogearSeigiFlow || machine.sim.lycorisFlow || machine.sim.kanokariFlow || machine.sim.aobutaFlow || machine.sim.bofuriFlow || machine.sim.azurLaneFlow || machine.sim.magiaRecordFlow || machine.sim.toaruIndex2Flow || machine.sim.darlingFranxxFlow || machine.sim.godEaterFlow || machine.sim.millionGodFlow || machine.sim.juohFlow || machine.sim.sunbreakFlow || machine.sim.paripiFlow || machine.sim.bancho4Flow || machine.sim.zenigata4Flow || machine.sim.inuyasha2Flow || machine.sim.godzillaEvaFlow || machine.sim.goldenKamuyFlow || machine.sim.superBlackjackFlow || machine.sim.magicalHalloween8Flow || machine.sim.gundamSeedFlow || machine.sim.fireForceFlow || machine.sim.fireForce2Flow;
       const settingModelLabel = machine.sim.settingRates
         ? hasDedicatedFlow ? "公開設定別値・機種専用進行" : "公開設定別値"
         : hasDedicatedFlow ? "共通固定補正・機種専用進行" : "共通固定補正";
@@ -1638,7 +1658,7 @@
         ? Math.max(1, mainRate * sim.triggerRate / sim.mainRate)
         : Math.max(1, sim.triggerRate * profile.rate);
     const publishedEntry = Number(publishedSetting?.entry);
-    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.bancho4Flow || sim.zenigata4Flow || sim.inuyasha2Flow || sim.goldenKamuyFlow || sim.superBlackjackFlow || sim.magicalHalloween8Flow || sim.gundamSeedFlow || sim.fireForceFlow || sim.fireForce2Flow
+    const triggerSuccess = sim.sao2Flow || sim.symphogearSeigiFlow || sim.lycorisFlow || sim.kanokariFlow || sim.aobutaFlow || sim.bofuriFlow || sim.magiaRecordFlow || sim.toaruIndex2Flow || sim.darlingFranxxFlow || sim.godEaterFlow || sim.millionGodFlow || sim.juohFlow || sim.sunbreakFlow || sim.paripiFlow || sim.bancho4Flow || sim.zenigata4Flow || sim.inuyasha2Flow || sim.godzillaEvaFlow || sim.goldenKamuyFlow || sim.superBlackjackFlow || sim.magicalHalloween8Flow || sim.gundamSeedFlow || sim.fireForceFlow || sim.fireForce2Flow
       ? Math.max(0, Math.min(1, Number(sim.triggerSuccess) || 0.55))
       : sim.godzillaEva2Flow || sim.mahoakoFlow || sim.okidokiGoldFlow || sim.uminchuFlow || sim.shinEvaFlow
       ? 1
@@ -1654,7 +1674,7 @@
       ? Math.min(0.98, Number(publishedSetting.upper))
       : hasPublishedSettingRates ? sim.upperChance : Math.min(0.98, sim.upperChance + profile.upper);
     const settingModelLabel = hasPublishedTriggerRate && hasPublishedMainRate
-      ? sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.darlingFranxxFlow ? "公開設定別値（CZ・BONUS・高確初当り）" : sim.godEaterFlow ? "公開設定別値（AT初当り・機種専用進行）" : sim.millionGodFlow ? "公開設定別値（GG初当り・機種専用進行）" : sim.juohFlow ? "公開設定別値（SC初当り・機種専用進行）" : sim.sunbreakFlow ? "公開設定別値（CZ・AT初当り・機種専用進行）" : sim.paripiFlow ? "公開設定別値（CZ3種・BONUS初当り・ST進行）" : sim.bancho4Flow ? "公開設定別値（初当り・機種専用進行）" : sim.zenigata4Flow ? "公開設定別値（AT初当り・上乗せ専用進行）" : sim.inuyasha2Flow ? "公開設定別値（CZ・AT初当り・BONUS＋1進行）" : sim.goldenKamuyFlow ? "公開設定別値（BONUS・AT初当り・上乗せAT）" : sim.superBlackjackFlow ? "公開設定別値（BONUS・RC高確・ST進行）" : sim.magicalHalloween8Flow ? "公開設定別値（BONUS・ART初当り・ストック進行）" : sim.gundamSeedFlow ? "公開設定別値（CZ・BONUS・ST・上位AT）" : sim.fireForceFlow ? "公開設定別値（初当り・BONUS・炎炎ループ）" : sim.fireForce2Flow ? "公開設定別値（BONUS・炎炎ループ初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
+      ? sim.godzillaEvaFlow ? "公開設定別値（BONUS・AT初当り・専用進行）" : sim.godzillaEva2Flow ? "公開設定別値（BONUS・AT初当り）" : sim.mahoakoFlow ? "公開設定別値（CZ・BONUS・AT初当り）" : sim.okidokiGoldFlow ? "公開設定別値（BONUS初当り・BIG・REG）" : sim.uminchuFlow ? "公開設定別値（BONUS初当り・合算）" : sim.tentenFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.goblinSlayerFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.assaultLilyFlow ? "公開設定別値（初当り・RUSH）" : sim.kaguyaFlow ? "公開設定別値（CZ換算・BONUS初当り）" : sim.dumbbellFlow ? "公開設定別値（CZ・AT初当り）" : sim.shinEvaFlow ? "公開設定別値（初当り合算）" : sim.tokyoGhoulFlow ? "公開設定別値（CZ合算・AT初当り）" : sim.basiliskTenzenFlow ? "公開設定別値（BC・BT初当り）" : sim.lycorisFlow ? "公開設定別値（CZ・AT初当り）" : sim.kanokariFlow ? "公開設定別値（CZ・BONUS初当り）" : sim.aobutaFlow ? "公開設定別値（BONUS初当り・完走型ST）" : sim.bofuriFlow ? "公開設定別値（BONUS初当り・防御状態）" : sim.azurLaneFlow ? "公開設定別値（海戦BONUS・AT初当り）" : sim.magiaRecordFlow ? "公開設定別値（BONUS・AT初当り）" : sim.toaruIndex2Flow ? "公開設定別値（CZ・AT初当り）" : sim.darlingFranxxFlow ? "公開設定別値（CZ・BONUS・高確初当り）" : sim.godEaterFlow ? "公開設定別値（AT初当り・機種専用進行）" : sim.millionGodFlow ? "公開設定別値（GG初当り・機種専用進行）" : sim.juohFlow ? "公開設定別値（SC初当り・機種専用進行）" : sim.sunbreakFlow ? "公開設定別値（CZ・AT初当り・機種専用進行）" : sim.paripiFlow ? "公開設定別値（CZ3種・BONUS初当り・ST進行）" : sim.bancho4Flow ? "公開設定別値（初当り・機種専用進行）" : sim.zenigata4Flow ? "公開設定別値（AT初当り・上乗せ専用進行）" : sim.inuyasha2Flow ? "公開設定別値（CZ・AT初当り・BONUS＋1進行）" : sim.goldenKamuyFlow ? "公開設定別値（BONUS・AT初当り・上乗せAT）" : sim.superBlackjackFlow ? "公開設定別値（BONUS・RC高確・ST進行）" : sim.magicalHalloween8Flow ? "公開設定別値（BONUS・ART初当り・ストック進行）" : sim.gundamSeedFlow ? "公開設定別値（CZ・BONUS・ST・上位AT）" : sim.fireForceFlow ? "公開設定別値（初当り・BONUS・炎炎ループ）" : sim.fireForce2Flow ? "公開設定別値（BONUS・炎炎ループ初当り）" : sim.titleFlow ? "公開設定別値（機種専用進行）" : "公開設定別値（CZ・初当り）"
       : hasPublishedMainRate
         ? sim.bofuriFlow ? "公開設定別値（BONUS初当り）＋機種専用進行" : "公開設定別値（初当り）＋CZ簡易換算"
         : "サイト共通補正モデル";
@@ -2441,6 +2461,12 @@
         ? Math.round(bonusPayout / Math.max(0.1, Number(sim.atPureIncrease) || 4))
         : Number(entryBonusTemplate.games) || Math.round(bonusPayout / Math.max(0.1, Number(sim.atPureIncrease) || 4)));
       entryBonus = { ...entryBonusTemplate, payout: bonusPayout, games: bonusGames, averagePayout: Number(entryBonusTemplate.payout) || bonusPayout, outcome: entered ? "RUSH突破" : "RUSH非突破" };
+      if (sim.godzillaEvaFlow && entryBonus.key === "awakening") {
+        upper = Math.random() < Math.max(0, Math.min(1, Number(entryBonus.directUpperChance) || 0.50));
+        entered = true;
+        entryBonus.directUpper = upper;
+        entryBonus.outcome = upper ? "G覚醒RUSH直行" : "ゴジエヴァRUSH突入";
+      }
       payout = Math.min(bonusPayout, SLOT_COMPLETE_LIMIT);
       atGamesTotal += bonusGames;
       atEvents.push({ kind: "entry-bonus", label: entryBonus.label || "初当りBONUS", games: bonusGames, award: payout, cumulative: payout, atChance: entryChance, outcome: entryBonus.outcome });
@@ -6301,28 +6327,40 @@
           flow.push(`${battleLabel} ${otomeBattleWon ? `勝利 +${gameAdd}G` : "敗北"}`);
         }
         basePayout = payout - entryPayout;
-      } else if (sim.godzillaEva2Flow) {
+      } else if (sim.godzillaEva2Flow || sim.godzillaEvaFlow) {
         payout = entryPayout;
         basePayout = 0;
-        const initialGames = Math.max(50, Number(weighted(sim.godzillaInitialGames || [[50, 1]])) || 50);
+        const godzillaOriginal = Boolean(sim.godzillaEvaFlow);
+        const directUpperEntry = godzillaOriginal && upper;
+        const initialPool = directUpperEntry ? sim.godzillaAwakeningGames : sim.godzillaInitialGames;
+        const initialGames = Math.max(directUpperEntry ? 100 : 50, Number(weighted(initialPool || [[directUpperEntry ? 100 : 50, 1]])) || (directUpperEntry ? 100 : 50));
         const initialCharacter = initialGames >= 200 ? "ゴジラ" : initialGames >= 100 ? "モスラ" : "エヴァンゲリオン";
-        const initialAward = Math.max(0, Math.min(slotAwardForGames(initialGames, atPureIncrease, sim.atPayoutVariance), SLOT_COMPLETE_LIMIT - payout));
+        // G覚醒チャレンジからの直上位は、ここでは初期G数だけを決定する。
+        // 実際の消化・獲得は下の上位セットで一度だけ計上する。
+        const initialAward = directUpperEntry ? 0 : Math.max(0, Math.min(slotAwardForGames(initialGames, atPureIncrease, sim.atPayoutVariance), SLOT_COMPLETE_LIMIT - payout));
         payout += initialAward;
-        atGamesTotal += initialGames + 2;
-        atEvents.push({ kind: "godzilla-at", label: "ゴジエヴァアタック", character: initialCharacter, games: initialGames, award: initialAward, cumulative: payout });
-        flow.push(`ゴジエヴァアタック ${initialCharacter}・初期${initialGames}G`);
+        atGamesTotal += (directUpperEntry ? 0 : initialGames) + 2;
+        atEvents.push({ kind: "godzilla-at", label: directUpperEntry ? "G覚醒アタック" : "ゴジエヴァアタック", character: initialCharacter, games: initialGames, award: initialAward, cumulative: payout, upper: directUpperEntry });
+        flow.push(`${directUpperEntry ? "G覚醒アタック" : "ゴジエヴァアタック"} ${initialCharacter}・初期${initialGames}G`);
 
-        const addOnChecks = Math.max(1, Number(weighted([[1, 0.25], [2, 0.45], [3, 0.25], [4, 0.05]])) || 1);
+        const addOnChecks = directUpperEntry ? 0 : Math.max(1, Number(weighted(sim.godzillaAddOnChecks || [[1, 0.25], [2, 0.45], [3, 0.25], [4, 0.05]])) || 1);
         for (let check = 0; check < addOnChecks && payout < SLOT_COMPLETE_LIMIT; check += 1) {
-          const route = weighted([["direct", 0.45], ["search", 0.22], ["impact", 0.18], ["shock", 0.15]]);
-          const baseAdd = Math.max(10, Number(weighted([[10, 0.52], [20, 0.28], [30, 0.13], [50, 0.06], [100, 0.01]])) || 10);
+          const route = godzillaOriginal ? weighted([["direct", 0.58], ["annihilation", 0.42]]) : weighted([["direct", 0.45], ["search", 0.22], ["impact", 0.18], ["shock", 0.15]]);
+          const baseAdd = Math.max(10, Number(weighted(sim.godzillaDirectAddGames || [[10, 0.52], [20, 0.28], [30, 0.13], [50, 0.06], [100, 0.01]])) || 10);
           let routeLabel = "G侵食役・変異";
           let routeDetail = "レア役・変異からゲーム数上乗せを開きます";
           let routeGames = 5;
           let chance = 1;
           let success = true;
           let tenfold = Math.random() < 0.08;
-          if (route === "search") {
+          if (route === "annihilation") {
+            routeLabel = "殲滅作戦";
+            routeDetail = "怪獣バトル勝利後、追撃チャンス成功で10〜30Gが10倍へ昇格します";
+            routeGames = 8;
+            chance = Math.max(0.05, Math.min(1, Number(sim.godzillaAnnihilationChance) || 0.50));
+            success = Math.random() < chance;
+            tenfold = success && Math.random() < Math.max(0.05, Math.min(1, Number(sim.godzillaPursuitChance) || 0.50));
+          } else if (route === "search") {
             routeLabel = "怪獣索敵ZONE → IMPACT BATTLE";
             routeDetail = "10G＋αの索敵から約52%で4Gバトルへ、勝利期待度約44%です";
             routeGames = 14;
@@ -6353,7 +6391,7 @@
             addOnTotal += award;
             addOnGamesTotal += gameAdd;
           }
-          atEvents.push({ kind: "godzilla-addon", label: routeLabel, route, routeDetail, games: routeGames, baseAdd, gameAdd, award, cumulative: payout, success, tenfold, chance: chance * 100, number: check + 1 });
+          atEvents.push({ kind: "godzilla-addon", label: routeLabel, route, routeDetail, games: routeGames, baseAdd, gameAdd, award, cumulative: payout, success, tenfold, chance: chance * 100, pursuitChance: godzillaOriginal ? (Number(sim.godzillaPursuitChance) || 0.50) * 100 : 0, number: check + 1, original: godzillaOriginal });
           flow.push(`${routeLabel} ${success ? `${tenfold ? "10倍上乗せ " : ""}+${gameAdd}G` : "失敗"}`);
         }
 
@@ -6366,21 +6404,27 @@
           const award = gameAdd ? Math.max(0, Math.min(slotAwardForGames(gameAdd, returnToUpper ? upperPureIncrease : atPureIncrease, sim.atPayoutVariance), SLOT_COMPLETE_LIMIT - payout)) : 0;
           payout += award;
           atGamesTotal += returnGames + gameAdd;
-          atEvents.push({ kind: "godzilla-return", label: "50G引き戻し区間", games: returnGames, gameAdd, award, cumulative: payout, success: returnSuccess, chance: returnChance * 100, returnToUpper });
-          flow.push(`50G引き戻し ${returnSuccess ? `${returnToUpper ? sim.upperLabel : sim.mainLabel}復帰 +${gameAdd}G` : "失敗"}`);
+          atEvents.push({ kind: "godzilla-return", label: `${returnGames}G引き戻し区間`, games: returnGames, gameAdd, award, cumulative: payout, success: returnSuccess, chance: returnChance * 100, returnToUpper });
+          flow.push(`${returnGames}G引き戻し ${returnSuccess ? `${returnToUpper ? sim.upperLabel : sim.mainLabel}復帰 +${gameAdd}G` : "失敗"}`);
         };
 
-        const upperRouteStarted = payout < SLOT_COMPLETE_LIMIT && Math.random() < upperChance;
+        const upperRouteStarted = payout < SLOT_COMPLETE_LIMIT && (directUpperEntry || Math.random() < upperChance);
         if (upperRouteStarted) {
-          upper = Math.random() < sim.upperSuccess;
-          atGamesTotal += Math.max(1, Number(sim.upperChallengeGames) || 4);
-          atEvents.push({ kind: "upper-challenge", label: sim.upperChallenge, games: Math.max(1, Number(sim.upperChallengeGames) || 4), award: 0, cumulative: payout, success: upper, chance: sim.upperSuccess * 100 });
-          flow.push(`${sim.upperChallenge} ${upper ? "勝利" : "敗北"}`);
+          if (!directUpperEntry) {
+            upper = Math.random() < sim.upperSuccess;
+            atGamesTotal += Math.max(1, Number(sim.upperChallengeGames) || 4);
+            atEvents.push({ kind: "upper-challenge", label: sim.upperChallenge, games: Math.max(1, Number(sim.upperChallengeGames) || 4), award: 0, cumulative: payout, success: upper, chance: sim.upperSuccess * 100 });
+            flow.push(`${sim.upperChallenge} ${upper ? "勝利" : "敗北"}`);
+          }
           if (upper) {
             let continueUpper = true;
             const upperLoopLimit = Math.max(1, Math.min(30, Number(sim.upperMaxLoops) || 12));
             do {
-              const upperGames = Math.max(100, Number(weighted(sim.upperSetGames || [[100, 1]])) || 100);
+              const firstUpperSet = upperLoops === 0;
+              const upperGamePool = firstUpperSet && Array.isArray(sim.upperFirstGames) ? sim.upperFirstGames : sim.upperSetGames;
+              const upperGames = directUpperEntry && firstUpperSet
+                ? initialGames
+                : Math.max(firstUpperSet ? 100 : godzillaOriginal ? 30 : 100, Number(weighted(upperGamePool || [[firstUpperSet ? 100 : 30, 1]])) || (firstUpperSet ? 100 : 30));
               const award = Math.max(0, Math.min(slotAwardForGames(upperGames, upperPureIncrease, sim.atPayoutVariance), SLOT_COMPLETE_LIMIT - payout));
               if (!award) break;
               upperLoops += 1;
@@ -6388,15 +6432,15 @@
               upperPayoutTotal += award;
               atGamesTotal += upperGames + Math.max(1, Number(sim.upperChallengeGames) || 4);
               const continued = payout < SLOT_COMPLETE_LIMIT && upperLoops < upperLoopLimit && Math.random() < sim.upperContinue;
-              atEvents.push({ kind: "upper", label: sim.upperLabel, rewardLabel: `G覚醒アタック +${upperGames}G`, games: upperGames, award, cumulative: payout, set: upperLoops, continued });
+              atEvents.push({ kind: "upper", label: sim.upperLabel, rewardLabel: `${firstUpperSet ? "G覚醒アタック" : "決戦キングギドラ勝利"} +${upperGames}G`, games: upperGames, award, cumulative: payout, set: upperLoops, continued, original: godzillaOriginal });
               continueUpper = continued;
             } while (continueUpper);
             flow.push(`${sim.upperLabel} ${upperLoops}区間・+${yen.format(upperPayoutTotal)}枚`);
             appendReturnZone(true);
           } else {
-            appendReturnZone(false);
+            if (!godzillaOriginal) appendReturnZone(false);
           }
-        } else {
+        } else if (!godzillaOriginal) {
           appendReturnZone(false);
         }
         basePayout = payout - entryPayout;
@@ -7624,7 +7668,8 @@
 
   async function playSlotExperience(result, runId) {
     const data = result.experience;
-    const godzillaEva2Flow = Boolean(data.godzillaEva2Flow);
+    const godzillaOriginalFlow = Boolean(machine.sim.godzillaEvaFlow);
+    const godzillaEva2Flow = Boolean(data.godzillaEva2Flow || godzillaOriginalFlow);
     const mahoakoFlow = Boolean(data.mahoakoFlow);
     const okidokiGoldFlow = Boolean(data.okidokiGoldFlow);
     const uminchuFlow = Boolean(machine.sim.uminchuFlow);
@@ -9195,7 +9240,28 @@
       await waitForExperience(900);
       if (!data.entered) return;
     }
-    if (!okidokiGoldFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !basiliskTenzenFlow && !sao2Flow && !symphogearSeigiFlow && !lycorisFlow && !kanokariFlow && !aobutaFlow && !bofuriFlow) {
+    if (godzillaOriginalFlow) {
+      const bonus = data.entryBonus || { label: "初当りBONUS", games: 20, payout: 100, atChance: 0.57 };
+      const bonusComplete = await animateExperienceCounter(Math.max(1, Number(bonus.games) || 20), "G", bonus.key === "awakening" ? "G AWAKENING CHALLENGE" : "INITIAL BONUS", bonus.label, "20G・純増約5.0枚/Gを消化します", 100, `獲得 約${yen.format(bonus.payout || 100)}枚`, runId);
+      if (!bonusComplete) return;
+      if (bonus.key === "awakening") {
+        setExperienceStage(2, "G AWAKENING FINAL", "G覚醒チャレンジ 最終ゲーム", "PUSH", "G覚醒アタックまたはゴジエヴァアタックを開きます", "judge", 50, "成功で上位AT・失敗でも通常AT");
+        await waitForExperienceAction("G覚醒チャレンジ PUSH", 5000, bonus.directUpper ? "upper" : "gold");
+        if (runId !== experienceRunId) return;
+        setExperienceStage(2, bonus.directUpper ? "G AWAKENING" : "NORMAL AT", bonus.directUpper ? "G覚醒アタック 突入" : "ゴジエヴァアタックへ", bonus.directUpper ? "上位AT" : "通常AT", bonus.directUpper ? "100G以上の初期ゲーム数を決定します" : "50〜600Gの初期ゲーム数を決定します", bonus.directUpper ? "hyper" : "rush", 100, "G覚醒チャレンジ結果");
+        await waitForExperience(750);
+      } else {
+        const challengeComplete = await animateExperienceCounter(5, "G", "RUSH CHALLENGE", "RUSHチャレンジ 5G＋α", "全役でゴジエヴァRUSHを抽選します", data.entryChance, `${bonus.label}後の代表突破期待度`, runId);
+        if (!challengeComplete) return;
+        setExperienceStage(2, "RUSH FINAL", "RUSHチャレンジ 最終ゲーム", "PUSH", "ゴジエヴァRUSHの当落を開きます", "judge", data.entryChance, "成功でゴジエヴァアタック");
+        await waitForExperienceAction("RUSHチャレンジ PUSH", 5000, data.entered ? "gold" : "normal");
+        if (runId !== experienceRunId) return;
+        setExperienceStage(2, data.entered ? "RUSH ENTRY" : "RUSH FAILED", data.entered ? "ゴジエヴァRUSH 突入" : "RUSHチャレンジ 失敗", data.entered ? "AT START" : "通常へ", data.entered ? "ゴジエヴァアタックで初期50〜600Gを決定" : "今回の一撃はここで終了", data.entered ? "rush" : "end", data.entered ? 100 : 0, "RUSHチャレンジ結果");
+        await waitForExperience(750);
+        if (!data.entered) return;
+      }
+    }
+    if (!godzillaOriginalFlow && !okidokiGoldFlow && !uminchuFlow && !tentenFlow && !goblinSlayerFlow && !assaultLilyFlow && !kaguyaFlow && !dumbbellFlow && !shinEvaFlow && !tokyoGhoulFlow && !basiliskTenzenFlow && !sao2Flow && !symphogearSeigiFlow && !lycorisFlow && !kanokariFlow && !aobutaFlow && !bofuriFlow) {
     const dedicatedEntryFlow = godzillaEva2Flow || mahoakoFlow;
     const entryJudgeLabel = dedicatedEntryFlow && data.entryBonus?.judgeLabel ? data.entryBonus.judgeLabel : `${data.mainLabel}突入ジャッジ`;
     const entryJudgeGames = dedicatedEntryFlow ? Math.max(1, Number(data.entryBonus?.judgeGames) || 3) : 3;
@@ -9961,12 +10027,18 @@
         }
 
         if (event.kind === "godzilla-at") {
-          setExperienceStage(3, "GODZILLA EVA ATTACK", "初期ゲーム数を決定", "PUSH", "登場キャラと初期ゲーム数を開きます", "judge", 100, "2G初期ゲーム数決定ゾーン");
-          await waitForExperienceAction("ゴジエヴァアタック PUSH", 5000, "gold");
+          const attackPhase = event.upper ? "G AWAKENING ATTACK" : "GODZILLA EVA ATTACK";
+          setExperienceStage(3, attackPhase, "初期ゲーム数を決定", "PUSH", "登場キャラと初期ゲーム数を開きます", "judge", 100, "2G初期ゲーム数決定ゾーン");
+          await waitForExperienceAction(`${event.label || "ゴジエヴァアタック"} PUSH`, 5000, event.upper ? "upper" : "gold");
           if (runId !== experienceRunId) return;
-          setExperienceStage(3, "GODZILLA EVA ATTACK", event.character || "エヴァンゲリオン", `+${yen.format(eventGames)}G`, "ゴジエヴァRUSHの初期ゲーム数が決定", eventGames >= 100 ? "hyper" : "rush", 100, "初期50〜600G");
+          setExperienceStage(3, attackPhase, event.character || "エヴァンゲリオン", `+${yen.format(eventGames)}G`, `${event.upper ? data.upperLabel : data.mainLabel}の初期ゲーム数が決定`, eventGames >= 100 ? "hyper" : "rush", 100, event.upper ? "初期100〜600G" : "初期50〜600G");
           await waitForExperience(eventGames >= 100 ? 1200 : 900);
-          const initialComplete = await animateExperienceCounter(eventGames, "G", "GODZILLA EVA RUSH", `${data.mainLabel} 初期ゲーム`, "G侵食役・変異・上乗せルートを抽選します", data.specialChance, "ゲーム数上乗せ抽選", runId);
+          if (event.upper) {
+            setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
+            setSlotAtStatus({ visible: true, remaining: eventGames, addOnGames: runningAddOnGames, total: event.cumulative });
+            continue;
+          }
+          const initialComplete = await animateExperienceCounter(eventGames, "G", event.upper ? "G AWAKENING RUSH" : "GODZILLA EVA RUSH", `${event.upper ? data.upperLabel : data.mainLabel} 初期ゲーム`, "G侵食役・変異・上乗せルートを抽選します", data.specialChance, "ゲーム数上乗せ抽選", runId);
           if (!initialComplete) return;
           consumedGames += eventGames;
           setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
@@ -9975,16 +10047,22 @@
         }
 
         if (event.kind === "godzilla-addon") {
-          const routeComplete = await animateExperienceCounter(eventGames, "G", event.route === "search" ? "MONSTER SEARCH" : event.route === "impact" ? "IMPACT BATTLE" : event.route === "shock" ? "震撃CHANCE" : "G侵食役・変異", event.label, event.routeDetail || "上乗せ結果を抽選します", event.chance, `${event.label} 成功期待度`, runId);
+          const routePhase = event.route === "annihilation" ? "ANNIHILATION BATTLE" : event.route === "search" ? "MONSTER SEARCH" : event.route === "impact" ? "IMPACT BATTLE" : event.route === "shock" ? "震撃CHANCE" : "G侵食役・変異";
+          const routeComplete = await animateExperienceCounter(eventGames, "G", routePhase, event.label, event.routeDetail || "上乗せ結果を抽選します", event.chance, `${event.label} 成功期待度`, runId);
           if (!routeComplete) return;
           consumedGames += eventGames;
-          setExperienceStage(3, event.route === "shock" ? "震撃CHANCE" : "ADD ON JUDGE", event.label, "PUSH", event.route === "shock" ? "10倍上乗せの成否を開きます" : "ルート結果と上乗せゲーム数を開きます", "judge", event.chance, `${event.label} 結果`);
+          setExperienceStage(3, event.route === "shock" ? "震撃CHANCE" : event.route === "annihilation" ? "BATTLE JUDGE" : "ADD ON JUDGE", event.label, "PUSH", event.route === "shock" ? "10倍上乗せの成否を開きます" : event.route === "annihilation" ? "怪獣バトルの勝敗を開きます" : "ルート結果と上乗せゲーム数を開きます", "judge", event.chance, `${event.label} 結果`);
           await waitForExperienceAction(`${event.label} PUSH`, 5000, event.tenfold ? "upper" : "gold");
           if (runId !== experienceRunId) return;
           if (!event.success) {
             setExperienceStage(3, "JUDGE END", `${event.label} 失敗`, "上乗せなし", `累計 ${yen.format(event.cumulative)}枚・ゴジエヴァRUSHへ戻ります`, "end", 0, `${event.label} 結果`);
             await waitForExperience(900);
             continue;
+          }
+          if (event.route === "annihilation") {
+            setExperienceStage(3, "PURSUIT CHANCE", "追撃チャンス", "PUSH", "成功すれば上乗せゲーム数が10倍になります", "judge", Number(event.pursuitChance) || 50, "追撃成功期待度 約50%");
+            await waitForExperienceAction("追撃チャンス PUSH", 5000, event.tenfold ? "upper" : "gold");
+            if (runId !== experienceRunId) return;
           }
           runningAddOn += Number(event.award) || 0;
           runningAddOnGames += Number(event.gameAdd) || 0;
@@ -10000,10 +10078,10 @@
         }
 
         if (event.kind === "godzilla-return") {
-          const returnComplete = await animateExperienceCounter(eventGames, "G", "RETURN ZONE", event.label, event.returnToUpper ? "G覚醒RUSHへの復帰を抽選します" : "ゴジエヴァRUSHへの復帰を抽選します", event.chance, `設定1引き戻し目安 約${Math.round(event.chance)}%`, runId);
+          const returnComplete = await animateExperienceCounter(eventGames, "G", "RETURN ZONE", event.label, event.returnToUpper ? "G覚醒RUSHへの復帰を抽選します" : "ゴジエヴァRUSHへの復帰を抽選します", event.chance, `引き戻し代表値 約${Math.round(event.chance)}%`, runId);
           if (!returnComplete) return;
           consumedGames += eventGames;
-          setExperienceStage(3, "RETURN JUDGE", event.label, "PUSH", "引き戻しの当落を開きます", "judge", event.chance, "50G引き戻し結果");
+          setExperienceStage(3, "RETURN JUDGE", event.label, "PUSH", "引き戻しの当落を開きます", "judge", event.chance, `${eventGames}G引き戻し結果`);
           await waitForExperienceAction("引き戻し PUSH", 5000, event.returnToUpper ? "upper" : "normal");
           if (runId !== experienceRunId) return;
           if (event.success) {
@@ -10013,7 +10091,7 @@
             if (!returnAtComplete) return;
             consumedGames += Number(event.gameAdd) || 0;
           } else {
-            setExperienceStage(3, "RUSH END", "引き戻し終了", "通常へ", `累計 ${yen.format(event.cumulative)}枚・最終結果へ`, "end", 0, "50G引き戻し区間終了");
+            setExperienceStage(3, "RUSH END", "引き戻し終了", "通常へ", `累計 ${yen.format(event.cumulative)}枚・最終結果へ`, "end", 0, `${eventGames}G引き戻し区間終了`);
             await waitForExperience(850);
           }
           setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
@@ -10886,7 +10964,7 @@
           const challengeTitle = seiyaTempleFlow ? "最終決戦・サガとの4Gバトル" : ggoStFlow ? "vs KKHC・5Gボスバトル" : godzillaEva2Flow ? "4G・上位AT決戦" : mahoakoFlow ? event.label : `${data.mainLabel}消化中`;
           const challengeDetail = seiyaTempleFlow ? "小役成立なら勝利。最後のPUSHで千日戦争への当落を開きます" : ggoStFlow ? "バレットライン対応役で勝利濃厚。PUSHで上位STへの当落を開きます" : godzillaEva2Flow ? "成立役で勝利を書き換え、最後のPUSHでG覚醒RUSHへの当落を開きます" : mahoakoFlow ? "成立役で上位ATを抽選し、最後のPUSHで当落を開きます" : `${data.upperChallenge}の当落まで数字が進みます`;
           const challengeChance = seiyaTempleFlow || ggoStFlow || godzillaEva2Flow || mahoakoFlow ? (Number(event.chance) || data.upperSuccessChance) : data.upperRouteChance;
-          const challengeRateLabel = seiyaTempleFlow ? "SAGA BATTLE 成功期待度" : ggoStFlow ? "ボスバトル代表成功率" : godzillaEva2Flow ? "突破期待度 約66%" : mahoakoFlow ? "上位AT代表成功率" : "上位ルート期待度";
+          const challengeRateLabel = seiyaTempleFlow ? "SAGA BATTLE 成功期待度" : ggoStFlow ? "ボスバトル代表成功率" : godzillaEva2Flow ? godzillaOriginalFlow ? "初回突破期待度 約55%" : "突破期待度 約66%" : mahoakoFlow ? "上位AT代表成功率" : "上位ルート期待度";
           const counterComplete = await animateExperienceCounter(eventGames, "G", challengePhase, challengeTitle, challengeDetail, challengeChance, challengeRateLabel, runId);
           if (!counterComplete) return;
           consumedGames += eventGames;
@@ -10899,7 +10977,7 @@
           await waitForExperience(820);
           if (upperSucceeded) {
             const upperPhase = setPushFlow ? "SUPER REVOLUTION RUSH" : battleBonusFlow ? "無想転生バトル" : garoBattleFlow ? "究極魔戒RUSH" : ragnadorUpperFlow ? "真ラグナドールRUSH" : seiyaTempleFlow ? "千日戦争" : ggoStFlow ? "イカれたレン" : godzillaEva2Flow ? "G覚醒RUSH" : mahoakoFlow ? "SUPER AKOGARE VERSION" : sgRaceFlow ? "青島SG" : "UPPER AT";
-            const upperMessage = setPushFlow ? "赤・金モードでセット継続抽選へ" : battleBonusFlow ? "継続率約94%のバトルへ" : garoBattleFlow ? "金色バトル勝利から陰我消滅ノ刻の報酬へ" : ragnadorUpperFlow ? "スペシャルエピソードを経由して純増約4.5枚/Gの上位ATへ" : seiyaTempleFlow ? "30G＋4/5Gバトル・継続期待度約88%の上位ATへ" : ggoStFlow ? "8G・継続率約85%のボーナス超高確率STへ" : godzillaEva2Flow ? "G覚醒アタックで100G以上を決定し、純増約5.2枚/Gの上位ATへ" : mahoakoFlow ? "3Gの上位あこがれATTACKで初期Gを決め、純増約5.0枚/Gへ" : sgRaceFlow ? "上位SGの継続レースへ" : upperGameManaged ? `純増約${Number(machine.sim.upperPureIncrease).toFixed(1)}枚/Gのゲーム数管理型ATへ` : "上位ATの継続抽選へ進みます";
+            const upperMessage = setPushFlow ? "赤・金モードでセット継続抽選へ" : battleBonusFlow ? "継続率約94%のバトルへ" : garoBattleFlow ? "金色バトル勝利から陰我消滅ノ刻の報酬へ" : ragnadorUpperFlow ? "スペシャルエピソードを経由して純増約4.5枚/Gの上位ATへ" : seiyaTempleFlow ? "30G＋4/5Gバトル・継続期待度約88%の上位ATへ" : ggoStFlow ? "8G・継続率約85%のボーナス超高確率STへ" : godzillaEva2Flow ? `G覚醒アタックで100G以上を決定し、純増約${godzillaOriginalFlow ? "5.0" : "5.2"}枚/Gの上位ATへ` : mahoakoFlow ? "3Gの上位あこがれATTACKで初期Gを決め、純増約5.0枚/Gへ" : sgRaceFlow ? "上位SGの継続レースへ" : upperGameManaged ? `純増約${Number(machine.sim.upperPureIncrease).toFixed(1)}枚/Gのゲーム数管理型ATへ` : "上位ATの継続抽選へ進みます";
             const upperIntroValue = upperGameManaged ? (machine.sim.upperGameRange || "100〜300G") : `${Math.round(data.upperContinueChance)}% LOOP`;
             setExperienceStage(3, upperPhase, `${data.upperLabel} 突入！`, upperIntroValue, upperMessage, "hyper", upperGameManaged ? 100 : data.upperContinueChance, `${data.upperLabel}開始`);
             await waitForExperience(1100);
@@ -10952,10 +11030,10 @@
         }
         if (godzillaEva2Flow && event.kind === "upper") {
           const upperSetLabel = `${data.upperLabel} ${event.set}区間目`;
-          setExperienceStage(3, "G AWAKENING ATTACK", event.set === 1 ? "G覚醒アタック" : "決戦勝利報酬", "PUSH", "100G以上の上位ATゲーム数を開きます", "judge", 100, "上位初期100G以上");
+          setExperienceStage(3, "G AWAKENING ATTACK", event.set === 1 ? "G覚醒アタック" : "決戦勝利報酬", "PUSH", event.set === 1 ? "100G以上の上位ATゲーム数を開きます" : "次セット30G以上のゲーム数を開きます", "judge", 100, event.set === 1 ? "上位初期100G以上" : godzillaOriginalFlow ? "2セット目以降30G以上" : "上位初期100G以上");
           await waitForExperienceAction(`${upperSetLabel} PUSH`, 5000, "upper");
           if (runId !== experienceRunId) return;
-          setExperienceStage(3, "G AWAKENING ATTACK", event.rewardLabel || "G覚醒アタック", `+${yen.format(eventGames)}G`, "G覚醒RUSHを開始します", "hyper", 100, "100〜300G代表振り分け");
+          setExperienceStage(3, "G AWAKENING ATTACK", event.rewardLabel || "G覚醒アタック", `+${yen.format(eventGames)}G`, "G覚醒RUSHを開始します", "hyper", 100, event.set === 1 ? godzillaOriginalFlow ? "100〜600G代表振り分け" : "100〜300G代表振り分け" : godzillaOriginalFlow ? "30G以上" : "100〜300G代表振り分け");
           await waitForExperience(1100);
           const upperComplete = await animateExperienceCounter(eventGames, "G", "G AWAKENING RUSH", `${upperSetLabel} 消化中`, "上乗せ性能が強化された上位ATを消化します", 100, "純増約5.2枚/G", runId);
           if (!upperComplete) return;
@@ -10963,13 +11041,13 @@
           setExperienceHud(`${yen.format(consumedGames)}G`, `${yen.format(result.investment)}円`, `${yen.format(event.cumulative)}枚`);
           setSlotAtStatus({ visible: true, remaining: 0, addOnGames: runningAddOnGames, total: event.cumulative });
           const battleGames = Math.max(1, Number(machine.sim.upperChallengeGames) || 4);
-          const battleComplete = await animateExperienceCounter(battleGames, "G", "決戦カイザーギドラ", `${upperSetLabel}終了・4G決戦`, "成立役で勝利を書き換え、最後のPUSHで継続を開きます", data.upperContinueChance, "突破期待度 約66%", runId);
+          const battleComplete = await animateExperienceCounter(battleGames, "G", godzillaOriginalFlow ? "決戦キングギドラ" : "決戦カイザーギドラ", `${upperSetLabel}終了・4G決戦`, "成立役で勝利を書き換え、最後のPUSHで継続を開きます", data.upperContinueChance, godzillaOriginalFlow ? "ループ率 約77%" : "突破期待度 約66%", runId);
           if (!battleComplete) return;
           consumedGames += battleGames;
-          setExperienceStage(3, "FINAL BATTLE", "決戦カイザーギドラ", "PUSH", event.continued ? "勝利して次のG覚醒RUSHへ" : "勝利・敗北を開きます", "judge", data.upperContinueChance, "突破期待度 約66%");
+          setExperienceStage(3, "FINAL BATTLE", godzillaOriginalFlow ? "決戦キングギドラ" : "決戦カイザーギドラ", "PUSH", event.continued ? "勝利して次のG覚醒RUSHへ" : "勝利・敗北を開きます", "judge", data.upperContinueChance, godzillaOriginalFlow ? "ループ率 約77%" : "突破期待度 約66%");
           await waitForExperienceAction(`${upperSetLabel} 決戦PUSH`, 5000, "upper");
           if (runId !== experienceRunId) return;
-          setExperienceStage(3, event.continued ? "BATTLE WIN" : "BATTLE LOSE", event.continued ? "カイザーギドラ撃破！" : "決戦敗北", event.continued ? "G覚醒RUSH継続" : "50G引き戻しへ", event.continued ? `累計 ${yen.format(event.cumulative)}枚・次のG覚醒アタックへ` : `累計 ${yen.format(event.cumulative)}枚`, event.continued ? "hyper" : "end", event.continued ? 100 : 0, "決戦カイザーギドラ結果");
+          setExperienceStage(3, event.continued ? "BATTLE WIN" : "BATTLE LOSE", event.continued ? `${godzillaOriginalFlow ? "キングギドラ" : "カイザーギドラ"}撃破！` : "決戦敗北", event.continued ? "G覚醒RUSH継続" : `${godzillaOriginalFlow ? "70" : "50"}G引き戻しへ`, event.continued ? `累計 ${yen.format(event.cumulative)}枚・次のG覚醒アタックへ` : `累計 ${yen.format(event.cumulative)}枚`, event.continued ? "hyper" : "end", event.continued ? 100 : 0, `${godzillaOriginalFlow ? "決戦キングギドラ" : "決戦カイザーギドラ"}結果`);
           await waitForExperience(event.continued ? 1000 : 850);
           continue;
         }
