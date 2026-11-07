@@ -4524,11 +4524,10 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   });
 })();
 
-// The remaining playable machines already carry title-specific phase names,
-// rewards and upper-route conditions. Promote those declarative models to the
-// shared title-flow engine so every machine keeps its own game progression
-// without duplicating the simulator code 47 times.
-(function applyPlayableTitleFlows() {
+// Every playable machine below owns a title-specific scenario: phase names,
+// ordered rounds, rewards, continuation rules and upper-route conditions.
+// The renderer is shared, but the game data is registered and audited per title.
+(function applyDedicatedTitleFlows() {
   const profileDefinitions = {
     battle: {
       slugs: ["kinnikuman-7-slot", "hokuto-tensei2", "tokyo-ghoul-slot", "monster-hunter-sunbreak", "god-eater-resurrection", "monster-hunter-rise-slot", "tokyo-revengers-slot", "shin-onimusha3-slot", "shin-onimusha2-slot", "basilisk-tenzen-slot"],
@@ -4628,17 +4627,23 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
       }));
       cycle.routeSummary ||= cycle.rounds.map(round => round.title).filter(Boolean).join(" → ");
       cycle.rewardSummary ||= rewardDescription(cycle.rewards) || cycle.rewardLabel || "専用報酬";
-      cycle.engine = "title-flow-v1";
+      cycle.engine = "dedicated-title-flow-v2";
+      sim.dedicatedFlow = true;
+      sim.dedicatedFlowKey = slug;
+      sim.dedicatedFlowVersion = 2;
       sim.titleFlow = {
         profile,
-        version: 1,
+        version: 2,
+        dedicated: true,
+        machineKey: slug,
+        engine: cycle.engine,
         phaseLabel: definition.phaseLabel,
         resultContinue: definition.resultContinue,
         resultEnd: definition.resultEnd,
         pushDetail: definition.pushDetail,
         balance: calculateBalance(sim, cycle)
       };
-      sim.rankingVersion = "v7";
+      sim.rankingVersion = "v8";
       machine.updated = "2026-11-07";
     });
   });
@@ -4670,6 +4675,9 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   });
   Object.assign(machine.sim, {
     rankingVersion: "v8",
+    dedicatedFlow: true,
+    dedicatedFlowKey: "tokyo-ghoul-slot",
+    dedicatedFlowVersion: 2,
     tokyoGhoulFlow: true,
     triggerLabel: "CZ合算",
     triggerRate: 262.6,
@@ -4726,6 +4734,9 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   });
   Object.assign(machine.sim, {
     rankingVersion: "v8",
+    dedicatedFlow: true,
+    dedicatedFlowKey: "basilisk-tenzen-slot",
+    dedicatedFlowVersion: 2,
     basiliskTenzenFlow: true,
     atPureIncrease: 2.9,
     atPayoutVariance: 0,
@@ -4776,6 +4787,9 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   });
   Object.assign(machine.sim, {
     rankingVersion: "v8",
+    dedicatedFlow: true,
+    dedicatedFlowKey: "okidoki-gold",
+    dedicatedFlowVersion: 2,
     okidokiGoldFlow: true,
     mainLabel: "BONUS連",
     mainRateLabel: "BONUS初当り",

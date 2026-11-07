@@ -7,26 +7,38 @@ vm.createContext(sandbox);
 vm.runInContext(source, sandbox);
 
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
-const titleFlows = machines.filter(([, machine]) => machine.sim?.titleFlow);
-const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow);
+const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
+const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
+const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow);
 const expectedProfiles = { battle: 8, st: 12, heaven: 4, bonus: 8, addon: 12 };
 const errors = [];
 const rows = [];
 
-for (const [slug, machine] of titleFlows) {
+for (const [slug, machine] of dedicatedFlows) {
+  const sim = machine.sim;
+  if (sim.dedicatedFlowKey !== slug || Number(sim.dedicatedFlowVersion) !== 2) {
+    errors.push(`${slug}: dedicated registration key or version is invalid`);
+  }
+}
+
+for (const [slug, machine] of declarativeFlows) {
   const sim = machine.sim;
   const cycle = sim.cycleFlow;
   const titleFlow = sim.titleFlow;
-  if (!cycle || cycle.engine !== "title-flow-v1") errors.push(`${slug}: title-flow engine is missing`);
+  if (sim.dedicatedFlowKey !== slug || Number(sim.dedicatedFlowVersion) !== 2) errors.push(`${slug}: dedicated registration is invalid`);
+  if (!cycle || cycle.engine !== "dedicated-title-flow-v2") errors.push(`${slug}: dedicated title-flow engine is missing`);
+  if (!titleFlow?.dedicated || titleFlow.machineKey !== slug || titleFlow.engine !== cycle?.engine || Number(titleFlow.version) !== 2) errors.push(`${slug}: title-flow registration is incomplete`);
   if (!Array.isArray(cycle?.rounds) || cycle.rounds.length < Math.max(1, Number(cycle.maxRounds) || 1)) errors.push(`${slug}: explicit rounds are incomplete`);
   if (!cycle?.routeSummary) errors.push(`${slug}: route summary is missing`);
-  if (!cycle?.rewardSummary) errors.push(`${slug}: reward summary is missing`);
+  if (!cycle?.rewardSummary || cycle.rewardSummary === "専用報酬") errors.push(`${slug}: title-specific reward summary is missing`);
   if (!titleFlow?.balance || !Number.isFinite(titleFlow.balance.averageRounds) || !Number.isFinite(titleFlow.balance.upperRoute)) errors.push(`${slug}: balance metrics are missing`);
   for (const [index, round] of (cycle?.rounds || []).entries()) {
     if (!round.title || !round.detail || !Array.isArray(round.rewards) || !round.rewards.length) errors.push(`${slug}: round ${index + 1} is incomplete`);
     const chance = Number(round.continueChance);
     if (!(chance > 0 && chance <= 1)) errors.push(`${slug}: round ${index + 1} has an invalid continue chance`);
   }
+  const roundTitles = (cycle?.rounds || []).map(round => round.title);
+  if (new Set(roundTitles).size !== roundTitles.length) errors.push(`${slug}: round titles are not unique`);
   rows.push({
     slug,
     profile: titleFlow.profile,
@@ -36,14 +48,15 @@ for (const [slug, machine] of titleFlows) {
   });
 }
 
-if (titleFlows.length !== 44) errors.push(`expected 44 reusable title flows, found ${titleFlows.length}`);
+if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
+if (declarativeFlows.length !== 44) errors.push(`expected 44 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
-  const actual = titleFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
+  const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
-const dedicatedMap = Object.fromEntries(dedicatedFlows);
-if (dedicatedFlows.length !== 3 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"]) {
-  errors.push(`expected dedicated Tokyo Ghoul, Basilisk Tenzen and Okidoki GOLD flows, found ${dedicatedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+const dedicatedMap = Object.fromEntries(specializedFlows);
+if (specializedFlows.length !== 3 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"]) {
+  errors.push(`expected specialized Tokyo Ghoul, Basilisk Tenzen and Okidoki GOLD flows, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
   const tokyoGhoul = dedicatedMap["tokyo-ghoul-slot"];
   const sim = tokyoGhoul.sim;
@@ -70,7 +83,7 @@ if (dedicatedFlows.length !== 3 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicat
 }
 
 if (process.argv.includes("--verbose")) console.table(rows);
-console.log(`Title-flow audit: ${titleFlows.length + dedicatedFlows.length} machines (${titleFlows.length} reusable + ${dedicatedFlows.length} dedicated) / ${rows.reduce((sum, row) => sum + row.rounds, 0)} reusable explicit rounds / ${errors.length} errors`);
+console.log(`Dedicated-flow audit: ${dedicatedFlows.length} machines (${declarativeFlows.length} declarative + ${specializedFlows.length} specialized) / ${rows.reduce((sum, row) => sum + row.rounds, 0)} explicit rounds / ${errors.length} errors`);
 if (errors.length) {
   errors.forEach(error => console.error(`- ${error}`));
   process.exit(1);
