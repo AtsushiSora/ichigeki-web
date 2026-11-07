@@ -4469,6 +4469,61 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   });
 })();
 
+(function applyShinEvaDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["shin-eva-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "3Gの作戦決定から10G＋αの作戦STへ。BONUSを重ね、マリ獣化から上位STを狙う。",
+    intro: "設定別初当りを使い、3GのEVANGELION IMPACT、5種類の作戦ST、3種類のBONUS、三機殲滅、マリ獣化チャレンジ、上位のオップファータイプ殲滅作戦までを実機順に体験できます。",
+    points: ["作戦STは10G＋α・BONUS期待度約72%", "BONUSは純増約5.0枚/G・3種類", "上位STは20G＋α・継続期待度約95%"],
+    specs: [["初当り（設定1）", "約1/291.1"], ["初当り（設定6）", "約1/212.5"], ["EVANGELION IMPACT", "3G・作戦決定"], ["作戦ST", "10G＋α・約72%"], ["作戦ST純増", "約0.1枚/G"], ["BIG BONUS", "約150枚＋α"], ["SUPER BIG BONUS", "約300枚＋α"], ["SPECIAL BONUS", "約150枚＋α"], ["BONUS純増", "約5.0枚/G"], ["三機殲滅", "8G＋α"], ["マリ獣化チャレンジ", "10G・約38%"], ["上位ST", "20G＋α・約95%"], ["ベース", "約33.1G/50枚"], ["出玉率", "98.2〜114.9%"]],
+    articleSections: [
+      { heading: "EVANGELION IMPACTと5種類の作戦", paragraphs: ["初当り後は3GのEVANGELION IMPACTで作戦を決定します。作戦はパリ5段階、ヤマト4段階、US3段階、第8使徒迎撃2段階、ヤシマ1段階で、必要段階が少ないほどBONUSが近づきます。", "作戦STは10G＋α。作戦目やレア役で段階を進め、規定段階到達でBONUSです。進行のたびに10Gを再セットする特徴を、サイトでは段階数と総消化G数で表示します。"] },
+      { heading: "作戦STと3種類のBONUS", paragraphs: ["作戦STのBONUS期待度は約72%、純増は約0.1枚/G。BONUSはBIG約150枚＋α、SUPER BIG約300枚＋α、SPECIAL約150枚＋αの3種類です。", "BONUS中は作戦進行ストックとVストックを抽選。サイトではBONUS種別をPUSHまで伏せ、獲得枚数とストックを別々に結果へ加算します。"] },
+      { heading: "三機殲滅とゲンドウ対決", paragraphs: ["三機殲滅は8G＋αの作戦進行ストック特化ゾーンです。作戦ST失敗時にストックを使い、作戦継続へつなげます。", "VSゲンドウに勝利すると三機殲滅の権利を獲得。三機殲滅は上位ATそのものではなく、通常STを助ける特化ゾーンとして専用表示します。"] },
+      { heading: "マリ獣化チャレンジと上位ST", paragraphs: ["BONUS後の一部で10Gのマリ獣化チャレンジへ。成功期待度は約38%で、成功後はSUPER BIGを経て上位STへ進みます。", "オップファータイプ殲滅作戦は20G＋α・純増約5.0枚/G・継続期待度約95%。8段階突破でSUPER BIGに当選し、再び上位STへ戻ります。"] },
+      { heading: "固定レートと簡易化する範囲", bullets: ["約33.1G/50枚・1,000円46枚貸し・5.2枚交換で固定", "作戦ごとの選択比率、各ストック率、マリ獣化出現率は非公表のため代表値", "通常時の全モード・天井・成立役は初当り確率へ集約", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10196"], ["エヴァプロ 開発者ブログ", "https://blog.eva-project.jp/l_shin_eva_st/1511/"], ["一撃 解析攻略", "https://1geki.jp/slot/l_shin_eva/"], ["なな徹 解析情報", "https://nana-press.com/kaiseki/machine/893/26817/"]],
+    readerGuide: {
+      verdict: "5種類の作戦STで段階を進め、3種類のBONUSと進行ストックを重ねるST型です。三機殲滅は通常STの補助、マリ獣化成功が上位STへの入口です。",
+      bestFor: ["作戦ごとの必要段階を見比べたい", "BONUS種類とストックをPUSHで開きたい", "通常STと継続約95%の上位STを比べたい"],
+      check: ["作戦STは10G＋α・BONUS期待度約72%", "マリ獣化は10G・成功期待度約38%", "非公表の作戦選択率・ストック率は代表モデル"],
+      compare: [["godzilla-eva2-slot", "Lゴジラ対エヴァ2", "同シリーズのゲーム数ATと比較"], ["kaguya-sama-slot", "Lかぐや様", "BONUSループ型と比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v6",
+    shinEvaFlow: true,
+    triggerLabel: "初当り（作戦ST／BONUS）",
+    triggerRate: 291.1,
+    triggerSuccess: 1,
+    mainLabel: "作戦ST",
+    mainRate: 291.1,
+    base50: 33.1,
+    normalMin: 0,
+    normalMax: 0,
+    atPureIncrease: 0.1,
+    atPayoutVariance: 0,
+    shinEvaBonusPureIncrease: 5.0,
+    shinEvaOperationContinue: 0.72,
+    shinEvaOperations: [[{ key: "paris", label: "パリ作戦", phases: 5 }, 0.30], [{ key: "yamato", label: "ヤマト作戦", phases: 4 }, 0.25], [{ key: "us", label: "US作戦", phases: 3 }, 0.22], [{ key: "eighth", label: "第8使徒迎撃作戦", phases: 2 }, 0.15], [{ key: "yashima", label: "ヤシマ作戦", phases: 1 }, 0.08]],
+    shinEvaBonuses: [[{ key: "big", label: "BIG BONUS", payout: 150, games: 30 }, 0.871], [{ key: "super", label: "SUPER BIG BONUS", payout: 300, games: 60 }, 0.098], [{ key: "special", label: "SPECIAL BONUS", payout: 150, games: 30 }, 0.031]],
+    specialLabel: "三機殲滅",
+    specialChance: 0.14,
+    upperChallenge: "マリ獣化チャレンジ",
+    upperChance: 0.12,
+    upperSuccess: 0.38,
+    upperLabel: "オップファータイプ殲滅作戦",
+    upperContinue: 0.95,
+    upperPayout: 0,
+    upperPureIncrease: 5.0,
+    shinEvaUpperMaxSets: 12,
+    settingRates: { 1: { trigger: 291.1, main: 291.1, payout: 0.982 }, 2: { trigger: 281.7, main: 281.7, payout: 0.992 }, 3: { trigger: 268.5, main: 268.5, payout: 1.014 }, 4: { trigger: 245.0, main: 245.0, payout: 1.056 }, 5: { trigger: 226.8, main: 226.8, payout: 1.101 }, 6: { trigger: 212.5, main: 212.5, payout: 1.149 } }
+  });
+})();
+
 // Dedicated implementations take precedence over the older reusable cycle map.
 // Keep this final cleanup after every enrichment pass so page copy and gameplay
 // both use the same title-specific model.
@@ -4492,4 +4547,6 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   if (kaguya?.kaguyaFlow) delete kaguya.cycleFlow;
   const dumbbell = window.ICHIGEKI_MACHINES["dumbbell-slot"]?.sim;
   if (dumbbell?.dumbbellFlow) delete dumbbell.cycleFlow;
+  const shinEva = window.ICHIGEKI_MACHINES["shin-eva-slot"]?.sim;
+  if (shinEva?.shinEvaFlow) delete shinEva.cycleFlow;
 })();
