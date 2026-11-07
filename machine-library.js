@@ -632,7 +632,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["KYORAKU 公式機種サイト", "https://www.kyoraku.co.jp/product_site/2026/ggo_s/"], ["一撃 GGO 機種概要・スペック", "https://1geki.jp/slot/l_sao_ggo/"], ["一撃 BIG・REG解析", "https://1geki.jp/slot/l_sao_ggo/61/"], ["一撃 SQUAD JAM解析", "https://1geki.jp/slot/l_sao_ggo/81/"], ["一撃 ガンゲイルストーム解析", "https://1geki.jp/slot/l_sao_ggo/83/"], ["一撃 イカれたレン解析", "https://1geki.jp/slot/l_sao_ggo/91/"]]
   },
   "godzilla-eva2-slot": {
-    order: 0.25, type: "slot", theme: "ember", year: "2026年11月", maker: "ビスティ", updated: "2026-11-04",
+    order: 0.25, type: "slot", theme: "ember", year: "2026年11月", maker: "ビスティ", updated: "2026-11-07",
     published: "2026-11-02",
     name: "Lパチスロ ゴジラ対エヴァンゲリオン 2", shortName: "スマスロ ゴジエヴァ2",
     image: "assets/machines/godzilla-eva2-slot-key-visual.jpg",
@@ -640,18 +640,20 @@ window.ICHIGEKI_MACHINES = {
     imageCredit: "遊技日本 新台記事",
     imageSource: "https://yugi-nippon.com/pachinko-new-machine/post-80463/",
     catchcopy: "2種類のBONUSを越え、G覚醒RUSHへ。",
-    intro: "2026年11月2日から順次導入が始まったスマスロ。設定別BONUS・AT初当りを使い、集結バトル、ゴジエヴァRUSH、決戦カイザーギドラ、G覚醒RUSHまでを簡易体験できます。",
-    points: ["BONUSは設定1約1/234.2〜設定6約1/195.0", "ATは設定1約1/460.5〜設定6約1/355.5", "純増約5.2枚/G・上位AT期待獲得約3600枚"],
-    specs: [["BONUS（設定1）", "約1/234.2"], ["BONUS（設定6）", "約1/195.0"], ["AT（設定1）", "約1/460.5"], ["AT（設定6）", "約1/355.5"], ["ベース", "約30G/50枚"], ["AT純増", "約5.2枚/G"]],
-    sim: { kind: "slot", triggerLabel: "集結バトル", triggerRate: 234.2, triggerSuccess: 0.50, mainLabel: "ゴジエヴァRUSH", mainRate: 460.5, base50: 30.0, coinUnit: 3.7, normalMin: 250, normalMax: 1300, atPureIncrease: 5.2, specialLabel: "震撃チャンス", specialChance: 0.36, specialMin: 200, specialMax: 1100, specialOutcomes: [[{ kind: "games", label: "震撃チャンス", games: [[10, 0.45], [20, 0.30], [30, 0.15], [50, 0.08], [100, 0.02]], triggerGames: 8 }, 0.65], [{ kind: "bonus", label: "ゴジエヴァBONUS", games: [[20, 0.60], [40, 0.40]], payouts: [[260, 0.60], [520, 0.40]], triggerGames: 10 }, 0.35]], upperChallenge: "決戦カイザーギドラ", upperChance: 0.20, upperSuccess: 0.50, upperLabel: "G覚醒RUSH", upperContinue: 0.80, upperPayout: 750, settingRates: { 1: { trigger: 234.2, main: 460.5, payout: 0.977 }, 2: { trigger: 229.0, main: 446.5, payout: 0.989 }, 3: { trigger: 221.8, main: 425.5, payout: 1.012 }, 4: { trigger: 207.0, main: 390.4, payout: 1.058 }, 5: { trigger: 201.5, main: 374.2, payout: 1.106 }, 6: { trigger: 195.0, main: 355.5, payout: 1.149 } } },
+    intro: "2026年11月2日導入のゲーム数管理型スマスロ。2種類の約73枚BONUS、専用ATジャッジ、ゴジエヴァアタック、10倍上乗せ、決戦カイザーギドラ、G覚醒RUSHを一連の専用演出で体験できます。",
+    points: ["エヴァBONUS後は3G＋α・AT期待度約41%", "ゴジラBONUS後は5G＋α・AT期待度約64%", "決戦カイザーギドラは4G・突破期待度約66%"],
+    specs: [["BONUS（設定1）", "約1/234.2"], ["BONUS（設定6）", "約1/195.0"], ["AT（設定1）", "約1/460.5"], ["AT（設定6）", "約1/355.5"], ["ベース", "約30G/50枚"], ["BONUS", "平均約73枚"], ["ゴジエヴァアタック", "2G・初期50〜600G"], ["通常AT純増", "約5.2枚/G"], ["震撃チャンス", "4G＋α・10倍期待度約43%"], ["決戦カイザーギドラ", "4G・突破期待度約66%"], ["G覚醒RUSH", "100G以上・純増約5.2枚/G"], ["AT後引き戻し", "50G・設定1約17.6%"]],
+    rankingVersion: "v5",
+    sim: { kind: "slot", triggerLabel: "BONUS初当り", triggerRate: 234.2, triggerSuccess: 1, mainLabel: "ゴジエヴァRUSH", mainRate: 460.5, base50: 30.0, coinUnit: 3.7, normalMin: 260, normalMax: 1560, atPureIncrease: 5.2, atPayoutVariance: 0.04, entryBonusAwards: [[{ label: "エヴァンゲリオンBONUS", games: 14, payout: 73, atChance: 0.41, judgeLabel: "初号機VS魏怒羅零号機", judgeGames: 3 }, 0.57], [{ label: "ゴジラBONUS", games: 14, payout: 73, atChance: 0.64, judgeLabel: "ゴジラチャレンジ", judgeGames: 5 }, 0.43]], godzillaEva2Flow: true, godzillaInitialGames: [[50, 0.48], [70, 0.20], [100, 0.18], [150, 0.08], [200, 0.04], [300, 0.015], [600, 0.005]], specialLabel: "震撃チャンス", specialChance: 0.43, specialMin: 52, specialMax: 2600, upperChallenge: "決戦カイザーギドラ", upperChallengeGames: 4, upperChance: 0.20, upperSuccess: 0.66, upperLabel: "G覚醒RUSH", upperContinue: 0.66, upperPayout: 780, upperPureIncrease: 5.2, upperGameManaged: true, upperGameRange: "100〜300G", upperSetGames: [[100, 0.58], [150, 0.24], [200, 0.13], [300, 0.05]], upperMaxLoops: 12, upperReturnGames: 50, upperReturnChance: 0.176, settingRates: { 1: { trigger: 234.2, main: 460.5, payout: 0.977 }, 2: { trigger: 229.0, main: 446.5, payout: 0.989 }, 3: { trigger: 221.8, main: 425.5, payout: 1.012 }, 4: { trigger: 207.0, main: 390.4, payout: 1.058 }, 5: { trigger: 201.5, main: 374.2, payout: 1.106 }, 6: { trigger: 195.0, main: 355.5, payout: 1.149 } } },
     articleSections: [
       { heading: "BONUSとAT初当りの設定差", paragraphs: ["疑似BONUSは設定1約1/234.2から設定6約1/195.0、AT『ゴジエヴァRUSH』は設定1約1/460.5から設定6約1/355.5です。", "START時に設定1〜6を均等抽選し、選ばれた設定のBONUS・AT初当り・出玉率を使用します。設定は最終結果と機種別ランキングに表示します。"] },
-      { heading: "2種類のBONUSからATを目指す", paragraphs: ["エヴァンゲリオンBONUS後は『初号機vs魏怒羅零号機』、ゴジラBONUS後は『ゴジラチャレンジ』でATを目指します。公開されているAT期待度の目安はそれぞれ約41%と約64%です。", "シミュレーターでは2種類の入口を集結バトルとBONUS後ジャッジへまとめ、代表値50%の簡易抽選として進行します。"] },
-      { heading: "ゴジエヴァRUSHと震撃チャンス", paragraphs: ["AT『ゴジエヴァRUSH』は純増約5.2枚/Gで、初期ゲーム数は50G以上です。上乗せ時はゲーム数10倍をかけた震撃チャンスが見どころです。", "サイトでは上乗せを追加枚数抽選にまとめます。実機の小役、G侵食役、内部状態、上乗せゲーム数の全振り分けは個別再現しません。"] },
-      { heading: "決戦カイザーギドラからG覚醒RUSHへ", paragraphs: ["特定条件を満たしたAT終了後は決戦カイザーギドラへ進み、勝利すると上位AT『G覚醒RUSH』へ突入します。上位AT突入時の期待獲得枚数は約3600枚と案内されています。", "上位到達率とループ抽選はサイト共通の固定値で簡易化し、公開値と区別して表示します。"] },
+      { heading: "集結バトルと2種類のBONUS", paragraphs: ["集結バトルは9G＋α・成功期待度約50%のBONUS当選CZです。通常時はレア役、G侵食役後の変異、100G・250G・400G以降150Gごとの規定ゲーム数からBONUSを目指します。", "エヴァンゲリオンBONUSとゴジラBONUSはいずれも平均約73枚。前者は3G＋αの『初号機VS魏怒羅零号機』でAT期待度約41%、後者は5G＋αの『ゴジラチャレンジ』で約64%です。サイトでは公開BONUS確率とAT確率に近づくよう、BONUS比率を体験用の代表値57%対43%で抽選します。"] },
+      { heading: "ゴジエヴァアタックとゲーム数管理AT", paragraphs: ["AT突入時は2Gのゴジエヴァアタックで初期50〜600Gを決定します。1G目の成立役でエヴァンゲリオン・モスラ・ゴジラを決め、2G目で初期ゲーム数を開きます。", "ゴジエヴァRUSHは純増約5.2枚/G。レア役や変異でゲーム数を上乗せし、上乗せ後のブレイク演出から怪獣索敵ZONE、IMPACT BATTLE、震撃CHANCEなどへ分岐します。"] },
+      { heading: "怪獣索敵・IMPACT BATTLE・10倍上乗せ", paragraphs: ["怪獣索敵ZONEは10G＋αでIMPACT BATTLE移行率約52%。IMPACT BATTLEは4G・勝利期待度約44%、勝利すると震撃CHANCEへ進みます。", "震撃CHANCEは4G＋α・10倍上乗せ期待度約43%。成功時の一部は4G＋αの震撃連鎖へ入り、震撃ジャッジ成功のたびに10倍上乗せと4G再セットを繰り返します。サイトではPUSHでルート、成功、最終上乗せゲーム数を順番に表示します。"] },
+      { heading: "決戦カイザーギドラからG覚醒RUSHへ", paragraphs: ["決戦カイザーギドラは4G・突破期待度約66%。AT最終ゲーム、1000枚以降500枚ごとの抽選、エンディング後、上位AT終了後などから突入し、勝利でG覚醒RUSHへ進みます。", "G覚醒RUSHは純増約5.2枚/G・100G以上。初回は2GのG覚醒アタックで初期ゲーム数を決め、勝利時の一部では30G＋αのG覚醒バーストへ。サイトでは上位終了ごとに4G決戦をPUSHで判定し、敗北後は50Gの引き戻し区間を表示します。"] },
       { heading: "固定レートと収支の条件", bullets: ["約30G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1基準の平均AT投資目安は約16,700円", "コイン単価は設定1の参考値約3.7円として表示", "19,000枚到達時はコンプリート表示"] }
     ],
-    sources: [["SANKYO公式 機種コレクション", "https://www.sankyo-fever.jp/collection/1001/"], ["エヴァンゲリオン系 開発こぼれ話", "https://blog.eva-project.jp/category/l_godzilla_vs_eva2/"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/vpage/2825/1"]]
+    sources: [["ゴジラ対エヴァンゲリオン2 公式サイト", "https://www.eva-project.jp/l_godzilla_vs_eva2/"], ["一撃 ゴジエヴァ2 機種概要・スペック", "https://1geki.jp/slot/l_goji_eva2/"], ["一撃 ゴジエヴァアタック解析", "https://1geki.jp/slot/l_goji_eva2/81/"], ["一撃 ゴジエヴァRUSH解析", "https://1geki.jp/slot/l_goji_eva2/83/"], ["一撃 震撃チャンス・震撃連鎖解析", "https://1geki.jp/slot/l_goji_eva2/87/"], ["一撃 決戦カイザーギドラ解析", "https://1geki.jp/slot/l_goji_eva2/89/"]]
   },
   "mahoako-slot": {
     order: 0.75, type: "slot", theme: "magenta", year: "2026年10月", maker: "ニューギン", updated: "2026-10-31",
@@ -4046,9 +4048,9 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
       compare: [["seiya-ougon-slot", "スマスロ 聖闘士星矢", "継続バトル型ATと比較"], ["godzilla-eva2-slot", "スマスロ ゴジエヴァ2", "BONUS経由ATとの違いを比較"]]
     },
     "godzilla-eva2-slot": {
-      verdict: "2種類のBONUSからゴジエヴァRUSHを目指し、決戦カイザーギドラ突破でG覚醒RUSHへ進む機種です。BONUSの軽さとAT初当りの重さを分けて見ると結果を理解しやすくなります。",
-      bestFor: ["BONUS後のAT当落から上位までを一連で試したい", "設定別BONUS・AT初当り差を比べたい", "上位AT到達時の大きな差枚を確認したい"],
-      check: ["設定1のBONUS約1/234.2とAT約1/460.5は別抽選", "2種類のBONUS後ジャッジは代表値50%へ簡略化", "G覚醒RUSHの到達率・ループは体験用固定値"],
+      verdict: "約73枚の2種類のBONUSから専用ジャッジを経て、50〜600Gのゲーム数管理AT、怪獣索敵、4Gバトル、10倍上乗せ、4Gの上位CZへ進む段階型です。",
+      bestFor: ["エヴァ約41%・ゴジラ約64%のAT当落を分けて試したい", "PUSHで10倍上乗せのゲーム数を開きたい", "4G決戦と100G以上のG覚醒RUSHを体験したい"],
+      check: ["BONUS比率と通常AT中の各ルート出現率は体験用代表値", "決戦カイザーギドラ突破期待度は約66%", "G覚醒RUSH終了後は4G決戦と50G引き戻しを表示"],
       compare: [["ggo-slot", "スマスロ GGO", "BONUSからSTへ進む機種と比較"], ["garo-yami-slot", "スマスロ 牙狼", "高純増の上位ループ型と比較"]]
     }
   };
@@ -4130,4 +4132,12 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
     machine.updated = machine.updated && machine.updated > updated ? machine.updated : updated;
     machine.articleSections = articleSections;
   });
+})();
+
+// Dedicated implementations take precedence over the older reusable cycle map.
+// Keep this final cleanup after every enrichment pass so page copy and gameplay
+// both use the same title-specific model.
+(() => {
+  const sim = window.ICHIGEKI_MACHINES["godzilla-eva2-slot"]?.sim;
+  if (sim?.godzillaEva2Flow) delete sim.cycleFlow;
 })();
