@@ -4368,6 +4368,56 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   });
 })();
 
+(function applyKaguyaDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["kaguya-sama-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-07",
+    catchcopy: "15G＋αの告らせたいチャレンジから、高純増BONUSの1G連へ。",
+    intro: "設定別BONUS初当りを使い、15G＋αのCZ、3種類の疑似BONUS、1G連、約100Gの引き戻し、奇跡的相性マリアージュMODEとEXTRA BONUSを実機順に体験できます。",
+    points: ["CZは15G＋α・成功期待度約58%", "BIG／SUPER BIGの1G連期待度約45%", "5連目以降のBONUSループ期待度約80%"],
+    specs: [["BONUS（設定1）", "約1/362"], ["BONUS（設定6）", "約1/335"], ["CZ", "15G＋α・約58%"], ["REG", "約83枚"], ["BIG", "30G・約270枚"], ["SUPER BIG", "54G・約490枚"], ["BONUS純増", "約9.0枚/G"], ["引き戻し", "約100G・約25%以上"], ["EXTRA BONUS", "平均期待約3450枚"], ["ベース", "約31G/50枚"]],
+    articleSections: [
+      { heading: "通常時から告らせたいチャレンジへ", paragraphs: ["通常時はチャンス目の規定回数、規定ゲーム数、強チャンス目などから前兆『恋愛頭脳戦』を経てCZを目指します。CZは15G＋αで、小役や2択成功から7図柄停止・一発告知を狙うゲーム性です。", "シミュレーターでは設定別BONUS初当りを維持しつつ、CZ15Gを最後まで進め、PUSHで約58%の当落を開きます。"] },
+      { heading: "3種類の疑似BONUSと1G連", paragraphs: ["REGは平均約83枚、BIGは30G・約270枚、SUPER BIGは54G・約490枚。BIG以上は消化中に約45%で1G連ストックを抽選し、1G連時はBIG以上が濃厚です。", "1G連の一部で白銀覚醒、ガチきゅんPUSH、チカブレイクを表示します。特化ゾーンは次回BONUSストック数をPUSHまで伏せて見せます。"] },
+      { heading: "約100Gの引き戻しと5連目以降", paragraphs: ["1G連非当選時は約100Gの引き戻しチャンスへ。成功期待度は通常約25%、5連目以降は約50%で、1G連と合わせたBONUSループ期待度は通常約60%、5連目以降は約80%です。", "引き戻し成功時もBIG以上へ進みます。終了時は100Gを最後までカウントして、ループ終了を明確に表示します。"] },
+      { heading: "奇跡的相性MODEとEXTRA BONUS", paragraphs: ["ボーナス終了後の一部やエンディング後は、32G以内のSUPER BIGが濃厚となる奇跡的相性マリアージュMODEへ移行します。終了後は約80%のBONUSループに期待できます。", "BIG／SUPER BIGの一部でEXTRA BONUSへ昇格。50Gまたは100Gを約80%で上乗せ決定し、平均期待枚数約3450枚の上位ボーナスとして専用表示します。"] },
+      { heading: "固定レートと簡易化する範囲", bullets: ["約31G/50枚・1,000円46枚貸し・5.2枚交換で固定", "内部モード、全小役、CZ再セット条件は代表抽選へ簡略化", "非公表のBONUS初回比率・特化ゾーン比率は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["SANKYO 新製品案内", "https://www.sankyo-fever.co.jp/corporate/modify/IR/Timely/files/press_20240620c.pdf"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10091"], ["一撃 解析攻略", "https://1geki.jp/slot/l_kaguya/"]],
+    readerGuide: {
+      verdict: "15G＋αのCZを突破し、純増約9.0枚/GのBONUSを1G連と約100Gの引き戻しで重ねる高純増タイプです。5連目以降の約80%ループとEXTRA BONUSで結果が大きく変わります。",
+      bestFor: ["CZからBONUSまでをPUSHで順番に体験したい", "REG・BIG・SUPER BIGの獲得差を比べたい", "1G連と100G引き戻しの連チャンを見たい"],
+      check: ["1G連時はBIG以上として抽選", "5連目以降は公開されている約80%ループを反映", "EXTRAの初期G数振り分けなど非公表部分は代表値"],
+      compare: [["dumbbell-slot", "スマスロ ダンベル", "同じSANKYOの高純増タイプと比較"], ["valvrave", "革命機ヴァルヴレイヴ", "セット継続型との違いを比較"]]
+    }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v5",
+    kaguyaFlow: true,
+    triggerLabel: "告らせたいチャレンジ",
+    triggerRate: 210,
+    triggerSuccess: 0.58,
+    mainLabel: "KAGUYA BONUS",
+    mainRate: 362,
+    atPureIncrease: 9.0,
+    atPayoutVariance: 0,
+    kaguyaInitialBonuses: [[{ key: "reg", label: "REGULAR BONUS", games: 10, payout: 83, oneGameChance: 0 }, 0.49], [{ key: "big", label: "BIG BONUS", games: 30, payout: 270, oneGameChance: 0.45 }, 0.50], [{ key: "super", label: "SUPER BIG BONUS", games: 54, payout: 490, oneGameChance: 0.45 }, 0.01]],
+    kaguyaChainBonuses: [[{ key: "big", label: "BIG BONUS", games: 30, payout: 270, oneGameChance: 0.45 }, 0.50], [{ key: "super", label: "SUPER BIG BONUS", games: 54, payout: 490, oneGameChance: 0.45 }, 0.50]],
+    kaguyaReturnChance: 0.25,
+    kaguyaLateReturnChance: 0.50,
+    kaguyaExtraChance: 0.015,
+    specialLabel: "1G連特化ゾーン",
+    specialChance: 0.10,
+    upperChallenge: "奇跡的相性マリアージュMODE",
+    upperChance: 0.07,
+    upperSuccess: 1,
+    upperLabel: "EXTRA BONUS",
+    upperContinue: 0.80,
+    upperPureIncrease: 9.0
+  });
+})();
+
 // Dedicated implementations take precedence over the older reusable cycle map.
 // Keep this final cleanup after every enrichment pass so page copy and gameplay
 // both use the same title-specific model.
@@ -4387,4 +4437,6 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   if (goblinSlayer?.goblinSlayerFlow) delete goblinSlayer.cycleFlow;
   const assaultLily = window.ICHIGEKI_MACHINES["assault-lily-slot"]?.sim;
   if (assaultLily?.assaultLilyFlow) delete assaultLily.cycleFlow;
+  const kaguya = window.ICHIGEKI_MACHINES["kaguya-sama-slot"]?.sim;
+  if (kaguya?.kaguyaFlow) delete kaguya.cycleFlow;
 })();
