@@ -9,8 +9,8 @@ vm.runInContext(source, sandbox);
 const machines = Object.entries(sandbox.window.ICHIGEKI_MACHINES || {});
 const dedicatedFlows = machines.filter(([, machine]) => machine.sim?.dedicatedFlow);
 const declarativeFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.titleFlow);
-const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow || machine.sim?.godEaterFlow || machine.sim?.millionGodFlow || machine.sim?.juohFlow || machine.sim?.sunbreakFlow || machine.sim?.paripiFlow || machine.sim?.bancho4Flow || machine.sim?.zenigata4Flow || machine.sim?.inuyasha2Flow || machine.sim?.godzillaEvaFlow || machine.sim?.dmc5Flow || machine.sim?.initialD2Flow || machine.sim?.lupinDaikoukaishaFlow || machine.sim?.goldenKamuyFlow || machine.sim?.superBlackjackFlow || machine.sim?.magicalHalloween8Flow || machine.sim?.gundamSeedFlow || machine.sim?.fireForceFlow || machine.sim?.fireForce2Flow);
-const expectedProfiles = { battle: 6, st: 0, heaven: 3, bonus: 0, addon: 6 };
+const specializedFlows = dedicatedFlows.filter(([, machine]) => machine.sim?.tokyoGhoulFlow || machine.sim?.basiliskTenzenFlow || machine.sim?.okidokiGoldFlow || machine.sim?.sao2Flow || machine.sim?.symphogearSeigiFlow || machine.sim?.lycorisFlow || machine.sim?.kanokariFlow || machine.sim?.aobutaFlow || machine.sim?.bofuriFlow || machine.sim?.azurLaneFlow || machine.sim?.magiaRecordFlow || machine.sim?.toaruIndex2Flow || machine.sim?.darlingFranxxFlow || machine.sim?.godEaterFlow || machine.sim?.millionGodFlow || machine.sim?.juohFlow || machine.sim?.sunbreakFlow || machine.sim?.paripiFlow || machine.sim?.bancho4Flow || machine.sim?.zenigata4Flow || machine.sim?.inuyasha2Flow || machine.sim?.godzillaEvaFlow || machine.sim?.dmc5Flow || machine.sim?.initialD2Flow || machine.sim?.lupinDaikoukaishaFlow || machine.sim?.toloveruDarknessFlow || machine.sim?.goldenKamuyFlow || machine.sim?.superBlackjackFlow || machine.sim?.magicalHalloween8Flow || machine.sim?.gundamSeedFlow || machine.sim?.fireForceFlow || machine.sim?.fireForce2Flow);
+const expectedProfiles = { battle: 6, st: 0, heaven: 3, bonus: 0, addon: 5 };
 const errors = [];
 const rows = [];
 
@@ -49,14 +49,14 @@ for (const [slug, machine] of declarativeFlows) {
 }
 
 if (dedicatedFlows.length !== 47) errors.push(`expected 47 dedicated flows, found ${dedicatedFlows.length}`);
-if (declarativeFlows.length !== 15) errors.push(`expected 15 declarative dedicated flows, found ${declarativeFlows.length}`);
+if (declarativeFlows.length !== 14) errors.push(`expected 14 declarative dedicated flows, found ${declarativeFlows.length}`);
 for (const [profile, expected] of Object.entries(expectedProfiles)) {
   const actual = declarativeFlows.filter(([, machine]) => machine.sim.titleFlow.profile === profile).length;
   if (actual !== expected) errors.push(`${profile}: expected ${expected}, found ${actual}`);
 }
 const dedicatedMap = Object.fromEntries(specializedFlows);
-if (specializedFlows.length !== 32 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["okidoki-black"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"] || !dedicatedMap["million-god-kiseki"] || !dedicatedMap["juoh-slot"] || !dedicatedMap["monster-hunter-sunbreak"] || !dedicatedMap["paripi-koumei-slot"] || !dedicatedMap["bancho4-slot"] || !dedicatedMap["zenigata4-slot"] || !dedicatedMap["inuyasha2-slot"] || !dedicatedMap["godzilla-eva-slot"] || !dedicatedMap["dmc5-st-slot"] || !dedicatedMap["initial-d-2nd-slot"] || !dedicatedMap["lupin-dai-koukaisha"] || !dedicatedMap["golden-kamuy-slot"] || !dedicatedMap["super-blackjack-slot"] || !dedicatedMap["magical-halloween8"] || !dedicatedMap["gundam-seed-slot"] || !dedicatedMap["fire-force-slot"] || !dedicatedMap["fire-force2-slot"]) {
-  errors.push(`expected thirty-two specialized flows including Lupin, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
+if (specializedFlows.length !== 33 || !dedicatedMap["tokyo-ghoul-slot"] || !dedicatedMap["basilisk-tenzen-slot"] || !dedicatedMap["okidoki-gold"] || !dedicatedMap["okidoki-black"] || !dedicatedMap["sao2-slot"] || !dedicatedMap["symphogear-seigi-slot"] || !dedicatedMap["lycoris-recoil-slot"] || !dedicatedMap["kanokari-slot"] || !dedicatedMap["aobuta-slot"] || !dedicatedMap["bofuri-slot"] || !dedicatedMap["azur-lane-slot"] || !dedicatedMap["magia-record-slot"] || !dedicatedMap["toaru-index2-slot"] || !dedicatedMap["darling-in-the-franxx-slot"] || !dedicatedMap["god-eater-resurrection"] || !dedicatedMap["million-god-kiseki"] || !dedicatedMap["juoh-slot"] || !dedicatedMap["monster-hunter-sunbreak"] || !dedicatedMap["paripi-koumei-slot"] || !dedicatedMap["bancho4-slot"] || !dedicatedMap["zenigata4-slot"] || !dedicatedMap["inuyasha2-slot"] || !dedicatedMap["godzilla-eva-slot"] || !dedicatedMap["dmc5-st-slot"] || !dedicatedMap["initial-d-2nd-slot"] || !dedicatedMap["lupin-dai-koukaisha"] || !dedicatedMap["toloveru-darkness-slot"] || !dedicatedMap["golden-kamuy-slot"] || !dedicatedMap["super-blackjack-slot"] || !dedicatedMap["magical-halloween8"] || !dedicatedMap["gundam-seed-slot"] || !dedicatedMap["fire-force-slot"] || !dedicatedMap["fire-force2-slot"]) {
+  errors.push(`expected thirty-three specialized flows including ToLOVEる, found ${specializedFlows.map(([slug]) => slug).join(", ") || "none"}`);
 } else {
   const godzillaEva = dedicatedMap["godzilla-eva-slot"];
   const godzillaEvaSim = godzillaEva.sim;
@@ -91,6 +91,15 @@ if (specializedFlows.length !== 32 || !dedicatedMap["tokyo-ghoul-slot"] || !dedi
   if (Number(lupinSim.lupinCzGames) !== 8 || Number(lupinSim.lupinGameGames) !== 8 || Number(lupinSim.lupinGameSuccess) !== 0.50) errors.push("lupin-dai-koukaisha: ICPO or Lupin Game model is incorrect");
   if (Number(lupinSim.lupinUpperZoneGames) !== 32 || Number(lupinSim.lupinUpperSuccess) !== 0.55) errors.push("lupin-dai-koukaisha: upper zone model is incorrect");
   if (Number(lupinSim.atPureIncrease) !== 2.7 || Number(lupinSim.upperPureIncrease) !== 4.7 || Number(lupinSim.base50) !== 31.1) errors.push("lupin-dai-koukaisha: pure increase or base is incorrect");
+  const toloveru = dedicatedMap["toloveru-darkness-slot"];
+  const toloveruSim = toloveru.sim;
+  if (toloveruSim.cycleFlow || toloveruSim.titleFlow || toloveruSim.entryBonusAwards) errors.push("toloveru-darkness-slot: legacy reusable flow still exists");
+  if (!Array.isArray(toloveruSim.toloveruCzRoutes) || toloveruSim.toloveruCzRoutes.length !== 3) errors.push("toloveru-darkness-slot: three CZ routes are incomplete");
+  if (!Array.isArray(toloveruSim.toloveruInitialBonuses) || toloveruSim.toloveruInitialBonuses.length !== 3) errors.push("toloveru-darkness-slot: initial BONUS types are incomplete");
+  if (!Array.isArray(toloveruSim.toloveruPresentChances) || toloveruSim.toloveruPresentChances.length !== 4 || !Array.isArray(toloveruSim.toloveruUpperPresents) || toloveruSim.toloveruUpperPresents.length !== 3) errors.push("toloveru-darkness-slot: present chance routes are incomplete");
+  if (Number(toloveruSim.toloveruStGames) !== 10 || Number(toloveruSim.toloveruStContinue) !== 0.52 || Number(toloveruSim.toloveruThreeHeroineUpper) !== 0.34 || Number(toloveruSim.toloveruUpperContinue) !== 0.80) errors.push("toloveru-darkness-slot: ST or upper model is incorrect");
+  if (Number(toloveruSim.atPureIncrease) !== 6.6 || Number(toloveruSim.base50) !== 30 || !Array.isArray(toloveruSim.settingPool) || toloveruSim.settingPool.join(",") !== "2,3,4,5,6") errors.push("toloveru-darkness-slot: pure increase, base, or setting pool is incorrect");
+  if (!toloveruSim.settingRates || Object.keys(toloveruSim.settingRates).length !== 5 || Number(toloveruSim.settingRates[2]?.main) !== 352 || Number(toloveruSim.settingRates[6]?.main) !== 311.1) errors.push("toloveru-darkness-slot: setting rates are incomplete");
   const bancho4 = dedicatedMap["bancho4-slot"];
   const bancho4Sim = bancho4.sim;
   if (bancho4Sim.cycleFlow || bancho4Sim.titleFlow) errors.push("bancho4-slot: legacy reusable flow still exists");
