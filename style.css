@@ -15036,6 +15036,33 @@ textarea { min-height: 132px; line-height: 1.65; }
 .my-records-history-score dd { margin: 0; color: #dce4dc; font-size: 11px; font-weight: 700; }
 .my-records-history-score > small { display: block; margin-top: 7px; color: #7f8980; font-size: 10px; }
 .my-records-history-score > button { margin-top: 10px; padding: 4px 0; border: 0; background: transparent; color: #ba7772; font: inherit; font-size: 10px; cursor: pointer; }
+.my-records-day-detail { grid-column: 1 / -1; overflow: hidden; border: 1px solid rgba(107, 211, 79, .32); border-radius: 14px; color: #6ee65d; background: #070b08; }
+.my-records-day-detail.is-negative { border-color: rgba(103, 174, 248, .36); color: #67aef8; }
+.my-records-day-detail summary { display: flex; gap: 16px; align-items: center; justify-content: space-between; min-height: 62px; padding: 10px 14px; list-style: none; cursor: pointer; }
+.my-records-day-detail summary::-webkit-details-marker { display: none; }
+.my-records-day-detail summary::after { content: "＋"; order: 3; display: grid; width: 30px; height: 30px; flex: 0 0 auto; place-items: center; border: 1px solid currentColor; border-radius: 50%; font-size: 17px; }
+.my-records-day-detail[open] summary::after { content: "−"; }
+.my-records-day-detail summary > span { display: grid; gap: 2px; min-width: 0; }
+.my-records-day-detail summary b { color: currentColor; font: 900 8px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .15em; }
+.my-records-day-detail summary strong { overflow-wrap: anywhere; color: #f3f8f4; font-size: 14px; }
+.my-records-day-detail summary em { margin-left: auto; color: currentColor; font-size: 19px; font-style: normal; font-weight: 950; white-space: nowrap; }
+.my-records-day-detail[open] summary { border-bottom: 1px solid rgba(255,255,255,.07); }
+.my-records-day-chart { position: relative; padding: 11px 12px 0; }
+.my-records-day-chart svg { display: block; width: 100%; height: auto; max-height: 230px; overflow: visible; }
+.my-records-day-grid line { stroke: rgba(255,255,255,.07); stroke-width: 1; }
+.my-records-day-grid line.is-zero { stroke: rgba(255,255,255,.34); stroke-dasharray: 6 5; }
+.my-records-day-area { fill: currentColor; opacity: .12; }
+.my-records-day-line { fill: none; stroke: currentColor; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.my-records-day-chart circle { fill: #070b08; stroke: currentColor; stroke-width: 3; vector-effect: non-scaling-stroke; }
+.my-records-day-chart > .is-max,
+.my-records-day-chart > .is-min { position: absolute; z-index: 2; left: 15px; padding: 2px 5px; border-radius: 5px; color: #dce6df; background: rgba(0,0,0,.65); font-size: 9px; font-weight: 850; }
+.my-records-day-chart > .is-max { top: 14px; }
+.my-records-day-chart > .is-min { bottom: 20px; }
+.my-records-day-axis { display: flex; justify-content: space-between; padding: 0 3px 5px; color: #758078; font-size: 9px; font-weight: 800; }
+.my-records-day-values { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; padding: 0 12px 12px; }
+.my-records-day-values > div { display: grid; min-width: 0; gap: 2px; padding: 9px; border: 1px solid rgba(255,255,255,.08); border-radius: 9px; background: rgba(255,255,255,.025); }
+.my-records-day-values span { color: #829087; font-size: 9px; }
+.my-records-day-values strong { overflow-wrap: anywhere; color: #f5faf6; font-size: 13px; }
 
 .my-records-empty { padding: 42px 20px; border: 1px dashed #334036; border-radius: 18px; text-align: center; }
 .my-records-empty > span { display: block; color: #6bd34f; font-size: 38px; }
@@ -15092,6 +15119,11 @@ textarea { min-height: 132px; line-height: 1.65; }
   .my-records-history-card { grid-template-columns: 1fr; gap: 14px; padding: 16px; }
   .my-records-history-score { padding: 13px 0 0; border-top: 1px solid #253128; border-left: 0; }
   .my-records-history-score > strong { font-size: 25px; }
+  .my-records-day-detail summary { min-height: 58px; padding: 9px 10px; }
+  .my-records-day-detail summary em { font-size: 16px; }
+  .my-records-day-chart { padding-inline: 7px; }
+  .my-records-day-chart svg { min-height: 155px; }
+  .my-records-day-values { grid-template-columns: 1fr 1fr; padding-inline: 8px; }
 }
 .calculation-tool {
   margin: 34px 0;

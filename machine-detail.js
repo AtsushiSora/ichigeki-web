@@ -10532,6 +10532,25 @@
     const savedAt = new Date().toISOString();
     const rateLabel = result.stats.find(([label]) => label === "利用レート")?.[1] || "";
     const coinUnitLabel = result.stats.find(([label]) => label === "コイン単価")?.[1] || "";
+    const dayExperience = result.experience?.kind === "slot-day" ? result.experience : null;
+    let daySummary = null;
+    if (dayExperience && Array.isArray(dayExperience.cycles)) {
+      const sourcePoints = [[0, 0], ...dayExperience.cycles.map(cycle => [
+        Math.max(0, Math.round(Number(cycle.totalGames) || 0)),
+        Math.round(Number(cycle.cumulativeDiff) || 0)
+      ])];
+      const pointLimit = 42;
+      const step = Math.max(1, Math.ceil((sourcePoints.length - 1) / (pointLimit - 1)));
+      const points = sourcePoints.filter((point, index) => index === 0 || index === sourcePoints.length - 1 || index % step === 0);
+      daySummary = {
+        games: Math.max(0, Math.round(Number(result.attempts) || 0)),
+        maximumHeldCoins: Math.max(0, Math.round(Number(dayExperience.maximumHeldCoins) || 0)),
+        maxNormalGap: Math.max(0, Math.round(Number(dayExperience.maxNormalGap) || 0)),
+        initialHits: Math.max(0, Math.round(Number(dayExperience.initialHits) || 0)),
+        maximumMy: Math.max(0, Math.round(Number(dayExperience.maximumMy) || 0)),
+        points
+      };
+    }
     const record = {
       id: typeof window.crypto?.randomUUID === "function" ? window.crypto.randomUUID() : `${Date.now()}-${Math.random().toString(16).slice(2)}`,
       slug,
@@ -10557,6 +10576,7 @@
       entered: Boolean(result.experience?.entered),
       upper: Boolean(result.experience?.upper),
       hits: Number(result.experience?.hits) || 0,
+      ...(daySummary ? { daySummary } : {}),
       flow: Array.isArray(result.flow) ? result.flow.slice(0, 12) : []
     };
     const records = readMachineHistory();

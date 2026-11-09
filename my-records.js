@@ -12,6 +12,7 @@
   const numeric = value => Number.isFinite(Number(value)) ? Number(value) : 0;
   const escapeHtml = value => String(value ?? "").replace(/[&<>'"]/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[character]);
   const signedYen = value => `${numeric(value) >= 0 ? "+" : "−"}¥${number.format(Math.abs(numeric(value)))}`;
+  const signedCoins = value => `${numeric(value) >= 0 ? "+" : "−"}${number.format(Math.abs(Math.round(numeric(value))))}枚`;
   const payoutUnit = record => record.scoreKind === "coins" || record.type === "slot" ? "枚" : "玉";
   const attemptUnit = record => record.type === "slot" ? "G" : "回転";
   const machineTitle = record => record.shortName || machines[record.slug]?.shortName || record.machineName || "機種名なし";
@@ -243,12 +244,41 @@
     }).join("");
   }
 
+  function dayChartMarkup(record) {
+    if (record.playMode !== "day" || !record.daySummary || !Array.isArray(record.daySummary.points)) return "";
+    const day = record.daySummary;
+    const points = day.points.map(point => [numeric(point?.[0]), numeric(point?.[1])]).filter((point, index, source) => point[0] >= 0 && (index === 0 || point[0] > source[index - 1][0]));
+    if (points.length < 2) return "";
+    const games = Math.max(1, numeric(day.games) || numeric(record.attempts));
+    const values = points.map(point => point[1]);
+    const rawMin = Math.min(0, ...values);
+    const rawMax = Math.max(0, ...values);
+    const spread = Math.max(1000, rawMax - rawMin);
+    const yMin = rawMin - spread * .1;
+    const yMax = rawMax + spread * .1;
+    const width = 640;
+    const height = 190;
+    const left = 18;
+    const right = width - 10;
+    const top = 12;
+    const bottom = height - 24;
+    const x = value => left + Math.min(games, value) / games * (right - left);
+    const y = value => top + (yMax - value) / (yMax - yMin) * (bottom - top);
+    const line = points.map((point, index) => `${index ? "L" : "M"}${x(point[0]).toFixed(1)} ${y(point[1]).toFixed(1)}`).join(" ");
+    const zeroY = y(0);
+    const last = points[points.length - 1];
+    const area = `${line} L${x(last[0]).toFixed(1)} ${zeroY.toFixed(1)} L${x(0).toFixed(1)} ${zeroY.toFixed(1)} Z`;
+    const finalDiff = numeric(record.score);
+    return `<details class="my-records-day-detail ${finalDiff >= 0 ? "is-positive" : "is-negative"}"><summary><span><b>FULL DAY GRAPH</b><strong>終日グラフ・詳細を見る</strong></span><em>${signedCoins(finalDiff)}</em></summary><div class="my-records-day-chart"><span class="is-max">${signedCoins(rawMax)}</span><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="0Gから${number.format(games)}Gまでの差枚推移。最終${signedCoins(finalDiff)}"><g class="my-records-day-grid"><line x1="${left}" y1="${top}" x2="${left}" y2="${bottom}"></line><line x1="${((left + right) / 2).toFixed(1)}" y1="${top}" x2="${((left + right) / 2).toFixed(1)}" y2="${bottom}"></line><line x1="${right}" y1="${top}" x2="${right}" y2="${bottom}"></line><line class="is-zero" x1="${left}" y1="${zeroY.toFixed(1)}" x2="${right}" y2="${zeroY.toFixed(1)}"></line></g><path class="my-records-day-area" d="${area}"></path><path class="my-records-day-line" d="${line}"></path><circle cx="${x(last[0]).toFixed(1)}" cy="${y(last[1]).toFixed(1)}" r="5"></circle></svg><span class="is-min">${signedCoins(rawMin)}</span><div class="my-records-day-axis"><span>0G</span><span>${number.format(Math.round(games / 2))}G</span><span>${number.format(games)}G</span></div></div><div class="my-records-day-values"><div><span>最大持ちメダル</span><strong>${number.format(numeric(day.maximumHeldCoins))}枚</strong></div><div><span>最大ハマり</span><strong>${number.format(numeric(day.maxNormalGap))}G</strong></div><div><span>初当たり</span><strong>${number.format(numeric(day.initialHits))}回</strong></div><div><span>最大MY</span><strong>${number.format(numeric(day.maximumMy))}枚</strong></div></div></details>`;
+  }
+
   function historyMarkup(record) {
     const balance = numeric(record.balanceYen);
     const displayedPayout = numeric(record.displayedPayout);
     const recordId = escapeHtml(record.id || `${record.slug}-${record.savedAt}`);
     const flow = Array.isArray(record.flow) ? record.flow.slice(0, 6) : [];
-    const badges = [machineType(record) === "slot" && numeric(record.setting) >= 1 ? `設定${numeric(record.setting)}` : "", record.complete ? "コンプリート" : "", record.upper ? "上位到達" : "", record.entered ? (machineType(record) === "slot" ? "AT突入" : "RUSH突入") : ""].filter(Boolean);
+    const badges = [record.playMode === "day" ? "終日9,000G" : "", machineType(record) === "slot" && numeric(record.setting) >= 1 ? `設定${numeric(record.setting)}` : "", record.complete ? "コンプリート" : "", record.upper ? "上位到達" : "", record.entered ? (machineType(record) === "slot" ? "AT突入" : "RUSH突入") : ""].filter(Boolean);
+    const dayChart = dayChartMarkup(record);
     return `<article class="my-records-history-card">
       <div class="my-records-history-main">
         <div class="my-records-history-meta"><span>${machineType(record) === "slot" ? "SLOT" : "PACHINKO"}</span><time>${escapeHtml(shortDate(record.savedAt))}</time></div>
@@ -259,10 +289,10 @@
       </div>
       <div class="my-records-history-score">
         <span>収支</span><strong class="${balance >= 0 ? "is-plus" : "is-minus"}">${signedYen(balance)}</strong>
-        <dl><div><dt>開始</dt><dd>${number.format(numeric(record.attempts))}${attemptUnit(record)}</dd></div><div><dt>投資</dt><dd>¥${number.format(numeric(record.investment))}</dd></div>${displayedPayout > 0 && machineType(record) !== "slot" ? `<div><dt>表記</dt><dd>${number.format(displayedPayout)}玉</dd></div><div><dt>実獲得</dt><dd>${number.format(numeric(record.payout))}玉</dd></div>` : `<div><dt>獲得</dt><dd>${number.format(numeric(record.payout))}${payoutUnit(record)}</dd></div>`}<div><dt>換金</dt><dd>¥${number.format(numeric(record.exchangeValue))}</dd></div></dl>
+        <dl><div><dt>${record.playMode === "day" ? "総G" : "開始"}</dt><dd>${number.format(numeric(record.attempts))}${attemptUnit(record)}</dd></div><div><dt>投資</dt><dd>¥${number.format(numeric(record.investment))}</dd></div>${displayedPayout > 0 && machineType(record) !== "slot" ? `<div><dt>表記</dt><dd>${number.format(displayedPayout)}玉</dd></div><div><dt>実獲得</dt><dd>${number.format(numeric(record.payout))}玉</dd></div>` : `<div><dt>獲得</dt><dd>${number.format(numeric(record.payout))}${payoutUnit(record)}</dd></div>`}<div><dt>換金</dt><dd>¥${number.format(numeric(record.exchangeValue))}</dd></div></dl>
         ${record.rateLabel ? `<small>${escapeHtml(record.rateLabel)}</small>` : ""}
         <button type="button" data-delete-machine-record="${recordId}" aria-label="${escapeHtml(machineTitle(record))}のこの記録を削除">この記録を削除</button>
-      </div>
+      </div>${dayChart}
     </article>`;
   }
 
