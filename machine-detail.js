@@ -111,6 +111,100 @@
   let aTypeBusy = false;
   let machinePlaySession = null;
   const FULL_DAY_GAMES = 9000;
+  const FULL_DAY_PAYOUT_SCALES = {
+    "tokyo-ghoul-slot": { 1: 0.4722, 2: 0.4554, 3: 0.4342, 4: 0.4274, 5: 0.4107, 6: 0.3813 },
+    "tokyo-revengers-slot": { 1: 1.2217, 2: 1.1811, 3: 1.2595, 4: 1.2439, 5: 1.2192, 6: 1.236 },
+    "magia-record-slot": { 1: 1.5206, 2: 1.5378, 3: 1.4687, 4: 1.4346, 5: 1.4909, 6: 1.4203 },
+    "god-eater-resurrection": { 1: 0.2552, 2: 0.2516, 3: 0.2518, 4: 0.2629, 5: 0.2448, 6: 0.2631 },
+    "lycoris-recoil-slot": { 1: 0.5202, 2: 0.5275, 3: 0.5007, 4: 0.5157, 5: 0.5127, 6: 0.5229 },
+    "toaru-index2-slot": { 1: 0.7765, 2: 0.7721, 3: 0.739, 4: 0.7818, 5: 0.7865, 6: 0.8199 },
+    "symphogear-seigi-slot": { 1: 1.4278, 2: 1.4237, 4: 1.3585, 5: 1.2589, 6: 1.1677 },
+    "sao2-slot": { 1: 0.8211, 2: 0.7834, 3: 0.8174, 4: 0.7982, 5: 0.8838, 6: 0.7543 },
+    "monster-hunter-rise-slot": { 1: 3.1517, 2: 3.0647, 3: 3.0181, 4: 2.9495, 5: 2.8255, 6: 2.8398 },
+    "monster-hunter-sunbreak": { 1: 0.342, 2: 0.3365, 3: 0.3413, 4: 0.3381, 5: 0.3181, 6: 0.3322 },
+    "kinnikuman-7-slot": { 1: 0.909, 2: 0.907, 4: 0.8751, 5: 0.8609, 6: 0.8813 },
+    "kanokari-slot": { 1: 0.9649, 2: 1.0588, 3: 0.9594, 4: 1.0018, 5: 1.0087, 6: 0.9302 },
+    "aobuta-slot": { 2: 0.5109, 3: 0.4915, 4: 0.4719, 5: 0.4576, 6: 0.349 },
+    "hokuto-tensei2": { 1: 0.902, 2: 0.8979, 3: 0.8432, 4: 0.8333, 5: 0.8151, 6: 0.7693 },
+    "bofuri-slot": { 1: 0.4759, 2: 0.4799, 3: 0.4993, 4: 0.4299, 5: 0.447, 6: 0.4284 },
+    "azur-lane-slot": { 1: 0.9696, 2: 0.9438, 3: 0.9803, 4: 0.9496, 5: 1.0327, 6: 1.057 },
+    "million-god-kiseki": { 1: 1.2374, 2: 0.9536, 3: 1.1921, 4: 0.8729, 5: 1.1975, 6: 0.8137 },
+    "juoh-slot": { 1: 0.7037, 2: 0.6928, 4: 0.6999, 5: 0.696, 6: 0.7193 },
+    "paripi-koumei-slot": { 1: 0.4707, 2: 0.4626, 3: 0.4475, 4: 0.4431, 5: 0.453, 6: 0.4585 },
+    "okidoki-black": { 1: 1.6173, 2: 1.5677, 3: 1.5489, 5: 1.6074, 6: 1.5259 },
+    "fire-force2-slot": { 1: 0.792, 2: 0.7858, 3: 0.7527, 4: 0.8165, 5: 0.7912, 6: 0.8307 },
+    "okidoki-gold": { 1: 1.6867, 2: 1.6123, 3: 1.524, 5: 1.5432, 6: 1.4638 },
+    "gundam-unicorn-awakening-drive": { 1: 1.4818, 2: 1.4274, 3: 1.3399, 4: 1.2711, 5: 1.4079, 6: 1.3685 },
+    "darling-in-the-franxx-slot": { 1: 1.3013, 2: 1.3181, 3: 1.3636, 4: 1.4188, 5: 1.4347, 6: 1.4797 },
+    "gundam-seed-slot": { 1: 0.9759, 2: 0.9395, 3: 1.0077, 4: 0.8823, 5: 0.8572, 6: 0.8095 },
+    "mushoku-tensei-slot": { 1: 0.7731, 2: 0.761, 3: 0.7769, 4: 0.7389, 5: 0.7107, 6: 0.8026 },
+    "super-bingo-neo-slot": { 1: 0.9614, 2: 0.7937, 4: 0.8158, 5: 0.7744, 6: 0.7832 },
+    "magical-halloween8": { 1: 0.9029, 2: 0.9074, 3: 0.9452, 4: 0.9771, 5: 0.9817, 6: 0.9825 },
+    "iza-bancho": { 1: 0.6751, 2: 0.621, 3: 0.6587, 4: 0.6424, 5: 0.7228, 6: 0.634 },
+    "toloveru-darkness-slot": { 2: 0.3059, 3: 0.2898, 4: 0.2939, 5: 0.2921, 6: 0.29 },
+    "biohazard5-slot": { 1: 0.7583, 2: 0.731, 3: 0.7036, 4: 0.6141, 5: 0.6057, 6: 0.6419 },
+    "yoshimune-slot": { 1: 0.7751, 2: 0.7703, 3: 0.7557, 4: 0.7282, 5: 0.7152, 6: 0.704 },
+    "vivy-slot": { 1: 0.7677, 2: 0.6462, 3: 0.7072, 4: 0.6429, 5: 0.7033, 6: 0.6661 },
+    "shin-onimusha3-slot": { 1: 1.0575, 2: 1.0458, 3: 0.9894, 4: 0.9672, 5: 0.9484, 6: 0.9502 },
+    "super-blackjack-slot": { 1: 0.8746, 2: 0.8614, 3: 0.885, 4: 0.8609, 5: 0.8331, 6: 0.7629 },
+    "golden-kamuy-slot": { 1: 0.9172, 2: 0.9612, 3: 0.9449, 4: 0.8738, 5: 0.9043, 6: 0.9161 },
+    "bancho4-slot": { 1: 1.172, 2: 1.1016, 3: 1.1776, 4: 1.0537, 5: 1.0187, 6: 1.0499 },
+    "zenigata4-slot": { 1: 0.589, 2: 0.6203, 3: 0.5784, 4: 0.5693, 5: 0.5615, 6: 0.5765 },
+    "inuyasha2-slot": { 1: 0.3435, 2: 0.3366, 3: 0.3626, 4: 0.3426, 5: 0.342, 6: 0.353 },
+    "shin-onimusha2-slot": { 1: 1.5512, 2: 1.5593, 3: 1.5472, 4: 1.3879, 5: 1.2609, 6: 1.2418 },
+    "fire-force-slot": { 1: 1.3445, 2: 1.3336, 4: 1.3607, 5: 1.3404, 6: 1.3888 },
+    "godzilla-eva-slot": { 1: 0.4905, 2: 0.5117, 4: 0.5179, 5: 0.5149, 6: 0.5218 },
+    "dmc5-st-slot": { 1: 0.5502, 2: 0.5689, 3: 0.551, 4: 0.5539, 5: 0.5136, 6: 0.5377 },
+    "initial-d-2nd-slot": { 1: 1.566, 2: 1.6021, 3: 1.5531, 4: 1.5243, 5: 1.4797, 6: 1.4556 },
+    "lupin-dai-koukaisha": { 1: 0.7472, 2: 0.7465, 3: 0.6883, 4: 0.695, 5: 0.679, 6: 0.6882 },
+    "basilisk-tenzen-slot": { 1: 0.6541, 2: 0.664, 3: 0.6002, 4: 0.6072, 5: 0.5658, 6: 0.5367 },
+    "chibariyo2-slot": { 1: 0.3473, 2: 0.3366, 4: 0.3315, 5: 0.3095, 6: 0.2889 }
+  };
+  const FULL_DAY_PAYOUT_FINE_TUNING = {
+    "god-eater-resurrection": { 1: 0.9009, 2: 0.9307, 3: 0.9004, 4: 0.8782, 5: 0.8999, 6: 0.8733 },
+    "kanokari-slot": { 1: 1.0435, 2: 0.9181, 3: 1.038, 4: 0.9898, 5: 1.0064, 6: 1.1169 },
+    "toloveru-darkness-slot": { 2: 0.8998, 3: 0.894, 4: 0.917, 5: 0.908, 6: 0.9346 },
+    "chibariyo2-slot": { 1: 0.9325, 2: 0.98, 4: 0.9189, 5: 0.968, 6: 0.9476 },
+    "gundam-seed-slot": { 1: 1.0077, 2: 1.0882, 3: 0.9211, 4: 0.9837, 5: 1.0895, 6: 1.0322 },
+    "inuyasha2-slot": { 1: 0.9597, 2: 0.9893, 3: 0.9189, 4: 1.0369, 5: 0.9967, 6: 0.9482 },
+    "mushoku-tensei-slot": { 1: 0.9392, 2: 0.9248, 3: 0.9552, 4: 1.0098, 5: 1.0885, 6: 1.0006 },
+    "biohazard5-slot": { 1: 0.9931, 2: 0.9975, 3: 0.9887, 4: 1.0926, 5: 1.0123, 6: 0.9523 },
+    "super-bingo-neo-slot": { 1: 0.9242, 2: 1.0864, 4: 0.9902, 5: 0.9604, 6: 0.943 },
+    "dmc5-st-slot": { 1: 0.9898, 2: 0.93, 3: 1.0142, 4: 0.9362, 5: 1.0287, 6: 0.9751 },
+    "tokyo-ghoul-slot": { 1: 0.9819, 2: 1.0035, 3: 0.9605, 4: 0.9843, 5: 0.941, 6: 0.9489 },
+    "hokuto-tensei2": { 1: 0.9979, 2: 0.9684, 3: 1.0171, 4: 0.9391, 5: 0.9753, 6: 1.0381 },
+    "bancho4-slot": { 1: 1.0168, 2: 1.0246, 3: 0.9417, 4: 1.0266, 5: 0.9915, 6: 0.9793 },
+    "golden-kamuy-slot": { 1: 1.0385, 2: 0.9722, 3: 0.9422, 4: 1.0048, 5: 0.9692, 6: 0.9587 },
+    "super-blackjack-slot": { 1: 1.031, 2: 1.0141, 3: 0.9995, 4: 0.9455, 5: 0.9768, 6: 1.0262 },
+    "bofuri-slot": { 1: 0.9978, 2: 1.0137, 3: 0.9435, 4: 1.0178, 5: 1.0022, 6: 0.9711 },
+    "azur-lane-slot": { 1: 0.9434, 2: 0.9906, 3: 0.96, 4: 1.0078, 5: 0.9669, 6: 0.9574 },
+    "tokyo-revengers-slot": { 1: 1.0001, 2: 0.9798, 3: 0.9461, 4: 0.9712, 5: 1.0019, 6: 0.9605 },
+    "okidoki-gold": { 1: 1.0054, 2: 1.0285, 3: 1.0343, 5: 0.9949, 6: 1.0565 },
+    "monster-hunter-sunbreak": { 1: 1.0082, 2: 1.0145, 3: 0.9762, 4: 0.9491, 5: 1.0427, 6: 0.9816 },
+    "aobuta-slot": { 2: 1.0196, 3: 1.0128, 4: 0.9497, 5: 0.9674, 6: 0.965 },
+    "vivy-slot": { 1: 0.9531, 2: 1.0595, 3: 1.054, 4: 1.0154, 5: 1.0202, 6: 0.9799 },
+    "basilisk-tenzen-slot": { 1: 0.9948, 2: 0.9472, 3: 1.056, 4: 0.9756, 5: 1.0222, 6: 1.0146 },
+    "fire-force2-slot": { 1: 1.0569, 2: 1.0337, 3: 1.0359, 4: 0.9705, 5: 1.0072, 6: 0.9739 },
+    "godzilla-eva-slot": { 1: 1.0514, 2: 1.0428, 4: 0.9518, 5: 0.9998, 6: 0.9568 }
+  };
+  const FULL_DAY_PAYOUT_FINAL_TUNING = {
+    "tokyo-revengers-slot": { 1: 0.9788, 2: 1.0572, 3: 1.0483, 4: 0.9719, 5: 0.9777, 6: 1.0312 },
+    "toaru-index2-slot": { 1: 0.9953, 2: 0.9827, 3: 1.0436, 4: 1.0123, 5: 0.9797, 6: 0.9553 },
+    "symphogear-seigi-slot": { 1: 1.0546, 2: 1.015, 4: 0.9855, 5: 1.0161, 6: 1.0093 },
+    "sao2-slot": { 1: 0.9568, 2: 0.9903, 3: 0.9756, 4: 0.997, 5: 0.9432, 6: 1.0086 },
+    "kinnikuman-7-slot": { 1: 1.0103, 2: 1.0091, 4: 1.004, 5: 1.0586, 6: 1.0208 },
+    "paripi-koumei-slot": { 1: 1.013, 2: 1.0424, 3: 1.058, 4: 1.0241, 5: 0.993, 6: 0.9819 },
+    "fire-force2-slot": { 1: 0.9835, 2: 1.0389, 3: 1.0586, 4: 1.0076, 5: 1.0196, 6: 0.9912 },
+    "gundam-unicorn-awakening-drive": { 1: 1.0189, 2: 1.0217, 3: 1.0169, 4: 1.0787, 5: 0.9742, 6: 1.0327 },
+    "super-bingo-neo-slot": { 1: 1.0201, 2: 1.0292, 4: 1.005, 5: 1.0813, 6: 1.0255 },
+    "shin-onimusha3-slot": { 1: 0.976, 2: 1.0123, 3: 1.0128, 4: 0.9478, 5: 0.9865, 6: 1.0402 },
+    "golden-kamuy-slot": { 1: 0.9828, 2: 0.9915, 3: 1.0527, 4: 1.0252, 5: 1.0073, 6: 1.012 },
+    "zenigata4-slot": { 1: 0.9897, 2: 0.9496, 3: 1.0116, 4: 1.0044, 5: 1.0112, 6: 1.0038 },
+    "inuyasha2-slot": { 1: 1.0454, 2: 1.0458, 3: 1.0542, 4: 0.969, 5: 0.9924, 6: 1.0003 },
+    "shin-onimusha2-slot": { 1: 1.0745, 2: 1.0141, 3: 0.9906, 4: 0.9681, 5: 1.0304, 6: 1.0298 },
+    "dmc5-st-slot": { 1: 1.0339, 2: 1.0789, 3: 1.0004, 4: 0.9868, 5: 0.9921, 6: 1.0123 },
+    "lupin-dai-koukaisha": { 1: 1.0155, 2: 0.9809, 3: 1.0489, 4: 0.954, 5: 0.9866, 6: 0.9812 }
+  };
   const hasFullDayMode = machine.type === "slot" && machine.sim.kind !== "juggler";
   const PLAY_MODE_KEY = "ichigekiMachinePlayModeV1";
   let selectedPlayMode = hasFullDayMode && localStorage.getItem(PLAY_MODE_KEY) === "day" ? "day" : "single";
@@ -10115,6 +10209,9 @@
 
   function runSlotDay(setting) {
     const sim = machine.sim;
+    const payoutScale = (Number(FULL_DAY_PAYOUT_SCALES[slug]?.[setting]) || 1)
+      * (Number(FULL_DAY_PAYOUT_FINE_TUNING[slug]?.[setting]) || 1)
+      * (Number(FULL_DAY_PAYOUT_FINAL_TUNING[slug]?.[setting]) || 1);
     const base = Math.max(20, Number(document.getElementById("baseRate").value) || sim.base50);
     const lendCoins = Math.max(40, Number(document.getElementById("lendCoins").value) || RANKING_RATE.slot.lendCoins);
     const exchangeCoins = Math.max(4, Number(document.getElementById("exchangeCoins").value) || RANKING_RATE.slot.exchangeCoins);
@@ -10172,8 +10269,9 @@
         break;
       }
 
-      const requestedPayout = Math.max(0, Number(result.payout) || 0);
-      const usedCoins = Math.max(0, requestedPayout - (Number(result.score) || 0));
+      const rawPayout = Math.max(0, Number(result.payout) || 0);
+      const requestedPayout = Math.round(rawPayout * payoutScale);
+      const usedCoins = Math.max(0, rawPayout - (Number(result.score) || 0));
       const awardedCoins = playCoins(usedCoins, requestedPayout);
       const cycleAtGames = Math.max(0, Number(result.experience?.atGamesTotal) || 0);
       const cycleGames = normal + cycleAtGames;
@@ -10275,6 +10373,53 @@
         resultLabel
       }
     };
+  }
+
+  if (hasFullDayMode && new URLSearchParams(window.location.search).get("audit") === "full-day") {
+    const runFullDayAudit = ({ runsPerSetting = 1000 } = {}) => {
+      const runs = Math.max(20, Math.min(10000, Math.round(Number(runsPerSetting) || 1000)));
+      const percentile = (sorted, ratio) => sorted[Math.min(sorted.length - 1, Math.max(0, Math.floor((sorted.length - 1) * ratio)))] || 0;
+      const settings = slotSettingPool.map(setting => {
+        const results = Array.from({ length: runs }, () => runSlotDay(setting));
+        const scores = results.map(result => Number(result.score) || 0).sort((left, right) => left - right);
+        const awarded = results.reduce((sum, result) => sum + (Number(result.experience?.totalAwardedCoins) || 0), 0);
+        const used = results.reduce((sum, result) => sum + Math.max(0, (Number(result.experience?.totalAwardedCoins) || 0) - (Number(result.score) || 0)), 0);
+        const average = values => values.reduce((sum, value) => sum + value, 0) / Math.max(1, values.length);
+        const expectedPayout = Number(machine.sim.settingRates?.[setting]?.payout) || null;
+        return {
+          setting,
+          runs,
+          expectedPayout,
+          observedPayout: used > 0 ? awarded / used : 0,
+          averageDiff: Math.round(average(scores)),
+          medianDiff: Math.round(percentile(scores, 0.5)),
+          p05Diff: Math.round(percentile(scores, 0.05)),
+          p95Diff: Math.round(percentile(scores, 0.95)),
+          winRate: results.filter(result => result.score > 0).length / runs,
+          tenThousandRate: results.filter(result => result.score >= 10000).length / runs,
+          completeRate: results.filter(result => result.complete).length / runs,
+          averageMaximumMy: Math.round(average(results.map(result => Number(result.experience?.maximumMy) || 0))),
+          averageInitialHits: Number(average(results.map(result => Number(result.experience?.initialHits) || 0)).toFixed(2)),
+          averageGames: Math.round(average(results.map(result => Number(result.attempts) || 0)))
+        };
+      });
+      return { slug, name: machine.shortName, targetGames: FULL_DAY_GAMES, runsPerSetting: runs, settings };
+    };
+    const auditParams = new URLSearchParams(window.location.search);
+    const auditRuns = Math.max(20, Math.min(10000, Math.round(Number(auditParams.get("runs")) || 1000)));
+    const auditPanel = document.createElement("section");
+    auditPanel.id = "fullDayAuditPanel";
+    auditPanel.setAttribute("aria-label", "終日バランス監査");
+    auditPanel.innerHTML = `<button type="button" id="fullDayAuditStart">終日監査を実行（設定ごと${yen.format(auditRuns)}回）</button><pre id="fullDayAuditOutput" data-ready="false">監査待機中</pre>`;
+    document.body.appendChild(auditPanel);
+    document.getElementById("fullDayAuditStart").addEventListener("click", () => {
+      const output = document.getElementById("fullDayAuditOutput");
+      output.textContent = "監査中…";
+      window.setTimeout(() => {
+        output.textContent = JSON.stringify(runFullDayAudit({ runsPerSetting: auditRuns }));
+        output.dataset.ready = "true";
+      }, 0);
+    });
   }
 
   function createATypeSession(setting) {

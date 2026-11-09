@@ -665,7 +665,7 @@ for (const [slug, machine] of Object.entries(machines)) {
   } else {
     html = html.replace("</head>", '<link rel="stylesheet" href="style.css?v=182"></head>');
   }
-  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=277");
+  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=283");
   html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=251");
   html = html.replace(/app-shell\.js\?v=\d+/, "app-shell.js?v=10");
   html = html.replace(/adsense-loader\.js\?v=\d+/, "adsense-loader.js?v=2");
