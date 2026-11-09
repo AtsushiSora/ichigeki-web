@@ -661,11 +661,11 @@ for (const [slug, machine] of Object.entries(machines)) {
   html = html.replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${escapeHtml(machine.intro)}">`);
   html = updateRobotsMeta(html, INDEXABLE_MACHINE_SLUGS.has(slug));
   if (/<link[^>]+rel="stylesheet"/.test(html)) {
-    html = html.replace(/style\.css(?:\?v=\d+)?/, "style.css?v=182");
+    html = html.replace(/style\.css(?:\?v=\d+)?/, "style.css?v=183");
   } else {
-    html = html.replace("</head>", '<link rel="stylesheet" href="style.css?v=182"></head>');
+    html = html.replace("</head>", '<link rel="stylesheet" href="style.css?v=183"></head>');
   }
-  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=283");
+  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=284");
   html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=251");
   html = html.replace(/app-shell\.js\?v=\d+/, "app-shell.js?v=10");
   html = html.replace(/adsense-loader\.js\?v=\d+/, "adsense-loader.js?v=2");

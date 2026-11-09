@@ -5405,6 +5405,42 @@ body.has-machine-sticky-start { padding-bottom: 96px; }
 .machine-result-stats div { padding: 9px; border: 1px solid var(--line); border-radius: 8px; text-align: left; }
 .machine-result-stats span { display: block; color: var(--muted); font-size: 10px; }
 .machine-result-stats strong { display: block; margin-top: 2px; }
+.machine-day-chart {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  margin: 15px 0;
+  padding: 13px;
+  border: 1px solid color-mix(in srgb, currentColor 42%, #26332b);
+  border-radius: 14px;
+  color: #6ee65d;
+  background: linear-gradient(145deg, color-mix(in srgb, currentColor 8%, #070b08), #050806 70%);
+  text-align: left;
+}
+.machine-day-chart[hidden] { display: none !important; }
+.machine-day-chart.is-negative { color: #67aef8; }
+.machine-day-chart-head { display: flex; gap: 12px; align-items: end; justify-content: space-between; }
+.machine-day-chart-head > div { display: grid; gap: 2px; }
+.machine-day-chart-head span { color: currentColor; font: 900 9px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .16em; }
+.machine-day-chart-head strong { color: #f5faf6; font-size: 17px; }
+.machine-day-chart-head b { color: currentColor; font-size: clamp(18px, 5vw, 25px); line-height: 1; white-space: nowrap; }
+.machine-day-chart-canvas { position: relative; min-width: 0; padding: 4px 0 0; }
+.machine-day-chart-canvas svg { display: block; width: 100%; height: auto; max-height: 270px; overflow: visible; color: currentColor; }
+.machine-day-chart-grid line { stroke: rgba(255,255,255,.075); stroke-width: 1; }
+.machine-day-chart-grid line.is-zero { stroke: rgba(255,255,255,.38); stroke-dasharray: 6 5; }
+.machine-day-chart-area { color: currentColor; }
+.machine-day-chart-line { fill: none; stroke: currentColor; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.machine-day-chart-markers circle { fill: #071009; stroke: currentColor; stroke-width: 3; vector-effect: non-scaling-stroke; }
+.machine-day-chart-max,
+.machine-day-chart-min { position: absolute; z-index: 2; left: 5px; padding: 2px 5px; border-radius: 5px; color: #dce6df; background: rgba(0,0,0,.62); font-size: 9px; font-weight: 850; }
+.machine-day-chart-max { top: 8px; }
+.machine-day-chart-min { bottom: 22px; }
+.machine-day-chart-axis { display: flex; justify-content: space-between; padding: 0 3px; color: #758078; font-size: 9px; font-weight: 800; }
+.machine-day-chart-summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.machine-day-chart-summary > div { display: grid; min-width: 0; gap: 2px; padding: 8px; border: 1px solid rgba(255,255,255,.09); border-radius: 9px; background: rgba(0,0,0,.24); }
+.machine-day-chart-summary span { color: #829087; font-size: 9px; }
+.machine-day-chart-summary strong { overflow-wrap: anywhere; color: #f5faf6; font-size: 13px; }
+.machine-day-chart.is-overlay { margin: 2px 0; }
 .machine-flow { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; margin: 10px 0; }
 .machine-flow span { padding: 5px 8px; border: 1px solid var(--line); border-radius: 999px; background: #080b09; font-size: 11px; font-weight: 850; }
 .machine-flow b { color: var(--muted); }
@@ -5686,6 +5722,9 @@ body.has-machine-sticky-start { padding-bottom: 96px; }
   .machine-spec-grid,
   .machine-control-grid,
   .machine-result-stats { grid-template-columns: 1fr 1fr; }
+  .machine-day-chart { padding: 11px 8px 9px; }
+  .machine-day-chart-summary { grid-template-columns: 1fr 1fr; }
+  .machine-day-chart-canvas svg { min-height: 170px; }
   .machine-archive-hero dl div:nth-child(2) { border-right: 0; }
   .machine-archive-hero dl div:last-child { grid-column: 1 / -1; border-top: 1px solid var(--line); }
   .machine-result-actions { display: grid; grid-template-columns: 1fr; }

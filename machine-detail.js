@@ -2050,7 +2050,7 @@
             <p class="machine-sim-note">投資・換金・収支は固定レートで計算します。パチンコは250玉貸し・28玉交換、スロットは46枚貸し・5.2枚交換です。${machine.sim.kind === "pachinko" ? "表記出玉と、打ち出し・オーバー入賞を簡易反映した実獲得出玉を分けて表示します。" : machine.sim.kind === "juggler" ? `Aタイプは開始時に${slotSettingLabel}を均等抽選し、BIG・REGを重ねて終了時に設定を発表します。` : machine.sim.okidokiGoldFlow ? `開始時に${slotSettingLabel}を抽選し、ハイビスカス点灯、BIG・REG、BONUS後32G、天国・保証・${machine.sim.okidokiBlackFlow ? "黒ドキ・裏ドキ" : "金ドキ"}を時系列表示します。設定と内部モードは最終結果で発表します。` : machine.sim.uminchuFlow ? `開始時に${slotSettingLabel}を抽選し、BIG・REG、BONUS後32G、10連後のIREGUIを時系列表示します。設定は最終結果で発表します。` : machine.sim.tentenFlow ? `開始時に${slotSettingLabel}を抽選し、14G CZ、初回BONUS、40G高確、王宮BONUS、輪廻転天を時系列表示します。設定は最終結果で発表します。` : machine.sim.goblinSlayerFlow ? `開始時に${slotSettingLabel}を抽選し、3種類CZ、100G AT、5G JUDGEMENT、BONUS、ULTIMATE LOOPを時系列表示します。設定は最終結果で発表します。` : machine.sim.assaultLilyFlow ? `開始時に${slotSettingLabel}を抽選し、直撃・3種類CZ・BONUS、差枚数AT、ボスヒュージ襲来、特化ゾーン、RUSH SUPERを時系列表示します。設定は最終結果で発表します。` : machine.sim.kaguyaFlow ? `開始時に${slotSettingLabel}を抽選し、15G＋αCZ、3種類BONUS、1G連、約100G引き戻し、EXTRA BONUSを時系列表示します。設定は最終結果で発表します。` : machine.sim.dumbbellFlow ? `開始時に${slotSettingLabel}を抽選し、10G＋αCZ、通常ATのゲーム数上乗せ、Vストック、金肉BONUSの差枚数ループを時系列表示します。設定は最終結果で発表します。` : machine.sim.shinEvaFlow ? `開始時に${slotSettingLabel}を抽選し、3Gの作戦決定、10G＋αの作戦ST、3種類BONUS、三機殲滅、マリ獣化、上位STを時系列表示します。設定は最終結果で発表します。` : machine.sim.vivyFlow ? `開始時に${slotSettingLabel}を抽選し、ACCESS CHANCE・周期、初期100枚の差枚数AT、レア役再生、3Gバトル、報酬、FESを時系列表示します。FESは特化ゾーンで、上位ATは搭載していません。設定は最終結果で発表します。` : `開始時に${slotSettingLabel}を均等抽選し、AT中のレア役、上乗せ、特化ゾーン、上位ATを機種別の代表値で時系列表示します。設定は最終結果で発表します。`}</p>
       <div class="machine-sim-layout">
         <div class="machine-sim-controls">${playModeMarkup}${controlMarkup()}<div class="machine-average-grid" id="averageGrid"></div><div class="machine-start-anchor" id="machineStartAnchor"></div><button class="machine-start-button${machineReady ? "" : " is-preparing"}" id="machineStart" type="button"${machineReady ? "" : " disabled"}><span>${machineReady ? initialStartLabel : "準備中"}</span><small>${machineReady ? initialStartDetail : availabilityLabel}</small></button><button class="machine-sticky-back" id="machineStickyBack" type="button" aria-label="前のページに戻る" hidden><span aria-hidden="true">←</span><strong>戻る</strong></button></div>
-        <div class="machine-result" id="machineResult" aria-live="polite"><span>${machineReady ? "RESULT" : "COMING SOON"}</span><strong id="resultTitle">${machineReady ? "開始ボタンを押してください" : "導入後に遊べます"}</strong><p id="resultSummary">${machineReady ? "平均値と今回の結果を比較できます。" : `${availabilityLabel}です。現在は記事とスペックをご覧ください。`}</p><div class="machine-result-stats" id="resultStats"></div><div class="machine-flow" id="resultFlow"></div><p class="machine-auto-save-status" id="machineAutoSaveStatus">${machineReady ? "結果は自動でマイ記録へ保存されます。" : "シミュレーターは導入日に自動で有効になります。"}</p><div class="achievement-unlock-toast" id="machineAchievementUnlock" hidden><span>TITLE UNLOCKED</span><strong></strong><small>新しい称号を獲得しました</small></div><div class="machine-result-actions"><a class="button" href="ranking.html#achievements">称号・記録を見る</a><a class="button" id="shareMachineResult" href="community.html?machine=${slug}&compose=simulation#simulationComposer">結果を投稿</a></div><div class="machine-ranking-entry"><label class="machine-ranking-name"><span>ランキングに登録する名前</span><input id="rankingNickname" type="text" maxlength="16" autocomplete="nickname" placeholder="ニックネーム"></label><button class="button primary" id="rankMachineResult" type="button" disabled>ランキングに登録</button></div></div>
+        <div class="machine-result" id="machineResult" aria-live="polite"><span>${machineReady ? "RESULT" : "COMING SOON"}</span><strong id="resultTitle">${machineReady ? "開始ボタンを押してください" : "導入後に遊べます"}</strong><p id="resultSummary">${machineReady ? "平均値と今回の結果を比較できます。" : `${availabilityLabel}です。現在は記事とスペックをご覧ください。`}</p><div class="machine-result-stats" id="resultStats"></div><section class="machine-day-chart" id="machineDayChart" aria-label="終日の差枚推移" hidden></section><div class="machine-flow" id="resultFlow"></div><p class="machine-auto-save-status" id="machineAutoSaveStatus">${machineReady ? "結果は自動でマイ記録へ保存されます。" : "シミュレーターは導入日に自動で有効になります。"}</p><div class="achievement-unlock-toast" id="machineAchievementUnlock" hidden><span>TITLE UNLOCKED</span><strong></strong><small>新しい称号を獲得しました</small></div><div class="machine-result-actions"><a class="button" href="ranking.html#achievements">称号・記録を見る</a><a class="button" id="shareMachineResult" href="community.html?machine=${slug}&compose=simulation#simulationComposer">結果を投稿</a></div><div class="machine-ranking-entry"><label class="machine-ranking-name"><span>ランキングに登録する名前</span><input id="rankingNickname" type="text" maxlength="16" autocomplete="nickname" placeholder="ニックネーム"></label><button class="button primary" id="rankMachineResult" type="button" disabled>ランキングに登録</button></div></div>
       </div>
       <section class="machine-experience" id="machineExperience" role="dialog" aria-modal="true" aria-label="${machine.shortName}のシミュレーション演出" data-profile="${experienceProfile.key}" data-machine-type="${machine.type}" data-ui="arcade" data-game-mode="${gameExperienceMode}" hidden>
         <div class="machine-experience-head"><div class="machine-experience-ident"><span id="machineExperienceStep">STEP 1 / 5</span><strong>${machine.shortName}</strong></div><div><button type="button" id="machineExperienceSound" aria-pressed="${experienceSoundEnabled}">${experienceSoundEnabled ? "音ON" : "音OFF"}</button><button type="button" id="machineExperienceSkip">スキップ</button><button type="button" id="machineExperienceClose" aria-label="ゲーム画面を閉じる">×</button></div></div>
@@ -2060,7 +2060,7 @@
         <div class="machine-experience-finish-actions" id="machineExperienceFinishActions" aria-label="結果画面の操作" hidden><div class="machine-experience-session-total" id="machineExperienceSessionTotal" hidden><span>SESSION TOTAL</span><strong id="machineExperienceSessionBalance">合計収支 0円</strong><small id="machineExperienceSessionDetail">1回目の結果を集計します</small></div><button type="button" class="machine-experience-finish-button is-replay" id="machineExperienceReplay"><span>もう一度</span><small>REPLAY</small></button><button type="button" class="machine-experience-finish-button is-back" id="machineExperienceBack"><span>戻る</span><small>BACK</small></button></div>
         <button type="button" class="machine-experience-push" id="machineExperiencePush" hidden>PUSH</button>
         <div class="machine-experience-progress" aria-label="演出の進行状況"><span data-machine-experience-step="0">${machine.sim.kind === "juggler" ? "スタート" : "通常"}</span><span data-machine-experience-step="1">${machine.sim.kind === "pachinko" ? "大当り" : machine.sim.kind === "juggler" ? "ボーナス" : "CZ"}</span><span data-machine-experience-step="2">${machine.sim.kind === "pachinko" ? "RUSH" : machine.sim.kind === "juggler" ? "続行判断" : "AT"}</span><span data-machine-experience-step="3">${machine.sim.kind === "pachinko" ? "連チャン" : machine.sim.kind === "juggler" ? "実戦データ" : machine.sim.vivyFlow ? "報酬" : "上位"}</span><span data-machine-experience-step="4">結果</span></div>
-        <section class="machine-experience-actions" id="machineExperienceActions" aria-labelledby="machineExperienceActionsTitle" hidden><div><span>RESULT</span><strong id="machineExperienceActionsTitle">今回の結果</strong><small id="machineOverlaySaveStatus">マイ記録へ自動保存しました</small></div><div class="machine-experience-result-stats" id="machineExperienceResultStats"></div><div class="machine-experience-main-actions"><button type="button" class="button primary" id="machineOverlayRetry">もう一度遊ぶ</button><a class="button" href="ranking.html">マイ記録</a><a class="button is-post" id="machineOverlayPost" href="community.html?machine=${slug}&compose=simulation#simulationComposer">結果を投稿</a></div><div class="machine-experience-rank"><label for="machineOverlayNickname">ランキング表示名<input id="machineOverlayNickname" type="text" maxlength="16" autocomplete="nickname" placeholder="ニックネーム"></label><button type="button" class="button is-rank" id="machineOverlayRank">ランキングに登録</button></div><button type="button" class="machine-experience-return" id="machineOverlayClose">機種ページへ戻る</button></section>
+        <section class="machine-experience-actions" id="machineExperienceActions" aria-labelledby="machineExperienceActionsTitle" hidden><div><span>RESULT</span><strong id="machineExperienceActionsTitle">今回の結果</strong><small id="machineOverlaySaveStatus">マイ記録へ自動保存しました</small></div><div class="machine-experience-result-stats" id="machineExperienceResultStats"></div><section class="machine-day-chart is-overlay" id="machineOverlayDayChart" aria-label="終日の差枚推移" hidden></section><div class="machine-experience-main-actions"><button type="button" class="button primary" id="machineOverlayRetry">もう一度遊ぶ</button><a class="button" href="ranking.html">マイ記録</a><a class="button is-post" id="machineOverlayPost" href="community.html?machine=${slug}&compose=simulation#simulationComposer">結果を投稿</a></div><div class="machine-experience-rank"><label for="machineOverlayNickname">ランキング表示名<input id="machineOverlayNickname" type="text" maxlength="16" autocomplete="nickname" placeholder="ニックネーム"></label><button type="button" class="button is-rank" id="machineOverlayRank">ランキングに登録</button></div><button type="button" class="machine-experience-return" id="machineOverlayClose">機種ページへ戻る</button></section>
       </section>
     </section>
 
@@ -10227,6 +10227,8 @@
     let dayDiff = 0;
     let lowestDiff = 0;
     let maximumMy = 0;
+    let maximumHeldCoins = 0;
+    let maxNormalGap = 0;
     let initialHits = 0;
     let enteredCount = 0;
     let upperCount = 0;
@@ -10238,6 +10240,7 @@
       const units = Math.ceil((cost - heldCoins) / lendCoins);
       investment += units * 1000;
       heldCoins += units * lendCoins;
+      maximumHeldCoins = Math.max(maximumHeldCoins, heldCoins);
     };
     const playCoins = (cost, requestedPayout = 0) => {
       const safeCost = Math.max(0, Math.round(cost));
@@ -10249,6 +10252,7 @@
       const remainingToComplete = Math.max(0, SLOT_COMPLETE_LIMIT - (dayDiff - lowestDiff));
       const award = Math.max(0, Math.min(Math.round(requestedPayout), remainingToComplete));
       heldCoins += award;
+      maximumHeldCoins = Math.max(maximumHeldCoins, heldCoins);
       totalAwardedCoins += award;
       dayDiff += award;
       maximumMy = Math.max(maximumMy, dayDiff - lowestDiff);
@@ -10264,12 +10268,14 @@
         const closingCost = Math.ceil(remainingGames / gamesPerThousand) * lendCoins;
         playCoins(closingCost, 0);
         normalGames += remainingGames;
+        maxNormalGap = Math.max(maxNormalGap, remainingGames);
         totalGames += remainingGames;
         cycles.push({ number: cycles.length + 1, closing: true, normalGames: remainingGames, totalGames, cumulativeDiff: dayDiff, heldCoins, investment });
         break;
       }
 
       const rawPayout = Math.max(0, Number(result.payout) || 0);
+      maxNormalGap = Math.max(maxNormalGap, normal);
       const requestedPayout = Math.round(rawPayout * payoutScale);
       const usedCoins = Math.max(0, rawPayout - (Number(result.score) || 0));
       const awardedCoins = playCoins(usedCoins, requestedPayout);
@@ -10318,6 +10324,8 @@
       ["上位到達", `${upperCount}回`],
       ["最大一撃", `${yen.format(maxSinglePayout)}枚`],
       ["最大MY", `${yen.format(maximumMy)}枚`],
+      ["最大持ちメダル", `${yen.format(maximumHeldCoins)}枚`],
+      ["最大ハマり", `${yen.format(maxNormalGap)}G`],
       ["総投資", `${yen.format(investment)}円`],
       ["最終持ちメダル", `${yen.format(heldCoins)}枚`],
       ["総獲得", `${yen.format(totalAwardedCoins)}枚`],
@@ -10364,6 +10372,8 @@
         upperCount,
         cycles,
         maximumMy,
+        maximumHeldCoins,
+        maxNormalGap,
         maxSinglePayout,
         totalAwardedCoins,
         payout: heldCoins,
@@ -10560,6 +10570,55 @@
     } catch { return { count: null, newTitles: [] }; }
   }
 
+  function renderFullDayChart(containerId, result) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const experience = result.experience || {};
+    if (experience.kind !== "slot-day" || !Array.isArray(experience.cycles)) {
+      container.hidden = true;
+      container.replaceChildren();
+      return;
+    }
+
+    const attempts = Math.max(1, Number(result.attempts) || FULL_DAY_GAMES);
+    const rawPoints = [{ games: 0, diff: 0 }, ...experience.cycles.map(cycle => ({
+      games: Math.max(0, Math.min(attempts, Number(cycle.totalGames) || 0)),
+      diff: Number(cycle.cumulativeDiff) || 0
+    }))];
+    const points = rawPoints.filter((point, index) => index === 0 || point.games > rawPoints[index - 1].games);
+    const values = points.map(point => point.diff);
+    const rawMin = Math.min(0, ...values);
+    const rawMax = Math.max(0, ...values);
+    const spread = Math.max(1000, rawMax - rawMin);
+    const yMin = rawMin - spread * 0.10;
+    const yMax = rawMax + spread * 0.10;
+    const width = 640;
+    const height = 240;
+    const left = 22;
+    const right = width - 12;
+    const top = 18;
+    const bottom = height - 28;
+    const x = games => left + games / attempts * (right - left);
+    const y = diff => top + (yMax - diff) / (yMax - yMin) * (bottom - top);
+    const line = points.map((point, index) => `${index ? "L" : "M"}${x(point.games).toFixed(1)} ${y(point.diff).toFixed(1)}`).join(" ");
+    const zeroY = y(0);
+    const area = `${line} L${x(points[points.length - 1]?.games || 0).toFixed(1)} ${zeroY.toFixed(1)} L${x(0).toFixed(1)} ${zeroY.toFixed(1)} Z`;
+    const finalDiff = Number(result.score) || 0;
+    const finalTone = finalDiff >= 0 ? "is-positive" : "is-negative";
+    const signed = value => `${value >= 0 ? "+" : ""}${yen.format(Math.round(value))}枚`;
+    const gradientId = `${containerId}Gradient`;
+    const markerPoints = points.filter((point, index) => index === points.length - 1 || index > 0 && (point.diff === rawMin || point.diff === rawMax));
+    const markers = markerPoints.map(point => `<circle cx="${x(point.games).toFixed(1)}" cy="${y(point.diff).toFixed(1)}" r="4.5"></circle>`).join("");
+    const grid = [0, .25, .5, .75, 1].map(ratio => {
+      const gridX = left + (right - left) * ratio;
+      return `<line x1="${gridX.toFixed(1)}" y1="${top}" x2="${gridX.toFixed(1)}" y2="${bottom}"></line>`;
+    }).join("");
+
+    container.className = `machine-day-chart ${container.classList.contains("is-overlay") ? "is-overlay " : ""}${finalTone}`.trim();
+    container.innerHTML = `<div class="machine-day-chart-head"><div><span>FULL DAY GRAPH</span><strong>終日差枚グラフ</strong></div><b>${signed(finalDiff)}</b></div><div class="machine-day-chart-canvas"><span class="machine-day-chart-max">${signed(rawMax)}</span><svg viewBox="0 0 ${width} ${height}" role="img" aria-label="0Gから${yen.format(attempts)}Gまでの差枚推移。最終${signed(finalDiff)}"><defs><linearGradient id="${gradientId}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".34"></stop><stop offset="1" stop-color="currentColor" stop-opacity=".02"></stop></linearGradient></defs><g class="machine-day-chart-grid">${grid}<line class="is-zero" x1="${left}" y1="${zeroY.toFixed(1)}" x2="${right}" y2="${zeroY.toFixed(1)}"></line></g><path class="machine-day-chart-area" d="${area}" fill="url(#${gradientId})"></path><path class="machine-day-chart-line" d="${line}"></path><g class="machine-day-chart-markers">${markers}</g></svg><span class="machine-day-chart-min">${signed(rawMin)}</span><div class="machine-day-chart-axis"><span>0G</span><span>${yen.format(Math.round(attempts / 2))}G</span><span>${yen.format(attempts)}G</span></div></div><div class="machine-day-chart-summary"><div><span>最大持ちメダル</span><strong>${yen.format(Number(experience.maximumHeldCoins) || 0)}枚</strong></div><div><span>最大ハマり</span><strong>${yen.format(Number(experience.maxNormalGap) || 0)}G</strong></div><div><span>初当たり</span><strong>${yen.format(Number(experience.initialHits) || 0)}回</strong></div><div><span>最大MY</span><strong>${yen.format(Number(experience.maximumMy) || 0)}枚</strong></div></div>`;
+    container.hidden = false;
+  }
+
   function renderResult(result) {
     latestResult = result;
     const saveInfo = saveMachineHistory(result);
@@ -10567,6 +10626,8 @@
     document.getElementById("resultTitle").textContent = result.title;
     document.getElementById("resultSummary").textContent = result.summary;
     document.getElementById("resultStats").innerHTML = result.stats.map(([label, value]) => `<div><span>${label}</span><strong>${value}</strong></div>`).join("");
+    renderFullDayChart("machineDayChart", result);
+    renderFullDayChart("machineOverlayDayChart", result);
     document.getElementById("resultFlow").innerHTML = result.flow.map(item => `<span>${item}</span>`).join("<b>›</b>");
     const overlayStats = result.stats.filter(([label]) => /^(?:遊技モード|今回の設定|今回の回転数|今回のゲーム数|総ゲーム数|初当り回数|上位到達|最大一撃|最大MY|総投資|最終持ちメダル|継続率モード|投資目安|現金投資目安|表記出玉|実獲得出玉|総出玉|獲得枚数|差玉目安|差枚目安|収支目安)$/.test(label)).slice(0, 8);
     document.getElementById("machineExperienceResultStats").innerHTML = overlayStats.map(([label, value]) => `<div><span>${label}</span><strong>${value}</strong></div>`).join("");
