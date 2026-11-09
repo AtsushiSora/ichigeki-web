@@ -48,7 +48,7 @@ for (const [slug, machine] of dedicated) {
     const hasMachineSnapshot = html.includes(`${machine.shortName}を数字で早分かり`);
     const hasMachineIdentity = html.includes(`data-machine="${slug}"`);
     if (!html.includes(machine.shortName) || !hasMachineSnapshot || !hasMachineIdentity) errors.push(`${slug}: prerendered dedicated copy is missing`);
-    if (!html.includes("machine-library.js?v=251") || !html.includes("machine-detail.js?v=276")) errors.push(`${slug}: asset version is stale`);
+    if (!html.includes("machine-library.js?v=251") || !html.includes("machine-detail.js?v=277")) errors.push(`${slug}: asset version is stale`);
   }
   inspectProbabilities(sim, "sim", slug);
   if (sim.cycleFlow?.continueModes) {

@@ -110,7 +110,7 @@
   let aTypeSession = null;
   let aTypeBusy = false;
   let machinePlaySession = null;
-  const FULL_DAY_GAMES = 8000;
+  const FULL_DAY_GAMES = 9000;
   const hasFullDayMode = machine.type === "slot" && machine.sim.kind !== "juggler";
   const PLAY_MODE_KEY = "ichigekiMachinePlayModeV1";
   let selectedPlayMode = hasFullDayMode && localStorage.getItem(PLAY_MODE_KEY) === "day" ? "day" : "single";
@@ -10848,7 +10848,7 @@
   function showExperienceActions() {
     const rankingEligible = latestResult?.rankingEligible !== false;
     document.getElementById("machineOverlayRank").disabled = !rankingEligible;
-    document.getElementById("machineOverlayRank").textContent = rankingEligible ? "ランキングに登録" : "8,000G完走で登録可能";
+    document.getElementById("machineOverlayRank").textContent = rankingEligible ? "ランキングに登録" : latestResult?.rankingLabel || "8,000G完走で登録可能";
     document.getElementById("machineOverlayPost").href = document.getElementById("shareMachineResult").href;
     document.getElementById("machineOverlayNickname").value = document.getElementById("rankingNickname").value;
     document.getElementById("machineExperienceActions").hidden = false;
