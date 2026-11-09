@@ -105,7 +105,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["山佐ネクスト 公式機種サイト", "https://www1.yamasa.co.jp/svakcj/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9849"]]
   },
   "shangri-la-frontier": {
-    order: 0.08, type: "pachinko", theme: "emerald", year: "2026年12月", maker: "Sammy", updated: "2026-11-01",
+    order: 0.08, type: "pachinko", theme: "emerald", year: "2026年12月", maker: "Sammy", updated: "2026-11-09",
     availableFrom: "2026-12-07",
     name: "e シャングリラ・フロンティア", shortName: "eシャンフロ",
     image: "assets/machines/shangri-la-frontier-key-visual.jpg",
@@ -116,9 +116,9 @@ window.ICHIGEKI_MACHINES = {
     intro: "2026年12月7日導入予定のスマパチLT機。図柄揃い約1/399.9、RUSH突入約54%、ST134回・継続約75%の流れと、右打ち中1500個・4500個中心の出玉を固定条件で簡易体験できます。",
     points: ["図柄揃い約1/399.9・RUSH突入約54%", "ST134回・RUSH継続約75%", "RUSH中は1500個または4500個以上が中心"],
     specs: [["図柄揃い", "約1/399.9"], ["RUSH中", "約1/98.5"], ["RUSH突入", "約54%"], ["ST回数", "134回"], ["RUSH継続", "約75%"], ["右打ち出玉", "1500・4500個＋α"]],
-    sim: { kind: "pachinko", hitRate: 399.9, hitLabel: "図柄揃い", startType: "通常ヘソ", spinsPer1k: 19.0, minSpins: 10, maxSpins: 30, rushLabel: "神ゲー SHANGRI-LA FRONTIER", rushEntry: 0.54, rushContinue: 0.75, firstPayoutIn: 1500, firstPayoutOut: 1500, rushPayouts: [[1500, 0.50], [4500, 0.48], [7500, 0.02]] },
+    sim: { kind: "pachinko", hitRate: 399.9, hitLabel: "図柄揃い", startType: "通常ヘソ", spinsPer1k: 19.0, minSpins: 10, maxSpins: 30, rushLabel: "神ゲー SHANGRI-LA FRONTIER", rushEntry: 0.54, rushContinue: 0.75, firstPayoutIn: 1500, firstPayoutOut: 1500, initialOutcomes: [[{ label: "図柄揃い 約1500個・RUSH", payout: 1500, rush: true }, 0.53], [{ label: "300個・RUSH", payout: 300, rush: true }, 0.01], [{ label: "図柄揃い 約1500個・通常へ", payout: 1500, rush: false }, 0.46]], rushPayouts: [[1500, 0.50], [4500, 0.48], [7500, 0.02]] },
     articleSections: [
-      { heading: "約1/399.9からRUSH突入約54%", paragraphs: ["通常時の図柄揃いは約1/399.9です。初当りの約53%は1500個獲得後にRUSHへ、約1%は300個獲得後にRUSHへ進み、合計突入率は約54%です。", "サイトでは初回300個の約1%を独立表示せず、初当り出玉を1500個の代表値へまとめています。RUSH非突入時も1500個として計算します。"] },
+      { heading: "約1/399.9からRUSH突入約54%", paragraphs: ["通常時の図柄揃いは約1/399.9です。初当りの約53%は1500個獲得後にRUSHへ、約1%は300個獲得後にRUSHへ進み、合計突入率は約54%です。", "シミュレーターも1500個＋RUSH、300個＋RUSH、1500個＋通常の3経路を別々に抽選します。初当りの表示と収支には、選ばれた経路の払い出し個数を反映します。"] },
       { heading: "ST134回・継続約75%", paragraphs: ["RUSH中は約1/98.5を134回転で抽選し、継続率は約75%です。シミュレーターではST中の各回転を個別表示せず、1回ごとに約75%の継続抽選へまとめます。", "平均連チャン回数は長期間の理論上の目安です。1回の結果は単発終了から複数回継続まで大きく変わります。"] },
       { heading: "1500個・4500個と超神ゲーBOOST", paragraphs: ["右打ち中は1500個が約50%、4500個が約48%、4500個＋超神ゲーBOOSTが約2%です。BOOSTでは1500個・3000個・4500個の上乗せを狙います。", "BOOSTの上乗せループは公開されている代表振り分けを完全再現せず、サイトでは4500個＋BOOSTの一部を7500個の代表出玉へ簡易化します。実機の上限や期待出玉を保証するものではありません。"] },
       { heading: "固定回転率と収支の条件", bullets: ["19.0回/1,000円・250玉貸し・28玉交換で固定", "平均初当り投資目安は約21,000円", "19.0回は比較用の参考値で実店舗の回転率を保証しない", "結果は自動でマイ記録へ保存し、同じ条件でランキング集計"] }
@@ -384,7 +384,7 @@ window.ICHIGEKI_MACHINES = {
     sources: [["P-WORLD 新台予定", "https://www.p-world.co.jp/database/machine/introduce_calendar.cgi?type=Pachi"], ["パチマガスロマガFREE スペック", "https://pachimaga.com/free/mach/maker-p/takao/e_nogamenolife119.php"], ["パチンコ・パチスロ.com スペック", "https://pachinkopachisro.com/archives/pachinko/e-no-game-no-life-119/"]]
   },
   "karakuri2-maou": {
-    order: 0.119, type: "pachinko", theme: "violet", year: "2024年11月", maker: "SANKYO", updated: "2026-10-31",
+    order: 0.119, type: "pachinko", theme: "violet", year: "2024年11月", maker: "SANKYO", updated: "2026-11-09",
     name: "eフィーバーからくりサーカス2 魔王ver.", shortName: "からくり2 魔王",
     image: "assets/machines/karakuri2-maou-key-visual.jpg",
     imageAlt: "eフィーバーからくりサーカス2 魔王ver.の実機画像",
@@ -394,10 +394,10 @@ window.ICHIGEKI_MACHINES = {
     intro: "図柄揃い約1/399.9、LT突入約52%、超悪魔RUSH継続約80%のスマパチLT機を固定条件で簡易体験できます。",
     points: ["図柄揃い約1/399.9", "LT突入約52%・継続約80%", "右打ち最大7500個"],
     specs: [["図柄揃い", "約1/399.9"], ["LT突入", "約52%"], ["ST回数", "135回"], ["LT継続", "約80%"], ["右打ち出玉", "1500〜7500個"], ["スタート", "通常ヘソ"]],
-    sim: { kind: "pachinko", hitRate: 399.9, hitLabel: "図柄揃い", startType: "通常ヘソ", spinsPer1k: 17.0, minSpins: 10, maxSpins: 30, rushLabel: "超悪魔RUSH", rushEntry: 0.52, rushContinue: 0.80, firstPayoutIn: 1200, firstPayoutOut: 1200, rushPayouts: [[1500, 0.40], [3000, 0.33], [4500, 0.17], [6000, 0.07], [7500, 0.03]] },
+    sim: { kind: "pachinko", hitRate: 399.9, hitLabel: "図柄揃い", startType: "通常ヘソ", spinsPer1k: 17.0, minSpins: 10, maxSpins: 30, rushLabel: "超悪魔RUSH", rushEntry: 0.52, rushContinue: 0.80, firstPayoutIn: 1200, firstPayoutOut: 1200, initialOutcomes: [[{ label: "約1200個・超悪魔RUSH", payout: 1200, rush: true }, 0.51], [{ label: "約300個・超悪魔RUSH", payout: 300, rush: true }, 0.01], [{ label: "約1200個・通常へ", payout: 1200, rush: false }, 0.48]], rushPayouts: [[0, 0.10], [1500, 0.40], [3000, 0.33], [4500, 0.10], [6000, 0.05], [7500, 0.02]] },
     articleSections: [
-      { heading: "約52%で超悪魔RUSHへ", paragraphs: ["図柄揃いは約1/399.9。1200個大当りと300個LT突入大当りを合わせたトータルLT突入率は約52%です。", "シミュレーターでは入口を1回の突入抽選へまとめます。"] },
-      { heading: "運命の一劇と最大7500個", paragraphs: ["LTは135回のSTでトータル継続約80%。右打ち中は1500個を軸に、3000個から最大7500個までの大当りがあります。", "STリセットは継続率へ含め、独立した出玉としては扱いません。"] },
+      { heading: "約52%で超悪魔RUSHへ", paragraphs: ["図柄揃いは約1/399.9。初当りの約51%は1200個＋RUSH、約1%は300個＋RUSH、約48%は1200個で通常へ戻ります。", "シミュレーターも3経路を別々に抽選し、選ばれた初当り出玉を収支へ反映します。"] },
+      { heading: "運命の一劇と最大7500個", paragraphs: ["LTは135回のSTでトータル継続約80%。右打ち中は1500個が約40%、3000個が約33%、4500〜7500個が合計約17%です。", "残る約10%は出玉なしのSTリセットとして抽選し、STが続く0個当りとして表示します。4500〜7500個の内訳は体験用の代表配分です。"] },
       { heading: "固定レートと収支の条件", bullets: ["17.0回/1,000円・250玉貸し・28玉交換で固定", "平均図柄揃い投資目安は約23,500円", "結果は自動でマイ記録へ保存"] }
     ],
     sources: [["SANKYO 公式スペック", "https://www.sankyo-fever.jp/products/machine_list/prw/spec/"], ["SANKYO オンライン博物館", "https://www.sankyo-fever.jp/collection/968/"]]
@@ -816,10 +816,10 @@ window.ICHIGEKI_MACHINES = {
     intro: "チャージを含む大当り合算約1/348.6、図柄揃い時の50%でDESTINY CHALLENGEへ進むLT機です。RUSH継続約77%と、1500～7500個の幅広い出玉を簡易体験できます。",
     points: ["大当り合算約1/348.6・図柄揃い約1/1394.4", "全大当り基準のRUSHルート約12.5%", "DESTINY RUSHはST144回・継続約77%"],
     specs: [["大当り合算", "約1/348.6"], ["図柄揃い", "約1/1394.4"], ["RUSH中", "約1/99.9"], ["ST回数／継続", "144回／約77%"], ["図柄揃い時RUSH", "50%"], ["右打ち出玉", "1500～7500個"]],
-    sim: { kind: "pachinko", hitRate: 348.6, hitLabel: "大当り・CHARGE", startType: "通常ヘソ", spinsPer1k: 19.0, minSpins: 10, maxSpins: 30, rushLabel: "DESTINY RUSH", rushEntry: 0.125, rushContinue: 0.77, firstPayoutIn: 1500, firstPayoutOut: 300, rushPayouts: [[1500, 0.259], [2700, 0.402], [3900, 0.249], [5100, 0.077], [6300, 0.012], [7500, 0.001]] },
+    sim: { kind: "pachinko", hitRate: 348.6, hitLabel: "大当り・CHARGE", startType: "通常ヘソ", spinsPer1k: 19.0, minSpins: 10, maxSpins: 30, rushLabel: "DESTINY RUSH", rushEntry: 0.125, rushContinue: 0.77, firstPayoutIn: 1500, firstPayoutOut: 300, initialOutcomes: [[{ label: "運命CHARGE 約300個", payout: 300, rush: false }, 0.7500036], [{ label: "図柄揃い・DESTINY CHALLENGE", payout: 1500, rush: true }, 0.1249982], [{ label: "図柄揃い 約1500個・通常へ", payout: 1500, rush: false }, 0.1249982]], rushPayouts: [[1500, 0.259], [2700, 0.402], [3900, 0.249], [5100, 0.077], [6300, 0.012], [7500, 0.001]] },
     readerGuide: { verdict: "低いRUSH入口を突破し、1回の大当りで大きな出玉を狙いたい人向けです。", bestFor: ["一撃の出玉幅を重視したい", "ST144回の約77%継続を試したい"], check: ["合算大当りの約75%はチャージ", "図柄揃い時のRUSHルートは50%"], compare: [["majo-to-yaju-pachinko", "e魔女と野獣", "上乗せ特化型と比較"], ["assault-lily", "eアサルトリリィ", "ライトLTと比較"]] },
     articleSections: [
-      { heading: "合算確率と図柄揃いを分けて見る", paragraphs: ["通常時はチャージを含む大当り合算約1/348.6、図柄揃いは約1/1394.4です。全大当りの約75%は2Rチャージで通常へ戻ります。", "図柄揃いの50%がDESTINY CHALLENGEへ進むため、全大当り基準のRUSHルートは約12.5%です。サイトでは合算大当りから約12.5%でRUSHへ進む簡易抽選にしています。"] },
+      { heading: "合算確率と図柄揃いを分けて見る", paragraphs: ["通常時はチャージを含む大当り合算約1/348.6、図柄揃いは約1/1394.4です。全大当りの約75%は2R・約300個の運命CHARGEで通常へ戻ります。", "残る約25%の図柄揃いは約1500個で、その50%がDESTINY CHALLENGEへ進みます。シミュレーターもCHARGE、図柄揃いRUSH、図柄揃い通常の3経路を分け、全大当り基準のRUSH突入約12.5%と初回出玉を同時に反映します。"] },
       { heading: "DESTINY CHALLENGEは実質次回まで", paragraphs: ["DESTINY CHALLENGEは約1/99.9を実質次回まで抽選し、当選後はDESTINY RUSHへ。RUSHはST144回で継続率約77%です。", "チャレンジ内の当りとRUSH中の当りは同じ出玉振り分けとして扱い、複数回大当り分を合算した表記出玉を表示します。"] },
       { heading: "右打ちは1500～7500個", paragraphs: ["右打ち中は1500個25.9%、2700個40.2%、3900個24.9%、5100個7.7%、6300個1.2%、7500個0.1%の代表値へ整理します。", "公表上は10R・18R・26R・34R・42R・50Rの合算表記です。サイトでは見やすい1500個単位に近い代表出玉へ丸めています。"] },
       { heading: "固定条件", bullets: ["19.0回/1,000円・250玉貸し・28玉交換で固定", "合算初当りまでの平均投資目安は約18,400円", "チャージと図柄揃いを簡易分岐", "結果はマイ記録と機種別ランキングへ保存"] }
@@ -837,12 +837,12 @@ window.ICHIGEKI_MACHINES = {
     intro: "大当り合算約1/349、図柄揃い約1/399、復讐RUSH突入約51%のLT・上乗せ特化型スマパチです。ST75回・継続約55%と、運命分岐からの大型出玉を簡易体験できます。",
     points: ["大当り合算約1/349・図柄揃い約1/399", "図柄揃い時RUSH突入約51%", "復讐RUSHはST75回・継続約55%"],
     specs: [["大当り合算", "約1/349"], ["図柄揃い", "約1/399"], ["復讐CHARGE", "約1/2799"], ["RUSH中", "約1/95"], ["RUSH突入／継続", "約51%／約55%"], ["運命分岐成功", "約50%"]],
-    sim: { kind: "pachinko", hitRate: 349, hitLabel: "図柄揃い・CHARGE", startType: "BIGスタート", spinsPer1k: 27.0, minSpins: 18, maxSpins: 38, rushLabel: "復讐RUSH", rushEntry: 0.446, rushContinue: 0.55, firstPayoutIn: 350, firstPayoutOut: 350, rushPayouts: [[2800, 0.50], [5600, 0.29], [8400, 0.21]], upperLabel: "運命分岐", upperUpgradeChance: 0.52, upperContinue: 0.55 },
-    readerGuide: { verdict: "継続率よりも1回の大型上乗せを重視する人向けです。", bestFor: ["2800個以上の出玉演出を楽しみたい", "運命分岐のPUSH勝負を試したい"], check: ["約51%は図柄揃い基準", "CHARGE込みの突入は約44.6%"], compare: [["takt-opus-destiny", "eタクトオーパス", "大出玉STと比較"], ["majo-to-yajuu-slot", "スマスロ 魔女と野獣", "スロット版と比較"]] },
+    sim: { kind: "pachinko", hitRate: 349, hitLabel: "図柄揃い・CHARGE", startType: "BIGスタート", spinsPer1k: 27.0, minSpins: 18, maxSpins: 38, rushLabel: "復讐RUSH", rushEntry: 0.4460902, rushContinue: 0.55, firstPayoutIn: 400, firstPayoutOut: 400, initialOutcomes: [[{ label: "復讐CHARGE 約300個", payout: 300, rush: false }, 0.1253133], [{ label: "図柄揃い 約400個・復讐RUSH", payout: 400, rush: true }, 0.4373434], [{ label: "図柄揃い 約400個・通常へ", payout: 400, rush: false }, 0.4285965], [{ label: "図柄揃い・運命分岐 約3000個", payout: 3000, rush: true, upper: true }, 0.0043734], [{ label: "図柄揃い・BEAST ATTACK 約6000個", payout: 6000, rush: true, upper: true }, 0.0025366], [{ label: "図柄揃い・超BEAST ATTACK 約9000個", payout: 9000, rush: true, upper: true }, 0.0018368]], rushPayouts: [[3000, 0.50], [6000, 0.29], [9000, 0.21]], upperLabel: "運命分岐", upperUpgradeChance: 0, upperChallenge: "運命分岐", upperChallengeSuccess: 1, upperAfterHits: 2, upperContinue: 0.55 },
+    readerGuide: { verdict: "継続率よりも1回の大型上乗せを重視する人向けです。", bestFor: ["3000個以上の出玉演出を楽しみたい", "運命分岐のPUSH勝負を試したい"], check: ["約51%は図柄揃い基準", "CHARGE込みの突入は約44.6%"], compare: [["takt-opus-destiny", "eタクトオーパス", "大出玉STと比較"], ["majo-to-yajuu-slot", "スマスロ 魔女と野獣", "スロット版と比較"]] },
     articleSections: [
-      { heading: "図柄揃いとCHARGEの合算", paragraphs: ["通常時の図柄揃いは約1/399、復讐CHARGEは約1/2799で、合算大当りは約1/349です。図柄揃い時のRUSH突入は約51%。", "CHARGEを含む全大当り基準ではRUSH突入が約44.6%になるため、シミュレーターは合算約1/349と突入約44.6%を組み合わせます。"] },
-      { heading: "ST75回・継続約55%", paragraphs: ["復讐RUSH中は約1/95を75回で抽選し、継続率は約55%です。初回RUSH中の大当り後は必ず運命分岐へ進み、2連目以降は約52%で分岐します。", "サイトでは連チャン中の上位昇格として運命分岐を表示し、成功率約50%の個別抽選は大型出玉振り分けへまとめています。"] },
-      { heading: "W上乗せと大型出玉", paragraphs: ["RUSH中は20R・40R・60R相当の大当りがあり、約2800個・約5600個・約8400個の代表出玉として扱います。公表上は最大9000個帯までの出玉があります。", "実際のアタッカー、V入賞、上乗せループ、打ち方による差は完全再現しません。結果では表記出玉と簡易的な実獲得出玉を分けます。"] },
+      { heading: "図柄揃いとCHARGEの合算", paragraphs: ["通常時の図柄揃いは約1/399、復讐CHARGEは約1/2799で、合算大当りは約1/349です。図柄揃い・魔女決戦の初回出玉は約400個、復讐CHARGEは約300個として経路を分けます。", "図柄揃い時のRUSH突入は約51%。CHARGEを含む全大当り基準では約44.6%になるため、シミュレーターも各経路の比率と出玉を分けて抽選します。"] },
+      { heading: "ST75回・継続約55%", paragraphs: ["復讐RUSH中は約1/95を75回で抽選し、継続率は約55%です。初回RUSH中の大当り後は必ず運命分岐へ進み、2連目以降は約52%で分岐します。", "通常時の約1%にある運命分岐直行も、3000個・6000個・9000個の各初当り経路として独立表示します。"] },
+      { heading: "W上乗せと大型出玉", paragraphs: ["運命分岐中は約3000個50%・約6000個29%・約9000個21%の公表振り分けを使います。表示は払い出し個数で、実獲得出玉は打ち出し分を考慮した別の数値です。", "実際のアタッカー、V入賞、上乗せループ、打ち方による差は完全再現しません。結果では表記出玉と簡易的な実獲得出玉を分けます。"] },
       { heading: "固定条件", bullets: ["27.0回/1,000円・250玉貸し・28玉交換で固定", "合算初当りまでの平均投資目安は約13,000円", "運命分岐とW上乗せは代表値で簡易化", "結果はマイ記録と機種別ランキングへ保存"] }
     ],
     sources: [["藤商事 公式機種ラインナップ", "https://www.fujimarukun.co.jp/products/"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/machine/4811/1/1"], ["PShort スペック", "https://pshort.jp/pachi/e_majo_to_yaju/"]]
@@ -1136,7 +1136,7 @@ window.ICHIGEKI_MACHINES = {
     intro: "大出玉ルートに特化し、大型ホールで主力設置されるスマパチ。液晶図柄揃い、極限7500バトル、上位LTの二段階突破を簡易再現します。",
     points: ["大当り約1/349.9、液晶図柄揃い約1/437.4", "図柄揃いの約50%で極限7500バトル", "バトル突破約50%、魔戒CHANCE LT継続約76%"],
     specs: [["大当り確率", "約1/349.9"], ["液晶図柄揃い", "約1/437.4"], ["極限7500バトル", "突入約50%"], ["LT突入", "バトルの約50%"], ["LT継続", "約76%"], ["スタート", "通常ヘソ"]],
-    sim: { kind: "pachinko", hitRate: 437.4, hitLabel: "液晶図柄揃い", startType: "通常ヘソ", spinsPer1k: 17.2, minSpins: 10, maxSpins: 30, rushLabel: "極限7500バトル", rushEntry: 0.50, rushContinue: 0, firstPayoutIn: 1500, firstPayoutOut: 1500, rushPayouts: [[1500, 0.75], [7500, 0.25]], upperLabel: "魔戒CHANCE LT", upperDirectChance: 0.50, upperUpgradeChance: 0, upperContinue: 0.76, upperEntryPayout: 7500 },
+    sim: { kind: "pachinko", hitRate: 437.4, hitLabel: "液晶図柄揃い", startType: "通常ヘソ", spinsPer1k: 17.2, minSpins: 10, maxSpins: 30, rushLabel: "極限7500バトル", rushEntry: 0.50, rushContinue: 0, firstPayoutIn: 3000, firstPayoutOut: 1500, rushPayouts: [[1500, 0.75], [7500, 0.25]], upperLabel: "魔戒CHANCE LT", upperDirectChance: 0.50, upperUpgradeChance: 0, upperContinue: 0.76, upperEntryPayout: 7500 },
     sources: [["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10305"], ["牙狼公式アーカイブ", "https://www.sansei-rd.com/p_garo_archive/archive/p_garo12_ok.html"]]
   },
   "karakuri-circus": {
@@ -1261,7 +1261,7 @@ window.ICHIGEKI_MACHINES = {
     points: ["設定1のCZ約1/277、ボーナス初当り約1/519", "コイン単価約4.5円の高波機", "超革命RUSHは継続約90%"],
     specs: [["CZ（設定1）", "約1/277"], ["ボーナス初当り（設定1）", "約1/519"], ["革命BONUS", "平均約470枚"], ["決戦BONUS", "平均約110枚"], ["革命BONUS AT期待度", "約55%"], ["決戦BONUS AT期待度", "約35%"], ["ベース", "約31.0G/50枚"], ["コイン単価", "約4.5円"], ["AT純増", "約7.2枚/G"], ["RUSH 1セット", "10〜100G以上"], ["超革命RUSH継続", "約90%"]],
     initialHitLabel: "革命BONUS／決戦BONUS",
-    sim: { kind: "slot", rankingVersion: "v4", triggerLabel: "CZ", triggerRate: 277, triggerSuccess: 0.534, mainLabel: "革命RUSH", mainRate: 519, base50: 31, coinUnit: 4.5, normalMin: 300, normalMax: 1500, entryBonusAwards: [[{ label: "革命BONUS", payout: 470, payoutOnMiss: [330, 390], payoutOnEntry: [530, 590], atChance: 0.55 }, 0.50], [{ label: "決戦BONUS", payout: 110, games: 15, atChance: 0.35 }, 0.50]], entryBonusAwardsNote: "ボーナス比率は設定1の代表値として1:1。革命BONUSは公表平均約470枚を保つよう、RUSH非突破330〜390枚・突破530〜590枚の実獲得目安で簡易抽選。成功・失敗別平均は非公表のため比較用モデル。通常革命RUSHの50G・100G合算は設定1約9.5%〜設定6約25.1%の実戦集計を使い、内訳非公表のため50G:100Gを3:1で配分", specialLabel: "ハラキリDRIVE", specialChance: 0.31, specialMin: 360, specialMax: 1800, upperChallenge: "ハラキリチャレンジ3回成功", upperChance: 0.4565, upperSuccess: 1, upperAfterSuccesses: 3, upperLabel: "超革命RUSH", upperContinue: 0.90, upperPayout: 540, setPushFlow: true, atPureIncrease: 7.2, atPayoutVariance: 0.16, mainSetContinue: 0.77, firstRushSetGames: [[20, 1]], rushSetGames: [[10, 0.68], [20, 0.23], [50, 0.07], [100, 0.02]], rushSetLongRateBySetting: { 1: 0.095, 2: 0.126, 3: 0.157, 4: 0.188, 5: 0.219, 6: 0.251 }, rushSet100Share: 0.25, rushSet20Share: 0.25, upperSetGames: [[10, 0.50], [20, 0.25], [50, 0.10], [100, 0.15]], settingRates: { 1: { trigger: 277, main: 519 }, 2: { trigger: 275, main: 516 }, 3: { trigger: 274, main: 514 }, 4: { trigger: 269, main: 507 }, 5: { trigger: 264, main: 499 }, 6: { trigger: 258, main: 490 } } },
+    sim: { kind: "slot", rankingVersion: "v4", triggerLabel: "CZ", triggerRate: 277, triggerSuccess: 0.534, mainLabel: "革命RUSH", mainRate: 519, base50: 31, coinUnit: 4.5, normalMin: 300, normalMax: 1500, entryBonusAwards: [[{ label: "革命BONUS", payout: 470, payoutOnMiss: [330, 390], payoutOnEntry: [530, 590], atChance: 0.55 }, 0.50], [{ label: "決戦BONUS", payout: 110, games: 15, atChance: 0.35 }, 0.50]], entryBonusAwardsNote: "ボーナス比率は設定1の代表値として1:1。革命BONUSは公表平均約470枚を保つよう、RUSH非突破330〜390枚・突破530〜590枚の実獲得目安で簡易抽選。成功・失敗別平均は非公表のため比較用モデル。通常革命RUSHの50G・100G合算は設定1約9.5%〜設定6約25.1%の実戦集計を使い、内訳非公表のため50G:100Gを3:1で配分", specialLabel: "ハラキリDRIVE", specialChance: 0.31, specialMin: 360, specialMax: 1800, upperChallenge: "ハラキリチャレンジ3回成功", upperChance: 0.4565, upperSuccess: 1, upperAfterSuccesses: 3, upperLabel: "超革命RUSH", upperContinue: 0.90, upperPayout: 540, setPushFlow: true, atPureIncrease: 7.2, atPayoutVariance: 0.16, mainSetContinue: 0.77, firstRushSetGames: [[20, 1]], rushSetGames: [[10, 0.68], [20, 0.23], [50, 0.07], [100, 0.02]], rushSetLongRateBySetting: { 1: 0.095, 2: 0.126, 3: 0.157, 4: 0.188, 5: 0.219, 6: 0.251 }, rushSet100Share: 0.25, rushSet20Share: 0.25, upperSetGames: [[10, 0.50], [20, 0.25], [50, 0.10], [100, 0.15]], settingRates: { 1: { trigger: 277, main: 519, payout: 0.973 }, 2: { trigger: 275, main: 516, payout: 0.983 }, 3: { trigger: 274, main: 514, payout: 1.008 }, 4: { trigger: 269, main: 507, payout: 1.032 }, 5: { trigger: 264, main: 499, payout: 1.079 }, 6: { trigger: 258, main: 490, payout: 1.149 } } },
     articleSections: [
       { heading: "設定別のCZ・初当りを使用", paragraphs: ["設定1〜6で公開されているCZとボーナス初当りを個別に登録しています。START時に抽選された設定のCZ確率を初当りGへ、CZとボーナス初当りの比率を突破抽選へ使用します。", "設定1はCZ約1/277・ボーナス初当り約1/519、設定6はCZ約1/258・ボーナス初当り約1/490です。"] },
       { heading: "BIG・REGではなく2種類のボーナス", paragraphs: ["通常時の当選にAタイプのBIG・REGという区分はありません。CZなどを経由して革命BONUSまたは決戦BONUSに当選し、革命RUSH突入を目指します。革命RUSHへ入った後はセット継続で超革命RUSHを狙います。", "革命BONUSは50G＋αを消化し、払い出し666枚到達で革命RUSH濃厚となるため、突破時と非突破時で獲得枚数が変わります。シミュレーターでは公表平均約470枚とRUSH期待度約55%を保つよう、非突破時330〜390枚・突破時530〜590枚の実獲得目安で抽選します。成功・失敗別の平均値は公表されていないため、この範囲は比較用の簡易モデルです。", "決戦BONUSは平均約110枚・RUSH期待度約35%として別抽選します。ボーナス獲得枚数を先に収支へ加え、RUSHへ入った場合はその後の獲得枚数を合算します。ボーナス種別の比率は設定1の代表値として1:1で、実機にある設定差までは再現していません。", "通常の革命RUSHは初回を基本20Gとし、2セット目以降の50G・100G合算を設定1約9.5%〜設定6約25.1%で変化させます。個別の内訳は非公表のため、長いセットに当選した場合は50Gを75%・100Gを25%とする比較用モデルです。", "革命RUSHは各セット終了後のハラキリチャレンジを約77%で抽選し、3回成功すると4セット目から超革命RUSHへ移行します。3回成功後に別の上位抽選は行いません。"], bullets: ["革命BONUS非突破は330〜390枚の実獲得目安", "革命BONUS突破は530〜590枚の実獲得目安", "通常革命RUSHの100Gは設定1約2.4%〜設定6約6.3%の比較用モデル", "決戦BONUSはベルナビ消化後・平均約110枚で革命RUSHを抽選", "ハラキリチャレンジ3回成功で4セット目から超革命RUSH", "RUSH非突入でもボーナス出玉を結果と収支へ加算", "全小役・内部モード・有利区間の詳細は簡略化"] }
@@ -1481,34 +1481,34 @@ window.ICHIGEKI_MACHINES = {
     imageSource: "https://www.newgin.co.jp/pub/machine/egodzilla7_dekasuta/spec.html",
     catchcopy: "約1/59の震撼ジャッジメントから、最大7500個のUG-RUSHへ。",
     intro: "2026年10月5日導入の役物チャレンジ型LT機。震撼ジャッジメントの発生と成功、図柄揃い後のUG-RUSH、アルティメットチャージを公開値に沿って簡易体験できます。",
-    points: ["震撼ジャッジメント出現約1/59・成功約42%", "図柄揃い時のLT突入約82.6%", "UG-RUSH継続約76.2%、大当りの1/2でアルティメットチャージ"],
-    specs: [["役物チャレンジ", "約1/59"], ["役物成功率", "約42%"], ["実質大当り", "約1/229.95"], ["LT突入", "約82.6%"], ["RUSH継続", "約76.2%"], ["スタート", "デカスタ"]],
-    sim: { kind: "pachinko", hitRate: 229.95, hitLabel: "実質大当り", startType: "デカスタ", spinsPer1k: 30.0, minSpins: 10, maxSpins: 40, rushLabel: "UG-RUSH", rushEntry: 0.826, rushContinue: 0.762, firstPayoutIn: 1500, firstPayoutOut: 1500, rushPayouts: [[1500, 0.53125], [3000, 0.125], [4500, 0.1875], [6000, 0.125], [7500, 0.03125]] },
+    points: ["震撼ジャッジメント出現約1/59・成功約42%", "図柄揃い時のLT突入約82.6%", "合算初当り基準のLT到達は約13.6%", "UG-RUSH継続約76.2%、大当りの1/2でアルティメットチャージ"],
+    specs: [["役物チャレンジ", "約1/59"], ["役物成功率", "約42%"], ["実質大当り", "約1/229.95"], ["図柄揃い時LT突入", "約82.6%"], ["合算初当り時LT到達", "約13.6%"], ["RUSH継続", "約76.2%"], ["スタート", "デカスタ"]],
+    sim: { kind: "pachinko", hitRate: 229.95, hitLabel: "実質大当り", startType: "デカスタ", spinsPer1k: 30.0, minSpins: 10, maxSpins: 40, rushLabel: "UG-RUSH", rushEntry: 0.1363, rushContinue: 0.762, firstPayoutIn: 1500, firstPayoutOut: 300, initialOutcomes: [[{ label: "G-CHARGE 約300個", payout: 300, rush: false }, 0.8351], [{ label: "図柄揃い・UG-RUSH直行", payout: 1500, rush: true }, 0.1262], [{ label: "図柄揃い・時短引き戻し", payout: 1500, rush: true }, 0.0101], [{ label: "図柄揃い・時短終了", payout: 1500, rush: false }, 0.0286]], rushPayouts: [[1500, 0.53125], [3000, 0.125], [4500, 0.1875], [6000, 0.125], [7500, 0.03125]] },
     articleSections: [
-      { heading: "約1/59の役物チャレンジ", paragraphs: ["通常時はデカスタから震撼ジャッジメントが約1/59で発生し、役物チャレンジの成功率は約42%です。成功後は約1/9.9の高確率で図柄揃いを目指します。別ルートのG-CHARGEは約1/275です。", "シミュレーターは役物の物理的な動きを再現できないため、震撼ジャッジメント経由とG-CHARGEを合わせた実質大当り約1/229.95を初当り抽選に使用します。役物発生率と成功率は記事内の固定仕様として表示します。"] },
-      { heading: "UG-RUSHとアルティメットチャージ", paragraphs: ["図柄揃い時のLT突入率は、初回約76.5%と時短120回の引き戻しを合わせて約82.6%。UG-RUSHは120回転、継続率は約76.2%です。", "RUSH中の大当りは50%でアルティメットチャージ。チャージ中は1500個から7500個までの振り分けがあるため、非突入の1500個と合算した出玉分布で抽選します。"] },
+      { heading: "約1/59の役物チャレンジ", paragraphs: ["通常時はデカスタから震撼ジャッジメントが約1/59で発生し、役物チャレンジの成功率は約42%です。成功後は約1/9.9の高確率で図柄揃いを目指します。別ルートのG-CHARGEは約1/275です。", "シミュレーターは役物の物理的な動きを再現できないため、震撼ジャッジメント経由とG-CHARGEを合わせた実質大当り約1/229.95を初当り抽選に使用します。その内訳はG-CHARGE約83.5%、図柄揃い約16.5%として分岐させます。"] },
+      { heading: "UG-RUSHとアルティメットチャージ", paragraphs: ["図柄揃い時のLT突入率は、初回約76.5%と時短120回の引き戻しを合わせて約82.6%。UG-RUSHは120回転、継続率は約76.2%です。G-CHARGEを含む合算初当り全体では、LT到達は約13.6%になります。", "RUSH中の大当りは50%でアルティメットチャージ。チャージ中は1500個から7500個までの振り分けがあるため、非突入の1500個と合算した出玉分布で抽選します。"] },
       { heading: "デカスタの固定条件", bullets: ["回転率は30.0回/1,000円のサイト固定体験値", "貸出は1,000円250玉、交換は100円28玉で固定", "特殊スタートのため実際の役物入賞や店舗調整とは一致しない", "平均投資は実質大当り約1/229.95を基準に表示"] }
     ],
     sources: [["ニューギン 公式スペック", "https://www.newgin.co.jp/pub/machine/egodzilla7_dekasuta/spec.html"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10562"]]
   },
   "smart-pachinko-gantz": {
-    order: 38, type: "pachinko", theme: "gold", year: "2026年10月", maker: "オッケー.",
+    order: 38, type: "pachinko", theme: "gold", year: "2026年10月", maker: "オッケー.", updated: "2026-11-09",
     name: "SMART-PACHINKO GANTZ", shortName: "SMART-PACHINKO GANTZ",
     image: "assets/machines/smart-pachinko-gantz-key-visual.jpg",
     imageAlt: "SMART-PACHINKO GANTZのキービジュアル",
     imageCredit: "P-WORLD 機種情報",
     imageSource: "https://www.p-world.co.jp/machine/database/10580",
-    catchcopy: "約1/319から、右打ちすべてがつながる超行って下ちいBONUSへ。",
-    intro: "2026年10月5日導入のミドルLT機。初当りから行って下ちいチャレンジまたは直行ルートを経て、右打ち全体が一つのBONUSとして続く新しい出玉体験を簡易化しています。",
-    points: ["通常時大当り約1/319", "右打ち突入率約66.7%", "超行って下ちいBONUSの平均期待出玉は約11,300個"],
-    specs: [["大当り確率", "約1/319"], ["右打ち突入", "約66.7%"], ["直行振り分け", "約15%"], ["チャレンジ", "約51.7%"], ["BONUS終了", "約1/73.1"], ["スタート", "通常ヘソ"]],
-    sim: { kind: "pachinko", hitRate: 319, hitLabel: "初当り", startType: "通常ヘソ", spinsPer1k: 17.5, minSpins: 10, maxSpins: 30, rushLabel: "超行って下ちいBONUS", rushEntry: 0.667, rushContinue: 0.935, firstPayoutIn: 1500, firstPayoutOut: 300, rushPayouts: [[150, 0.65], [1500, 0.25], [3000, 0.10]] },
+    catchcopy: "約1/319から、5段階チャレンジを突破して超行って下ちいBONUSへ。",
+    intro: "2026年10月5日導入のミドルLT機。初当りの15%直行と、51.7%から始まる5段階チャレンジを別々に抽選し、右打ち全体が一つのBONUSとして続く出玉体験を簡易化しています。",
+    points: ["通常時大当り約1/319", "右打ち入口約66.7%・超BONUS到達は計算上約40.8%", "超行って下ちいBONUSの平均期待出玉は約11,300個"],
+    specs: [["大当り確率", "約1/319"], ["右打ち入口", "約66.7%"], ["超BONUS直行", "約15%"], ["チャレンジ", "約51.7%・5段階"], ["超BONUS到達", "計算上約40.8%"], ["BONUS終了", "約1/73.1"]],
+    sim: { kind: "pachinko", hitRate: 319, hitLabel: "初当り", startType: "通常ヘソ", spinsPer1k: 17.5, minSpins: 10, maxSpins: 30, rushLabel: "超行って下ちいBONUS", rushEntry: 0.407683616, rushContinue: 0.935, firstPayoutIn: 3000, firstPayoutOut: 300, initialOutcomes: [[{ label: "超行って下ちいBONUS3000直行", payout: 3000, rush: true }, 0.15], [{ label: "通常へ 約300個", payout: 300, rush: false }, 0.333], [{ label: "チャレンジ1段階終了 約600個", payout: 600, rush: false }, 0.06721], [{ label: "チャレンジ2段階終了 約900個", payout: 900, rush: false }, 0.0584727], [{ label: "チャレンジ3段階終了 約1200個", payout: 1200, rush: false }, 0.050871249], [{ label: "チャレンジ4段階終了 約1500個", payout: 1500, rush: false }, 0.04425798663], [{ label: "チャレンジ5段階終了 約1800個", payout: 1800, rush: false }, 0.0385044483681], [{ label: "5段階突破・超行って下ちいBONUS", payout: 1800, rush: true }, 0.2576836159989]], rushPayouts: [[150, 0.65], [1500, 0.25], [3000, 0.10]] },
     articleSections: [
-      { heading: "約1/319から右打ちへ", paragraphs: ["通常時の大当りは約1/319。初当りの約15%は超行って下ちいBONUS3000へ直行し、約51.7%は行って下ちいチャレンジへ進みます。右打ちへの合算突入率は約66.7%です。", "シミュレーターでは複数の入口を約66.7%の右打ち突入抽選へまとめ、非突入時は300個、突入時は初回1500個から開始します。初回3000個などの細かな振り分けはBONUS中の出玉抽選へまとめています。"] },
+      { heading: "約1/319から5段階チャレンジへ", paragraphs: ["通常時の大当りは約1/319。初当りの約15%は超行って下ちいBONUS3000へ直行し、約51.7%は行って下ちいチャレンジへ進みます。残る約33.3%は300個で通常へ戻ります。", "チャレンジは5段階を連続突破する流れです。公開されている各段階の継続約87%を使うと、チャレンジ成功は約49.8%、直行を含む超BONUS到達は初当り全体の計算上約40.8%です。シミュレーターは各終了段階の600〜1800個と5段階突破を別経路で抽選します。"] },
       { heading: "一つにつながるBONUS", paragraphs: ["右打ち中は150個の『行って下ちいBONUS』を重ね、∞ZONEや超行って下ちい3000を獲得しながら、終了抽選まで一つのBONUSとして出玉を伸ばします。公式掲載のBONUS終了確率は約1/73.1です。", "従来のST継続率へ単純変換できないため、簡易モデルでは平均期待出玉約11,300個へ近づくよう、継続と150個・1500個・3000個の振り分けをサイト固定値にしています。実機の小当り、V入賞、各特化ゾーン出現率は完全再現しません。"] },
       { heading: "固定条件と投資計算", bullets: ["回転率は17.5回/1,000円のサイト固定値", "貸出は1,000円250玉、交換は100円28玉で固定", "平均319回転までの投資目安を表示", "ランキングも全員同じ簡易BONUS条件で計算"] }
     ],
-    sources: [["フィールズ 公式製品情報", "https://www.fields.biz/products/ps/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10580"]]
+    sources: [["フィールズ 公式製品情報", "https://www.fields.biz/products/ps/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10580"], ["パチ7 機種解説", "https://pachiseven.jp/articles/detail/26389"], ["パチりんこ スペック解説", "https://pachirinko.com/2026.kishu/gantz.inf.html"]]
   },
   "paripi-koumei-slot": {
     order: 39, type: "slot", theme: "violet", year: "2026年10月", maker: "山佐ネクスト",
@@ -3407,6 +3407,34 @@ window.ICHIGEKI_MACHINES = {
   });
 })();
 
+// Give the established slot flows a baseline revision. The newer 47-machine
+// passes later overwrite their targets, leaving exactly 31 legacy custom flows.
+(() => {
+  const machines = window.ICHIGEKI_MACHINES || {};
+  for (const machine of Object.values(machines)) {
+    if (machine?.type !== "slot" || machine.sim?.kind !== "slot") continue;
+    if (!machine.sim.balanceRevision) machine.sim.balanceRevision = "legacy-31-v1";
+  }
+})();
+
+// Pachinko and A-type balance audit coverage.
+// Pachinko keeps the published jackpot/RUSH figures intact; the audit checks
+// their mathematical consistency instead of forcing every title toward the
+// same expected return. A-type titles are checked against their six-setting
+// BIG/REG and payout tables at the common 8,000G session length.
+(() => {
+  const machines = window.ICHIGEKI_MACHINES || {};
+  for (const machine of Object.values(machines)) {
+    if (!machine?.sim) continue;
+    if (machine.type === "pachinko" && machine.sim.kind === "pachinko") {
+      machine.sim.balanceRevision = "pachinko-89-v1";
+    }
+    if (machine.sim.kind === "juggler") {
+      machine.sim.balanceRevision = "atype-12-v1";
+    }
+  }
+})();
+
 // Expanded, title-specific AT flows for the next group of popular machines.
 // These run after the base cycle map so older generic definitions are replaced.
 (() => {
@@ -4898,6 +4926,7 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
     kanokariSDreamTimeStocks: [[4, 0.20], [5, 0.25], [6, 0.28], [7, 0.17], [8, 0.10]],
     kanokariSDreamTimeChance: 0.03,
     kanokariSDreamChance: 0.04,
+    kanokariMaxCycles: 80,
     specialLabel: "ななかりDREAM／ALL1G恋変換",
     specialChance: 0.18,
     upperChallenge: "S級出玉トリガー",
@@ -5276,7 +5305,7 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
     gundamSeedStGames: 20, gundamSeedStContinue: 0.70, gundamSeedBattleGames: 3, gundamSeedBattleChance: 0.50, gundamSeedLastChanceGames: 3, gundamSeedLastChance: 0.12, gundamSeedMaxLoops: 12,
     gundamSeedDestinyZoneGames: 5, gundamSeedDestinyZoneChance: 0.606,
     gundamSeedBurstFrontGames: 5, gundamSeedBurstFrontChance: 0.56, gundamSeedBurstBackGames: 5, gundamSeedBurstBackChance: 0.50,
-    gundamSeedUpperGames: 10, gundamSeedUpperContinue: 0.96, gundamSeedUpperMaxSets: 60, gundamSeedFullBurstChance: 0.06, gundamSeedFullBurstAwards: [[100, 0.45], [200, 0.25], [300, 0.14], [500, 0.10], [700, 0.04], [1000, 0.02]],
+    gundamSeedUpperGames: 10, gundamSeedUpperContinue: 0.96, gundamSeedUpperMaxSets: 240, gundamSeedFullBurstChance: 0.06, gundamSeedFullBurstAwards: [[100, 0.45], [200, 0.25], [300, 0.14], [500, 0.10], [700, 0.04], [1000, 0.02]],
     specialLabel: "宿命ZONE", specialChance: 0.606, upperChallenge: "ストライクバースト", upperChance: 0.56, upperSuccess: 0.50, upperLabel: "フリーダムハイパー", upperContinue: 0.96, upperPayout: 0,
     settingRates: { 1: { trigger: 362.2, main: 460.1, payout: 0.977 }, 2: { trigger: 377.3, main: 446.9, payout: 0.988 }, 3: { trigger: 349.1, main: 411.8, payout: 1.012 }, 4: { trigger: 309.7, main: 364.5, payout: 1.054 }, 5: { trigger: 301.6, main: 355.6, payout: 1.107 }, 6: { trigger: 266.9, main: 318.4, payout: 1.149 } }
   });
@@ -5560,6 +5589,139 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
     yoshimuneHeavenGames: [[32, 0.28], [64, 0.42], [96, 0.30]], yoshimuneHeavenBonusChance: 1,
     specialLabel: "1G連", specialChance: 0.24, upperChallenge: "裏鷹狩り", upperChance: 0.035, upperSuccess: 0.80, upperLabel: "裏鷹狩りループ", upperContinue: 0.80, upperPayout: 0,
     settingRates: { 1: { trigger: 378.9, main: 378.9, payout: 0.978 }, 2: { trigger: 369.6, main: 369.6, payout: 0.991 }, 3: { trigger: 358.8, main: 358.8, payout: 1.006 }, 4: { trigger: 335.1, main: 335.1, payout: 1.041 }, 5: { trigger: 318.5, main: 318.5, payout: 1.071 }, 6: { trigger: 292.4, main: 292.4, payout: 1.120 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+  delete machine.sim.entryBonusAwards;
+  delete machine.sim.entryBonusAwardsNote;
+})();
+
+(function applyChibariyo2DedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["chibariyo2-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "花笠が光ればBONUS。32G連を重ね、赤・虹パトランプからリミットレスを目指す。",
+    intro: "初当りBONUS、32G以内の天国連、6連目の赤パトランプ昇格抽選、10連目の赤・15連目の虹パトランプ、虹終了後のリミットレスまでを機種専用画面で体験できます。",
+    points: ["REG約90枚・BIG約210枚・SBB約315枚", "天国A約66%／B約75%／C約80%", "赤約88%・虹約92%でループ", "虹終了後はリミットレスへ移行"],
+    specs: [["BONUS初当り（設定1）", "約1/328.0"], ["BONUS初当り（設定6）", "約1/224.8"], ["ベース", "約27.9G/50枚"], ["REG BONUS", "30G・約90枚"], ["BIG BONUS", "70G・約210枚"], ["SUPER BIG", "70G・約315枚"], ["天国A", "約66%ループ"], ["天国B", "約75%ループ"], ["天国C", "約80%ループ"], ["赤パトランプ", "約88%ループ"], ["虹パトランプ", "約92%ループ"], ["リミットレス", "約88%ループ"]],
+    articleSections: [
+      { heading: "チェリーと規定ゲーム数から花笠BONUSへ", paragraphs: ["通常時はチェリー成立回数と規定ゲーム数を軸にBONUSを目指します。チェリー回数は5の倍数が節目で、最大45回。ゲーム数天井は最大999Gです。", "設定別のBONUS初当りは約1/328.0〜約1/224.8。専用画面では通常回転後に花笠ランプが点灯し、最初のBONUS種類をPUSHで開きます。"] },
+      { heading: "REG・BIG・SUPER BIG", paragraphs: ["REGは30G・約90枚、BIGは70G・約210枚で純増約3.0枚/G。SUPER BIGは70G・約315枚で純増約4.5枚/Gです。", "1G連当選時はモードに応じてBIG／SUPER BIGを振り分けます。弱チェリーによる1G連はBIG、強チェリーならSUPER BIGとなる公開法則も反映しています。"] },
+      { heading: "32G連とパトランプモード", paragraphs: ["天国Aは約66%、天国Bは約75%、天国Cは約80%で32G以内のBONUSをループします。スイカでの継続書き換えは約3.1%です。", "6連目は赤パトランプへの昇格チャンス、10連目は赤、15連目は虹へ。赤は約88%、虹は約92%でループするため、連チャン数を重ねるほど上位モードが見えてきます。"] },
+      { heading: "虹の先にあるリミットレス", paragraphs: ["虹パトランプモードが終了するとリミットレスへ移行。リミットレスは約88%でループし、BONUSごとに有利区間をリセットします。", "リミットレス中はBONUS当選ごとに15%で虹パトランプへ再昇格。専用画面では現在モード、32Gカウント、BONUS種類、連チャン数を順に表示します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約27.9G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1・2・4・5・6を均等抽選し、初当りと出玉率は公開設定別値を使用", "REG／BIG／SBB、32G連、6・10・15連の昇格、1G連、リミットレスを専用進行", "天国A〜Cの初期振り分け、6連目の赤昇格率、通常契機の1G連率など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["NET 公式機種情報", "https://www.net-fun.co.jp/chibariyo2/"], ["一撃 基本スペック・モード", "https://1geki.jp/slot/l_chibariyo2/"], ["なな徹 BONUS解析", "https://nana-press.com/kaiseki/machine/722/19952/"], ["なな徹 天国・パトランプモード", "https://nana-press.com/kaiseki/machine/722/19944/"]],
+    readerGuide: { verdict: "32G連を重ねるほど赤・虹・リミットレスへ近づく、モード昇格型のBONUS連チャン機です。", bestFor: ["花笠告知からBONUS種類をPUSHで開きたい", "32Gのカウントダウンを毎連楽しみたい", "赤・虹・リミットレスへ段階的に上げたい"], check: ["初当り・BONUS枚数・主要モード継続率は公開値", "BONUSゲーム数と獲得枚数を別表示", "未公表の細かな振り分けは体験用代表値"], compare: [["okidoki-black", "沖ドキ！BLACK", "32G連タイプと比較"], ["okidoki-gold", "沖ドキ！GOLD", "天国連タイプと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v36", dedicatedFlow: true, dedicatedFlowKey: "chibariyo2-slot", dedicatedFlowVersion: 2, chibariyo2Flow: true,
+    triggerLabel: "花笠BONUS初当り", triggerRate: 328.0, triggerSuccess: 1, mainLabel: "天国32G連", mainRate: 328.0, base50: 27.9, coinUnit: 4.5,
+    normalMin: 0, normalMax: 0, atPureIncrease: 3.0, upperPureIncrease: 4.5, atPayoutVariance: 0,
+    chibariyoBonuses: {
+      reg: { key: "reg", label: "REG BONUS", games: 30, award: 90, pure: 3.0 },
+      big: { key: "big", label: "BIG BONUS", games: 70, award: 210, pure: 3.0 },
+      sbig: { key: "sbig", label: "SUPER BIG", games: 70, award: 315, pure: 4.5 }
+    },
+    chibariyoBonusRates: { 1: { reg: 321.5, big: 226.1, sbig: 707.9 }, 2: { reg: 308.3, big: 217.2, sbig: 673.4 }, 4: { reg: 275.9, big: 193.6, sbig: 590.1 }, 5: { reg: 258.1, big: 181.0, sbig: 545.0 }, 6: { reg: 221.8, big: 156.1, sbig: 453.5 } },
+    chibariyoModes: { heavenA: 0.66, heavenB: 0.75, heavenC: 0.80, red: 0.88, rainbow: 0.92, limitless: 0.88 },
+    chibariyoEntryModes: [["heavenA", 0.55], ["heavenB", 0.30], ["heavenC", 0.15]],
+    chibariyoSixthRedChance: 0.25, chibariyoRewriteChance: 0.031, chibariyoOneGameChance: 0.08, chibariyoLimitlessRainbowChance: 0.15,
+    chibariyoMaxChains: 50, specialLabel: "1G連", specialChance: 0.08, upperChallenge: "虹パトランプ", upperChance: 0.15, upperSuccess: 0.92, upperLabel: "リミットレス", upperContinue: 0.88, upperPayout: 0,
+    settingRates: { 1: { trigger: 328.0, main: 328.0, payout: 0.973 }, 2: { trigger: 314.4, main: 314.4, payout: 0.993 }, 4: { trigger: 281.1, main: 281.1, payout: 1.047 }, 5: { trigger: 263.3, main: 263.3, payout: 1.096 }, 6: { trigger: 224.8, main: 224.8, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+  delete machine.sim.entryBonusAwards;
+  delete machine.sim.entryBonusAwardsNote;
+})();
+
+(function applyKinnikuman7DedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["kinnikuman-7-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "26Gの悪魔超人バトルを7戦突破。悪魔将軍を倒し、魔界ループへ。",
+    intro: "前半11G＋バトル15Gのセットを重ね、7戦突破後の30Gエピソード、悪魔将軍バトル、上位AT『悪魔大行進』と30Gの魔界の荒野までを機種専用画面で体験できます。",
+    points: ["通常ATは1セット26G・純増約6.1枚/G", "全8シナリオ・各セット50%以上", "7戦突破後の悪魔将軍バトルは上位期待度約90%", "悪魔大行進は100枚＋α・継続約65〜99%"],
+    specs: [["正義超人ゾーン（設定1）", "約1/99.8"], ["AT（設定1）", "約1/404.1"], ["AT（設定6）", "約1/336.5"], ["ベース", "約31.0G/50枚"], ["7人の悪魔超人", "11G＋15G・純増約6.1枚/G"], ["セット継続", "全8シナリオ・50%以上"], ["エピソード", "7戦突破後・30G"], ["悪魔将軍バトル", "1セット6G・最大5セット"], ["初回上位期待度", "約90%"], ["悪魔大行進", "1セット100枚＋α"], ["上位セット継続", "約65〜99%"], ["魔界の荒野", "30G＋α・引き戻し約30%"]],
+    articleSections: [
+      { heading: "超人パワーから7人の悪魔超人へ", paragraphs: ["通常時は規定超人パワー到達や正義超人チャレンジ・正義超人アタックからATを目指します。正義超人ゾーン合算は設定1約1/99.8〜設定6約1/91.7、AT初当りは約1/404.1〜約1/336.5です。", "専用画面では通常回転後にCZ最終PUSHを行い、成功時は赤7準備・3GのオープニングからATを開始します。通常時の超人パワーモードや全前兆は初当り確率へまとめています。"] },
+      { heading: "前半11G＋バトル15Gの7戦", paragraphs: ["通常AT『7人の悪魔超人』は1セット26G、純増約6.1枚/G。前半11Gで対戦相手やVストックを確認し、後半15Gのバトル最終PUSHで継続を開きます。", "継続率は全8種類のシナリオで管理され、各セット50%以上。4戦目以降は65%以上、7戦目は85%以上です。専用画面では8シナリオの代表選択率を用い、セットごとの公開下限値で判定します。"] },
+      { heading: "バッファローマンと7戦突破", paragraphs: ["1〜6戦目にバッファローマンが乱入し、勝利すると残りバトルの継続が濃厚です。通常の継続抽選、Vストック、書き換えをすべて個別再現せず、SP発動時は残りセットを勝利として進めます。", "7戦突破後は30Gのエピソードへ。エピソード中も悪魔将軍バトルの勝利ストックを抽選し、終了後は初回期待度約90%の悪魔将軍バトルへ進みます。"] },
+      { heading: "悪魔将軍バトルから魔界ループ", paragraphs: ["悪魔将軍バトルは1セット6G・最大5セット。勝利すると上位AT『悪魔大行進』、敗北すると30G＋αの『魔界の荒野』へ進みます。魔界の荒野からの悪魔将軍バトル引き戻し期待度は約30%です。", "悪魔大行進は1セット100枚＋α・純増約6.1枚/G。初期枚数により継続期待度が変わり、100枚で約66.1%、400枚で約98.8%。終了後は魔界の荒野へ戻り、悪魔将軍バトルと悪魔大行進の魔界ループを狙います。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約31.0G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1・2・4・5・6を均等抽選し、CZ・AT初当りと出玉率は公開設定別値を使用", "26G×7戦、30Gエピソード、悪魔将軍バトル、悪魔大行進、魔界の荒野を専用進行", "8シナリオの選択率、バッファローマンSP選択率、上位初期枚数の細かな振り分けは体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["山佐ネクスト 公式機種サイト", "https://www1.yamasa.co.jp/svakcj/"], ["パチ＆スロ必勝本 AT解説", "https://p.hisshobon.jp/machine/4117/1/97293"], ["パチ＆スロ必勝本 継続シナリオ", "https://p.hisshobon.jp/machine/4117/1/102184"], ["なな徹 魔界ループ解析", "https://nana-press.com/kaiseki/machine/583/16197/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9849"]],
+    readerGuide: { verdict: "26Gのバトルを7戦突破し、悪魔将軍バトルから魔界ループを狙うシナリオ継続型ATです。", bestFor: ["セットごとに継続PUSHを楽しみたい", "バッファローマン乱入で残り勝利を確定させたい", "悪魔将軍バトルから上位ATを目指したい"], check: ["ATゲーム数・純増・シナリオ下限・上位期待度は公開値", "各セットのゲーム数と獲得枚数を別表示", "未公表の選択率は体験用代表値"], compare: [["hokuto-tensei2", "スマスロ 北斗転生2", "勝舞型ATと比較"], ["monster-hunter-rise-slot", "スマスロ モンハンライズ", "討伐型ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v37", dedicatedFlow: true, dedicatedFlowKey: "kinnikuman-7-slot", dedicatedFlowVersion: 2, kinnikuman7Flow: true,
+    triggerLabel: "正義超人ゾーン", triggerRate: 99.8, triggerSuccess: 0.247, mainLabel: "7人の悪魔超人", mainRate: 404.1, base50: 31.0, coinUnit: 3.8,
+    normalMin: 0, normalMax: 0, atPureIncrease: 6.1, upperPureIncrease: 6.1, atPayoutVariance: 0,
+    kinnikumanSetGames: 26, kinnikumanFrontGames: 11, kinnikumanBattleGames: 15, kinnikumanEpisodeGames: 30,
+    kinnikumanDevils: ["ステカセキング", "ブラックホール", "アトランティス", "ミスターカーメン", "ザ・魔雲天", "スプリングマン", "バッファローマン"],
+    kinnikumanScenarios: [
+      [{ name: "シナリオ1", rates: [0.65, 0.50, 0.50, 0.65, 0.65, 0.65, 0.85] }, 0.18],
+      [{ name: "シナリオ2", rates: [0.55, 0.50, 0.55, 0.65, 0.65, 0.85, 0.85] }, 0.18],
+      [{ name: "シナリオ3", rates: [0.55, 0.50, 0.55, 0.65, 0.85, 0.85, 0.85] }, 0.16],
+      [{ name: "シナリオ4", rates: [0.55, 0.50, 0.65, 0.65, 0.85, 0.85, 0.85] }, 0.14],
+      [{ name: "シナリオ5", rates: [0.55, 0.50, 0.65, 0.85, 0.85, 0.85, 0.85] }, 0.12],
+      [{ name: "シナリオ6", rates: [0.55, 0.65, 0.85, 0.85, 0.85, 0.85, 0.85] }, 0.10],
+      [{ name: "シナリオ7", rates: [1.00, 0.85, 0.85, 0.85, 0.85, 0.85, 0.85] }, 0.08],
+      [{ name: "シナリオ8", rates: [1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00] }, 0.04]
+    ],
+    kinnikumanBuffaloSpChance: 0.08, kinnikumanEpisodeShogunSuccess: 0.90, kinnikumanReturnShogunSuccess: 0.30,
+    kinnikumanShogunBattleGames: [[6, 0.22], [12, 0.24], [18, 0.24], [24, 0.18], [30, 0.12]],
+    kinnikumanUpperInitialCoins: [[100, 0.64], [200, 0.20], [300, 0.10], [400, 0.06]],
+    kinnikumanUpperContinueByCoins: { 100: 0.661, 200: 0.83, 300: 0.94, 400: 0.988 },
+    kinnikumanUpperMaxSets: 20, kinnikumanWildernessGames: 30,
+    specialLabel: "Vストック", specialChance: 0.16, upperChallenge: "悪魔将軍バトル", upperChance: 0.90, upperSuccess: 0.90, upperLabel: "悪魔大行進", upperContinue: 0.661, upperPayout: 0,
+    settingRates: { 1: { trigger: 99.8, main: 404.1, payout: 0.979 }, 2: { trigger: 98.6, main: 400.6, payout: 0.991 }, 4: { trigger: 96.3, main: 362.1, payout: 1.060 }, 5: { trigger: 94.2, main: 350.7, payout: 1.106 }, 6: { trigger: 91.7, main: 336.5, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+  delete machine.sim.entryBonusAwards;
+  delete machine.sim.entryBonusAwardsNote;
+})();
+
+(function applyHokutoTensei2DedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["hokuto-tensei2"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "30Gの闘神演舞で勝舞魂を集め、1魂ずつPUSH。天撃の先に裏闘神演舞。",
+    intro: "闘神演舞30Gで勝舞魂を獲得し、神拳勝舞では勝舞魂1個につき1G・PUSH1回で継続を判定。天撃4Gから裏闘神演舞へ進み、赤勝舞魂とゲーム数アップまでを機種専用画面で体験できます。",
+    points: ["闘神演舞は1セット30G・純増約4.0枚/G", "神拳勝舞は勝舞魂1個につき1G・トータル勝率約1/5", "勝利時の残り勝舞魂は次セットへ持ち越し", "天撃は4G・成功期待度50%以上"],
+    specs: [["AT初当り（設定1）", "約1/366.0"], ["AT初当り（設定6）", "約1/273.1"], ["ベース", "約31.5G/50枚"], ["コイン単価", "約3.5円"], ["闘神演舞", "1セット30G・純増約4.0枚/G"], ["神拳勝舞", "勝舞魂1個につき1G"], ["勝舞魂トータル勝率", "約1/5"], ["天撃", "4G・成功期待度50%以上"], ["裏闘神演舞", "初回70G＋赤勝舞魂2個"], ["上位セット", "30〜300G"]],
+    articleSections: [
+      { heading: "規定あべしから闘神演舞へ", paragraphs: ["通常時は規定あべし到達を軸にAT『闘神演舞』を目指します。AT初当りは設定1約1/366.0〜設定6約1/273.1。専用シミュレーターはSTART時に設定1〜6を均等抽選し、公開されている設定別初当り確率を使用します。", "通常時のモード・天破の刻・前兆の全抽選は初当り確率へ集約し、初当り後から実機のAT順で進めます。"] },
+      { heading: "闘神演舞30Gで勝舞魂を獲得", paragraphs: ["闘神演舞は1セット30G＋α、純増約4.0枚/G。成立役と闘神レベルを参照して勝舞魂を獲得し、拳王強襲やSPバトルが絡むと魂の大量獲得にも期待できます。", "専用画面では30Gのカウント後にPUSHで今回の勝舞魂を表示します。勝舞魂の細かな獲得分布は未公表部分があるため、公開されているゲーム構造に沿った体験用代表値です。"] },
+      { heading: "勝舞魂1個につき1Gの神拳勝舞", paragraphs: ["神拳勝舞は勝舞魂1個につき1G。1個ずつPUSHし、勝利するまで残り魂を減らします。勝利すれば残った勝舞魂を次セットへ持ち越し、0個まで敗北するとAT終了です。", "トータル勝率は約1/5。小役別ではハズレ・10枚ベル約7.8%、リプレイ約26.2%、右下がりベル約32.0%、勝舞図柄約53.4%、スイカ約50%、チャンス目約75%、強チェリーは勝利濃厚という公開値を抽選へ反映します。"] },
+      { heading: "天撃から裏闘神演舞へ", paragraphs: ["天撃は突入ゲームを含む4Gで、成功期待度は50%以上。成功すると裏闘神演舞へ進みます。失敗後は天国移行が濃厚となり、次回初当りで上位へ進むルートがありますが、1回のシミュレーション内では天撃終了として集計します。", "裏闘神演舞は初回70G＋赤勝舞魂2個から開始。以後は30〜300Gを獲得し、裏神拳勝舞の勝利時は残った赤勝舞魂に応じて次セットのゲーム数が上がります。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約31.5G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6を均等抽選し、AT初当りと出玉率は公開設定別値を使用", "30G闘神演舞、魂1個ずつの神拳勝舞、天撃、裏闘神演舞を専用進行", "勝舞魂獲得個数、拳王強襲・SPバトル・天撃の到達配分など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["サミー 公式機種情報", "https://www.sammy.co.jp/japanese/product/pachislot/sp_hok_ke_tensei/"], ["パチマガスロマガ 神拳勝舞解析", "https://psmaga.com/e/pachi/pla/s_conq/sammy_slot/222/at03.php"], ["なな徹 神拳勝舞解析", "https://nana-press.com/kaiseki/machine/1059/33032/"], ["なな徹 天撃・裏闘神演舞解析", "https://nana-press.com/kaiseki/machine/1059/33035/"], ["パチ＆スロ必勝本 AT解説", "https://p.hisshobon.jp/machine/4636/1/113102"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/10370"]],
+    readerGuide: { verdict: "30Gで集めた勝舞魂を1個ずつ使い、勝つまでPUSHする自力継続型ATです。", bestFor: ["勝舞魂が尽きる前に勝つ緊張感を楽しみたい", "小役ごとの勝率差をPUSHで確認したい", "天撃から裏闘神演舞を目指したい"], check: ["ATゲーム数・純増・神拳勝舞の小役別勝率・天撃期待度は公開値", "勝利時は残った魂を次セットへ持ち越し", "未公表の魂獲得分布・ルート比率は体験用代表値"], compare: [["kinnikuman-7-slot", "スマスロ キン肉マン", "7戦シナリオ型ATと比較"], ["monster-hunter-rise-slot", "スマスロ モンハンライズ", "討伐PUSH型ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v38", dedicatedFlow: true, dedicatedFlowKey: "hokuto-tensei2", dedicatedFlowVersion: 2, hokutoTensei2Flow: true,
+    triggerLabel: "規定あべし", triggerRate: 366, triggerSuccess: 1, mainLabel: "闘神演舞", mainRate: 366, base50: 31.5, coinUnit: 3.5,
+    normalMin: 0, normalMax: 0, atPureIncrease: 4.0, upperPureIncrease: 4.0, atPayoutVariance: 0,
+    hokutoSetGames: 30, hokutoInitialSouls: 2, hokutoMaxSets: 20,
+    hokutoSoulGains: [[1, 0.30], [2, 0.28], [3, 0.20], [5, 0.13], [7, 0.06], [10, 0.03]],
+    hokutoRoles: [[{ key: "miss", label: "ハズレ・10枚ベル", chance: 0.078 }, 0.49], [{ key: "replay", label: "リプレイ", chance: 0.262 }, 0.26], [{ key: "right-bell", label: "右下がりベル", chance: 0.320 }, 0.14], [{ key: "shobu", label: "勝舞図柄", chance: 0.534 }, 0.055], [{ key: "weak-cherry", label: "弱チェリー", chance: 0.670 }, 0.022], [{ key: "watermelon", label: "スイカ", chance: 0.500 }, 0.016], [{ key: "chance", label: "チャンス目", chance: 0.750 }, 0.011], [{ key: "strong-cherry", label: "強チェリー", chance: 1.000 }, 0.006]],
+    hokutoKenohChance: 0.08, hokutoKenohSouls: [[3, 0.40], [5, 0.32], [7, 0.18], [10, 0.10]],
+    hokutoSpChanceOnWin: 0.05, hokutoSpSouls: [[3, 0.34], [5, 0.30], [7, 0.20], [10, 0.11], [15, 0.05]],
+    hokutoTengekiChance: 0.12, hokutoTengekiGames: 4, hokutoTengekiSuccess: 0.50,
+    hokutoUpperFirstGames: 70, hokutoUpperFirstSouls: 2, hokutoUpperMaxSets: 12,
+    hokutoUpperSoulGains: [[1, 0.32], [2, 0.30], [3, 0.20], [5, 0.12], [7, 0.04], [10, 0.02]],
+    hokutoUpperRoles: [[{ key: "red-bell", label: "ベル", chance: 0.28 }, 0.48], [{ key: "red-replay", label: "リプレイ", chance: 0.42 }, 0.28], [{ key: "red-shobu", label: "勝舞図柄", chance: 0.75 }, 0.15], [{ key: "red-rare", label: "レア役", chance: 1.00 }, 0.09]],
+    hokutoUpperGames: [[30, 0.40], [40, 0.20], [50, 0.18], [70, 0.12], [100, 0.07], [200, 0.02], [300, 0.01]],
+    hokutoHyakuretsuChance: 0.12, hokutoHyakuretsuRewrite: 0.50,
+    specialLabel: "拳王強襲／SPバトル", specialChance: 0.08, upperChallenge: "天撃", upperChance: 0.12, upperSuccess: 0.50, upperLabel: "裏闘神演舞", upperContinue: 0.75, upperPayout: 0,
+    settingRates: { 1: { trigger: 366.0, main: 366.0, payout: 0.976 }, 2: { trigger: 357.0, main: 357.0, payout: 0.984 }, 3: { trigger: 336.3, main: 336.3, payout: 1.007 }, 4: { trigger: 298.7, main: 298.7, payout: 1.062 }, 5: { trigger: 283.2, main: 283.2, payout: 1.111 }, 6: { trigger: 273.1, main: 273.1, payout: 1.149 } }
   });
   delete machine.sim.cycleFlow;
   delete machine.sim.titleFlow;
@@ -6107,7 +6269,7 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
       { heading: "8GのCZから東京喰種咬へ", paragraphs: ["レミニセンスは8G・成功期待度約50%、大喰いの利世は8G・約75%。エピソードボーナスは約100枚を獲得してATへ進みます。", "設定別のCZ合算とAT初当りを使用し、通常時の全モード・規定ゲーム数は初当り確率へまとめます。"] },
       { heading: "差枚ATと4Gの喰種対決", paragraphs: ["東京喰種咬は初期約150枚・純増約4.0枚/G。導入エピソード後、レア役や規定ゲーム数から4Gの喰種対決へ進みます。", "対戦相手別の勝利期待度は鯱40%、霧嶋絢都47%、ヤモリ53%、特等ら76%、亜門86%、有馬貴将67%。勝利時はBITESへ進みます。"] },
       { heading: "BITESと2種類の特化ゾーン", paragraphs: ["BITESは小役成立で報酬を1段階以上上げ、ハズレ時は約20%で継続。終了時の報酬を差枚へ加算してATへ戻ります。", "超BITESは300〜3000枚、極BITESは2000枚または完走が濃厚。百足覚醒は期待約300枚、隻眼の梟は期待約500枚として別イベントで表示します。"] },
-      { heading: "有馬貴将JUDGEMENTから裏ATへ", paragraphs: ["有馬貴将は10戦目までに出現。勝利するとAT終了後に5G・成功期待度約61%の有馬貴将JUDGEMENTへ進みます。", "成功後のCCGの死神は1G完結で300・500・1000・2000枚のいずれかを上乗せ。続くATの一部は100G＋α・純増約5.0枚/Gの裏ATです。"] },
+      { heading: "有馬貴将JUDGEMENTから裏ATへ", paragraphs: ["有馬貴将は10戦目までに出現。勝利するとAT終了後に5G・成功期待度約61%の有馬貴将JUDGEMENTへ進みます。", "成功後のCCGの死神は1G完結で300・500・1000・2000枚のいずれかを上乗せ。続くATの一部は純増約5.0枚/Gの裏ATへ移行し、公開されている上位ルートの期待枚数に近づくよう100G区間を継続抽選します。"] },
       { heading: "固定条件と簡易化する範囲", bullets: ["約31G/50枚・1,000円46枚貸し・5.2枚交換で固定", "有馬の出現戦数は設定1の公開比率を使用", "対戦相手選択率、BITES種別率、裏AT移行率など未公表部分は代表値", "19,000枚到達時はコンプリート表示"] }
     ],
     sources: [["L 東京喰種 公式サイト", "https://www.slot-l-tokyoghoul.jp/"], ["P-WORLD 機種情報・解析", "https://www.p-world.co.jp/machine/database/10207"], ["円谷フィールズHD 発売発表", "https://www.tsuburaya-fields.co.jp/ir/j/files/press/2024/press_20241114f.pdf"]],
@@ -6147,7 +6309,9 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
     upperContinue: 0,
     upperPayout: 0,
     upperPureIncrease: 5.0,
-    tokyoGhoulUpperAtChance: 0.55
+    tokyoGhoulUpperAtChance: 0.55,
+    tokyoGhoulUpperContinue: 0.82,
+    tokyoGhoulUpperMaxSections: 24
   });
   delete machine.sim.cycleFlow;
   delete machine.sim.titleFlow;
@@ -6302,6 +6466,410 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   delete machine.sim.titleFlow;
 })();
 
+(function applyMonsterHunterRiseDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["monster-hunter-rise-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "仲間と超抽選バトルへ。討伐、剥ぎ取り、百竜ノ淵源から気焔万丈を目指す。",
+    intro: "集会所で仲間とモンスターを決め、25〜100G＋αの狩猟ボーナスで討伐を目指します。剥ぎ取りチャンス、10頭以降のエンディング、7Gの百竜ノ淵源チャレンジ、100Gの百竜ノ淵源BONUS、上位AT『気焔万丈』までを機種専用画面で体験できます。",
+    points: ["狩猟ボーナスは25〜100G＋α・平均討伐約52%", "剥ぎ取り銀50%・Gは50%ループ", "百竜ノ淵源チャレンジ約67%・BONUS討伐約72%"],
+    specs: [["AT（設定1）", "約1/309.5"], ["AT（設定6）", "約1/230.8"], ["ベース", "約32.7G/50枚"], ["BARボーナス", "25G＋α"], ["赤7ボーナス", "40G／50G＋α"], ["紫7ボーナス", "60G／100G＋α"], ["平均討伐期待度", "約52%"], ["通常AT純増", "約2.7枚/G"], ["百竜ノ淵源チャレンジ", "7G・約67%"], ["百竜ノ淵源BONUS", "100G・討伐約72%"], ["気焔万丈", "純増約4.0枚/G"]],
+    articleSections: [
+      { heading: "クエストから狩猟ボーナスへ", paragraphs: ["通常時はカムラポイント100ptごとのクエストや、リプレイ規定回数のアイルーだるま落としなどから狩猟ボーナスを目指します。AT初当りは設定1約1/309.5〜設定6約1/230.8です。", "通常時の全ポイントモード・クエストテーブルは設定別AT初当りへ集約し、専用画面では当選後の集会所から実機の順で進めます。"] },
+      { heading: "25〜100G＋αの超抽選バトル", paragraphs: ["BARは25G＋α、赤7は40Gまたは50G＋α、紫7は60Gまたは100G＋α。通常時の純増は約2.7枚/G、紫7と上位中は約4.0枚/Gです。", "平均討伐期待度は約52%。ベル連やレア役、参戦ハンター、状態異常などをまとめたモンスター別の討伐期待度で判定し、最終PUSHまで勝敗を伏せます。"] },
+      { heading: "剥ぎ取りチャンスで次の狩猟を獲得", paragraphs: ["討伐後は剥ぎ取りチャンスへ。銀は50%でボーナスストック、金はストック濃厚、Gはストック濃厚＋50%で継続、超Gはストック濃厚＋70%以上で継続します。", "専用画面では剥ぎ取りの種類、ストック個数、次の集会所への継続を1回のPUSHで表示します。"] },
+      { heading: "百竜ノ淵源から上位AT『気焔万丈』へ", paragraphs: ["10頭以上討伐後は終了時にエンディングを抽選し、15頭以上なら発生濃厚。エンディング後は7G・成功期待度約67%の百竜ノ淵源チャレンジへ進みます。", "成功後の百竜ノ淵源BONUSは100G・討伐期待度約72%。ナルハタタヒメ討伐で超剥ぎ取りチャンスGと上位AT『気焔万丈』を獲得し、以後のボーナス純増が約4.0枚/Gになります。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約32.7G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6のAT初当り・出玉率は公開設定別値を使用", "BONUS図柄、保障ゲーム数、平均討伐率、剥ぎ取り性能、上位CZ・BONUSは公開値を優先", "仲間構成、状態異常、細かな攻撃抽選、図柄内のゲーム数比率など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["円谷フィールズHD 発売発表", "https://www.tsuburaya-fields.co.jp/ir/j/files/press/2024/press_20240917a.pdf"], ["なな徹 狩猟ボーナス解析", "https://nana-press.com/kaiseki/machine/837/25321/"], ["一撃 AT・モンスター選択解析", "https://1geki.jp/slot/l_mh_rize/81/"], ["一撃 百竜ノ淵源・気焔万丈解析", "https://1geki.jp/slot/l_mh_rize/"], ["パチマガスロマガFREE 機種解析", "https://pachimaga.com/free/mach/maker-s/aderion/064297.php"]],
+    readerGuide: { verdict: "25〜100G＋αの超抽選バトルでモンスターを討伐し、剥ぎ取りで次の狩猟をつなぎながら百竜ノ淵源と上位ATを目指す討伐ループ型です。", bestFor: ["モンスターと仲間を見て討伐PUSHを楽しみたい", "剥ぎ取り銀・金・G・超Gの違いを確認したい", "10頭以降のエンディングから上位ATを狙いたい"], check: ["BONUSゲーム数・平均討伐率・剥ぎ取り性能は公開値", "百竜ノ淵源チャレンジ約67%・BONUS討伐約72%", "未公表の仲間・攻撃抽選は体験用代表値"], compare: [["monster-hunter-sunbreak", "モンハンライズ：サンブレイク", "ゲーム数上乗せ型の後継機と比較"], ["god-eater-resurrection", "ゴッドイーター リザレクション", "討伐報酬型ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v39", dedicatedFlow: true, dedicatedFlowKey: "monster-hunter-rise-slot", dedicatedFlowVersion: 2, monsterHunterRiseFlow: true,
+    triggerLabel: "クエスト", triggerRate: 155, triggerSuccess: 0.50, mainLabel: "狩猟ボーナス", mainRate: 309.5, base50: 32.7, coinUnit: 3.2,
+    normalMin: 0, normalMax: 0, atPureIncrease: 2.7, upperPureIncrease: 4.0, atPayoutVariance: 0,
+    mhRiseMonsters: [
+      [{ label: "トビカガチ", symbol: "BAR", games: 25, chance: 0.51 }, 0.11],
+      [{ label: "プケプケ", symbol: "BAR", games: 25, chance: 0.51 }, 0.11],
+      [{ label: "ビシュテンゴ", symbol: "BAR", games: 25, chance: 0.51 }, 0.11],
+      [{ label: "バサルモス", symbol: "BAR", games: 25, chance: 0.51 }, 0.11],
+      [{ label: "タマミツネ", symbol: "赤7", games: [[40, 0.80], [50, 0.20]], chance: 0.51 }, 0.075],
+      [{ label: "ベリオロス", symbol: "赤7", games: [[40, 0.80], [50, 0.20]], chance: 0.51 }, 0.075],
+      [{ label: "ゴシャハギ", symbol: "赤7", games: [[40, 0.80], [50, 0.20]], chance: 0.52 }, 0.072],
+      [{ label: "ティガレックス", symbol: "赤7", games: [[40, 0.80], [50, 0.20]], chance: 0.52 }, 0.072],
+      [{ label: "ヤツカダキ", symbol: "赤7", games: [[40, 0.80], [50, 0.20]], chance: 0.52 }, 0.072],
+      [{ label: "オロミドロ", symbol: "赤7", games: [[40, 0.80], [50, 0.20]], chance: 0.52 }, 0.072],
+      [{ label: "リオレウス", symbol: "赤7", games: [[40, 0.80], [50, 0.20]], chance: 0.52 }, 0.072],
+      [{ label: "ヌシ・リオレイア", symbol: "赤7", games: 50, chance: 0.55, gold: true }, 0.010],
+      [{ label: "マガイマガド", symbol: "紫7", games: [[60, 0.85], [100, 0.15]], chance: 0.66, gold: true }, 0.038],
+      [{ label: "ヌシ・ジンオウガ", symbol: "紫7", games: 100, chance: 0.68, gold: true }, 0.002]
+    ],
+    mhRiseAllies: ["YOU", "Lara", "ミランダ", "HARUTO", "ひろし", "モラ・ガラテア", "アキラ", "隊長"],
+    mhRiseCarves: [[{ key: "silver", label: "剥ぎ取りチャンス銀", chance: 0.50, loop: 0 }, 0.72], [{ key: "gold", label: "剥ぎ取りチャンス金", chance: 1, loop: 0 }, 0.20], [{ key: "g", label: "剥ぎ取りチャンスG", chance: 1, loop: 0.50 }, 0.07], [{ key: "super-g", label: "超剥ぎ取りチャンスG", chance: 1, loop: 0.70 }, 0.01]],
+    mhRiseEndingChanceByHunts: { 10: 0.10, 11: 0.20, 12: 0.30, 13: 0.40, 14: 0.50, 15: 1 },
+    mhRiseSourceChallengeGames: 7, mhRiseSourceChallengeChance: 0.67, mhRiseSourceBonusGames: 100, mhRiseSourceBonusChance: 0.72, mhRiseMaxHunts: 15, mhRiseUpperMaxHunts: 12,
+    specialLabel: "剥ぎ取りチャンスG", specialChance: 0.08, upperChallenge: "百竜ノ淵源チャレンジ", upperChance: 0, upperSuccess: 0.67, upperLabel: "気焔万丈", upperContinue: 0, upperPayout: 0
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
+(function applyGundamUnicornAwakeningDriveDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["gundam-unicorn-awakening-drive"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "可能性の獣から覚醒HYPERへ。6回のBONUSをつなぎ、虹の彼方と覚醒DRIVEを目指す。",
+    intro: "CZ『彗星決戦』、約100枚の初当りBONUS、20G＋αのAT『可能性の獣』、BONUS2回で移行する覚醒HYPER、さらに4回で昇格する上位AT『Over The Rainbow』、4Gの覚醒の光、1000枚が約50%でループする覚醒DRIVEまでを専用画面で体験できます。",
+    points: ["可能性の獣は20G＋α・初回2セット以上", "BONUS2回→覚醒HYPER・さらに4回→上位AT", "覚醒DRIVEは1000枚保障＋約50%ループ"],
+    specs: [["CZ（設定1）", "約1/298.5"], ["AT（設定1）", "約1/471.9"], ["AT（設定6）", "約1/392.3"], ["ベース", "約33.1G/50枚"], ["彗星決戦", "成功期待度約60%"], ["可能性の獣", "20G＋α・純増約2.0枚/G"], ["エピソードセブン", "8G・BONUS期待度約47%"], ["エピソードBONUS", "約100枚・純増約6.0枚/G"], ["上位AT", "初回50G＋α・以降30G＋α"], ["覚醒の光", "4G・成功期待度約50%"], ["覚醒DRIVE", "1000枚保障・約50%ループ"]],
+    articleSections: [
+      { heading: "彗星決戦から必ず可能性の獣へ", paragraphs: ["通常時は可能性役でSTANDBYを進め、レア役や規定ゲーム数からCZ『彗星決戦』を目指します。CZ成功期待度は約60%。突破後は約100枚の初当りBONUSを消化し、必ずAT『可能性の獣』へ進みます。", "AT初当りは設定1約1/471.9〜設定6約1/392.3。CZとAT初当りの公開設定別値を使い、設定は最終結果で表示します。"] },
+      { heading: "可能性の獣は20G＋α・初回2セット以上", paragraphs: ["可能性の獣は純増約2.0枚/G、1セット20G＋α。AT初当り時にセットストックを1個持つため、2セット以上継続します。セット終了後は最大3Gのフル・フロンタルバトルで継続を判定します。", "セット開始時の可能性ジャッジでユニコーン・デストロイ・覚醒のATモードを決め、レア役から8Gのエピソードセブンを目指します。エピソードセブンのBONUS期待度は約47%です。"] },
+      { heading: "BONUS2回＋4回で上位ATへ", paragraphs: ["エピソードBONUSは純増約6.0枚/G・約100枚。通常AT中に2回当選すると強AT『覚醒HYPER』へ昇格します。", "覚醒HYPERは覚醒モード固定で抽選が強化され、強AT中にさらに4回BONUSを獲得すると『覚醒HYPER -Over The Rainbow-』へ。上位ATは純増約6.0枚/G、初回50G＋α・2セット目以降30G＋αです。"] },
+      { heading: "覚醒の光と1000枚ループの覚醒DRIVE", paragraphs: ["上位AT終了後は4G・成功期待度約50%の覚醒の光へ。成功で上位ATへ復帰し、成立役に応じて覚醒DRIVEも抽選します。", "覚醒DRIVEは最低1000枚を保障し、1000枚上乗せが約50%でループする最強特化ゾーンです。専用画面では1000枚ごとにPUSHし、継続回数と累計上乗せを表示します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約33.1G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6のCZ・AT初当り・出玉率は公開設定別値を使用", "ATゲーム数、BONUS昇格回数、CZゲーム数、純増、覚醒DRIVE性能は公開値", "ATモード別のエピソード当選率、ストック率など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["SANKYOオンライン博物館 機種詳細", "https://www.sankyo-fever.jp/collection/994/"], ["円谷フィールズHD 発売発表", "https://www.tsuburaya-fields.co.jp/ir/j/files/press/2026/press_20260115a.pdf"], ["一撃 ゲームフロー・解析", "https://1geki.jp/slot/l_gundam_uc2/"], ["パチ＆スロ必勝本 AT・上位AT解説", "https://p.hisshobon.jp/vpage/2775/4"], ["P-WORLD 機種データ", "https://www.p-world.co.jp/machine/database/10468"]],
+    readerGuide: { verdict: "20G＋αの可能性の獣でエピソードBONUSを2回、覚醒HYPERでさらに4回つなぎ、上位ATと1000枚ループを目指す段階昇格型ATです。", bestFor: ["BONUS回数で段階的にATが強くなる流れを楽しみたい", "フル・フロンタルバトルや覚醒の光をPUSHで判定したい", "覚醒DRIVEの1000枚ループを体験したい"], check: ["通常AT20G・強AT20G・上位初回50G／以降30G", "エピソードセブン約47%・覚醒の光約50%", "未公表のATモード別当選率は体験用代表値"], compare: [["gundam-seed-slot", "Lパチスロ ガンダムSEED", "ST型のガンダムATと比較"], ["godzilla-eva-slot", "Lゴジラ対エヴァンゲリオン", "段階昇格・上位AT型と比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v40", dedicatedFlow: true, dedicatedFlowKey: "gundam-unicorn-awakening-drive", dedicatedFlowVersion: 2, gundamUnicornDriveFlow: true,
+    triggerLabel: "彗星決戦", triggerRate: 298.5, triggerSuccess: 0.60, mainLabel: "可能性の獣", mainRate: 471.9, base50: 33.1, coinUnit: 3.7,
+    normalMin: 0, normalMax: 0, atPureIncrease: 2.0, bonusPureIncrease: 6.0, upperPureIncrease: 6.0, atPayoutVariance: 0,
+    unicornInitialBonusGames: 17, unicornInitialBonusAward: 100,
+    unicornAtGames: 20, unicornInitialStocks: 1, unicornBattleGames: 3, unicornBattleSuccess: 0.36, unicornEpisodeGames: 8, unicornEpisodeSuccess: 0.47,
+    unicornModes: [[{ key: "unicorn", label: "ユニコーンモード", episodeChance: 0.42 }, 0.50], [{ key: "destroy", label: "デストロイモード", episodeChance: 0.62 }, 0.35], [{ key: "awaken", label: "覚醒モード", episodeChance: 0.82 }, 0.15]],
+    unicornStockChance: 0.12, unicornEpisodeBonusGames: 17, unicornEpisodeBonusAward: 100, unicornNormalBonusTarget: 2,
+    unicornHyperEpisodeChance: 0.90, unicornHyperBonusTarget: 4, unicornHyperExtraEpisodeChance: 0.55,
+    unicornUpperFirstGames: 50, unicornUpperNextGames: 30, unicornMsJudgeGames: 4, unicornMsJudgeSuccess: 0.47,
+    unicornUpperBonuses: [[{ label: "ユニコーンBONUS 100枚", award: 100, games: 17 }, 0.50], [{ label: "ユニコーンBONUS 500枚", award: 500, games: 84 }, 0.35], [{ label: "ユニコーンBONUS 1000枚", award: 1000, games: 167 }, 0.15]],
+    unicornLightGames: 4, unicornLightSuccess: 0.50,
+    unicornLightTriggers: [[{ label: "リプレイ", driveChance: 0 }, 0.50], [{ label: "可能性役", driveChance: 0.252 }, 0.28], [{ label: "破壊役", driveChance: 0.598 }, 0.14], [{ label: "覚醒役", driveChance: 0.799 }, 0.07], [{ label: "ユニコーン役", driveChance: 1 }, 0.01]],
+    unicornDriveAward: 1000, unicornDriveContinue: 0.50, unicornMaxSets: 14, unicornUpperMaxSets: 12,
+    specialLabel: "エピソードBONUS", specialChance: 0.47, upperChallenge: "覚醒の光", upperChance: 0, upperSuccess: 0.50, upperLabel: "覚醒HYPER -Over The Rainbow-", upperContinue: 0, upperPayout: 0,
+    settingRates: { 1: { trigger: 298.5, main: 471.9, payout: 0.977 }, 2: { trigger: 287.0, main: 456.6, payout: 0.989 }, 3: { trigger: 265.1, main: 427.8, payout: 1.010 }, 4: { trigger: 247.7, main: 403.9, payout: 1.054 }, 5: { trigger: 243.9, main: 398.3, payout: 1.105 }, 6: { trigger: 239.8, main: 392.3, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
+(function applyMushokuTenseiDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["mushoku-tensei-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "3人の無職CHANCEから4種類のBONUSへ。ヒロインVを重ね、転生の回廊とオルステッドを目指す。",
+    intro: "ロキシー・シルフィエット・エリスの無職CHANCE、4種類の初当りBONUS、30GセットのAT、ヒロインV、バケーションゾーン、ターニングポイント2、七大列強龍神オルステッド、純増約4.5枚/Gの上位ATまでを専用画面で体験できます。",
+    points: ["無職CHANCEは約50%・66%・50%", "ATは30G・平均5.7セット", "ターニングポイント2は5G・成功約56%"],
+    specs: [["CZ（設定1）", "約1/130"], ["BONUS（設定1）", "約1/170"], ["AT（設定1）", "約1/416"], ["AT（設定6）", "約1/292"], ["ベース", "約33G/50枚"], ["AT", "30G・純増約2.8枚/G"], ["平均継続", "5.7セット"], ["ターニングポイント2", "5G・成功期待度約56%"], ["上位AT", "30G・純増約4.5枚/G"], ["上位期待枚数", "約3600枚"]],
+    articleSections: [
+      { heading: "無職CHANCEから4種類のBONUSへ", paragraphs: ["無職CHANCEは10G＋α。ロキシーとエリスは成功期待度約50%、シルフィエットは約66%で、ヒロイン役成立時に対応・非対応で当選率が変わります。", "成功後は無職転生BONUS約70枚・AT期待度約50%、魔術BONUS約50枚・約16%、AT濃厚のEPISODE BONUS、本気BONUS約50枚・上位期待度約56%のいずれかへ進みます。"] },
+      { heading: "ATは27G＋転生の回廊3G", paragraphs: ["AT『異世界行ったら本気だす』は1セット30G、純増約2.8枚/G、平均5.7セット。前半27GでヒロインVストックを狙い、最後の3G『転生の回廊』で継続を判定します。", "ヒロインVを持っていれば消費して継続。ロキシー・シルフィエット・エリス・ダブル・ALLの種類を専用画面で表示します。"] },
+      { heading: "バケーションゾーンでVを強化", paragraphs: ["Vストック獲得時の一部から10G・20G・30Gのバケーションゾーンへ。約1/6.8のヒロイン役で、所持Vの強化または新しいヒロインV獲得を目指します。", "専用進行では残りゲーム数を進めたあとPUSHし、獲得・昇格したVストックを表示してATへ戻します。"] },
+      { heading: "ターニングポイント2から上位ATへ", paragraphs: ["ターニングポイント2は5G・成功期待度約56%。成功すると10G＋αの七大列強龍神オルステッドを経由し、純増約4.5枚/Gの上位ATへ進みます。", "失敗してもEPISODE BONUSを経由して通常ATへ復帰。25セット以上は上位CZ抽選、35セット以上は突入濃厚です。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約33G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6のBONUS・AT初当り・出玉率を公開値で反映", "CZ・BONUS・AT・上位CZ・特化・上位ATを機種専用進行", "ヒロイン役の細かな成立順と内部状態は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["無職転生 公式サイト", "https://www.l-mushokutensei.jp/"], ["P-WORLD 機種データ", "https://www.p-world.co.jp/machine/database/10395"], ["一撃 解析・ゲームフロー", "https://1geki.jp/slot/l_musyokutensei/"], ["パチ＆スロ必勝本 基本スペック", "https://p.hisshobon.jp/machine/4663/1/112812"], ["なな徹 AT・CZ解析", "https://nana-press.com/kaiseki/machine/1058/"]],
+    readerGuide: { verdict: "CZでBONUSを取り、30Gセット中にヒロインVを集め、転生の回廊を継続。ターニングポイント2成功からオルステッドと上位ATを目指すVストック型ATです。", bestFor: ["CZとBONUSの種類をPUSHで開きたい", "ヒロインVを集めてセット継続を伸ばしたい", "上位CZ失敗後もEPISODE BONUSから続く流れを体験したい"], check: ["通常ATは27G＋継続ジャッジ3G", "BONUSごとにAT期待度が異なる", "未公表のV獲得率は体験用代表値"], compare: [["kinnikuman-7-slot", "スマスロ キン肉マン 7人の悪魔超人編", "セット継続型ATと比較"], ["monster-hunter-rise-slot", "スマスロ モンスターハンターライズ", "ストック型の連戦ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v41", dedicatedFlow: true, dedicatedFlowKey: "mushoku-tensei-slot", dedicatedFlowVersion: 2, mushokuTenseiFlow: true,
+    triggerLabel: "無職CHANCE", triggerRate: 130, triggerSuccess: 0.55, mainLabel: "異世界行ったら本気だす", mainRate: 416, base50: 33, coinUnit: 3.7,
+    normalMin: 0, normalMax: 0, atPureIncrease: 2.8, bonusPureIncrease: 2.8, upperPureIncrease: 4.5, atPayoutVariance: 0,
+    mushokuCzGames: 10,
+    mushokuCzTypes: [[{ key: "roxy", label: "ロキシーの無職CHANCE", chance: 0.50, corresponding: "ロキシー" }, 0.36], [{ key: "sylphie", label: "シルフィエットの無職CHANCE", chance: 0.66, corresponding: "シルフィエット" }, 0.28], [{ key: "eris", label: "エリスの無職CHANCE", chance: 0.50, corresponding: "エリス", noRegular: true }, 0.36]],
+    mushokuInitialBonuses: [[{ key: "mushoku", label: "無職転生BONUS", games: 25, award: 70, atChance: 0.50 }, 0.46], [{ key: "magic", label: "魔術BONUS", games: 18, award: 50, atChance: 0.16 }, 0.39], [{ key: "episode", label: "EPISODE BONUS", games: 25, award: 70, atChance: 1, vStocks: 1 }, 0.12], [{ key: "serious", label: "本気BONUS", games: 18, award: 50, atChance: 0.56, upperOnSuccess: true }, 0.03]],
+    mushokuAtGames: 27, mushokuCorridorGames: 3, mushokuAverageSets: 5.7, mushokuVChance: 0.45, mushokuCorridorChance: 0.68,
+    mushokuVTypes: [[{ key: "mushoku", label: "無職V" }, 0.55], [{ key: "roxy", label: "ロキシーV" }, 0.14], [{ key: "sylphie", label: "シルフィエットV" }, 0.14], [{ key: "eris", label: "エリスV" }, 0.14], [{ key: "double", label: "ダブルヒロインV" }, 0.025], [{ key: "all", label: "ALLヒロインV" }, 0.005]],
+    mushokuVacationChance: 0.18, mushokuVacationGames: [[10, 0.80], [20, 0.16], [30, 0.04]], mushokuHeroineRoleRate: 6.8,
+    mushokuUpperCzGames: 5, mushokuUpperCzSuccess: 0.56, mushokuUpperCzRates: { 1: 2281, 2: 2137, 3: 1968, 4: 1655, 5: 1459, 6: 1324 },
+    mushokuOrstedGames: 10, mushokuUpperSetGames: 27, mushokuUpperCorridorGames: 3, mushokuUpperMaxSets: 18, mushokuNormalMaxSets: 35,
+    specialLabel: "バケーションゾーン", specialChance: 0.18, upperChallenge: "ターニングポイント2", upperChance: 0, upperSuccess: 0.56, upperLabel: "異世界行ったら本気だす（上位AT）", upperContinue: 0, upperPayout: 0,
+    settingRates: { 1: { trigger: 130, bonus: 170, main: 416, payout: 0.977 }, 2: { trigger: 129, bonus: 168, main: 406, payout: 0.991 }, 3: { trigger: 128, bonus: 166, main: 394, payout: 1.009 }, 4: { trigger: 127, bonus: 161, main: 361, payout: 1.054 }, 5: { trigger: 127, bonus: 156, main: 327, payout: 1.095 }, 6: { trigger: 125, bonus: 147, main: 292, payout: 1.137 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
+(function applySuperBingoNeoDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["super-bingo-neo-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "THE セグから33G＋αのBCへ。Hooah!の111G刻みと純増約5枚のHBCを狙う。",
+    intro: "通常／ハイパーのTHE セグ、33G＋αのBINGO CHANCE、ラスト7Gのカウントダウン7、Hooah!、どっきどきゾーン、ドリームラッシュ、333枚以上のHYPER BINGO CHANCEまでを専用画面で体験できます。",
+    points: ["THE セグは約40%・ハイパー約66%", "BCは33G＋α・継続率約50〜90%", "HBCは333枚以上・継続80%以上"],
+    specs: [["AT（設定1）", "約1/449.2"], ["AT（設定6）", "約1/365.3"], ["ベース", "約31.4G/50枚"], ["THE セグ", "10G＋ST・約40%"], ["THE セグ ハイパー", "約66%"], ["BINGO CHANCE", "33G＋α・純増約2.8枚/G"], ["BC継続率", "約50／67／75／80／90%"], ["Hooah!", "111G刻み・段階アップ約50%"], ["HBC", "333枚以上・純増約5.0枚/G"], ["HBC継続", "80%以上"]],
+    articleSections: [
+      { heading: "THE セグはコンボをつなぐCZ", paragraphs: ["THE セグは10G＋セグメントタイム。BINGO図柄揃いで3・4・5・7GのSTへ入り、揃うたびにゲーム数をリセットしてコンボを伸ばします。5コンボ到達ならBC濃厚です。", "通常は設定1で約40%、ハイパーは約66%。専用進行では10GとSTを進め、最後のPUSHでBINGO CHANCE当落を開きます。"] },
+      { heading: "BINGO CHANCEは33G＋α", paragraphs: ["BINGO CHANCEは純増約2.8枚/G、1セット33G＋α。継続率は約50・67・75・80・90%の5種類で、残り7Gからカウントダウン7へ移行します。", "BC中は7揃いで33Gまたは111G以上を上乗せ。規定ビンゴポイント11・33・55到達や小役から上乗せを狙います。"] },
+      { heading: "Hooah!は111G刻みで昇格", paragraphs: ["Hooah!発生時は111Gから始まり、各段階約50%で222G、333Gへカウントアップします。333G以上の上乗せは上位ATへの重要ルートです。", "ドリームラッシュでは最低保証回数＋継続率で7揃いを重ね、33Gまたは111G以上を複数回獲得します。"] },
+      { heading: "HBCは差枚数管理の上位AT", paragraphs: ["HYPER BINGO CHANCEは純増約5.0枚/G、1セット333〜1999枚＋α、継続率80%以上。上乗せはすべて333枚以上のHooah!となります。", "セット終了後はハイパーカウントダウン7へ。失敗後も111GでBC引き戻し濃厚かつHooah!発生率アップという復帰ルートがあります。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約31.4G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1・2・4・5・6のAT初当りと出玉率を公開値で反映", "CZ・BC・Hooah!・特化ゾーン・HBCを機種専用進行", "CZ選択率・継続率モード・特化ゾーン出現率は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["P-WORLD 機種データ", "https://www.p-world.co.jp/machine/database/10142"], ["一撃 解析・ゲームフロー", "https://1geki.jp/slot/l_superbingo_neo/"], ["一撃 オンライン遊技説明", "https://1geki.jp/slot/l_superbingo_neo/39/"], ["なな徹 BINGO CHANCE解析", "https://nana-press.com/kaiseki/machine/845/25969/"], ["パチ＆スロ必勝本 通常時・AT解説", "https://p.hisshobon.jp/vpage/2658/4"]],
+    readerGuide: { verdict: "THE セグを突破し、33G＋αのBCをカウントダウン7でループ。Hooah!の111G刻みと333G以上からのHBCで一撃を狙うゲーム数・継続率管理型ATです。", bestFor: ["カウントダウン7の継続をPUSHで開きたい", "Hooah!の111→222→333G昇格を体験したい", "333枚以上の上位ATループを狙いたい"], check: ["BCは33G＋α・純増約2.8枚/G", "継続率は5段階", "未公表のモード選択率は体験用代表値"], compare: [["yoshimune-slot", "スマスロ 吉宗", "大きな初期報酬と1G連を比較"], ["million-god-kiseki", "スマスロ ミリオンゴッド", "セット継続型ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v42", dedicatedFlow: true, dedicatedFlowKey: "super-bingo-neo-slot", dedicatedFlowVersion: 2, superBingoNeoFlow: true,
+    triggerLabel: "THE セグ", triggerRate: 240, triggerSuccess: 0.53, mainLabel: "BINGO CHANCE", mainRate: 449.2, base50: 31.4, coinUnit: 4.1,
+    normalMin: 0, normalMax: 0, atPureIncrease: 2.8, upperPureIncrease: 5.0, atPayoutVariance: 0,
+    bingoEntryRoutes: [[{ key: "seg", label: "THE セグ", games: 10, stGames: 4, chanceBySetting: { 1: 0.40, 2: 0.42, 4: 0.45, 5: 0.48, 6: 0.50 } }, 0.67], [{ key: "hyper", label: "THE セグ ハイパー", games: 10, stGames: 5, chanceBySetting: { 1: 0.66, 2: 0.68, 4: 0.70, 5: 0.72, 6: 0.74 } }, 0.18], [{ key: "direct", label: "BC直撃", games: 0, stGames: 0, chance: 1 }, 0.15]],
+    bingoStGames: [[3, 0.30], [4, 0.35], [5, 0.25], [7, 0.10]],
+    bingoContinueModes: [[{ label: "継続率50%", chance: 0.50 }, 0.38], [{ label: "継続率67%", chance: 0.67 }, 0.22], [{ label: "継続率75%", chance: 0.75 }, 0.20], [{ label: "継続率80%", chance: 0.80 }, 0.14], [{ label: "継続率90%", chance: 0.90 }, 0.06]],
+    bingoBcGames: 33, bingoCountdownGames: 7, bingoMaxSets: 16, bingoHooahChance: 0.04, bingoHooahStepChance: 0.50, bingoSevenChance: 0.22,
+    bingoPointTargets: [[11, 0.45], [33, 0.35], [55, 0.20]], bingoDokiChance: 0.08, bingoDreamRushChance: 0.035,
+    bingoDreamRushColors: [[{ label: "青スター", average: 4.5, continue: 0.72 }, 0.45], [{ label: "黄スター", average: 5.3, continue: 0.76 }, 0.30], [{ label: "緑スター", average: 7.1, continue: 0.83 }, 0.18], [{ label: "赤スター", average: 10.2, continue: 0.90 }, 0.07]],
+    bingoHbcAwards: [[333, 0.50], [666, 0.25], [999, 0.13], [1333, 0.07], [1666, 0.03], [1999, 0.02]], bingoHbcContinue: 0.82, bingoHbcMaxSets: 12, bingoHbcCountdownGames: 7,
+    bingoReturnGames: 111, bingoReturnChance: 1, bingoReturnHooahChance: 0.20,
+    specialLabel: "Hooah!", specialChance: 0.04, upperChallenge: "333G Hooah!", upperChance: 0, upperSuccess: 1, upperLabel: "HYPER BINGO CHANCE", upperContinue: 0.82, upperPayout: 0,
+    settingPool: [1, 2, 4, 5, 6],
+    settingRates: { 1: { main: 449.2, payout: 0.973 }, 2: { main: 440.4, payout: 0.985 }, 4: { main: 405.5, payout: 1.043 }, 5: { main: 387.2, payout: 1.083 }, 6: { main: 365.3, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+})();
+
+(function applyIzaBanchoDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["iza-bancho"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "150枚＋αの頂ZBASHから決闘へ。番長BONUS、武士道、絶頂決戦を経て青頂を狙う。",
+    intro: "規定ゲーム数・刺客ゾーンから頂ZBASHへ入り、ステージ移行、差枚数直乗せ、刀ポイント、3G＋αの決闘、番長BONUS、倍斬刀チャレンジ、愛の教育的武士道、絶頂決戦～巌流島～、青頂ZBASHまでを機種専用画面で体験できます。",
+    points: ["頂ZBASHは初期150枚＋α・純増約2.8枚/G", "決闘勝利で赤7・青7・武士道・絶頂", "絶頂決戦は平均約700枚・終了後は青頂ZBASH"],
+    specs: [["AT（設定1）", "約1/386.9"], ["AT（設定6）", "約1/312.1"], ["ベース", "約32G/50枚"], ["頂ZBASH", "初期150枚＋α・純増約2.8枚/G"], ["差枚数直乗せ", "20〜300枚"], ["決闘", "3G＋α"], ["番長BONUS", "赤7 20G＋α／青7 20G"], ["絶頂決戦～巌流島～", "2セット保証・平均約700枚"], ["青頂ZBASH", "純増約5.0枚/G"], ["青頂の決闘報酬", "青7 約75%／絶頂 約25%"]],
+    articleSections: [
+      { heading: "通常時から頂ZBASHへ", paragraphs: ["ATは規定ゲーム数到達や刺客ゾーン成功などから当選。設定ごとのAT初当り確率を通常ゲーム数の抽選に使い、専用進行では刺客ゾーン経由と直撃を分けて表示します。", "刺客ゾーンの細かな選択率・枠色別期待度は全数値が公表されていないため、体験用代表値です。公開初当り確率そのものは設定別に固定しています。"] },
+      { heading: "頂ZBASHは差枚数管理", paragraphs: ["頂ZBASHは初期150枚＋α、純増約2.8枚/G。中庭・回廊・大広間・天守閣のステージで斬揃いと決闘期待度が変わり、レア役では20〜300枚の直乗せと決闘を同時に狙います。", "大広間は10G＋α滞在し、斬揃い・レア役で決闘濃厚。天守閣は決闘濃厚で、勝利すれば愛の教育的武士道以上が期待できます。"] },
+      { heading: "刀ポイントと3G＋αの決闘", paragraphs: ["ベル・斬揃い・レア役で刀ポイントを貯め、抜刀から決闘を抽選。決闘は3G＋αで、リプレイと斜めベルが斬揃いに変換され、斬揃い・レア役合算は約1/4.4です。", "通常・強・確定の決闘を分け、最後のPUSHで勝敗を表示。勝利するまで成敗報酬は変わらず、10マス目は絶頂濃厚という報酬法則も反映します。"] },
+      { heading: "番長BONUS・倍斬刀・武士道", paragraphs: ["決闘勝利時は赤7番長BONUS、青7番長BONUS、愛の教育的武士道、絶頂決戦の順に報酬が強化。赤7は20G＋α、青7は20Gで差枚数上乗せを抽選します。", "倍斬刀チャレンジは3G間に斬揃い・レア役を引くと、上乗せ差枚数を2〜8倍へ。愛の教育的武士道は絶頂決戦をかけた専用PUSHで当落を開きます。"] },
+      { heading: "絶頂決戦から青頂ZBASHへ", paragraphs: ["絶頂決戦～巌流島～は2セット保証の差枚数上乗せ特化ゾーンで、平均上乗せは約700枚。終了後は必ず青頂ZBASHへ進みます。", "青頂ZBASHは純増約5.0枚/G。直乗せは3桁以上となり、決闘勝利時は青7番長BONUSが約75%、絶頂決戦が約25%。絶頂へ戻る輪廻ループを専用進行で表現します。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約32G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6のAT初当り・出玉率を公開値で反映", "頂ZBASH・直乗せ・決闘・BONUS・武士道・絶頂・青頂を機種専用進行", "CZ選択率・ステージ移行率・報酬振分の未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["P-WORLD 機種データ", "https://www.p-world.co.jp/machine/database/10275"], ["一撃 頂ZBASH解析", "https://1geki.jp/slot/l_bancho_iza/81/"], ["一撃 青頂ZBASH解析", "https://1geki.jp/slot/l_bancho_iza/93/"], ["なな徹 解析まとめ", "https://nana-press.com/kaiseki/machine/946/29792/"], ["パチ＆スロ必勝本 青頂ZBASH", "https://p.hisshobon.jp/machine/4512/1/109804"]],
+    readerGuide: { verdict: "150枚＋αの差枚数ATで直乗せと決闘を重ね、BONUS・武士道・絶頂決戦から純増約5枚の青頂ZBASHを狙う対決型ATです。", bestFor: ["3G＋αの決闘をPUSHで開きたい", "差枚数上乗せと倍斬刀の倍率を楽しみたい", "絶頂決戦と青頂の輪廻ループを狙いたい"], check: ["通常ATは純増約2.8枚/G・初期150枚＋α", "絶頂決戦は2セット保証・平均約700枚", "未公表の細かな選択率は体験用代表値"], compare: [["bancho4-slot", "押忍！番長4", "ゲーム数管理の頂RISEと比較"], ["zenigata4-slot", "主役は銭形4", "上乗せ型ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v43", dedicatedFlow: true, dedicatedFlowKey: "iza-bancho", dedicatedFlowVersion: 2, izaBanchoFlow: true,
+    triggerLabel: "刺客ゾーン／規定G", triggerRate: 240, triggerSuccess: 0.67, mainLabel: "頂ZBASH", mainRate: 386.9, base50: 32, coinUnit: 4.0,
+    normalMin: 0, normalMax: 0, atPureIncrease: 2.8, upperPureIncrease: 5.0, atPayoutVariance: 0,
+    izaEntryRoutes: [[{ key: "cz", label: "刺客ゾーン", games: 10, chance: 0.45 }, 0.60], [{ key: "direct", label: "規定ゲーム数到達", games: 0, chance: 1 }, 0.40]],
+    izaInitialCoins: 150,
+    izaStages: [[{ key: "courtyard", label: "中庭", slashRate: 54, duelChance: 0.25 }, 0.38], [{ key: "corridor", label: "回廊", slashRate: 47, duelChance: 0.34 }, 0.30], [{ key: "hall", label: "大広間", slashRate: 33, duelChance: 0.70 }, 0.24], [{ key: "castle", label: "天守閣", slashRate: 1, duelChance: 1, rewardFloor: "bushido" }, 0.08]],
+    izaDirectAdds: [[20, 0.34], [30, 0.24], [50, 0.20], [100, 0.14], [200, 0.06], [300, 0.02]],
+    izaDirectAddChance: 0.28,
+    izaBaizantoChance: 0.10,
+    izaBaizantoMultipliers: [[2, 0.62], [3, 0.20], [4, 0.10], [6, 0.06], [8, 0.02]],
+    izaDuelTypes: [[{ key: "normal", label: "決闘", chance: 0.54 }, 0.66], [{ key: "strong", label: "強決闘", chance: 0.82 }, 0.27], [{ key: "certain", label: "確定決闘", chance: 1 }, 0.07]],
+    izaRewards: [[{ key: "red", label: "赤7番長BONUS" }, 0.45], [{ key: "blue", label: "青7番長BONUS" }, 0.28], [{ key: "bushido", label: "愛の教育的武士道" }, 0.19], [{ key: "zeccho", label: "絶頂決戦～巌流島～" }, 0.08]],
+    izaBonusGames: 20,
+    izaBonusAdds: [[20, 0.40], [30, 0.26], [50, 0.20], [100, 0.10], [200, 0.03], [300, 0.01]],
+    izaBushidoSuccess: 0.45,
+    izaZecchoAwards: [[400, 0.20], [600, 0.35], [800, 0.30], [1200, 0.15]],
+    izaUpperBlueShare: 0.75,
+    izaUpperDirectAdds: [[100, 0.72], [200, 0.22], [300, 0.06]],
+    izaUpperReturnChance: 0.18,
+    izaMaxSections: 28,
+    specialLabel: "絶頂決戦～巌流島～", specialChance: 0.08, upperChallenge: "愛の教育的武士道", upperChance: 0, upperSuccess: 0.45, upperLabel: "青頂ZBASH", upperContinue: 0, upperPayout: 0,
+    settingRates: { 1: { main: 386.9, payout: 0.976 }, 2: { main: 368.5, payout: 0.989 }, 3: { main: 375.8, payout: 1.013 }, 4: { main: 332.4, payout: 1.060 }, 5: { main: 351.6, payout: 1.121 }, 6: { main: 312.1, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+  delete machine.sim.specialOutcomes;
+})();
+
+(function applyVivyDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["vivy-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "ACCESS CHANCEから初期100枚の差枚数ATへ。3Gバトルとレア役再生で報酬を重ねる一本道。",
+    intro: "周期・ACCESS CHANCE・ACCESS CHANCE EXからPROJECT SINGULARITYへ入り、レア役再生、3GのSINGULARITY BATTLE、1Gの報酬決定、OVER DRIVE、マツモトチャンス、2種類のBONUS、Fluorite Eye's Strikeまでを機種専用画面で体験できます。",
+    points: ["ATは初期100枚・純増約3.2枚/G", "SINGULARITY BATTLEは約1/33・勝利期待度約45%", "FESは15G・期待獲得約1600枚"],
+    specs: [["AT（設定1）", "約1/276.5"], ["AT（設定6）", "約1/210.3"], ["ベース", "約31G/50枚"], ["AT", "初期100枚・純増約3.2枚/G"], ["SINGULARITY BATTLE", "約1/33・3G・勝利期待度約45%"], ["OVER DRIVE", "3回失敗まで・最大10回上乗せ"], ["OVER DRIVE平均", "青 約180枚／赤 約340枚／PREMIUM 約1000枚"], ["マツモトチャンス", "5G＋α・平均約710枚"], ["VIVY／EPISODE BONUS", "各30G"], ["Fluorite Eye's Strike", "15G・期待獲得約1600枚"], ["上位AT", "非搭載"]],
+    articleSections: [
+      { heading: "通常時は周期とACCESS CHANCE", paragraphs: ["通常時は周期到達やレア役からACCESS CHANCEを目指します。ACCESS CHANCEは5G×セット継続型で、1セット平均約61pt、毎ゲーム5pt以上を獲得します。", "ACCESS CHANCE EXは1セット10G、AT期待度約50%。レア役成立ならAT濃厚です。通常AC・AC EX・周期直撃を分け、最後のPUSHでPROJECT SINGULARITY当落を表示します。"] },
+      { heading: "レア役を記憶して再生", paragraphs: ["レア役再生は過去15Gのレア役を記憶し、マツモト図柄揃いで再生する本機の中心機能です。再生レア役と同じレア役が重なるとSINGULARITY FLASHとなります。", "AT開始時はレア役再生が必ず発生。専用進行では再生レベル、再生回数、SINGULARITY FLASHを個別に表示します。"] },
+      { heading: "PROJECT SINGULARITYと3Gバトル", paragraphs: ["ATは初期100枚、純増約3.2枚/Gの差枚数管理。SINGULARITY BATTLEは約1/33、3G、平均勝利期待度約45%です。", "リプレイ成立時は勝利期待度35%以上、オフィーリアなら75%。対応レア役・BAR揃い・マツモト揃いは勝利濃厚として、3Gを進めたあとPUSHで勝敗を開きます。"] },
+      { heading: "勝利後は1GのSINGULARITY CHANCE", paragraphs: ["バトル勝利後は1GのSINGULARITY CHANCEで、3桁以上の差枚数上乗せ、OVER DRIVE青・赤・PREMIUM、マツモトチャンスのいずれかを決定します。", "OVER DRIVEは3回失敗するまで継続し最大10回上乗せ。平均上乗せは青約180枚、赤約340枚、PREMIUM約1000枚です。マツモトチャンスは5G＋α、平均約710枚です。"] },
+      { heading: "BONUSとFluorite Eye's Strike", paragraphs: ["VIVY BONUSとEPISODE BONUSはいずれも30G。VIVY BONUS中はレア役で上乗せ、EPISODE BONUS後はOVER DRIVEへ進みます。", "Fluorite Eye's Strikeは15G、期待獲得約1600枚のプレミアム特化ゾーンです。終了後はオフィーリアとのバトルへ進みます。本機に上位ATはないため、FESを上位ATとは表記しません。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約31G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6のAT初当り・出玉率を公開値で反映", "AC・AC EX・差枚数AT・3Gバトル・報酬・BONUS・FESを機種専用進行", "入口選択率・敵選択率・報酬の未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["大都技研 公式機種情報", "https://www.daitogiken.com/contents/product/slot/vivy/"], ["一撃 基本スペック・ゲームフロー", "https://1geki.jp/slot/l_vivy/"], ["一撃 SINGULARITY BATTLE解析", "https://1geki.jp/slot/l_vivy/83/"], ["一撃 設定差", "https://1geki.jp/slot/l_vivy/0/"], ["なな徹 SINGULARITY CHANCE報酬", "https://nana-press.com/kaiseki/machine/1259/39741/"], ["パチスロ必勝本 FES解析", "https://p.hisshobon.jp/machine/4842/1/20"]],
+    readerGuide: { verdict: "レア役を15G記憶して再生し、初期100枚の差枚数ATで3Gバトルと1G報酬決定を重ねる、上位ATなしの上乗せ型ATです。", bestFor: ["3Gバトルの勝敗をPUSHで開きたい", "差枚数上乗せとOVER DRIVEを楽しみたい", "プレミアム特化FESを狙いたい"], check: ["ATは初期100枚・純増約3.2枚/G", "バトルは約1/33・平均勝率約45%", "未公表の入口・報酬選択率は体験用代表値"], compare: [["iza-bancho", "いざ！番長", "差枚数上乗せと対決型ATを比較"], ["biohazard5-slot", "スマスロ バイオハザード5", "ゲーム数上乗せ型ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v44", dedicatedFlow: true, dedicatedFlowKey: "vivy-slot", dedicatedFlowVersion: 2, vivyFlow: true,
+    triggerLabel: "ACCESS CHANCE／周期", triggerRate: 175.6, triggerSuccess: 0.635, mainLabel: "PROJECT SINGULARITY", mainRate: 276.5, base50: 31, coinUnit: 3.0,
+    normalMin: 0, normalMax: 0, atPureIncrease: 3.2, atPayoutVariance: 0,
+    vivyEntryRoutes: [[{ key: "access", label: "ACCESS CHANCE", games: 5, sets: [[1, 0.36], [2, 0.28], [3, 0.20], [4, 0.10], [5, 0.06]], chance: 0.40 }, 0.40], [{ key: "access-ex", label: "ACCESS CHANCE EX", games: 10, sets: [[1, 0.55], [2, 0.30], [3, 0.15]], chance: 0.50 }, 0.25], [{ key: "direct", label: "周期到達・AT直撃", games: 0, sets: [[1, 1]], chance: 1 }, 0.35]],
+    vivyInitialCoins: 100,
+    vivyReplayLevels: [[{ level: 1, label: "レア役再生 Lv.1", rareRate: 19.0 }, 0.50], [{ level: 2, label: "レア役再生 Lv.2", rareRate: 8.0 }, 0.34], [{ level: 3, label: "レア役再生 Lv.3", rareRate: 4.6 }, 0.16]],
+    vivyBattleRate: 33, vivyBattleGames: 3, vivyBattleChance: 0.45,
+    vivyOpponents: [[{ key: "elizabeth", label: "エリザベス", role: "チェリー", chance: 0.42 }, 0.34], [{ key: "grace", label: "グレイス", role: "スイカ", chance: 0.45 }, 0.28], [{ key: "kakitani", label: "垣谷ユウゴ", role: "チャンス目", chance: 0.48 }, 0.24], [{ key: "ophelia", label: "オフィーリア", role: "リプレイ", chance: 0.75 }, 0.14]],
+    vivyBattleTriggers: [[{ key: "replay", label: "リプレイ", bonus: 0 }, 0.40], [{ key: "nonmatch", label: "非対応レア役", bonus: 0.08 }, 0.24], [{ key: "match", label: "対応レア役", guaranteed: true }, 0.18], [{ key: "strong", label: "強レア役", bonus: 0.24 }, 0.10], [{ key: "matsumoto", label: "マツモト揃い", guaranteed: true }, 0.06], [{ key: "flash", label: "SINGULARITY FLASH", guaranteed: true }, 0.02]],
+    vivyRewards: [[{ key: "direct", label: "差枚数上乗せ" }, 0.58], [{ key: "od-blue", label: "OVER DRIVE 青" }, 0.25], [{ key: "od-red", label: "OVER DRIVE 赤" }, 0.09], [{ key: "matsumoto", label: "マツモトチャンス" }, 0.06], [{ key: "od-premium", label: "OVER DRIVE PREMIUM" }, 0.02]],
+    vivyDirectAdds: [[100, 0.54], [200, 0.25], [300, 0.13], [500, 0.06], [1000, 0.02]],
+    vivyOdTypes: { "od-blue": { label: "OVER DRIVE 青", average: 180 }, "od-red": { label: "OVER DRIVE 赤", average: 340 }, "od-premium": { label: "OVER DRIVE PREMIUM", average: 1000 } },
+    vivyOdMaxRounds: 10, vivyOdMissLimit: 3,
+    vivyMatsumotoGames: 5, vivyMatsumotoAverage: 710,
+    vivyBonusChance: 0.055, vivyBonuses: [[{ key: "vivy", label: "VIVY BONUS", games: 30, average: 130, odAfter: false }, 0.74], [{ key: "episode", label: "EPISODE BONUS", games: 30, average: 160, odAfter: true }, 0.26]],
+    vivyFesChance: 0.012, vivyFesGames: 15, vivyFesAverage: 1600,
+    vivyMaxSections: 30,
+    specialLabel: "OVER DRIVE", specialChance: 0.36, upperChallenge: "Fluorite Eye's Strike", upperChance: 0, upperSuccess: 0, upperLabel: "上位AT非搭載", upperContinue: 0, upperPayout: 0,
+    settingRates: { 1: { trigger: 175.6, main: 276.5, payout: 0.977 }, 2: { trigger: 159.8, main: 251.7, payout: 0.987 }, 3: { trigger: 172.8, main: 272.1, payout: 1.002 }, 4: { trigger: 141.5, main: 222.8, payout: 1.047 }, 5: { trigger: 149.8, main: 235.9, payout: 1.083 }, 6: { trigger: 133.5, main: 210.3, payout: 1.128 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+  delete machine.sim.specialOutcomes;
+  delete machine.sim.upperSetGames;
+  delete machine.sim.upperPureIncrease;
+})();
+
+(function applyTokyoRevengersDedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["tokyo-revengers-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "初当りから東卍CHANCE／東卍RUSHへ。3Gバトルと8択報酬を重ね、純増約8.0枚/Gの上位を目指す。",
+    intro: "東卍CHANCE、3GのBREAK CHANCE、差枚数管理の東卍RUSH、一触即発、東卍ATTACK、リベンジチャンス、東卍RUSH BURST、天上天下唯我独尊、黒い衝動までを機種専用進行で再現します。",
+    points: ["初当りの約60%がATにつながる設計", "一触即発は約1/51・3G・平均勝利約40%", "上位は純増約8.0枚/G・継続約80%"],
+    specs: [["初当り（設定1）", "約1/282.4"], ["初当り（設定6）", "約1/240.1"], ["東卍RUSH（設定1）", "約1/482.2"], ["東卍RUSH（設定6）", "約1/373.1"], ["ベース", "約32G/50枚"], ["東卍CHANCE", "20G・純増約3.2枚/G・AT期待度約20%"], ["BREAK CHANCE", "3G・毎ゲーム50枚以上・合計150枚以上"], ["東卍RUSH", "差枚数管理・純増約3.2枚/G"], ["一触即発", "約1/51・3G・平均勝利約40%"], ["リベンジチャンス", "5G・成功期待度約50%"], ["東卍RUSH BURST", "純増約8.0枚/G"], ["天上天下唯我独尊", "5G・成功期待度約80%"], ["黒い衝動", "5G＋α・100〜300枚上乗せ"], ["設定", "1〜6"]],
+    articleSections: [
+      { heading: "初当りから東卍RUSHまで", paragraphs: ["初当りは設定1約1/282.4〜設定6約1/240.1、東卍RUSHは約1/482.2〜約1/373.1です。初当りの約60%がATにつながる全体値に合わせ、AT直撃と20Gの東卍CHANCEを分けて表示します。", "東卍CHANCEは純増約3.2枚/G、AT期待度約20%。非突破でも獲得枚数を残して結果へ進みます。"] },
+      { heading: "BREAK CHANCEと差枚数AT", paragraphs: ["AT開始時のBREAK CHANCEは3G。毎ゲーム50枚以上を獲得し、合計150枚以上の初期差枚を決めます。", "東卍RUSHは純増約3.2枚/Gの差枚数管理。残り差枚を減らしながら直乗せ、一触即発、東卍ATTACKを抽選します。"] },
+      { heading: "一触即発と東卍ATTACK", paragraphs: ["一触即発は約1/51で出現する3Gバトル。平均勝利期待度は約40%で、武道・千冬・三ツ谷・ドラケン・マイキーごとの公開期待度を反映します。", "勝利後の東卍ATTACKは8個の報酬候補を進めるゾーン。差枚数上乗せ、Episode、HEAT UP、渋谷JACK、リベンジチャンスを一つのPUSHで開きます。8回目はリベンジチャンス濃厚として扱います。"] },
+      { heading: "リベンジチャンスと上位ループ", paragraphs: ["リベンジチャンスは5G、成功期待度約50%。成功後は純増約8.0枚/Gの東卍RUSH BURSTへ進みます。", "上位区間後の天上天下唯我独尊は5G、成功期待度約80%。成功で上位を継続し、一部で黒い衝動へ入ります。"] },
+      { heading: "黒い衝動", paragraphs: ["黒い衝動は5G＋αのST型特化ゾーン。1回の上乗せは100〜300枚で、3回上乗せまでは継続約99.7%、以降は約90.4%です。", "上乗せ枚数と上位ATの消化枚数を分け、最終結果で各到達回数を確認できます。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約32G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6の初当り・東卍RUSH・出玉率を公開値で反映", "入口・BREAK CHANCE・一触即発・東卍ATTACK・上位を機種専用進行", "報酬アイコンの選択率など未公表部分は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["Sammy 公式特設サイト", "https://www.sammy.co.jp/japanese/product/rev_slo_special/"], ["一撃 基本スペック・ゲームフロー", "https://1geki.jp/slot/l_tokyo_revengers/"], ["一撃 BREAK CHANCE解析", "https://1geki.jp/slot/l_tokyo_revengers/80/"], ["一撃 一触即発解析", "https://1geki.jp/slot/l_tokyo_revengers/85/"], ["一撃 東卍ATTACK解析", "https://1geki.jp/slot/l_tokyo_revengers/87/"], ["一撃 リベンジチャンス解析", "https://1geki.jp/slot/l_tokyo_revengers/93/"], ["一撃 東卍RUSH BURST解析", "https://1geki.jp/slot/l_tokyo_revengers/94/"], ["一撃 天上天下唯我独尊解析", "https://1geki.jp/slot/l_tokyo_revengers/96/"], ["一撃 黒い衝動解析", "https://1geki.jp/slot/l_tokyo_revengers/97/"]],
+    readerGuide: { verdict: "初期差枚を3Gで決め、約1/51の3Gバトルと8択報酬から上位CZを目指す差枚数管理ATです。", bestFor: ["一触即発の対戦相手別ジャッジを楽しみたい", "東卍ATTACKの報酬をPUSHで開きたい", "約80%の上位ループと黒い衝動を狙いたい"], check: ["東卍CHANCEは20G・AT期待度約20%", "一触即発は約1/51・平均勝利約40%", "未公表の報酬選択率は体験用代表値"], compare: [["iza-bancho", "いざ！番長", "差枚数管理と対決型ATを比較"], ["vivy-slot", "スマスロ Vivy", "3Gバトルと差枚数上乗せを比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v45", dedicatedFlow: true, dedicatedFlowKey: "tokyo-revengers-slot", dedicatedFlowVersion: 2, tokyoRevengersFlow: true,
+    triggerLabel: "初当り", triggerRate: 282.4, triggerSuccess: 1, mainLabel: "東卍RUSH", mainRate: 482.2, base50: 32, coinUnit: 3.6,
+    normalMin: 0, normalMax: 0, atPureIncrease: 3.2, atPayoutVariance: 0,
+    tokyoRevengersEntryRoutes: [[{ key: "rush", label: "東卍RUSH直撃", games: 0, chance: 1 }, 0.482], [{ key: "chance", label: "東卍CHANCE", games: 20, award: 64, chance: 0.20 }, 0.518]],
+    tokyoBreakGames: 3, tokyoBreakRewards: [[50, 0.64], [100, 0.24], [200, 0.09], [300, 0.03]],
+    tokyoBattleRate: 51, tokyoBattleGames: 3,
+    tokyoOpponents: [[{ key: "takemichi", label: "武道", chance: 0.317 }, 0.273], [{ key: "chifuyu", label: "千冬", chance: 0.335 }, 0.273], [{ key: "mitsuya", label: "三ツ谷", chance: 0.393 }, 0.211], [{ key: "draken", label: "ドラケン", chance: 0.631 }, 0.211], [{ key: "mikey", label: "マイキー", chance: 0.904 }, 0.032]],
+    tokyoAttackRewards: [[{ key: "add-50", label: "差枚数上乗せ +50枚", coins: 50 }, 0.25], [{ key: "add-100", label: "差枚数上乗せ +100枚", coins: 100 }, 0.20], [{ key: "add-200", label: "差枚数上乗せ +200枚", coins: 200 }, 0.09], [{ key: "add-300", label: "差枚数上乗せ +300枚", coins: 300 }, 0.04], [{ key: "episode", label: "Episode", games: 25, coins: 80 }, 0.14], [{ key: "heat-green", label: "HEAT UP 緑", coins: 150 }, 0.10], [{ key: "heat-red", label: "HEAT UP 赤", coins: 250 }, 0.07], [{ key: "shibuya", label: "渋谷JACK", coins: 500 }, 0.05], [{ key: "revenge", label: "リベンジチャンス", coins: 0 }, 0.06]],
+    tokyoDirectAddChance: 0.18, tokyoDirectAdds: [[20, 0.48], [50, 0.30], [100, 0.15], [200, 0.06], [300, 0.01]], tokyoMaxSections: 24,
+    tokyoRevengeGames: 5, tokyoRevengeSuccess: 0.50,
+    tokyoUpperInitialCoins: 500, tokyoUpperPureIncrease: 8.0, tokyoUpperJudgeGames: 5, tokyoUpperContinue: 0.80, tokyoUpperMaxLoops: 40,
+    tokyoBlackChance: 0.08, tokyoBlackGames: 5, tokyoBlackAdds: [[100, 0.62], [200, 0.28], [300, 0.10]], tokyoBlackPre3Continue: 0.997, tokyoBlackPost3Continue: 0.904, tokyoBlackMaxAdds: 10,
+    specialLabel: "東卍ATTACK", specialChance: 0.40, upperChallenge: "リベンジチャンス", upperChance: 0, upperSuccess: 0.50, upperLabel: "東卍RUSH BURST", upperContinue: 0.80, upperPayout: 0, upperPureIncrease: 8.0,
+    settingRates: { 1: { trigger: 282.4, main: 482.2, payout: 0.978 }, 2: { trigger: 279.5, main: 474.7, payout: 0.988 }, 3: { trigger: 272.2, main: 456.9, payout: 1.014 }, 4: { trigger: 255.8, main: 414.0, payout: 1.063 }, 5: { trigger: 249.1, main: 393.8, payout: 1.112 }, 6: { trigger: 240.1, main: 373.1, payout: 1.149 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+  delete machine.sim.specialOutcomes;
+  delete machine.sim.upperSetGames;
+})();
+
+(function applyShinOnimusha3DedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["shin-onimusha3-slot"];
+  if (!machine) return;
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "鬼斬チャージと規定BPから蒼剣RUSHへ。ゲーム数上乗せ、BONUS、セット継続を重ねて真蒼剣RUSHを目指す。",
+    intro: "鬼モード・鬼斬チャージ・真鬼斬チャージ・リーチ目の入口から、蒼剣RUSH、鬼武侠、鬼BATTLE、蒼剣BONUS、幻魔京BATTLE、覚醒チャレンジ、秀吉最終決戦、真蒼剣RUSHまでを機種専用進行で体験できます。",
+    points: ["蒼剣RUSHは初回40G＋α・2セット目以降30G＋α", "継続率は50%・66%・80%・89%", "真蒼剣RUSHは純増約5.5枚/G・継続率89%"],
+    specs: [["AT（設定1）", "約1/379.7"], ["AT（設定6）", "約1/293.1"], ["ベース", "約33G/50枚"], ["蒼剣RUSH", "初回40G＋α／以降30G＋α"], ["通常AT純増", "約2.5枚/G"], ["セット継続率", "50%・66%・80%・89%"], ["幻魔京BATTLE", "6G"], ["鬼斬チャージ", "1セット4G・最大10セット"], ["覚醒チャレンジ", "3・5・7セット目がチャンス"], ["秀吉最終決戦", "6G・成功期待度約73%"], ["真蒼剣RUSH", "30G＋α・純増約5.5枚/G・継続率89%"], ["設定", "1〜6"]],
+    articleSections: [
+      { heading: "通常時の入口", paragraphs: ["通常時は規定BPからの鬼モード、鬼斬チャージ、真鬼斬チャージ、リーチ目による直撃から蒼剣RUSHを目指します。鬼斬チャージは1セット4GのST型で最大10セットです。", "専用進行ではAT初当りの設定別公開値を通常ゲーム数に使い、当選時の入口を4経路に分けて表示します。入口の細かな選択率は体験用代表値です。"] },
+      { heading: "蒼剣RUSHと幻魔京BATTLE", paragraphs: ["蒼剣RUSHは初回40G＋α、2セット目以降30G＋α。純増約2.5枚/Gで、継続率は50%・66%・80%・89%の4段階です。", "ゲーム数消化後は6Gの幻魔京BATTLEへ。最後のPUSHで継続を開き、継続時は次セットへ進みます。"] },
+      { heading: "上乗せ・BONUS・鬼BATTLE", paragraphs: ["AT中はレア役からゲーム数直乗せ、鬼の珠獲得、鬼BATTLE、BONUSを抽選。鬼の珠は鬼武侠でゲーム数へ変換します。", "BONUSは鬼BONUS・赤7・青7を分け、赤7・青7終了後の一部で鬼斬乱舞へ進みます。ゲーム数上乗せとBONUS獲得枚数は別々に集計します。"] },
+      { heading: "覚醒チャレンジと秀吉最終決戦", paragraphs: ["幻魔京BATTLE勝利時はセット数に応じて覚醒チャレンジを抽選。3・5・7セット目ほど期待でき、成功で真蒼剣RUSHへ進みます。", "10セット到達時やエンディングなどでは6Gの秀吉最終決戦へ。成功期待度約73%で、最後のPUSHで真蒼剣RUSHの当落を表示します。"] },
+      { heading: "真蒼剣RUSH", paragraphs: ["真蒼剣RUSHは30G＋α、純増約5.5枚/G、継続率89%。通常ATと同様に上乗せ・BONUS・バトルを重ねます。", "専用進行では通常ATと上位ATの消化ゲーム数・純増・セット数を分け、最終結果で最高到達を確認できます。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約33G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6のAT初当り・出玉率を公開値で反映", "入口・セット・上乗せ・BONUS・バトル・上位を機種専用進行", "未公表の入口・報酬選択率は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["一撃 基本スペック・ゲームフロー", "https://1geki.jp/slot/l_shinnoni3/"], ["一撃 蒼剣RUSH解析", "https://1geki.jp/slot/l_shinnoni3/81/"], ["一撃 演出・上位ルート", "https://1geki.jp/slot/l_shinnoni3/95/"], ["なな徹 解析まとめ", "https://nana-press.com/kaiseki/machine/1015/"], ["なな徹 幻魔京BATTLE解析", "https://nana-press.com/kaiseki/machine/1015/31949/"]],
+    readerGuide: { verdict: "初回40G＋αの蒼剣RUSHでゲーム数上乗せとBONUSを重ね、6Gバトルを突破して純増約5.5枚の真蒼剣RUSHを狙うセット継続型ATです。", bestFor: ["幻魔京BATTLEの継続をPUSHで開きたい", "ゲーム数上乗せとBONUSを別々に楽しみたい", "覚醒チャレンジと秀吉最終決戦から上位を狙いたい"], check: ["通常ATは純増約2.5枚/G", "上位は純増約5.5枚/G・継続89%", "未公表の細かな選択率は体験用代表値"], compare: [["shin-onimusha2-slot", "新鬼武者2", "前作の蒼剣RUSHと比較"], ["biohazard5-slot", "バイオハザード5", "ゲーム数上乗せ型ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v46", dedicatedFlow: true, dedicatedFlowKey: "shin-onimusha3-slot", dedicatedFlowVersion: 2, shinOnimusha3Flow: true,
+    triggerLabel: "AT初当り", triggerRate: 379.7, triggerSuccess: 1, mainLabel: "蒼剣RUSH", mainRate: 379.7, base50: 33, coinUnit: 3.3,
+    normalMin: 0, normalMax: 0, atPureIncrease: 2.5, upperPureIncrease: 5.5, atPayoutVariance: 0,
+    onimushaEntryRoutes: [[{ key: "points", label: "鬼モード・規定BP", games: 0 }, 0.56], [{ key: "charge", label: "鬼斬チャージ", games: 28, sets: 7 }, 0.27], [{ key: "true-charge", label: "真鬼斬チャージ", games: 12, sets: 2 }, 0.10], [{ key: "reach", label: "リーチ目・AT直撃", games: 0 }, 0.07]],
+    onimushaContinueModes: [[{ label: "継続率50%", chance: 0.50 }, 0.46], [{ label: "継続率66%", chance: 0.66 }, 0.29], [{ label: "継続率80%", chance: 0.80 }, 0.18], [{ label: "継続率89%", chance: 0.89 }, 0.07]],
+    onimushaFirstGames: 40, onimushaLaterGames: 30, onimushaBattleGames: 6, onimushaMaxSets: 10,
+    onimushaDirectAddChance: 0.30, onimushaDirectAdds: [[10, 0.54], [30, 0.29], [50, 0.10], [100, 0.05], [200, 0.01], [300, 0.008], [600, 0.002]],
+    onimushaSphereChance: 0.25, onimushaSphereCounts: [[1, 0.68], [2, 0.24], [3, 0.08]], onimushaSphereAdds: [[10, 0.58], [20, 0.24], [30, 0.12], [50, 0.05], [100, 0.01]],
+    onimushaOniBattleChance: 0.24, onimushaOniBattleWin: 0.58, onimushaOniBattleAdds: [[30, 0.55], [50, 0.27], [100, 0.13], [200, 0.04], [300, 0.01]],
+    onimushaBonusChance: 0.20, onimushaBonuses: [[{ key: "oni", label: "鬼BONUS", games: 15, award: 69, ranbu: false }, 0.50], [{ key: "red", label: "赤7 蒼剣BONUS", games: 20, award: 92, ranbu: true }, 0.422], [{ key: "blue", label: "青7 蒼剣BONUS", games: 30, award: 138, ranbu: true }, 0.078]],
+    onimushaRanbuChance: 0.063, onimushaRanbuAdds: [[30, 0.45], [50, 0.28], [100, 0.18], [200, 0.07], [300, 0.02]],
+    onimushaKakuseiChanceBySet: { 3: 0.102, 5: 0.203, 7: 0.305 }, onimushaKakuseiSuccess: 0.50,
+    onimushaHideyoshiGames: 6, onimushaHideyoshiSuccess: 0.73,
+    onimushaUpperGames: 30, onimushaUpperContinue: 0.89, onimushaUpperMaxSets: 12,
+    specialLabel: "鬼武侠／蒼剣BONUS", specialChance: 0.34, upperChallenge: "覚醒チャレンジ／秀吉最終決戦", upperChance: 0, upperSuccess: 0.73, upperLabel: "真蒼剣RUSH", upperContinue: 0.89, upperPayout: 0,
+    settingRates: { 1: { main: 379.7, payout: 0.975 }, 2: { main: 372.7, payout: 0.983 }, 3: { main: 352.8, payout: 1.002 }, 4: { main: 306.5, payout: 1.052 }, 5: { main: 297.9, payout: 1.092 }, 6: { main: 293.1, payout: 1.130 } }
+  });
+  delete machine.sim.cycleFlow;
+  delete machine.sim.titleFlow;
+  delete machine.sim.specialOutcomes;
+  delete machine.sim.upperSetGames;
+})();
+
+(function applyShinOnimusha2DedicatedFlow() {
+  const machine = window.ICHIGEKI_MACHINES["shin-onimusha2-slot"];
+  if (!machine) return;
+  const standardRewards = [
+    [{ kind: "base", label: "蒼剣RUSHセット消化", payout: 0 }, 0.38],
+    [{ kind: "games", label: "ゲーム数直乗せ", games: [[10, 0.46], [30, 0.28], [50, 0.15], [100, 0.08], [200, 0.02], [300, 0.01]] }, 0.27],
+    [{ kind: "games", label: "鬼武侠", games: [[10, 0.50], [20, 0.25], [30, 0.15], [50, 0.08], [100, 0.02]] }, 0.12],
+    [{ kind: "bonus", label: "鬼BONUS", games: 12, payout: 48 }, 0.115],
+    [{ kind: "bonus", label: "蒼剣BONUS", games: 25, payout: 100 }, 0.095],
+    [{ kind: "bonus", label: "真蒼剣BONUS", games: 40, payout: 160 }, 0.02]
+  ];
+  const round = (title, games, detail) => ({ title, games, continueChance: 0.66, rewards: standardRewards, detail });
+  Object.assign(machine, {
+    updated: "2026-11-08",
+    catchcopy: "4G STのバッサリZONEから蒼剣RUSHへ。上乗せ、3種類のBONUS、幻魔京BATTLEを重ねる。",
+    intro: "バッサリZONEのアイコン進行から蒼剣RUSHへ入り、ゲーム数直乗せ、鬼武侠、3種類のBONUS、幻魔京BATTLE、金色覚醒鬼武者までを機種専用の順番で体験できます。",
+    points: ["バッサリZONEは4G ST・AT期待度約33%", "蒼剣RUSHは初回40G＋α・以降30G＋α", "継続率50%・66%・80%・89%"],
+    specs: [["AT（設定1）", "約1/405.2"], ["AT（設定6）", "約1/262.2"], ["バッサリZONE", "4G ST・AT期待度約33%"], ["HYPERバッサリZONE", "6G ST"], ["ベース", "約37G/50枚"], ["蒼剣RUSH", "初回40G＋α／以降30G＋α"], ["AT純増", "約2.0枚/G"], ["セット継続率", "50%・66%・80%・89%"], ["幻魔京BATTLE", "最大6G"], ["鬼／蒼剣／真蒼剣BONUS", "12G／25G／40G"], ["BONUS純増", "約4.0枚/G"], ["金色覚醒鬼武者", "AT継続89%・BONUS継続最大80%"], ["設定", "1〜6"]],
+    articleSections: [
+      { heading: "4G STのバッサリZONE", paragraphs: ["通常時は主にレア役からバッサリZONEを目指します。4G以内に小役が成立するとアイコンが1段階進み、残り4Gへ再セット。HYPERは6Gスタートです。", "終了時のアイコンは緑約20%、赤約50%、紫約75%、金以上はAT濃厚。専用進行では4G STと最終アイコンの期待度をAT期待度約33%へまとめています。"] },
+      { heading: "蒼剣RUSHと幻魔京BATTLE", paragraphs: ["蒼剣RUSHは純増約2.0枚/G。初回40G＋α、2セット目以降30G＋αで、継続率は50%・66%・80%・89%の4段階です。", "残りゲーム数が0になると最大6Gの幻魔京BATTLEへ。勝利で次セットへ進み、レア役では勝利書き換えも抽選します。シミュレーターは公開継続率の中間的な66%を代表値としてセットごとに判定します。"] },
+      { heading: "ゲーム数上乗せと鬼武侠", paragraphs: ["AT中のレア役は直乗せ、宝玉獲得、リーチ目高確、BONUSを抽選します。獲得した宝玉はセット終盤の鬼武侠でゲーム数へ変換します。", "直乗せは10G以上。一閃フリーズでは100〜300G級の上乗せがあり、演出上の+20Gは200G以上が濃厚です。サイトでは上乗せゲーム数と獲得枚数を分けて表示します。"] },
+      { heading: "3種類のBONUS", paragraphs: ["鬼BONUSは12G・約48枚、蒼剣BONUSは25G・約100枚、真蒼剣BONUSは40G・約160枚。BONUS中は純増約4.0枚/Gで、レア役からAT継続ストックを抽選します。", "通常契機の種類振り分けは鬼50.0%、蒼剣41.4%、真蒼剣8.6%。BONUS後はリーチ目高確へ入り、次のBONUSループを狙います。"] },
+      { heading: "金色覚醒鬼武者", paragraphs: ["金色フリーズなどから突入するプレミアムルートで、AT継続率89%とBONUS継続率最大80%のWループが特徴です。", "専用進行では通常ATとは別の上位区間として表示し、セット継続とBONUS報酬を分けて集計します。金色覚醒の細かな突入率は非公表のため体験用代表値です。"] },
+      { heading: "固定条件と簡略化する範囲", bullets: ["約37G/50枚・1,000円46枚貸し・5.2枚交換で固定", "設定1〜6のAT初当り・出玉率を公開値で反映", "CZ・初回40G・以降30G・上乗せ・3種BONUS・継続バトルを専用表示", "継続率モード選択率、レア役出現順、金色覚醒突入率は体験用代表値", "19,000枚到達時はコンプリート表示"] }
+    ],
+    sources: [["一撃 蒼剣RUSH解析", "https://1geki.jp/slot/s_sinnoni2/81/"], ["一撃 バッサリZONE解析", "https://1geki.jp/slot/s_sinnoni2/42/"], ["なな徹 蒼剣RUSH解析", "https://nana-press.com/kaiseki/machine/397/10590/"], ["なな徹 BONUS解析", "https://nana-press.com/kaiseki/machine/397/10591/"], ["P-WORLD 機種情報", "https://www.p-world.co.jp/machine/database/9658"]],
+    readerGuide: { verdict: "4G STのCZを突破し、初回40Gの蒼剣RUSHで上乗せとBONUSを重ねながら幻魔京BATTLEを突破するゲーム数＋セット継続型ATです。", bestFor: ["4G STのアイコン進行を楽しみたい", "上乗せと3種類のBONUSを別々に見たい", "幻魔京BATTLEから金色覚醒を狙いたい"], check: ["通常ATは純増約2.0枚/G", "BONUSは純増約4.0枚/G", "非公表の細かな選択率は体験用代表値"], compare: [["shin-onimusha3-slot", "スマスロ 新鬼武者3", "後継機の蒼剣RUSHと比較"], ["biohazard5-slot", "スマスロ バイオハザード5", "ゲーム数上乗せ型ATと比較"]] }
+  });
+  Object.assign(machine.sim, {
+    rankingVersion: "v47", dedicatedFlow: true, dedicatedFlowKey: "shin-onimusha2-slot", dedicatedFlowVersion: 2, shinOnimusha2Flow: true,
+    triggerLabel: "バッサリZONE", triggerRate: 123, triggerSuccess: 0.33, mainLabel: "蒼剣RUSH", mainRate: 405.2, base50: 37, coinUnit: 2.6,
+    normalMin: 0, normalMax: 0, atPureIncrease: 2.0, atPayoutVariance: 0,
+    cycleFlow: {
+      engine: "shin-onimusha2-dedicated-v2", phase: "SOUKEN RUSH", label: "幻魔京BATTLE", statLabel: "蒼剣RUSH専用進行", games: 30, continueChance: 0.66, maxRounds: 10,
+      continueModes: [[{ label: "継続率50%", chance: 0.50 }, 0.46], [{ label: "継続率66%", chance: 0.66 }, 0.29], [{ label: "継続率80%", chance: 0.80 }, 0.18], [{ label: "継続率89%", chance: 0.89 }, 0.07]],
+      rounds: [
+        round("蒼剣RUSH SET 1", 40, "初回40G＋αを消化し、上乗せ・BONUSを経て幻魔京BATTLEへ進みます"),
+        ...Array.from({ length: 9 }, (_, index) => round(`蒼剣RUSH SET ${index + 2}`, 30, "30G＋αを消化し、上乗せ・BONUSを経て最大6Gの幻魔京BATTLEへ進みます"))
+      ],
+      routeSummary: "バッサリZONE → 蒼剣RUSH → 上乗せ／鬼武侠／BONUS → 幻魔京BATTLE → 次セット",
+      rewardSummary: "直乗せ10〜300G・鬼武侠・鬼BONUS約48枚・蒼剣BONUS約100枚・真蒼剣BONUS約160枚",
+      rewards: standardRewards, endLabel: "蒼剣RUSH終了"
+    },
+    shinOnimusha2Presentation: { phaseLabel: "SOUKEN RUSH", resultContinue: "GENMAKYO WIN", resultEnd: "SOUKEN RUSH END", pushDetail: "幻魔京BATTLEの勝敗と、今回の上乗せ・BONUSを開きます" },
+    specialLabel: "鬼武侠／3種BONUS", specialChance: 0.35,
+    upperChallenge: "金色フリーズ", upperChance: 0.018, upperSuccess: 1, upperLabel: "金色覚醒鬼武者", upperContinue: 0.89, upperPureIncrease: 2.0, upperPayout: 60, upperMaxLoops: 12,
+    upperAwards: [[{ label: "金色覚醒 SET", games: 30, payout: 60 }, 0.20], [{ label: "金色覚醒＋蒼剣BONUS", games: 55, bonusGames: 25, payout: 160 }, 0.40], [{ label: "金色覚醒＋真蒼剣BONUS", games: 70, bonusGames: 40, payout: 220 }, 0.40]],
+    settingRates: { 1: { main: 405.2, payout: 0.982 }, 2: { main: 382.4, payout: 0.995 }, 3: { main: 366.2, payout: 1.005 }, 4: { main: 301.3, payout: 1.054 }, 5: { main: 275.6, payout: 1.077 }, 6: { main: 262.2, payout: 1.101 } }
+  });
+  delete machine.sim.titleFlow;
+  delete machine.sim.specialOutcomes;
+  delete machine.sim.upperSetGames;
+})();
+
 // Dedicated implementations take precedence over the older reusable cycle map.
 // Keep this final cleanup after every enrichment pass so page copy and gameplay
 // both use the same title-specific model.
@@ -6327,4 +6895,203 @@ window.ICHIGEKI_MACHINE_AVAILABILITY = {
   if (dumbbell?.dumbbellFlow) delete dumbbell.cycleFlow;
   const shinEva = window.ICHIGEKI_MACHINES["shin-eva-slot"]?.sim;
   if (shinEva?.shinEvaFlow) delete shinEva.cycleFlow;
+})();
+
+// First balance pass for the ten machines most often used from the top page.
+// Published rates stay intact; only representative, unpublished branches are
+// tuned from repeated end-to-end simulator runs.
+(() => {
+  const machines = window.ICHIGEKI_MACHINES || {};
+  const revision = "primary-10-v1";
+  const rankingRevision = "balance-20261108";
+  const primarySlugs = [
+    "tokyo-ghoul-slot",
+    "tokyo-revengers-slot",
+    "magia-record-slot",
+    "god-eater-resurrection",
+    "lycoris-recoil-slot",
+    "toaru-index2-slot",
+    "symphogear-seigi-slot",
+    "sao2-slot",
+    "monster-hunter-rise-slot",
+    "monster-hunter-sunbreak"
+  ];
+
+  for (const slug of primarySlugs) {
+    if (machines[slug]?.sim) machines[slug].sim.balanceRevision = revision;
+  }
+
+  const remainingRevision = "remaining-37-v1";
+  const remainingSlugs = [
+    "kinnikuman-7-slot", "kanokari-slot", "aobuta-slot", "hokuto-tensei2", "bofuri-slot", "azur-lane-slot",
+    "million-god-kiseki", "juoh-slot", "paripi-koumei-slot", "okidoki-black", "fire-force2-slot", "okidoki-gold",
+    "gundam-unicorn-awakening-drive", "darling-in-the-franxx-slot", "gundam-seed-slot", "mushoku-tensei-slot",
+    "super-bingo-neo-slot", "magical-halloween8", "iza-bancho", "toloveru-darkness-slot", "biohazard5-slot",
+    "yoshimune-slot", "vivy-slot", "shin-onimusha3-slot", "super-blackjack-slot", "golden-kamuy-slot",
+    "bancho4-slot", "zenigata4-slot", "inuyasha2-slot", "shin-onimusha2-slot", "fire-force-slot",
+    "godzilla-eva-slot", "dmc5-st-slot", "initial-d-2nd-slot", "lupin-dai-koukaisha", "basilisk-tenzen-slot",
+    "chibariyo2-slot"
+  ];
+  for (const slug of remainingSlugs) {
+    if (machines[slug]?.sim) machines[slug].sim.balanceRevision = remainingRevision;
+  }
+
+  const remainingRankingRevision = "balance-remaining-20261108";
+  const adjustedRemainingSlugs = [
+    "aobuta-slot", "hokuto-tensei2", "fire-force2-slot", "iza-bancho", "toloveru-darkness-slot",
+    "biohazard5-slot", "yoshimune-slot", "zenigata4-slot", "inuyasha2-slot", "lupin-dai-koukaisha",
+    "chibariyo2-slot", "gundam-seed-slot"
+  ];
+  for (const slug of adjustedRemainingSlugs) {
+    if (machines[slug]?.sim) machines[slug].sim.rankingVersion = remainingRankingRevision;
+  }
+
+  Object.assign(machines["biohazard5-slot"]?.sim || {}, {
+    bioMaxSections: 160,
+    bioDirectAddChance: 0.10,
+    bioMutationChance: 0.015,
+    bioUroborosChance: 0.03,
+    bioEpisodeChance: 0.06,
+    bioBurstChance: 0.015,
+    bioUpperMaxStages: 6
+  });
+
+  Object.assign(machines["aobuta-slot"]?.sim || {}, {
+    aobutaStHeroes: [
+      { key: "tomoe", label: "古賀朋絵", awards: [[111, 0.48], [222, 0.45], [333, 0.055], [555, 0.014], [1111, 0.001]] },
+      { key: "nodoka", label: "豊浜のどか", awards: [[100, 0.92], [200, 0.065], [500, 0.014], [1000, 0.001]] },
+      { key: "futaba", label: "双葉理央", awards: [[100, 0.78], [200, 0.15], [500, 0.06], [1000, 0.009], [1500, 0.001]] },
+      { key: "kaede", label: "梓川かえで", awards: [[200, 0.60], [300, 0.25], [400, 0.10], [800, 0.04], [1200, 0.009], [2000, 0.001]] }
+    ],
+    aobutaExtraSetChance: 0.10,
+    aobutaShokoChance: 0.08,
+    aobutaMaxNormalLoops: 6,
+    aobutaMaxUpperLoops: 6
+  });
+
+  Object.assign(machines["hokuto-tensei2"]?.sim || {}, {
+    hokutoKenohChance: 0.06,
+    hokutoSpChanceOnWin: 0.04,
+    hokutoHyakuretsuChance: 0.10,
+    hokutoUpperMaxSets: 10
+  });
+
+  Object.assign(machines["fire-force2-slot"]?.sim || {}, {
+    fireForce2MaxLoops: 10,
+    fireForce2ShinraChance: 0.05
+  });
+
+  Object.assign(machines["iza-bancho"]?.sim || {}, {
+    izaDirectAddChance: 0.14,
+    izaBaizantoChance: 0.04,
+    izaUpperReturnChance: 0.07,
+    izaMaxSections: 16
+  });
+
+  Object.assign(machines["toloveru-darkness-slot"]?.sim || {}, {
+    toloveruPresentChances: [
+      [{ key: "boin", label: "ばいんATTACK", payouts: [[100, 0.34], [200, 0.42], [300, 0.19], [500, 0.045], [800, 0.004], [1600, 0.001]] }, 0.55],
+      [{ key: "pero", label: "ぺろぺろちゃんす", payouts: [[300, 0.78], [500, 0.19], [800, 0.029], [1600, 0.001]] }, 0.33],
+      [{ key: "icepu", label: "愛すぷRUSH", payouts: [[500, 0.88], [800, 0.115], [1600, 0.005]] }, 0.118],
+      [{ key: "whisper", label: "whisper", payouts: [[800, 0.90], [1600, 0.10]] }, 0.002]
+    ],
+    toloveruUpperPresents: [
+      [{ key: "icepu", label: "愛すぷRUSH", payouts: [[500, 0.88], [800, 0.11], [1600, 0.01]] }, 0.90],
+      [{ key: "whisper", label: "whisper", payouts: [[800, 0.90], [1600, 0.10]] }, 0.04],
+      [{ key: "episode", label: "とらぶるエピソード", payouts: [[500, 0.82], [800, 0.17], [1600, 0.01]] }, 0.06]
+    ],
+    toloveruMaxUpperLoops: 8
+  });
+
+  Object.assign(machines["yoshimune-slot"]?.sim || {}, {
+    yoshimuneHawkChance: 0.05,
+    yoshimuneSuperBigChance: 0.005,
+    yoshimuneBigStockChance: 0.18,
+    yoshimuneDoubleStockChance: 0.02,
+    yoshimuneUpperMaxLoops: 7
+  });
+
+  Object.assign(machines["zenigata4-slot"]?.sim || {}, {
+    zenigataMaxSections: 18,
+    zenigataBigGameChance: 0.36,
+    zenigataThirtyRareChance: 0.08,
+    zenigataThirtyLastChance: 0.15,
+    zenigataSuperDekaChance: 0.30
+  });
+
+  Object.assign(machines["inuyasha2-slot"]?.sim || {}, {
+    inuyashaMaxRounds: 6,
+    inuyashaAllBigChance: 0.15,
+    upperChance: 0.10,
+    inuyashaUpperMaxLoops: 7
+  });
+
+  Object.assign(machines["lupin-dai-koukaisha"]?.sim || {}, {
+    lupinMaxSections: 40,
+    lupinDirectChance: 0.16,
+    lupinGameChance: 0.12,
+    lupinBigChanceChance: 0.05,
+    lupinKaitoMaxSets: 6,
+    lupinUpperThreshold: 2400
+  });
+
+  Object.assign(machines["chibariyo2-slot"]?.sim || {}, {
+    chibariyoSixthRedChance: 0.18,
+    chibariyoOneGameChance: 0.05,
+    chibariyoLimitlessRainbowChance: 0.15,
+    chibariyoMaxChains: 30
+  });
+
+  Object.assign(machines["gundam-seed-slot"]?.sim || {}, {
+    gundamSeedLastChance: 0.15,
+    gundamSeedFullBurstChance: 0.08
+  });
+
+  Object.assign(machines["tokyo-ghoul-slot"]?.sim || {}, {
+    rankingVersion: rankingRevision,
+    tokyoGhoulBitesModes: [[{ key: "normal", label: "BITES" }, 0.975], [{ key: "super", label: "超BITES" }, 0.023], [{ key: "extreme", label: "極BITES" }, 0.002]],
+    specialChance: 0.05,
+    tokyoGhoulUpperAtChance: 0.25
+  });
+
+  Object.assign(machines["god-eater-resurrection"]?.sim || {}, {
+    rankingVersion: rankingRevision,
+    godEaterRewards: [[{ key: "type-1", label: "壱式", payout: 200 }, 0.75], [{ key: "mizuchi", label: "ミズチ", payout: 300 }, 0.17], [{ key: "punisher", label: "パニッシャー", payout: 400 }, 0.06], [{ key: "vendiger", label: "ベンディガー", payout: 510 }, 0.015], [{ key: "golden-jaw", label: "金ノ咢", payout: 700 }, 0.004], [{ key: "black-lindow", label: "漆黒リンドウ", payout: 1000 }, 0.001]],
+    godEaterOverkillChance: 0.02,
+    godEaterMaxBattles: 10,
+    godEaterHannibalChance: 0.08,
+    godEaterGateOutcomes: [[{ key: "yu", label: "主人公覚醒", upper: "漆黒の捕喰者" }, 0.80], [{ key: "lindow", label: "リンドウ覚醒", upper: "神堕" }, 0.08], [{ key: "none", label: "覚醒非当選", upper: "" }, 0.12]],
+    godEaterUpperMaxBattles: 8,
+    godEaterKamiochiMaxLoops: 8
+  });
+
+  Object.assign(machines["lycoris-recoil-slot"]?.sim || {}, {
+    rankingVersion: rankingRevision,
+    lycorisLegendaryChance: 0.02,
+    lycorisUpperMaxSections: 2,
+    lycorisUpperFrontBonusRate: 18,
+    lycorisUpperStBonusRate: 12
+  });
+
+  Object.assign(machines["monster-hunter-sunbreak"]?.sim || {}, {
+    rankingVersion: rankingRevision,
+    sunbreakMaxEvents: 10,
+    sunbreakBonusChance: 0.035,
+    sunbreakQuriaChance: 0.035,
+    sunbreakQuriaReset: 0.68,
+    sunbreakOpeningQuestChance: 0.10,
+    sunbreakQuestContinueChance: 0.30,
+    sunbreakCourageChance: 0.20,
+    sunbreakUpperMaxLoops: 2
+  });
+
+  Object.assign(machines["monster-hunter-rise-slot"]?.sim || {}, {
+    rankingVersion: rankingRevision,
+    mhRiseAllyAssistPerExtra: 0.05
+  });
+
+  Object.assign(machines["tokyo-revengers-slot"]?.sim || {}, {
+    rankingVersion: rankingRevision,
+    tokyoDirectAddChance: 0.24
+  });
 })();

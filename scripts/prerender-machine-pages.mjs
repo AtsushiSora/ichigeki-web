@@ -383,6 +383,25 @@ function snapshotMarkup(machine) {
       ["アドラバースト", "20G＋JAC", "純増約5.7枚/G"]
     ];
     note = "灰焔騎士団、初当りBONUS、伝導者の影、炎炎激闘ストック、紅丸炎舞、森羅万象、アドラバーストを機種専用で記録します。";
+  } else if (sim.shinOnimusha3Flow) {
+    items = [["AT初当り", `約1/${sim.mainRate}`, "設定1の蒼剣RUSH"], ["通常AT", "初回40G＋α", `純増約${formatNumber(sim.atPureIncrease, 1)}枚/G`], ["幻魔京BATTLE", `${sim.onimushaBattleGames || 6}G`, "継続率50〜89%"], ["真蒼剣RUSH", "継続89%", `純増約${formatNumber(sim.upperPureIncrease, 1)}枚/G`]];
+    note = "通常時の4入口、蒼剣RUSH、ゲーム数上乗せ、鬼武侠、鬼BATTLE、3種BONUS、2つの上位ルートを機種専用で記録します。";
+  } else if (sim.tokyoRevengersFlow) {
+    items = [
+      ["初当り", `約1/${sim.triggerRate}`, "設定1の初当り合算"],
+      ["東卍RUSH", `約1/${sim.mainRate}`, `純増約${formatNumber(sim.atPureIncrease, 1)}枚/G`],
+      ["一触即発", `約1/${sim.tokyoBattleRate || 51}`, `${sim.tokyoBattleGames || 3}G・平均勝利約40%`],
+      ["上位ループ", `約${formatNumber((sim.tokyoUpperContinue || .8) * 100)}%`, `純増約${formatNumber(sim.tokyoUpperPureIncrease || 8, 1)}枚/G`]
+    ];
+    note = "東卍CHANCE、3GのBREAK CHANCE、差枚数AT、3Gバトル、8択報酬、上位CZと上位ループを機種専用で記録します。";
+  } else if (sim.vivyFlow) {
+    items = [
+      ["AT初当り", `約1/${sim.mainRate}`, "設定1のPROJECT SINGULARITY"],
+      ["初期差枚", `${formatNumber(sim.vivyInitialCoins || 100, 0)}枚`, `純増約${formatNumber(sim.atPureIncrease, 1)}枚/G`],
+      ["バトル", `約1/${sim.vivyBattleRate || 33}`, `${sim.vivyBattleGames || 3}G・勝率約${formatNumber((sim.vivyBattleWinChance || .45) * 100)}%`],
+      ["上位AT", "非搭載", "FESはプレミアム特化ゾーン"]
+    ];
+    note = "ACCESS CHANCE・周期から差枚数ATへ入り、レア役再生、3Gバトル、差枚数上乗せ、BONUS、Fluorite Eye's Strikeまでを機種専用で記録します。";
   } else if (sim.sao2Flow) {
     items = [
       ["CZ突破", "約55%", "スコードロンバトル"],
@@ -422,6 +441,12 @@ function resultGuideMarkup(machine) {
       ? [["ボーナス", "何GでBIG・REGに当ったか"], ["続行判断", "ボーナスごとに続ける・やめるを選択"], ["実戦データ", "総G数、BIG・REG回数、合算"], ["最終収支", "差枚と5.2枚交換の収支目安"]]
       : sim.okidokiGoldFlow
         ? [["初当り", "ハイビスカス点灯までのゲーム数"], ["BONUS", "BIG・REGの回数と最大32G連"], ["内部モード", `天国・保証・${sim.okidokiBlackFlow ? "黒ドキ・裏ドキ" : "金ドキ"}・ドキドキへの到達`], ["最終収支", "差枚と5.2枚交換の収支目安"]]
+      : sim.shinOnimusha3Flow
+        ? [["当るまで", "AT初当りと4つの入口"], ["AT中", "蒼剣RUSH、鬼武侠、鬼BATTLE、BONUS"], ["上位", "覚醒チャレンジ、秀吉最終決戦、真蒼剣RUSH"], ["最終収支", "差枚と5.2枚交換の収支目安"]]
+      : sim.tokyoRevengersFlow
+        ? [["当るまで", "初当りと東卍CHANCE／東卍RUSHの入口"], ["AT中", "BREAK CHANCE、一触即発、東卍ATTACK"], ["上位", "リベンジチャンス、東卍RUSH BURST、黒い衝動"], ["最終収支", "差枚と5.2枚交換の収支目安"]]
+      : sim.vivyFlow
+        ? [["当るまで", "ACCESS CHANCE・周期とAT当選ゲーム数"], ["AT中", "レア役再生、3Gバトル、差枚数上乗せ"], ["プレミアム", "BONUS・OVER DRIVE・FESへの到達（上位ATは非搭載）"], ["最終収支", "差枚と5.2枚交換の収支目安"]]
       : [["当るまで", `${sim.triggerLabel}・${sim.mainLabel}までのゲーム数`], ["設定", `設定${settingPool.join("・")}から抽選された今回の設定`], ["上位到達", `${sim.upperChallenge || "上位CZ"}と${sim.upperLabel || "上位AT"}への到達`], ["最終収支", "差枚と5.2枚交換の収支目安"]];
   return `
         <section class="machine-article-section machine-result-guide">
@@ -453,7 +478,7 @@ function faqItems(slug, machine) {
   return [
     { question: `${machine.shortName}はどんな台？`, answer: `${releaseSummary}${machine.points?.[0] ? ` ${machine.points[0]}が主な確認ポイントです。` : ""}` },
     { question: `${machine.shortName}の平均投資目安は？`, answer: `設定${settingPool[0]}基準の${initialHitName(initialHitLabel)}約1/${sim.mainRate}と、50枚あたり${sim.base50}G・46枚貸しの固定条件から、平均${formatNumber(averageInvestment, 0)}円を目安として表示します。実際の設定や遊技状況で結果は変わります。` },
-    { question: `設定とゲームの流れはどう抽選する？`, answer: sim.kind === "juggler" ? `開始時に設定${settingPool.join("・")}から1つを均等抽選し、最大${formatNumber(sim.games, 0)}GまでBIG・REGを抽選します。設定は終了時の結果とランキングに表示します。` : sim.okidokiGoldFlow ? `開始時に設定${settingPool.join("・")}から1つを均等抽選し、BONUS初当り後はBIG・REG、32G連、天国・ドキドキ・超ドキドキ・保証・${sim.okidokiBlackFlow ? "黒ドキ・裏ドキ" : "金ドキ"}を順番に判定します。設定と最高内部モードは最終結果に表示します。` : `開始時に設定${settingPool.join("・")}から1つを均等抽選し、${sim.triggerLabel}、${initialHitLabel}${initialHitLabel !== sim.mainLabel ? `、${sim.mainLabel}` : ""}、${sim.upperChallenge}、${sim.upperLabel}の順で到達を判定します。設定は最終結果とランキングに表示します。` },
+    { question: `設定とゲームの流れはどう抽選する？`, answer: sim.kind === "juggler" ? `開始時に設定${settingPool.join("・")}から1つを均等抽選し、最大${formatNumber(sim.games, 0)}GまでBIG・REGを抽選します。設定は終了時の結果とランキングに表示します。` : sim.okidokiGoldFlow ? `開始時に設定${settingPool.join("・")}から1つを均等抽選し、BONUS初当り後はBIG・REG、32G連、天国・ドキドキ・超ドキドキ・保証・${sim.okidokiBlackFlow ? "黒ドキ・裏ドキ" : "金ドキ"}を順番に判定します。設定と最高内部モードは最終結果に表示します。` : sim.shinOnimusha3Flow ? `開始時に設定${settingPool.join("・")}から1つを均等抽選し、AT初当り、通常時の入口、蒼剣RUSH、ゲーム数上乗せ、鬼武侠、鬼BATTLE、3種BONUS、覚醒・秀吉、真蒼剣RUSHを順番に判定します。設定と最高到達は最終結果に表示します。` : sim.tokyoRevengersFlow ? `開始時に設定${settingPool.join("・")}から1つを均等抽選し、初当り、東卍CHANCEまたは直撃、BREAK CHANCE、一触即発、東卍ATTACK、上位CZと上位ATを順番に判定します。設定と最高到達は最終結果に表示します。` : sim.vivyFlow ? `開始時に設定${settingPool.join("・")}から1つを均等抽選し、ACCESS CHANCE・周期、初期100枚のPROJECT SINGULARITY、3Gバトル、差枚数上乗せ、BONUS、FESを順番に判定します。上位ATは搭載していません。` : `開始時に設定${settingPool.join("・")}から1つを均等抽選し、${sim.triggerLabel}、${initialHitLabel}${initialHitLabel !== sim.mainLabel ? `、${sim.mainLabel}` : ""}、${sim.upperChallenge}、${sim.upperLabel}の順で到達を判定します。設定は最終結果とランキングに表示します。` },
     { question: `収支はどう計算する？`, answer: "1,000円46枚貸し・5.2枚交換の固定条件で投資、換金、収支目安を計算します。実店舗の再プレイ、持ちメダル、端数処理は含みません。" }
   ];
 }
@@ -573,7 +598,7 @@ function schemaMarkup(slug, machine) {
 function newMachinePage(slug, machine) {
   const title = `${escapeHtml(machine.name)} | 記事・シミュレーター | ICHIGEKI`;
   const description = escapeHtml(machine.intro);
-  return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#05232d"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml"><meta name="description" content="${description}"><title>${title}</title><link rel="canonical" href="https://ichigeki-pachislot.com/${slug}.html"><link rel="stylesheet" href="style.css?v=181"></head><body class="machine-library-page" data-machine="${escapeHtml(slug)}"><header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">MACHINE</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#simulator">シミュレーター</a><a href="community.html?machine=${escapeHtml(slug)}">投稿</a></nav></div></header><main class="page machine-detail-shell" id="machineApp"></main><footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="community.html">コミュニティ</a><a href="disclaimer.html">免責事項</a></div></div></footer><script src="machine-library.js?v=222"></script><script src="achievements.js?v=1"></script><script src="site-insights.js?v=1"></script><script src="machine-detail.js?v=247"></script><script src="app-shell.js?v=10"></script><script src="adsense-loader.js?v=2"></script></body></html>`;
+  return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#05232d"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon.svg" type="image/svg+xml"><meta name="description" content="${description}"><title>${title}</title><link rel="canonical" href="https://ichigeki-pachislot.com/${slug}.html"><link rel="stylesheet" href="style.css?v=182"></head><body class="machine-library-page" data-machine="${escapeHtml(slug)}"><header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">MACHINE</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#simulator">シミュレーター</a><a href="community.html?machine=${escapeHtml(slug)}">投稿</a></nav></div></header><main class="page machine-detail-shell" id="machineApp"></main><footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="community.html">コミュニティ</a><a href="disclaimer.html">免責事項</a></div></div></footer><script src="machine-library.js?v=222"></script><script src="achievements.js?v=1"></script><script src="site-insights.js?v=1"></script><script src="machine-detail.js?v=247"></script><script src="app-shell.js?v=10"></script><script src="adsense-loader.js?v=2"></script></body></html>`;
 }
 
 function updateRobotsMeta(html, isIndexable) {
@@ -636,12 +661,12 @@ for (const [slug, machine] of Object.entries(machines)) {
   html = html.replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${escapeHtml(machine.intro)}">`);
   html = updateRobotsMeta(html, INDEXABLE_MACHINE_SLUGS.has(slug));
   if (/<link[^>]+rel="stylesheet"/.test(html)) {
-    html = html.replace(/style\.css(?:\?v=\d+)?/, "style.css?v=181");
+    html = html.replace(/style\.css(?:\?v=\d+)?/, "style.css?v=182");
   } else {
-    html = html.replace("</head>", '<link rel="stylesheet" href="style.css?v=181"></head>');
+    html = html.replace("</head>", '<link rel="stylesheet" href="style.css?v=182"></head>');
   }
-  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=256");
-  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=230");
+  html = html.replace(/machine-detail\.js\?v=\d+/, "machine-detail.js?v=276");
+  html = html.replace(/machine-library\.js\?v=\d+/, "machine-library.js?v=251");
   html = html.replace(/app-shell\.js\?v=\d+/, "app-shell.js?v=10");
   html = html.replace(/adsense-loader\.js\?v=\d+/, "adsense-loader.js?v=2");
   if (!html.includes("site-insights.js")) html = html.replace(/(<script src="machine-detail\.js\?v=129"><\/script>)/, '<script src="site-insights.js?v=1"></script>\n  $1');
