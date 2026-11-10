@@ -17,7 +17,7 @@
   <meta property="og:url" content="https://ichigeki-pachislot.com/ranking.html">
   <meta property="og:image" content="https://ichigeki-pachislot.com/icon.svg">
   <meta name="twitter:card" content="summary">
-  <link rel="stylesheet" href="style.css?v=184">
+  <link rel="stylesheet" href="style.css?v=185">
 </head>
 <body class="my-records-page">
   <header class="site-header">
@@ -104,6 +104,18 @@
       <div class="my-records-trend-chart" id="recordTrendChart" role="img" aria-label="直近7日間のシミュレーション収支グラフ"></div>
     </section>
 
+    <section class="my-records-setting" aria-labelledby="recordSettingTitle">
+      <div class="my-records-section-head">
+        <div><span>FULL DAY BY SETTING</span><h2 id="recordSettingTitle">設定別・終日比較</h2></div>
+        <label class="my-records-setting-filter">比較する機種
+          <select id="recordSettingMachine"><option value="all">すべてのスロット</option></select>
+        </label>
+      </div>
+      <p class="my-records-setting-lead" id="recordSettingSummary">終日9,000Gの記録が増えると、設定1〜6の成績を比較できます。</p>
+      <div class="my-records-setting-grid" id="recordSettingGrid"></div>
+      <p class="my-records-setting-note">マイ記録に保存された結果だけを集計しています。設定ごとの理論値・期待収支ではありません。</p>
+    </section>
+
     <section class="my-records-achievements" id="achievements" aria-labelledby="achievementTitle">
       <div class="my-records-section-head">
         <div><span>ACHIEVEMENTS</span><h2 id="achievementTitle">称号・実績</h2></div>
@@ -178,7 +190,7 @@
   <script src="site-insights.js?v=1"></script>
   <script src="community-config.js?v=2"></script>
   <script src="auth.js?v=1" id="ichigeki-auth-script"></script>
-  <script src="my-records.js?v=8"></script>
+  <script src="my-records.js?v=9"></script>
   <script src="adsense-loader.js?v=2"></script>
   <script src="app-shell.js?v=10"></script>
 </body>

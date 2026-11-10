@@ -188,6 +188,54 @@
     $("recordTrendSummary").textContent = weekItems ? `${weekItems}回・${signedYen(weekBalance)}` : "記録が増えるとグラフになります";
   }
 
+  function renderSettingComparison() {
+    const select = $("recordSettingMachine");
+    const allDayRecords = records.filter(record => record.playMode === "day" && machineType(record) === "slot" && numeric(record.setting) >= 1 && numeric(record.setting) <= 6);
+    const machineOptions = [...new Map(allDayRecords.map(record => [record.slug, machineTitle(record)])).entries()]
+      .filter(([slug]) => slug)
+      .sort((a, b) => a[1].localeCompare(b[1], "ja"));
+    const selected = machineOptions.some(([slug]) => slug === select.value) ? select.value : "all";
+    select.innerHTML = `<option value="all">すべてのスロット</option>${machineOptions.map(([slug, title]) => `<option value="${escapeHtml(slug)}">${escapeHtml(title)}</option>`).join("")}`;
+    select.value = selected;
+
+    const source = selected === "all" ? allDayRecords : allDayRecords.filter(record => record.slug === selected);
+    const results = Array.from({ length: 6 }, (_, index) => {
+      const setting = index + 1;
+      const items = source.filter(record => numeric(record.setting) === setting);
+      const totalCoins = items.reduce((sum, record) => sum + numeric(record.score), 0);
+      const totalBalance = items.reduce((sum, record) => sum + numeric(record.balanceYen), 0);
+      const wins = items.filter(record => numeric(record.balanceYen) > 0).length;
+      const maximumMyItems = items.filter(record => numeric(record.daySummary?.maximumMy) > 0);
+      const averageMy = maximumMyItems.length ? Math.round(maximumMyItems.reduce((sum, record) => sum + numeric(record.daySummary.maximumMy), 0) / maximumMyItems.length) : 0;
+      return {
+        setting,
+        items,
+        averageCoins: items.length ? Math.round(totalCoins / items.length) : 0,
+        averageBalance: items.length ? Math.round(totalBalance / items.length) : 0,
+        winRate: items.length ? Math.round(wins / items.length * 100) : 0,
+        averageMy
+      };
+    });
+    const populated = results.filter(result => result.items.length);
+    const maximum = Math.max(1, ...populated.map(result => Math.abs(result.averageCoins)));
+    const best = [...populated].sort((a, b) => b.averageCoins - a.averageCoins)[0];
+
+    if (!source.length) {
+      $("recordSettingSummary").textContent = selected === "all"
+        ? "終日9,000Gの記録が増えると、設定1〜6の成績を比較できます。"
+        : "この機種の終日記録はまだありません。";
+    } else if (best) {
+      $("recordSettingSummary").textContent = `保存した${number.format(source.length)}日分では、設定${best.setting}が平均差枚${signedCoins(best.averageCoins)}です。`;
+    }
+
+    $("recordSettingGrid").innerHTML = results.map(result => {
+      if (!result.items.length) return `<article class="my-records-setting-card is-empty"><header><strong>設定${result.setting}</strong><span>0日</span></header><p>記録なし</p><div class="my-records-setting-bar"><i></i></div><small>終日を遊ぶと追加されます</small></article>`;
+      const positive = result.averageCoins >= 0;
+      const barWidth = Math.max(8, Math.round(Math.abs(result.averageCoins) / maximum * 100));
+      return `<article class="my-records-setting-card ${positive ? "is-positive" : "is-negative"}"><header><strong>設定${result.setting}</strong><span>${number.format(result.items.length)}日</span></header><p>${signedCoins(result.averageCoins)}</p><div class="my-records-setting-bar" role="img" aria-label="設定${result.setting}の平均差枚${signedCoins(result.averageCoins)}"><i style="width:${barWidth}%"></i></div><dl><div><dt>勝率</dt><dd>${result.winRate}%</dd></div><div><dt>平均収支</dt><dd>${signedYen(result.averageBalance)}</dd></div><div><dt>平均最大MY</dt><dd>${result.averageMy ? `${number.format(result.averageMy)}枚` : "--"}</dd></div></dl></article>`;
+    }).join("");
+  }
+
   function renderAchievements() {
     const achievements = window.ICHIGEKI_ACHIEVEMENTS;
     if (!achievements) return;
@@ -310,6 +358,7 @@
     renderSummary();
     renderPlayStyle();
     renderTrend();
+    renderSettingComparison();
     renderAchievements();
     renderMachineCards();
     renderHistory();
@@ -357,6 +406,8 @@
     visibleCount = PAGE_SIZE;
     renderHistory();
   });
+
+  $("recordSettingMachine").addEventListener("change", renderSettingComparison);
 
   $("machineHistoryLoadMore").addEventListener("click", () => {
     visibleCount += PAGE_SIZE;
