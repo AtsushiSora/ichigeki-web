@@ -1,6 +1,8 @@
 (function () {
   "use strict";
   if (location.hostname !== "ichigeki-pachislot.com") return;
+  const robotsMeta = document.querySelector('meta[name="robots"]');
+  if (robotsMeta && /(?:^|[\s,])noindex(?:[\s,]|$)/i.test(robotsMeta.content || "")) return;
   if (document.getElementById("ichigekiAdsenseScript")) return;
   const script = document.createElement("script");
   script.id = "ichigekiAdsenseScript";

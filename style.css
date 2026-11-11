@@ -17161,6 +17161,82 @@ textarea { min-height: 132px; line-height: 1.65; }
   .home-tools-section nav a { min-height: 60px; padding: 11px 12px; }
   .home-responsible-note { font-size: 10px; }
 }
+
+/* Search-visible category guidance v187 */
+.machine-hub-explainer {
+  display: grid;
+  gap: 18px;
+  margin-top: 8px;
+  padding: clamp(20px, 4vw, 32px);
+  border: 1px solid rgba(129, 150, 136, .25);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 92% 0, rgba(116, 239, 93, .08), transparent 34%),
+    linear-gradient(145deg, rgba(10, 16, 11, .97), rgba(5, 8, 6, .98));
+}
+.machine-hub-explainer.is-pachinko { border-color: rgba(255, 99, 117, .28); }
+.machine-hub-explainer.is-slot { border-color: rgba(85, 180, 255, .28); }
+.machine-hub-explainer > header { max-width: 780px; }
+.machine-hub-explainer > header > span {
+  color: #7be969;
+  font: 950 9px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .18em;
+}
+.machine-hub-explainer.is-pachinko > header > span { color: #ff8998; }
+.machine-hub-explainer.is-slot > header > span { color: #7fc4ff; }
+.machine-hub-explainer h2 {
+  margin: 6px 0 8px;
+  color: #f4f8f4;
+  font-size: clamp(23px, 4vw, 34px);
+  line-height: 1.25;
+}
+.machine-hub-explainer > header > p {
+  margin: 0;
+  color: #9ca8a0;
+  font-size: 13px;
+  line-height: 1.8;
+}
+.machine-hub-explainer > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.machine-hub-explainer article {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid rgba(151, 176, 156, .2);
+  border-radius: 16px;
+  background: rgba(5, 9, 6, .74);
+}
+.machine-hub-explainer article b {
+  color: #74e75f;
+  font: 950 10px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: .12em;
+}
+.machine-hub-explainer.is-pachinko article b { color: #ff8191; }
+.machine-hub-explainer.is-slot article b { color: #74bfff; }
+.machine-hub-explainer article h3 { margin: 10px 0 7px; color: #edf3ee; font-size: 17px; }
+.machine-hub-explainer article p { margin: 0; color: #929e96; font-size: 11px; line-height: 1.75; }
+.machine-hub-explainer-note {
+  margin: 0;
+  padding: 13px 15px;
+  border-left: 3px solid #6fda5d;
+  color: #919d95;
+  background: rgba(116, 239, 93, .04);
+  font-size: 10px;
+  line-height: 1.7;
+}
+.machine-hub-explainer.is-pachinko .machine-hub-explainer-note { border-left-color: #f36d7e; }
+.machine-hub-explainer.is-slot .machine-hub-explainer-note { border-left-color: #66b6fa; }
+
+@media (max-width: 760px) {
+  .machine-hub-explainer { gap: 14px; padding: 18px 14px; border-radius: 18px; }
+  .machine-hub-explainer h2 { font-size: 24px; }
+  .machine-hub-explainer > header > p { font-size: 12px; }
+  .machine-hub-explainer > div { grid-template-columns: 1fr; gap: 8px; }
+  .machine-hub-explainer article { padding: 15px; }
+  .machine-hub-explainer article h3 { font-size: 16px; }
+}
 /* GitHub Pages custom 404 */
 .not-found-page {
   min-height: 100vh;
