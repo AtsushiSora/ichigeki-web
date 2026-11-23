@@ -69,4 +69,15 @@
     auth.src = "auth.js?v=1";
     document.head.appendChild(auth);
   }
+
+  const robotsMeta = document.querySelector('meta[name="robots"]');
+  const isNoindex = robotsMeta && /(?:^|[\s,])noindex(?:[\s,]|$)/i.test(robotsMeta.content || "");
+  if (location.hostname === "ichigeki-pachislot.com" && !isNoindex && !document.getElementById("ichigekiAdsenseScript")) {
+    const adsense = document.createElement("script");
+    adsense.id = "ichigekiAdsenseScript";
+    adsense.async = true;
+    adsense.crossOrigin = "anonymous";
+    adsense.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2599640417413447";
+    document.head.appendChild(adsense);
+  }
 })();

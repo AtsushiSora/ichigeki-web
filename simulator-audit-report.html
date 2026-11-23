@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8"><meta name="google-adsense-account" content="ca-pub-2599640417413447">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050705">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <meta name="description" content="ICHIGEKIの初当り・継続抽選を固定シードで10万回検証し、理論値との差、中央値、90%点、1,000回転超の割合を公開する再現可能な検証レポートです。">
+  <title>10万回抽選で検証するシミュレーター | ICHIGEKI</title>
+  <link rel="canonical" href="https://ichigeki-pachislot.com/simulator-audit-report.html">
+  <meta property="og:type" content="article"><meta property="og:site_name" content="ICHIGEKI">
+  <meta property="og:title" content="10万回抽選で検証するシミュレーター | ICHIGEKI">
+  <meta property="og:description" content="初当り・継続抽選の理論値と、固定シードによる10万回の検証結果を比較します。">
+  <meta property="og:url" content="https://ichigeki-pachislot.com/simulator-audit-report.html">
+  <meta property="og:image" content="https://ichigeki-pachislot.com/icon.svg">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="style.css?v=188">
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"TechArticle",
+    "headline":"10万回抽選で検証するシミュレーター",
+    "description":"ICHIGEKIの初当り・継続抽選を固定条件で検証し、理論値との差を公開します。",
+    "datePublished":"2026-11-23",
+    "dateModified":"2026-11-23",
+    "author":{"@type":"Organization","name":"ICHIGEKI編集部","url":"https://ichigeki-pachislot.com/about.html"},
+    "publisher":{"@type":"Organization","name":"ICHIGEKI"},
+    "mainEntityOfPage":"https://ichigeki-pachislot.com/simulator-audit-report.html",
+    "inLanguage":"ja"
+  }
+  </script>
+</head>
+<body class="editorial-page">
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html"><span class="brand-name">ICHIGEKI</span><span class="brand-sub">SIMULATOR AUDIT</span></a><nav class="nav"><a href="index.html">トップ</a><a href="#first-hit">初当り</a><a href="#continuation">継続</a><a href="#method">検証方法</a></nav></div></header>
+  <main class="page editorial-shell"><article class="article-card editorial-article">
+    <div class="article-meta"><span>独自検証</span><time datetime="2026-11-23">2026年11月23日更新</time></div>
+    <h1>10万回抽選で<br>シミュレーターを検証</h1>
+    <p class="editorial-lead">ICHIGEKIの抽選が設定した確率から大きく外れていないかを、同じ結果を再現できる固定シードで確認しました。都合の良い結果だけを選ばず、試行数・乱数式・比較する理論値を公開します。</p>
+
+    <section class="audit-summary" aria-label="検証条件">
+      <div><small>試行数</small><strong>各100,000回</strong></div>
+      <div><small>公開日</small><strong>2026.11.23</strong></div>
+      <div><small>乱数</small><strong>固定シードLCG</strong></div>
+      <div><small>目的</small><strong>抽選ロジックの検算</strong></div>
+    </section>
+
+    <div class="toc">
+      <a href="#first-hit">1/319.7の初当り</a>
+      <a href="#slot-hit">1/300の初当り</a>
+      <a href="#continuation">81%継続</a>
+      <a href="#method">再現方法</a>
+      <a href="#limits">分かること・分からないこと</a>
+    </div>
+
+    <h2 id="first-hit">1/319.7の初当りを10万回抽選</h2>
+    <p>パチンコの代表例として、毎回転1/319.7で独立抽選する条件を10万回繰り返しました。理論上の平均は319.7回転、中央値は約222回転です。検証では平均319.21回転、中央値222回転となりました。</p>
+    <div class="table-wrap"><table class="ranking-table editorial-table"><thead><tr><th>指標</th><th>理論・計算値</th><th>10万回の結果</th></tr></thead><tbody>
+      <tr><td>平均回転</td><td>319.70回</td><td>319.21回</td></tr>
+      <tr><td>中央値</td><td>約222回</td><td>222回</td></tr>
+      <tr><td>90%が当る回転</td><td>約735回</td><td>735回</td></tr>
+      <tr><td>99%が当る回転</td><td>約1,470回</td><td>1,462回</td></tr>
+      <tr><td>1,000回転超</td><td>約4.36%</td><td>4.33%</td></tr>
+    </tbody></table></div>
+    <p>「319回転回せば当る」のではなく、319回転までに1回以上当る確率は約63.19%です。100回転では約26.90%、500回転では約79.12%、1,000回転でも約95.64%なので、約4.36%は1,000回転を超えます。</p>
+
+    <h2 id="slot-hit">平均300Gの初当りを10万回抽選</h2>
+    <p>スロットの簡易初当りモデルとして平均300Gの幾何分布を同じ方法で検証しました。結果は平均302.30G、中央値209G、90%点697G、99%点1,390Gでした。10万回でも平均は理論値と完全には一致せず、試行の偏りが残ります。</p>
+    <p>この差はバグとは限りません。確率抽選は試行数を増やすほど理論値に近づく傾向がありますが、有限回では毎回ずれます。1回のシミュレーション結果が平均から大きく離れることも、同じ理由で自然に起こります。</p>
+
+    <h2 id="continuation">81%継続を10万回検証</h2>
+    <p>初回の当りを1連目とし、その後81%で次の当りへ進み、19%で終了する条件です。平均連チャンの理論値は1÷（1－0.81）＝約5.263連です。</p>
+    <div class="table-wrap"><table class="ranking-table editorial-table"><thead><tr><th>指標</th><th>理論値</th><th>10万回の結果</th></tr></thead><tbody>
+      <tr><td>平均連チャン</td><td>5.263連</td><td>5.273連</td></tr>
+      <tr><td>単発</td><td>19.00%</td><td>19.00%</td></tr>
+      <tr><td>5連以上</td><td>43.05%</td><td>43.03%</td></tr>
+      <tr><td>10連以上</td><td>15.01%</td><td>15.07%</td></tr>
+      <tr><td>検証内の最大</td><td>上限なし</td><td>58連</td></tr>
+    </tbody></table></div>
+    <p>81%継続でも約5回に1回は単発です。一方、10連以上も約15%あります。継続率は「最低何連するか」ではなく、終了までの分布を作る数字として読む必要があります。</p>
+
+    <section class="audit-rerun" aria-labelledby="rerunTitle">
+      <div><span>REPRODUCIBLE TEST</span><h2 id="rerunTitle">ブラウザでも同じ検証を再実行</h2><p>固定シード「20261123」を使うため、端末が違っても同じ結果になります。実行はこのページ内だけで完結し、結果や端末情報を送信しません。</p></div>
+      <button type="button" id="rerunAudit">10万回の検証を実行</button>
+      <p id="auditOutput" class="audit-output" aria-live="polite">未実行</p>
+    </section>
+
+    <h2 id="method">検証方法と再現条件</h2>
+    <ol class="article-review-steps">
+      <li><span aria-hidden="true">1</span><strong>条件を固定</strong>初当り分母、継続率、試行数、乱数の開始値を先に決めます。</li>
+      <li><span aria-hidden="true">2</span><strong>全結果を集計</strong>外れや深いハマりも除外せず、平均・中央値・分位点へ含めます。</li>
+      <li><span aria-hidden="true">3</span><strong>理論値と比較</strong>幾何分布の式で求めた値と、10万回抽選の差を確認します。</li>
+      <li><span aria-hidden="true">4</span><strong>再現可能にする</strong>固定シードと計算方法を公開し、同じ入力で同じ結果を確認できるようにします。</li>
+    </ol>
+    <details class="audit-code"><summary>使用した乱数と計算式を見る</summary><pre><code>seed = (1664525 × seed + 1013904223) mod 2^32
+初当りG = floor(log(1 - u) / log(1 - 1 / 分母)) + 1
+平均連 = 1 / (1 - 継続率)
+n連以上 = 継続率^(n - 1)</code></pre></details>
+
+    <h2 id="limits">この検証で分かること・分からないこと</h2>
+    <ul class="info-list">
+      <li><strong>確認できること</strong>サイトの基本抽選が、指定した初当り確率・継続率の理論値から大きく外れていないか。</li>
+      <li><strong>確認できないこと</strong>実店舗の釘、設定配分、小役、内部モード、遊技者の打ち方、将来の勝敗や収支。</li>
+      <li><strong>実機との差</strong>機種固有の複合抽選や状態移行は、各ページに記載した範囲で簡略化しています。</li>
+      <li><strong>用途</strong>確率のばらつきを理解し、シミュレーション結果を読み解くための技術検証です。</li>
+    </ul>
+    <p>機種別シミュレーターは、この基礎抽選にRUSH・CZ・AT・上位状態などの段階を加えています。個別に再現していない項目は<a href="simulation-policy.html">計算・掲載方針</a>、結果表示の意味は<a href="simulation-result-guide.html">結果の読み方</a>で確認できます。</p>
+
+    <div class="next-links"><a href="probability-tool.html">確率を自分で計算</a><a href="simulation-result-guide.html">結果の読み方</a><a href="simulation-policy.html">計算・掲載方針</a><a href="about.html">編集・検証方法</a></div>
+    <p class="note">執筆・検算：ICHIGEKI編集部。文章整理とコード作成に生成AIを補助利用し、掲載した条件、計算式、10万回の出力は運営者が確認しています。</p>
+  </article></main>
+  <footer class="site-footer"><div class="footer-inner"><span>© ICHIGEKI</span><div class="footer-links"><a href="articles.html">記事一覧</a><a href="about.html">運営者情報</a><a href="sitemap.html">サイトマップ</a><a href="contact.html">お問い合わせ</a></div></div></footer>
+  <script>
+  (() => {
+    const button = document.getElementById('rerunAudit');
+    const output = document.getElementById('auditOutput');
+    const makeRandom = (start) => {
+      let seed = start >>> 0;
+      return () => {
+        seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+        return seed / 4294967296;
+      };
+    };
+    button.addEventListener('click', () => {
+      button.disabled = true;
+      output.textContent = '検証中…';
+      requestAnimationFrame(() => setTimeout(() => {
+        const random = makeRandom(20261123);
+        const values = [];
+        let total = 0;
+        let over1000 = 0;
+        for (let i = 0; i < 100000; i += 1) {
+          const games = Math.floor(Math.log(1 - random()) / Math.log(1 - 1 / 319.7)) + 1;
+          values.push(games);
+          total += games;
+          if (games > 1000) over1000 += 1;
+        }
+        values.sort((a, b) => a - b);
+        output.textContent = `完了：平均 ${(total / 100000).toFixed(2)}回／中央値 ${values[50000]}回／1,000回転超 ${(over1000 / 1000).toFixed(2)}%`;
+        button.disabled = false;
+      }, 30));
+    });
+  })();
+  </script>
+  <script src="app-shell.js?v=10"></script>
+  <script src="adsense-loader.js?v=2"></script>
+</body>
+</html>
