@@ -16433,6 +16433,35 @@ textarea { min-height: 132px; line-height: 1.65; }
   background: linear-gradient(135deg, rgba(32, 97, 48, .2), transparent 52%), #080c09;
   box-shadow: inset 0 1px rgba(255, 255, 255, .035);
 }
+
+.machine-independent-audit {
+  margin: 22px 0;
+  padding: 20px;
+  border: 1px solid color-mix(in srgb, var(--machine-accent, #70de5b) 46%, transparent);
+  border-radius: 20px;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--machine-accent, #70de5b) 10%, transparent), transparent 48%),
+    rgba(4, 11, 7, .78);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .04);
+}
+.machine-independent-audit-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid rgba(112, 222, 91, .18); }
+.machine-independent-audit-head span { color: var(--machine-accent, #78ed66); font: 900 11px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .16em; }
+.machine-independent-audit-head h3 { margin: 0; color: #f5faf5; font-size: clamp(21px, 3vw, 28px); }
+.machine-independent-audit > p { margin: 16px 0 0; color: #cbd5cd; font-size: 14px; line-height: 1.85; }
+.machine-independent-audit-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 9px; margin-top: 16px; }
+.machine-independent-audit-grid > div { display: grid; align-content: start; min-height: 112px; padding: 13px; border: 1px solid rgba(255, 255, 255, .09); border-radius: 14px; background: rgba(0, 0, 0, .24); }
+.machine-independent-audit-grid span { color: #a7b3aa; font-size: 11px; font-weight: 800; }
+.machine-independent-audit-grid strong { margin-top: 8px; color: #f4f8f4; font-size: clamp(19px, 2.6vw, 24px); line-height: 1.15; }
+.machine-independent-audit-grid small { margin-top: 8px; color: #91a097; font-size: 11px; line-height: 1.5; }
+.machine-independent-audit .machine-independent-audit-note { color: #9eaaa1; font-size: 12px; }
+.machine-independent-audit-note a { color: var(--machine-accent, #78ed66); font-weight: 800; text-underline-offset: 3px; }
+
+@media (max-width: 680px) {
+  .machine-independent-audit { margin-inline: -2px; padding: 17px; border-radius: 19px; }
+  .machine-independent-audit-head { display: grid; gap: 7px; }
+  .machine-independent-audit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .machine-independent-audit-grid > div { min-height: 102px; padding: 12px; }
+}
 .machine-reader-guide-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding-bottom: 14px; border-bottom: 1px solid rgba(112, 222, 91, .18); }
 .machine-reader-guide-head span,
 .machine-article-sim-cta > span { color: #7eea6a; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; font-weight: 900; letter-spacing: .16em; }
